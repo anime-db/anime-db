@@ -1,0 +1,5 @@
+.buildpath
+.project
+.settings/
+bin/.hpid
+bin/.mpid

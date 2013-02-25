@@ -1,0 +1,87 @@
+#!/bin/sh
+
+
+# Set the address to 0.0.0.0 in order to open access to the application from outside
+addr='127.0.0.1'
+
+# Port on the service
+port=56780
+
+# Path to the directory with the application
+path=../
+
+
+case "$1" in
+    start)
+        if [ ! -f .hpid ]
+        then
+            if [ ! -f ${path}src/router.php ]
+            then
+                echo "Cent run service" >&2 
+            fi
+            php -S ${addr}:${port} -t ${path}src ${path}src/router.php > /dev/null 2> /dev/null &
+            echo $! > .hpid
+        else
+            echo "Server is already running" >&2
+        fi
+        if [ ! -f .mpid ]
+        then
+            if [ ! -f ${path}src/task_manager.php ]
+            then
+                echo "Cent run task manager" >&2 
+            fi
+            php -f ${path}src/task_manager.php > /dev/null 2> /dev/null &
+            echo $! > .mpid
+        else
+            echo "Task manager is already running" >&2
+        fi
+        ;;
+    stop)
+        if [ -f .hpid ]
+        then
+            kill `cat .hpid` 2> /dev/null
+            rm .hpid
+        else
+            echo "Server is not running" >&2
+        fi
+        if [ -f .mpid ]
+        then
+            kill `cat .mpid` 2> /dev/null
+            rm .mpid
+        else
+            echo "Task manager is not running" >&2
+        fi
+        ;;
+    reload|restart|force-reload)
+        if [ -f .hpid ]
+        then
+            kill `cat .hpid` 2> /dev/null
+            rm .hpid
+        fi
+        if [ -f .mpid ]
+        then
+            kill `cat .mpid` 2> /dev/null
+            rm .mpid
+        fi
+        if [ ! -f ${path}src/router.php ]
+        then
+            echo "Cent run service" >&2 
+        fi
+        if [ ! -f ${path}src/task_manager.php ]
+        then
+            echo "Cent run task manager" >&2 
+        fi
+
+        # start new process
+        php -S ${addr}:${port} -t ${path}src ${path}src/router.php > /dev/null 2> /dev/null &
+        echo $! > .hpid
+        php -f ${path}src/task_manager.php > /dev/null 2> /dev/null &
+        echo $! > .mpid
+        ;;
+    *)
+        echo "Usage: $N {start|stop|restart}" >&2
+        exit 1
+        ;;
+esac
+
+exit 0
