@@ -8,75 +8,80 @@ addr='127.0.0.1'
 port=56780
 
 # Path to the directory with the application
-path=../
+path=../src
+
+
+run_service() {
+    if [ ! -f ${path}/router.php ]
+    then
+        echo "Cent run service" >&2
+        exit 1 
+    fi
+    php -S ${addr}:${port} -t $path ${path}/router.php > /dev/null 2> /dev/null &
+    echo $! > .hpid
+}
+
+run_task_manager() {
+    if [ ! -f ${path}/task_manager.php ]
+    then
+        echo "Cent run task manager" >&2
+        exit 1 
+    fi
+    php -f ${path}/task_manager.php > /dev/null 2> /dev/null &
+    echo $! > .mpid
+}
+
+stop_service() {
+    kill `cat .hpid` 2> /dev/null
+    rm .hpid
+}
+
+stop_task_manager() {
+    kill `cat .mpid` 2> /dev/null
+    rm .mpid
+}
 
 
 case "$1" in
     start)
-        if [ ! -f .hpid ]
-        then
-            if [ ! -f ${path}src/router.php ]
-            then
-                echo "Cent run service" >&2 
-            fi
-            php -S ${addr}:${port} -t ${path}src ${path}src/router.php > /dev/null 2> /dev/null &
-            echo $! > .hpid
-        else
-            echo "Server is already running" >&2
-        fi
-        if [ ! -f .mpid ]
-        then
-            if [ ! -f ${path}src/task_manager.php ]
-            then
-                echo "Cent run task manager" >&2 
-            fi
-            php -f ${path}src/task_manager.php > /dev/null 2> /dev/null &
-            echo $! > .mpid
-        else
-            echo "Task manager is already running" >&2
-        fi
-        ;;
-    stop)
         if [ -f .hpid ]
         then
-            kill `cat .hpid` 2> /dev/null
-            rm .hpid
-        else
-            echo "Server is not running" >&2
+            echo "Server is already running" >&2
+            exit 1
         fi
         if [ -f .mpid ]
         then
-            kill `cat .mpid` 2> /dev/null
-            rm .mpid
-        else
-            echo "Task manager is not running" >&2
+            echo "Task manager is already running" >&2
+            exit 1
         fi
+        run_service
+        run_task_manager
+        ;;
+    stop)
+        if [ ! -f .hpid ]
+        then
+            echo "Server is not running" >&2
+            exit 1
+        fi
+        if [ ! -f .mpid ]
+        then
+            echo "Task manager is not running" >&2
+            exit 1
+        fi
+        stop_service
+        stop_task_manager
         ;;
     reload|restart|force-reload)
         if [ -f .hpid ]
         then
-            kill `cat .hpid` 2> /dev/null
-            rm .hpid
+            stop_service
         fi
         if [ -f .mpid ]
         then
-            kill `cat .mpid` 2> /dev/null
-            rm .mpid
+            stop_task_manager
         fi
-        if [ ! -f ${path}src/router.php ]
-        then
-            echo "Cent run service" >&2 
-        fi
-        if [ ! -f ${path}src/task_manager.php ]
-        then
-            echo "Cent run task manager" >&2 
-        fi
-
-        # start new process
-        php -S ${addr}:${port} -t ${path}src ${path}src/router.php > /dev/null 2> /dev/null &
-        echo $! > .hpid
-        php -f ${path}src/task_manager.php > /dev/null 2> /dev/null &
-        echo $! > .mpid
+        run_service
+        run_task_manager
         ;;
     *)
         echo "Usage: $N {start|stop|restart}" >&2
