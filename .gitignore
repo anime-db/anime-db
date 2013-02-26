@@ -1,5 +1,8 @@
-.buildpath
-.project
-.settings/
+# Services pid files
 bin/.hpid
 bin/.mpid
+
+# Eclipse files
+.buildpath
+.project
+.settings
