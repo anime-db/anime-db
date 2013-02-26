@@ -2,8 +2,8 @@
 
 # AnimeDB #
 
-Application for making your home collection anime<br/>
-This project is intended for home use
+This is the anplication for making your home collection anime<br/>
+The project is for home use only
 
 ## Repositories ##
 
@@ -29,10 +29,9 @@ Clone this repository to fetch the latest version of this application
     # command to restart the application
     ./service restart
 
-After starting the application, open the browser to<br/>
-<http://localhost:56780/>
+After starting the application, open the browser <http://localhost:56780/>
 
-If you want to access an application on your local network, you need to edit file the application starts
+If you want to access an application on your local network, you need to edit startup-file of the application
 
     vim bin/service
 
@@ -47,4 +46,5 @@ Seve the file and restart the application
     cd bin
     ./service restart
 
-After restart, open on another computer in the browser address <http://{ip_addres}:56780/>, where {ip_addres} is the IP address of the computer on which the application is runnin
+
+After restart, open on another computer the browser with address <http://{ip_addres}:56780/>, where {ip_addres} is the IP address of the computer on which the application is running
