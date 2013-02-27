@@ -1,9 +1,10 @@
-<img src="https://secure.gravatar.com/avatar/2a8242057d58d3e601063be3135a216c?s=420&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-org-420.png">
+<img src="http://anime-db.org/images/logo.jpg">
 
 # AnimeDB #
 
 This is the anplication for making your home collection anime<br/>
 The project is for home use only
+As of PHP 5.4.0
 
 ## Repositories ##
 
