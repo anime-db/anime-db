@@ -20,16 +20,15 @@ Clone this repository to fetch the latest version of this application
 ## Quick start ##
 
     cd .. # go to the directory with the application
-    cd bin
 
     # command to start the application
-    ./service start
+    ./animedb start
 
     # command to stop the application
-    ./service stop
+    ./animedb stop
 
     # command to restart the application
-    ./service restart
+    ./animedb restart
 
 After starting the application, open the browser <http://localhost:56780/>
 
@@ -45,8 +44,7 @@ If you want to access an application on your local network, you need to edit sta
 
 Seve the file and restart the application
 
-    cd bin
-    ./service restart
+    ./animedb restart
 
 
 After restart, open on another computer the browser with address <http://{ip_addres}:56780/>, where {ip_addres} is the IP address of the computer on which the application is running
