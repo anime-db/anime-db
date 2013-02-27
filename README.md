@@ -2,23 +2,24 @@
 
 # AnimeDB #
 
-This is the anplication for making your home collection anime<br/>
-The project is for home use only
+This is the application for making your home collection anime<br/>
+The application is for home use only
 As of PHP 5.4.0
 
 ## Repositories ##
 
 The official source code for this application can be retrieved from<br/>
-<http://github.com/anime-db/client>
+<http://github.com/anime-db/application>
 
 ## Installation ##
+
 Clone this repository to fetch the latest version of this application
 
-    git clone git://github.com/anime-db/client.git
+    git clone git://github.com/anime-db/application.git
 
 ## Quick start ##
 
-    cd .. # go to the directory with the client
+    cd .. # go to the directory with the application
     cd bin
 
     # command to start the application
