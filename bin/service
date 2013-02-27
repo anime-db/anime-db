@@ -1,0 +1,92 @@
+#!/bin/sh
+
+
+# Set the address to 0.0.0.0 in order to open access to the application from outside
+addr='localhost'
+
+# Port on the service
+port=56780
+
+# Path to the directory with the application
+path=../src
+
+
+run_service() {
+    if [ ! -f ${path}/router.php ]
+    then
+        echo "Cent run service" >&2
+        exit 1 
+    fi
+    php -S ${addr}:${port} -t $path ${path}/router.php > /dev/null 2> /dev/null &
+    echo $! > .hpid
+}
+
+run_task_manager() {
+    if [ ! -f ${path}/task_manager.php ]
+    then
+        echo "Cent run task manager" >&2
+        exit 1 
+    fi
+    php -f ${path}/task_manager.php > /dev/null 2> /dev/null &
+    echo $! > .mpid
+}
+
+stop_service() {
+    kill `cat .hpid` 2> /dev/null
+    rm .hpid
+}
+
+stop_task_manager() {
+    kill `cat .mpid` 2> /dev/null
+    rm .mpid
+}
+
+
+case "$1" in
+    start)
+        if [ -f .hpid ]
+        then
+            echo "Server is already running" >&2
+            exit 1
+        fi
+        if [ -f .mpid ]
+        then
+            echo "Task manager is already running" >&2
+            exit 1
+        fi
+        run_service
+        run_task_manager
+        ;;
+    stop)
+        if [ ! -f .hpid ]
+        then
+            echo "Server is not running" >&2
+            exit 1
+        fi
+        if [ ! -f .mpid ]
+        then
+            echo "Task manager is not running" >&2
+            exit 1
+        fi
+        stop_service
+        stop_task_manager
+        ;;
+    reload|restart|force-reload)
+        if [ -f .hpid ]
+        then
+            stop_service
+        fi
+        if [ -f .mpid ]
+        then
+            stop_task_manager
+        fi
+        run_service
+        run_task_manager
+        ;;
+    *)
+        echo "Usage: $N {start|stop|restart}" >&2
+        exit 1
+        ;;
+esac
+
+exit 0
