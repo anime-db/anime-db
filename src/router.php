@@ -30,10 +30,15 @@ if (preg_match('/^\/(?:\d+(?:\-[a-z]+)?)|(?:item\-[a-z]+)\.html$/', $path)) {
 	return require 'item.php';
 }
 
-#    RewriteRule type.html					type.php		[QSA,L] # выбор типа
-#    RewriteRule type\-([a-z]+)\.html		type.php?t=$1	[QSA,L] # просмотр конкретного типа
-#    RewriteRule genre.html					genre.php		[QSA,L] # выбор жанра
-#    RewriteRule genre\-([a-z]+)\.html		genre.php?g=$1	[QSA,L] # просмотр конкретного жанра
-
+#RewriteRule type.html					type.php		[QSA,L] # выбор типа
+#RewriteRule type\-([a-z]+)\.html		type.php?t=$1	[QSA,L] # просмотр конкретного типа
+#RewriteRule genre.html					genre.php		[QSA,L] # выбор жанра
+#RewriteRule genre\-([a-z]+)\.html		genre.php?g=$1	[QSA,L] # просмотр конкретного жанра
+/*if (preg_match('/^\/(type|genre)(?:\-([a-z]+))?\.html$/', $path, $mat)) {
+	if (isset($mat[2])) {
+		$_GET[$mat[1] == 'type' ? 't' : 'g'] = $mat[2];
+	}
+	return require 'selection.php';
+}*/
 
 $call_not_found();
