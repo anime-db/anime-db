@@ -8,7 +8,7 @@ addr='0.0.0.0'
 port=56780
 
 # Path to the directory with the application
-path=./src
+path=.
 
 
 run_service() {
