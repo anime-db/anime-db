@@ -1,6 +1,6 @@
 # Temp #
 ########
-vendor/
+vendor/*
 app/bootstrap*
 src/Acme
 
