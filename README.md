@@ -22,29 +22,14 @@ Clone this repository to fetch the latest version of this application
     cd .. # go to the directory with the application
 
     # command to start the application
-    ./animedb start
+    ./app/server start
 
     # command to stop the application
-    ./animedb stop
+    ./app/server stop
 
     # command to restart the application
-    ./animedb restart
+    ./app/server restart
 
 After starting the application, open the browser <http://localhost:56780/>
 
-If you want to access an application on your local network, you need to edit startup-file of the application
-
-    vim bin/service
-
-    # find the line
-    addr='localhost'
-
-    # and replace it her 
-    addr='0.0.0.0'
-
-Seve the file and restart the application
-
-    ./animedb restart
-
-
-After restart, open on another computer the browser with address <http://{ip_addres}:56780/>, where {ip_addres} is the IP address of the computer on which the application is running
+If you want to access an application on your local network, you need open on another computer the browser with address http://{ip_addres}:56780/, where {ip_addres} is the IP address of the computer on which the application is running

@@ -1,19 +1,22 @@
+# Temp #
+########
+vendor/
+app/bootstrap*
+src/Acme
+
 # Services pid files #
 ######################
-.hpid
-.mpid
+.spid
+.tmpid
 
 # Symfony directories #
-#############
-/Symfony/web/bundles/
-/Symfony/app/bootstrap*
-/Symfony/app/cache/*
-/Symfony/app/logs/*
-/Symfony/vendor/
-/Symfony/app/config/parameters.ini
+#######################
+web/bundles/
+app/cache/*
+app/logs/*
 
 # Eclipse files #
-################
+#################
 .buildpath
 .project
 .settings

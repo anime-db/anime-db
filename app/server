@@ -11,76 +11,77 @@ port=56780
 path=.
 
 
-run_service() {
-    if [ ! -f ${path}/router.php ]
+run_server() {
+    if [ ! -f ${path}/app/router.php ]
     then
-        echo "Cent run service" >&2
+        echo "Cent run server" >&2
         exit 1 
     fi
-    php -S ${addr}:${port} -t $path ${path}/router.php > /dev/null 2> /dev/null &
-    echo $! > .hpid
+#    php -S ${addr}:${port} -t ${path}/web ${path}/app/router.php > /dev/null 2> /dev/null &
+    php -S ${addr}:${port} -t ${path}/web ${path}/app/router.php > /dev/null 2> error.log &
+    echo $! > .spid
 }
 
 run_task_manager() {
-    if [ ! -f ${path}/task_manager.php ]
+    if [ ! -f ${path}/app/task_manager.php ]
     then
         echo "Cent run task manager" >&2
         exit 1 
     fi
-    php -f ${path}/task_manager.php > /dev/null 2> /dev/null &
-    echo $! > .mpid
+    php -f ${path}/app/task_manager.php > /dev/null 2> /dev/null &
+    echo $! > .tmpid
 }
 
-stop_service() {
-    kill `cat .hpid` 2> /dev/null
-    rm .hpid
+stop_server() {
+    kill `cat .spid` 2> /dev/null
+    rm .spid
 }
 
 stop_task_manager() {
-    kill `cat .mpid` 2> /dev/null
-    rm .mpid
+    kill `cat .tmpid` 2> /dev/null
+    rm .tmpid
 }
 
 
 case "$1" in
     start)
-        if [ -f .hpid ]
+        if [ -f .spid ]
         then
             echo "Server is already running" >&2
             exit 1
         fi
-        if [ -f .mpid ]
+        if [ -f .tmpid ]
         then
             echo "Task manager is already running" >&2
             exit 1
         fi
-        run_service
+        run_server
         run_task_manager
         ;;
     stop)
-        if [ ! -f .hpid ]
+        if [ ! -f .spid ]
         then
             echo "Server is not running" >&2
             exit 1
         fi
-        if [ ! -f .mpid ]
+        if [ ! -f .tmpid ]
         then
             echo "Task manager is not running" >&2
             exit 1
         fi
-        stop_service
+        stop_server
         stop_task_manager
         ;;
     reload|restart|force-reload)
-        if [ -f .hpid ]
+        if [ -f .spid ]
         then
-            stop_service
+            stop_server
         fi
-        if [ -f .mpid ]
+        if [ -f .tmpid ]
         then
             stop_task_manager
         fi
-        run_service
+        run_server
         run_task_manager
         ;;
     *)

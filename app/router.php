@@ -1,12 +1,8 @@
 <?php
-$call_not_found = function () {
-	require 'guepard/404.php';
-	exit(0);
-};
 
 // run not in cli-server
 if (PHP_SAPI != 'cli-server') {
-	$call_not_found();
+	exit('This script can be run from the CLI-server only.');
 }
 
 // Check that the access to the application by the local computer or local network
@@ -18,11 +14,11 @@ if (!empty($_SERVER['HTTP_CLIENT_IP']) ||
 		!in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', 'fe80::1', '::1')) &&
 		(
 			( // local network IPv6
-				strpos($_SERVER['REMOTE_ADDR'], ':') !== false &&
+				$ipv6 = (strpos($_SERVER['REMOTE_ADDR'], ':') !== false) &&
 				strpos($_SERVER['REMOTE_ADDR'], 'fc00::') !== 0
 			) ||
 			( // local network IPv4
-				strpos($_SERVER['REMOTE_ADDR'], ':') === false &&
+				!$ipv6 &&
 				($long = ip2long($_SERVER['REMOTE_ADDR'])) === false ||
 				!(
 					($long >= ip2long('10.0.0.0')    && $long <= ip2long('10.255.255.255')) ||
@@ -38,7 +34,13 @@ if (!empty($_SERVER['HTTP_CLIENT_IP']) ||
 }
 
 return false;
+
 /*
+$call_not_found = function () {
+	require 'guepard/404.php';
+	exit(0);
+};
+
 if (!($path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH))) {
 	$call_not_found();
 }
