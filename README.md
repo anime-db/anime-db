@@ -34,7 +34,7 @@ After starting the application, open the browser <http://localhost:56780/>
 
 If you want to access an application on your local network, you need to edit startup-file of the application
 
-    vim bin/service
+    vim ./animedb
 
     # find the line
     addr='localhost'
