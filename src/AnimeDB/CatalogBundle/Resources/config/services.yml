@@ -1,0 +1,7 @@
+parameters:
+#    anime_db_catalog.example.class: AnimeDB\CatalogBundle\Example
+
+services:
+#    anime_db_catalog.example:
+#        class: %anime_db_catalog.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

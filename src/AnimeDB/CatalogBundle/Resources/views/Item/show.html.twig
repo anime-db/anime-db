@@ -1,0 +1,10 @@
+{% extends 'AnimeDBCatalogBundle::layout.html.twig' %}
+
+{% block content %}
+<ul>
+	<li><a href="<?=str_replace('#action#', 'autofill', $result['link'])?>">{% trans %}Autofill record{% endtrans %}</a></li>
+<!-- 	<li><a href="<?=str_replace('#action#', 'conversion', $result['link'])?>">Конвертировать файлы</a></li> -->
+	<li><a href="<?=str_replace('#action#', 'change', $result['link'])?>">{% trans %}Change record{% endtrans %}</a></li>
+	<li><a href="<?=str_replace('#action#', 'remove', $result['link'])?>">{% trans %}Delete record{% endtrans %}</a></li>
+</ul>
+{% endblock %}

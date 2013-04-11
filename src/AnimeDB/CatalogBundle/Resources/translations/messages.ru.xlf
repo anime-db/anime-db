@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>The product is licensed under the %license%.</source>
+                <target>Продукт распространяется под лицензией %license%.</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>%AnimeDB% is a system for making the home catalog of the anime. The system is designed for home use only.</source>
+                <target>%AnimeDB% это система для составления домашнего каталога аниме. Система предназначена только для домашнего использования.</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>Picks Alphabetical</source>
+                <target>Выборка по алфавиту</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>Oversampled</source>
+                <target>Расширенная выборка</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>Search this site</source>
+                <target>Поиск по сайту</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>Add record</source>
+                <target>Добавить запись</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>Change record</source>
+                <target>Изменить запись</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>Autofill record</source>
+                <target>Автозаполнениие записи</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>Delete record</source>
+                <target>Удалить запись</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>Search</source>
+                <target>Поиск</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

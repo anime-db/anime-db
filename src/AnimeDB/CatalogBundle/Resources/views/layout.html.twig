@@ -1,0 +1,56 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}AnimeDB{% endblock %}
+
+{% block stylesheets %}
+	<link href="{{ asset('/bundles/animedbcatalog/css/jquery-ui/jquery-ui-1.8.16.custom.css') }}" type="text/css" rel="stylesheet">
+	<link href="{{ asset('/bundles/animedbcatalog/css/main.css') }}" type="text/css" rel="stylesheet">
+{% endblock %}
+
+{% block javascripts %}
+	<script type="text/javascript" src="{{ asset('/bundles/animedbcatalog/js/jquery-1.6.2.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('/bundles/animedbcatalog/js/jquery-ui-1.8.16.custom.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('/bundles/animedbcatalog/js/init.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+<div id="bg">
+	<div id="wrapper">
+		<div id="header">
+			<h1 class="logo">
+				<a href="{{ path('home') }}" title="Home Anime DB"><span>Home Anime DB</span></a>
+			</h1>
+			<div id="navigation">
+				<div class="left"></div>
+				<ul>
+					<li><a href="{{ path('home_alphabet') }}">{% trans %}Picks Alphabetical{% endtrans %}</a></li>
+					<li><a href="{{ path('home_selection') }}">{% trans %}Oversampled{% endtrans %}</a></li>
+					<li class="last"><a href="{{ path('item_add') }}">{% trans %}Add record{% endtrans %}</a></li>
+				</ul>
+				<div class="right"></div>
+			</div>
+		</div>
+		<div id="content-wrapper">
+			<div id="content">
+				<div class="content">
+					<div id="home-center-header">
+						<p class="intro-message">{% trans with {'%AnimeDB%': '<strong>Anime DB</strong>'}%}%AnimeDB% is a system for making the home catalog of the anime. The system is designed for home use only.{% endtrans %}</p>
+						<div id="home-search">
+							{% render "AnimeDBCatalogBundle:Home:searchSimpleForm" %}
+						</div>
+					</div>
+					<div id="home-center">
+						{% block content %}{% endblock %}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="footer">
+			<div class="license">{% trans with {'%license%': '<a href="http://opensource.org/licenses/GPL-3.0">GPLv3</a>'}%}The product is licensed under the %license%.{% endtrans %}</div>
+			<div class="copy">&copy; 2011-{{ "now"|date("Y") }} <a href="http://anime-db.org/">AnimeDB</a></div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
+{% endblock %}

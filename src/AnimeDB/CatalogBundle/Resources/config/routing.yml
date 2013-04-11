@@ -1,0 +1,38 @@
+home:
+    pattern:  /
+    defaults: { _controller: AnimeDBCatalogBundle:Home:index }
+
+home_alphabet:
+    pattern:  /alphabet.html
+    defaults: { _controller: AnimeDBCatalogBundle:Home:alphabet }
+
+home_selection:
+    pattern:  /selection.html
+    defaults: { _controller: AnimeDBCatalogBundle:Home:selection }
+
+home_search:
+    pattern:  /search.html
+    defaults: { _controller: AnimeDBCatalogBundle:Home:search }
+
+
+item_add:
+    pattern:  /add.html
+    defaults: { _controller: AnimeDBCatalogBundle:Item:add }
+
+item_show:
+    pattern:  /{id}/
+    defaults: { _controller: AnimeDBCatalogBundle:Item:show }
+    requirements:
+        id:  \d+
+
+item_change:
+    pattern:  /{id}/change.html
+    defaults: { _controller: AnimeDBCatalogBundle:Item:change }
+    requirements:
+        id:  \d+
+
+item_remove:
+    pattern:  /{id}/remove.html
+    defaults: { _controller: AnimeDBCatalogBundle:Item:remove }
+    requirements:
+        id:  \d+
