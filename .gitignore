@@ -1,8 +1,7 @@
 # Temp #
 ########
-vendor/*
-app/bootstrap*
-src/Acme
+#vendor/*
+#app/bootstrap*
 
 # Services pid files #
 ######################
