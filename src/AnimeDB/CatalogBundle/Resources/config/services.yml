@@ -1,7 +1,13 @@
 parameters:
-#    anime_db_catalog.example.class: AnimeDB\CatalogBundle\Example
 
 services:
-#    anime_db_catalog.example:
-#        class: %anime_db_catalog.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+     anime_db_catalog.autofill.chain:
+        class: AnimeDB\CatalogBundle\Service\Autofill\Chain
+     anime_db_catalog.autofill.worldartru:
+        class: AnimeDB\CatalogBundle\Service\Autofill\Filler\WorldArtRu
+        tags:
+            -  { name: anime_db_catalog.autofill, alias: worldartru }
+     anime_db_catalog.autofill.shikimoriorg:
+        class: AnimeDB\CatalogBundle\Service\Autofill\Filler\ShikimoriOrg
+        tags:
+            -  { name: anime_db_catalog.autofill, alias: shikimoriorg }

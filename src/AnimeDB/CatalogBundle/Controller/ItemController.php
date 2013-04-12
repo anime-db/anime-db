@@ -41,6 +41,10 @@ class ItemController extends Controller
     public function addAction()
     {
         // TODO требуется реализация
+        /* @var $chain \AnimeDB\CatalogBundle\Service\Autofill\Chain */
+        //$chain = $this->get('anime_db_catalog.autofill.chain');
+        //p($chain->getFillerNames());
+        //p($chain->getFillerTetles());
         return $this->render('AnimeDBCatalogBundle:Item:add.html.twig');
     }
 

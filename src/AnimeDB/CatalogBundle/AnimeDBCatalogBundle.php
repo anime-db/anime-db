@@ -11,6 +11,8 @@
 namespace AnimeDB\CatalogBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use AnimeDB\CatalogBundle\Service\Autofill\CompilerPass;
 
 /**
  * Bundle
@@ -20,4 +22,9 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class AnimeDBCatalogBundle extends Bundle
 {
+    public function build(ContainerBuilder $container)
+    {
+        parent::build($container);
+        $container->addCompilerPass(new CompilerPass());
+    }
 }
