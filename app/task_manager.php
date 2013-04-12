@@ -1,7 +1,7 @@
 <?php
 while (true) {
-	// do something
-	// ...
+    // do something
+    // ...
 
-	sleep(10000);
+    sleep(10000);
 }

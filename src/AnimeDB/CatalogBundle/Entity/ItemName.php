@@ -25,92 +25,89 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class ItemName
 {
+    /**
+     * Id
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     *
+     * @var integer
+     */
+    protected $id;
 
-	/**
-	 * Id
-	 *
-	 * @ORM\Id
-	 * @ORM\GeneratedValue
-	 * @ORM\Column(type="integer")
-	 *
-	 * @var integer
-	 */
-	protected $id;
+    /**
+     * Item name
+     *
+     * @ORM\Column(type="string", length=256)
+     *
+     * @var string
+     */
+    protected $name;
 
-	/**
-	 * Item name
-	 *
-	 * @ORM\Column(type="string", length=256)
-	 *
-	 * @var string
-	 */
-	protected $name;
+    /**
+     * Items list
+     *
+     * @ORM\ManyToOne(targetEntity="Item", inversedBy="names")
+     * @ORM\JoinColumn(name="item", referencedColumnName="id")
+     *
+     * @var \AnimeDB\CatalogBundle\Entity\Item
+     */
+    protected $item;
 
-	/**
-	 * Items list
-	 *
-	 * @ORM\ManyToOne(targetEntity="Item", inversedBy="names")
-	 * @ORM\JoinColumn(name="item", referencedColumnName="id")
-	 *
-	 * @var \AnimeDB\CatalogBundle\Entity\Item
-	 */
-	protected $item;
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return \AnimeDB\CatalogBundle\Entity\ItemName
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
 
-	/**
-	 * Get id
-	 *
-	 * @return integer
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 
-	/**
-	 * Set name
-	 *
-	 * @param string $name
-	 *
-	 * @return \AnimeDB\CatalogBundle\Entity\ItemName
-	 */
-	public function setName($name)
-	{
-		$this->name = $name;
-		return $this;
-	}
+    /**
+     * Set item
+     *
+     * @param \AnimeDB\CatalogBundle\Entity\Item $item
+     *
+     * @return \AnimeDB\CatalogBundle\Entity\ItemName
+     */
+    public function setItem(\AnimeDB\CatalogBundle\Entity\Item $item = null)
+    {
+        $this->item = $item;
+        return $this;
+    }
 
-	/**
-	 * Get name
-	 *
-	 * @return string
-	 */
-	public function getName()
-	{
-		return $this->name;
-	}
-
-	/**
-	 * Set item
-	 *
-	 * @param \AnimeDB\CatalogBundle\Entity\Item $item
-	 *
-	 * @return \AnimeDB\CatalogBundle\Entity\ItemName
-	 */
-	public function setItem(\AnimeDB\CatalogBundle\Entity\Item $item = null)
-	{
-		$this->item = $item;
-		return $this;
-	}
-
-	/**
-	 * Get item
-	 *
-	 * @return \AnimeDB\CatalogBundle\Entity\Item
-	 */
-	public function getItem()
-	{
-		return $this->item;
-	}
-
+    /**
+     * Get item
+     *
+     * @return \AnimeDB\CatalogBundle\Entity\Item
+     */
+    public function getItem()
+    {
+        return $this->item;
+    }
 }

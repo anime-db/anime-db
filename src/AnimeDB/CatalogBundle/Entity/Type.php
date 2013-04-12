@@ -25,122 +25,118 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Type
 {
+    /**
+     * Id
+     *
+     * @ORM\Id
+     * @ORM\Column(type="string", length=16)
+     *
+     * @var integer
+     */
+    protected $id;
 
-	/**
-	 * Id
-	 *
-	 * @ORM\Id
-	 * @ORM\Column(type="string", length=16)
-	 *
-	 * @var integer
-	 */
-	protected $id;
+    /**
+     * Type name
+     *
+     * @ORM\Column(type="string", length=32)
+     *
+     * @var string
+     */
+    protected $name;
 
-	/**
-	 * Type name
-	 *
-	 * @ORM\Column(type="string", length=32)
-	 *
-	 * @var string
-	 */
-	protected $name;
+    /**
+     * Items list
+     *
+     * @ORM\OneToMany(targetEntity="Item", mappedBy="type")
+     *
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     */
+    protected $items;
 
-	/**
-	 * Items list
-	 *
-	 * @ORM\OneToMany(targetEntity="Item", mappedBy="type")
-	 *
-	 * @var \Doctrine\Common\Collections\ArrayCollection
-	 */
-	protected $items;
+    /**
+     * Construct
+     */
+    public function __construct()
+    {
+        $this->items = new ArrayCollection();
+    }
 
+    /**
+     * Set id
+     *
+     * @param string $id
+     *
+     * @return \AnimeDB\CatalogBundle\Entity\Type
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
 
-	/**
-	 * Construct
-	 */
-	public function __construct()
-	{
-		$this->items = new ArrayCollection();
-	}
+    /**
+     * Get id
+     *
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return \AnimeDB\CatalogBundle\Entity\Type
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
 
-	/**
-	 * Set id
-	 *
-	 * @param string $id
-	 *
-	 * @return \AnimeDB\CatalogBundle\Entity\Type
-	 */
-	public function setId($id)
-	{
-		$this->id = $id;
-		return $this;
-	}
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 
-	/**
-	 * Get id
-	 *
-	 * @return string
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
+    /**
+     * Add items
+     *
+     * @param \AnimeDB\CatalogBundle\Entity\Item $items
+     *
+     * @return \AnimeDB\CatalogBundle\Entity\Type
+     */
+    public function addItem(\AnimeDB\CatalogBundle\Entity\Item $items)
+    {
+        $this->items[] = $items;
+        return $this;
+    }
 
-	/**
-	 * Set name
-	 *
-	 * @param string $name
-	 *
-	 * @return \AnimeDB\CatalogBundle\Entity\Type
-	 */
-	public function setName($name)
-	{
-		$this->name = $name;
-		return $this;
-	}
+    /**
+     * Remove items
+     *
+     * @param \AnimeDB\CatalogBundle\Entity\Item $items
+     */
+    public function removeItem(\AnimeDB\CatalogBundle\Entity\Item $items)
+    {
+        $this->items->removeElement($items);
+    }
 
-	/**
-	 * Get name
-	 *
-	 * @return string
-	 */
-	public function getName()
-	{
-		return $this->name;
-	}
-
-	/**
-	 * Add items
-	 *
-	 * @param \AnimeDB\CatalogBundle\Entity\Item $items
-	 *
-	 * @return \AnimeDB\CatalogBundle\Entity\Type
-	 */
-	public function addItem(\AnimeDB\CatalogBundle\Entity\Item $items)
-	{
-		$this->items[] = $items;
-		return $this;
-	}
-
-	/**
-	 * Remove items
-	 *
-	 * @param \AnimeDB\CatalogBundle\Entity\Item $items
-	 */
-	public function removeItem(\AnimeDB\CatalogBundle\Entity\Item $items)
-	{
-		$this->items->removeElement($items);
-	}
-
-	/**
-	 * Get items
-	 *
-	 * @return \Doctrine\Common\Collections\Collection
-	 */
-	public function getItems()
-	{
-		return $this->items;
-	}
-
+    /**
+     * Get items
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getItems()
+    {
+        return $this->items;
+    }
 }

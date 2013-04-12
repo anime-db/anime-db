@@ -25,109 +25,105 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Genre
 {
+    /**
+     * Id
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     *
+     * @var integer
+     */
+    protected $id;
 
-	/**
-	 * Id
-	 *
-	 * @ORM\Id
-	 * @ORM\GeneratedValue
-	 * @ORM\Column(type="integer")
-	 *
-	 * @var integer
-	 */
-	protected $id;
+    /**
+     * Gender name
+     *
+     * @ORM\Column(type="string", length=16)
+     *
+     * @var string
+     */
+    protected $name;
 
-	/**
-	 * Gender name
-	 *
-	 * @ORM\Column(type="string", length=16)
-	 *
-	 * @var string
-	 */
-	protected $name;
+    /**
+     * Items list
+     *
+     * @ORM\ManyToMany(targetEntity="Item", inversedBy="genres")
+     *
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     */
+    protected $items;
 
-	/**
-	 * Items list
-	 *
-	 * @ORM\ManyToMany(targetEntity="Item", inversedBy="genres")
-	 *
-	 * @var \Doctrine\Common\Collections\ArrayCollection
-	 */
-	protected $items;
+    /**
+     * Construct
+     */
+    public function __construct()
+    {
+        $this->items = new ArrayCollection();
+    }
 
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	/**
-	 * Construct
-	 */
-	public function __construct()
-	{
-		$this->items = new ArrayCollection();
-	}
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return \AnimeDB\CatalogBundle\Entity\Genre
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
 
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 
-	/**
-	 * Get id
-	 *
-	 * @return integer
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
+    /**
+     * Add items
+     *
+     * @param \AnimeDB\CatalogBundle\Entity\Item $items
+     * @return Genre
+     */
+    public function addItem(\AnimeDB\CatalogBundle\Entity\Item $items)
+    {
+        $this->items[] = $items;
+        return $this;
+    }
 
-	/**
-	 * Set name
-	 *
-	 * @param string $name
-	 *
-	 * @return \AnimeDB\CatalogBundle\Entity\Genre
-	 */
-	public function setName($name)
-	{
-		$this->name = $name;
-		return $this;
-	}
+    /**
+     * Remove items
+     *
+     * @param \AnimeDB\CatalogBundle\Entity\Item $items
+     */
+    public function removeItem(\AnimeDB\CatalogBundle\Entity\Item $items)
+    {
+        $this->items->removeElement($items);
+    }
 
-	/**
-	 * Get name
-	 *
-	 * @return string
-	 */
-	public function getName()
-	{
-		return $this->name;
-	}
-
-	/**
-	 * Add items
-	 *
-	 * @param \AnimeDB\CatalogBundle\Entity\Item $items
-	 * @return Genre
-	 */
-	public function addItem(\AnimeDB\CatalogBundle\Entity\Item $items)
-	{
-		$this->items[] = $items;
-		return $this;
-	}
-
-	/**
-	 * Remove items
-	 *
-	 * @param \AnimeDB\CatalogBundle\Entity\Item $items
-	 */
-	public function removeItem(\AnimeDB\CatalogBundle\Entity\Item $items)
-	{
-		$this->items->removeElement($items);
-	}
-
-	/**
-	 * Get items
-	 *
-	 * @return \Doctrine\Common\Collections\Collection
-	 */
-	public function getItems()
-	{
-		return $this->items;
-	}
-
+    /**
+     * Get items
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getItems()
+    {
+        return $this->items;
+    }
 }

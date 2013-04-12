@@ -20,55 +20,53 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  */
 class ItemController extends Controller
 {
+    /**
+     * Просмотр записи
+     *
+     * @param integer $id ID записи
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showAction($id)
+    {
+        // TODO требуется реализация
+        return $this->render('AnimeDBCatalogBundle:Item:show.html.twig', array('name' => 'Test'));
+    }
 
-	/**
-	 * Просмотр записи
-	 *
-	 * @param integer $id ID записи
-	 *
-	 * @return \Symfony\Component\HttpFoundation\Response
-	 */
-	public function showAction($id)
-	{
-		// TODO требуется реализация
-		return $this->render('AnimeDBCatalogBundle:Item:show.html.twig', array('name' => 'Test'));
-	}
+    /**
+     * Добавление записи
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function addAction()
+    {
+        // TODO требуется реализация
+        return $this->render('AnimeDBCatalogBundle:Item:add.html.twig');
+    }
 
-	/**
-	 * Добавление записи
-	 *
-	 * @return \Symfony\Component\HttpFoundation\Response
-	 */
-	public function addAction()
-	{
-		// TODO требуется реализация
-		return $this->render('AnimeDBCatalogBundle:Item:add.html.twig');
-	}
+    /**
+     * Изменение записи
+     *
+     * @param integer $id ID записи
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function changeAction($id)
+    {
+        // TODO требуется реализация
+        return $this->render('AnimeDBCatalogBundle:Item:change.html.twig');
+    }
 
-	/**
-	 * Изменение записи
-	 *
-	 * @param integer $id ID записи
-	 *
-	 * @return \Symfony\Component\HttpFoundation\Response
-	 */
-	public function changeAction($id)
-	{
-		// TODO требуется реализация
-		return $this->render('AnimeDBCatalogBundle:Item:change.html.twig');
-	}
-
-	/**
-	 * Удаление записи
-	 *
-	 * @param integer $id ID записи
-	 *
-	 * @return \Symfony\Component\HttpFoundation\Response
-	 */
-	public function removeAction($id)
-	{
-		// TODO требуется реализация
-		return $this->redirect($this->generateUrl('home'));
-	}
-
+    /**
+     * Удаление записи
+     *
+     * @param integer $id ID записи
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function removeAction($id)
+    {
+        // TODO требуется реализация
+        return $this->redirect($this->generateUrl('home'));
+    }
 }
