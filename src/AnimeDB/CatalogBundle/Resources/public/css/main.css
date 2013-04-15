@@ -286,6 +286,8 @@ p {
 	margin: 0 0 5px 0;
 	padding: 0 0 2px 5px;
 	border-bottom: 1px #ccc solid;
+	display: inline-block;
+	min-width: 40%;
 }
 .content section > div,
 .content section > p {
@@ -298,7 +300,7 @@ p {
  * Main page for add item
  */
 .b-add-item section {
-	margin-bottom: 30px;
+	margin-bottom: 50px;
 }
 .b-add-item section h3 {
 	font-size: 120%;
