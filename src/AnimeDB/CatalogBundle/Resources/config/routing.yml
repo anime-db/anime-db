@@ -19,6 +19,10 @@ item_add:
     pattern:  /add.html
     defaults: { _controller: AnimeDBCatalogBundle:Item:add }
 
+item_addition_form:
+    pattern:  /addition-form.html
+    defaults: { _controller: AnimeDBCatalogBundle:Item:additionForm }
+
 item_show:
     pattern:  /{id}/
     defaults: { _controller: AnimeDBCatalogBundle:Item:show }

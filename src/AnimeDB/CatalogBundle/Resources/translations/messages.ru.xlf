@@ -42,6 +42,46 @@
                 <source>Search</source>
                 <target>Поиск</target>
             </trans-unit>
+            <trans-unit id="11">
+                <source>Addition form</source>
+                <target>Форма добавления</target>
+            </trans-unit>
+            <trans-unit id="12">
+                <source>From source</source>
+                <target>Из источника</target>
+            </trans-unit>
+            <trans-unit id="13">
+                <source>Name</source>
+                <target>Название</target>
+            </trans-unit>
+            <trans-unit id="14">
+                <source>Filler</source>
+                <target>Наполнитель</target>
+            </trans-unit>
+            <trans-unit id="15">
+                <source>URL address</source>
+                <target>URL адрес</target>
+            </trans-unit>
+            <trans-unit id="16">
+                <source>Manually</source>
+                <target>Вручную</target>
+            </trans-unit>
+            <trans-unit id="17">
+                <source><![CDATA[Jump to the <a href="%link%">form</a> of drafting record.]]></source>
+                <target><![CDATA[Перейти к <a href="%link%">форме</a> составления описания записи.]]></target>
+            </trans-unit>
+            <trans-unit id="18">
+                <source>Find</source>
+                <target>Найти</target>
+            </trans-unit>
+            <trans-unit id="19">
+                <source>Add</source>
+                <target>Добавить</target>
+            </trans-unit>
+            <trans-unit id="20">
+                <source>Source</source>
+                <target>Источник</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -13,7 +13,7 @@ namespace AnimeDB\CatalogBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
- * Контроллер управления записью
+ * Controller item
  *
  * @package AnimeDB\CatalogBundle\Controller
  * @author  Peter Gribanov <info@peter-gribanov.ru>
@@ -21,7 +21,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class ItemController extends Controller
 {
     /**
-     * Просмотр записи
+     * Show item
      *
      * @param integer $id ID записи
      *
@@ -34,22 +34,58 @@ class ItemController extends Controller
     }
 
     /**
-     * Добавление записи
+     * Add item
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function addAction()
     {
-        // TODO требуется реализация
         /* @var $chain \AnimeDB\CatalogBundle\Service\Autofill\Chain */
-        //$chain = $this->get('anime_db_catalog.autofill.chain');
-        //p($chain->getFillerNames());
-        //p($chain->getFillerTetles());
-        return $this->render('AnimeDBCatalogBundle:Item:add.html.twig');
+        $chain = $this->get('anime_db_catalog.autofill.chain');
+
+        /* @var $vender \Symfony\Component\Form\Form */
+        $search = $this->createFormBuilder()
+            ->add('name', 'text', array(
+                'label' => $this->get('translator')->trans('Name'),
+                'attr'=> array(
+                    'placeholder' => 'One Piece',
+                ),
+            ))
+            ->add('filler', 'choice', array(
+                'label' => $this->get('translator')->trans('Source'),
+                'choices' => $chain->getFillerTetles()
+            ))
+            ->getForm();
+
+        /* @var $source \Symfony\Component\Form\Form */
+        $source = $this->createFormBuilder()
+            ->add('url', 'text', array(
+                'label' => $this->get('translator')->trans('URL address'),
+                'attr'=> array(
+                    'placeholder' => 'http://',
+                ),
+            ))
+            ->getForm();
+
+        return $this->render('AnimeDBCatalogBundle:Item:add.html.twig', array(
+            'source_form' => $source->createView(),
+            'search_form' => $search->createView(),
+        ));
     }
 
     /**
-     * Изменение записи
+     * Addition form
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function additionFormAction()
+    {
+        // TODO требуется реализация
+        return $this->render('AnimeDBCatalogBundle:Item:addition-form.html.twig');
+    }
+
+    /**
+     * Change item
      *
      * @param integer $id ID записи
      *
@@ -62,7 +98,7 @@ class ItemController extends Controller
     }
 
     /**
-     * Удаление записи
+     * Remove item
      *
      * @param integer $id ID записи
      *

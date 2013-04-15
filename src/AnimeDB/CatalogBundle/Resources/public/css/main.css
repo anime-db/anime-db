@@ -1,4 +1,4 @@
-@CHARSET "UTF-8";
+@charset "UTF-8";
 
 html {
 	background: #e9cd8e url(images/bg.jpg) repeat-x bottom left;
@@ -14,34 +14,34 @@ body {
 	font-size: 12px;
 	line-height: 1.4em;
 }
-
-h1 /*{
-	margin: 0 0 20px 0;
-	padding: 0;
-*/}
-textarea,
-input {
-}
-:link,
-*:visited {
+a:link,
+a:visited {
 	border-bottom: 0;
 }
 a,
 a .ui-button-text,
-input.ui-button,
-button.ui-button {
+input[type~=button],
+input[type~=reset],
+input[type~=submit],
+button,
+.ui-button .ui-button-text,
+h1, h2, h3, h4, h5, h6, b, strong {
 	color: #db3400;
+}
+a:hover,
+a:hover .ui-button-text
+input[type~=button]:hover,
+input[type~=reset]:hover,
+input[type~=submit]:hover,
+button:hover,
+.ui-button.ui-state-hover .ui-button-text {
+	color: #b00;
 }
 a:visited,
 a:visited .ui-button-text {
 	color: #ff6600;
 }
-a:hover,
-a:hover .ui-button-text,
-input:hover.ui-button,
-button:hover.ui-button {
-	color: #b00;
-}
+
 
 #wrapper {
 	margin: 0 auto 20px;
@@ -166,7 +166,6 @@ h1.logo a span {
 }
 
 
-
 #home-center-header {
 	height: 120px;
 	margin: 55px 35px 0;
@@ -189,6 +188,9 @@ h1.logo a span {
 	float: right;
 	text-align: center;
 }
+#home-search h2 {
+	color: #000;
+}
 #home-search input {
 	background: url(images/magglass.png) no-repeat scroll 5px 6px #FFFFFF;
 	border: 2px #fff100 solid;
@@ -207,7 +209,6 @@ h1.logo a span {
 	margin: 30px 35px 0;
 	min-height: 330px;
 }
-
 
 
 /* Normal
@@ -278,12 +279,55 @@ p {
 }
 
 
+.content section {
+	margin-bottom: 10px;
+}
+.content section > h3 {
+	margin: 0 0 5px 0;
+	padding: 0 0 2px 5px;
+	border-bottom: 1px #ccc solid;
+}
+.content section > div,
+.content section > p {
+	margin-left: 5px;
+}
+
+
+
+/**
+ * Main page for add item
+ */
+.b-add-item section {
+	margin-bottom: 30px;
+}
+.b-add-item section h3 {
+	font-size: 120%;
+	font-weight: bold;
+}
+.b-add-item label {
+	padding-top: 5px;
+	display: block;
+	width: 63px;
+	float: left;
+}
+#f-add-item-search div,
+#f-add-item-source div {
+	padding-top: 5px;
+	margin-right: 15px;
+	float: left;
+}
+#f-add-item-search input {
+	width: 300px;
+}
+#f-add-item-source input {
+	width: 460px;
+}
 
 
 /*
  * form-catalog_item_add
  */
-
+/*
 #form-catalog_item_add textarea {
 	width: 100%;
 }
@@ -307,7 +351,7 @@ p {
 	margin: 0 5px;
 }
 .form-field-input label {
-}
+}*/
 
 /*
 .error,
@@ -330,19 +374,19 @@ div.ui-widget div.ui-state-highlight {
 	margin-right: 5px;
 }
 
-
+/*
 .catalog-item-autofill-search-list {
 	
 }
 .catalog-item-autofill-search-list li {
 	margin: 15px;
 	list-style: none;
-}
+}*/
 
 
 /*
  * catalog-last-added
- */
+ *//*
 .catalog-last-added .item {
 	width: 270px;
 	margin: 10px 10px 30px;
@@ -365,4 +409,4 @@ div.ui-widget div.ui-state-highlight {
 }
 .catalog-last-added .details {
 	float: right;
-}
+}*/

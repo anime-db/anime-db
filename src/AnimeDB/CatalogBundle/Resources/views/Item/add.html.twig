@@ -3,4 +3,28 @@
 {% block title %}{% trans %}Add record{% endtrans %} - {{ parent() }}{% endblock %}
 
 {% block content %}
+<div class="b-add-item">
+	<section class="b-add-search">
+		<h3>{% trans %}Search{% endtrans %}</h3>
+		<div>
+			<form action="{{ path('home_search') }}" method="post" {{ form_enctype(search_form) }}>
+				{{ form_widget(search_form, {'id': 'f-add-item-search'})}}
+				<button type="submit">{% trans %}Find{% endtrans %}</button>
+			</form>
+		</div>
+	</section>
+	<section class="b-add-from-source">
+		<h3>{% trans %}From source{% endtrans %}</h3>
+		<div>
+			<form action="{{ path('home_search') }}" method="post" {{ form_enctype(source_form) }}>
+				{{ form_widget(source_form, {'id': 'f-add-item-source'}) }}
+				<button type="submit">{% trans %}Add{% endtrans %}</button>
+			</form>
+		</div>
+	</section>
+	<section class="b-add-manually">
+		<h3>{% trans %}Manually{% endtrans %}</h3>
+		<p>{% trans with {'%link%': path('item_addition_form')}%}Jump to the <a href="%link%">form</a> of drafting record.{% endtrans %}</p>
+	</section>
+</div>
 {% endblock %}
