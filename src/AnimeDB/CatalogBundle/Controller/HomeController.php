@@ -13,7 +13,7 @@ namespace AnimeDB\CatalogBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
- * Контроллер главной страници каталога
+ * The controller the main page of the catalog
  *
  * @package AnimeDB\CatalogBundle\Controller
  * @author  Peter Gribanov <info@peter-gribanov.ru>
@@ -21,7 +21,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class HomeController extends Controller
 {
     /**
-     * Главная
+     * Home
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -32,12 +32,13 @@ class HomeController extends Controller
     }
 
     /**
-     * Поиск записи
+     * Search simple form
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function searchSimpleFormAction()
     {
+        /* @var $form \Symfony\Component\Form\Form */
         $form = $this->createFormBuilder()
             ->add('q', 'text', array('label' => $this->get('translator')->trans('Search')))
             ->getForm();
@@ -48,7 +49,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Выбор по алфавиту
+     * Select by alphabet
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -58,7 +59,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Выбор по категории
+     * Select by category
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
