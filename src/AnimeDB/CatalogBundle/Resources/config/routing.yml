@@ -40,3 +40,12 @@ item_remove:
     defaults: { _controller: AnimeDBCatalogBundle:Item:remove }
     requirements:
         id:  \d+
+
+
+filler_search:
+    pattern:  /filler/search.html
+    defaults: { _controller: AnimeDBCatalogBundle:Filler:search }
+
+filler_get:
+    pattern:  /filler/get.html
+    defaults: { _controller: AnimeDBCatalogBundle:Filler:get }

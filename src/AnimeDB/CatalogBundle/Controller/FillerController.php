@@ -20,4 +20,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  */
 class FillerController extends Controller
 {
+    /**
+     * Search item
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function searchAction() {
+        // TODO требуется реализация
+        return $this->render('AnimeDBCatalogBundle:Filler:search.html.twig');
+    }
+
+    /**
+     * Get item
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function getAction() {
+        // TODO требуется реализация
+        return $this->render('AnimeDBCatalogBundle:Filler:get.html.twig');
+    }
 }
