@@ -49,11 +49,13 @@ class Cron extends ContainerAwareCommand
      * @see Symfony\Component\Console\Command.Command::execute()
      */
     protected function execute(InputInterface $input, OutputInterface $output) {
+        // TODO command is disabled until there is no implementation
+        return false;
+
         $crontab = $this->getContainer()->getParameter('cron');
         $crontab = $this->parse($crontab);
 
         if ($crontab) {
-            //p($crontab);
             while (true) {
                 // TODO create an analog cron
                 sleep(86400);

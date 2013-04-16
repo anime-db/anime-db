@@ -37,6 +37,9 @@ class TaskManager extends ContainerAwareCommand
      * @see Symfony\Component\Console\Command.Command::execute()
      */
     protected function execute(InputInterface $input, OutputInterface $output) {
+        // TODO command is disabled until there is no implementation
+        return false;
+
         while (true) {
             // TODO listen socket and perform tasks when they appear
             sleep(86400);
