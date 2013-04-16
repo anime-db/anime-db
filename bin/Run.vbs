@@ -14,9 +14,9 @@ sSpid  = sPath & "/bin/.spid"
 sTmpid = sPath & "/bin/.tmpid"
 sCpid  = sPath & "/bin/.cpid"
 
-
-' Commands to run server and task manager
 sConsole = sPath & "/bin/php/php.exe -f " & sPath & "/app/console "
+
+' Commands to run server, task manager and cron
 sServer      = sPath & "/bin/php/php.exe -S " & sAddr & ":" & sPort & " -t " & sPath & "/web " & sPath & "/app/router.php > nul 2> nul"
 sTaskManager = sConsole & "animedb:task-manager > nul 2> nul"
 sCron        = sConsole & "animedb:cron > nul 2> nul"
