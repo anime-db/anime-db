@@ -49,7 +49,7 @@ if ($request->server->get('HTTP_CLIENT_IP') ||
 }
 
 // give static or run for dev
-if (is_file(__DIR__.'/../web'.parse_url($request->getRequestUri(), PHP_URL_PATH)) || $request->getScriptName() == '/app_dev.php') {
+if (is_file(__DIR__.'/../web'.$request->getScriptName())) {
     return false;
 }
 
