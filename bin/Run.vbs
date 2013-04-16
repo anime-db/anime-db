@@ -15,7 +15,7 @@ sTmpid = sPath & "/bin/.tmpid"
 
 ' Commands to run server and task manager
 sServer = sPath & "/bin/php/php.exe -S " & sAddr & ":" & sPort & " -t " & sPath & "/web " & sPath & "/app/router.php > nul 2> nul"
-sTaskManager = sPath & "/bin/php/php.exe -f " & sPath & "/app/task_manager.php > nul 2> nul"
+sTaskManager = sPath & "/bin/php/php.exe -f " & sPath & "/app/console animedb:task-manager > nul 2> nul"
 
 ' Server is run?
 if oFileSystem.FileExists(sSpid) then

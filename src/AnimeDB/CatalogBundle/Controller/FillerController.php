@@ -13,7 +13,7 @@ namespace AnimeDB\CatalogBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
- * Контроллер наполнителя записи
+ * Controller filler item
  *
  * @package AnimeDB\CatalogBundle\Controller
  * @author  Peter Gribanov <info@peter-gribanov.ru>

@@ -8,7 +8,7 @@ addr='0.0.0.0'
 port=56780
 
 # Path to the directory with the application
-path=.
+path=/home/gribanov/projects/application
 
 
 run_server() {
@@ -18,38 +18,38 @@ run_server() {
         exit 1 
     fi
     php -S ${addr}:${port} -t ${path}/web ${path}/app/router.php > /dev/null 2> /dev/null &
-    echo $! > bin/.spid
+    echo $! > ${path}/bin/.spid
 }
 
 run_task_manager() {
-    if [ ! -f ${path}/app/task_manager.php ]
+    if [ ! -f ${path}/app/console ]
     then
         echo "Cent run task manager" >&2
         exit 1 
     fi
-    php -f ${path}/app/task_manager.php > /dev/null 2> /dev/null &
-    echo $! > bin/.tmpid
+    ${path}/app/console animedb:task-manager > /dev/null 2> /dev/null &
+    echo $! > ${path}/bin/.tmpid
 }
 
 stop_server() {
-    kill `cat bin/.spid` 2> /dev/null
-    rm bin/.spid
+    kill `cat ${path}/bin/.spid` 2> /dev/null
+    rm ${path}/bin/.spid
 }
 
 stop_task_manager() {
-    kill `cat bin/.tmpid` 2> /dev/null
-    rm bin/.tmpid
+    kill `cat ${path}/bin/.tmpid` 2> /dev/null
+    rm ${path}/bin/.tmpid
 }
 
 
 case "$1" in
     start)
-        if [ -f bin/.spid ]
+        if [ -f ${path}/bin/.spid ]
         then
             echo "Server is already running" >&2
             exit 1
         fi
-        if [ -f bin/.tmpid ]
+        if [ -f ${path}/bin/.tmpid ]
         then
             echo "Task manager is already running" >&2
             exit 1
@@ -58,12 +58,12 @@ case "$1" in
         run_task_manager
         ;;
     stop)
-        if [ ! -f bin/.spid ]
+        if [ ! -f ${path}/bin/.spid ]
         then
             echo "Server is not running" >&2
             exit 1
         fi
-        if [ ! -f bin/.tmpid ]
+        if [ ! -f ${path}/bin/.tmpid ]
         then
             echo "Task manager is not running" >&2
             exit 1
@@ -72,11 +72,11 @@ case "$1" in
         stop_task_manager
         ;;
     reload|restart|force-reload)
-        if [ -f bin/.spid ]
+        if [ -f ${path}/bin/.spid ]
         then
             stop_server
         fi
-        if [ -f bin/.tmpid ]
+        if [ -f ${path}/bin/.tmpid ]
         then
             stop_task_manager
         fi

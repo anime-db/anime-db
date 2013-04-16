@@ -71,6 +71,10 @@ Create a symbolic link on service
 
     $ ln -s /path/to/app/bin/service /etc/init.d/animedb
 
+Run service
+
+    $ service animedb start
+
 For the application is launched after the computer start, run the command
 
     $ update-rc.d animedb defaults
