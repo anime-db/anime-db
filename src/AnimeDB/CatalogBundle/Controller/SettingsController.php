@@ -13,11 +13,11 @@ namespace AnimeDB\CatalogBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
- * Filler item
+ * Application settings
  *
  * @package AnimeDB\CatalogBundle\Controller
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class FillerController extends Controller
+class SettingsController extends Controller
 {
 }

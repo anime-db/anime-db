@@ -13,7 +13,7 @@ namespace AnimeDB\CatalogBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
- * The controller the main page of the catalog
+ * Main page of the catalog
  *
  * @package AnimeDB\CatalogBundle\Controller
  * @author  Peter Gribanov <info@peter-gribanov.ru>
