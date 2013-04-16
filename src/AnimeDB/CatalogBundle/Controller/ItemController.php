@@ -11,6 +11,8 @@
 namespace AnimeDB\CatalogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AnimeDB\CatalogBundle\Form\Filler\Search;
+use AnimeDB\CatalogBundle\Form\Filler\Get;
 
 /**
  * Item
@@ -44,28 +46,10 @@ class ItemController extends Controller
         $chain = $this->get('anime_db_catalog.autofill.chain');
 
         /* @var $vender \Symfony\Component\Form\Form */
-        $search = $this->createFormBuilder()
-            ->add('name', 'text', array(
-                'label' => $this->get('translator')->trans('Name'),
-                'attr'=> array(
-                    'placeholder' => 'One Piece',
-                ),
-            ))
-            ->add('filler', 'choice', array(
-                'label' => $this->get('translator')->trans('Source'),
-                'choices' => $chain->getFillerTetles()
-            ))
-            ->getForm();
+        $search = $this->createForm(new Search($chain->getFillerTitles()));
 
         /* @var $source \Symfony\Component\Form\Form */
-        $source = $this->createFormBuilder()
-            ->add('url', 'text', array(
-                'label' => $this->get('translator')->trans('URL address'),
-                'attr'=> array(
-                    'placeholder' => 'http://',
-                ),
-            ))
-            ->getForm();
+        $source = $this->createForm(new Get());
 
         return $this->render('AnimeDBCatalogBundle:Item:add.html.twig', array(
             'source_form' => $source->createView(),

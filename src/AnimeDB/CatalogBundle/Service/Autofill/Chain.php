@@ -73,7 +73,7 @@ class Chain
      *
      * @return array
      */
-    public function getFillerTetles() {
+    public function getFillerTitles() {
         return $this->filler_titles;
     }
 }

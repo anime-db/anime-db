@@ -8,18 +8,18 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Form\Search;
+namespace AnimeDB\CatalogBundle\Form\Filler;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * Simple form for search item
+ * Get item from filler
  *
- * @package AnimeDB\CatalogBundle\Form\Search
+ * @package AnimeDB\CatalogBundle\Form\Filler
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Simple extends AbstractType
+class Get extends AbstractType
 {
     /**
      * (non-PHPdoc)
@@ -27,8 +27,12 @@ class Simple extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('simple');
-        $builder->add('text', 'q');
+        $builder->add('url', 'text', array(
+            'label' => 'URL address',
+            'attr' => array(
+                'placeholder' => 'http://',
+            ),
+        ));
     }
 
     /**
@@ -37,6 +41,6 @@ class Simple extends AbstractType
      */
     public function getName()
     {
-        return 'simple';
+        return 'filler_get';
     }
 }
