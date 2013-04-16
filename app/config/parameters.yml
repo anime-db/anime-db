@@ -14,3 +14,9 @@ parameters:
 
     locale: ru
     secret: a996943667c670ed1dcd4fb3822fd659
+
+    serial_number: ""
+
+    cron:
+        - "0 1 1 * * animedb:check-updates"
+        - "0 1 */3 * * animedb:scan-storage"

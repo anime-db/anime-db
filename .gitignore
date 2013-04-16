@@ -2,6 +2,7 @@
 ######################
 bin/.spid
 bin/.tmpid
+bin/.cpid
 
 # Symfony directories #
 #######################

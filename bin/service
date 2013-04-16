@@ -11,77 +11,56 @@ port=56780
 path=/home/gribanov/projects/application
 
 
-run_server() {
-    if [ ! -f ${path}/app/router.php ]
-    then
-        echo "Cent run server" >&2
-        exit 1 
-    fi
-    php -S ${addr}:${port} -t ${path}/web ${path}/app/router.php > /dev/null 2> /dev/null &
-    echo $! > ${path}/bin/.spid
-}
+if [ ! -f ${path}/app/router.php ] || [ ! -f ${path}/app/console ];
+then
+    echo "Cent run Application" >&2
+    exit 1
+fi
 
-run_task_manager() {
-    if [ ! -f ${path}/app/console ]
-    then
-        echo "Cent run task manager" >&2
-        exit 1 
-    fi
-    ${path}/app/console animedb:task-manager > /dev/null 2> /dev/null &
-    echo $! > ${path}/bin/.tmpid
-}
 
 stop_server() {
-    kill `cat ${path}/bin/.spid` 2> /dev/null
-    rm ${path}/bin/.spid
+    if [ -f ${path}/bin/.spid ]
+    then
+        kill `cat ${path}/bin/.spid` 2> /dev/null
+        rm ${path}/bin/.spid
+    fi
 }
-
 stop_task_manager() {
-    kill `cat ${path}/bin/.tmpid` 2> /dev/null
-    rm ${path}/bin/.tmpid
+    if [ -f ${path}/bin/.tmpid ]
+    then
+        kill `cat ${path}/bin/.tmpid` 2> /dev/null
+        rm ${path}/bin/.tmpid
+    fi
+}
+stop_cron() {
+    if [ -f ${path}/bin/.cpid ]
+    then
+        kill `cat ${path}/bin/.cpid` 2> /dev/null
+        rm ${path}/bin/.cpid
+    fi
 }
 
 
 case "$1" in
-    start)
-        if [ -f ${path}/bin/.spid ]
-        then
-            echo "Server is already running" >&2
-            exit 1
-        fi
-        if [ -f ${path}/bin/.tmpid ]
-        then
-            echo "Task manager is already running" >&2
-            exit 1
-        fi
-        run_server
-        run_task_manager
-        ;;
     stop)
-        if [ ! -f ${path}/bin/.spid ]
-        then
-            echo "Server is not running" >&2
-            exit 1
-        fi
-        if [ ! -f ${path}/bin/.tmpid ]
-        then
-            echo "Task manager is not running" >&2
-            exit 1
-        fi
         stop_server
         stop_task_manager
+        stop_cron
         ;;
-    reload|restart|force-reload)
-        if [ -f ${path}/bin/.spid ]
-        then
-            stop_server
-        fi
-        if [ -f ${path}/bin/.tmpid ]
-        then
-            stop_task_manager
-        fi
-        run_server
-        run_task_manager
+    start|reload|restart|force-reload)
+        stop_server
+        stop_task_manager
+        stop_cron
+
+        # run server
+        php -S ${addr}:${port} -t ${path}/web ${path}/app/router.php > /dev/null 2> /dev/null &
+        echo $! > ${path}/bin/.spid
+        # run task manager
+        ${path}/app/console animedb:task-manager > /dev/null 2> /dev/null &
+        echo $! > ${path}/bin/.tmpid
+        # run cron
+        ${path}/app/console animedb:cron > /dev/null 2> /dev/null &
+        echo $! > ${path}/bin/.cpid
         ;;
     *)
         echo "Usage: $N {start|stop|restart}" >&2

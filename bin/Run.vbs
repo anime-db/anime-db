@@ -1,4 +1,4 @@
-dim sAddr, sPort, sPath, sServer, sTaskManager, sSpid, sTmpid
+dim sAddr, sPort, sPath, sServer, sConsole, sTaskManager, sCron, sSpid, sTmpid
 
 set oFileSystem = WScript.CreateObject("Scripting.FileSystemObject")
 
@@ -12,34 +12,58 @@ sPath = oFileSystem.GetAbsolutePathName("..")
 ' Pid files
 sSpid  = sPath & "/bin/.spid"
 sTmpid = sPath & "/bin/.tmpid"
+sCpid  = sPath & "/bin/.cpid"
+
 
 ' Commands to run server and task manager
-sServer = sPath & "/bin/php/php.exe -S " & sAddr & ":" & sPort & " -t " & sPath & "/web " & sPath & "/app/router.php > nul 2> nul"
-sTaskManager = sPath & "/bin/php/php.exe -f " & sPath & "/app/console animedb:task-manager > nul 2> nul"
+sConsole = sPath & "/bin/php/php.exe -f " & sPath & "/app/console "
+sServer      = sPath & "/bin/php/php.exe -S " & sAddr & ":" & sPort & " -t " & sPath & "/web " & sPath & "/app/router.php > nul 2> nul"
+sTaskManager = sConsole & "animedb:task-manager > nul 2> nul"
+sCron        = sConsole & "animedb:cron > nul 2> nul"
 
-' Server is run?
+' Stop Server if running
 if oFileSystem.FileExists(sSpid) then
-    Wscript.echo "Server is already running"
-    WScript.Quit
+    iErrorReturn = StopProc(sSpid)
+    if iErrorReturn <> 0 then
+        Wscript.echo "Could not stop Server: ", iErrorReturn
+        WScript.Quit
+    end if
 end if
-' Task manager is run?
+' Stop Task manager if running
 if oFileSystem.FileExists(sTmpid) then
-    Wscript.echo "Task manager is already running"
-    WScript.Quit
+    iErrorReturn = StopProc(sTmpid)
+    if iErrorReturn <> 0 then
+        Wscript.echo "Could not stop Task manager: ", iErrorReturn
+        WScript.Quit
+    end if
+end if
+' Stop Cron if running
+if oFileSystem.FileExists(sCpid) then
+    iErrorReturn = StopProc(sCpid)
+    if iErrorReturn <> 0 then
+        Wscript.echo "Could not stop Cron: ", iErrorReturn
+        WScript.Quit
+    end if
 end if
 
-' run server
+
+' Run Server
 iErrorReturn = StartProc(sServer, sSpid)
 if iErrorReturn <> 0 then
     Wscript.echo "Could not start Server: ", iErrorReturn
-	WScript.Quit
+    WScript.Quit
 end if
-
-' run task manager
+' Run Task manager
 iErrorReturn = StartProc(sTaskManager, sTmpid)
 if iErrorReturn <> 0 then
     Wscript.echo "Could not start Task manager: ", iErrorReturn
-	WScript.Quit
+    WScript.Quit
+end if
+' Run Cron
+iErrorReturn = StartProc(sCron, sCpid)
+if iErrorReturn <> 0 then
+    Wscript.echo "Could not start Cron: ", iErrorReturn
+    WScript.Quit
 end if
 
 Wscript.Echo "Application successfully launched"
@@ -51,8 +75,25 @@ function StartProc(sProgramToRun, sPidFile)
     Set oConfig = GetObject("WinMgmts:").get("Win32_ProcessStartup").SpawnInstance_
     oConfig.ShowWindow = 0
     StartProc = GetObject("WinMgmts:Win32_Process").Create(sProgramToRun, null, oConfig, iProcessID)
-	' put in to file pid
+    ' put in to file pid
     set oTextStream = WScript.CreateObject("Scripting.FileSystemObject").CreateTextFile(sPidFile)
     oTextStream.Write(iProcessID)
     oTextStream.Close
+end function
+
+' Stop process
+function StopProc(sPidFile)
+    ' get pid from file
+    set oFileSystem = WScript.CreateObject("Scripting.FileSystemObject")
+    set oTextStream = oFileSystem.OpenTextFile(sPidFile, 1, false)
+    iProcessID = oTextStream.ReadAll()
+    oTextStream.Close
+    oFileSystem.GetFile(sPidFile).Delete
+    ' stop process
+    dim sQry
+    sQry = "SELECT * FROM Win32_Process WHERE ProcessID = '" & iProcessID & "'"
+    set oWMISrvc = GetObject("WinMgmts:")
+    for each item in oWMISrvc.ExecQuery(sQry)
+        item.Terminate
+    next
 end function

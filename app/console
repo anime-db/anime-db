@@ -13,6 +13,10 @@ require_once __DIR__.'/AppKernel.php';
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use AnimeDB\CatalogBundle\Command\TaskManager;
+use AnimeDB\CatalogBundle\Command\CheckUpdates;
+use AnimeDB\CatalogBundle\Command\ScanStorages;
+use AnimeDB\CatalogBundle\Command\CheckItem;
+use AnimeDB\CatalogBundle\Command\Cron;
 
 $input = new ArgvInput();
 $env = $input->getParameterOption(array('--env', '-e'), getenv('SYMFONY_ENV') ?: 'dev');
@@ -20,5 +24,9 @@ $debug = getenv('SYMFONY_DEBUG') !== '0' && !$input->hasParameterOption(array('-
 
 $kernel = new AppKernel($env, $debug);
 $application = new Application($kernel);
-$application->add(new TaskManager);
+$application->add(new TaskManager());
+$application->add(new CheckUpdates());
+$application->add(new ScanStorages());
+$application->add(new CheckItem());
+$application->add(new Cron());
 $application->run($input);

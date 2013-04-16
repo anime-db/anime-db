@@ -10,7 +10,7 @@
 
 namespace AnimeDB\CatalogBundle\Command;
 
-use Symfony\Component\Console\Command\Command;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -20,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @package AnimeDB\CatalogBundle\Command
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class TaskManager extends Command
+class TaskManager extends ContainerAwareCommand
 {
     /**
      * (non-PHPdoc)
@@ -28,7 +28,8 @@ class TaskManager extends Command
      */
     protected function configure()
     {
-        $this->setName('animedb:task-manager')->setDescription('Task Manager');
+        $this->setName('animedb:task-manager')
+            ->setDescription('Task Manager');
     }
 
     /**
@@ -38,9 +39,7 @@ class TaskManager extends Command
     protected function execute(InputInterface $input, OutputInterface $output) {
         while (true) {
             // TODO listen socket and perform tasks when they appear
-            // TODO create an analog cron
-
-            sleep(10000);
+            sleep(86400);
         }
     }
 }
