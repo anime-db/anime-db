@@ -284,8 +284,8 @@ p {
 }
 .content section > h3 {
 	margin: 0 0 5px 0;
-	padding: 0 0 2px 5px;
-	border-bottom: 1px #ccc solid;
+	padding: 0 0 2px 5px;/*
+	border-bottom: 1px #ccc solid;*/
 	display: inline-block;
 	min-width: 40%;
 }
@@ -314,15 +314,11 @@ p {
 }
 #f-add-item-search div,
 #f-add-item-source div {
-	padding-top: 5px;
-	margin-right: 15px;
+	margin: 5px 15px 0 0;
 	float: left;
 }
-#f-add-item-search input {
+.b-add-item input {
 	width: 300px;
-}
-#f-add-item-source input {
-	width: 460px;
 }
 
 
