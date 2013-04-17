@@ -24,4 +24,22 @@ interface Filler
      * @return string
      */
     public function getTitle();
+
+    /**
+     * Search source by name
+     *
+     * @param string $name
+     *
+     * @return array
+     */
+    public function search($name);
+
+    /**
+     * Fill item from source
+     *
+     * @param string $source
+     *
+     * @return \AnimeDB\CatalogBundle\Entity\Item|null
+     */
+    public function fill($source);
 }

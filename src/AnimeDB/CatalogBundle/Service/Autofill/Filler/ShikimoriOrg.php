@@ -36,4 +36,30 @@ class ShikimoriOrg implements Filler
     public function getTitle() {
         return self::NAME;
     }
+
+    /**
+     * Search source by name
+     *
+     * @param string $name
+     *
+     * @return array
+     */
+    public function search($name)
+    {
+        // TODO requires the implementation of
+        return array();
+    }
+
+    /**
+     * Fill item from source
+     *
+     * @param string $source
+     *
+     * @return \AnimeDB\CatalogBundle\Entity\Item|null
+     */
+    public function fill($source)
+    {
+        // TODO requires the implementation of
+        return null;
+    }
 }
