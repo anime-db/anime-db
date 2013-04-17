@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Жанр
+ * Genre
  *
  * @ORM\Entity
  * @ORM\Table(name="genre")

@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Страна
+ * Country
  *
  * @ORM\Entity
  * @ORM\Table(name="country")

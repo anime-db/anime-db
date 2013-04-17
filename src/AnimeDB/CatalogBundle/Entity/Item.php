@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Anime record
+ * Item
  *
  * @ORM\Entity
  * @ORM\Table(name="item")
@@ -48,7 +48,7 @@ class Item
     /**
      * Main name
      *
-     * @ORM\OneToMany(targetEntity="ItemName", mappedBy="id")
+     * @ORM\OneToMany(targetEntity="Name", mappedBy="id")
      *
      * @var \Doctrine\Common\Collections\ArrayCollection
      */
@@ -166,11 +166,41 @@ class Item
     protected $file_info;
 
     /**
+     * Source list
+     *
+     * @ORM\OneToMany(targetEntity="Source", mappedBy="id")
+     *
+     * @var \AnimeDB\CatalogBundle\Entity\Source
+     */
+    protected $sources;
+
+    /**
+     * Image
+     *
+     * @ORM\Column(type="string", length=256)
+     *
+     * @var string
+     */
+    protected $image;
+
+    /**
+     * Image list
+     *
+     *
+     * @ORM\OneToMany(targetEntity="Image", mappedBy="id")
+     *
+     * @var \AnimeDB\CatalogBundle\Entity\Image
+     */
+    protected $images;
+
+    /**
      * Construct
      */
     public function __construct() {
-        $this->genres = new ArrayCollection();
-        $this->names  = new ArrayCollection();
+        $this->genres  = new ArrayCollection();
+        $this->names   = new ArrayCollection();
+        $this->sources = new ArrayCollection();
+        $this->images  = new ArrayCollection();
     }
 
     /**
@@ -523,5 +553,94 @@ class Item
     public function getStorage()
     {
         return $this->storage;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     *
+     * @return \AnimeDB\CatalogBundle\Entity\Item
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string 
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Add sources
+     *
+     * @param \AnimeDB\CatalogBundle\Entity\Source $sources
+     *
+     * @return \AnimeDB\CatalogBundle\Entity\Item
+     */
+    public function addSource(\AnimeDB\CatalogBundle\Entity\Source $sources)
+    {
+        $this->sources[] = $sources;
+        return $this;
+    }
+
+    /**
+     * Remove sources
+     *
+     * @param \AnimeDB\CatalogBundle\Entity\Source $sources
+     */
+    public function removeSource(\AnimeDB\CatalogBundle\Entity\Source $sources)
+    {
+        $this->sources->removeElement($sources);
+    }
+
+    /**
+     * Get sources
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSources()
+    {
+        return $this->sources;
+    }
+
+    /**
+     * Add images
+     *
+     * @param \AnimeDB\CatalogBundle\Entity\Image $images
+     *
+     * @return \AnimeDB\CatalogBundle\Entity\Item
+     */
+    public function addImage(\AnimeDB\CatalogBundle\Entity\Image $images)
+    {
+        $this->images[] = $images;
+        return $this;
+    }
+
+    /**
+     * Remove images
+     *
+     * @param \AnimeDB\CatalogBundle\Entity\Image $images
+     */
+    public function removeImage(\AnimeDB\CatalogBundle\Entity\Image $images)
+    {
+        $this->images->removeElement($images);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getImages()
+    {
+        return $this->images;
     }
 }
