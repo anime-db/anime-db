@@ -41,7 +41,7 @@ class Cron extends ContainerAwareCommand
     protected function configure()
     {
         $this->setName('animedb:cron')
-        ->setDescription('Analog Cron');
+            ->setDescription('Analog Cron');
     }
 
     /**
@@ -49,10 +49,12 @@ class Cron extends ContainerAwareCommand
      * @see Symfony\Component\Console\Command.Command::execute()
      */
     protected function execute(InputInterface $input, OutputInterface $output) {
-        // TODO command is disabled until there is no implementation
-        return false;
+        // exit if disabled
+        if (!$this->getContainer()->getParameter('cron')['enabled']) {
+            return null;
+        }
 
-        $crontab = $this->getContainer()->getParameter('cron');
+        $crontab = $this->getContainer()->getParameter('cron')['comands'];
         $crontab = $this->parse($crontab);
 
         if ($crontab) {
