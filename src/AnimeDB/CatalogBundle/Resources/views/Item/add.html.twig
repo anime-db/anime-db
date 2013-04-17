@@ -16,7 +16,7 @@
 	<section class="b-add-from-source">
 		<h3>{% trans %}From source{% endtrans %}</h3>
 		<div>
-			<form action="{{ path('filler_get') }}" method="post" {{ form_enctype(source_form) }}>
+			<form action="{{ path('filler_get') }}" method="get" {{ form_enctype(source_form) }}>
 				{{ form_widget(source_form, {'id': 'f-add-item-source'}) }}
 				<button type="submit">{% trans %}Add{% endtrans %}</button>
 			</form>

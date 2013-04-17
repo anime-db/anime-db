@@ -11,6 +11,7 @@
 namespace AnimeDB\CatalogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AnimeDB\CatalogBundle\Form\Filler\Search;
 
 /**
  * Filler item
@@ -26,8 +27,29 @@ class FillerController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function searchAction() {
-        // TODO требуется реализация
-        return $this->render('AnimeDBCatalogBundle:Filler:search.html.twig');
+        /* @var $chain \AnimeDB\CatalogBundle\Service\Autofill\Chain */
+        $chain = $this->get('anime_db_catalog.autofill.chain');
+
+        /* @var $form \Symfony\Component\Form\Form */
+        $form = $this->createForm(new Search($chain->getFillerTitles()));
+
+        /* @var $request \Symfony\Component\HttpFoundation\Request */
+        $request = $this->getRequest();
+        $list = array();
+
+        if ($request->isMethod('POST')) {
+            $form->bindRequest($request);
+            if ($form->isValid()) {
+
+                $data = $form->getData();
+                /* @var $filler \AnimeDB\CatalogBundle\Service\Autofill\Filler\Filler */
+                $filler = $chain->getFiller($data['filler']);
+                $list = $filler->search($data['name']);
+            }
+        }
+        return $this->render('AnimeDBCatalogBundle:Filler:search.html.twig', array(
+            'list' => $list
+        ));
     }
 
     /**

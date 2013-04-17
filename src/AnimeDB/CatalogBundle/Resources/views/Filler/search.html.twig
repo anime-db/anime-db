@@ -1,7 +1,19 @@
 {% extends 'AnimeDBCatalogBundle::layout.html.twig' %}
 
-{% block title %}{% trans %}Addition form{% endtrans %} - {{ parent() }}{% endblock %}
+{% block title %}{% trans %}Search item{% endtrans %} - {{ parent() }}{% endblock %}
 
 
 {% block content %}
+{% if list %}
+	<ul>
+		{% for item in list %}
+			<li>
+				<a href="{{ item.source }}">{{ item.name }}</a>
+				<div>{{ item.description|nl2br }}</div>
+			</li>
+		{% endfor %}
+	</ul>
+{% else %}
+	Not found
+{% endif%}
 {% endblock %}

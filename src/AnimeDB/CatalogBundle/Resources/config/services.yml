@@ -1,13 +1,25 @@
 parameters:
 
 services:
-     anime_db_catalog.autofill.chain:
+    anime_db_catalog.autofill.chain:
         class: AnimeDB\CatalogBundle\Service\Autofill\Chain
-     anime_db_catalog.autofill.worldartru:
+    anime_db_catalog.autofill.worldartru:
         class: AnimeDB\CatalogBundle\Service\Autofill\Filler\WorldArtRu
+        arguments: ['@buzz.browser']
         tags:
             -  { name: anime_db_catalog.autofill, alias: worldartru }
-     anime_db_catalog.autofill.shikimoriorg:
+    anime_db_catalog.autofill.shikimoriorg:
         class: AnimeDB\CatalogBundle\Service\Autofill\Filler\ShikimoriOrg
         tags:
             -  { name: anime_db_catalog.autofill, alias: shikimoriorg }
+
+    # cURL client for Buzz
+    buzz.client.curl:
+        class:  Buzz\Client\Curl
+        public: false
+        calls:
+            - [setVerifyPeer, [false]]
+    # Buzz browser
+    buzz.browser:
+        class:     Buzz\Browser
+        arguments: ['@buzz.client.curl']

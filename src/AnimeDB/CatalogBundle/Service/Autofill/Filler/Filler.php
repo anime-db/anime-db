@@ -28,6 +28,17 @@ interface Filler
     /**
      * Search source by name
      *
+     * Return structure
+     * <code>
+     * [
+     *     {
+     *         'name': string,
+     *         'source': string,
+     *         'description': string
+     *     }
+     * ]
+     * </code>
+     *
      * @param string $name
      *
      * @return array
