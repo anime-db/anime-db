@@ -40,7 +40,7 @@ class HomeController extends Controller
     {
         /* @var $form \Symfony\Component\Form\Form */
         $form = $this->createFormBuilder()
-            ->add('q', 'text', array('label' => $this->get('translator')->trans('Search')))
+            ->add('q', 'text', array('label' => 'Search'))
             ->getForm();
 
         return $this->render('AnimeDBCatalogBundle:Home:searchSimpleForm.html.twig', array(

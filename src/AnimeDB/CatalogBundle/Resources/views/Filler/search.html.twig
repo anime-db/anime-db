@@ -1,19 +1,23 @@
 {% extends 'AnimeDBCatalogBundle::layout.html.twig' %}
 
-{% block title %}{% trans %}Search item{% endtrans %} - {{ parent() }}{% endblock %}
+{% block title %}{% trans %}Search{% endtrans %} - {{ parent() }}{% endblock %}
 
 
 {% block content %}
+<div class="b-filler-search">
+<h2>{% trans %}List of results{% endtrans %}</h2>
 {% if list %}
+	<span>{% trans %}Select the entry you want to add{% endtrans %}</span>
 	<ul>
 		{% for item in list %}
 			<li>
-				<a href="{{ item.source }}">{{ item.name }}</a>
+				<a href="{{ path('filler_get') }}?filler_get[url]={{ item.source|url_encode }}">{{ item.name }}</a>
 				<div>{{ item.description|nl2br }}</div>
 			</li>
 		{% endfor %}
 	</ul>
 {% else %}
-	Not found
+	<strong>{% trans %}Nothing was found{% endtrans %}</strong>
 {% endif%}
+</div>
 {% endblock %}

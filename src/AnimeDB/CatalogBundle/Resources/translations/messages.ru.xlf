@@ -82,6 +82,22 @@
                 <source>Source</source>
                 <target>Источник</target>
             </trans-unit>
+            <trans-unit id="21">
+                <source>List of results</source>
+                <target>Список результатов</target>
+            </trans-unit>
+            <trans-unit id="22">
+                <source>Nothing was found</source>
+                <target>Ничего не найдено</target>
+            </trans-unit>
+            <trans-unit id="23">
+                <source>Select the entry you want to add</source>
+                <target>Выберите запись, которую Вы хотите добавить</target>
+            </trans-unit>
+            <trans-unit id="24">
+                <source>Unable to find any filler for the specified source</source>
+                <target>Не найден ни один наполнитель для указанного источника</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -103,22 +103,16 @@ class WorldArtRu implements Filler
             return array();
         }
         // get list from xpath
+        $list = array();
         $xpath = new \DOMXPath($dom);
         $nodes = $xpath->query(self::XPATH_FOR_LIST);
-        $list = array();
         foreach ($nodes as $node) {
             // has link on source
             $link = $xpath->query('a', $node);
             if ($link->length) {
                 // get source
-                $source = '';
-                foreach ($link->item(0)->attributes as $att) {
-                    if ($att->nodeName == 'href') {
-                        $source = self::HOST.$att->nodeValue;
-                        break;
-                    }
-                }
-                $name = $link->item(0)->nodeValue;
+                $source = self::HOST.$link->item(0)->attributes->item(0)->nodeValue;
+                $name   = $link->item(0)->nodeValue;
                 if ($source && $name) {
                     $list[] = array(
                         'name'        => str_replace(array("\r\n", "\n"), ' ', $name),
@@ -141,8 +135,26 @@ class WorldArtRu implements Filler
      */
     public function fill($source)
     {
+        if (!$this->isSupportSource($source)) {
+            return null;
+        }
+        $dom = $this->getDomDocumentFromUrl($source);
+        if (!($dom instanceof \DOMDocument)) {
+            return null;
+        }
         // TODO requires the implementation of
         return null;
+    }
+
+    /**
+     * Filler is support this source
+     *
+     * @param string $source
+     *
+     * @return boolean
+     */
+    public function isSupportSource($source) {
+        return is_string($source) && strpos($source, self::HOST) == 0;
     }
 
     /**

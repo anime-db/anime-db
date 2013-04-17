@@ -322,6 +322,21 @@ p {
 }
 
 
+/**
+ * Filler search page
+ */
+.b-filler-search ul {
+	padding: 0;
+}
+.b-filler-search li {
+	list-style: none;
+	margin-bottom: 10px;
+}
+.b-filler-search a {
+	margin-bottom: 3px;
+	display: block;
+}
+
 /*
  * form-catalog_item_add
  */

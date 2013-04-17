@@ -62,4 +62,16 @@ class ShikimoriOrg implements Filler
         // TODO requires the implementation of
         return null;
     }
+
+    /**
+     * Filler is support this source
+     *
+     * @param string $source
+     *
+     * @return boolean
+     */
+    public function isSupportSource($source) {
+        // TODO requires the implementation of
+        return false;
+    }
 }

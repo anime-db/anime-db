@@ -23,6 +23,17 @@ class Get extends AbstractType
 {
     /**
      * (non-PHPdoc)
+     * @see Symfony\Component\Form.AbstractType::getDefaultOptions()
+     */
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'csrf_protection' => false,
+        );
+    }
+
+    /**
+     * (non-PHPdoc)
      * @see \Symfony\Component\Form\AbstractType::buildForm()
      */
     public function buildForm(FormBuilderInterface $builder, array $options)

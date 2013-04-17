@@ -53,4 +53,13 @@ interface Filler
      * @return \AnimeDB\CatalogBundle\Entity\Item|null
      */
     public function fill($source);
+
+    /**
+     * Filler is support this source
+     *
+     * @param string $source
+     *
+     * @return boolean
+     */
+    public function isSupportSource($source);
 }

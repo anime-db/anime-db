@@ -12,6 +12,8 @@ namespace AnimeDB\CatalogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AnimeDB\CatalogBundle\Form\Filler\Search;
+use AnimeDB\CatalogBundle\Form\Filler\Get;
+use AnimeDB\CatalogBundle\Service\Autofill\Filler\Filler;
 
 /**
  * Filler item
@@ -58,7 +60,31 @@ class FillerController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function getAction() {
-        // TODO требуется реализация
-        return $this->render('AnimeDBCatalogBundle:Filler:get.html.twig');
+        /* @var $form \Symfony\Component\Form\Form */
+        $form = $this->createForm(new Get());
+
+        /* @var $request \Symfony\Component\HttpFoundation\Request */
+        $request = $this->getRequest();
+
+        $error = '';
+        if ($request->isMethod('GET')) {
+            $form->bindRequest($request);
+            if ($form->isValid()) {
+                $source = $form->getData()['url'];
+                /* @var $chain \AnimeDB\CatalogBundle\Service\Autofill\Chain */
+                $chain = $this->get('anime_db_catalog.autofill.chain');
+                $filler = $chain->getFillerBySource($source);
+                if (!($filler instanceof Filler)) {
+                    $error = $this->get('translator')->trans('Unable to find any filler for the specified source');
+                } else {
+                    $item = $filler->fill($source);
+                    // TODO create form from item for chenge data and save
+                }
+            }
+        }
+
+        return $this->render('AnimeDBCatalogBundle:Filler:get.html.twig', array(
+            'error' => $error
+        ));
     }
 }

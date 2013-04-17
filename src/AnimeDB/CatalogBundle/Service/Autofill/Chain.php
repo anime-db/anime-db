@@ -60,6 +60,22 @@ class Chain
     }
 
     /**
+     * Get filler by source
+     *
+     * @param string $source
+     *
+     * @return \AnimeDB\CatalogBundle\Service\Autofill\Filler\Filler|null
+     */
+    public function getFillerBySource($source) {
+        foreach ($this->fillers as $filler) {
+            if ($filler->isSupportSource($source)) {
+                return $filler;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Get filler names
      *
      * @return array
