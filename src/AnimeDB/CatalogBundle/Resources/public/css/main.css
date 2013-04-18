@@ -42,6 +42,58 @@ a:visited .ui-button-text {
 	color: #ff6600;
 }
 
+h3,
+h4 {
+	margin: 0;
+	font-weight: normal;
+}
+
+h3 {
+	padding: 0 0 9px;
+}
+
+h4 {
+	padding-bottom: 21px;
+	border-bottom: 1px dashed #999;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+p {
+	font-size: 12px;
+}
+
+/*
+ * Forms
+ */
+form label {
+	height: 26px;
+	width: 250px;
+	display: block;
+	line-height: 26px;
+	float: left;
+}
+input,
+textarea {
+	width: 300px;
+}
+textarea {
+	height: 100px;
+}
+.f-row {
+	margin-bottom: 5px;
+}
+.b-col-r {
+	margin: 0 0 10px 30px;
+	clear: both;
+}
+.b-col-r > .f-row > label {
+	display: none;
+}
+.ui-corner-all {
+	border-radius: 4px 4px 4px 4px;
+}
+
 
 #wrapper {
 	margin: 0 auto 20px;
@@ -198,6 +250,7 @@ h1.logo a span {
 	padding: 5px 5px 5px 20px;/*
 	border: 1px solid #C0CAD5;*/
 	font-size: 11px;
+	width: 150px;
 }
 #home-search label {
 	display: none;
@@ -206,46 +259,9 @@ h1.logo a span {
 	display: inline-block;
 }
 #home-center {
-	margin: 30px 35px 0;
+	margin: 30px 35px 30px 35px;
 	min-height: 330px;
 }
-
-
-/* Normal
-   -------------------------------- */
-
-h3,
-h4 {
-	margin: 0;
-	font-weight: normal;
-}
-
-h3 {
-	padding: 0 0 9px;
-}
-
-h4 {
-	padding-bottom: 21px;
-	border-bottom: 1px dashed #999;
-	font-size: 12px;
-	font-weight: bold;
-}
-
-.pull-quote {
-	padding: 6px 0;
-	line-height: 20px;
-	text-transform: uppercase;
-	font-size: 12px;
-}
-
-p {
-	font-size: 12px;
-}
-.ui-corner-all {
-	border-radius: 4px 4px 4px 4px;
-}
-
-
 
 
 /* Footer
@@ -336,6 +352,7 @@ p {
 	margin-bottom: 3px;
 	display: block;
 }
+
 
 /*
  * form-catalog_item_add

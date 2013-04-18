@@ -87,7 +87,7 @@ class Item
      *
      * @ORM\ManyToMany(targetEntity="Genre", inversedBy="items")
      *
-     * @var \AnimeDB\CatalogBundle\Entity\Genre
+     * @var \Doctrine\Common\Collections\ArrayCollection
      */
     protected $genres;
 
@@ -170,7 +170,7 @@ class Item
      *
      * @ORM\OneToMany(targetEntity="Source", mappedBy="id")
      *
-     * @var \AnimeDB\CatalogBundle\Entity\Source
+     * @var \Doctrine\Common\Collections\ArrayCollection
      */
     protected $sources;
 
@@ -189,7 +189,7 @@ class Item
      *
      * @ORM\OneToMany(targetEntity="Image", mappedBy="id")
      *
-     * @var \AnimeDB\CatalogBundle\Entity\Image
+     * @var \Doctrine\Common\Collections\ArrayCollection
      */
     protected $images;
 
@@ -423,11 +423,11 @@ class Item
     /**
      * Add names
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Item $names
+     * @param \AnimeDB\CatalogBundle\Entity\Name $names
      *
      * @return \AnimeDB\CatalogBundle\Entity\Item
      */
-    public function addName(\AnimeDB\CatalogBundle\Entity\Item $names)
+    public function addName(\AnimeDB\CatalogBundle\Entity\Name $names)
     {
         $this->names[] = $names;
         return $this;

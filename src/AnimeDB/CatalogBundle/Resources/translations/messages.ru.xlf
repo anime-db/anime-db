@@ -98,6 +98,74 @@
                 <source>Unable to find any filler for the specified source</source>
                 <target>Не найден ни один наполнитель для указанного источника</target>
             </trans-unit>
+            <trans-unit id="25">
+                <source>Names</source>
+                <target>Названия</target>
+            </trans-unit>
+            <trans-unit id="26">
+                <source>Source</source>
+                <target>Источник</target>
+            </trans-unit>
+            <trans-unit id="27">
+                <source>Date start</source>
+                <target>Дата начала</target>
+            </trans-unit>
+            <trans-unit id="28">
+                <source>Date end</source>
+                <target>Дата окончания</target>
+            </trans-unit>
+            <trans-unit id="29">
+                <source>Duration</source>
+                <target>Продолжительность</target>
+            </trans-unit>
+            <trans-unit id="30">
+                <source>Summary</source>
+                <target>Описание</target>
+            </trans-unit>
+            <trans-unit id="31">
+                <source>Path</source>
+                <target>Путь</target>
+            </trans-unit>
+            <trans-unit id="32">
+                <source>Episodes</source>
+                <target>Эпизоды</target>
+            </trans-unit>
+            <trans-unit id="33">
+                <source>Translate</source>
+                <target>Переводы</target>
+            </trans-unit>
+            <trans-unit id="34">
+                <source>File info</source>
+                <target>Информация о файлах</target>
+            </trans-unit>
+            <trans-unit id="35">
+                <source>Image</source>
+                <target>Изображение</target>
+            </trans-unit>
+            <trans-unit id="36">
+                <source>Images</source>
+                <target>Изображения</target>
+            </trans-unit>
+            <trans-unit id="37">
+                <source>Type</source>
+                <target>Тип</target>
+            </trans-unit>
+            <trans-unit id="38">
+                <source>Genres</source>
+                <target>Жанры</target>
+            </trans-unit>
+            <trans-unit id="39">
+                <source>Production</source>
+                <target>Производитель</target>
+            </trans-unit>
+            <trans-unit id="40">
+                <source>Storage</source>
+                <target>Хранилище</target>
+            </trans-unit>
+            <trans-unit id="41">
+                <source>Sources</source>
+                <target>Источники</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

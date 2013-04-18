@@ -13,6 +13,11 @@ namespace AnimeDB\CatalogBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AnimeDB\CatalogBundle\Form\Filler\Search;
 use AnimeDB\CatalogBundle\Form\Filler\Get;
+use AnimeDB\CatalogBundle\Entity\Item;
+use AnimeDB\CatalogBundle\Entity\Name;
+use AnimeDB\CatalogBundle\Entity\Image;
+use AnimeDB\CatalogBundle\Entity\Source;
+use AnimeDB\CatalogBundle\Form\ItemType;
 
 /**
  * Item
@@ -31,7 +36,7 @@ class ItemController extends Controller
      */
     public function showAction($id)
     {
-        // TODO требуется реализация
+        // TODO requires the implementation of
         return $this->render('AnimeDBCatalogBundle:Item:show.html.twig', array('name' => 'Test'));
     }
 
@@ -64,8 +69,17 @@ class ItemController extends Controller
      */
     public function additionFormAction()
     {
-        // TODO требуется реализация
-        return $this->render('AnimeDBCatalogBundle:Item:addition-form.html.twig');
+        $item = new Item();
+        $item->addImage(new Image());
+        $item->addName(new Name());
+        $item->addSource(new Source());
+
+        /* @var $form \Symfony\Component\Form\Form */
+        $form = $this->createForm(new ItemType(), $item);
+
+        return $this->render('AnimeDBCatalogBundle:Item:addition-form.html.twig', array(
+            'form' => $form->createView()
+        ));
     }
 
     /**
@@ -77,7 +91,7 @@ class ItemController extends Controller
      */
     public function changeAction($id)
     {
-        // TODO требуется реализация
+        // TODO requires the implementation of
         return $this->render('AnimeDBCatalogBundle:Item:change.html.twig');
     }
 
@@ -90,7 +104,7 @@ class ItemController extends Controller
      */
     public function removeAction($id)
     {
-        // TODO требуется реализация
+        // TODO requires the implementation of
         return $this->redirect($this->generateUrl('home'));
     }
 }

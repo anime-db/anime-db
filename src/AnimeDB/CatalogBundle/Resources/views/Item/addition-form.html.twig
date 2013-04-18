@@ -2,6 +2,14 @@
 
 {% block title %}{% trans %}Addition form{% endtrans %} - {{ parent() }}{% endblock %}
 
+{% form_theme form 'AnimeDBCatalogBundle:Form:fields.html.twig' %}
 
 {% block content %}
+<div class="b-addition-form">
+	<h2>Добавление записи</h2>
+	<form action="{{ path('filler_get') }}" method="post" {{ form_enctype(form) }}>
+		{{ form_widget(form) }}
+		<button type="submit">{% trans %}Add{% endtrans %}</button>
+	</form>
+</div>
 {% endblock %}
