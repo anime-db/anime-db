@@ -119,7 +119,7 @@ class Cron extends ContainerAwareCommand
      */
     private function runCommand($command)
     {
-        exec($command.' &');
+        exec(PHP_BINARY.' '.__DIR__.'/../../../../app/console '.$command.' &');
     }
 
 
