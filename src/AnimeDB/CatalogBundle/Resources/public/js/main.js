@@ -1,56 +1,61 @@
 $(function(){
 
-$('#catalog-item-autofill').click(function(e){
-//	$(this).parents('form').attr({action:'/item-autofill.html'});
-	location.href = '/item-autofill.html';
-	return false;
-});
-$('input:submit, button, .catalog-last-added .details').button();
+// add button jQuery UI style
+$('input:submit, input:button, input:reset, button, .catalog-last-added .details').button();
 
 
 
+var Form = {};
+Form.Collection = {
+	classes: {
+		collection: 'b-col-r',
+		button_add: 'b-col-add-item',
+		button_remove: 'b-col-rm-item'
+	},
+	templates: {
+		row: '<div class="f-row">__data__</div>',
+		add: 'Add item',
+		remove: 'Remove item'
+	},
 
-//Get the ul that holds the collection of tags
-var collection = $('.b-col-r');
+	init: function() {
+		var fc = Form.Collection;
+		// each collections
+		$.each($('.'+fc.classes.collection), function() {
+			var collection = $(this);
+			collection.data('index', collection.find(':input').length);
+			// add "remove" button
+			var tpl = '<a href="#" class="'+fc.classes.button_remove+'">'+fc.templates.remove+'</a>';
+			collection.children().append($(tpl));
+			// add "add" button
+			var tpl = '<a href="#" class="'+fc.classes.button_add+'">'+fc.templates.add+'</a>';
+			collection.append($(fc.templates.row.replace(/__data__/, tpl)));
+		});
+		// add "remove" and "add" buttons
+		$('.'+fc.classes.button_add).bind('click', fc.onAdd);
+		$('.'+fc.classes.button_remove).bind('click', fc.orRemove);
+	},
+	onAdd: function(e) {
+		e.preventDefault();
+		var fc = Form.Collection;
+		var collection = $(this).parent().parent();
+		// increment index
+		var index = collection.data('index');
+		collection.data('index', index + 1);
+		// prototype of new item
+		var new_item = collection.data('prototype').replace(/__name__(label__)?/g, index);
+		// remove button temaplte
+		var tpl = '<a href="#" class="'+fc.classes.button_remove+'">'+fc.templates.remove+'</a>';
+		new_item = $(new_item).append($(tpl).bind('click', fc.orRemove));
+		// add new item
+		collection.find('.'+fc.classes.button_add).parent().before(new_item);
+	},
+	orRemove: function(e) {
+		e.preventDefault();
+		$(this).parent().remove();
+	}
+};
 
-//setup an "add a tag" link
-var add_link = $('<a href="#" class="b-col-add-item">Add a tag</a>');
-var new_link = $('<div></div>').append(add_link);
-
-
-// add the "add a tag" anchor and li to the tags ul
-collection.append(new_link);
-
-// count the current form inputs we have (e.g. 2), use that as the new
-// index when inserting a new item (e.g. 2)
-collection.data('index', collection.find(':input').length);
-
-add_link.bind('click', function(e) {
-    // prevent the link from creating a "#" on the URL
-    e.preventDefault();
-
-    // add a new tag form (see next code block)
-    addTagForm(collection, new_link);
-    return false;
-});
-
-function addTagForm(collection, new_link) {
-    // Get the data-prototype explained earlier
-    var prototype = collection.data('prototype');
-
-    // get the new index
-    var index = collection.data('index');
-
-    // Replace '__name__' in the prototype's HTML to
-    // instead be a number based on how many items we have
-    var new_form = prototype.replace(/__name__/g, index);
-
-    // increase the index with one for the next item
-    collection.data('index', index + 1);
-
-    // Display the form in the page in an li, before the "Add a tag" link li
-    var new_link = $('<div></div>').append(new_form);
-    new_link.before(new_link);
-}
+Form.Collection.init();
 
 });

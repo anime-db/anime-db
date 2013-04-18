@@ -28,18 +28,19 @@ button,
 h1, h2, h3, h4, h5, h6, b, strong {
 	color: #db3400;
 }
+a:visited,
+a:visited .ui-button-text {
+	color: #ff6600;
+}
 a:hover,
-a:hover .ui-button-text
+a:hover .ui-button-text,
 input[type~=button]:hover,
 input[type~=reset]:hover,
 input[type~=submit]:hover,
 button:hover,
 .ui-button.ui-state-hover .ui-button-text {
 	color: #b00;
-}
-a:visited,
-a:visited .ui-button-text {
-	color: #ff6600;
+	text-decoration: none;
 }
 
 h3,
@@ -89,6 +90,12 @@ textarea {
 }
 .b-col-r > .f-row > label {
 	display: none;
+}
+.b-col-i {
+	display: inline-block;
+}
+.b-col-rm-item {
+	float: right;
 }
 .ui-corner-all {
 	border-radius: 4px 4px 4px 4px;

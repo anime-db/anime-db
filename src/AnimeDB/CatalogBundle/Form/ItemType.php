@@ -39,7 +39,6 @@ class ItemType extends AbstractType
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
-                'prototype' => true,
                 'attr'     => array('class' => 'b-col-r'),
                 'options'  => array(
                     'required'  => false,
@@ -55,7 +54,6 @@ class ItemType extends AbstractType
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
-                'prototype' => true,
                 'attr'     => array('class' => 'b-col-r'),
                 'options'  => array(
                     'required'  => false,
@@ -76,7 +74,6 @@ class ItemType extends AbstractType
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
-                'prototype' => true,
                 'attr'     => array('class' => 'b-col-r'),
                 'options'  => array(
                     'required'  => false,
