@@ -11,6 +11,7 @@
 namespace AnimeDB\CatalogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -39,6 +40,7 @@ class Type
      * Type name
      *
      * @ORM\Column(type="string", length=32)
+     * @Assert\NotBlank()
      *
      * @var string
      */

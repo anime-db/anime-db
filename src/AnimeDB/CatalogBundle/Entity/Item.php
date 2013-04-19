@@ -11,6 +11,7 @@
 namespace AnimeDB\CatalogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -40,6 +41,7 @@ class Item
      * Main name
      *
      * @ORM\Column(type="string", length=256)
+     * @Assert\NotBlank()
      *
      * @var integer
      */
@@ -68,6 +70,7 @@ class Item
      * Date start release
      *
      * @ORM\Column(type="date")
+     * @Assert\Date()
      *
      * @var DateTime
      */
@@ -77,6 +80,7 @@ class Item
      * Date end release
      *
      * @ORM\Column(type="date")
+     * @Assert\Date()
      *
      * @var DateTime|null
      */
@@ -105,6 +109,7 @@ class Item
      * Duration
      *
      * @ORM\Column(type="integer")
+     * @Assert\Type(type="integer", message="The value {{ value }} is not a valid {{ type }}.")
      *
      * @var integer
      */
@@ -178,6 +183,7 @@ class Item
      * Image
      *
      * @ORM\Column(type="string", length=256)
+     * @Assert\Image()
      *
      * @var string
      */
