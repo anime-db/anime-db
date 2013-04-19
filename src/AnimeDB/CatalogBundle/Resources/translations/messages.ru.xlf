@@ -171,10 +171,18 @@
                 <target>Основное название</target>
             </trans-unit>
             <trans-unit id="43">
+                <source>Other names</source>
+                <target>Другие названия</target>
+            </trans-unit>
+            <trans-unit id="44">
                 <source>Main image</source>
                 <target>Основное изображение</target>
             </trans-unit>
-            <trans-unit id="44">
+            <trans-unit id="45">
+                <source>Other images</source>
+                <target>Другие изображения</target>
+            </trans-unit>
+            <trans-unit id="46">
                 <source>External sources</source>
                 <target>Внешние источники</target>
             </trans-unit>

@@ -41,6 +41,7 @@ class ItemType extends AbstractType
                 'by_reference' => false,
                 'allow_delete' => true,
                 'attr'         => array('class' => 'b-col-r'),
+                'label'        => 'Other names',
                 'options'      => array(
                     'required' => false,
                     'attr'     => array('class' => 'b-col-i')
@@ -49,7 +50,7 @@ class ItemType extends AbstractType
             ->add('date_start')
             ->add('date_end')
             ->add('duration')
-            ->add('image', null, array(
+            ->add('image', 'file', array(
                 'label' => 'Main image'
             ))
             ->add('images', 'collection', array(
@@ -57,10 +58,11 @@ class ItemType extends AbstractType
                 'allow_add'    => true,
                 'by_reference' => false,
                 'allow_delete' => true,
+                'label'        => 'Other images',
                 'attr'         => array('class' => 'b-col-r'),
                 'options'      => array(
                     'required' => false,
-                    'attr'     => array('class' => 'b-col-i')
+                    'attr'     => array('class' => 'b-col-i'),
                 ),
             ))
             ->add('type', 'entity', array(
