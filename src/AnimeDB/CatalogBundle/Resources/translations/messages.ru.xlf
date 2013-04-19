@@ -43,8 +43,8 @@
                 <target>Поиск</target>
             </trans-unit>
             <trans-unit id="11">
-                <source>Addition form</source>
-                <target>Форма добавления</target>
+                <source>Add manually</source>
+                <target>Добавление вручную</target>
             </trans-unit>
             <trans-unit id="12">
                 <source>From source</source>

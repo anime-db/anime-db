@@ -67,7 +67,7 @@ class ItemController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function additionFormAction()
+    public function addManuallyAction()
     {
         $item = new Item();
         $item->addImage(new Image());
@@ -77,7 +77,7 @@ class ItemController extends Controller
         /* @var $form \Symfony\Component\Form\Form */
         $form = $this->createForm(new ItemType(), $item);
 
-        return $this->render('AnimeDBCatalogBundle:Item:addition-form.html.twig', array(
+        return $this->render('AnimeDBCatalogBundle:Item:add-manually.html.twig', array(
             'form' => $form->createView()
         ));
     }
