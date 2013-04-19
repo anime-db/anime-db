@@ -33,16 +33,15 @@ class ItemType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('names', new NameType())
             ->add('names', 'collection', array(
-                'type' => new NameType(),
-                'allow_add' => true,
+                'type'         => new NameType(),
+                'allow_add'    => true,
                 'by_reference' => false,
                 'allow_delete' => true,
-                'attr'     => array('class' => 'b-col-r'),
-                'options'  => array(
-                    'required'  => false,
-                    'attr'      => array('class' => 'b-col-i')
+                'attr'         => array('class' => 'b-col-r'),
+                'options'      => array(
+                    'required' => false,
+                    'attr'     => array('class' => 'b-col-i')
                 ),
             ))
             ->add('date_start')
@@ -50,34 +49,47 @@ class ItemType extends AbstractType
             ->add('duration')
             ->add('image')
             ->add('images', 'collection', array(
-                'type' => new ImageType(),
-                'allow_add' => true,
+                'type'         => new ImageType(),
+                'allow_add'    => true,
                 'by_reference' => false,
                 'allow_delete' => true,
-                'attr'     => array('class' => 'b-col-r'),
-                'options'  => array(
-                    'required'  => false,
-                    'attr'      => array('class' => 'b-col-i')
+                'attr'         => array('class' => 'b-col-r'),
+                'options'      => array(
+                    'required' => false,
+                    'attr'     => array('class' => 'b-col-i')
                 ),
             ))
-            ->add('type')
-            ->add('genres')
-            ->add('production')
+            ->add('type', 'entity', array(
+                'class'    => 'AnimeDBCatalogBundle:Type',
+                'property' => 'name'
+            ))
+            ->add('genres', 'entity', array(
+                'class'    => 'AnimeDBCatalogBundle:Genre',
+                'property' => 'name',
+                'multiple' => true
+            ))
+            ->add('manufacturer', 'entity', array(
+                'class'    => 'AnimeDBCatalogBundle:Country',
+                'property' => 'name',
+            ))
             ->add('path')
             ->add('translate')
             ->add('summary')
             ->add('episodes')
             ->add('file_info')
-            ->add('storage')
+            ->add('storage', 'entity', array(
+                'class'    => 'AnimeDBCatalogBundle:Storage',
+                'property' => 'name',
+            ))
             ->add('sources', 'collection', array(
-                'type' => new SourceType(),
-                'allow_add' => true,
+                'type'         => new SourceType(),
+                'allow_add'    => true,
                 'by_reference' => false,
                 'allow_delete' => true,
-                'attr'     => array('class' => 'b-col-r'),
-                'options'  => array(
-                    'required'  => false,
-                    'attr'      => array('class' => 'b-col-i')
+                'attr'         => array('class' => 'b-col-r'),
+                'options'      => array(
+                    'required' => false,
+                    'attr'     => array('class' => 'b-col-i')
                 ),
             ))
         ;

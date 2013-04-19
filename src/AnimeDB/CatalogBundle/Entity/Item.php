@@ -92,14 +92,14 @@ class Item
     protected $genres;
 
     /**
-     * Country of origin
+     * Manufacturer
      *
      * @ORM\ManyToOne(targetEntity="Country", inversedBy="items")
-     * @ORM\JoinColumn(name="production", referencedColumnName="id")
+     * @ORM\JoinColumn(name="manufacturer", referencedColumnName="id")
      *
      * @var \AnimeDB\CatalogBundle\Entity\Country
      */
-    protected $production;
+    protected $manufacturer;
 
     /**
      * Duration
@@ -510,26 +510,26 @@ class Item
     }
 
     /**
-     * Set production
+     * Set manufacturer
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Country $production
+     * @param \AnimeDB\CatalogBundle\Entity\Country $manufacturer
      *
      * @return \AnimeDB\CatalogBundle\Entity\Item
      */
-    public function setProduction(\AnimeDB\CatalogBundle\Entity\Country $production = null)
+    public function setProduction(\AnimeDB\CatalogBundle\Entity\Country $manufacturer = null)
     {
-        $this->production = $production;
+        $this->manufacturer = $manufacturer;
         return $this;
     }
 
     /**
-     * Get production
+     * Get manufacturer
      *
      * @return \AnimeDB\CatalogBundle\Entity\Country
      */
-    public function getProduction()
+    public function getManufacturer()
     {
-        return $this->production;
+        return $this->manufacturer;
     }
 
     /**

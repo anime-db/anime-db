@@ -155,7 +155,7 @@
                 <target>Жанры</target>
             </trans-unit>
             <trans-unit id="39">
-                <source>Production</source>
+                <source>Manufacturer</source>
                 <target>Производитель</target>
             </trans-unit>
             <trans-unit id="40">

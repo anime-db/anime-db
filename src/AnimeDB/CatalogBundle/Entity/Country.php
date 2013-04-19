@@ -47,7 +47,7 @@ class Country
     /**
      * Items list
      *
-     * @ORM\OneToMany(targetEntity="Item", mappedBy="production")
+     * @ORM\OneToMany(targetEntity="Item", mappedBy="manufacturer")
      *
      * @var \Doctrine\Common\Collections\ArrayCollection
      */
