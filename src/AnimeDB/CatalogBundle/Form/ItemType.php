@@ -32,7 +32,9 @@ class ItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
+            ->add('name', null, array(
+                'label' => 'Main name'
+            ))
             ->add('names', 'collection', array(
                 'type'         => new NameType(),
                 'allow_add'    => true,
@@ -47,7 +49,9 @@ class ItemType extends AbstractType
             ->add('date_start')
             ->add('date_end')
             ->add('duration')
-            ->add('image')
+            ->add('image', null, array(
+                'label' => 'Main image'
+            ))
             ->add('images', 'collection', array(
                 'type'         => new ImageType(),
                 'allow_add'    => true,
@@ -87,6 +91,7 @@ class ItemType extends AbstractType
                 'by_reference' => false,
                 'allow_delete' => true,
                 'attr'         => array('class' => 'b-col-r'),
+                'label'        => 'External sources',
                 'options'      => array(
                     'required' => false,
                     'attr'     => array('class' => 'b-col-i')

@@ -166,6 +166,18 @@
                 <source>Sources</source>
                 <target>Источники</target>
             </trans-unit>
+            <trans-unit id="42">
+                <source>Main name</source>
+                <target>Основное название</target>
+            </trans-unit>
+            <trans-unit id="43">
+                <source>Main image</source>
+                <target>Основное изображение</target>
+            </trans-unit>
+            <trans-unit id="44">
+                <source>External sources</source>
+                <target>Внешние источники</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
