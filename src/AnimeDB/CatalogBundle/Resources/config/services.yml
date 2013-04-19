@@ -1,5 +1,3 @@
-parameters:
-
 services:
     anime_db_catalog.autofill.chain:
         class: AnimeDB\CatalogBundle\Service\Autofill\Chain
