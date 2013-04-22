@@ -12,6 +12,7 @@ namespace AnimeDB\CatalogBundle\Service\Autofill\Filler;
 
 use AnimeDB\CatalogBundle\Service\Autofill\Filler\Filler;
 use Buzz\Browser;
+use Symfony\Component\DomCrawler\Crawler;
 
 /**
  * Autofill from site world-art.ru
@@ -48,7 +49,7 @@ class WorldArtRu implements Filler
      *
      * @var string
      */
-    const XPATH_FOR_LIST = '/html/body/table/tr/td/center/table/tr/td/table/tr/td/table/tr/td';
+    const XPATH_FOR_LIST = '//body/table/tr/td/center/table/tr/td/table/tr/td/table/tr/td';
 
     /**
      * Browser
@@ -96,30 +97,23 @@ class WorldArtRu implements Filler
      */
     public function search($name)
     {
-        // get dom
         $url = str_replace('#NAME#', urlencode($name), self::SEARH_URL);
-        $dom = $this->getDomDocumentFromUrl(self::HOST.$url);
-        if (!($dom instanceof \DOMDocument)) {
-            return array();
-        }
         // get list from xpath
+        $crawler = $this->getCrawlerFromUrl(self::HOST.$url)
+            ->filterXPath(self::XPATH_FOR_LIST);
+
         $list = array();
-        $xpath = new \DOMXPath($dom);
-        $nodes = $xpath->query(self::XPATH_FOR_LIST);
-        foreach ($nodes as $node) {
+        foreach ($crawler as $el) {
+            $elc = new Crawler($el);
+            /* @var $link Crawler */
+            $link = $elc->filter('a')->first();
             // has link on source
-            $link = $xpath->query('a', $node);
-            if ($link->length) {
-                // get source
-                $source = self::HOST.$link->item(0)->attributes->item(0)->nodeValue;
-                $name   = $link->item(0)->nodeValue;
-                if ($source && $name) {
-                    $list[] = array(
-                        'name'        => str_replace(array("\r\n", "\n"), ' ', $name),
-                        'source'      => $source,
-                        'description' => trim(str_replace($name, '', $node->nodeValue)),
-                    );
-                }
+            if ($link->count() && ($href = $link->attr('href')) && ($name = $link->text())) {
+                $list[] = array(
+                    'name'        => str_replace(array("\r\n", "\n"), ' ', $name),
+                    'source'      => self::HOST.$href,
+                    'description' => trim(str_replace($name, '', $elc->text())),
+                );
             }
         }
 
@@ -138,10 +132,7 @@ class WorldArtRu implements Filler
         if (!$this->isSupportSource($source)) {
             return null;
         }
-        $dom = $this->getDomDocumentFromUrl($source);
-        if (!($dom instanceof \DOMDocument)) {
-            return null;
-        }
+        $crawler = $this->getCrawlerFromUrl($source);
         // TODO requires the implementation of
         return null;
     }
@@ -158,15 +149,15 @@ class WorldArtRu implements Filler
     }
 
     /**
-     * Get DOMDocument from url
+     * Get Crawler from url
      *
      * Receive content from the URL, cleaning using Tidy and creating DOM document
      *
      * @param string $url
      *
-     * @return \DOMDocument|null
+     * @return \Symfony\Component\DomCrawler\Crawler
      */
-    private function getDomDocumentFromUrl($url) {
+    private function getCrawlerFromUrl($url) {
         // get content
         /* @var $response \Buzz\Message\Response */
         $response = $this->browser->get($url);
@@ -191,12 +182,9 @@ class WorldArtRu implements Filler
         // remove noembed
         $html = preg_replace('/<noembed>.*?<\/noembed>/is', '', $html);
 
-        // find lists
-        $dom = new \DOMDocument('1.0', 'utf8');
-        if ($dom->loadHTML($html)) {
-            return $dom;
-        } else {
-            return null;
-        }
+        // load Crawler
+        $crawler = new Crawler();
+        $crawler->addHtmlContent($html);
+        return $crawler;
     }
 }
