@@ -175,8 +175,8 @@
                 <target>Другие названия</target>
             </trans-unit>
             <trans-unit id="44">
-                <source>Main image</source>
-                <target>Основное изображение</target>
+                <source>Cover</source>
+                <target>Обложка</target>
             </trans-unit>
             <trans-unit id="45">
                 <source>Other images</source>

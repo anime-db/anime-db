@@ -183,14 +183,14 @@ class Item
     protected $sources;
 
     /**
-     * Image
+     * Cover
      *
      * @ORM\Column(type="string", length=256)
      * @Assert\Image()
      *
      * @var string
      */
-    protected $image;
+    protected $cover;
 
     /**
      * Image list
@@ -613,26 +613,26 @@ class Item
     }
 
     /**
-     * Set image
+     * Set cover
      *
-     * @param string $image
+     * @param string $cover
      *
      * @return \AnimeDB\CatalogBundle\Entity\Item
      */
-    public function setImage($image)
+    public function setCover($cover)
     {
-        $this->image = $image;
+        $this->cover = $cover;
         return $this;
     }
 
     /**
-     * Get image
+     * Get cover
      *
      * @return string 
      */
-    public function getImage()
+    public function getCover()
     {
-        return $this->image;
+        return $this->cover;
     }
 
     /**
