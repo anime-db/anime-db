@@ -12,7 +12,14 @@ namespace AnimeDB\CatalogBundle\Service\Autofill\Filler;
 
 use AnimeDB\CatalogBundle\Service\Autofill\Filler\Filler;
 use Buzz\Browser;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DomCrawler\Crawler;
+use AnimeDB\CatalogBundle\Entity\Item;
+use AnimeDB\CatalogBundle\Entity\Source;
+use AnimeDB\CatalogBundle\Entity\Name;
+use AnimeDB\CatalogBundle\Entity\Country;
+use AnimeDB\CatalogBundle\Entity\Genre;
+use AnimeDB\CatalogBundle\Entity\Type;
 
 /**
  * Autofill from site world-art.ru
@@ -52,6 +59,13 @@ class WorldArtRu implements Filler
     const XPATH_FOR_LIST = '//body/table/tr/td/center/table/tr/td/table/tr/td/table/tr/td';
 
     /**
+     * XPath for fill item
+     *
+     * @var string
+     */
+    const XPATH_FOR_FILL = '//body/table/tr/td/center/table[9]/tr/td/table[1]/tr/td';
+
+    /**
      * Browser
      *
      * @var \Buzz\Browser
@@ -59,13 +73,128 @@ class WorldArtRu implements Filler
     private $browser;
 
     /**
+     * Request
+     *
+     * @var \Symfony\Component\HttpFoundation\Request
+     */
+    private $request;
+
+    /**
+     * World-Art countrys
+     *
+     * @var array
+     */
+    private $countrys = [
+        'Россия' => ['RU', 'Russia'],
+        'Япония' => ['JP', 'Japan'],
+        'США' => ['US', 'United States'],
+        'Австралия' => ['AU', 'Australia'],
+        'Австрия' => ['AT', 'Austria'],
+        'Азербайджан' => ['AZ', 'Azerbaijan'],
+        'Албания' => ['AL', 'Albania'],
+        'Алжир' => ['DZ', 'Algeria'],
+        'Ангола' => ['AO', 'Angola'],
+        'Андорра' => ['AD', 'Andorra'],
+        'Аргентина' => ['AR', 'Argentina'],
+        'Армения' => ['AM', 'Armenia'],
+        'Аруба' => ['AW', 'Aruba'],
+        'Афганистан' => ['AF', 'Afghanistan'],
+        'Беларусь' => ['BY', 'Belarus'],
+        'Бельгия' => ['BE', 'Belgium'],
+        'Болгария' => ['BG', 'Bulgaria'],
+        'Боливия' => ['BO', 'Bolivia'],
+        'Бразилия' => ['BR', 'Brazil'],
+        'Буркина-Фасо' => ['BF', 'Burkina Faso'],
+        'Вануату' => ['VU', 'Vanuatu'],
+        'Великобритания' => ['GB', 'United Kingdom'],
+        'Венгрия' => ['HU', 'Hungary'],
+        'Вьетнам' => ['VN', 'Vietnam'],
+        'Германия' => ['DE', 'Germany'],
+        'Греция' => ['GR', 'Greece'],
+        'Грузия' => ['GE', 'Georgia'],
+        'Дания' => ['DK', 'Denmark'],
+        'Египет' => ['EG', 'Egypt'],
+        'Замбия' => ['ZM', 'Zambia'],
+    ];
+
+    /**
+     * World-Art genres
+     *
+     * @var array
+     */
+    private $genres = [
+        'боевик' => 'Action',
+        'боевые искусства' => 'Martial arts',
+        'вампиры' => 'Vampires',
+        'война' => 'War',
+        'детектив' => 'Detective',
+        'для детей' => 'For children',
+        'дзёсэй' => 'Josei',
+        'драма' => 'Drama',
+        'история' => 'History',
+        'киберпанк' => 'Cyberpunk',
+        'комедия' => 'Comedy',
+        'махо-сёдзё' => 'Mahoe shoujo',
+        'меха' => 'Meho',
+        'мистерия' => 'Mystery play',
+        'мистика' => 'Mysticism',
+        'музыкальный' => 'Musical',
+        'образовательный' => 'Educational',
+        'пародия' => 'Parody',
+        'cтимпанк' => 'Steampunk',
+        'паропанк' => 'Steampunk',
+        'повседневность' => 'Everyday',
+        'полиция' => 'Police',
+        'постапокалиптика' => 'Apocalyptic fiction',
+        'приключения' => 'Adventure',
+        'психология' => 'Psychology',
+        'романтика' => 'Romance',
+        'самурайский боевик' => 'Samurai action',
+        'сёдзё' => 'Shoujo',
+        'сёдзё-ай' => 'Shoujo-ai',
+        'сёнэн' => 'Senen',
+        'сёнэн-ай' => 'Senen-ai',
+        'сказка' => 'Fable',
+        'спорт' => 'Sport',
+        'сэйнэн' => 'Senen',
+        'триллер' => 'Thriller',
+        'школа' => 'School',
+        'фантастика' => 'Fantastic',
+        'фэнтези' => 'Fantasy',
+        'эротика' => 'Erotica',
+        'этти' => 'Ettie',
+        'ужасы' => 'Horror',
+        'хентай' => 'Hentai',
+        'юри' => 'Urey',
+        'яой' => 'Yaoi',
+    ];
+
+    /**
+     * World-Art types
+     *
+     * @var array
+     */
+    private $types = [
+        'ТВ' => ['tv', 'TV'],
+        'ТВ-спэшл' => ['speshl', 'TV-speshl'],
+        'OVA' => ['ova', 'OVA'],
+        'ONA' => ['ona', 'ONA'],
+        'OAV' => ['oav', 'OAV'],
+        'полнометражный фильм' => ['feature', 'Feature'],
+        'короткометражный фильм' => ['featurette', 'Featurette'],
+        'музыкальное видео' => ['music', 'Music video'],
+        'рекламный ролик' => ['commercial', 'Commercial'],
+    ];
+
+    /**
      * Construct
      *
      * @param \Buzz\Browser $browser
      */
-    public function __construct(Browser $browser)
+    public function __construct(Browser $browser, Request $request)
     {
         $this->browser = $browser;
+        $this->request = $request;
     }
 
     /**
@@ -102,18 +231,18 @@ class WorldArtRu implements Filler
         $crawler = $this->getCrawlerFromUrl(self::HOST.$url)
             ->filterXPath(self::XPATH_FOR_LIST);
 
-        $list = array();
+        $list = [];
         foreach ($crawler as $el) {
             $elc = new Crawler($el);
             /* @var $link Crawler */
             $link = $elc->filter('a')->first();
             // has link on source
             if ($link->count() && ($href = $link->attr('href')) && ($name = $link->text())) {
-                $list[] = array(
-                    'name'        => str_replace(array("\r\n", "\n"), ' ', $name),
+                $list[] = [
+                    'name'        => str_replace(["\r\n", "\n"], ' ', $name),
                     'source'      => self::HOST.$href,
                     'description' => trim(str_replace($name, '', $elc->text())),
-                );
+                ];
             }
         }
 
@@ -132,8 +261,219 @@ class WorldArtRu implements Filler
         if (!$this->isSupportSource($source)) {
             return null;
         }
-        $crawler = $this->getCrawlerFromUrl($source);
-        // TODO requires the implementation of
+        $dom = $this->getDomDocumentFromUrl($source);
+        if (!($dom instanceof \DOMDocument)) {
+            return null;
+        }
+        $xpath = new \DOMXPath($dom);
+        $nodes = $xpath->query(self::XPATH_FOR_FILL);
+
+        $item = new Item();
+
+        // add source links
+        /* @var $links \DOMNodeList */
+        $links = $xpath->query('a', $nodes->item(1));
+        for ($i = 0; $i < $links->length; $i++) {
+            $link = $this->getAttrAsArray($links->item($i));
+            if (strpos($link['href'], 'http://') !== false && strpos($link['href'], self::HOST) === false) {
+                $item->addSource((new Source())->setSource($link['href']));
+            }
+        }
+        /* @var $body \DOMElement */
+        $body = $nodes->item(4);
+
+        // add cover
+        $item->setCover($this->getCover($xpath, $body));
+        // fill main data
+        $head = $xpath->query('table[3]/tr[2]/td[3]', $body);
+        if (!$head->length) {
+            $head = $xpath->query('table[2]/tr[1]/td[3]', $body);
+        }
+        if ($head->length) {
+            $item = $this->fillHeadData($item, $xpath, $head->item(0));
+        } else {
+            throw new \Exception('Cant get head info');
+        }
+
+        // TODO get summary, other images, episodes
+
+        // add source link on world-art
+        $item->addSource((new Source())->setSource($source));
+        return $item;
+    }
+
+    /**
+     * Get element attributes as array
+     *
+     * @param \DOMElement $element
+     *
+     * @return array
+     */
+    private function getAttrAsArray(\DOMElement $element) {
+        $return = [];
+        for ($i = 0; $i < $element->attributes->length; ++$i) {
+            $return[$element->attributes->item($i)->nodeName] = $element->attributes->item($i)->nodeValue;
+        }
+        return $return;
+    }
+
+    /**
+     * Get cover from source
+     *
+     * @param \DOMXPath $xpath
+     * @param \DOMElement $body
+     *
+     * @return string|null
+     */
+    private function getCover(\DOMXPath $xpath, \DOMElement $body) {
+        $imgs = $xpath->query('table/tr/td//img', $body);
+        if ($imgs->length) {
+            $src = $this->getAttrAsArray($imgs->item(0))['src'];
+            if (strpos($src, 'http://') === false) {
+                $src = self::HOST.'animation/'.$src;
+            }
+            return $src;
+        }
+        return null;
+    }
+
+    /**
+     * Fill head data
+     *
+     * @param \AnimeDB\CatalogBundle\Entity\Item $item
+     * @param \DOMXPath $xpath
+     * @param \DOMElement $head
+     *
+     * @return \AnimeDB\CatalogBundle\Entity\Item
+     */
+    private function fillHeadData(Item $item, \DOMXPath $xpath, \DOMElement $head) {
+        // add main name
+        $name = $xpath->query('font[1]/b', $head)->item(0)->nodeValue;
+        $name = trim(str_replace('[ТВ]', '', $name), ' [');
+        $item->setName($name);
+
+        // find other names
+        foreach ($head->childNodes as $node) {
+            if ($node->nodeName == '#text' && trim($node->nodeValue)) {
+                $item->addName((new Name())->setName(trim($node->nodeValue)));
+            }
+        }
+
+        /* @var $data \DOMElement */
+        $data = $xpath->query('font[2]', $head)->item(0);
+        foreach ($data->childNodes as $i => $node) {
+            if ($node->nodeName == 'b') {
+                switch ($node->nodeValue) {
+                    // set manufacturer
+                    case 'Производство':
+                        $j = 1;
+                        do {
+                            if ($data->childNodes->item($i+$j)->nodeName == 'img') {
+                                $country_name = trim($data->childNodes->item($i+$j+1)->nodeValue);
+                                if ($country_name && $country = $this->getCountryByName($country_name)) {
+                                    $item->setManufacturer($country);
+                                }
+                                break;
+                            }
+                            $j++;
+                        } while ($data->childNodes->item($i+$j)->nodeName != 'br');
+                        break;
+
+                    // add genre
+                    case 'Жанр':
+                        $j = 2;
+                        do {
+                            if ($data->childNodes->item($i+$j)->nodeName == 'a' &&
+                                ($genre = $this->getGenreByName($data->childNodes->item($i+$j)->nodeValue))
+                            ) {
+                                $item->addGenre($genre);
+                            }
+                            $j++;
+                        } while ($data->childNodes->item($i+$j)->nodeName != 'br');
+                        break;
+
+                    // set type and add file info
+                    case 'Тип':
+                        $type = $data->childNodes->item($i+1)->nodeValue;
+                        if (preg_match('/(\w+) (\(.+)$/u', $type, $match)) {
+                            // add type
+                            if ($type = $this->getTypeByName($match[1])) {
+                                $item->setType($type);
+                            }
+                            // TODO get duration
+
+                            // add file info
+                            $file_info = $item->getFileInfo();
+                            $item->setFileInfo(($file_info ? $file_info."\r\n" : '').$match[2]);
+                        }
+                        break;
+
+                    // set date start and date end if exists
+                    case 'Выпуск':
+                        $j = 1;
+                        $date = '';
+                        do {
+                            $date .= $data->childNodes->item($i+$j)->nodeValue;
+                            $j++;
+                        } while ($data->childNodes->item($i+$j)->nodeName != 'br');
+
+                        if (preg_match('/(\d{2}.\d{2}.\d{4})(?:.*(\d{2}.\d{2}.\d{4}))?/', $date, $match)) {
+                            $item->setDateStart(new \DateTime($match[1]));
+                            if (isset($match[2])) {
+                                $item->setDateEnd(new \DateTime($match[2]));
+                            }
+                        }
+                        break;
+                }
+            }
+        }
+
+        return $item;
+    }
+
+    /**
+     * Get real country by name
+     *
+     * @param integer $id
+     *
+     * @return \AnimeDB\CatalogBundle\Entity\Country|null
+     */
+    private function getCountryByName($name) {
+        if (isset($this->countrys[$name])) {
+            return (new Country())
+                ->setId($this->countrys[$name][0])
+                ->setName($this->countrys[$name][1]);
+        }
+        return null;
+    }
+
+    /**
+     * Get real genre by name
+     *
+     * @param string $name
+     *
+     * @return \AnimeDB\CatalogBundle\Entity\Genre
+     */
+    private function getGenreByName($name) {
+        if (isset($this->genres[$name])) {
+            return (new Genre())->setName($this->genres[$name]);
+        }
+        return null;
+    }
+
+    /**
+     * Get real type by name
+     *
+     * @param string $name
+     *
+     * @return \AnimeDB\CatalogBundle\Entity\Type
+     */
+    private function getTypeByName($name) {
+        if (isset($this->types[$name])) {
+            return (new Type())
+                ->setId($this->types[$name][0])
+                ->setName($this->types[$name][1]);
+        }
         return null;
     }
 
@@ -151,40 +491,73 @@ class WorldArtRu implements Filler
     /**
      * Get Crawler from url
      *
-     * Receive content from the URL, cleaning using Tidy and creating DOM document
+     * Receive content from the URL, cleaning using Tidy and creating Crawler
      *
      * @param string $url
      *
      * @return \Symfony\Component\DomCrawler\Crawler
      */
     private function getCrawlerFromUrl($url) {
-        // get content
+        $crawler = new Crawler();
+        $crawler->addHtmlContent($this->getContentFromUrl($url));
+        return $crawler;
+    }
+
+    /**
+     * Get DOMDocument from url
+     *
+     * Receive content from the URL, cleaning using Tidy and creating DOM document
+     *
+     * @param string $url
+     *
+     * @return \DOMDocument|null
+     */
+    private function getDomDocumentFromUrl($url) {
+        $dom = new \DOMDocument('1.0', 'utf8');
+        if ($dom->loadHTML($this->getContentFromUrl($url))) {
+            return $dom;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Get content from url
+     *
+     * Receive content from the URL and cleaning using Tidy
+     *
+     * @param string $url
+     */
+    private function getContentFromUrl($url) {
+        if (is_file(__DIR__.'/url.xml~')) {
+            return file_get_contents(__DIR__.'/url.xml~');
+        }
+        // send request from the original user
+        $headers = $this->request->server->getHeaders();
+        unset($headers['HOST'], $headers['COOKIE']);
         /* @var $response \Buzz\Message\Response */
-        $response = $this->browser->get($url);
+        $response = $this->browser->get($url, $headers);
         if ($response->getStatusCode() !== 200 || !($html = $response->getContent())) {
             return null;
         }
         $html = iconv('windows-1251', 'utf-8', $html);
 
         // clean content
-        $config = array(
+        $config = [
             'output-xhtml' => true,
             'indent' => true,
             'indent-spaces' => 0,
             'fix-backslash' => true,
             'hide-comments' => true,
             'drop-empty-paras' => true,
-        );
+        ];
         $tidy = new \tidy();
         $tidy->ParseString($html, $config, 'utf8');
         $tidy->cleanRepair();
         $html = $tidy->root()->value;
         // remove noembed
-        $html = preg_replace('/<noembed>.*?<\/noembed>/is', '', $html);
-
-        // load Crawler
-        $crawler = new Crawler();
-        $crawler->addHtmlContent($html);
-        return $crawler;
+        $content = preg_replace('/<noembed>.*?<\/noembed>/is', '', $html);
+        file_put_contents(__DIR__.'/url.xml~', $content);
+        return $content;
     }
 }
