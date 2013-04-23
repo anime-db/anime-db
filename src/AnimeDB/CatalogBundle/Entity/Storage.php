@@ -130,26 +130,27 @@ class Storage
     }
 
     /**
-     * Add items
+     * Add item
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Item $items
+     * @param \AnimeDB\CatalogBundle\Entity\Item $item
      *
      * @return \AnimeDB\CatalogBundle\Entity\Storage
      */
-    public function addItem(\AnimeDB\CatalogBundle\Entity\Item $items)
+    public function addItem(\AnimeDB\CatalogBundle\Entity\Item $item)
     {
-        $this->items[] = $items;
+        $this->items[] = $item->setStorage($this);
         return $this;
     }
 
     /**
-     * Remove items
+     * Remove item
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Item $items
+     * @param \AnimeDB\CatalogBundle\Entity\Item $item
      */
-    public function removeItem(\AnimeDB\CatalogBundle\Entity\Item $items)
+    public function removeItem(\AnimeDB\CatalogBundle\Entity\Item $item)
     {
-        $this->items->removeElement($items);
+        $this->items->removeElement($item);
+        $item->setStorage(null);
     }
 
     /**

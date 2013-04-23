@@ -13,6 +13,7 @@ namespace AnimeDB\CatalogBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use AnimeDB\CatalogBundle\Entity\Item;
 
 /**
  * Item images
@@ -54,17 +55,9 @@ class Image
      * @ORM\ManyToOne(targetEntity="Item", inversedBy="images")
      * @ORM\JoinColumn(name="id", referencedColumnName="id")
      *
-     * @var \Doctrine\Common\Collections\ArrayCollection
+     * @var \AnimeDB\CatalogBundle\Entity\Item
      */
-    protected $items;
-
-    /**
-     * Construct
-     */
-    public function __construct()
-    {
-        $this->items = new ArrayCollection();
-    }
+    protected $item;
 
     /**
      * Get id
@@ -100,35 +93,30 @@ class Image
     }
 
     /**
-     * Add items
+     * Set item
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Item $items
+     * @param \AnimeDB\CatalogBundle\Entity\Item $item
      *
      * @return \AnimeDB\CatalogBundle\Entity\Image
      */
-    public function addItem(\AnimeDB\CatalogBundle\Entity\Item $items)
+    public function setItem(Item $item = null)
     {
-        $this->items[] = $items;
+        if ($this->item != $item) {
+            $this->item = $item;
+            if ($item instanceof Item) {
+                $this->item->addImage($this);
+            }
+        }
         return $this;
     }
 
     /**
-     * Remove items
+     * Get item
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Item $items
+     * @return \AnimeDB\CatalogBundle\Entity\Item
      */
-    public function removeItem(\AnimeDB\CatalogBundle\Entity\Item $items)
+    public function getItem()
     {
-        $this->items->removeElement($items);
-    }
-
-    /**
-     * Get items
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getItems()
-    {
-        return $this->items;
+        return $this->item;
     }
 }

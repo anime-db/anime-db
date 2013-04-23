@@ -13,6 +13,7 @@ namespace AnimeDB\CatalogBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use AnimeDB\CatalogBundle\Entity\Item;
 
 /**
  * Item name
@@ -97,9 +98,14 @@ class Name
      *
      * @return \AnimeDB\CatalogBundle\Entity\Name
      */
-    public function setItem(\AnimeDB\CatalogBundle\Entity\Item $item = null)
+    public function setItem(Item $item = null)
     {
-        $this->item = $item;
+        if ($this->item != $item) {
+            $this->item = $item;
+            if ($item instanceof Item) {
+                $this->item->addName($this);
+            }
+        }
         return $this;
     }
 

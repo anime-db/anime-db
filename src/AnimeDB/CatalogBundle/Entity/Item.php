@@ -13,6 +13,9 @@ namespace AnimeDB\CatalogBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use AnimeDB\CatalogBundle\Entity\Country;
+use AnimeDB\CatalogBundle\Entity\Storage;
+use AnimeDB\CatalogBundle\Entity\Type;
 
 /**
  * Item
@@ -245,11 +248,11 @@ class Item
     /**
      * Set date_start
      *
-     * @param \DateTime $dateStart
+     * @param \DateTime|null $dateStart
      *
      * @return \AnimeDB\CatalogBundle\Entity\Item
      */
-    public function setDateStart($dateStart)
+    public function setDateStart(\DateTime $dateStart = null)
     {
         $this->date_start = $dateStart;
         return $this;
@@ -268,11 +271,11 @@ class Item
     /**
      * Set date_end
      *
-     * @param \DateTime $dateEnd
+     * @param \DateTime|null $dateEnd
      *
      * @return \AnimeDB\CatalogBundle\Entity\Item
      */
-    public function setDateEnd($dateEnd)
+    public function setDateEnd(\DateTime $dateEnd = null)
     {
         $this->date_end = $dateEnd;
         return $this;
@@ -427,26 +430,32 @@ class Item
     }
 
     /**
-     * Add names
+     * Add name
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Name $names
+     * @param \AnimeDB\CatalogBundle\Entity\Name $name
      *
      * @return \AnimeDB\CatalogBundle\Entity\Item
      */
-    public function addName(\AnimeDB\CatalogBundle\Entity\Name $names)
+    public function addName(\AnimeDB\CatalogBundle\Entity\Name $name)
     {
-        $this->names[] = $names;
+        if (!$this->names->contains($name)) {
+            $this->names->add($name);
+            $name->setItem($this);
+        }
         return $this;
     }
 
     /**
-     * Remove names
+     * Remove name
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Item $names
+     * @param \AnimeDB\CatalogBundle\Entity\Name $name
      */
-    public function removeName(\AnimeDB\CatalogBundle\Entity\Item $names)
+    public function removeName(\AnimeDB\CatalogBundle\Entity\Name $name)
     {
-        $this->names->removeElement($names);
+        if ($this->names->contains($name)) {
+            $this->names->removeElement($name);
+            $name->setItem(null);
+        }
     }
 
     /**
@@ -466,9 +475,21 @@ class Item
      *
      * @return \AnimeDB\CatalogBundle\Entity\Item
      */
-    public function setType(\AnimeDB\CatalogBundle\Entity\Type $type = null)
+    public function setType(Type $type = null)
     {
-        $this->type = $type;
+        if ($this->type !== $type) {
+            // romove link on this item for old type
+            if ($this->type instanceof Type) {
+                $tmp = $this->type;
+                $this->type = null;
+                $tmp->removeItem($this);
+            }
+            $this->type = $type;
+            // add link on this item
+            if ($this->type instanceof Type) {
+                $this->type->addItem($this);
+            }
+        }
         return $this;
     }
 
@@ -485,24 +506,30 @@ class Item
     /**
      * Add genres
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Genre $genres
+     * @param \AnimeDB\CatalogBundle\Entity\Genre $genre
      *
      * @return \AnimeDB\CatalogBundle\Entity\Item
      */
-    public function addGenre(\AnimeDB\CatalogBundle\Entity\Genre $genres)
+    public function addGenre(\AnimeDB\CatalogBundle\Entity\Genre $genre)
     {
-        $this->genres[] = $genres;
+        if (!$this->genres->contains($genre)) {
+            $this->genres->add($genre);
+            $genre->addItem($this);
+        }
         return $this;
     }
 
     /**
      * Remove genres
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Genre $genres
+     * @param \AnimeDB\CatalogBundle\Entity\Genre $genre
      */
-    public function removeGenre(\AnimeDB\CatalogBundle\Entity\Genre $genres)
+    public function removeGenre(\AnimeDB\CatalogBundle\Entity\Genre $genre)
     {
-        $this->genres->removeElement($genres);
+        if ($this->genres->contains($genre)) {
+            $this->genres->removeElement($genre);
+            $genre->removeItem($this);
+        }
     }
 
     /**
@@ -522,9 +549,21 @@ class Item
      *
      * @return \AnimeDB\CatalogBundle\Entity\Item
      */
-    public function setProduction(\AnimeDB\CatalogBundle\Entity\Country $manufacturer = null)
+    public function setManufacturer(Country $manufacturer = null)
     {
-        $this->manufacturer = $manufacturer;
+        if ($this->manufacturer !== $manufacturer) {
+            // romove link on this item for old manufacturer
+            if ($this->manufacturer instanceof Country) {
+                $tmp = $this->manufacturer;
+                $this->manufacturer = null;
+                $tmp->removeItem($this);
+            }
+            $this->manufacturer = $manufacturer;
+            // add link on this item
+            if ($this->manufacturer instanceof Country) {
+                $this->manufacturer->addItem($this);
+            }
+        }
         return $this;
     }
 
@@ -545,9 +584,21 @@ class Item
      *
      * @return \AnimeDB\CatalogBundle\Entity\Item
      */
-    public function setStorage(\AnimeDB\CatalogBundle\Entity\Storage $storage = null)
+    public function setStorage(Storage $storage = null)
     {
-        $this->storage = $storage;
+        if ($this->storage !== $storage) {
+            // romove link on this item for old storage
+            if ($this->storage instanceof Storage) {
+                $tmp = $this->storage;
+                $this->storage = null;
+                $tmp->removeItem($this);
+            }
+            $this->storage = $storage;
+            // add link on this item
+            if ($this->storage instanceof Storage) {
+                $this->storage->addItem($this);
+            }
+        }
         return $this;
     }
 
@@ -585,26 +636,32 @@ class Item
     }
 
     /**
-     * Add sources
+     * Add source
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Source $sources
+     * @param \AnimeDB\CatalogBundle\Entity\Source $source
      *
      * @return \AnimeDB\CatalogBundle\Entity\Item
      */
-    public function addSource(\AnimeDB\CatalogBundle\Entity\Source $sources)
+    public function addSource(\AnimeDB\CatalogBundle\Entity\Source $source)
     {
-        $this->sources[] = $sources;
+        if (!$this->sources->contains($source)) {
+            $this->sources->add($source);
+            $source->setItem($this);
+        }
         return $this;
     }
 
     /**
-     * Remove sources
+     * Remove source
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Source $sources
+     * @param \AnimeDB\CatalogBundle\Entity\Source $source
      */
-    public function removeSource(\AnimeDB\CatalogBundle\Entity\Source $sources)
+    public function removeSource(\AnimeDB\CatalogBundle\Entity\Source $source)
     {
-        $this->sources->removeElement($sources);
+        if ($this->sources->contains($source)) {
+            $this->sources->removeElement($source);
+            $source->setItem(null);
+        }
     }
 
     /**
@@ -618,26 +675,32 @@ class Item
     }
 
     /**
-     * Add images
+     * Add image
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Image $images
+     * @param \AnimeDB\CatalogBundle\Entity\Image $image
      *
      * @return \AnimeDB\CatalogBundle\Entity\Item
      */
-    public function addImage(\AnimeDB\CatalogBundle\Entity\Image $images)
+    public function addImage(\AnimeDB\CatalogBundle\Entity\Image $image)
     {
-        $this->images[] = $images;
+        if (!$this->images->contains($image)) {
+            $this->images->add($image);
+            $image->setItem($this);
+        }
         return $this;
     }
 
     /**
-     * Remove images
+     * Remove image
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Image $images
+     * @param \AnimeDB\CatalogBundle\Entity\Image $image
      */
-    public function removeImage(\AnimeDB\CatalogBundle\Entity\Image $images)
+    public function removeImage(\AnimeDB\CatalogBundle\Entity\Image $image)
     {
-        $this->images->removeElement($images);
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
+            $image->setItem(null);
+        }
     }
 
     /**

@@ -118,18 +118,19 @@ class Type
      */
     public function addItem(\AnimeDB\CatalogBundle\Entity\Item $items)
     {
-        $this->items[] = $items;
+        $this->items[] = $items->setType($this);
         return $this;
     }
 
     /**
-     * Remove items
+     * Remove item
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Item $items
+     * @param \AnimeDB\CatalogBundle\Entity\Item $item
      */
-    public function removeItem(\AnimeDB\CatalogBundle\Entity\Item $items)
+    public function removeItem(\AnimeDB\CatalogBundle\Entity\Item $item)
     {
-        $this->items->removeElement($items);
+        $this->items->removeElement($item);
+        $item->setType(null);
     }
 
     /**

@@ -100,23 +100,30 @@ class Genre
     /**
      * Add items
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Item $items
+     * @param \AnimeDB\CatalogBundle\Entity\Item $item
+     *
      * @return Genre
      */
-    public function addItem(\AnimeDB\CatalogBundle\Entity\Item $items)
+    public function addItem(\AnimeDB\CatalogBundle\Entity\Item $item)
     {
-        $this->items[] = $items;
+        if (!$this->items->contains($item)) {
+            $this->items->add($item);
+            $item->addGenre($this);
+        }
         return $this;
     }
 
     /**
      * Remove items
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Item $items
+     * @param \AnimeDB\CatalogBundle\Entity\Item $item
      */
-    public function removeItem(\AnimeDB\CatalogBundle\Entity\Item $items)
+    public function removeItem(\AnimeDB\CatalogBundle\Entity\Item $item)
     {
-        $this->items->removeElement($items);
+        if ($this->items->contains($item)) {
+            $this->items->removeElement($item);
+            $item->removeGenre($this);
+        }
     }
 
     /**

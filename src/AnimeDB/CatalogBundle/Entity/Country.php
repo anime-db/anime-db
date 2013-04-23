@@ -112,26 +112,29 @@ class Country
     }
 
     /**
-     * Add items
+     * Add item
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Item $items
+     * @param \AnimeDB\CatalogBundle\Entity\Item $item
      *
      * @return \AnimeDB\CatalogBundle\Entity\Country
      */
-    public function addItem(\AnimeDB\CatalogBundle\Entity\Item $items)
+    public function addItem(\AnimeDB\CatalogBundle\Entity\Item $item)
     {
-        $this->items[] = $items;
+        if (!in_array($item, $this->items)) {
+            $this->items[] = $item->setManufacturer($this);
+        }
         return $this;
     }
 
     /**
-     * Remove items
+     * Remove item
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Item $items
+     * @param \AnimeDB\CatalogBundle\Entity\Item $item
      */
-    public function removeItem(\AnimeDB\CatalogBundle\Entity\Item $items)
+    public function removeItem(\AnimeDB\CatalogBundle\Entity\Item $item)
     {
-        $this->items->removeElement($items);
+        $this->items->removeElement($item);
+        $item->setManufacturer(null);
     }
 
     /**
