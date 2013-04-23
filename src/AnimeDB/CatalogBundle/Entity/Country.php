@@ -120,7 +120,7 @@ class Country
      */
     public function addItem(\AnimeDB\CatalogBundle\Entity\Item $item)
     {
-        if (!in_array($item, $this->items)) {
+        if (!$this->items->contains($item)) {
             $this->items[] = $item->setManufacturer($this);
         }
         return $this;
