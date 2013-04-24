@@ -10,6 +10,8 @@
  
 namespace AnimeDB\CatalogBundle\Service\Autofill\Filler;
 
+use AnimeDB\CatalogBundle\Entity\Image;
+
 use AnimeDB\CatalogBundle\Service\Autofill\Filler\Filler;
 use Buzz\Browser;
 use Symfony\Component\HttpFoundation\Request;
@@ -284,23 +286,16 @@ class WorldArtRu implements Filler
 
         // add cover
         $item->setCover($this->getCover($xpath, $body));
+
         // fill main data
         $head = $xpath->query('table[3]/tr[2]/td[3]', $body);
         if (!$head->length) {
             $head = $xpath->query('table[2]/tr[1]/td[3]', $body);
         }
-        if ($head->length) {
-            $item = $this->fillHeadData($item, $xpath, $head->item(0));
-        } else {
-            throw new \Exception('Cant get head info');
-        }
+        $this->fillHeadData($item, $xpath, $head->item(0));
 
-        // TODO get summary, other images, episodes
-        /* for ($i = 0; $i < $body->childNodes->length; $i++) {
-            switch (trim($body->childNodes->item($i)->nodeValue)) {
-                
-            }
-        } */
+        // fill body data
+        $this->fillBodyData($item, $xpath, $body);
 
         // add source link on world-art
         $item->addSource((new Source())->setSource($source));
@@ -416,6 +411,7 @@ class WorldArtRu implements Filler
                         $i++;
                         break;
                     // set date start and date end if exists
+                    case 'Премьера':
                     case 'Выпуск':
                         $j = 1;
                         $date = '';
@@ -425,18 +421,80 @@ class WorldArtRu implements Filler
                         } while ($data->childNodes->item($i+$j)->nodeName != 'br');
                         $i += $j;
 
-                        if (preg_match('/(\d{2}.\d{2}.\d{4})(?:.*(\d{2}.\d{2}.\d{4}))?/', $date, $match)) {
-                            $item->setDateStart(new \DateTime($match[1]));
-                            if (isset($match[2])) {
-                                $item->setDateEnd(new \DateTime($match[2]));
+                        $reg = '/(?<start>(?:(?:\d{2})|(?:\?\?)).\d{2}.\d{4})'.
+                            '(?:.*(?<end>(?:(?:\d{2})|(?:\?\?)).\d{2}.\d{4}))?/';
+                        if (preg_match($reg, $date, $match)) {
+                            $item->setDateStart(new \DateTime(str_replace('??', '01', $match['start'])));
+                            if (isset($match['end'])) {
+                                $item->setDateEnd(new \DateTime($match['end']));
                             }
                         }
                         break;
                 }
             }
         }
-
-        return $item;
+    }
+    
+    /**
+     * Fill body data
+     *
+     * @param \AnimeDB\CatalogBundle\Entity\Item $item
+     * @param \DOMXPath $xpath
+     * @param \DOMElement $body
+     *
+     * @return \AnimeDB\CatalogBundle\Entity\Item
+     */
+    private function fillBodyData(Item $item, \DOMXPath $xpath, \DOMElement $body) {
+        for ($i = 0; $i < $body->childNodes->length; $i++) {
+            if ($value = trim($body->childNodes->item($i)->nodeValue)) {
+                switch ($value) {
+                    // get summary
+                    case 'Краткое содержание:':
+                        $summary = $xpath->query('tr/td/p[1]', $body->childNodes->item($i+2));
+                        if ($summary->length) {
+                            $item->setSummary(trim($summary->item(0)->nodeValue));
+                        }
+                        $i += 2;
+                        break;
+                    // get episodes
+                    case 'Эпизоды:':
+                        if (!trim($body->childNodes->item($i+1)->nodeValue)) { // simple list
+                            $item->setEpisodes(trim($body->childNodes->item($i+2)->nodeValue));
+                            $i += 2;
+                        } else { // episodes in table
+                            $rows = $xpath->query('tr/td[2]', $body->childNodes->item($i+1));
+                            $episodes = '';
+                            for ($j = 1; $j < $rows->length; $j++) {
+                                $episode = $xpath->query('font', $rows->item($j));
+                                $episodes .= $j.'. '.$episode->item(0)->nodeValue;
+                                if ($rows->length > 1) {
+                                    $episodes .= ' ('.$episode->item(1)->nodeValue.')';
+                                }
+                                $episodes .= "\n";
+                            }
+                            $item->setEpisodes($episodes);
+                            $i++;
+                        }
+                        break;
+                    default:
+                        // find other images
+                        $images = $xpath->query('table[2]/tr[3]/td[3]/a', $body->childNodes->item($i));
+                        foreach ($images as $image) {
+                            $crawler = $this->getCrawlerFromUrl($this->getAttrAsArray($image)['href']);
+                            $images = $crawler->filter('table table table table table img');
+                            foreach ($images as $image) {
+                                $src = $this->getAttrAsArray($image)['src'];
+                                $src = str_replace('optimize_b', 'optimize_d', $src);
+                                if (strpos($src, 'http://') === false) {
+                                    $src = self::HOST.'animation/'.$src;
+                                }
+                                // TODO upload images
+                                $item->addImage((new Image())->setSource($src));
+                            }
+                        }
+                }
+            }
+        }
     }
 
     /**
@@ -537,9 +595,9 @@ class WorldArtRu implements Filler
      * @param string $url
      */
     private function getContentFromUrl($url) {
-        if (is_file(__DIR__.'/url.xml~')) {
+        /* if (is_file(__DIR__.'/url.xml~')) {
             return file_get_contents(__DIR__.'/url.xml~');
-        }
+        } */
         // send request from the original user
         $headers = $this->request->server->getHeaders();
         unset($headers['HOST'], $headers['COOKIE']);
