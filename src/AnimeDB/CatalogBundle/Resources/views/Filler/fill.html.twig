@@ -1,0 +1,17 @@
+{% extends 'AnimeDBCatalogBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Autofill record{% endtrans %} - {{ parent() }}{% endblock %}
+
+{% form_theme form 'AnimeDBCatalogBundle:Form:fields.html.twig' %}
+
+{% block content %}
+<div class="b-addition-form">
+	<h2>{% trans %}Autofill record{% endtrans %}</h2>
+	<div>
+		<form action="{{ path('item_add_manually') }}" method="post" {{ form_enctype(form) }}>
+			{{ form_widget(form) }}
+			<button type="submit">{% trans %}Find{% endtrans %}</button>
+		</form>
+	</div>
+</div>
+{% endblock %}

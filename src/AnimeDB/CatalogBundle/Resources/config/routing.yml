@@ -46,6 +46,6 @@ filler_search:
     pattern:  /filler/search.html
     defaults: { _controller: AnimeDBCatalogBundle:Filler:search }
 
-filler_get:
-    pattern:  /filler/get.html
-    defaults: { _controller: AnimeDBCatalogBundle:Filler:get }
+filler_fill:
+    pattern:  /filler/fill.html
+    defaults: { _controller: AnimeDBCatalogBundle:Filler:fill }

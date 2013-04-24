@@ -14,6 +14,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AnimeDB\CatalogBundle\Form\Filler\Search;
 use AnimeDB\CatalogBundle\Form\Filler\Get;
 use AnimeDB\CatalogBundle\Service\Autofill\Filler\Filler;
+use AnimeDB\CatalogBundle\Form\ItemType;
+use AnimeDB\CatalogBundle\Entity\Item;
+use AnimeDB\CatalogBundle\Entity\Name;
+use AnimeDB\CatalogBundle\Entity\Image;
+use AnimeDB\CatalogBundle\Entity\Source;
 
 /**
  * Filler item
@@ -59,7 +64,7 @@ class FillerController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getAction() {
+    public function fillAction() {
         /* @var $form \Symfony\Component\Form\Form */
         $form = $this->createForm(new Get());
 
@@ -67,24 +72,74 @@ class FillerController extends Controller
         $request = $this->getRequest();
 
         $error = '';
-        if ($request->isMethod('GET')) {
-            $form->bindRequest($request);
-            if ($form->isValid()) {
-                $source = $form->getData()['url'];
-                /* @var $chain \AnimeDB\CatalogBundle\Service\Autofill\Chain */
-                $chain = $this->get('anime_db_catalog.autofill.chain');
-                $filler = $chain->getFillerBySource($source);
-                if (!($filler instanceof Filler)) {
-                    $error = $this->get('translator')->trans('Unable to find any filler for the specified source');
-                } else {
-                    $item = $filler->fill($source);
-                    // TODO create form from item for chenge data and save
-                }
+        $form->bindRequest($request);
+        if ($form->isValid()) {
+            $source = $form->getData()['url'];
+            /* @var $chain \AnimeDB\CatalogBundle\Service\Autofill\Chain */
+            $chain = $this->get('anime_db_catalog.autofill.chain');
+            $filler = $chain->getFillerBySource($source);
+            if (!($filler instanceof Filler)) {
+                $error = $this->get('translator')->trans('Unable to find any filler for the specified source');
+            } else {
+                /* @var $item \AnimeDB\CatalogBundle\Entity\Item */
+                $item = $filler->fill($source);
+                // persist data or add default for not empty
+                $this->persist($item);
+
+                /* @var $form \Symfony\Component\Form\Form */
+                $form = $this->createForm(new ItemType(), $item);
+                return $this->render('AnimeDBCatalogBundle:Filler:fill.html.twig', array(
+                    'form' => $form->createView(),
+                ));
             }
         }
 
-        return $this->render('AnimeDBCatalogBundle:Filler:get.html.twig', array(
-            'error' => $error
+        return $this->render('AnimeDBCatalogBundle:Filler:fill.html.twig', array(
+            'error' => $error,
         ));
+    }
+
+    private function persist(Item $item) {
+        /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $this->getDoctrine()->getEntityManager();
+        // type
+        if ($item->getType()) {
+            $em->persist($item->getType());
+        }
+        // manufacturer
+        if ($item->getManufacturer()) {
+            $em->persist($item->getManufacturer());
+        }
+        // genres
+        if ($item->getGenres()->count()) {
+            foreach ($item->getGenres() as $genre) {
+                $em->persist($genre);
+            }
+        }
+        // images
+        if ($item->getImages()->count()) {
+            foreach ($item->getImages() as $image) {
+                $em->persist($image);
+            }
+        } else {
+            $item->addImage(new Image());
+        }
+        // names
+        if ($item->getNames()->count()) {
+            foreach ($item->getNames() as $name) {
+                $em->persist($name);
+            }
+        } else {
+            $item->addName(new Name());
+        }
+        // sources
+        if ($item->getSources()->count()) {
+            foreach ($item->getSources() as $source) {
+                $em->persist($source);
+            }
+        } else {
+            $item->addSource(new Source());
+        }
+        
     }
 }

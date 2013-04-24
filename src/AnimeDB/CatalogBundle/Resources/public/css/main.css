@@ -360,6 +360,35 @@ h1.logo a span {
 	display: block;
 }
 
+/**
+ * Addition form
+ */
+#animedb_catalogbundle_itemtype_summary,
+#animedb_catalogbundle_itemtype_episodes {
+	width: 500px;
+	height: 200px;
+}
+#animedb_catalogbundle_itemtype_file_info {
+	width: 500px;
+}
+.b-addition-form .b-col-r .b-col-i label {
+	width: 220px;
+}
+.b-addition-form .b-col-r .f-row {
+	height: 31px;
+}
+.b-addition-form .b-col-r .b-col-i {
+	float: left;
+}
+.b-addition-form .b-col-r .b-col-rm-item {
+	height: 31px;
+	line-height: 31px;
+	margin-left: 20px;
+	float: left;
+}
+.b-addition-form .b-col-r {
+	clear: both;
+}
 
 /*
  * form-catalog_item_add

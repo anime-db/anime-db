@@ -47,10 +47,17 @@ class ItemType extends AbstractType
                     'attr'     => array('class' => 'b-col-i')
                 ),
             ))
-            ->add('date_start')
-            ->add('date_end')
+            ->add('date_start', 'date', array(
+                'format' => 'y-MM-d',
+            ))
+            ->add('date_end', 'date', array(
+                'format' => 'y-MM-d',
+            ))
             ->add('duration')
-            ->add('cover', 'file')
+            // TODO do something with downloading images from an url
+            ->add('cover', 'file', array(
+                'data_class' => null,
+            ))
             ->add('images', 'collection', array(
                 'type'         => new ImageType(),
                 'allow_add'    => true,
