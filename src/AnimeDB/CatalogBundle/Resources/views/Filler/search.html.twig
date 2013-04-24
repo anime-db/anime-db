@@ -11,7 +11,7 @@
 	<ul>
 		{% for item in list %}
 			<li>
-				<a href="{{ path('filler_get') }}?filler_get[url]={{ item.source|url_encode }}">{{ item.name }}</a>
+				<a href="{{ path('filler_fill') }}?filler_get[url]={{ item.source|url_encode }}">{{ item.name }}</a>
 				<div>{{ item.description|nl2br }}</div>
 			</li>
 		{% endfor %}
