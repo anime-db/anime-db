@@ -39,14 +39,15 @@ class Source
     protected $id;
 
     /**
-     * Source
+     * URL
      *
      * @ORM\Column(type="string", length=256)
      * @Assert\NotBlank()
+     * @Assert\Url()
      *
      * @var string
      */
-    protected $source;
+    protected $url;
 
     /**
      * Items list
@@ -69,26 +70,26 @@ class Source
     }
 
     /**
-     * Set source
+     * Set url
      *
-     * @param string $source
+     * @param string $url
      *
      * @return \AnimeDB\CatalogBundle\Entity\Source
      */
-    public function setSource($source)
+    public function setUrl($url)
     {
-        $this->source = $source;
+        $this->url = $url;
         return $this;
     }
 
     /**
-     * Get source
+     * Get url
      *
      * @return string 
      */
-    public function getSource()
+    public function getUrl()
     {
-        return $this->source;
+        return $this->url;
     }
 
     /**

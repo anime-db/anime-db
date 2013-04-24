@@ -278,7 +278,7 @@ class WorldArtRu implements Filler
         for ($i = 0; $i < $links->length; $i++) {
             $link = $this->getAttrAsArray($links->item($i));
             if (strpos($link['href'], 'http://') !== false && strpos($link['href'], self::HOST) === false) {
-                $item->addSource((new Source())->setSource($link['href']));
+                $item->addSource((new Source())->setUrl($link['href']));
             }
         }
         /* @var $body \DOMElement */
@@ -298,7 +298,7 @@ class WorldArtRu implements Filler
         $this->fillBodyData($item, $xpath, $body);
 
         // add source link on world-art
-        $item->addSource((new Source())->setSource($source));
+        $item->addSource((new Source())->setUrl($source));
         return $item;
     }
 

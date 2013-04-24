@@ -186,6 +186,10 @@
                 <source>External sources</source>
                 <target>Внешние источники</target>
             </trans-unit>
+            <trans-unit id="47">
+                <source>URL adress</source>
+                <target>URL адрес</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
