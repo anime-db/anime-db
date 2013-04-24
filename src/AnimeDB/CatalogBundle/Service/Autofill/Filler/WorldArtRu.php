@@ -595,9 +595,6 @@ class WorldArtRu implements Filler
      * @param string $url
      */
     private function getContentFromUrl($url) {
-        /* if (is_file(__DIR__.'/url.xml~')) {
-            return file_get_contents(__DIR__.'/url.xml~');
-        } */
         // send request from the original user
         $headers = $this->request->server->getHeaders();
         unset($headers['HOST'], $headers['COOKIE']);
@@ -623,7 +620,6 @@ class WorldArtRu implements Filler
         $html = $tidy->root()->value;
         // remove noembed
         $content = preg_replace('/<noembed>.*?<\/noembed>/is', '', $html);
-        file_put_contents(__DIR__.'/url.xml~', $content);
         return $content;
     }
 }
