@@ -371,7 +371,8 @@ class WorldArtRu implements Filler
 
         /* @var $data \DOMElement */
         $data = $xpath->query('font[2]', $head)->item(0);
-        for ($i = 0; $i < $data->childNodes->length; $i++) {
+        $length = $data->childNodes->length;
+        for ($i = 0; $i < $length; $i++) {
             if ($data->childNodes->item($i)->nodeName == 'b') {
                 switch ($data->childNodes->item($i)->nodeValue) {
                     // set manufacturer
@@ -428,7 +429,7 @@ class WorldArtRu implements Filler
                         do {
                             $date .= $data->childNodes->item($i+$j)->nodeValue;
                             $j++;
-                        } while ($data->childNodes->item($i+$j)->nodeName != 'br');
+                        } while ($length > $i+$j && $data->childNodes->item($i+$j)->nodeName != 'br');
                         $i += $j;
 
                         $reg = '/(?<start>(?:(?:\d{2})|(?:\?\?)).\d{2}.\d{4})'.
