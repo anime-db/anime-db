@@ -10,18 +10,18 @@
  
 namespace AnimeDB\CatalogBundle\Service\Autofill\Filler;
 
-use AnimeDB\CatalogBundle\Entity\Image;
-
 use AnimeDB\CatalogBundle\Service\Autofill\Filler\Filler;
 use Buzz\Browser;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DomCrawler\Crawler;
+use Doctrine\Bundle\DoctrineBundle\Registry;
 use AnimeDB\CatalogBundle\Entity\Item;
 use AnimeDB\CatalogBundle\Entity\Source;
 use AnimeDB\CatalogBundle\Entity\Name;
 use AnimeDB\CatalogBundle\Entity\Country;
 use AnimeDB\CatalogBundle\Entity\Genre;
 use AnimeDB\CatalogBundle\Entity\Type;
+use AnimeDB\CatalogBundle\Entity\Image;
 
 /**
  * Autofill from site world-art.ru
@@ -80,6 +80,13 @@ class WorldArtRu implements Filler
      * @var \Symfony\Component\HttpFoundation\Request
      */
     private $request;
+
+    /**
+     * Doctrine
+     *
+     * @var \Doctrine\Bundle\DoctrineBundle\Registry
+     */
+    private $doctrine;
 
     /**
      * World-Art countrys
@@ -192,11 +199,14 @@ class WorldArtRu implements Filler
      * Construct
      *
      * @param \Buzz\Browser $browser
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Doctrine\Bundle\DoctrineBundle\Registry $doctrine
      */
-    public function __construct(Browser $browser, Request $request)
+    public function __construct(Browser $browser, Request $request, Registry $doctrine)
     {
-        $this->browser = $browser;
-        $this->request = $request;
+        $this->browser  = $browser;
+        $this->request  = $request;
+        $this->doctrine = $doctrine;
     }
 
     /**
@@ -522,7 +532,9 @@ class WorldArtRu implements Filler
      */
     private function getGenreByName($name) {
         if (isset($this->genres[$name])) {
-            return (new Genre())->setName($this->genres[$name]);
+            return $this->doctrine
+                ->getRepository('AnimeDBCatalogBundle:Genre')
+                ->findOneByName($this->genres[$name]);
         }
         return null;
     }
