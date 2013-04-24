@@ -563,7 +563,7 @@ class WorldArtRu implements Filler
      * @return boolean
      */
     public function isSupportSource($source) {
-        return is_string($source) && strpos($source, self::HOST) == 0;
+        return is_string($source) && strpos($source, self::HOST) === 0;
     }
 
     /**
@@ -592,7 +592,7 @@ class WorldArtRu implements Filler
      */
     private function getDomDocumentFromUrl($url) {
         $dom = new \DOMDocument('1.0', 'utf8');
-        if ($dom->loadHTML($this->getContentFromUrl($url))) {
+        if (($content = $this->getContentFromUrl($url)) && $dom->loadHTML($content)) {
             return $dom;
         } else {
             return null;
