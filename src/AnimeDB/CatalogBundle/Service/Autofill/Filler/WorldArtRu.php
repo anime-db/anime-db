@@ -296,6 +296,11 @@ class WorldArtRu implements Filler
         }
 
         // TODO get summary, other images, episodes
+        /* for ($i = 0; $i < $body->childNodes->length; $i++) {
+            switch (trim($body->childNodes->item($i)->nodeValue)) {
+                
+            }
+        } */
 
         // add source link on world-art
         $item->addSource((new Source())->setSource($source));
@@ -361,9 +366,9 @@ class WorldArtRu implements Filler
 
         /* @var $data \DOMElement */
         $data = $xpath->query('font[2]', $head)->item(0);
-        foreach ($data->childNodes as $i => $node) {
-            if ($node->nodeName == 'b') {
-                switch ($node->nodeValue) {
+        for ($i = 0; $i < $data->childNodes->length; $i++) {
+            if ($data->childNodes->item($i)->nodeName == 'b') {
+                switch ($data->childNodes->item($i)->nodeValue) {
                     // set manufacturer
                     case 'Производство':
                         $j = 1;
@@ -377,8 +382,8 @@ class WorldArtRu implements Filler
                             }
                             $j++;
                         } while ($data->childNodes->item($i+$j)->nodeName != 'br');
+                        $i += $j;
                         break;
-
                     // add genre
                     case 'Жанр':
                         $j = 2;
@@ -390,24 +395,26 @@ class WorldArtRu implements Filler
                             }
                             $j++;
                         } while ($data->childNodes->item($i+$j)->nodeName != 'br');
+                        $i += $j;
                         break;
-
                     // set type and add file info
                     case 'Тип':
                         $type = $data->childNodes->item($i+1)->nodeValue;
-                        if (preg_match('/(\w+) (\(.+)$/u', $type, $match)) {
+                        if (preg_match('/(?<type>\w+) (?:\((?<file_info>.+)\))?, (?<duration>\d{1,3}) мин\.$/u', $type, $match)) {
                             // add type
-                            if ($type = $this->getTypeByName($match[1])) {
+                            if ($type = $this->getTypeByName($match['type'])) {
                                 $item->setType($type);
                             }
-                            // TODO get duration
-
+                            // add duration
+                            $item->setDuration((int)$match['duration']);
                             // add file info
-                            $file_info = $item->getFileInfo();
-                            $item->setFileInfo(($file_info ? $file_info."\r\n" : '').$match[2]);
+                            if (!empty($match['file_info'])) {
+                                $file_info = $item->getFileInfo();
+                                $item->setFileInfo(($file_info ? $file_info."\n" : '').$match['file_info']);
+                            }
                         }
+                        $i++;
                         break;
-
                     // set date start and date end if exists
                     case 'Выпуск':
                         $j = 1;
@@ -416,6 +423,7 @@ class WorldArtRu implements Filler
                             $date .= $data->childNodes->item($i+$j)->nodeValue;
                             $j++;
                         } while ($data->childNodes->item($i+$j)->nodeName != 'br');
+                        $i += $j;
 
                         if (preg_match('/(\d{2}.\d{2}.\d{4})(?:.*(\d{2}.\d{2}.\d{4}))?/', $date, $match)) {
                             $item->setDateStart(new \DateTime($match[1]));
