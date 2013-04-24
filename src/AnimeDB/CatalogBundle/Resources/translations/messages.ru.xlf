@@ -190,6 +190,10 @@
                 <source>URL adress</source>
                 <target>URL адрес</target>
             </trans-unit>
+            <trans-unit id="48">
+                <source>Can`t get content from the specified source</source>
+                <target>Не удается получить содержимое из указанного источника</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

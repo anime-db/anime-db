@@ -72,6 +72,7 @@ class FillerController extends Controller
         $request = $this->getRequest();
 
         $error = '';
+        $fill_form = null;
         $form->bindRequest($request);
         if ($form->isValid()) {
             $source = $form->getData()['url'];
@@ -79,23 +80,23 @@ class FillerController extends Controller
             $chain = $this->get('anime_db_catalog.autofill.chain');
             $filler = $chain->getFillerBySource($source);
             if (!($filler instanceof Filler)) {
-                $error = $this->get('translator')->trans('Unable to find any filler for the specified source');
+                $error = 'Unable to find any filler for the specified source';
             } else {
                 /* @var $item \AnimeDB\CatalogBundle\Entity\Item */
                 $item = $filler->fill($source);
-                // persist data or add default for not empty
-                $this->persist($item);
-
-                /* @var $form \Symfony\Component\Form\Form */
-                $form = $this->createForm(new ItemType(), $item);
-                return $this->render('AnimeDBCatalogBundle:Filler:fill.html.twig', array(
-                    'form' => $form->createView(),
-                ));
+                if (!$item) {
+                    $error = 'Can`t get content from the specified source';
+                } else {
+                    // persist data or add default for not empty
+                    $this->persist($item);
+                    $fill_form = $this->createForm(new ItemType(), $item)->createView();
+                }
             }
         }
 
         return $this->render('AnimeDBCatalogBundle:Filler:fill.html.twig', array(
             'error' => $error,
+            'form' => $fill_form,
         ));
     }
 
