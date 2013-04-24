@@ -44,18 +44,8 @@ class HomeController extends Controller
             ->getForm();
 
         return $this->render('AnimeDBCatalogBundle:Home:searchSimpleForm.html.twig', array(
-                'form' => $form->createView(),
+            'form' => $form->createView(),
         ));
-    }
-
-    /**
-     * Select by alphabet
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function alphabetAction() {
-        // TODO требуется реализация
-        return $this->render('AnimeDBCatalogBundle:Home:alphabet.html.twig');
     }
 
     /**

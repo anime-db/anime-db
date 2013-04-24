@@ -10,3 +10,7 @@ anime_db_catalog:
 #_internal:
 #    resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
 #    prefix:   /_internal
+
+#fix for missing _proxy declared route in symfony 2.2
+_proxy:
+    pattern: /_proxy/{_controller}/{_format}

@@ -23,7 +23,6 @@
 			<div id="navigation">
 				<div class="left"></div>
 				<ul>
-					<li><a href="{{ path('home_alphabet') }}">{% trans %}Picks Alphabetical{% endtrans %}</a></li>
 					<li><a href="{{ path('home_selection') }}">{% trans %}Oversampled{% endtrans %}</a></li>
 					<li class="last"><a href="{{ path('item_add') }}">{% trans %}Add record{% endtrans %}</a></li>
 				</ul>
@@ -36,7 +35,7 @@
 					<div id="home-center-header">
 						<p class="intro-message">{% trans with {'%AnimeDB%': '<strong>Anime DB</strong>'}%}%AnimeDB% is a system for making the home catalog of the anime. The system is designed for home use only.{% endtrans %}</p>
 						<div id="home-search">
-							{% render "AnimeDBCatalogBundle:Home:searchSimpleForm" %}
+							{% render controller('AnimeDBCatalogBundle:Home:searchSimpleForm') %}
 						</div>
 					</div>
 					<div id="home-center">
