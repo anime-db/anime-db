@@ -25,7 +25,8 @@ input[type~=reset],
 input[type~=submit],
 button,
 .ui-button .ui-button-text,
-h1, h2, h3, h4, h5, h6, b, strong {
+h1, h2, h3, h4, h5, h6, b,
+.content strong {
 	color: #db3400;
 }
 a:visited,
@@ -251,11 +252,11 @@ h1.logo a span {
 	color: #000;
 }
 #home-search input {
-	background: url(images/magglass.png) no-repeat scroll 5px 6px #FFFFFF;
+	background: url(images/magglass.png) no-repeat scroll 5px 7px #FFFFFF;
+	/*border: 1px #C0CAD5 solid;*/
 	border: 2px #fff100 solid;
 	margin: 2px 15px 0 0;
-	padding: 5px 5px 5px 20px;/*
-	border: 1px solid #C0CAD5;*/
+	padding: 5px 5px 5px 20px;
 	font-size: 11px;
 	width: 150px;
 }
@@ -374,9 +375,6 @@ h1.logo a span {
 .b-addition-form .b-col-r .b-col-i label {
 	width: 220px;
 }
-.b-addition-form .b-col-r .f-row {
-	height: 31px;
-}
 .b-addition-form .b-col-r .b-col-i {
 	float: left;
 }
@@ -386,44 +384,13 @@ h1.logo a span {
 	margin-left: 20px;
 	float: left;
 }
-.b-addition-form .b-col-r {
+.b-addition-form .b-col-r,
+.b-addition-form .f-row {
 	clear: both;
 }
 
-/*
- * form-catalog_item_add
- */
-/*
-#form-catalog_item_add textarea {
-	width: 100%;
-}
-#form-catalog_item_add button {
-	margin: 0 20px;
-}
-#form-catalog_item_add .form-field-input,
-#form-catalog_item_add .form-field-input div {
-	text-align: left;
-	vertical-align: top;
-}
-#form-catalog_item_add .form-field-title {
-	text-align: right;
-}
-#form-catalog_item_add .form-buttons {
-	margin-top: 10px;
-	text-align: center;
-}
-.form-field-input input[type=radio] {
-	line-height: 12px;
-	margin: 0 5px;
-}
-.form-field-input label {
-}*/
 
-/*
-.error,
-.form-error {
-	color: rad;
-}*/
+
 
 
 /*
@@ -439,16 +406,6 @@ div.ui-widget div.ui-state-highlight {
 	float: left;
 	margin-right: 5px;
 }
-
-/*
-.catalog-item-autofill-search-list {
-	
-}
-.catalog-item-autofill-search-list li {
-	margin: 15px;
-	list-style: none;
-}*/
-
 
 /*
  * catalog-last-added

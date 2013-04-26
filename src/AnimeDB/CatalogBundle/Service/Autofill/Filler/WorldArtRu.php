@@ -22,6 +22,7 @@ use AnimeDB\CatalogBundle\Entity\Country;
 use AnimeDB\CatalogBundle\Entity\Genre;
 use AnimeDB\CatalogBundle\Entity\Type;
 use AnimeDB\CatalogBundle\Entity\Image;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Autofill from site world-art.ru
@@ -90,6 +91,8 @@ class WorldArtRu implements Filler
 
     /**
      * World-Art countrys
+     *
+     * TODO Fill countrys list
      *
      * @var array
      */
@@ -342,7 +345,7 @@ class WorldArtRu implements Filler
             if (strpos($src, 'http://') === false) {
                 $src = self::HOST.'animation/'.$src;
             }
-            return $src;
+            return $this->uploadImage($src);
         }
         return null;
     }
@@ -365,7 +368,8 @@ class WorldArtRu implements Filler
         // find other names
         foreach ($head->childNodes as $node) {
             if ($node->nodeName == '#text' && trim($node->nodeValue)) {
-                $item->addName((new Name())->setName(trim($node->nodeValue)));
+                $name = trim(preg_replace('/(\(\d+\))?/', '', $node->nodeValue));
+                $item->addName((new Name())->setName($name));
             }
         }
 
@@ -499,14 +503,95 @@ class WorldArtRu implements Filler
                                 if (strpos($src, 'http://') === false) {
                                     $src = self::HOST.'animation/'.$src;
                                 }
-                                // TODO upload images
-                                $item->addImage((new Image())->setSource($src));
+                                $item->addImage((new Image())->setSource($this->uploadImage($src)));
                             }
                         }
                 }
             }
         }
     }
+
+    /**
+     * Upload image from url
+     *
+     * @param string $url
+     *
+     * @return string
+     */
+    private function uploadImage($url) {
+        // training directory
+        $root = realpath(__DIR__.'/../../../../../../web/upload').'/';
+//         $this->mkdir($root);
+        // create file name
+        $ext = pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION);
+        $dest = $this->createFileName($root, $ext);
+        // upload
+        copy($url, $dest);
+        // return relative path
+        return 'upload/'.pathinfo($dest, PATHINFO_BASENAME);
+    }
+
+    /**
+     * Create unique file name
+     *
+     * @param string $path
+     * @param string $ext
+     *
+     * @return string
+     */
+    private function createFileName($path, $ext) {
+        do {
+            $file_name = uniqid();
+        } while (file_exists($path.$file_name.'.'.$ext));
+        return $path.$file_name.'.'.$ext;
+    }
+
+	/**
+	 * Create a directory
+	 * 
+	 * Creates the directory and the full path to it if it does not exist
+	 *
+	 * @throws \Exception
+	 *
+	 * @param string  $directory
+	 * @param integer $mask
+	 */
+	private function mkdir($directory, $mask = 0755) {
+		if (is_dir($directory) || !$directory) {
+			return;
+		}
+		$directory = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $directory);
+		if (is_file($directory)) {
+			throw new \Exception('mkdir() file exists');
+		}
+
+		// access mask must contain a flag designs for access to it
+		if (($mask & 0002) === 0002 || ($mask & 0004) === 0004) { // other
+			$mask = $mask | 0001;
+		}
+		if (($mask & 0020) === 0020 || ($mask & 0040) === 0040) { // group
+			$mask = $mask | 0010;
+		}
+		if (($mask & 0200) === 0200 || ($mask & 0400) === 0400) { // user
+			$mask = $mask | 0100;
+		}
+
+		$names = explode(DIRECTORY_SEPARATOR, $directory);
+		$dir = DIRECTORY_SEPARATOR;
+		for ($i=0; $i < count($names); $i++) {
+			if ($names[$i]) { // can come to an empty string
+				$dir .= $names[$i].DIRECTORY_SEPARATOR;
+				if (!is_dir($dir)) {
+					$old_umask = umask(0);
+					@mkdir($dir, $mask);
+					umask($old_umask);
+					if (!is_dir($dir)) {
+						throw new \Exception('Can`t create a folder '.$dir);
+					}
+				}
+			}
+		}
+	}
 
     /**
      * Get real country by name
@@ -610,7 +695,7 @@ class WorldArtRu implements Filler
     private function getContentFromUrl($url) {
         // send request from the original user
         $headers = $this->request->server->getHeaders();
-        unset($headers['HOST'], $headers['COOKIE']);
+        unset($headers['HOST'], $headers['COOKIE'], $headers['HTTP_REFERER']);
         /* @var $response \Buzz\Message\Response */
         $response = $this->browser->get($url, $headers);
         if ($response->getStatusCode() !== 200 || !($html = $response->getContent())) {

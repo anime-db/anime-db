@@ -2,6 +2,22 @@
 
 {% block title %}{% trans %}Autofill record{% endtrans %} - {{ parent() }}{% endblock %}
 
+{% if form %}
+{% block stylesheets %}
+	<link href="{{ asset('uploadify/uploadify.css') }}" rel="stylesheet" />
+	{{ form_stylesheet(form) }}
+	{{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset('uploadify/jquery.uploadify.min.js') }}"></script>
+	{{ form_javascript(form) }}
+{% endblock %}
+
+{% form_theme form 'AnimeDBCatalogBundle:Form:fields.html.twig' %}
+{% endif %}
+
 {% block content %}
 <div class="b-addition-form">
 	<h2>{% trans %}Autofill record{% endtrans %}</h2>
@@ -9,7 +25,6 @@
 		{% if error %}
 			<strong>{{ error|trans }}</strong>
 		{% else %}
-			{% form_theme form 'AnimeDBCatalogBundle:Form:fields.html.twig' %}
 			<form action="{{ path('item_add_manually') }}" method="post" {{ form_enctype(form) }}>
 				{{ form_widget(form) }}
 				<button type="submit">{% trans %}Find{% endtrans %}</button>

@@ -47,6 +47,11 @@ class ItemType extends AbstractType
                     'attr'     => array('class' => 'b-col-i')
                 ),
             ))
+            // TODO do something with downloading images from an url
+            ->add('cover', 'genemu_jqueryimage', array(
+//                 'property_path' => 'WebPath'
+            ))
+            // TODO use datepicker
             ->add('date_start', 'date', array(
                 'format' => 'y-MM-d',
             ))
@@ -54,10 +59,6 @@ class ItemType extends AbstractType
                 'format' => 'y-MM-d',
             ))
             ->add('duration')
-            // TODO do something with downloading images from an url
-            ->add('cover', 'file', array(
-                'data_class' => null,
-            ))
             ->add('images', 'collection', array(
                 'type'         => new ImageType(),
                 'allow_add'    => true,
@@ -81,7 +82,7 @@ class ItemType extends AbstractType
             ))
             ->add('manufacturer', 'entity', array(
                 'class'    => 'AnimeDBCatalogBundle:Country',
-                'property' => 'name',
+                'property' => 'name'
             ))
             ->add('path')
             ->add('translate')

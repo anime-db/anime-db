@@ -119,4 +119,24 @@ class Image
     {
         return $this->item;
     }
+
+    public function getAbsolutePath()
+    {
+        return $this->cover !== null ? $this->getUploadRootDir().'/'.$this->cover : null;
+    }
+
+    public function getWebPath()
+    {
+        return $this->cover !== null ? $this->getUploadDir().'/'.$this->cover : null;
+    }
+
+    protected function getUploadRootDir()
+    {
+        return realpath(__DIR__.'/../../../../web/'.$this->getUploadDir());
+    }
+
+    protected function getUploadDir()
+    {
+        return 'media';
+    }
 }

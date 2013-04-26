@@ -141,6 +141,5 @@ class FillerController extends Controller
         } else {
             $item->addSource(new Source());
         }
-        
     }
 }
