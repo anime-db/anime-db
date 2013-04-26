@@ -11,6 +11,7 @@
 namespace AnimeDB\CatalogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Main page of the catalog
@@ -27,7 +28,7 @@ class HomeController extends Controller
      */
     public function indexAction()
     {
-        // TODO требуется реализация
+        // TODO requires the implementation of
         return $this->render('AnimeDBCatalogBundle:Home:index.html.twig', array('name' => 'Test'));
     }
 
@@ -40,7 +41,10 @@ class HomeController extends Controller
     {
         /* @var $form \Symfony\Component\Form\Form */
         $form = $this->createFormBuilder()
-            ->add('q', 'text', array('label' => 'Search'))
+            ->add('q', 'genemu_jqueryautocomplete_text', array(
+                'label' => 'Search',
+                'route_name' => 'home_autocomplete_name',
+            ))
             ->getForm();
 
         return $this->render('AnimeDBCatalogBundle:Home:searchSimpleForm.html.twig', array(
@@ -49,12 +53,26 @@ class HomeController extends Controller
     }
 
     /**
+     * Autocomplete name
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function autocompleteNameAction() {
+        $term = $this->getRequest()->get('term');
+
+        // TODO do search
+        $value = array('Foo', 'Bar');
+
+        return new JsonResponse(json_encode($value));
+    }
+
+    /**
      * Select by category
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function selectionAction() {
-        // TODO требуется реализация
+        // TODO requires the implementation of
         return $this->render('AnimeDBCatalogBundle:Home:selection.html.twig');
     }
 }

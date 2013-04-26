@@ -14,6 +14,9 @@ home_search_simple_form:
     pattern:  /search-simple-form.html
     defaults: { _controller: AnimeDBCatalogBundle:Home:searchSimpleForm }
 
+home_autocomplete_name:
+    pattern:  /autocomplete-name.json
+    defaults: { _controller: AnimeDBCatalogBundle:Home:autocompleteName }
 
 item_add:
     pattern:  /add.html

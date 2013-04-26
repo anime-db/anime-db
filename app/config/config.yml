@@ -67,7 +67,8 @@ swiftmailer:
 genemu_form:
     select2: ~
     date: ~
-    autocomplete: ~
+    autocomplete:
+        enabled: true
     file:
         enabled: true
         swf:     uploadify/uploadify.swf
