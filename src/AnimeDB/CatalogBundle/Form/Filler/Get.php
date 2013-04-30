@@ -12,6 +12,7 @@ namespace AnimeDB\CatalogBundle\Form\Filler;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Get item from filler
@@ -21,15 +22,16 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class Get extends AbstractType
 {
+
     /**
      * (non-PHPdoc)
-     * @see Symfony\Component\Form.AbstractType::getDefaultOptions()
+     * @see Symfony\Component\Form.AbstractType::setDefaultOptions()
      */
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             'csrf_protection' => false,
-        );
+        ));
     }
 
     /**

@@ -12,6 +12,7 @@ namespace AnimeDB\CatalogBundle\Form\Filler;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Search item from filler
@@ -36,6 +37,17 @@ class Search extends AbstractType
     public function __construct(array $filler_titles)
     {
         $this->filler_titles = $filler_titles;
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Symfony\Component\Form.AbstractType::setDefaultOptions()
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'csrf_protection' => false,
+        ));
     }
 
     /**
