@@ -29,8 +29,9 @@ class ImageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // TODO do something with downloading images from an url
-        $builder->add('source', 'genemu_jqueryimage', array(
+        $builder->add('source', 'text', array(
 //             'data_class' => null,
+            'required' => false
         ));
     }
 
