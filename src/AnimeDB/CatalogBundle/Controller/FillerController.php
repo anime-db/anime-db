@@ -87,8 +87,9 @@ class FillerController extends Controller
                 if (!$item) {
                     $error = 'Can`t get content from the specified source';
                 } else {
-                    // persist data or add default for not empty
-                    $this->persist($item);
+                    // persist entity
+                    $em = $this->getDoctrine()->getEntityManager();
+                    $em->persist($item);
                     $fill_form = $this->createForm(new ItemType(), $item)->createView();
                 }
             }
@@ -98,48 +99,5 @@ class FillerController extends Controller
             'error' => $error,
             'form' => $fill_form,
         ));
-    }
-
-    private function persist(Item $item) {
-        /* @var $em \Doctrine\ORM\EntityManager */
-        $em = $this->getDoctrine()->getEntityManager();
-        // type
-        if ($item->getType()) {
-            $em->persist($item->getType());
-        }
-        // manufacturer
-        if ($item->getManufacturer()) {
-            $em->persist($item->getManufacturer());
-        }
-        // genres
-        if ($item->getGenres()->count()) {
-            foreach ($item->getGenres() as $genre) {
-                $em->persist($genre);
-            }
-        }
-        // images
-        if ($item->getImages()->count()) {
-            foreach ($item->getImages() as $image) {
-                $em->persist($image);
-            }
-        } else {
-            $item->addImage(new Image());
-        }
-        // names
-        if ($item->getNames()->count()) {
-            foreach ($item->getNames() as $name) {
-                $em->persist($name);
-            }
-        } else {
-            $item->addName(new Name());
-        }
-        // sources
-        if ($item->getSources()->count()) {
-            foreach ($item->getSources() as $source) {
-                $em->persist($source);
-            }
-        } else {
-            $item->addSource(new Source());
-        }
     }
 }
