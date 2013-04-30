@@ -51,7 +51,7 @@ class Name
     /**
      * Items list
      *
-     * @ORM\ManyToOne(targetEntity="Item", inversedBy="names")
+     * @ORM\ManyToOne(targetEntity="Item", inversedBy="names", cascade={"persist"})
      * @ORM\JoinColumn(name="item", referencedColumnName="id")
      *
      * @var \AnimeDB\CatalogBundle\Entity\Item

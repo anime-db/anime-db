@@ -16,6 +16,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use AnimeDB\CatalogBundle\Entity\Country;
 use AnimeDB\CatalogBundle\Entity\Storage;
 use AnimeDB\CatalogBundle\Entity\Type;
+use Doctrine\ORM\EntityManager;
 
 /**
  * Item
@@ -48,12 +49,12 @@ class Item
      *
      * @var integer
      */
-    protected $name;
+    protected $name = '';
 
     /**
      * Main name
      *
-     * @ORM\OneToMany(targetEntity="Name", mappedBy="id")
+     * @ORM\OneToMany(targetEntity="Name", mappedBy="item", cascade={"persist", "remove"}, orphanRemoval=true)
      *
      * @var \Doctrine\Common\Collections\ArrayCollection
      */
@@ -62,7 +63,7 @@ class Item
     /**
      * Type
      *
-     * @ORM\ManyToOne(targetEntity="Type", inversedBy="items")
+     * @ORM\ManyToOne(targetEntity="Type", inversedBy="items", cascade={"persist"})
      * @ORM\JoinColumn(name="type", referencedColumnName="id")
      *
      * @var \AnimeDB\CatalogBundle\Entity\Type
@@ -82,7 +83,7 @@ class Item
     /**
      * Date end release
      *
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      * @Assert\Date()
      *
      * @var DateTime|null
@@ -92,7 +93,8 @@ class Item
     /**
      * Genre list
      *
-     * @ORM\ManyToMany(targetEntity="Genre", inversedBy="items")
+     * @ORM\ManyToMany(targetEntity="Genre", inversedBy="items", cascade={"persist"})
+     * @ORM\JoinTable(name="items_genres")
      *
      * @var \Doctrine\Common\Collections\ArrayCollection
      */
@@ -101,7 +103,7 @@ class Item
     /**
      * Manufacturer
      *
-     * @ORM\ManyToOne(targetEntity="Country", inversedBy="items")
+     * @ORM\ManyToOne(targetEntity="Country", inversedBy="items", cascade={"persist"})
      * @ORM\JoinColumn(name="manufacturer", referencedColumnName="id")
      *
      * @var \AnimeDB\CatalogBundle\Entity\Country
@@ -111,35 +113,36 @@ class Item
     /**
      * Duration
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      * @Assert\Type(type="integer", message="The value {{ value }} is not a valid {{ type }}.")
      *
      * @var integer
      */
-    protected $duration;
+    protected $duration = 0;
 
     /**
      * Summary
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      *
      * @var string
      */
-    protected $summary;
+    protected $summary = '';
 
     /**
      * Disk path
      *
      * @ORM\Column(type="string", length=256)
+     * @Assert\NotBlank()
      *
      * @var string
      */
-    protected $path;
+    protected $path = '';
 
     /**
      * Storage
      *
-     * @ORM\ManyToOne(targetEntity="Storage", inversedBy="items")
+     * @ORM\ManyToOne(targetEntity="Storage", inversedBy="items", cascade={"persist"})
      * @ORM\JoinColumn(name="storage", referencedColumnName="id")
      *
      * @var integer
@@ -149,34 +152,34 @@ class Item
     /**
      * Episodes list
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      *
      * @var string
      */
-    protected $episodes;
+    protected $episodes = '';
 
     /**
      * Translate (subtitles and voice)
      *
-     * @ORM\Column(type="string", length=256)
+     * @ORM\Column(type="string", length=256, nullable=true)
      *
      * @var string
      */
-    protected $translate;
+    protected $translate = '';
 
     /**
      * File info
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      *
      * @var string
      */
-    protected $file_info;
+    protected $file_info = '';
 
     /**
      * Source list
      *
-     * @ORM\OneToMany(targetEntity="Source", mappedBy="id")
+     * @ORM\OneToMany(targetEntity="Source", mappedBy="item", cascade={"persist", "remove"}, orphanRemoval=true)
      *
      * @var \Doctrine\Common\Collections\ArrayCollection
      */
@@ -185,18 +188,17 @@ class Item
     /**
      * Cover
      *
-     * @ORM\Column(type="string", length=256)
-     * @Assert\Image()
+     * @ORM\Column(type="string", length=256, nullable=true)
+     * @ Assert\Image()
      *
      * @var string
      */
-    protected $cover;
+    protected $cover = '';
 
     /**
      * Image list
      *
-     *
-     * @ORM\OneToMany(targetEntity="Image", mappedBy="id")
+     * @ORM\OneToMany(targetEntity="Image", mappedBy="item", cascade={"persist", "remove"}, orphanRemoval=true)
      *
      * @var \Doctrine\Common\Collections\ArrayCollection
      */

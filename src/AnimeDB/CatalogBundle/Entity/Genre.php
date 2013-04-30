@@ -50,7 +50,7 @@ class Genre
     /**
      * Items list
      *
-     * @ORM\ManyToMany(targetEntity="Item", inversedBy="genres")
+     * @ORM\ManyToMany(targetEntity="Item", mappedBy="genres")
      *
      * @var \Doctrine\Common\Collections\ArrayCollection
      */

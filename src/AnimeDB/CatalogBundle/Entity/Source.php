@@ -31,8 +31,8 @@ class Source
      * Id
      *
      * @ORM\Id
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      *
      * @var integer
      */
@@ -52,8 +52,8 @@ class Source
     /**
      * Items list
      *
-     * @ORM\ManyToOne(targetEntity="Item", inversedBy="sources")
-     * @ORM\JoinColumn(name="id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Item", inversedBy="sources", cascade={"persist"})
+     * @ORM\JoinColumn(name="item", referencedColumnName="id")
      *
      * @var \AnimeDB\CatalogBundle\Entity\Item
      */
