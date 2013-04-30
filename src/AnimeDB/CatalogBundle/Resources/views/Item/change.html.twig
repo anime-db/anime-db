@@ -2,5 +2,26 @@
 
 {% block title %}{% trans %}Change record{% endtrans %} - {{ parent() }}{% endblock %}
 
+{% block stylesheets %}
+	<link href="{{ asset('uploadify/uploadify.css') }}" rel="stylesheet" />
+	{{ form_stylesheet(form) }}
+	{{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset('uploadify/jquery.uploadify.min.js') }}"></script>
+	{{ form_javascript(form) }}
+{% endblock %}
+
+{% form_theme form 'AnimeDBCatalogBundle:Form:fields.html.twig' %}
+
 {% block content %}
+<div class="b-addition-form">
+	<h2>{% trans %}Change record{% endtrans %}</h2>
+	<form action="{{ path('item_change', {'id': item.id}) }}" method="post" {{ form_enctype(form) }}>
+		{{ form_widget(form) }}
+		<button type="submit">{% trans %}Change{% endtrans %}</button>
+	</form>
+</div>
 {% endblock %}

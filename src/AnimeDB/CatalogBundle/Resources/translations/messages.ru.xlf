@@ -190,6 +190,14 @@
                 <source>Can`t get content from the specified source</source>
                 <target>Не удается получить содержимое из указанного источника</target>
             </trans-unit>
+            <trans-unit id="49">
+                <source>Add record</source>
+                <target>Добавление записи</target>
+            </trans-unit>
+            <trans-unit id="50">
+                <source>Change</source>
+                <target>Изменить</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

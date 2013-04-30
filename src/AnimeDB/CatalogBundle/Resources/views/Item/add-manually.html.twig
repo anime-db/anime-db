@@ -18,8 +18,8 @@
 
 {% block content %}
 <div class="b-addition-form">
-	<h2>Добавление записи</h2>
-	<form action="{{ path('filler_fill') }}" method="post" {{ form_enctype(form) }}>
+	<h2>{% trans %}Add record{% endtrans %}</h2>
+	<form action="{{ path('item_add_manually') }}" method="post" {{ form_enctype(form) }}>
 		{{ form_widget(form) }}
 		<button type="submit">{% trans %}Add{% endtrans %}</button>
 	</form>

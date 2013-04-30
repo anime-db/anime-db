@@ -1,10 +1,12 @@
 {% extends 'AnimeDBCatalogBundle::layout.html.twig' %}
 
+{% block title %}{{ item.name }} - {{ parent() }}{% endblock %}
+
 {% block content %}
 <ul>
-	<li><a href="<?=str_replace('#action#', 'autofill', $result['link'])?>">{% trans %}Autofill record{% endtrans %}</a></li>
-<!-- 	<li><a href="<?=str_replace('#action#', 'conversion', $result['link'])?>">Конвертировать файлы</a></li> -->
-	<li><a href="<?=str_replace('#action#', 'change', $result['link'])?>">{% trans %}Change record{% endtrans %}</a></li>
-	<li><a href="<?=str_replace('#action#', 'remove', $result['link'])?>">{% trans %}Delete record{% endtrans %}</a></li>
+	<li><a href="#fill {{ item.id }}">{% trans %}Autofill record{% endtrans %}</a></li>
+	<li><a href="#conversion {{ item.id }}">Добавление информации в папку</a></li>
+	<li><a href="{{ path('item_change', {'id': item.id}) }}">{% trans %}Change record{% endtrans %}</a></li>
+	<li><a href="{{ path('item_remove', {'id': item.id}) }}">{% trans %}Delete record{% endtrans %}</a></li>
 </ul>
 {% endblock %}

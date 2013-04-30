@@ -2,20 +2,24 @@
 
 {% block title %}{% trans %}Autofill record{% endtrans %} - {{ parent() }}{% endblock %}
 
-{% if form %}
 {% block stylesheets %}
-	<link href="{{ asset('uploadify/uploadify.css') }}" rel="stylesheet" />
-	{{ form_stylesheet(form) }}
+	{% if form %}
+		<link href="{{ asset('uploadify/uploadify.css') }}" rel="stylesheet" />
+		{{ form_stylesheet(form) }}
+	{% endif %}
 	{{ parent() }}
 {% endblock %}
 
 {% block javascripts %}
 	{{ parent() }}
-	<script src="{{ asset('uploadify/jquery.uploadify.min.js') }}"></script>
-	{{ form_javascript(form) }}
+	{% if form %}
+		<script src="{{ asset('uploadify/jquery.uploadify.min.js') }}"></script>
+		{{ form_javascript(form) }}
+	{% endif %}
 {% endblock %}
 
-{% form_theme form 'AnimeDBCatalogBundle:Form:fields.html.twig' %}
+{% if form %}
+	{% form_theme form 'AnimeDBCatalogBundle:Form:fields.html.twig' %}
 {% endif %}
 
 {% block content %}
@@ -27,7 +31,7 @@
 		{% else %}
 			<form action="{{ path('item_add_manually') }}" method="post" {{ form_enctype(form) }}>
 				{{ form_widget(form) }}
-				<button type="submit">{% trans %}Find{% endtrans %}</button>
+				<button type="submit">{% trans %}Add{% endtrans %}</button>
 			</form>
 		{% endif %}
 	</div>

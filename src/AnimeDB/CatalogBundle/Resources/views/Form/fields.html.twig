@@ -57,3 +57,22 @@
     </div>
 {% endspaceless %}
 {% endblock genemu_jqueryimage_widget %}
+
+
+{% block date_widget %}
+{% spaceless %}
+    {% if widget == 'single_text' %}
+        {% set type = 'date' %}
+        {{ block('form_widget_simple') }}
+    {% else %}
+        <div {{ block('widget_container_attributes') }}>
+            {% set type = 'date' %}
+            {{ date_pattern|replace({
+                '{{ year }}':  form_widget(form.year),
+                '{{ month }}': form_widget(form.month),
+                '{{ day }}':   form_widget(form.day),
+            })|raw }}
+        </div>
+    {% endif %}
+{% endspaceless %}
+{% endblock date_widget %}

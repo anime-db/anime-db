@@ -18,6 +18,7 @@ use AnimeDB\CatalogBundle\Entity\Name;
 use AnimeDB\CatalogBundle\Entity\Image;
 use AnimeDB\CatalogBundle\Entity\Source;
 use AnimeDB\CatalogBundle\Form\ItemType;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Item
@@ -36,8 +37,16 @@ class ItemController extends Controller
      */
     public function showAction($id)
     {
-        // TODO requires the implementation of
-        return $this->render('AnimeDBCatalogBundle:Item:show.html.twig', array('name' => 'Test'));
+        /* @var $item \AnimeDB\CatalogBundle\Entity\Item */
+        $item = $this->getDoctrine()
+            ->getRepository('AnimeDBCatalogBundle:Item')
+            ->find($id);
+        if (!$item) {
+            throw $this->createNotFoundException('No found items for id '.$id);
+        }
+        return $this->render('AnimeDBCatalogBundle:Item:show.html.twig',
+            array('item' => $item)
+        );
     }
 
     /**
@@ -65,17 +74,26 @@ class ItemController extends Controller
     /**
      * Addition form
      *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function addManuallyAction()
+    public function addManuallyAction(Request $request)
     {
         $item = new Item();
-        $item->addImage(new Image());
-        $item->addName(new Name());
-        $item->addSource(new Source());
 
         /* @var $form \Symfony\Component\Form\Form */
         $form = $this->createForm(new ItemType(), $item);
+
+        if ($request->getMethod() == 'POST') {
+            $form->bindRequest($request);
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($item);
+                $em->flush();
+                return $this->redirect($this->generateUrl('item_show', array('id' => $item->getId())));
+            }
+        }
 
         return $this->render('AnimeDBCatalogBundle:Item:add-manually.html.twig', array(
             'form' => $form->createView()
@@ -91,8 +109,31 @@ class ItemController extends Controller
      */
     public function changeAction($id)
     {
-        // TODO requires the implementation of
-        return $this->render('AnimeDBCatalogBundle:Item:change.html.twig');
+        /* @var $item \AnimeDB\CatalogBundle\Entity\Item */
+        $item = $this->getDoctrine()
+            ->getRepository('AnimeDBCatalogBundle:Item')
+            ->find($id);
+        if (!$item) {
+            throw $this->createNotFoundException('No found items for id '.$id);
+        }
+
+        /* @var $form \Symfony\Component\Form\Form */
+        $form = $this->createForm(new ItemType(), $item);
+/* 
+        if ($request->getMethod() == 'POST') {
+            $form->bindRequest($request);
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($item);
+                $em->flush();
+                return $this->redirect($this->generateUrl('item_show', array('id' => $item->getId())));
+            }
+        } */
+
+        return $this->render('AnimeDBCatalogBundle:Item:change.html.twig', array(
+            'item' => $item,
+            'form' => $form->createView()
+        ));
     }
 
     /**

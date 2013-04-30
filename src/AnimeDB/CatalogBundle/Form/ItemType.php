@@ -32,79 +32,91 @@ class ItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', null, array(
+            ->add('name', null, [
                 'label' => 'Main name'
-            ))
-            ->add('names', 'collection', array(
+            ])
+            ->add('names', 'collection', [
                 'type'         => new NameType(),
                 'allow_add'    => true,
                 'by_reference' => false,
                 'allow_delete' => true,
-                'attr'         => array('class' => 'b-col-r'),
+                'attr'         => ['class' => 'b-col-r'],
                 'label'        => 'Other names',
-                'options'      => array(
+                'options'      => [
                     'required' => false,
-                    'attr'     => array('class' => 'b-col-i')
-                ),
-            ))
+                    'attr'     => ['class' => 'b-col-i']
+                ],
+            ])
             // TODO do something with downloading images from an url
-            ->add('cover', 'genemu_jqueryimage', array(
-//                 'property_path' => 'WebPath'
-            ))
+            ->add('cover', 'text', [
+//                 'property_path' => 'WebPath',
+                'required' => false
+            ])
             // TODO use datepicker
-            ->add('date_start', 'date', array(
-                'format' => 'y-MM-d',
-            ))
-            ->add('date_end', 'date', array(
-                'format' => 'y-MM-d',
-            ))
+            ->add('date_start', 'date', [
+                'format' => 'yyyy-MM-dd',
+                'widget' => 'single_text',
+            ])
+            ->add('date_end', 'date', [
+                'format' => 'yyyy-MM-dd',
+                'widget' => 'single_text',
+                'required' => false
+            ])
             ->add('duration')
-            ->add('images', 'collection', array(
+            ->add('images', 'collection', [
                 'type'         => new ImageType(),
                 'allow_add'    => true,
                 'by_reference' => false,
                 'allow_delete' => true,
                 'label'        => 'Other images',
-                'attr'         => array('class' => 'b-col-r'),
-                'options'      => array(
+                'attr'         => ['class' => 'b-col-r'],
+                'options'      => [
                     'required' => false,
-                    'attr'     => array('class' => 'b-col-i'),
-                ),
-            ))
-            ->add('type', 'entity', array(
+                    'attr'     => ['class' => 'b-col-i'],
+                ],
+            ])
+            ->add('type', 'entity', [
                 'class'    => 'AnimeDBCatalogBundle:Type',
                 'property' => 'name'
-            ))
-            ->add('genres', 'entity', array(
+            ])
+            ->add('genres', 'entity', [
                 'class'    => 'AnimeDBCatalogBundle:Genre',
                 'property' => 'name',
                 'multiple' => true
-            ))
-            ->add('manufacturer', 'entity', array(
+            ])
+            ->add('manufacturer', 'entity', [
                 'class'    => 'AnimeDBCatalogBundle:Country',
                 'property' => 'name'
-            ))
+            ])
             ->add('path')
-            ->add('translate')
-            ->add('summary')
-            ->add('episodes')
-            ->add('file_info')
-            ->add('storage', 'entity', array(
+            ->add('translate', null, [
+                'required' => false
+            ])
+            ->add('summary', null, [
+                'required' => false
+            ])
+            ->add('episodes', null, [
+                'required' => false
+            ])
+            ->add('file_info', null, [
+                'required' => false
+            ])
+            ->add('storage', 'entity', [
                 'class'    => 'AnimeDBCatalogBundle:Storage',
                 'property' => 'name',
-            ))
-            ->add('sources', 'collection', array(
+            ])
+            ->add('sources', 'collection', [
                 'type'         => new SourceType(),
                 'allow_add'    => true,
                 'by_reference' => false,
                 'allow_delete' => true,
-                'attr'         => array('class' => 'b-col-r'),
+                'attr'         => ['class' => 'b-col-r'],
                 'label'        => 'External sources',
-                'options'      => array(
+                'options'      => [
                     'required' => false,
-                    'attr'     => array('class' => 'b-col-i')
-                ),
-            ))
+                    'attr'     => ['class' => 'b-col-i']
+                ],
+            ])
         ;
     }
 
@@ -114,9 +126,9 @@ class ItemType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'AnimeDB\CatalogBundle\Entity\Item'
-        ));
+        ]);
     }
 
     /**
