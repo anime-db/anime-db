@@ -2,12 +2,12 @@
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<title>{% block title %}{% endblock %}</title>
+		<title>{% block title %}{% endblock %} - AnimeDB</title>
 		<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 		{% block stylesheets %}{% endblock %}
 		{% block javascripts %}{% endblock %}
 	</head>
-	<body>
+	<body{% if body_class is defined %} class="{{ body_class }}"{% endif %}>
 		{% block body %}{% endblock %}
 	</body>
 </html>
