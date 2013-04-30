@@ -18,6 +18,7 @@ home_autocomplete_name:
     pattern:  /autocomplete-name.json
     defaults: { _controller: AnimeDBCatalogBundle:Home:autocompleteName }
 
+
 item_add:
     pattern:  /add.html
     defaults: { _controller: AnimeDBCatalogBundle:Item:add }

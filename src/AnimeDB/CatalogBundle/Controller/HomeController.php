@@ -41,9 +41,9 @@ class HomeController extends Controller
     {
         /* @var $form \Symfony\Component\Form\Form */
         $form = $this->createFormBuilder()
-            ->add('q', 'genemu_jqueryautocomplete_text', array(
+            ->add('q', 'search', array(
                 'label' => 'Search',
-                'route_name' => 'home_autocomplete_name',
+//                 'route_name' => 'home_autocomplete_name',
             ))
             ->getForm();
 
