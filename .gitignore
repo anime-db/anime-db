@@ -1,4 +1,6 @@
-web/upload
+# Application #
+###############
+web/media/
 
 # Services pid files #
 ######################
