@@ -1,19 +1,47 @@
 @charset "UTF-8";
-
-html {
-	background: #e9cd8e url(images/bg.jpg) repeat-x bottom left;
-	min-height: 100%;
-}
-body {
-	background: url(images/bg-left.jpg) no-repeat bottom left;
-	margin: 0;
-	padding: 0;
-	min-height: 100%;/*
+body {/*
 	font-family: Arial, Helvetica, Verdana, sans-serif;
 	*/font-family: "Trebuchet MS",Verdana,sans-serif;
 	font-size: 12px;
 	line-height: 1.4em;
+	background: #e9cd8e url(images/bg.jpg) repeat-x bottom left;
 }
+html, body {
+	margin: 0;
+	padding: 0;
+	min-height: 500px;
+	height: 100%;
+}
+
+#bg-buttom {
+    height: auto !important; /* ie6 ignores !important, so this will be overridden below */
+    min-height: 100%; /* ie6 ignores min-height completely */
+    height: 100%;
+    position: relative;
+    z-index: 1;
+}
+#bg-left,
+#bg-right {
+	position: relative;
+	margin: -1431px auto 0 auto;
+	height: 1431px;
+}
+#bg-left {
+	background: url(images/bg-left.jpg) no-repeat bottom left;
+}
+#bg-right {
+	background: url(images/bg-right.jpg) no-repeat bottom right;
+}
+#wrapper {
+	margin: 0 auto 0;
+	padding-bottom: 20px;
+	width: 956px;
+	position: relative;
+}
+#header {
+	height: 90px;
+}
+
 a:link,
 a:visited {
 	border-bottom: 0;
@@ -65,7 +93,7 @@ p {
 	font-size: 12px;
 }
 
-/*
+/**
  * Forms
  */
 form label {
@@ -103,24 +131,10 @@ textarea {
 }
 
 
-#wrapper {
-	margin: 0 auto 20px;
-	width: 956px;
-	position: relative;
-}
-#header {
-	height: 90px;
-}
-#bg {
-	height: 100%;
-	background: url(images/bg-right.jpg) no-repeat bottom right;
-}
 
-
-
-/* Logo
-   -------------------------------- */
-
+/**
+ * Logo
+ */
 h1.logo {
 	position: absolute;
 	top: 10px;
@@ -143,7 +157,7 @@ h1.logo a span {
 	display: none;
 }
 
-/*
+/**
  * Navigation
  */
 #navigation {
@@ -198,39 +212,36 @@ h1.logo a span {
 }
 
 
-/* Content
-   -------------------------------- */
-
+/*
+ * Content
+ */
 #content-wrapper {
-	background: #fff url(images/content_bg.png) repeat-y 0 0;
+	background: #fff url(images/bg-home-right.gif) no-repeat -231px -144px;
 	border: 3px #ff9f0b solid;
 	border-bottom: 0;
 }
-
-#content {
-	background: url(images/content_body_bg.png) no-repeat 0 13px;
-	zoom: 1;
-}
 .content {
-	padding: 0 3px 0 3px;
+	background: url(images/bg-home-top.gif) no-repeat 0 0;
 	overflow: hidden;
+	min-height: 365px;
+	padding: 30px 35px 30px 35px;
 }
-#content .content {
-	min-height: 380px;
-}
-#content-wrapper {
+
+
+/**
+ * Home
+ */
+.home #content-wrapper {
 	background: #fff url(images/bg-home-top.gif) no-repeat 0 0;
 }
-#content {
+.home .content {
 	background: url(images/bg-home-right.gif) no-repeat right 34px;
 }
-
-
-#home-center-header {
-	height: 120px;
-	margin: 55px 35px 0;
+.home-center-header {
+	height: 121px;
+	margin: 25px 0 0 0;
 }
-#home-center-header p.intro-message {
+.home-center-header p.intro-message {
 	margin: 0;
 	width: 440px;
 	float: left;
@@ -240,18 +251,18 @@ h1.logo a span {
 	font-family: Arial, Helvetica, Verdana, sans-serif;
 	font-weight: normal;
 }
-#home-center-header p.intro-message strong {
+.home-center-header p.intro-message strong {
 	color: #333;
 	font-weight: normal;
 }
-#home-search {
+.home-search {
 	float: right;
 	text-align: center;
 }
-#home-search h2 {
+.home-search h2 {
 	color: #000;
 }
-#home-search input {
+.home-search input {
 	background: url(images/magglass.png) no-repeat scroll 5px 7px #FFFFFF;
 	/*border: 1px #C0CAD5 solid;*/
 	border: 2px #fff100 solid;
@@ -260,21 +271,17 @@ h1.logo a span {
 	font-size: 11px;
 	width: 150px;
 }
-#home-search label {
+.home-search label {
 	display: none;
 }
-#home-search div {
+.home-search div {
 	display: inline-block;
 }
-#home-center {
-	margin: 30px 35px 30px 35px;
-	min-height: 330px;
-}
 
 
-/* Footer
-   -------------------------------- */
-
+/**
+ * Footer
+ */
 #footer {
 	height: 45px;
 	padding: 12px 0 10px 0;
@@ -325,6 +332,9 @@ h1.logo a span {
  */
 .b-add-item section {
 	margin-bottom: 50px;
+}
+.b-add-item .b-add-manually {
+	margin-bottom: 0;
 }
 .b-add-item section h3 {
 	font-size: 120%;

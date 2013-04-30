@@ -1,7 +1,5 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}AnimeDB{% endblock %}
-
 {% block stylesheets %}
 	<link href="{{ asset('/bundles/animedbcatalog/css/jquery-ui/jquery-ui-1.8.16.custom.css') }}" type="text/css" rel="stylesheet">
 	<link href="{{ asset('/bundles/animedbcatalog/css/main.css') }}" type="text/css" rel="stylesheet">
@@ -14,7 +12,7 @@
 {% endblock %}
 
 {% block body %}
-<div id="bg">
+<div id="bg-buttom">
 	<div id="wrapper">
 		<div id="header">
 			<h1 class="logo">
@@ -30,18 +28,8 @@
 			</div>
 		</div>
 		<div id="content-wrapper">
-			<div id="content">
-				<div class="content">
-					<div id="home-center-header">
-						<p class="intro-message">{% trans with {'%AnimeDB%': '<strong>Anime DB</strong>'}%}%AnimeDB% is a system for making the home catalog of the anime. The system is designed for home use only.{% endtrans %}</p>
-						<div id="home-search">
-							{% render controller('AnimeDBCatalogBundle:Home:searchSimpleForm') %}
-						</div>
-					</div>
-					<div id="home-center">
-						{% block content %}{% endblock %}
-					</div>
-				</div>
+			<div class="content">
+				{% block content %}{% endblock %}
 			</div>
 		</div>
 		<div id="footer">
@@ -50,6 +38,8 @@
 		</div>
 	</div>
 </div>
+<div id="bg-left"></div>
+<div id="bg-right"></div>
 </body>
 </html>
 {% endblock %}
