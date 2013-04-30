@@ -519,16 +519,18 @@ class WorldArtRu implements Filler
      * @return string
      */
     private function uploadImage($url) {
+        // TODO correct upload images
         // training directory
-        $root = realpath(__DIR__.'/../../../../../../web/upload').'/';
-//         $this->mkdir($root);
+        $root = realpath(__DIR__.'/../../../../../../web/media');
+        $path = $root.date('/Y/m/');
+        $this->mkdir($path);
         // create file name
         $ext = pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION);
-        $dest = $this->createFileName($root, $ext);
+        $dest = $this->createFileName($path, $ext);
         // upload
         copy($url, $dest);
         // return relative path
-        return 'upload/'.pathinfo($dest, PATHINFO_BASENAME);
+        return str_replace($root.'/', '', $dest);
     }
 
     /**
