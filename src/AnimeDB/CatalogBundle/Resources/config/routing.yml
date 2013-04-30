@@ -28,20 +28,26 @@ item_add_manually:
     defaults: { _controller: AnimeDBCatalogBundle:Item:addManually }
 
 item_show:
-    pattern:  /{id}/
+    pattern:  /{id}-{name}/
     defaults: { _controller: AnimeDBCatalogBundle:Item:show }
     requirements:
         id:  \d+
 
 item_change:
-    pattern:  /{id}/change.html
+    pattern:  /{id}-{name}/change.html
     defaults: { _controller: AnimeDBCatalogBundle:Item:change }
     requirements:
         id:  \d+
 
 item_remove:
-    pattern:  /{id}/remove.html
+    pattern:  /{id}-{name}/remove.html
     defaults: { _controller: AnimeDBCatalogBundle:Item:remove }
+    requirements:
+        id:  \d+
+
+item_complement:
+    pattern:  /{id}-{name}/complement.html
+    defaults: { _controller: AnimeDBCatalogBundle:Item:complement }
     requirements:
         id:  \d+
 

@@ -5,8 +5,8 @@
 {% block content %}
 <ul>
 	<li><a href="#fill {{ item.id }}">{% trans %}Autofill record{% endtrans %}</a></li>
-	<li><a href="#conversion {{ item.id }}">Добавление информации в папку</a></li>
-	<li><a href="{{ path('item_change', {'id': item.id}) }}">{% trans %}Change record{% endtrans %}</a></li>
-	<li><a href="{{ path('item_remove', {'id': item.id}) }}">{% trans %}Delete record{% endtrans %}</a></li>
+	<li><a href="{{ path('item_complement', {'id': item.id, 'name': item.name}) }}">{% trans %}Complement directory{% endtrans %}</a></li>
+	<li><a href="{{ path('item_change', {'id': item.id, 'name': item.name}) }}">{% trans %}Change record{% endtrans %}</a></li>
+	<li><a href="{{ path('item_remove', {'id': item.id, 'name': item.name}) }}">{% trans %}Delete record{% endtrans %}</a></li>
 </ul>
 {% endblock %}

@@ -31,7 +31,7 @@ class ItemController extends Controller
     /**
      * Show item
      *
-     * @param integer $id ID записи
+     * @param integer $id
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -91,7 +91,10 @@ class ItemController extends Controller
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($item);
                 $em->flush();
-                return $this->redirect($this->generateUrl('item_show', array('id' => $item->getId())));
+                return $this->redirect($this->generateUrl(
+                    'item_show',
+                    array('id' => $item->getId(), 'name' => $item->getName())
+                ));
             }
         }
 
@@ -103,11 +106,12 @@ class ItemController extends Controller
     /**
      * Change item
      *
-     * @param integer $id ID записи
+     * @param integer $id
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function changeAction($id)
+    public function changeAction($id, Request $request)
     {
         /* @var $item \AnimeDB\CatalogBundle\Entity\Item */
         $item = $this->getDoctrine()
@@ -119,16 +123,19 @@ class ItemController extends Controller
 
         /* @var $form \Symfony\Component\Form\Form */
         $form = $this->createForm(new ItemType(), $item);
-/* 
+
         if ($request->getMethod() == 'POST') {
             $form->bindRequest($request);
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($item);
                 $em->flush();
-                return $this->redirect($this->generateUrl('item_show', array('id' => $item->getId())));
+                return $this->redirect($this->generateUrl(
+                    'item_show',
+                    array('id' => $item->getId(), 'name' => $item->getName())
+                ));
             }
-        } */
+        }
 
         return $this->render('AnimeDBCatalogBundle:Item:change.html.twig', array(
             'item' => $item,
@@ -139,7 +146,7 @@ class ItemController extends Controller
     /**
      * Remove item
      *
-     * @param integer $id ID записи
+     * @param integer $id
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -147,5 +154,29 @@ class ItemController extends Controller
     {
         // TODO requires the implementation of
         return $this->redirect($this->generateUrl('home'));
+    }
+
+    /**
+     * Complement item directory
+     *
+     * @param integer $id
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function complementAction($id) {
+        /* @var $item \AnimeDB\CatalogBundle\Entity\Item */
+        $item = $this->getDoctrine()
+            ->getRepository('AnimeDBCatalogBundle:Item')
+            ->find($id);
+        if (!$item) {
+            throw $this->createNotFoundException('No found items for id '.$id);
+        }
+
+        // TODO requires the implementation complement directory
+
+        return $this->redirect($this->generateUrl(
+            'item_show',
+            array('id' => $item->getId(), 'name' => $item->getName())
+        ));
     }
 }

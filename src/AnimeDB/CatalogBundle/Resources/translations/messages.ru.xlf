@@ -198,6 +198,10 @@
                 <source>Change</source>
                 <target>Изменить</target>
             </trans-unit>
+            <trans-unit id="51">
+                <source>Complement directory</source>
+                <target>Укомплектовать директорию</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
