@@ -12,32 +12,31 @@
 {% endblock %}
 
 {% block body %}
-<div id="bg-buttom">
-	<div id="wrapper">
-		<div id="header">
-			<h1 class="logo">
-				<a href="{{ path('home') }}" title="Home Anime DB"><span>Home Anime DB</span></a>
-			</h1>
-			<div id="navigation">
-				<div class="left"></div>
-				<ul>
-					<li><a href="{{ path('home_selection') }}">{% trans %}Oversampled{% endtrans %}</a></li>
-					<li class="last"><a href="{{ path('item_add') }}">{% trans %}Add record{% endtrans %}</a></li>
-				</ul>
-				<div class="right"></div>
-			</div>
-		</div>
-		<div id="content-wrapper">
-			<div class="content">
-				{% block content %}{% endblock %}
-			</div>
-		</div>
-		<div id="footer">
-			<div class="license">{% trans with {'%license%': '<a href="http://opensource.org/licenses/GPL-3.0">GPLv3</a>'}%}The product is licensed under the %license%.{% endtrans %}</div>
-			<div class="copy">&copy; 2011-{{ "now"|date("Y") }} <a href="http://anime-db.org/">AnimeDB</a></div>
+<div id="wrapper">
+	<div id="header">
+		<h1 class="logo">
+			<a href="{{ path('home') }}" title="Home Anime DB"><span>Home Anime DB</span></a>
+		</h1>
+		<div id="navigation">
+			<div class="left"></div>
+			<ul>
+				<li><a href="{{ path('home_selection') }}">{% trans %}Oversampled{% endtrans %}</a></li>
+				<li class="last"><a href="{{ path('item_add') }}">{% trans %}Add record{% endtrans %}</a></li>
+			</ul>
+			<div class="right"></div>
 		</div>
 	</div>
+	<div id="content-wrapper">
+		<div class="content">
+			{% block content %}{% endblock %}
+		</div>
+	</div>
+	<div id="footer">
+		<div class="license">{% trans with {'%license%': '<a href="http://opensource.org/licenses/GPL-3.0">GPLv3</a>'}%}The product is licensed under the %license%.{% endtrans %}</div>
+		<div class="copy">&copy; 2011-{{ "now"|date("Y") }} <a href="http://anime-db.org/">AnimeDB</a></div>
+	</div>
 </div>
+<div id="bg-buttom"></div>
 <div id="bg-left"></div>
 <div id="bg-right"></div>
 </body>

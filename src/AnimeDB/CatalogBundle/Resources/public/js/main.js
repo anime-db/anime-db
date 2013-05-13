@@ -1,9 +1,3 @@
-$(function(){
-
-// add button jQuery UI style
-$('input:submit, input:button, input:reset, button, .catalog-last-added .details').button();
-
-
 
 var Form = {};
 Form.Collection = {
@@ -55,6 +49,26 @@ Form.Collection = {
 		$(this).parent().remove();
 	}
 };
+
+
+$(function(){
+
+// add button jQuery UI style
+$('input:submit, input:button, input:reset, button, .catalog-last-added .details').button();
+
+// resize content wrapper
+$(window).resize(function() {
+	var footer = $('#footer');
+	var content = $('#content-wrapper').css('height', 'auto');
+	content.css('height', 
+		$(document).height()
+		- footer.height()
+		- parseInt(footer.css('paddingTop'))
+		- parseInt(footer.css('paddingBottom'))
+		- $('#header').height()
+		- parseInt(content.css('borderTop'))
+	);
+}).trigger('resize');
 
 Form.Collection.init();
 
