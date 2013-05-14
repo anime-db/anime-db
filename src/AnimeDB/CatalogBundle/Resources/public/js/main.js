@@ -57,9 +57,10 @@ $(function(){
 $('input:submit, input:button, input:reset, button, .catalog-last-added .details').button();
 
 // resize content wrapper
-$(window).resize(function() {
+var resizeContentWrapper = function() {
 	var footer = $('#footer');
 	var content = $('#content-wrapper').css('height', 'auto');
+	console.log($(document).height());
 	content.css('height', 
 		$(document).height()
 		- footer.height()
@@ -68,7 +69,8 @@ $(window).resize(function() {
 		- $('#header').height()
 		- parseInt(content.css('borderTop'))
 	);
-}).trigger('resize');
+};
+$(window).resize(resizeContentWrapper).load(resizeContentWrapper);
 
 Form.Collection.init();
 
