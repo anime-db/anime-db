@@ -1,7 +1,7 @@
 @charset "UTF-8";
-body {/*
-	font-family: Arial, Helvetica, Verdana, sans-serif;
-	*/font-family: "Trebuchet MS",Verdana,sans-serif;
+body {
+	font-family: "Helvetica Neue",Arial,Verdana,sans-serif;
+	/* font-family: "Trebuchet MS",Verdana,sans-serif; */
 	font-size: 12px;
 	line-height: 1.4em;
 	background: #e9cd8e;
@@ -16,6 +16,9 @@ html, body {
 a:link,
 a:visited {
 	border-bottom: 0;
+}
+ul {
+	padding-left: 25px;
 }
 a,
 a .ui-button-text,
@@ -42,26 +45,25 @@ button:hover,
 	color: #b00;
 	text-decoration: none;
 }
-
 h3,
 h4 {
 	margin: 0;
 	font-weight: normal;
 }
-
 h3 {
 	padding: 0 0 9px;
 }
-
 h4 {
 	padding-bottom: 21px;
 	border-bottom: 1px dashed #999;
 	font-size: 12px;
 	font-weight: bold;
 }
-
 p {
 	font-size: 12px;
+}
+abbr {
+	cursor: default;
 }
 
 /**
@@ -221,6 +223,7 @@ h1.logo a span {
 	background: #fff url(images/bg-home-right.gif) no-repeat -231px -144px;
 	border: 3px #ff9f0b solid;
 	border-bottom: 0;
+	height: auto;
 }
 .content {
 	background: url(images/bg-home-top.gif) no-repeat 0 0;
@@ -400,6 +403,67 @@ h1.logo a span {
 
 
 
+.content section header {
+	font-weight: bold;
+	background-color: #ffeeb8;
+	border-left: 5px #db3400 solid;
+	margin: 2px 0 5px;
+	padding: 3px 7px 2px 5px;
+}
+.content section article {
+	margin-left: 3px;
+}
+.favicon {
+	width: 16px;
+	height: 16px;
+}
+
+/**
+ * Show image
+ */
+.item-show-left {
+	width: 600px;
+	float: left;
+}
+.item-show-right {
+	width: 260px;
+	float: right;
+}
+.item-show-left .cover {
+	margin: 0 15px 10px 0;
+	float: left;
+}
+.item-controls a {
+	display: block;
+	height: 16px;
+	padding-left: 20px;
+	margin-bottom: 2px;
+}
+.item-controls .fill {
+	background: url(images/polygon.png) no-repeat 0 -32px;
+}
+.item-controls .complement {
+	background: url(images/polygon.png) no-repeat 0 -48px;
+}
+.item-controls .change {
+	background: url(images/polygon.png) no-repeat 0 -16px;
+}
+.item-controls .remove {
+	background: url(images/polygon.png) no-repeat 0 0;
+}
+.item-info ul {
+	margin: 0;
+}
+.item-sources ul {
+	margin: 0;
+	padding: 0;
+}
+.item-sources li {
+	list-style: none;
+	margin: 2px;
+	height: 16px;
+	float: left;
+}
 
 
 /*
