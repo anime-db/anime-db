@@ -8,12 +8,12 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Twig;
+namespace AnimeDB\CatalogBundle\Service\Twig;
 
 /**
  * Twig extension
  *
- * @package AnimeDB\CatalogBundle\Twig
+ * @package AnimeDB\CatalogBundle\Service\Twig
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class AnimeDBExtension extends \Twig_Extension

@@ -14,7 +14,7 @@ services:
             -  { name: anime_db_catalog.autofill, alias: shikimoriorg }
     # Twig extension
     anime_db_catalog.twig.anime_db_extension:
-        class: AnimeDB\CatalogBundle\Twig\AnimeDBExtension
+        class: AnimeDB\CatalogBundle\Service\Twig\AnimeDBExtension
         tags:
             - { name: twig.extension }
 
