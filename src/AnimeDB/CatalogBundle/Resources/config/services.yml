@@ -12,6 +12,11 @@ services:
         class: AnimeDB\CatalogBundle\Service\Autofill\Filler\ShikimoriOrg
         tags:
             -  { name: anime_db_catalog.autofill, alias: shikimoriorg }
+    # Twig extension
+    anime_db_catalog.twig.anime_db_extension:
+        class: AnimeDB\CatalogBundle\Twig\AnimeDBExtension
+        tags:
+            - { name: twig.extension }
 
     # cURL client for Buzz
     buzz.client.curl:
