@@ -5,8 +5,8 @@ web/media/
 # Services pid files #
 ######################
 bin/.spid
-bin/.tmpid
-bin/.cpid
+bin/.elpid
+bin/.tspid
 
 # Symfony directories #
 #######################

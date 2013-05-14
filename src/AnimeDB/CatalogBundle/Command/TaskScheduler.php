@@ -15,12 +15,12 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Task Manager
+ * Task Scheduler
  *
  * @package AnimeDB\CatalogBundle\Command
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class TaskManager extends ContainerAwareCommand
+class TaskScheduler extends ContainerAwareCommand
 {
     /**
      * (non-PHPdoc)
@@ -28,8 +28,8 @@ class TaskManager extends ContainerAwareCommand
      */
     protected function configure()
     {
-        $this->setName('animedb:task-manager')
-            ->setDescription('Task Manager');
+        $this->setName('animedb:task-scheduler')
+            ->setDescription('Task Scheduler');
     }
 
     /**
@@ -38,12 +38,11 @@ class TaskManager extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output) {
         // exit if disabled
-        if (!$this->getContainer()->getParameter('task-manager')['enabled']) {
+        if (!$this->getContainer()->getParameter('task-scheduler')['enabled']) {
             return null;
         }
-
         while (true) {
-            // TODO listen socket and perform tasks when they appear
+            // TODO get tasks and run this
             sleep(86400);
         }
     }

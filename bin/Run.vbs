@@ -1,4 +1,4 @@
-dim sAddr, sPort, sPath, sServer, sConsole, sTaskManager, sCron, sSpid, sTmpid
+dim sAddr, sPort, sPath, sServer, sConsole, sEventListener, sTaskScheduler, sSpid, sElpid
 
 set oFileSystem = WScript.CreateObject("Scripting.FileSystemObject")
 
@@ -11,15 +11,15 @@ sPath = oFileSystem.GetAbsolutePathName("..")
 
 ' Pid files
 sSpid  = sPath & "/bin/.spid"
-sTmpid = sPath & "/bin/.tmpid"
-sCpid  = sPath & "/bin/.cpid"
+sElpid = sPath & "/bin/.elpid"
+sTspid = sPath & "/bin/.tspid"
 
 sConsole = sPath & "/bin/php/php.exe -f " & sPath & "/app/console "
 
-' Commands to run server, task manager and cron
-sServer      = sPath & "/bin/php/php.exe -S " & sAddr & ":" & sPort & " -t " & sPath & "/web " & sPath & "/app/router.php > nul 2> nul"
-sTaskManager = sConsole & "animedb:task-manager > nul 2> nul"
-sCron        = sConsole & "animedb:cron > nul 2> nul"
+' Commands to run server, Event listener and cron
+sServer        = sPath & "/bin/php/php.exe -S " & sAddr & ":" & sPort & " -t " & sPath & "/web " & sPath & "/app/router.php > nul 2> nul"
+sEventListener = sConsole & "animedb:event-listener > nul 2> nul"
+sTaskScheduler = sConsole & "animedb:task-scheduler > nul 2> nul"
 
 ' Stop Server if running
 if oFileSystem.FileExists(sSpid) then
@@ -29,19 +29,19 @@ if oFileSystem.FileExists(sSpid) then
         WScript.Quit
     end if
 end if
-' Stop Task manager if running
-if oFileSystem.FileExists(sTmpid) then
-    iErrorReturn = StopProc(sTmpid)
+' Stop Event listener if running
+if oFileSystem.FileExists(sElpid) then
+    iErrorReturn = StopProc(sElpid)
     if iErrorReturn <> 0 then
-        Wscript.echo "Could not stop Task manager: ", iErrorReturn
+        Wscript.echo "Could not stop Event listener: ", iErrorReturn
         WScript.Quit
     end if
 end if
-' Stop Cron if running
-if oFileSystem.FileExists(sCpid) then
-    iErrorReturn = StopProc(sCpid)
+' Stop Task scheduler if running
+if oFileSystem.FileExists(sTspid) then
+    iErrorReturn = StopProc(sTspid)
     if iErrorReturn <> 0 then
-        Wscript.echo "Could not stop Cron: ", iErrorReturn
+        Wscript.echo "Could not stop Task scheduler: ", iErrorReturn
         WScript.Quit
     end if
 end if
@@ -53,16 +53,16 @@ if iErrorReturn <> 0 then
     Wscript.echo "Could not start Server: ", iErrorReturn
     WScript.Quit
 end if
-' Run Task manager
-iErrorReturn = StartProc(sTaskManager, sTmpid)
+' Run Event listener
+iErrorReturn = StartProc(sEventListener, sElpid)
 if iErrorReturn <> 0 then
-    Wscript.echo "Could not start Task manager: ", iErrorReturn
+    Wscript.echo "Could not start Event listener: ", iErrorReturn
     WScript.Quit
 end if
-' Run Cron
-iErrorReturn = StartProc(sCron, sCpid)
+' Run Task scheduler
+iErrorReturn = StartProc(sTaskScheduler, sTspid)
 if iErrorReturn <> 0 then
-    Wscript.echo "Could not start Cron: ", iErrorReturn
+    Wscript.echo "Could not start Task scheduler: ", iErrorReturn
     WScript.Quit
 end if
 

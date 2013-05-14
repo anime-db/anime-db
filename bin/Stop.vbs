@@ -1,4 +1,4 @@
-dim sPath, sSpid, sTmpid, sCpid
+dim sPath, sSpid, sElpid, sTspid
 
 set oFileSystem = WScript.CreateObject("Scripting.FileSystemObject")
 
@@ -7,8 +7,8 @@ sPath = oFileSystem.GetAbsolutePathName("..")
 
 ' Pid files
 sSpid  = sPath & "/bin/.spid"
-sTmpid = sPath & "/bin/.tmpid"
-sCpid  = sPath & "/bin/.cpid"
+sElpid = sPath & "/bin/.elpid"
+sTspid = sPath & "/bin/.tspid"
 
 
 ' Stop Server
@@ -19,19 +19,19 @@ if oFileSystem.FileExists(sSpid) then
         WScript.Quit
     end if
 end if
-' Stop Task manager
-if oFileSystem.FileExists(sTmpid) then
-    iErrorReturn = StopProc(sTmpid)
+' Stop Event listener
+if oFileSystem.FileExists(sElpid) then
+    iErrorReturn = StopProc(sElpid)
     if iErrorReturn <> 0 then
-        Wscript.echo "Could not stop Task manager: ", iErrorReturn
+        Wscript.echo "Could not stop Event listener: ", iErrorReturn
         WScript.Quit
     end if
 end if
-' Stop Cron
-if oFileSystem.FileExists(sCpid) then
-    iErrorReturn = StopProc(sCpid)
+' Stop Task scheduler
+if oFileSystem.FileExists(sTspid) then
+    iErrorReturn = StopProc(sTspid)
     if iErrorReturn <> 0 then
-        Wscript.echo "Could not stop Cron: ", iErrorReturn
+        Wscript.echo "Could not stop Task scheduler: ", iErrorReturn
         WScript.Quit
     end if
 end if

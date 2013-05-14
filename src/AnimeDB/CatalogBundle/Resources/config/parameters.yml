@@ -1,10 +1,7 @@
 parameters:
     serial_number: ""
 
-    cron:
+    task-scheduler:
         enabled: false
-        comands:
-            - "0 1 1 * * animedb:check-updates"
-            - "0 1 */3 * * animedb:scan-storage"
-    task-manager:
+    event-listener:
         enabled: false

@@ -25,18 +25,18 @@ stop_server() {
         rm ${path}/bin/.spid
     fi
 }
-stop_task_manager() {
-    if [ -f ${path}/bin/.tmpid ]
+stop_event_listener() {
+    if [ -f ${path}/bin/.elpid ]
     then
-        kill `cat ${path}/bin/.tmpid` 2> /dev/null
-        rm ${path}/bin/.tmpid
+        kill `cat ${path}/bin/.elpid` 2> /dev/null
+        rm ${path}/bin/.elpid
     fi
 }
-stop_cron() {
-    if [ -f ${path}/bin/.cpid ]
+stop_task_scheduler() {
+    if [ -f ${path}/bin/.tspid ]
     then
-        kill `cat ${path}/bin/.cpid` 2> /dev/null
-        rm ${path}/bin/.cpid
+        kill `cat ${path}/bin/.tspid` 2> /dev/null
+        rm ${path}/bin/.tspid
     fi
 }
 
@@ -44,23 +44,23 @@ stop_cron() {
 case "$1" in
     stop)
         stop_server
-        stop_task_manager
-        stop_cron
+        stop_event_listener
+        stop_task_scheduler
         ;;
     start|reload|restart|force-reload)
         stop_server
-        stop_task_manager
-        stop_cron
+        stop_event_listener
+        stop_task_scheduler
 
         # run server
         php -S ${addr}:${port} -t ${path}/web ${path}/app/router.php > /dev/null 2> /dev/null &
         echo $! > ${path}/bin/.spid
-        # run task manager
-        ${path}/app/console animedb:task-manager > /dev/null 2> /dev/null &
-        echo $! > ${path}/bin/.tmpid
-        # run cron
-        ${path}/app/console animedb:cron > /dev/null 2> /dev/null &
-        echo $! > ${path}/bin/.cpid
+        # run event listener
+        ${path}/app/console animedb:event-listener > /dev/null 2> /dev/null &
+        echo $! > ${path}/bin/.elpid
+        # run task scheduler
+        ${path}/app/console animedb:task-scheduler > /dev/null 2> /dev/null &
+        echo $! > ${path}/bin/.tspid
         ;;
     *)
         echo "Usage: $N {start|stop|restart}" >&2
