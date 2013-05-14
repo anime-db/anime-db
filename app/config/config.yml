@@ -48,7 +48,7 @@ doctrine:
         dbname:   "%database_name%"
         user:     "%database_user%"
         password: "%database_password%"
-        path:     "%kernel.root_dir%/src/%database_path%"
+        path:     "%kernel.root_dir%/Resources/%database_path%"
         charset:  UTF8
 
     orm:
