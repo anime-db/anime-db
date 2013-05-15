@@ -9,29 +9,29 @@
 	<section class="item-summary">{{ item.summary }}</section>
 	{% if item.translate %}
 		<section class="item-translate">
-			<header>Переводы</header>
+			<header>{% trans %}Translate{% endtrans %}</header>
 			<article>{{ item.translate|nl2br }}</article>
 		</section>
 	{% endif %}
 	<section class="item-file-info">
-		<header>Путь к файлам</header>
+		<header>{% trans %}The path to the files{% endtrans %}</header>
 		<article>{{ item.path }}</article>
 	</section>
 	{% if item.fileinfo %}
 		<section class="item-file-info">
-			<header>Информация о файлах</header>
+			<header>{% trans %}File info{% endtrans %}</header>
 			<article>{{ item.fileinfo|nl2br }}</article>
 		</section>
 	{% endif %}
 	{% if item.episodes %}
 		<section class="item-episodes">
-			<header>Эпизоды</header>
+			<header>{% trans %}Episodes{% endtrans %}</header>
 			<article>{{ item.episodes|nl2br }}</article>
 		</section>
 	{% endif %}
 	{% if item.images is not empty %}
 		<section class="item-images">
-			<header>Кадры</header>
+			<header>{% trans %}Image{% endtrans %}</header>
 			<ul>
 				{% for image in item.images %}
 					<li><img src="{{ image.source }}" alt="" /></li>
@@ -42,7 +42,7 @@
 </section>
 <section class="item-show-right">
 	<section class="item-controls">
-		<header>Запись</header>
+		<header>{% trans %}Record{% endtrans %}</header>
 		<article>
 			<nav>
 				<a href="#fill {{ item.id }}" class="fill">{% trans %}Autofill record{% endtrans %}</a>
@@ -53,32 +53,44 @@
 		</article>
 	</section>
 	<section class="item-info">
-		<header>Информация</header>
+		<header>{% trans %}Information{% endtrans %}</header>
 		<article>
 			<div>
-				<strong>Тип:</strong> <a href="{{ path('home_selection', {'type': item.type.id}) }}">{{ item.type.name }}</a>
+				<strong>{% trans %}Type{% endtrans %}</strong> <a href="{{ path('home_selection', {'type': item.type.id}) }}">{{ item.type.name }}</a>
+			</div>
+			<!-- <div>
+				<strong>{% trans %}Episodes{% endtrans %}</strong> 13
+			</div> -->
+			<div>
+				<strong>{% trans %}The duration of the episode{% endtrans %}</strong> {{ item.duration }} мин.
 			</div>
 			<div>
-				<strong>Эпизоды:</strong> 13
+				<strong>{% trans %}Status{% endtrans %}</strong>
+				{% if item.dateend %} {% trans %}came out in{% endtrans %} {% else %} {% trans %}goes from{% endtrans %} {% endif %}
+				<a href="{{ path('home_selection', {'date_start': item.datestart|date('Y')}) }}">{{ item.datestart|date('Y') }}</a>{% if item.dateend and (item.datestart|date('Y') != item.dateend|date('Y')) %}-<a href="{{ path('home_selection', {'date_end': item.dateend|date('Y')}) }}">{{ item.dateend|date('Y') }}</a>{% endif %}
+				{% trans %}y.{% endtrans %}
+				{# start date of issue  #}
+				{% set startdey = item.datestart|date('d') %}
+				{% set startmonth = item.datestart|date('F') ~ '|' ~ item.datestart|date('F') %}
+				{# end date of issue  #}
+				{% if item.dateend %}
+					{% set enddey = item.dateend|date('d') %}
+					{% set endmonth = item.dateend|date('F') ~ '|' ~ item.dateend|date('F') %}
+					{% set dateend = 'to'|trans ~ ' ' ~ enddey ~ ' ' ~ endmonth|transchoice(enddey, {}, 'datechoice')|lower ~ ' ' ~ item.dateend|date('Y') ~ ' ' ~ 'y.'|trans %}
+				{% else %}
+					{% set dateend = '' %}
+				{% endif %}
+				(<abbr title="{% trans %}From{% endtrans %} {{ startdey }} {{ startmonth|transchoice(startdey, {}, 'datechoice')|lower }} {{ item.datestart|date('Y') }} {% trans %}y.{% endtrans %}{{ dateend }}">?</abbr>)
 			</div>
 			<div>
-				<strong>Длительность эпизода:</strong> {{ item.duration }} мин.
+				<strong>{% trans %}Production{% endtrans %}</strong> <a href="{{ path('home_selection', {'manufacturer': item.manufacturer.id}) }}">{{ item.manufacturer.name }}</a>
 			</div>
 			<div>
-				<strong>Статус:</strong>
-				{% if item.dateend %} вышло в {% else %} выходит с {% endif %}
-				<a href="{{ path('home_selection', {'date_start': item.datestart|date('1.1.Y')}) }}">{{ item.datestart|date('Y') }}</a>{% if item.dateend and (item.datestart|date('Y') != item.dateend|date('Y')) %}-<a href="{{ path('home_selection', {'date_end': item.dateend|date('1.1.Y')}) }}">{{ item.dateend|date('Y') }}</a>{% endif %} г.
-				(<abbr title="С {{ item.datestart|date('d') }} {{ item.datestart|date('F')|lower }} {{ item.datestart|date('Y') }} г.{% if item.dateend %} по {{ item.dateend|date('d') }} {{ item.dateend|date('F')|lower }} {{ item.dateend|date('Y') }} г.{% endif %}">?</abbr>)
-			</div>
-			<div>
-				<strong>Производство:</strong> <a href="{{ path('home_selection', {'manufacturer': item.manufacturer.id}) }}">{{ item.manufacturer.name }}</a>
-			</div>
-			<div>
-				<strong>Хранилище:</strong> <a href="{{ path('home_selection', {'storage': item.storage.id}) }}">{{ item.storage.name }}</a>
+				<strong>{% trans %}Storage{% endtrans %}</strong> <a href="{{ path('home_selection', {'storage': item.storage.id}) }}">{{ item.storage.name }}</a>
 			</div>
 			{% if item.names is not empty %}
 				<div>
-					<strong>Альтернативные названия:</strong>
+					<strong>{% trans %}Alternative names{% endtrans %}</strong>
 					<ul>
 						{% for name in item.names %}
 							<li>{{ name.name }}</li>
@@ -90,7 +102,7 @@
 	</section>
 	{% if item.genres is not empty %}
 		<section class="item-genres">
-			<header>Жанры</header>
+			<header>{% trans %}Genres{% endtrans %}</header>
 			<article>
 					{% for genre in item.genres %}
 						<a href="{{ path('home_selection', {'genre': genre.id}) }}" target="_blank">{{ genre.name }}</a>{% if not loop.last %}, {% endif %}
@@ -100,7 +112,7 @@
 	{% endif %}
 	{% if item.sources is not empty %}
 		<section class="item-sources">
-			<header>Источники</header>
+			<header>{% trans %}Sources{% endtrans %}</header>
 			<article>
 				<ul>
 					{% for source in item.sources %}

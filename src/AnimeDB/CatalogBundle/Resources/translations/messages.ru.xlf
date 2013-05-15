@@ -202,6 +202,58 @@
                 <source>Complement directory</source>
                 <target>Укомплектовать директорию</target>
             </trans-unit>
+            <trans-unit id="52">
+                <source>The path to the files</source>
+                <target>Путь к файлам</target>
+            </trans-unit>
+            <trans-unit id="53">
+                <source>Record</source>
+                <target>Запись</target>
+            </trans-unit>
+            <trans-unit id="54">
+                <source>Information</source>
+                <target>Информация</target>
+            </trans-unit>
+            <trans-unit id="55">
+                <source>The duration of the episode</source>
+                <target>Длительность эпизода</target>
+            </trans-unit>
+            <trans-unit id="56">
+                <source>Status</source>
+                <target>Статус</target>
+            </trans-unit>
+            <trans-unit id="57">
+                <source>came out in</source>
+                <target>вышло в</target>
+            </trans-unit>
+            <trans-unit id="58">
+                <source>goes from</source>
+                <target>выходит с</target>
+            </trans-unit>
+            <trans-unit id="59">
+                <source>From</source>
+                <target>С</target>
+            </trans-unit>
+            <trans-unit id="60">
+                <source>from</source>
+                <target>с</target>
+            </trans-unit>
+            <trans-unit id="61">
+                <source>to</source>
+                <target>по</target>
+            </trans-unit>
+            <trans-unit id="62">
+                <source>y.</source>
+                <target>г.</target>
+            </trans-unit>
+            <trans-unit id="63">
+                <source>Production</source>
+                <target>Производство</target>
+            </trans-unit>
+            <trans-unit id="64">
+                <source>Alternative names</source>
+                <target>Альтернативные названия</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
