@@ -1,0 +1,8 @@
+notifications:
+  email: "dev@animedb.org"
+
+language: php
+php:
+  - 5.4
+
+phpunit -c app/
