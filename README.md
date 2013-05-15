@@ -1,4 +1,5 @@
 <img src="http://anime-db.org/images/logo.jpg" /><br />
+[![Build Status](https://travis-ci.org/peter-gribanov/application.png?branch=framework)](https://travis-ci.org/peter-gribanov/application)<br />
 <img src="http://www.php.net/images/logos/php5-power-micro.png" />
 
 # AnimeDB #
