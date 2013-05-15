@@ -3,6 +3,6 @@ php:
   - 5.4
 
 notifications:
-  email: "dev@animedb.org"
+  email: "dev@anime-db.org"
 
 script: "phpunit -c app/"
