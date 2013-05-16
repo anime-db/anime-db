@@ -9,6 +9,7 @@
  */
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 // If you don't want to setup permissions the proper way, just uncomment the following PHP line
 // read http://symfony.com/doc/current/book/installation.html#configuration-and-setup for more information
@@ -20,6 +21,13 @@ require_once __DIR__.'/../app/AppKernel.php';
 $kernel = new AppKernel('dev', true);
 //$kernel->loadClassCache();
 $request = Request::createFromGlobals();
-$response = $kernel->handle($request);
+
+// give static or run for dev
+if (is_file(__DIR__.$request->getPathInfo())) {
+    $response = new Response(file_get_contents(__DIR__.$request->getPathInfo()));
+    $response->headers->set('Content-Type', mime_content_type(__DIR__.$request->getPathInfo()));
+} else {
+    $response = $kernel->handle($request);
+}
 $response->send();
 $kernel->terminate($request, $response);
