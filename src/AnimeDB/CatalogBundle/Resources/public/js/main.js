@@ -56,22 +56,6 @@ $(function(){
 // add button jQuery UI style
 $('input:submit, input:button, input:reset, button, .catalog-last-added .details').button();
 
-// resize content wrapper
-var resizeContentWrapper = function() {
-	var footer = $('#footer');
-	var content = $('#content-wrapper').css('height', 'auto');
-	console.log($(document).height());
-	content.css('height', 
-		$(document).height()
-		- footer.height()
-		- parseInt(footer.css('paddingTop'))
-		- parseInt(footer.css('paddingBottom'))
-		- $('#header').height()
-		- parseInt(content.css('borderTop'))
-	);
-};
-$(window).resize(resizeContentWrapper).load(resizeContentWrapper);
-
 Form.Collection.init();
 
 });
