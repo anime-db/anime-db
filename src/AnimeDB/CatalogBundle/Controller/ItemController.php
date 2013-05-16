@@ -57,7 +57,7 @@ class ItemController extends Controller
     public function addAction()
     {
         /* @var $chain \AnimeDB\CatalogBundle\Service\Autofill\Chain */
-        $chain = $this->get('anime_db_catalog.autofill.chain');
+        $chain = $this->get('anime_db.autofill');
 
         /* @var $search \Symfony\Component\Form\Form */
         $search = $this->createForm(new Search($chain->getFillerTitles()));

@@ -35,7 +35,7 @@ class FillerController extends Controller
      */
     public function searchAction() {
         /* @var $chain \AnimeDB\CatalogBundle\Service\Autofill\Chain */
-        $chain = $this->get('anime_db_catalog.autofill.chain');
+        $chain = $this->get('anime_db.autofill');
 
         /* @var $form \Symfony\Component\Form\Form */
         $form = $this->createForm(new Search($chain->getFillerTitles()));
@@ -77,7 +77,7 @@ class FillerController extends Controller
         if ($form->isValid()) {
             $source = $form->getData()['url'];
             /* @var $chain \AnimeDB\CatalogBundle\Service\Autofill\Chain */
-            $chain = $this->get('anime_db_catalog.autofill.chain');
+            $chain = $this->get('anime_db.autofill');
             $filler = $chain->getFillerBySource($source);
             if (!($filler instanceof Filler)) {
                 $error = 'Unable to find any filler for the specified source';
