@@ -15,6 +15,7 @@ services:
     # Twig extension
     anime_db.twig_extension:
         class: AnimeDB\CatalogBundle\Service\TwigExtension
+        arguments: [@router]
         tags:
             - { name: twig.extension }
 

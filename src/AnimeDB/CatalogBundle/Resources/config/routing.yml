@@ -59,3 +59,8 @@ filler_search:
 filler_fill:
     pattern:  /filler/fill.html
     defaults: { _controller: AnimeDBCatalogBundle:Filler:fill }
+
+
+media_favicon:
+    pattern:  /media/favicon/{host}.ico
+    defaults: { _controller: AnimeDBCatalogBundle:Media:favicon }
