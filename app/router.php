@@ -19,7 +19,7 @@ if (PHP_SAPI != 'cli-server') {
 
 
 // get request
-require_once __DIR__.'/bootstrap.php.cache';
+$loader = require_once __DIR__.'/bootstrap.php.cache';
 $request = Request::createFromGlobals();
 
 // Check that the access to the application by the local computer or local network
@@ -57,8 +57,8 @@ if (is_file(__DIR__.'/../web'.$request->getScriptName())) {
 // Use APC for autoloading to improve performance
 // Change 'sf2' by the prefix you want in order to prevent key conflict with another application
 /*
- $loader = new ApcClassLoader('sf2', $loader);
- $loader->register(true);
+$loader = new ApcClassLoader('sf2', $loader);
+$loader->register(true);
 */
 
 require_once __DIR__.'/AppKernel.php';
