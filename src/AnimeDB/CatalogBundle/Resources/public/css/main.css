@@ -223,6 +223,7 @@ h1.logo a span {
 	background: #fff url(images/bg-home-right.gif) no-repeat -231px -144px;
 	border: 3px #ff9f0b solid;
 	border-bottom: 0;
+	min-height: 183px;
 	height: auto;
 }
 .content {
@@ -240,6 +241,7 @@ h1.logo a span {
 }
 .home .content {
 	background: url(images/bg-home-right.gif) no-repeat right 34px;
+	min-height: 327px;
 }
 .home-center-header {
 	height: 121px;
