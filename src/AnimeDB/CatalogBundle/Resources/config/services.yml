@@ -1,20 +1,20 @@
 services:
-    anime_db_catalog.autofill.chain:
+    anime_db.autofill:
         class: AnimeDB\CatalogBundle\Service\Autofill\Chain
         scope: request
-    anime_db_catalog.autofill.worldartru:
+    anime_db.autofill.worldartru:
         class: AnimeDB\CatalogBundle\Service\Autofill\Filler\WorldArtRu
         arguments: [@buzz.browser, @request, @doctrine]
         scope: request
         tags:
-            -  { name: anime_db_catalog.autofill, alias: worldartru }
-    anime_db_catalog.autofill.shikimoriorg:
+            -  { name: autofill.filler, alias: worldartru }
+    anime_db.autofill.shikimoriorg:
         class: AnimeDB\CatalogBundle\Service\Autofill\Filler\ShikimoriOrg
         tags:
-            -  { name: anime_db_catalog.autofill, alias: shikimoriorg }
+            -  { name: autofill.filler, alias: shikimoriorg }
     # Twig extension
-    anime_db_catalog.twig.anime_db_extension:
-        class: AnimeDB\CatalogBundle\Service\Twig\AnimeDBExtension
+    anime_db.twig_extension:
+        class: AnimeDB\CatalogBundle\Service\TwigExtension
         tags:
             - { name: twig.extension }
 

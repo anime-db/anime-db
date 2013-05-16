@@ -29,12 +29,12 @@ class CompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('anime_db_catalog.autofill.chain')) {
+        if (!$container->hasDefinition('anime_db.autofill')) {
             return;
         }
 
-        $definition = $container->getDefinition('anime_db_catalog.autofill.chain');
-        $taggedServices = $container->findTaggedServiceIds('anime_db_catalog.autofill');
+        $definition = $container->getDefinition('anime_db.autofill');
+        $taggedServices = $container->findTaggedServiceIds('autofill.filler');
 
         foreach ($taggedServices as $id => $tagAttributes) {
             foreach ($tagAttributes as $attributes) {

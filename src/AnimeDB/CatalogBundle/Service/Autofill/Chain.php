@@ -7,7 +7,7 @@
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
- 
+
 namespace AnimeDB\CatalogBundle\Service\Autofill;
 
 use AnimeDB\CatalogBundle\Service\Autofill\Filler\Filler;
