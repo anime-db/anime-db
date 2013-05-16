@@ -5,7 +5,6 @@
 {% block stylesheets %}
 	{% if form %}
 		<link href="{{ asset('uploadify/uploadify.css') }}" rel="stylesheet" />
-		{{ form_stylesheet(form) }}
 	{% endif %}
 	{{ parent() }}
 {% endblock %}
@@ -14,7 +13,6 @@
 	{{ parent() }}
 	{% if form %}
 		<script src="{{ asset('uploadify/jquery.uploadify.min.js') }}"></script>
-		{{ form_javascript(form) }}
 	{% endif %}
 {% endblock %}
 

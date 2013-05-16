@@ -4,14 +4,12 @@
 
 {% block stylesheets %}
 	<link href="{{ asset('uploadify/uploadify.css') }}" rel="stylesheet" />
-	{{ form_stylesheet(form) }}
 	{{ parent() }}
 {% endblock %}
 
 {% block javascripts %}
 	{{ parent() }}
 	<script src="{{ asset('uploadify/jquery.uploadify.min.js') }}"></script>
-	{{ form_javascript(form) }}
 {% endblock %}
 
 {% form_theme form 'AnimeDBCatalogBundle:Form:fields.html.twig' %}
