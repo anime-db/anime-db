@@ -23,6 +23,7 @@ use AnimeDB\CatalogBundle\Entity\Genre;
 use AnimeDB\CatalogBundle\Entity\Type;
 use AnimeDB\CatalogBundle\Entity\Image;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Autofill from site world-art.ru
@@ -88,6 +89,13 @@ class WorldArtRu implements Filler
      * @var \Doctrine\Bundle\DoctrineBundle\Registry
      */
     private $doctrine;
+
+    /**
+     * Filesystem
+     *
+     * @var \Symfony\Component\Filesystem\Filesystem
+     */
+    private $fs;
 
     /**
      * World-Art countrys
@@ -210,6 +218,7 @@ class WorldArtRu implements Filler
         $this->browser  = $browser;
         $this->request  = $request;
         $this->doctrine = $doctrine;
+        $this->fs = new Filesystem();
     }
 
     /**
@@ -523,12 +532,12 @@ class WorldArtRu implements Filler
         // training directory
         $root = realpath(__DIR__.'/../../../../../../web/media');
         $path = $root.date('/Y/m/');
-        $this->mkdir($path);
+        $this->fs->mkdir($path);
         // create file name
         $ext = pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION);
         $dest = $this->createFileName($path, $ext);
         // upload
-        copy($url, $dest);
+        $this->fs->copy($url, $dest);
         // return relative path
         return str_replace($root.'/', '', $dest);
     }
@@ -547,53 +556,6 @@ class WorldArtRu implements Filler
         } while (file_exists($path.$file_name.'.'.$ext));
         return $path.$file_name.'.'.$ext;
     }
-
-	/**
-	 * Create a directory
-	 * 
-	 * Creates the directory and the full path to it if it does not exist
-	 *
-	 * @throws \Exception
-	 *
-	 * @param string  $directory
-	 * @param integer $mask
-	 */
-	private function mkdir($directory, $mask = 0755) {
-		if (is_dir($directory) || !$directory) {
-			return;
-		}
-		$directory = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $directory);
-		if (is_file($directory)) {
-			throw new \Exception('mkdir() file exists');
-		}
-
-		// access mask must contain a flag designs for access to it
-		if (($mask & 0002) === 0002 || ($mask & 0004) === 0004) { // other
-			$mask = $mask | 0001;
-		}
-		if (($mask & 0020) === 0020 || ($mask & 0040) === 0040) { // group
-			$mask = $mask | 0010;
-		}
-		if (($mask & 0200) === 0200 || ($mask & 0400) === 0400) { // user
-			$mask = $mask | 0100;
-		}
-
-		$names = explode(DIRECTORY_SEPARATOR, $directory);
-		$dir = DIRECTORY_SEPARATOR;
-		for ($i=0; $i < count($names); $i++) {
-			if ($names[$i]) { // can come to an empty string
-				$dir .= $names[$i].DIRECTORY_SEPARATOR;
-				if (!is_dir($dir)) {
-					$old_umask = umask(0);
-					@mkdir($dir, $mask);
-					umask($old_umask);
-					if (!is_dir($dir)) {
-						throw new \Exception('Can`t create a folder '.$dir);
-					}
-				}
-			}
-		}
-	}
 
     /**
      * Get real country by name
