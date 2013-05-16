@@ -63,18 +63,3 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
-# Genemu Configuration
-genemu_form:
-    select2: ~
-    date: ~
-    autocomplete:
-        enabled: true
-    file:
-        enabled: true
-        swf:     uploadify/uploadify.swf
-        folder:  upload
-    image:
-        enabled:  true
-        filters:  []
-        thumbnails:
-            large: [500, 500]
