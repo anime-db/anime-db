@@ -2,6 +2,11 @@ anime_db_catalog:
     resource: "@AnimeDBCatalogBundle/Resources/config/routing.yml"
     prefix:   /
 
+# Imagine
+_imagine:
+    resource: .
+    type:     imagine
+
 # Internal routing configuration to handle ESI
 # ****** WARNING ******
 # This route should be enabled with caution as it can open a security vulnerability

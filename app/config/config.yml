@@ -63,3 +63,13 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
+# Avalanche Configuration
+avalanche_imagine:
+    source_root:  %kernel.root_dir%/../web/media
+    web_root:     %kernel.root_dir%/../web
+    cache_prefix: media
+    driver:       gd
+    filters:
+        card_cover:
+            type:    thumbnail
+            options: { size: [240, 300], mode: outbound }
