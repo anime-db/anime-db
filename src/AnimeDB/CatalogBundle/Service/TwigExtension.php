@@ -45,11 +45,7 @@ class TwigExtension extends \Twig_Extension
 
     public function favicon($url)
     {
-        if ($url) {
-            $host = str_replace('.', '_', parse_url($url, PHP_URL_HOST));
-            $url = $this->router->generate('media_favicon', ['host' => $host]);
-        }
-        return $url;
+        return $url ? $this->router->generate('media_favicon', ['host' => parse_url($url, PHP_URL_HOST)]) : false;
     }
 
     public function getName()
