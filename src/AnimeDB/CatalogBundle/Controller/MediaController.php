@@ -34,10 +34,12 @@ class MediaController extends Controller
         $path = realpath(__DIR__.'/../../../../web').'/media/favicon/';
         $file = $path.$host.'.ico';
         if (!file_exists($file)) {
-            (new Filesystem())->copy('http://'.$host.'/favicon.ico', $file);
-            // file not found
-            if (!file_exists($file)) {
-                throw $this->createNotFoundException('No found favicon for host '.$host);
+            $fs = new Filesystem();
+            $fs->copy('http://'.$host.'/favicon.ico', $file);
+            // not found
+            if (file_exists($file) && !file_get_contents($file)) {
+                $fs->remove($file);
+                return new Response('', 404, ['Content-Type' => 'image/x-icon']);
             }
         }
         return new Response(file_get_contents($file), 200, ['Content-Type' => 'image/x-icon']);
