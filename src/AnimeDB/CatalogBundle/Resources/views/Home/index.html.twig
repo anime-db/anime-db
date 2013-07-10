@@ -14,9 +14,11 @@
 	<div class="home-item">
 		<div class="cover">
 			<img src="{{ item.cover|apply_filter('home_cover') }}" alt="{{ item.name }}" />
-			<ul class="item-genres">
+			<ul class="genres">
 				{% for genre in item.genres %}
-					<li><a href="{{ path('home_selection', {'genre': genre.id}) }}">{{ genre.name }}</a></li>
+					<li class="genre-item">
+						<a href="{{ path('home_selection', {'genre': genre.id}) }}">{{ genre.name }}</a>
+					</li>
 				{% endfor %}
 			</ul>
 		</div>
