@@ -23,7 +23,6 @@ use Symfony\Component\Filesystem\Exception\IOException;
  */
 class MediaController extends Controller
 {
-
     /**
      * MIME type list
      *
@@ -42,6 +41,8 @@ class MediaController extends Controller
      */
     public function faviconAction($host)
     {
+        $status = 200;
+        $content = '';
         $path = realpath(__DIR__.'/../../../../web').'/media/favicon/';
         $file = $path.$host.'.ico';
         if (!file_exists($file)) {
@@ -49,15 +50,17 @@ class MediaController extends Controller
             // download favicon
             try {
                 $fs->copy('http://'.$host.'/favicon.ico', $file);
+                // site does not have a favicon
+                if (($info = @getimagesize($file)) === false || !in_array($info['mime'], self::$mime['ico'])) {
+                    $fs->remove($file);
+                    $status = 404;
+                } else {
+                    $content = file_get_contents($file);
+                }
             } catch (IOException $e) {
-                return new Response('', 500, ['Content-Type' => self::$mime['ico'][0]]);
-            }
-            // site does not have a favicon
-            if (($info = @getimagesize($file)) === false || !in_array($info['mime'], self::$mime['ico'])) {
-                $fs->remove($file);
-                return new Response('', 404, ['Content-Type' => self::$mime['ico'][0]]);
+                $status = 500;
             }
         }
-        return new Response(file_get_contents($file), 200, ['Content-Type' => self::$mime['ico'][0]]);
+        return new Response($content, $status, ['Content-Type' => self::$mime['ico'][0]]);
     }
 }
