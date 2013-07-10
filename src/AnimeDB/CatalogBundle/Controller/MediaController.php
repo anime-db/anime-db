@@ -13,6 +13,7 @@ namespace AnimeDB\CatalogBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
  * Favicon
@@ -22,8 +23,18 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class MediaController extends Controller
 {
+
     /**
-     * Show icon
+     * MIME type list
+     *
+     * @var array
+     */
+    private static $mime = [
+        'ico' => ['image/x-icon', 'image/vnd.microsoft.icon']
+    ];
+
+    /**
+     * Show favicon
      *
      * @param string $host
      *
@@ -35,13 +46,18 @@ class MediaController extends Controller
         $file = $path.$host.'.ico';
         if (!file_exists($file)) {
             $fs = new Filesystem();
-            $fs->copy('http://'.$host.'/favicon.ico', $file);
-            // not found
-            if (file_exists($file) && !file_get_contents($file)) {
+            // download favicon
+            try {
+                $fs->copy('http://'.$host.'/favicon.ico', $file);
+            } catch (IOException $e) {
+                return new Response('', 500, ['Content-Type' => self::$mime['ico'][0]]);
+            }
+            // site does not have a favicon
+            if (($info = @getimagesize($file)) === false || !in_array($info['mime'], self::$mime['ico'])) {
                 $fs->remove($file);
-                return new Response('', 404, ['Content-Type' => 'image/x-icon']);
+                return new Response('', 404, ['Content-Type' => self::$mime['ico'][0]]);
             }
         }
-        return new Response(file_get_contents($file), 200, ['Content-Type' => 'image/x-icon']);
+        return new Response(file_get_contents($file), 200, ['Content-Type' => self::$mime['ico'][0]]);
     }
 }
