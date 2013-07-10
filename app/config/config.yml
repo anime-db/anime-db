@@ -73,3 +73,6 @@ avalanche_imagine:
         card_cover:
             type:    thumbnail
             options: { size: [240, 300], mode: outbound }
+        home_cover:
+            type:    thumbnail
+            options: { size: [200, 250], mode: outbound }

@@ -10,8 +10,26 @@
 	</div>
 </div>
 <div class="home-center">
-
-Hello {{ name }}!
-
+{% for item in items %}
+	<div class="home-item">
+		<div class="cover">
+			<img src="{{ item.cover|apply_filter('home_cover') }}" alt="{{ item.name }}" />
+			<ul class="item-genres">
+				{% for genre in item.genres %}
+					<li><a href="{{ path('home_selection', {'genre': genre.id}) }}">{{ genre.name }}</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+		<div class="name">{{ item.name }}</div>
+		<div class="names">
+			{% for name in item.names %}
+				<div class="names-item">{{ name.name }}</div>
+			{% endfor %}
+		</div>
+		<div class="year"><strong>{% trans %}Year{% endtrans %}:</strong> <a href="{{ path('home_selection', {'date_start': item.datestart|date('Y')}) }}">{{ item.datestart|date('Y') }}</a></div>
+		<!-- <div class="episodes"><strong>{% trans %}Episodes{% endtrans %}</strong> 13</div> -->
+		<div class="type"><strong>{% trans %}Type{% endtrans %}:</strong> <a href="{{ path('home_selection', {'type': item.type.id}) }}">{{ item.type.name }}</a></div>
+	</div>
+{% endfor %}
 </div>
 {% endblock %}
