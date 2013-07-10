@@ -22,14 +22,33 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class HomeController extends Controller
 {
     /**
+     * Items per page
+     *
+     * @var integer
+     */
+    const ITEMS_PER_PAGE = 6;
+
+    /**
      * Home
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
-        // TODO requires the implementation of
-        return $this->render('AnimeDBCatalogBundle:Home:index.html.twig', array('name' => 'Test'));
+        // current page for paging
+        $page = $this->getRequest()->get('page', 1);
+        $current_page = $page > 0 ? $page-1 : 0;
+
+        // get items
+        $repository = $this->getDoctrine()->getRepository('AnimeDBCatalogBundle:Item');
+        $query = $repository->createQueryBuilder('i')
+            ->orderBy('i.id', 'ASC')
+            ->setFirstResult($current_page*self::ITEMS_PER_PAGE)
+            ->setMaxResults(self::ITEMS_PER_PAGE)
+            ->getQuery();
+        $items = $query->getResult();
+
+        return $this->render('AnimeDBCatalogBundle:Home:index.html.twig', array('items' => $items));
     }
 
     /**
