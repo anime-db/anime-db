@@ -461,6 +461,13 @@ h1.logo a span {
 .item-controls .remove {
 	background: url(images/polygon.png) no-repeat 0 0;
 }
+.item-summary {
+	min-height: 300px;
+}
+.item-episodes article {
+	max-height: 500px;
+	overflow: auto;
+}
 .item-info ul {
 	margin: 0;
 }
