@@ -132,7 +132,7 @@
             </trans-unit>
             <trans-unit id="34">
                 <source>File info</source>
-                <target>Информация о файлах</target>
+                <target>Информация о файле</target>
             </trans-unit>
             <trans-unit id="35">
                 <source>Image</source>
