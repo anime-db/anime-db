@@ -7,22 +7,6 @@
 	<h2>{{ item.name }}</h2>
 	<img src="{{ item.cover|apply_filter('card_cover') }}" alt="{{ item.name }}" class="cover" />
 	<section class="item-summary">{{ item.summary }}</section>
-	{% if item.translate %}
-		<section class="item-translate">
-			<header>{% trans %}Translate{% endtrans %}</header>
-			<article>{{ item.translate|nl2br }}</article>
-		</section>
-	{% endif %}
-	<section class="item-file-info">
-		<header>{% trans %}The path to the files{% endtrans %}</header>
-		<article>{{ item.path }}</article>
-	</section>
-	{% if item.fileinfo %}
-		<section class="item-file-info">
-			<header>{% trans %}File info{% endtrans %}</header>
-			<article>{{ item.fileinfo|nl2br }}</article>
-		</section>
-	{% endif %}
 	{% if item.episodes %}
 		<section class="item-episodes">
 			<header>{% trans %}Episodes{% endtrans %}</header>
@@ -120,6 +104,22 @@
 					{% endfor %}
 				</ul>
 			</article>
+		</section>
+	{% endif %}
+	{% if item.translate %}
+		<section class="item-translate">
+			<header>{% trans %}Translate{% endtrans %}</header>
+			<article>{{ item.translate|nl2br }}</article>
+		</section>
+	{% endif %}
+	<section class="item-file-info">
+		<header>{% trans %}The path to the files{% endtrans %}</header>
+		<article>{{ item.path }}</article>
+	</section>
+	{% if item.fileinfo %}
+		<section class="item-file-info">
+			<header>{% trans %}File info{% endtrans %}</header>
+			<article>{{ item.fileinfo|nl2br }}</article>
 		</section>
 	{% endif %}
 </section>

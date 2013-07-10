@@ -471,8 +471,7 @@ h1.logo a span {
 .item-sources li {
 	list-style: none;
 	margin: 2px;
-	height: 16px;
-	float: left;
+	display: inline-block;
 }
 
 
