@@ -40,7 +40,7 @@
 		<header>{% trans %}Information{% endtrans %}</header>
 		<article>
 			<div>
-				<strong>{% trans %}Type{% endtrans %}</strong> <a href="{{ path('home_selection', {'type': item.type.id}) }}">{{ item.type.name }}</a>
+				<strong>{% trans %}Type{% endtrans %}</strong> <a href="{{ path('home_selection', {'selection[type]': item.type.id}) }}">{{ item.type.name }}</a>
 			</div>
 			<!-- <div>
 				<strong>{% trans %}Episodes{% endtrans %}</strong> 13
@@ -51,7 +51,7 @@
 			<div>
 				<strong>{% trans %}Status{% endtrans %}</strong>
 				{% if item.dateend %} {% trans %}came out in{% endtrans %} {% else %} {% trans %}goes from{% endtrans %} {% endif %}
-				<a href="{{ path('home_selection', {'date_start': item.datestart|date('Y')}) }}">{{ item.datestart|date('Y') }}</a>{% if item.dateend and (item.datestart|date('Y') != item.dateend|date('Y')) %}-<a href="{{ path('home_selection', {'date_end': item.dateend|date('Y')}) }}">{{ item.dateend|date('Y') }}</a>{% endif %}
+				<a href="{{ path('home_selection', {'selection[date_start]': item.datestart|date('Y-01-01')}) }}">{{ item.datestart|date('Y') }}</a>{% if item.dateend and (item.datestart|date('Y') != item.dateend|date('Y')) %}-<a href="{{ path('home_selection', {'selection[date_end]': item.dateend|date('Y-01-01')}) }}">{{ item.dateend|date('Y') }}</a>{% endif %}
 				{% trans %}y.{% endtrans %}
 				{# start date of issue  #}
 				{% set startdey = item.datestart|date('d') %}
@@ -67,10 +67,10 @@
 				(<abbr title="{% trans %}From{% endtrans %} {{ startdey }} {{ startmonth|transchoice(startdey, {}, 'datechoice')|lower }} {{ item.datestart|date('Y') }} {% trans %}y.{% endtrans %}{{ dateend }}">?</abbr>)
 			</div>
 			<div>
-				<strong>{% trans %}Production{% endtrans %}</strong> <a href="{{ path('home_selection', {'manufacturer': item.manufacturer.id}) }}">{{ item.manufacturer.name }}</a>
+				<strong>{% trans %}Production{% endtrans %}</strong> <a href="{{ path('home_selection', {'selection[manufacturer]': item.manufacturer.id}) }}">{{ item.manufacturer.name }}</a>
 			</div>
 			<div>
-				<strong>{% trans %}Storage{% endtrans %}</strong> <a href="{{ path('home_selection', {'storage': item.storage.id}) }}">{{ item.storage.name }}</a>
+				<strong>{% trans %}Storage{% endtrans %}</strong> <a href="{{ path('home_selection', {'selection[storage]': item.storage.id}) }}">{{ item.storage.name }}</a>
 			</div>
 			{% if item.names is not empty %}
 				<div>
@@ -89,7 +89,7 @@
 			<header>{% trans %}Genres{% endtrans %}</header>
 			<article>
 					{% for genre in item.genres %}
-						<a href="{{ path('home_selection', {'genre': genre.id}) }}" target="_blank">{{ genre.name }}</a>{% if not loop.last %}, {% endif %}
+						<a href="{{ path('home_selection', {'selection[genres][]': genre.id}) }}" target="_blank">{{ genre.name }}</a>{% if not loop.last %}, {% endif %}
 					{% endfor %}
 			</article>
 		</section>

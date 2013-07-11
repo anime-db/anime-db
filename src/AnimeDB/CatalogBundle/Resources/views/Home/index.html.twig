@@ -15,12 +15,12 @@
 		<img src="{{ item.cover|apply_filter('home_cover') }}" alt="{{ item.name }}" />
 		<div class="name"><strong>{{ item.name }}</strong></div>
 		<div class="type">
-			<a href="{{ path('home_selection', {'type': item.type.id}) }}" title="{% trans %}Type{% endtrans %}">{{ item.type.name }}</a>
+			<a href="{{ path('home_selection', {'selection[type]': item.type.id}) }}" title="{% trans %}Type{% endtrans %}">{{ item.type.name }}</a>
 		</div>
 		<ul class="genres">
 			{% for genre in item.genres %}
 				<li class="genre-item">
-					<a href="{{ path('home_selection', {'genre': genre.id}) }}" title="{% trans %}Genre{% endtrans %}">{{ genre.name }}</a>
+					<a href="{{ path('home_selection', {'selection[genres][]': genre.id}) }}" title="{% trans %}Genre{% endtrans %}">{{ genre.name }}</a>
 				</li>
 			{% endfor %}
 		</ul>

@@ -558,6 +558,25 @@ div.ui-widget div.ui-state-highlight {
 	margin-right: 5px;
 }
 
+/**
+ * Selection for items
+ */
+.b-selection .params {
+	width: 200px;
+	float: left;
+}
+.b-selection .result {
+	width: 650px;
+	float: right;
+}
+.b-selection .params article {
+	padding-right: 7px;
+}
+#f-selection input,
+#f-selection select {
+	width: 100%;
+}
+
 /*
  * catalog-last-added
  *//*

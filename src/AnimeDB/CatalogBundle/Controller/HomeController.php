@@ -12,6 +12,9 @@ namespace AnimeDB\CatalogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use AnimeDB\CatalogBundle\Form\SearchSimple;
+use AnimeDB\CatalogBundle\Form\Selection;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Main page of the catalog
@@ -58,16 +61,8 @@ class HomeController extends Controller
      */
     public function searchSimpleFormAction()
     {
-        /* @var $form \Symfony\Component\Form\Form */
-        $form = $this->createFormBuilder()
-            ->add('q', 'search', array(
-                'label' => 'Search',
-//                 'route_name' => 'home_autocomplete_name',
-            ))
-            ->getForm();
-
         return $this->render('AnimeDBCatalogBundle:Home:searchSimpleForm.html.twig', array(
-            'form' => $form->createView(),
+            'form' => $this->createForm(new SearchSimple())->createView(),
         ));
     }
 
@@ -76,7 +71,8 @@ class HomeController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function autocompleteNameAction() {
+    public function autocompleteNameAction()
+    {
         $term = $this->getRequest()->get('term');
 
         // TODO do search
@@ -86,12 +82,27 @@ class HomeController extends Controller
     }
 
     /**
-     * Select by category
+     * Selection item
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function selectionAction() {
-        // TODO requires the implementation of
-        return $this->render('AnimeDBCatalogBundle:Home:selection.html.twig');
+    public function selectionAction(Request $request)
+    {
+        /* @var $form \Symfony\Component\Form\Form */
+        $form = $this->createForm(new Selection());
+
+        if ($request->query->count()) {
+            $form->bindRequest($request);
+            if ($form->isValid()) {
+                // TODO do search
+                //$form->getData();
+            }
+        }
+
+        return $this->render('AnimeDBCatalogBundle:Home:selection.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 }

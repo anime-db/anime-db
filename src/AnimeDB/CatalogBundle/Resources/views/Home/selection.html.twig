@@ -3,4 +3,20 @@
 {% block title %}{% trans %}Oversampled{% endtrans %}{% endblock %}
 
 {% block content %}
+<div class="b-selection">
+	<section class="params">
+		<header>Параметры поиска</header>
+		<article>
+			<form action="{{ path('home_selection') }}" method="get" {{ form_enctype(form) }}>
+				{{ form_widget(form, {'id': 'f-selection'}) }}
+				<button type="submit">{% trans %}Search{% endtrans %}</button>
+			</form>
+		</article>
+	</section>
+	<section class="result">
+		<header>Результаты поиска</header>
+		<article>
+		</article>
+	</section>
+</div>
 {% endblock %}
