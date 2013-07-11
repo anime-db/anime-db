@@ -480,17 +480,45 @@ h1.logo a span {
 	margin: 2px;
 	display: inline-block;
 }
+
+/**
+ * Item list on home page
+ */
 .home-item {
 	width: 200px;
-	margin: 0 10px 20px 10px;
-}
-.home-item .cover {
 	height: 250px;
+	margin: 10px;
 	position: relative;
+	overflow: hidden;
+}
+.home-item:hover .name {
+	display: block;
+}
+.home-item .name {
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 200px;
+	height: 250px;
+	background: #222;
+	opacity: 0.7;
+	filter: alpha(Opacity=70);
+}
+.home-item .name strong {
+	display: block;
+	margin: 23px 12px 0 12px;
+	font-size: 120%;
+	color: #fff;
+}
+.home-item .type {
+	position: absolute;
+	left: 4px;
+	top: 3px;
 }
 .home-item .genres {
 	position: absolute;
-	bottom: 2px;
+	bottom: 0;
 	right: 4px;
 	margin: 0;
 	padding: 0;
@@ -500,7 +528,8 @@ h1.logo a span {
 .home-item .genres .genre-item {
 	margin: 3px 0;
 }
-.home-item .genres .genre-item a {
+.home-item .genres .genre-item a,
+.home-item .type a {
 	display: inline-block;
 	padding: 1px 4px;
 	text-decoration: none;
@@ -510,8 +539,9 @@ h1.logo a span {
 	-moz-border-radius: 4px;
 	border-radius: 4px;
 }
-.home-item .genres .genre-item a:hover {
-	padding: 2px 5px;
+.home-item .genres .genre-item a:hover,
+.home-item .type a:hover {
+	background: #ff6600;
 }
 
 /*

@@ -255,8 +255,8 @@
                 <target>Альтернативные названия</target>
             </trans-unit>
             <trans-unit id="65">
-                <source>Year</source>
-                <target>Год</target>
+                <source>Genre</source>
+                <target>Жанр</target>
             </trans-unit>
         </body>
     </file>
