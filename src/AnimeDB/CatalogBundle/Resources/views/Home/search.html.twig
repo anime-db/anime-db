@@ -5,7 +5,7 @@
 {% block content %}
 <div class="b-search">
 	<section class="params">
-		<header>Параметры поиска</header>
+		<header>{% trans %}Search options{% endtrans %}</header>
 		<article>
 			<form action="{{ path('home_search') }}" method="get" {{ form_enctype(form) }}>
 				{{ form_widget(form, {'id': 'f-search'}) }}
@@ -14,7 +14,7 @@
 		</article>
 	</section>
 	<section class="result">
-		<header>Результаты поиска</header>
+		<header>{% trans %}Search results{% endtrans %}</header>
 		<article>
 			{% include 'AnimeDBCatalogBundle:Home:list-items.html.twig' %}
 		</article>

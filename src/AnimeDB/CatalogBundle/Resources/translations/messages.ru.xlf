@@ -10,6 +10,14 @@
                 <source>%AnimeDB% is a system for making the home catalog of the anime. The system is designed for home use only.</source>
                 <target>%AnimeDB% это система для составления домашнего каталога аниме. Система предназначена только для домашнего использования.</target>
             </trans-unit>
+            <trans-unit id="3">
+                <source>Search options</source>
+                <target>Параметры поиска</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>Search results</source>
+                <target>Результаты поиска</target>
+            </trans-unit>
             <trans-unit id="5">
                 <source>Search this site</source>
                 <target>Поиск по сайту</target>
