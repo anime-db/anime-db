@@ -52,7 +52,6 @@ class ItemType extends AbstractType
 //                 'property_path' => 'WebPath',
                 'required' => false
             ])
-            // TODO use datepicker
             ->add('date_start', 'date', [
                 'format' => 'yyyy-MM-dd',
                 'widget' => 'single_text',

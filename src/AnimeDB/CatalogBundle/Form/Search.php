@@ -45,7 +45,6 @@ class Search extends AbstractType
                 'label' => 'Name',
                 'required' => false
             ])
-            // TODO use datepicker
             ->add('date_start', 'date', [
                 'format' => 'yyyy-MM-dd',
                 'widget' => 'single_text',
