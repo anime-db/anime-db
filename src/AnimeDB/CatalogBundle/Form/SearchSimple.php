@@ -53,6 +53,6 @@ class SearchSimple extends AbstractType
      */
     public function getName()
     {
-        return 'selection';
+        return 'search_items';
     }
 }

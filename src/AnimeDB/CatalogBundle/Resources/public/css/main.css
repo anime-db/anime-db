@@ -559,21 +559,21 @@ div.ui-widget div.ui-state-highlight {
 }
 
 /**
- * Selection for items
+ * Search items
  */
-.b-selection .params {
+.b-search .params {
 	width: 200px;
 	float: left;
 }
-.b-selection .result {
+.b-search .result {
 	width: 650px;
 	float: right;
 }
-.b-selection .params article {
+.b-search .params article {
 	padding-right: 7px;
 }
-#f-selection input,
-#f-selection select {
+#f-search input,
+#f-search select {
 	width: 100%;
 }
 

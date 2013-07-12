@@ -15,12 +15,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Selection items form
+ * Search items form
  *
  * @package AnimeDB\CatalogBundle\Form
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Selection extends AbstractType
+class Search extends AbstractType
 {
 
     /**
@@ -85,6 +85,6 @@ class Selection extends AbstractType
      */
     public function getName()
     {
-        return 'selection';
+        return 'search_items';
     }
 }

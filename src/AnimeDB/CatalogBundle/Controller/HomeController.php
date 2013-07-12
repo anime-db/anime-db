@@ -13,7 +13,7 @@ namespace AnimeDB\CatalogBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AnimeDB\CatalogBundle\Form\SearchSimple;
-use AnimeDB\CatalogBundle\Form\Selection;
+use AnimeDB\CatalogBundle\Form\Search;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -82,16 +82,16 @@ class HomeController extends Controller
     }
 
     /**
-     * Selection item
+     * Search item
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function selectionAction(Request $request)
+    public function searchAction(Request $request)
     {
         /* @var $form \Symfony\Component\Form\Form */
-        $form = $this->createForm(new Selection());
+        $form = $this->createForm(new Search());
 
         if ($request->query->count()) {
             $form->bindRequest($request);
@@ -101,7 +101,7 @@ class HomeController extends Controller
             }
         }
 
-        return $this->render('AnimeDBCatalogBundle:Home:selection.html.twig', array(
+        return $this->render('AnimeDBCatalogBundle:Home:search.html.twig', array(
             'form' => $form->createView(),
         ));
     }

@@ -1,14 +1,14 @@
 {% extends 'AnimeDBCatalogBundle::layout.html.twig' %}
 
-{% block title %}{% trans %}Oversampled{% endtrans %}{% endblock %}
+{% block title %}{% trans %}Search{% endtrans %}{% endblock %}
 
 {% block content %}
-<div class="b-selection">
+<div class="b-search">
 	<section class="params">
 		<header>Параметры поиска</header>
 		<article>
-			<form action="{{ path('home_selection') }}" method="get" {{ form_enctype(form) }}>
-				{{ form_widget(form, {'id': 'f-selection'}) }}
+			<form action="{{ path('home_search') }}" method="get" {{ form_enctype(form) }}>
+				{{ form_widget(form, {'id': 'f-search'}) }}
 				<button type="submit">{% trans %}Search{% endtrans %}</button>
 			</form>
 		</article>
