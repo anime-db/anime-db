@@ -1,6 +1,8 @@
 # Application #
 ###############
-web/media/
+web/media/[0-9]*
+web/media/suit
+web/media/favicon
 
 # Services pid files #
 ######################
