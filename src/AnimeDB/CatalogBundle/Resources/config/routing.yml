@@ -6,10 +6,6 @@ home_selection:
     pattern:  /selection.html
     defaults: { _controller: AnimeDBCatalogBundle:Home:selection }
 
-home_search:
-    pattern:  /search.html
-    defaults: { _controller: AnimeDBCatalogBundle:Home:search }
-
 home_search_simple_form:
     pattern:  /search-simple-form.html
     defaults: { _controller: AnimeDBCatalogBundle:Home:searchSimpleForm }
