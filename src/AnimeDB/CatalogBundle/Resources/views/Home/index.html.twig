@@ -13,7 +13,7 @@
 {% for item in items %}
 	<div class="home-item">
 		<img src="{{ item.cover|apply_filter('home_cover') }}" alt="{{ item.name }}" />
-		<div class="name"><strong>{{ item.name }}</strong></div>
+		<a href="{{ path('item_show', {'id': item.id, 'name': item.name}) }}" class="name"><strong>{{ item.name }}</strong></a>
 		<div class="type">
 			<a href="{{ path('home_search', {'search_items[type]': item.type.id}) }}" title="{% trans %}Type{% endtrans %}">{{ item.type.name }}</a>
 		</div>

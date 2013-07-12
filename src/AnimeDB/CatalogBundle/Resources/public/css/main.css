@@ -491,8 +491,10 @@ h1.logo a span {
 	position: relative;
 	overflow: hidden;
 }
-.home-item:hover .name {
+.home-item:hover .name,
+.home-item .name:hover {
 	display: block;
+	text-decoration: none;
 }
 .home-item .name {
 	display: none;
