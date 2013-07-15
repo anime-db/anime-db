@@ -426,9 +426,9 @@ class WorldArtRu implements Filler
                     // set type and add file info
                     case 'Тип':
                         $type = $data->childNodes->item($i+1)->nodeValue;
-                        if (preg_match('/(?<type>\w+) (?:\((?<file_info>.+)\))?, (?<duration>\d{1,3}) мин\.$/u', $type, $match)) {
+                        if (preg_match('/(?<type>[\w\s]+)(?: \((?<file_info>.+)\))?, (?<duration>\d{1,3}) мин\.$/u', $type, $match)) {
                             // add type
-                            if ($type = $this->getTypeByName($match['type'])) {
+                            if ($type = $this->getTypeByName(trim($match['type']))) {
                                 $item->setType($type);
                             }
                             // add duration
