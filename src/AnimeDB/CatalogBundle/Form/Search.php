@@ -75,6 +75,15 @@ class Search extends AbstractType
                 'class'    => 'AnimeDBCatalogBundle:Storage',
                 'property' => 'name',
                 'required' => false
+            ])
+            ->add('sort', 'choice', [
+                'label' => 'Sort',
+                'choices' => [
+                    'id' => 'Date add', // really sort by ID, not by date
+                    'name' => 'Name',
+                    'date_start' => 'Date start',
+                    'date_end' => 'Date end'
+                ]
             ]);
     }
 

@@ -262,6 +262,14 @@
                 <source>Genre</source>
                 <target>Жанр</target>
             </trans-unit>
+            <trans-unit id="66">
+                <source>Sort</source>
+                <target>Сортировать</target>
+            </trans-unit>
+            <trans-unit id="67">
+                <source>Date add</source>
+                <target>Дата добавления</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

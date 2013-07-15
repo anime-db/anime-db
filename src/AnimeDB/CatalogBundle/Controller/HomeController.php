@@ -109,16 +109,16 @@ class HomeController extends Controller
                 // current page for paging
                 $page = $request->get('page', 1);
                 $current_page = $page > 0 ? $page-1 : 0;
+                $data = $form->getData();
 
                 // build query
                 $repository = $this->getDoctrine()->getRepository('AnimeDBCatalogBundle:Item');
                 /* @var $builder \Doctrine\ORM\QueryBuilder */
                 $builder = $repository->createQueryBuilder('i')
-                    ->orderBy('i.id', 'ASC')
+                    ->orderBy('i.'.($data['sort'] ?: 'id'), 'ASC')
                     ->setFirstResult($current_page * self::ITEMS_PER_PAGE)
                     ->setMaxResults(self::ITEMS_PER_PAGE);
 
-                $data = $form->getData();
                 // main name
                 if ($data['name']) {
                     $builder->andWhere('i.name = :name')
