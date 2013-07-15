@@ -378,7 +378,7 @@ class WorldArtRu implements Filler
     private function fillHeadData(Item $item, \DOMXPath $xpath, \DOMElement $head) {
         // add main name
         $name = $xpath->query('font[1]/b', $head)->item(0)->nodeValue;
-        $name = trim(str_replace('[ТВ]', '', $name), ' [');
+        $name = trim(preg_replace('/(\[ТВ\]|OVA(\-\d)?)/', '', $name), ' [');
         $item->setName($name);
 
         // find other names
