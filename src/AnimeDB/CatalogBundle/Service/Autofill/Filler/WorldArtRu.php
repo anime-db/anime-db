@@ -60,14 +60,21 @@ class WorldArtRu implements Filler
      *
      * @var string
      */
-    const XPATH_FOR_LIST = '//body/table/tr/td/center/table/tr/td/table/tr/td/table/tr/td';
+    const XPATH_FOR_LIST = '//center/table/tr/td/table/tr/td/table/tr/td';
 
     /**
      * XPath for fill item
      *
      * @var string
      */
-    const XPATH_FOR_FILL = '//body/table/tr/td/center/table[9]/tr/td/table[1]/tr/td';
+    const XPATH_FOR_FILL = '//center/table[7]/tr/td/table[1]/tr/td';
+
+    /**
+     * Default HTTP User-Agent
+     *
+     * @var string
+     */
+    const DEFAULT_USER_AGENT = 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.2 Safari/537.36';
 
     /**
      * Browser
@@ -657,9 +664,10 @@ class WorldArtRu implements Filler
      * @param string $url
      */
     private function getContentFromUrl($url) {
-        // send request from the original user
-        $headers = $this->request->server->getHeaders();
-        unset($headers['HOST'], $headers['COOKIE'], $headers['HTTP_REFERER']);
+        // send headers from original request
+        $headers = [
+            'User-Agent' => $this->request->server->get('HTTP_USER_AGENT', self::DEFAULT_USER_AGENT)
+        ];
         /* @var $response \Buzz\Message\Response */
         $response = $this->browser->get($url, $headers);
         if ($response->getStatusCode() !== 200 || !($html = $response->getContent())) {
@@ -681,7 +689,6 @@ class WorldArtRu implements Filler
         $tidy->cleanRepair();
         $html = $tidy->root()->value;
         // remove noembed
-        $content = preg_replace('/<noembed>.*?<\/noembed>/is', '', $html);
-        return $content;
+        return preg_replace('/<noembed>.*?<\/noembed>/is', '', $html);
     }
 }
