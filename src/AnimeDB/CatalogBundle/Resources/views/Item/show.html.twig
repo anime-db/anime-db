@@ -60,7 +60,7 @@
 				{% if item.dateend %}
 					{% set enddey = item.dateend|date('d') %}
 					{% set endmonth = item.dateend|date('F') ~ '|' ~ item.dateend|date('F') %}
-					{% set dateend = 'to'|trans ~ ' ' ~ enddey ~ ' ' ~ endmonth|transchoice(enddey, {}, 'datechoice')|lower ~ ' ' ~ item.dateend|date('Y') ~ ' ' ~ 'y.'|trans %}
+					{% set dateend = ' ' ~ 'to'|trans ~ ' ' ~ enddey ~ ' ' ~ endmonth|transchoice(enddey, {}, 'datechoice')|lower ~ ' ' ~ item.dateend|date('Y') ~ ' ' ~ 'y.'|trans %}
 				{% else %}
 					{% set dateend = '' %}
 				{% endif %}
