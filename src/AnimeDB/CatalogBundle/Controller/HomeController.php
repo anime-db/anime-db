@@ -34,7 +34,7 @@ class HomeController extends Controller
      *
      * @var integer
      */
-    const ITEMS_PER_PAGE = 6;
+    const ITEMS_PER_PAGE = 8;
 
     /**
      * Home
