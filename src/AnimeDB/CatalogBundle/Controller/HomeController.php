@@ -52,7 +52,7 @@ class HomeController extends Controller
         // get items
         $repository = $this->getDoctrine()->getRepository('AnimeDBCatalogBundle:Item');
         $query = $repository->createQueryBuilder('i')
-            ->orderBy('i.id', 'ASC')
+            ->orderBy('i.id', 'DESC')
             ->setFirstResult($current_page * self::ITEMS_PER_PAGE)
             ->setMaxResults(self::ITEMS_PER_PAGE)
             ->getQuery();
