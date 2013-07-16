@@ -19,6 +19,7 @@ use AnimeDB\CatalogBundle\Entity\Item;
 use AnimeDB\CatalogBundle\Entity\Name;
 use AnimeDB\CatalogBundle\Entity\Image;
 use AnimeDB\CatalogBundle\Entity\Source;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Filler item
@@ -31,21 +32,20 @@ class FillerController extends Controller
     /**
      * Search item
      *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function searchAction() {
+    public function searchAction(Request $request) {
         /* @var $chain \AnimeDB\CatalogBundle\Service\Autofill\Chain */
         $chain = $this->get('anime_db.autofill');
 
         /* @var $form \Symfony\Component\Form\Form */
         $form = $this->createForm(new Search($chain->getFillerTitles()));
 
-        /* @var $request \Symfony\Component\HttpFoundation\Request */
-        $request = $this->getRequest();
         $list = array();
-
         if ($request->isMethod('POST')) {
-            $form->bindRequest($request);
+            $form->handleRequest($request);
             if ($form->isValid()) {
 
                 $data = $form->getData();
@@ -62,35 +62,38 @@ class FillerController extends Controller
     /**
      * Get item
      *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function fillAction() {
+    public function fillAction(Request $request) {
         /* @var $form \Symfony\Component\Form\Form */
         $form = $this->createForm(new Get());
 
-        /* @var $request \Symfony\Component\HttpFoundation\Request */
-        $request = $this->getRequest();
-
         $error = '';
         $fill_form = null;
-        $form->bindRequest($request);
-        if ($form->isValid()) {
-            $source = $form->getData()['url'];
-            /* @var $chain \AnimeDB\CatalogBundle\Service\Autofill\Chain */
-            $chain = $this->get('anime_db.autofill');
-            $filler = $chain->getFillerBySource($source);
-            if (!($filler instanceof Filler)) {
-                $error = 'Unable to find any filler for the specified source';
-            } else {
-                /* @var $item \AnimeDB\CatalogBundle\Entity\Item */
-                $item = $filler->fill($source);
-                if (!$item) {
-                    $error = 'Can`t get content from the specified source';
+        if (!$request->isMethod('POST')) {
+            $error = 'Not specified source';
+        } else {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $source = $form->getData()['url'];
+                /* @var $chain \AnimeDB\CatalogBundle\Service\Autofill\Chain */
+                $chain = $this->get('anime_db.autofill');
+                $filler = $chain->getFillerBySource($source);
+                if (!($filler instanceof Filler)) {
+                    $error = 'Unable to find any filler for the specified source';
                 } else {
-                    // persist entity
-                    $em = $this->getDoctrine()->getEntityManager();
-                    $em->persist($item);
-                    $fill_form = $this->createForm(new ItemType(), $item)->createView();
+                    /* @var $item \AnimeDB\CatalogBundle\Entity\Item */
+                    $item = $filler->fill($source);
+                    if (!$item) {
+                        $error = 'Can`t get content from the specified source';
+                    } else {
+                        // persist entity
+                        $em = $this->getDoctrine()->getManager();
+                        $em->persist($item);
+                        $fill_form = $this->createForm(new ItemType(), $item)->createView();
+                    }
                 }
             }
         }

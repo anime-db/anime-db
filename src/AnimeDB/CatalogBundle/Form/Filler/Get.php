@@ -40,12 +40,13 @@ class Get extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('url', 'text', array(
-            'label' => 'URL address',
-            'attr' => array(
-                'placeholder' => 'http://',
-            ),
-        ));
+        $builder
+            ->add('url', 'text', array(
+                'label' => 'URL address',
+                'attr' => array(
+                    'placeholder' => 'http://',
+                ),
+            ));
     }
 
     /**

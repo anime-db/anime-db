@@ -41,7 +41,8 @@ class Search extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', null, [
+            ->setMethod('GET')
+            ->add('name', 'search', [
                 'label' => 'Name',
                 'required' => false
             ])
@@ -78,6 +79,7 @@ class Search extends AbstractType
             ])
             ->add('sort_field', 'choice', [
                 'label' => 'Sort by',
+                'data' => 'id',
                 'choices' => [
                     'id' => 'Date add', // really sort by ID, not by date
                     'name' => 'Name',
@@ -87,6 +89,7 @@ class Search extends AbstractType
             ])
             ->add('sort_direction', 'choice', [
                 'label' => 'Sort direction',
+                'data' => 'DESC',
                 'choices' => [
                     'DESC' => 'Descending',
                     'ASC' => 'Ascending',

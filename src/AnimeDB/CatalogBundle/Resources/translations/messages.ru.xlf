@@ -282,6 +282,10 @@
                 <source>Descending</source>
                 <target>По убыванию</target>
             </trans-unit>
+            <trans-unit id="71">
+                <source>Not specified source</source>
+                <target>Не указан источник</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

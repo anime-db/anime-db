@@ -27,7 +27,7 @@
 		{% if error %}
 			<strong>{{ error|trans }}</strong>
 		{% else %}
-			<form action="{{ path('item_add_manually') }}" method="post" {{ form_enctype(form) }}>
+			<form action="{{ path('item_add_manually') }}" method="post">
 				{{ form_widget(form) }}
 				<button type="submit">{% trans %}Add{% endtrans %}</button>
 			</form>

@@ -56,16 +56,17 @@ class Search extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'text', array(
-            'label' => 'Name',
-            'attr' => array(
-                'placeholder' => 'One Piece',
-            ),
-        ));
-        $builder->add('filler', 'choice', array(
-            'label' => 'Source',
-            'choices' => $this->filler_titles
-        ));
+        $builder
+            ->add('name', 'text', array(
+                'label' => 'Name',
+                'attr' => array(
+                    'placeholder' => 'One Piece',
+                ),
+            ))
+            ->add('filler', 'choice', array(
+                'label' => 'Source',
+                'choices' => $this->filler_titles
+            ));
     }
 
     /**

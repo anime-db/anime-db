@@ -111,7 +111,7 @@ class HomeController extends Controller
         $items = [];
 
         if ($request->query->count()) {
-            $form->bindRequest($request);
+            $form->handleRequest($request);
             if ($form->isValid()) {
                 // current page for paging
                 $page = $request->get('page', 1);
@@ -122,7 +122,7 @@ class HomeController extends Controller
                 $repository = $this->getDoctrine()->getRepository('AnimeDBCatalogBundle:Item');
                 /* @var $builder \Doctrine\ORM\QueryBuilder */
                 $builder = $repository->createQueryBuilder('i')
-                    ->orderBy('i.'.$data['sort_field'], $data['sort_direction'])
+                    ->orderBy('i.'.($data['sort_field'] ?: 'id'), ($data['sort_direction'] ?: 'DESC'))
                     ->setFirstResult($current_page * self::SEARCH_ITEMS_PER_PAGE)
                     ->setMaxResults(self::SEARCH_ITEMS_PER_PAGE);
 

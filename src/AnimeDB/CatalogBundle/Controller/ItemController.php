@@ -86,9 +86,9 @@ class ItemController extends Controller
         $form = $this->createForm(new ItemType(), $item);
 
         if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
+            $form->handleRequest($request);
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getEntityManager();
+                $em = $this->getDoctrine()->getManager();
                 $em->persist($item);
                 $em->flush();
                 return $this->redirect($this->generateUrl(
@@ -125,9 +125,9 @@ class ItemController extends Controller
         $form = $this->createForm(new ItemType(), $item);
 
         if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
+            $form->handleRequest($request);
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getEntityManager();
+                $em = $this->getDoctrine()->getManager();
                 $em->persist($item);
                 $em->flush();
                 return $this->redirect($this->generateUrl(
