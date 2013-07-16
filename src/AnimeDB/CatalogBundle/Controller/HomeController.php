@@ -115,7 +115,7 @@ class HomeController extends Controller
                 $repository = $this->getDoctrine()->getRepository('AnimeDBCatalogBundle:Item');
                 /* @var $builder \Doctrine\ORM\QueryBuilder */
                 $builder = $repository->createQueryBuilder('i')
-                    ->orderBy('i.'.($data['sort'] ?: 'id'), 'ASC')
+                    ->orderBy('i.'.$data['sort_field'], $data['sort_direction'])
                     ->setFirstResult($current_page * self::ITEMS_PER_PAGE)
                     ->setMaxResults(self::ITEMS_PER_PAGE);
 

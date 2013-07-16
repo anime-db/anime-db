@@ -76,13 +76,20 @@ class Search extends AbstractType
                 'property' => 'name',
                 'required' => false
             ])
-            ->add('sort', 'choice', [
-                'label' => 'Sort',
+            ->add('sort_field', 'choice', [
+                'label' => 'Sort by',
                 'choices' => [
                     'id' => 'Date add', // really sort by ID, not by date
                     'name' => 'Name',
                     'date_start' => 'Date start',
                     'date_end' => 'Date end'
+                ]
+            ])
+            ->add('sort_direction', 'choice', [
+                'label' => 'Sort direction',
+                'choices' => [
+                    'DESC' => 'Descending',
+                    'ASC' => 'Ascending',
                 ]
             ]);
     }

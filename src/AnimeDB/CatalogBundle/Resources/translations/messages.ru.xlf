@@ -263,12 +263,24 @@
                 <target>Жанр</target>
             </trans-unit>
             <trans-unit id="66">
-                <source>Sort</source>
-                <target>Сортировать</target>
+                <source>Sort by</source>
+                <target>Сортировать по</target>
             </trans-unit>
             <trans-unit id="67">
                 <source>Date add</source>
                 <target>Дата добавления</target>
+            </trans-unit>
+            <trans-unit id="68">
+                <source>Sort direction</source>
+                <target>Направление сортировки</target>
+            </trans-unit>
+            <trans-unit id="69">
+                <source>Ascending</source>
+                <target>По возрастанию</target>
+            </trans-unit>
+            <trans-unit id="70">
+                <source>Descending</source>
+                <target>По убыванию</target>
             </trans-unit>
         </body>
     </file>
