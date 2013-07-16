@@ -72,30 +72,28 @@ class FillerController extends Controller
 
         $error = '';
         $fill_form = null;
-        if (!$request->isMethod('POST')) {
-            $error = 'Not specified source';
-        } else {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                $source = $form->getData()['url'];
-                /* @var $chain \AnimeDB\CatalogBundle\Service\Autofill\Chain */
-                $chain = $this->get('anime_db.autofill');
-                $filler = $chain->getFillerBySource($source);
-                if (!($filler instanceof Filler)) {
-                    $error = 'Unable to find any filler for the specified source';
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $source = $form->getData()['url'];
+            /* @var $chain \AnimeDB\CatalogBundle\Service\Autofill\Chain */
+            $chain = $this->get('anime_db.autofill');
+            $filler = $chain->getFillerBySource($source);
+            if (!($filler instanceof Filler)) {
+                $error = 'Unable to find any filler for the specified source';
+            } else {
+                /* @var $item \AnimeDB\CatalogBundle\Entity\Item */
+                $item = $filler->fill($source);
+                if (!$item) {
+                    $error = 'Can`t get content from the specified source';
                 } else {
-                    /* @var $item \AnimeDB\CatalogBundle\Entity\Item */
-                    $item = $filler->fill($source);
-                    if (!$item) {
-                        $error = 'Can`t get content from the specified source';
-                    } else {
-                        // persist entity
-                        $em = $this->getDoctrine()->getManager();
-                        $em->persist($item);
-                        $fill_form = $this->createForm(new ItemType(), $item)->createView();
-                    }
+                    // persist entity
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($item);
+                    $fill_form = $this->createForm(new ItemType(), $item)->createView();
                 }
             }
+        } else {
+            $error = 'Not specified source';
         }
 
         return $this->render('AnimeDBCatalogBundle:Filler:fill.html.twig', array(
