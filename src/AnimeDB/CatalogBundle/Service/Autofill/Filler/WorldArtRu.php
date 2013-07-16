@@ -257,6 +257,7 @@ class WorldArtRu implements Filler
      */
     public function search($name)
     {
+        $name = iconv('utf-8', 'cp1251', $name);
         $url = str_replace('#NAME#', urlencode($name), self::SEARH_URL);
         // get list from xpath
         $crawler = $this->getCrawlerFromUrl(self::HOST.$url)
