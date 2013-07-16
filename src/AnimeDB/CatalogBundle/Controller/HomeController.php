@@ -30,11 +30,18 @@ use Doctrine\ORM\Query\Expr;
 class HomeController extends Controller
 {
     /**
-     * Items per page
+     * Items per page on home page
      *
      * @var integer
      */
-    const ITEMS_PER_PAGE = 8;
+    const HOME_ITEMS_PER_PAGE = 8;
+
+    /**
+     * Items per page on search page
+     *
+     * @var integer
+     */
+    const SEARCH_ITEMS_PER_PAGE = 6;
 
     /**
      * Home
@@ -53,8 +60,8 @@ class HomeController extends Controller
         $repository = $this->getDoctrine()->getRepository('AnimeDBCatalogBundle:Item');
         $query = $repository->createQueryBuilder('i')
             ->orderBy('i.id', 'DESC')
-            ->setFirstResult($current_page * self::ITEMS_PER_PAGE)
-            ->setMaxResults(self::ITEMS_PER_PAGE)
+            ->setFirstResult($current_page * self::HOME_ITEMS_PER_PAGE)
+            ->setMaxResults(self::HOME_ITEMS_PER_PAGE)
             ->getQuery();
         $items = $query->getResult();
 
@@ -116,8 +123,8 @@ class HomeController extends Controller
                 /* @var $builder \Doctrine\ORM\QueryBuilder */
                 $builder = $repository->createQueryBuilder('i')
                     ->orderBy('i.'.$data['sort_field'], $data['sort_direction'])
-                    ->setFirstResult($current_page * self::ITEMS_PER_PAGE)
-                    ->setMaxResults(self::ITEMS_PER_PAGE);
+                    ->setFirstResult($current_page * self::SEARCH_ITEMS_PER_PAGE)
+                    ->setMaxResults(self::SEARCH_ITEMS_PER_PAGE);
 
                 // main name
                 if ($data['name']) {
