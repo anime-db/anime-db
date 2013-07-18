@@ -12,6 +12,8 @@ services:
         class: AnimeDB\CatalogBundle\Service\Autofill\Filler\ShikimoriOrg
         tags:
             -  { name: autofill.filler, alias: shikimoriorg }
+    anime_db.pagination:
+        class: AnimeDB\CatalogBundle\Service\Pagination
     # Twig extension
     anime_db.twig_extension:
         class: AnimeDB\CatalogBundle\Service\TwigExtension
