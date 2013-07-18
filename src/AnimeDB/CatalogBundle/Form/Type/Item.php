@@ -8,22 +8,22 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Form;
+namespace AnimeDB\CatalogBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use AnimeDB\CatalogBundle\Form\ImageType;
-use AnimeDB\CatalogBundle\Form\NameType;
-use AnimeDB\CatalogBundle\Form\SourceType;
+use AnimeDB\CatalogBundle\Form\Type\Image;
+use AnimeDB\CatalogBundle\Form\Type\Name;
+use AnimeDB\CatalogBundle\Form\Type\Source;
 
 /**
  * Item form
  *
- * @package AnimeDB\CatalogBundle\Form
+ * @package AnimeDB\CatalogBundle\Form\Type
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class ItemType extends AbstractType
+class Item extends AbstractType
 {
     /**
      * (non-PHPdoc)
@@ -36,7 +36,7 @@ class ItemType extends AbstractType
                 'label' => 'Main name'
             ])
             ->add('names', 'collection', [
-                'type'         => new NameType(),
+                'type'         => new Name(),
                 'allow_add'    => true,
                 'by_reference' => false,
                 'allow_delete' => true,
@@ -63,7 +63,7 @@ class ItemType extends AbstractType
             ])
             ->add('duration')
             ->add('images', 'collection', [
-                'type'         => new ImageType(),
+                'type'         => new Image(),
                 'allow_add'    => true,
                 'by_reference' => false,
                 'allow_delete' => true,
@@ -105,7 +105,7 @@ class ItemType extends AbstractType
                 'property' => 'name',
             ])
             ->add('sources', 'collection', [
-                'type'         => new SourceType(),
+                'type'         => new Source(),
                 'allow_add'    => true,
                 'by_reference' => false,
                 'allow_delete' => true,

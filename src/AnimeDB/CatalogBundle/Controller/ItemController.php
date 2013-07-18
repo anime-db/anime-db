@@ -17,7 +17,7 @@ use AnimeDB\CatalogBundle\Entity\Item;
 use AnimeDB\CatalogBundle\Entity\Name;
 use AnimeDB\CatalogBundle\Entity\Image;
 use AnimeDB\CatalogBundle\Entity\Source;
-use AnimeDB\CatalogBundle\Form\ItemType;
+use AnimeDB\CatalogBundle\Form\Type\Item as ItemType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

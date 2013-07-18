@@ -41,7 +41,8 @@ class SearchSimple extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // TODO add autocomplete name
-        $builder->add('name', 'search', [
+        $builder
+            ->add('name', 'search', [
                 'label' => 'Name',
                 'required' => false
             ]);
