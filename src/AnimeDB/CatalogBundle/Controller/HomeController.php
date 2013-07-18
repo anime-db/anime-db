@@ -20,6 +20,7 @@ use AnimeDB\CatalogBundle\Entity\Country as CountryEntity;
 use AnimeDB\CatalogBundle\Entity\Genre as GenreEntity;
 use AnimeDB\CatalogBundle\Entity\Storage as StorageEntity;
 use Doctrine\ORM\Query\Expr;
+use AnimeDB\CatalogBundle\Service\Pagination;
 
 /**
  * Main page of the catalog
@@ -54,18 +55,37 @@ class HomeController extends Controller
     {
         // current page for paging
         $page = $request->get('page', 1);
-        $current_page = $page > 0 ? $page-1 : 0;
+        $current_page = $page > 1 ? $page : 1;
 
         // get items
         $repository = $this->getDoctrine()->getRepository('AnimeDBCatalogBundle:Item');
-        $query = $repository->createQueryBuilder('i')
+        $items = $repository->createQueryBuilder('i')
             ->orderBy('i.id', 'DESC')
-            ->setFirstResult($current_page * self::HOME_ITEMS_PER_PAGE)
+            ->setFirstResult(($current_page - 1) * self::HOME_ITEMS_PER_PAGE)
             ->setMaxResults(self::HOME_ITEMS_PER_PAGE)
-            ->getQuery();
-        $items = $query->getResult();
+            ->getQuery()
+            ->getResult();
 
-        return $this->render('AnimeDBCatalogBundle:Home:index.html.twig', ['items' => $items]);
+        // get count all items
+        $count = $repository->createQueryBuilder('i')
+            ->select('count(i.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        $that = $this;
+        $pagination = $this->get('anime_db.pagination')->createNavigation(
+            ceil($count/self::HOME_ITEMS_PER_PAGE),
+            $current_page,
+            Pagination::DEFAULT_LIST_LENGTH,
+            function ($page) use ($that) {
+                return $that->generateUrl('home', ['page' => $page]);
+            },
+            $this->generateUrl('home')
+        );
+
+        return $this->render('AnimeDBCatalogBundle:Home:index.html.twig',
+            ['items' => $items, 'pagination' => $pagination]
+        );
     }
 
     /**
@@ -109,51 +129,47 @@ class HomeController extends Controller
         /* @var $form \Symfony\Component\Form\Form */
         $form = $this->createForm(new Search());
         $items = [];
+        $pagination = [];
 
         if ($request->query->count()) {
             $form->handleRequest($request);
             if ($form->isValid()) {
-                // current page for paging
-                $page = $request->get('page', 1);
-                $current_page = $page > 0 ? $page-1 : 0;
                 $data = $form->getData();
 
                 // build query
-                $repository = $this->getDoctrine()->getRepository('AnimeDBCatalogBundle:Item');
-                /* @var $builder \Doctrine\ORM\QueryBuilder */
-                $builder = $repository->createQueryBuilder('i')
-                    ->orderBy('i.'.($data['sort_field'] ?: 'id'), ($data['sort_direction'] ?: 'DESC'))
-                    ->setFirstResult($current_page * self::SEARCH_ITEMS_PER_PAGE)
-                    ->setMaxResults(self::SEARCH_ITEMS_PER_PAGE);
+                /* @var $selector \Doctrine\ORM\QueryBuilder */
+                $selector = $this->getDoctrine()
+                    ->getRepository('AnimeDBCatalogBundle:Item')
+                    ->createQueryBuilder('i');
 
                 // main name
                 if ($data['name']) {
-                    $builder->andWhere('i.name = :name')
+                    $selector->andWhere('i.name = :name')
                         ->setParameter('name', $data['name']);
                 }
                 // date start
                 if ($data['date_start'] instanceof \DateTime) {
-                    $builder->andWhere('i.date_start >= :date_start')
+                    $selector->andWhere('i.date_start >= :date_start')
                         ->setParameter('date_start', $data['date_start']->format('Y-m-d'));
                 }
                 // date end
                 if ($data['date_end'] instanceof \DateTime) {
-                    $builder->andWhere('i.date_end <= :date_end')
+                    $selector->andWhere('i.date_end <= :date_end')
                         ->setParameter('date_end', $data['date_end']->format('Y-m-d'));
                 }
                 // manufacturer
                 if ($data['manufacturer'] instanceof CountryEntity) {
-                    $builder->andWhere('i.manufacturer = :manufacturer')
+                    $selector->andWhere('i.manufacturer = :manufacturer')
                         ->setParameter('manufacturer', $data['manufacturer']->getId());
                 }
                 // storage
                 if ($data['storage'] instanceof StorageEntity) {
-                    $builder->andWhere('i.storage = :storage')
+                    $selector->andWhere('i.storage = :storage')
                         ->setParameter('storage', $data['storage']->getId());
                 }
                 // type
                 if ($data['type'] instanceof TypeEntity) {
-                    $builder->andWhere('i.type = :type')
+                    $selector->andWhere('i.type = :type')
                         ->setParameter('type', $data['type']->getId());
                 }
                 // genres
@@ -161,19 +177,52 @@ class HomeController extends Controller
                     $keys = [];
                     foreach ($data['genres'] as $key => $genre) {
                         $keys[] = ':genre'.$key;
-                        $builder->setParameter('genre'.$key, $genre->getId());
+                        $selector->setParameter('genre'.$key, $genre->getId());
                     }
-                    $builder->innerJoin('i.genres', 'g')
+                    $selector->innerJoin('i.genres', 'g')
                         ->andWhere('g.id IN ('.implode(',', $keys).')');
                 }
+
+                // get count all items
+                $count = clone $selector;
+                $count = $count
+                    ->select('count(i.id)')
+                    ->getQuery()
+                    ->getSingleScalarResult();
+
+                // current page for paging
+                $current_page = $request->get('page', 1);
+                $current_page = $current_page > 1 ? $current_page : 1;
+
                 // get items
-                $items = $builder->getQuery()->getResult();
+                $items = $selector
+                    ->setFirstResult(($current_page - 1) * self::SEARCH_ITEMS_PER_PAGE)
+                    ->setMaxResults(self::SEARCH_ITEMS_PER_PAGE)
+                    ->orderBy('i.'.($data['sort_field'] ?: 'id'), ($data['sort_direction'] ?: 'DESC'))
+                    ->getQuery()
+                    ->getResult();
+
+                // build pagination
+                $that = $this;
+                $pagination = $this->get('anime_db.pagination')->createNavigation(
+                    ceil($count/self::HOME_ITEMS_PER_PAGE),
+                    $current_page,
+                    Pagination::DEFAULT_LIST_LENGTH,
+                    function ($page) use ($that, $request) {
+                        return $that->generateUrl(
+                            'home_search',
+                            ['search_items' => $request->query->get('search_items'), 'page' => $page]
+                        );
+                    },
+                    $this->generateUrl('home_search', ['search_items' => $request->query->get('search_items')])
+                );
             }
         }
 
         return $this->render('AnimeDBCatalogBundle:Home:search.html.twig', [
             'form'  => $form->createView(),
             'items' => $items,
+            'pagination' => $pagination
         ]);
     }
 }
