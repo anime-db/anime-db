@@ -28,7 +28,7 @@ class Source extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('url', null, array('label' => 'URL adress'));
+        $builder->add('url', null, ['label' => 'URL adress']);
     }
 
     /**
@@ -37,9 +37,9 @@ class Source extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'AnimeDB\CatalogBundle\Entity\Source'
-        ));
+        ]);
     }
 
     /**

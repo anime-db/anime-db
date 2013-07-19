@@ -29,10 +29,10 @@ class Image extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // TODO do something with downloading images from an url
-        $builder->add('source', 'text', array(
+        $builder->add('source', 'text', [
 //             'data_class' => null,
             'required' => false
-        ));
+        ]);
     }
 
     /**
@@ -41,9 +41,9 @@ class Image extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'AnimeDB\CatalogBundle\Entity\Image'
-        ));
+        ]);
     }
 
     /**
