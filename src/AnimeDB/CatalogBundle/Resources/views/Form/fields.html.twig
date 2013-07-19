@@ -22,43 +22,6 @@
 {% endblock form_row %}
 
 
-{% block genemu_jqueryimage_widget %}
-{% spaceless %}
-    <div id="{{ id }}_container" class="f-genemu-image">
-        <div class="left">
-            <div id="{{ id }}_preview">
-                {% set type = "hidden" %}
-                {{ block("hidden_widget") }}
-
-                {% if value %}
-                    {% set widthMax = thumbnail is defined ? thumbnail.width : 500 %}
-                    {% set ratio = width > widthMax ? width / widthMax : 1 %}
-                    {% set asset = asset(thumbnail is defined ? thumbnail.file : value) %}
-                    {% set width = width / ratio %}
-                    {% set height = height / ratio %}
-                {% else %}
-                    {% set asset = asset("bundles/genemuform/images/default.png") %}
-                    {% set width = 96 %}
-                    {% set height = 96 %}
-                {% endif %}
-
-                <img id="{{ id }}_img_preview" src="{{ asset }}" width="{{ width }}" height="{{ height }}" />
-            </div>
-            <ul id="{{ id }}_options" class="options">
-                {% for filter in filters %}
-                    <li class="{{ filter }} change"></li>
-                {% endfor %}
-            </ul>
-            <div id="{{ id }}_upload"></div>
-            <div class="queue">
-                <div id="{{ id }}_queue"></div>
-            </div>
-        </div>
-    </div>
-{% endspaceless %}
-{% endblock genemu_jqueryimage_widget %}
-
-
 {% block date_widget %}
 {% spaceless %}
     {% if widget == 'single_text' %}
@@ -76,3 +39,14 @@
     {% endif %}
 {% endspaceless %}
 {% endblock date_widget %}
+
+
+{% block image_widget %}
+    {% spaceless %}
+    <div class="f-image">
+        {% set type = 'hidden' %}
+        {{ block('form_widget') }}
+        <img src="{% if value is not empty %}/media/{{ value }}{% endif %}" />
+    </div>
+    {% endspaceless %}
+{% endblock %}
