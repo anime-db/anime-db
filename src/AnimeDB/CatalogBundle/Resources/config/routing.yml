@@ -67,5 +67,5 @@ media_favicon:
 form_template:
     pattern:  /form/template/{template}.html
     requirements:
-        host: [-a-z]+
+        template: "[-a-z]+"
     defaults: { _controller: AnimeDBCatalogBundle:Form:template }
