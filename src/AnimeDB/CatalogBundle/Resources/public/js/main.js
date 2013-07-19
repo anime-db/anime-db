@@ -8,8 +8,6 @@ Form.Collection = {
 	},
 	templates: {
 		row: '<div class="f-row">__data__</div>',
-		add: 'Add item',
-		remove: 'Remove item'
 	},
 
 	init: function() {
@@ -18,17 +16,20 @@ Form.Collection = {
 		$.each($('.'+fc.classes.collection), function() {
 			var collection = $(this);
 			collection.data('index', collection.find(':input').length);
+
 			// add "remove" button
-			var tpl = '<a href="#" class="'+fc.classes.button_remove+'">'+fc.templates.remove+'</a>';
+			var tpl = '<a href="#" class="'+fc.classes.button_remove+'">'+collection.data('add')+'</a>';
 			collection.children().append($(tpl));
+
 			// add "add" button
-			var tpl = '<a href="#" class="'+fc.classes.button_add+'">'+fc.templates.add+'</a>';
+			var tpl = '<a href="#" class="'+fc.classes.button_add+'">'+collection.data('remove')+'</a>';
 			collection.append($(fc.templates.row.replace(/__data__/, tpl)));
 		});
 		// add "remove" and "add" buttons
 		$('.'+fc.classes.button_add).bind('click', fc.onAdd);
 		$('.'+fc.classes.button_remove).bind('click', fc.orRemove);
 	},
+
 	onAdd: function(e) {
 		e.preventDefault();
 		var fc = Form.Collection;

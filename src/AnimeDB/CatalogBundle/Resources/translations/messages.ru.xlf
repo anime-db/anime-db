@@ -286,6 +286,14 @@
                 <source>Not specified source</source>
                 <target>Не указан источник</target>
             </trans-unit>
+            <trans-unit id="72">
+                <source>Add</source>
+                <target>Добавить</target>
+            </trans-unit>
+            <trans-unit id="73">
+                <source>Remove</source>
+                <target>Удалить</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

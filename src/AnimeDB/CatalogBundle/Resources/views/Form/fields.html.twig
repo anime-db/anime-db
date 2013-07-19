@@ -1,7 +1,12 @@
 
 {% block form_widget_compound %}
 {% spaceless %}
-    <div {{ block('widget_container_attributes') }} class="f-group">
+    <div
+        {{ block('widget_container_attributes') }}
+        class="f-group"
+        data-add="{% trans %}Add{% endtrans %}"
+        data-remove="{% trans %}Remove{% endtrans %}"
+    >
         {% if form.parent is empty %}
             {{ form_errors(form) }}
         {% endif %}
