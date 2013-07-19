@@ -16,6 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use AnimeDB\CatalogBundle\Form\Entity\Image;
 use AnimeDB\CatalogBundle\Form\Entity\Name;
 use AnimeDB\CatalogBundle\Form\Entity\Source;
+use AnimeDB\CatalogBundle\Form\Field\Image as ImageField;
 
 /**
  * Item form
@@ -47,9 +48,7 @@ class Item extends AbstractType
                     'attr'     => ['class' => 'b-col-i']
                 ],
             ])
-            // TODO do something with downloading images from an url
-            ->add('cover', 'text', [
-//                 'property_path' => 'WebPath',
+            ->add('cover', new ImageField(), [
                 'required' => false
             ])
             ->add('date_start', 'date', [

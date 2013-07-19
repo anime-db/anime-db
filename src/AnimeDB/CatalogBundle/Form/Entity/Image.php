@@ -13,6 +13,7 @@ namespace AnimeDB\CatalogBundle\Form\Entity;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use AnimeDB\CatalogBundle\Form\Field\Image as ImageField;
 
 /**
  * Image form
@@ -28,9 +29,7 @@ class Image extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        // TODO do something with downloading images from an url
-        $builder->add('source', 'text', [
-//             'data_class' => null,
+        $builder->add('source', new ImageField(), [
             'required' => false
         ]);
     }
