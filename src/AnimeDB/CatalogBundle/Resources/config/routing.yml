@@ -12,7 +12,7 @@ home_search_simple_form:
 
 home_autocomplete_name:
     pattern:  /autocomplete-name.json
-    defaults: { _controller: AnimeDBCatalogBundle:Home:autocompleteName }
+    defaults: { _controller: AnimeDBCatalogBundle:Home:autocompleteName, _format: json }
 
 
 item_add:
@@ -69,3 +69,7 @@ form_template:
     requirements:
         template: "[-a-z]+"
     defaults: { _controller: AnimeDBCatalogBundle:Form:template }
+
+scandir_template:
+    pattern:  /form/folders.json
+    defaults: { _controller: AnimeDBCatalogBundle:Form:folders, _format: json }
