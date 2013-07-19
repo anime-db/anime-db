@@ -114,7 +114,7 @@ class HomeController extends Controller
         // TODO do search
         $value = ['Foo', 'Bar'];
 
-        return new JsonResponse(json_encode($value));
+        return new JsonResponse($value);
     }
 
     /**
