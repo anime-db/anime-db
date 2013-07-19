@@ -55,3 +55,13 @@
     </div>
     {% endspaceless %}
 {% endblock %}
+
+
+{% block local_path_widget %}
+    {% spaceless %}
+    <div class="f-path">
+        {{ block('form_widget') }}
+        <!-- <button type="button" class="change-path">{% trans %}Change{% endtrans %}</button> -->
+    </div>
+    {% endspaceless %}
+{% endblock %}

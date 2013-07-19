@@ -17,6 +17,7 @@ use AnimeDB\CatalogBundle\Form\Entity\Image;
 use AnimeDB\CatalogBundle\Form\Entity\Name;
 use AnimeDB\CatalogBundle\Form\Entity\Source;
 use AnimeDB\CatalogBundle\Form\Field\Image as ImageField;
+use AnimeDB\CatalogBundle\Form\Field\LocalPath as LocalPathField;
 
 /**
  * Item form
@@ -86,7 +87,7 @@ class Item extends AbstractType
                 'class'    => 'AnimeDBCatalogBundle:Country',
                 'property' => 'name'
             ])
-            ->add('path')
+            ->add('path', new LocalPathField())
             ->add('translate', null, [
                 'required' => false
             ])
