@@ -17,7 +17,7 @@ use AnimeDB\CatalogBundle\Entity\Item;
 use AnimeDB\CatalogBundle\Entity\Name;
 use AnimeDB\CatalogBundle\Entity\Image;
 use AnimeDB\CatalogBundle\Entity\Source;
-use AnimeDB\CatalogBundle\Form\Type\Item as ItemType;
+use AnimeDB\CatalogBundle\Form\Entity\Item as ItemForm;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -83,7 +83,7 @@ class ItemController extends Controller
         $item = new Item();
 
         /* @var $form \Symfony\Component\Form\Form */
-        $form = $this->createForm(new ItemType(), $item);
+        $form = $this->createForm(new ItemForm(), $item);
 
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
@@ -122,7 +122,7 @@ class ItemController extends Controller
         }
 
         /* @var $form \Symfony\Component\Form\Form */
-        $form = $this->createForm(new ItemType(), $item);
+        $form = $this->createForm(new ItemForm(), $item);
 
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
