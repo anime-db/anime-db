@@ -16,7 +16,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
- * Favicon
+ * Media
  *
  * @package AnimeDB\CatalogBundle\Controller
  * @author  Peter Gribanov <info@peter-gribanov.ru>
