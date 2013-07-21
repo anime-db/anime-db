@@ -18,11 +18,11 @@ Form.Collection = {
 			collection.data('index', collection.find(':input').length);
 
 			// add "remove" button
-			var tpl = '<a href="#" class="'+fc.classes.button_remove+'">'+collection.data('add')+'</a>';
+			var tpl = '<a href="#" class="'+fc.classes.button_remove+'">'+collection.data('remove')+'</a>';
 			collection.children().append($(tpl));
 
 			// add "add" button
-			var tpl = '<a href="#" class="'+fc.classes.button_add+'">'+collection.data('remove')+'</a>';
+			var tpl = '<a href="#" class="'+fc.classes.button_add+'">'+collection.data('add')+'</a>';
 			collection.append($(fc.templates.row.replace(/__data__/, tpl)));
 		});
 		// add "remove" and "add" buttons
@@ -51,6 +51,24 @@ Form.Collection = {
 	}
 };
 
+var Cap = {
+	element: null,
+	observers: [],
+	setElement: function(el) {
+		Cap.element = el.click(function() {
+			for (key in Cap.observers) {
+				Cap.observers[key].update(Cap);
+			}
+			Cap.element.hide();
+		});
+	}
+	show: function() {
+		Cap.element.show();
+	},
+	observeble: function(observer) {
+		Cap.observers[] = observer;
+	}
+};
 
 $(function(){
 
@@ -58,5 +76,6 @@ $(function(){
 $('input:submit, input:button, input:reset, button, .catalog-last-added .details').button();
 
 Form.Collection.init();
+Cap.setElement($('#cap'));
 
 });
