@@ -5,7 +5,7 @@
 {% block content %}
 <form action="" method="post" name="image-popup">
 	<div class="f-row">
-		<label for="image-popup-remote">{% trans %}Remote image{% endtrans %}</label>
+		<label for="image-popup-remote">{% trans %}Image from URL{% endtrans %}</label>
 		<input type="text" name="image-popup[remote]" id="image-popup-remote" placeholder="http://"{% if remote is defined %} value="{remote}"{% endif %} />
 	</div>
 	<div class="f-row">
