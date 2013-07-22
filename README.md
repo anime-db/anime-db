@@ -19,6 +19,7 @@ Clone this repository to fetch the latest version of this application
 
     git clone git://github.com/anime-db/application.git
 
+
 ## Quick start ##
 
 ### From Windows ###
@@ -35,9 +36,6 @@ To stop the application, call the script
 
 *To launch the application of Linux you need to install PHP version 5.4 and above*
 
-
-    # go to the directory with the application
-    $ cd ..
 
     # command to start the application
     $ bin/service start
