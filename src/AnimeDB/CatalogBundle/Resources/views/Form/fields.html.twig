@@ -48,7 +48,7 @@
 
 {% block image_widget %}
     {% spaceless %}
-    <div class="f-image">
+    <div class="f-image" data-popup="{{ path('form_template', {'template': 'image'}) }}">
         {% set type = 'hidden' %}
         {{ block('form_widget') }}
         <img src="{% if value is not empty %}/media/{{ value }}{% endif %}" class="chenge-button" />
