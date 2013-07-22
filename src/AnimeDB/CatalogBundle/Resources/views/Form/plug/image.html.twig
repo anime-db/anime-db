@@ -3,18 +3,18 @@
 {% set popup_id = 'f-image-popup' %}
 
 {% block content %}
-<form action="" method="post" name="image-popup">
+<form action="{{ path('form_upload_image') }}" method="post" name="image-popup" enctype="multipart/form-data">
 	<div class="f-row">
 		<label for="image-popup-remote">{% trans %}Image from URL{% endtrans %}</label>
-		<input type="text" name="image-popup[remote]" id="image-popup-remote" placeholder="http://"{% if remote is defined %} value="{remote}"{% endif %} />
+		<input type="text" name="image-popup[remote]" id="image-popup-remote" placeholder="http://" />
 	</div>
 	<div class="f-row">
 		<label for="image-popup-local">{% trans %}Local image{% endtrans %}</label>
-		<input type="file" name="image-popup[local]" id="image-popup-local"{% if local is defined %} value="{local}"{% endif %} />
+		<input type="file" name="image-popup[local]" id="image-popup-local" accept="image/*" />
 	</div>
 	<div class="f-row">
 		<label></label>
-		<button type="submit">{% if remote is defined and local is defined %}{% trans %}Add image{% endtrans %}{% else %}{% trans %}Chenge image{% endtrans %}{% endif %}</button>
+		<button type="submit">{% if chenge is defined %}{% trans %}Chenge image{% endtrans %}{% else %}{% trans %}Add image{% endtrans %}{% endif %}</button>
 	</div>
 </form>
 {% endblock %}

@@ -64,6 +64,19 @@ class FormController extends Controller
     }
 
     /**
+     * Upload image
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function uploadImageAction(Request $request) {
+        if ($request->getMethod() == 'POST') {
+        }
+        return new JsonResponse([]);
+    }
+
+    /**
      * Rand and return template
      *
      * @param string $template
