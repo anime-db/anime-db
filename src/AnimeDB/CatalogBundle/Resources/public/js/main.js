@@ -61,21 +61,25 @@ var Cap = {
 			}
 			Cap.element.hide();
 		});
-	}
-	show: function() {
+	},
+	show: function(popup) {
 		Cap.element.show();
+		popup.show();
 	},
 	observeble: function(observer) {
-		Cap.observers[] = observer;
+		Cap.observers.push(observer);
 	}
 };
+
 
 $(function(){
 
 // add button jQuery UI style
 $('input:submit, input:button, input:reset, button, .catalog-last-added .details').button();
 
+// init form collection
 Form.Collection.init();
+// init cap
 Cap.setElement($('#cap'));
 
 });
