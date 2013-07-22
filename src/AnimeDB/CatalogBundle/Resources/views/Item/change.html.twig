@@ -2,16 +2,6 @@
 
 {% block title %}{% trans %}Change record{% endtrans %}{% endblock %}
 
-{% block stylesheets %}
-	<link href="{{ asset('uploadify/uploadify.css') }}" rel="stylesheet" />
-	{{ parent() }}
-{% endblock %}
-
-{% block javascripts %}
-	{{ parent() }}
-	<script src="{{ asset('uploadify/jquery.uploadify.min.js') }}"></script>
-{% endblock %}
-
 {% form_theme form 'AnimeDBCatalogBundle:Form:fields.html.twig' %}
 
 {% block content %}
