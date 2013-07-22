@@ -294,6 +294,22 @@
                 <source>Remove</source>
                 <target>Удалить</target>
             </trans-unit>
+            <trans-unit id="74">
+                <source>Remote image</source>
+                <target>Удаленная кортинка</target>
+            </trans-unit>
+            <trans-unit id="75">
+                <source>Local image</source>
+                <target>Локальная кортинка</target>
+            </trans-unit>
+            <trans-unit id="76">
+                <source>Add image</source>
+                <target>Добавить картинку</target>
+            </trans-unit>
+            <trans-unit id="77">
+                <source>Chenge image</source>
+                <target>Изменить картинку</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

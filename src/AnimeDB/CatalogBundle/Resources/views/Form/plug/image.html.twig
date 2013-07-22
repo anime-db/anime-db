@@ -1,0 +1,20 @@
+{% extends 'AnimeDBCatalogBundle::popup.html.twig' %}
+
+{% set popup_id = 'f-image-popup' %}
+
+{% block content %}
+<form action="" method="post" name="image-popup">
+	<div class="f-row">
+		<label for="image-popup-remote">{% trans %}Remote image{% endtrans %}</label>
+		<input type="text" name="image-popup[remote]" id="image-popup-remote" placeholder="http://"{% if remote is defined %} value="{remote}"{% endif %} />
+	</div>
+	<div class="f-row">
+		<label for="image-popup-local">{% trans %}Local image{% endtrans %}</label>
+		<input type="file" name="image-popup[local]" id="image-popup-local"{% if local is defined %} value="{local}"{% endif %} />
+	</div>
+	<div class="f-row">
+		<label></label>
+		<button type="submit">{% if remote is defined and local is defined %}{% trans %}Add image{% endtrans %}{% else %}{% trans %}Chenge image{% endtrans %}{% endif %}</button>
+	</div>
+</form>
+{% endblock %}

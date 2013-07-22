@@ -51,7 +51,7 @@
     <div class="f-image">
         {% set type = 'hidden' %}
         {{ block('form_widget') }}
-        <img src="{% if value is not empty %}/media/{{ value }}{% endif %}" />
+        <img src="{% if value is not empty %}/media/{{ value }}{% endif %}" class="chenge-button" />
     </div>
     {% endspaceless %}
 {% endblock %}

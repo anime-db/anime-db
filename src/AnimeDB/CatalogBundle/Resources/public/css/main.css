@@ -630,3 +630,35 @@ div.ui-widget div.ui-state-highlight {
 	min-width: 24px;
 	cursor: default;
 }
+
+/**
+ * Popup
+ */
+.popup {
+	position: fixed;
+	top: 100px;
+	z-index: 11;
+	width: 100%;
+}
+.popup .wrapper {
+	width: 560px;
+	margin: 0 auto;
+	padding: 20px 25px 15px 25px;
+	background: #fff url(images/bg-home-right.gif) no-repeat -570px -144px;
+	border: 3px #ff9f0b solid;
+	
+}
+
+/**
+ * Form image popup
+ */
+#f-image-popup .wrapper {
+	width: 380px;
+	background-position: -750px -144px;
+}
+#f-image-popup label {
+	width: 120px;
+}
+#f-image-popup input {
+	width: 250px;
+}
