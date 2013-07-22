@@ -73,6 +73,6 @@ class FormController extends Controller
      */
     public function templateAction($template, Request $request)
     {
-        return $this->renderView('AnimeDBCatalogBundle:Form:plug/'.$template.'.html.twig', $request->query->all());
+        return $this->render('AnimeDBCatalogBundle:Form:plug/'.$template.'.html.twig', $request->query->all());
     }
 }
