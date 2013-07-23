@@ -23,6 +23,7 @@ use Doctrine\ORM\EntityManager;
  *
  * @ORM\Entity
  * @ORM\Table(name="item")
+ * @ORM\HasLifecycleCallbacks()
  * @IgnoreAnnotation("ORM")
  *
  * @package AnimeDB\CatalogBundle\Entity
@@ -189,7 +190,6 @@ class Item
      * Cover
      *
      * @ORM\Column(type="string", length=256, nullable=true)
-     * @ Assert\Image()
      *
      * @var string
      */
@@ -203,6 +203,13 @@ class Item
      * @var \Doctrine\Common\Collections\ArrayCollection
      */
     protected $images;
+
+    /**
+     * Old covers list
+     *
+     * @var array
+     */
+    protected $old_covers = [];
 
     /**
      * Construct
@@ -623,6 +630,10 @@ class Item
      */
     public function setCover($cover)
     {
+        // copy current cover to old for remove old cover file after update
+        if ($this->cover) {
+            $this->old_covers[] = $this->cover;
+        }
         $this->cover = $cover;
         return $this;
     }
@@ -713,5 +724,62 @@ class Item
     public function getImages()
     {
         return $this->images;
+    }
+
+    /**
+     * Remove cover file
+     *
+     * @ORM\postRemove
+     */
+    public function doRemoveCover()
+    {
+        if ($this->cover && file_exists($this->getAbsolutePath())) {
+            unlink($this->getAbsolutePath());
+        }
+    }
+
+    /**
+     * Remove old cover files
+     *
+     * @ORM\postRemove
+     * @ORM\postUpdate
+     */
+    public function doRemoveOldCovers()
+    {
+        while ($cover = array_shift($this->old_covers)) {
+            if (file_exists($this->getUploadRootDir().'/'.$cover)) {
+                unlink($this->getUploadRootDir().'/'.$cover);
+            }
+        }
+    }
+
+    /**
+     * Get absolute path
+     *
+     * @return string
+     */
+    public function getAbsolutePath()
+    {
+        return $this->cover !== null ? $this->getUploadRootDir().'/'.$this->cover : null;
+    }
+
+    /**
+     * Get upload root dir
+     *
+     * @return string
+     */
+    protected function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    /**
+     * Get upload dir
+     *
+     * @return string
+     */
+    protected function getUploadDir()
+    {
+        return 'media';
     }
 }

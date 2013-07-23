@@ -20,6 +20,7 @@ use AnimeDB\CatalogBundle\Entity\Item;
  *
  * @ORM\Entity
  * @ORM\Table(name="image")
+ * @ORM\HasLifecycleCallbacks()
  * @IgnoreAnnotation("ORM")
  *
  * @package AnimeDB\CatalogBundle\Entity
@@ -43,7 +44,6 @@ class Image
      *
      * @ORM\Column(type="string", length=256)
      * @Assert\NotBlank()
-     * @Assert\Image()
      *
      * @var string
      */
@@ -58,6 +58,13 @@ class Image
      * @var \AnimeDB\CatalogBundle\Entity\Item
      */
     protected $item;
+
+    /**
+     * Old source list
+     *
+     * @var array
+     */
+    protected $old_sources = [];
 
     /**
      * Get id
@@ -78,6 +85,9 @@ class Image
      */
     public function setSource($source)
     {
+        if ($this->source) {
+            $this->old_sources[] = $this->source;
+        }
         $this->source = $source;
         return $this;
     }
@@ -120,21 +130,58 @@ class Image
         return $this->item;
     }
 
+    /**
+     * Remove source file
+     *
+     * @ORM\postRemove
+     */
+    public function doRemoveSource()
+    {
+        if ($this->source && file_exists($this->getAbsolutePath())) {
+            unlink($this->getAbsolutePath());
+        }
+    }
+
+    /**
+     * Remove old source files
+     *
+     * @ORM\postRemove
+     * @ORM\postUpdate
+     */
+    public function doRemoveOldSources()
+    {
+        while ($cover = array_shift($this->old_sources)) {
+            if (file_exists($this->getUploadRootDir().'/'.$cover)) {
+                unlink($this->getUploadRootDir().'/'.$cover);
+            }
+        }
+    }
+
+    /**
+     * Get absolute path
+     *
+     * @return string
+     */
     public function getAbsolutePath()
     {
-        return $this->cover !== null ? $this->getUploadRootDir().'/'.$this->cover : null;
+        return $this->source !== null ? $this->getUploadRootDir().'/'.$this->source : null;
     }
 
-    public function getWebPath()
-    {
-        return $this->cover !== null ? $this->getUploadDir().'/'.$this->cover : null;
-    }
-
+    /**
+     * Get upload root dir
+     *
+     * @return string
+     */
     protected function getUploadRootDir()
     {
-        return realpath(__DIR__.'/../../../../web/'.$this->getUploadDir());
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
     }
 
+    /**
+     * Get upload dir
+     *
+     * @return string
+     */
     protected function getUploadDir()
     {
         return 'media';
