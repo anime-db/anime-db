@@ -23,7 +23,7 @@ use Doctrine\ORM\EntityManager;
  *
  * @ORM\Entity
  * @ORM\Table(name="item")
- * @ORM\HasLifecycleCallbacks()
+ * @ORM\HasLifecycleCallbacks
  * @IgnoreAnnotation("ORM")
  *
  * @package AnimeDB\CatalogBundle\Entity
@@ -729,7 +729,7 @@ class Item
     /**
      * Remove cover file
      *
-     * @ORM\postRemove
+     * @ORM\PostRemove
      */
     public function doRemoveCover()
     {
@@ -741,8 +741,8 @@ class Item
     /**
      * Remove old cover files
      *
-     * @ORM\postRemove
-     * @ORM\postUpdate
+     * @ORM\PostRemove
+     * @ORM\PostUpdate
      */
     public function doRemoveOldCovers()
     {

@@ -133,7 +133,7 @@ class Image
     /**
      * Remove source file
      *
-     * @ORM\postRemove
+     * @ORM\PostRemove
      */
     public function doRemoveSource()
     {
@@ -145,8 +145,8 @@ class Image
     /**
      * Remove old source files
      *
-     * @ORM\postRemove
-     * @ORM\postUpdate
+     * @ORM\PostRemove
+     * @ORM\PostUpdate
      */
     public function doRemoveOldSources()
     {
