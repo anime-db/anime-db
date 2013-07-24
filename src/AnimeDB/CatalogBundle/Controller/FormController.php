@@ -82,13 +82,27 @@ class FormController extends Controller
     }
 
     /**
+     * Form field image
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function imageAction(Request $request) {
+        return $this->render('AnimeDBCatalogBundle:Form:image.html.twig', [
+            'form' => $this->createForm(new UploadImage())->createView(),
+            'chenge' => (bool)$request->get('chenge', false)
+        ]);
+    }
+
+    /**
      * Upload image
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function uploadImageAction(Request $request) {
+    public function imageUploadAction(Request $request) {
         $image = new ImageField();
         $form = $this->createForm(new UploadImage(), $image);
         $form->handleRequest($request);
