@@ -8,16 +8,18 @@ sAddr = "0.0.0.0"
 sPort = "56780"
 ' Path to the directory with the application
 sPath = oFileSystem.GetAbsolutePathName("..")
+' Path to php.exe
+sPhp = sPath & "/bin/php/php.exe"
 
 ' Pid files
 sSpid  = sPath & "/bin/.spid"
 sElpid = sPath & "/bin/.elpid"
 sTspid = sPath & "/bin/.tspid"
 
-sConsole = sPath & "/bin/php/php.exe -f " & sPath & "/app/console "
+sConsole = sPhp & " -f " & sPath & "/app/console "
 
 ' Commands to run server, Event listener and cron
-sServer        = sPath & "/bin/php/php.exe -S " & sAddr & ":" & sPort & " -t " & sPath & "/web " & sPath & "/app/router.php > nul 2> nul"
+sServer        = sPhp & " -S " & sAddr & ":" & sPort & " -t " & sPath & "/web " & sPath & "/app/router.php > nul 2> nul"
 sEventListener = sConsole & "animedb:event-listener > nul 2> nul"
 sTaskScheduler = sConsole & "animedb:task-scheduler > nul 2> nul"
 
