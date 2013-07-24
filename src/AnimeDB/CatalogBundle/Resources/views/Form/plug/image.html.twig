@@ -3,14 +3,14 @@
 {% set popup_id = 'f-image-popup' %}
 
 {% block content %}
-<form action="{{ path('form_upload_image') }}" method="post" name="image-popup" enctype="multipart/form-data">
+<form action="{{ path('form_upload_image') }}" method="post" name="image_popup" enctype="multipart/form-data">
 	<div class="f-row">
-		<label for="image-popup-remote">{% trans %}Image from URL{% endtrans %}</label>
-		<input type="text" name="image-popup[remote]" id="image-popup-remote" placeholder="http://" />
+		<label for="image_popup-remote">{% trans %}Image from URL{% endtrans %}</label>
+		<input type="text" name="image_popup[remote]" id="image_popup-remote" placeholder="http://" />
 	</div>
 	<div class="f-row">
-		<label for="image-popup-local">{% trans %}Local image{% endtrans %}</label>
-		<input type="file" name="image-popup[local]" id="image-popup-local" accept="image/*" />
+		<label for="image_popup-local">{% trans %}Local image{% endtrans %}</label>
+		<input type="file" name="image_popup[local]" id="image_popup-local" accept="image/bmp,image/gif,image/jpeg,image/png" />
 	</div>
 	<div class="f-row">
 		<label></label>

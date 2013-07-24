@@ -662,6 +662,21 @@ div.ui-widget div.ui-state-highlight {
 #f-image-popup input {
 	width: 250px;
 }
+.f-image {
+	background: #ccc;
+	border: 1px #ff6600 solid;
+	height: 150px;
+	width: 150px;
+	line-height: 150px;
+	text-align: center;
+	margin-bottom: 2px;
+	float: left;
+}
 .f-image .chenge-button {
 	cursor: pointer;
+}
+.f-image img {
+	max-height: 100%;
+	max-width: 100%;
+	vertical-align: middle;
 }

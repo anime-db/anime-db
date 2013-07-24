@@ -78,3 +78,5 @@ form_scandir:
 form_upload_image:
     pattern:  /form/uploadImage.json
     defaults: { _controller: AnimeDBCatalogBundle:Form:uploadImage, _format: json }
+    requirements:
+        _method:  POST

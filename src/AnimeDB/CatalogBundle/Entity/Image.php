@@ -20,7 +20,7 @@ use AnimeDB\CatalogBundle\Entity\Item;
  *
  * @ORM\Entity
  * @ORM\Table(name="image")
- * @ORM\HasLifecycleCallbacks()
+ * @ORM\HasLifecycleCallbacks
  * @IgnoreAnnotation("ORM")
  *
  * @package AnimeDB\CatalogBundle\Entity

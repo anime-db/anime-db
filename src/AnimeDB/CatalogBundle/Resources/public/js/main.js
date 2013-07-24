@@ -55,16 +55,19 @@ Form.Collection = {
  * Form image
  */
 // Model Field
-var FormImageModelField = function(file, button) {
+var FormImageModelField = function(file, image, button) {
 	this.file = file;
+	this.image = image;
 	this.button = button;
 };
 FormImageModelField.prototype = {
 	chenge: function(field) {
 		Cap.show(FormImagePopUp.block);
 	},
+	// update field data
 	update: function(data) {
-		console.log(data); // TODO update data
+		this.file.val(data.path);
+		this.image.attr('src', data.image);
 	}
 }
 // Model PopUp
@@ -73,7 +76,6 @@ var FormImageModelPopUp = function(block, remote, local) {
 	this.block = block;
 	this.remote = remote;
 	this.local = local;
-	this.onUpload = function(){};
 	this.form = block.find('form').submit(function() {
 		that.upload();
 		return false;
@@ -81,6 +83,8 @@ var FormImageModelPopUp = function(block, remote, local) {
 	Cap.observe(this);
 };
 FormImageModelPopUp.prototype = {
+	// update callback
+	onUpload: function() {},
 	show: function() {
 		this.block.show();
 	},
@@ -90,20 +94,31 @@ FormImageModelPopUp.prototype = {
 	upload: function() {
 		var that = this;
 		// send form as ajax and call onUpload handler
-		$(this.form).ajaxSubmit({
+		this.form.ajaxSubmit({
+			dataType: 'json',
 			success: function(data) {
 				that.onUpload(data);
 				Cap.hide();
+				that.form.resetForm();
 			},
-			error: function(data) {
-				console.log(data); // TODO triger error
+			error: function(data, error, message) {
+				// for normal error
+				if (data.status == 404) {
+					data = JSON.parse(data.responseText);
+					if (typeof(data.error) !== 'undefined' && data.error) {
+						message = data.error;
+					}
+				}
+				alert(message);
 			}
 		});
 	}
 };
+// Image controller
 var FormImageController = function(image) {
 	var field = new FormImageModelField(
 		image.find('input'),
+		image.find('img'),
 		image.find('.chenge-button')
 	);
 	field.button.click(function() {
@@ -124,9 +139,12 @@ var FormImageController = function(image) {
 				);
 				FormImagePopUp.hide();
 				$('body').append(FormImagePopUp.block);
-				UI.button(FormImagePopUp.block); // apply buttons
+				// apply buttons
+				UI.button(FormImagePopUp.block);
 				// subscribe field on upload image in pop-up
-				FormImagePopUp.onUpload = field.update;
+				FormImagePopUp.onUpload = function(data) {
+					field.update(data);
+				};
 			}
 		});
 	}
@@ -138,12 +156,14 @@ var Cap = {
 	setElement: function(el) {
 		Cap.element = el.click(Cap.hide);
 	},
+	// hide cup and observers
 	hide: function() {
 		for (key in Cap.observers) {
 			Cap.observers[key].hide();
 		}
 		Cap.element.hide();
 	},
+	// show cup and observers
 	show: function() {
 		for (key in Cap.observers) {
 			Cap.observers[key].show();
@@ -164,11 +184,12 @@ var UI = {
 		if (typeof(context) == 'undefined') {
 			context = document;
 		}
-		$(context).find('input:submit, input:button, input:reset, button, .catalog-last-added .details').button();
+		$(context).find('input:submit, input:button, input:reset, button').button();
 	}
 }
 
 
+// init after document load
 $(function(){
 
 UI.button();

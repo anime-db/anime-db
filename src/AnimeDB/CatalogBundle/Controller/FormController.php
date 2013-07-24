@@ -13,6 +13,10 @@ namespace AnimeDB\CatalogBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+// use Symfony\Component\HttpFoundation\File\UploadedFile;
+use AnimeDB\CatalogBundle\Entity\Field\Image as ImageField;
+use AnimeDB\CatalogBundle\Form\Field\Image\Upload as UploadImage;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Form
@@ -22,6 +26,20 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class FormController extends Controller
 {
+    /**
+     * Allowed image extensions
+     *
+     * @var array
+     */
+    protected static $allowed_exts = ['bmp','gif','jpeg','jpg','jpe','png'];
+
+    /**
+     * Allowed image MIME-types
+     *
+     * @var array
+     */
+    protected static $allowed_mime = ['image/bmp','image/gif','image/jpeg','image/png'];
+
     /**
      * Return list folders for directory
      *
@@ -71,9 +89,25 @@ class FormController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function uploadImageAction(Request $request) {
-        if ($request->getMethod() == 'POST') {
+        $image = new ImageField();
+        $form = $this->createForm(new UploadImage(), $image);
+        $form->handleRequest($request);
+
+        if (!$form->isValid()) {
+            $errors = $form->getErrors();
+            return new JsonResponse(['error' => $this->get('translator')->trans($errors[0]->getMessage())], 404);
         }
-        return new JsonResponse([]);
+
+        // try upload file
+        try {
+            $image->upload($this->get('validator'));
+            return new JsonResponse([
+                'path'  => $image->getPath(),
+                'image' => $image->getWebPath(),
+            ]);
+        } catch (\InvalidArgumentException $e) {
+            return new JsonResponse(['error' => $this->get('translator')->trans($e->getMessage())], 404);
+        }
     }
 
     /**
