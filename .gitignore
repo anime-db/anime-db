@@ -17,6 +17,7 @@ app/cache/
 app/logs/
 app/bootstrap.php.cache
 vendor/
+composer.lock
 
 # Eclipse files #
 #################
