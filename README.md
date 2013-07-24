@@ -64,11 +64,8 @@ To restart the application, call the script
 
 After starting the application, open the browser <http://localhost:56780/>
 
-If you want to access an application on your local network, you need open on another computer the browser with address <http://{ip_addres}:56780/>, where {ip_addres} is the IP address of the computer on which the application is running
-
-*If you run the application only on Linux or Mac, you can delete the files needed to run the application on Windows*
-
-    rm -rf bin/Run.vbs bin/Stop.vbs
+If you want to access an application on your local network, you need open on another computer the browser with address <http://IP_ADDRES:56780/>,
+where **IP_ADDRES** is the IP address of the computer on which the application is running
 
 ## Install as service ##
 
