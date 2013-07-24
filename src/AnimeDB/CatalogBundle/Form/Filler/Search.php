@@ -41,17 +41,6 @@ class Search extends AbstractType
 
     /**
      * (non-PHPdoc)
-     * @see Symfony\Component\Form.AbstractType::setDefaultOptions()
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults(array(
-            'csrf_protection' => false,
-        ));
-    }
-
-    /**
-     * (non-PHPdoc)
      * @see \Symfony\Component\Form\AbstractType::buildForm()
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
