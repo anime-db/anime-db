@@ -13,8 +13,10 @@ bin/.tspid
 # Symfony directories #
 #######################
 web/bundles/
-app/cache/*
-app/logs/*
+app/cache/
+app/logs/
+app/bootstrap.php.cache
+vendor/
 
 # Eclipse files #
 #################
