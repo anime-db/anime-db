@@ -1,8 +1,12 @@
 language: php
 php:
-  - 5.4
+    - 5.4
 
 notifications:
-  email: "dev@anime-db.org"
+    email: dev@anime-db.org
 
-script: "phpunit -c app/"
+before_script:
+    - composer install
+
+script:
+    - phpunit -c app/
