@@ -9,7 +9,7 @@ sPort = "56780"
 ' Path to the directory with the application
 sPath = oFileSystem.GetAbsolutePathName("..")
 ' Path to php.exe
-sPhp = sPath & "/bin/php/php.exe"
+sPhp = "php"
 
 ' Pid files
 sSpid  = sPath & "/bin/.spid"
