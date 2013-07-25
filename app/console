@@ -12,11 +12,11 @@ require_once __DIR__.'/AppKernel.php';
 
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
-use AnimeDB\CatalogBundle\Command\EventListener;
-use AnimeDB\CatalogBundle\Command\CheckUpdates;
-use AnimeDB\CatalogBundle\Command\ScanStorages;
-use AnimeDB\CatalogBundle\Command\CheckItem;
-use AnimeDB\CatalogBundle\Command\TaskScheduler;
+use AnimeDB\Bundle\CatalogBundle\Command\EventListener;
+use AnimeDB\Bundle\CatalogBundle\Command\CheckUpdates;
+use AnimeDB\Bundle\CatalogBundle\Command\ScanStorages;
+use AnimeDB\Bundle\CatalogBundle\Command\CheckItem;
+use AnimeDB\Bundle\CatalogBundle\Command\TaskScheduler;
 
 $input = new ArgvInput();
 $env = $input->getParameterOption(array('--env', '-e'), getenv('SYMFONY_ENV') ?: 'dev');

@@ -8,22 +8,22 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Controller;
+namespace AnimeDB\Bundle\CatalogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use AnimeDB\CatalogBundle\Form\Filler\Search;
-use AnimeDB\CatalogBundle\Form\Filler\Get;
-use AnimeDB\CatalogBundle\Entity\Item;
-use AnimeDB\CatalogBundle\Entity\Name;
-use AnimeDB\CatalogBundle\Entity\Image;
-use AnimeDB\CatalogBundle\Entity\Source;
-use AnimeDB\CatalogBundle\Form\Entity\Item as ItemForm;
+use AnimeDB\Bundle\CatalogBundle\Form\Filler\Search;
+use AnimeDB\Bundle\CatalogBundle\Form\Filler\Get;
+use AnimeDB\Bundle\CatalogBundle\Entity\Item;
+use AnimeDB\Bundle\CatalogBundle\Entity\Name;
+use AnimeDB\Bundle\CatalogBundle\Entity\Image;
+use AnimeDB\Bundle\CatalogBundle\Entity\Source;
+use AnimeDB\Bundle\CatalogBundle\Form\Entity\Item as ItemForm;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Item
  *
- * @package AnimeDB\CatalogBundle\Controller
+ * @package AnimeDB\Bundle\CatalogBundle\Controller
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class ItemController extends Controller
@@ -37,7 +37,7 @@ class ItemController extends Controller
      */
     public function showAction($id)
     {
-        /* @var $item \AnimeDB\CatalogBundle\Entity\Item */
+        /* @var $item \AnimeDB\Bundle\CatalogBundle\Entity\Item */
         $item = $this->getDoctrine()
             ->getRepository('AnimeDBCatalogBundle:Item')
             ->find($id);
@@ -56,7 +56,7 @@ class ItemController extends Controller
      */
     public function addAction()
     {
-        /* @var $chain \AnimeDB\CatalogBundle\Service\Autofill\Chain */
+        /* @var $chain \AnimeDB\Bundle\CatalogBundle\Service\Autofill\Chain */
         $chain = $this->get('anime_db.autofill');
 
         /* @var $search \Symfony\Component\Form\Form */
@@ -113,7 +113,7 @@ class ItemController extends Controller
      */
     public function changeAction($id, Request $request)
     {
-        /* @var $item \AnimeDB\CatalogBundle\Entity\Item */
+        /* @var $item \AnimeDB\Bundle\CatalogBundle\Entity\Item */
         $item = $this->getDoctrine()
             ->getRepository('AnimeDBCatalogBundle:Item')
             ->find($id);
@@ -164,7 +164,7 @@ class ItemController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function complementAction($id) {
-        /* @var $item \AnimeDB\CatalogBundle\Entity\Item */
+        /* @var $item \AnimeDB\Bundle\CatalogBundle\Entity\Item */
         $item = $this->getDoctrine()
             ->getRepository('AnimeDBCatalogBundle:Item')
             ->find($id);

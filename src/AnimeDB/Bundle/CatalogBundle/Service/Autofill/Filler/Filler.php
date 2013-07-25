@@ -8,12 +8,12 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Service\Autofill\Filler;
+namespace AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler;
 
 /**
  * Autofill filler interface
  * 
- * @package AnimeDB\CatalogBundle\Service\Autofill\Filler
+ * @package AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 interface Filler
@@ -50,7 +50,7 @@ interface Filler
      *
      * @param string $source
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Item|null
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item|null
      */
     public function fill($source);
 

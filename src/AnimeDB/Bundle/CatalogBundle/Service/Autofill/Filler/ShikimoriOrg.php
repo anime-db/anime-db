@@ -8,15 +8,15 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Service\Autofill\Filler;
+namespace AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler;
 
-use AnimeDB\CatalogBundle\Service\Autofill\Filler\Filler;
+use AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler\Filler;
 
 /**
  * Autofill from site shikimori.org
  * 
  * @link http://shikimori.org/
- * @package AnimeDB\CatalogBundle\Service\Autofill\Filler
+ * @package AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class ShikimoriOrg implements Filler
@@ -55,7 +55,7 @@ class ShikimoriOrg implements Filler
      *
      * @param string $source
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Item|null
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item|null
      */
     public function fill($source)
     {

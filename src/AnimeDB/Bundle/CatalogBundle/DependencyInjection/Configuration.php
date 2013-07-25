@@ -1,6 +1,6 @@
 <?php
 
-namespace AnimeDB\CatalogBundle\DependencyInjection;
+namespace AnimeDB\Bundle\CatalogBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

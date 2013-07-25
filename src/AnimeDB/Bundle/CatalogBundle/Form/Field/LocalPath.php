@@ -8,14 +8,14 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Form\Field;
+namespace AnimeDB\Bundle\CatalogBundle\Form\Field;
 
 use Symfony\Component\Form\AbstractType;
 
 /**
  * Local path form field
  *
- * @package AnimeDB\CatalogBundle\Form\Field
+ * @package AnimeDB\Bundle\CatalogBundle\Form\Field
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class LocalPath extends AbstractType

@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Command;
+namespace AnimeDB\Bundle\CatalogBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Event Listener
  *
- * @package AnimeDB\CatalogBundle\Command
+ * @package AnimeDB\Bundle\CatalogBundle\Command
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class EventListener extends ContainerAwareCommand

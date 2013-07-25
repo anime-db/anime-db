@@ -8,21 +8,21 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Form\Entity;
+namespace AnimeDB\Bundle\CatalogBundle\Form\Entity;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use AnimeDB\CatalogBundle\Form\Entity\Image;
-use AnimeDB\CatalogBundle\Form\Entity\Name;
-use AnimeDB\CatalogBundle\Form\Entity\Source;
-use AnimeDB\CatalogBundle\Form\Field\Image as ImageField;
-use AnimeDB\CatalogBundle\Form\Field\LocalPath as LocalPathField;
+use AnimeDB\Bundle\CatalogBundle\Form\Entity\Image;
+use AnimeDB\Bundle\CatalogBundle\Form\Entity\Name;
+use AnimeDB\Bundle\CatalogBundle\Form\Entity\Source;
+use AnimeDB\Bundle\CatalogBundle\Form\Field\Image as ImageField;
+use AnimeDB\Bundle\CatalogBundle\Form\Field\LocalPath as LocalPathField;
 
 /**
  * Item form
  *
- * @package AnimeDB\CatalogBundle\Form\Entity
+ * @package AnimeDB\Bundle\CatalogBundle\Form\Entity
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Item extends AbstractType
@@ -126,7 +126,7 @@ class Item extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'AnimeDB\CatalogBundle\Entity\Item'
+            'data_class' => 'AnimeDB\Bundle\CatalogBundle\Entity\Item'
         ]);
     }
 

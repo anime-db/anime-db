@@ -8,14 +8,14 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Service\Autofill;
+namespace AnimeDB\Bundle\CatalogBundle\Service\Autofill;
 
-use AnimeDB\CatalogBundle\Service\Autofill\Filler\Filler;
+use AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler\Filler;
 
 /**
  * Chain
  * 
- * @package AnimeDB\CatalogBundle\Service\Autofill
+ * @package AnimeDB\Bundle\CatalogBundle\Service\Autofill
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Chain
@@ -37,7 +37,7 @@ class Chain
     /**
      * Add autofill filler
      *
-     * @param \AnimeDB\CatalogBundle\Service\Autofill\Filler\Filler $filler
+     * @param \AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler\Filler $filler
      * @param string $alias
      */
     public function addFiller(Filler $filler, $alias) {
@@ -50,7 +50,7 @@ class Chain
      *
      * @param string $alias
      *
-     * @return \AnimeDB\CatalogBundle\Service\Autofill\Filler\Filler|null
+     * @return \AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler\Filler|null
      */
     public function getFiller($alias) {
         if (array_key_exists($alias, $this->fillers)) {
@@ -64,7 +64,7 @@ class Chain
      *
      * @param string $source
      *
-     * @return \AnimeDB\CatalogBundle\Service\Autofill\Filler\Filler|null
+     * @return \AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler\Filler|null
      */
     public function getFillerBySource($source) {
         foreach ($this->fillers as $filler) {

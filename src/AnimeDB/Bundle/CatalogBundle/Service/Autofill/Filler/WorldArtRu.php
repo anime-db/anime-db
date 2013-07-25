@@ -8,20 +8,20 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
  
-namespace AnimeDB\CatalogBundle\Service\Autofill\Filler;
+namespace AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler;
 
-use AnimeDB\CatalogBundle\Service\Autofill\Filler\Filler;
+use AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler\Filler;
 use Buzz\Browser;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DomCrawler\Crawler;
 use Doctrine\Bundle\DoctrineBundle\Registry;
-use AnimeDB\CatalogBundle\Entity\Item;
-use AnimeDB\CatalogBundle\Entity\Source;
-use AnimeDB\CatalogBundle\Entity\Name;
-use AnimeDB\CatalogBundle\Entity\Country;
-use AnimeDB\CatalogBundle\Entity\Genre;
-use AnimeDB\CatalogBundle\Entity\Type;
-use AnimeDB\CatalogBundle\Entity\Image;
+use AnimeDB\Bundle\CatalogBundle\Entity\Item;
+use AnimeDB\Bundle\CatalogBundle\Entity\Source;
+use AnimeDB\Bundle\CatalogBundle\Entity\Name;
+use AnimeDB\Bundle\CatalogBundle\Entity\Country;
+use AnimeDB\Bundle\CatalogBundle\Entity\Genre;
+use AnimeDB\Bundle\CatalogBundle\Entity\Type;
+use AnimeDB\Bundle\CatalogBundle\Entity\Image;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -29,7 +29,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * Autofill from site world-art.ru
  * 
  * @link http://world-art.ru/
- * @package AnimeDB\CatalogBundle\Service\Autofill\Filler
+ * @package AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class WorldArtRu implements Filler
@@ -286,7 +286,7 @@ class WorldArtRu implements Filler
      *
      * @param string $source
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Item|null
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item|null
      */
     public function fill($source)
     {
@@ -370,11 +370,11 @@ class WorldArtRu implements Filler
     /**
      * Fill head data
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Item $item
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item $item
      * @param \DOMXPath $xpath
      * @param \DOMElement $head
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Item
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
      */
     private function fillHeadData(Item $item, \DOMXPath $xpath, \DOMElement $head) {
         // add main name
@@ -473,11 +473,11 @@ class WorldArtRu implements Filler
     /**
      * Fill body data
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Item $item
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item $item
      * @param \DOMXPath $xpath
      * @param \DOMElement $body
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Item
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
      */
     private function fillBodyData(Item $item, \DOMXPath $xpath, \DOMElement $body) {
         for ($i = 0; $i < $body->childNodes->length; $i++) {
@@ -573,7 +573,7 @@ class WorldArtRu implements Filler
      *
      * @param integer $id
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Country|null
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Country|null
      */
     private function getCountryByName($name) {
         if (isset($this->countrys[$name])) {
@@ -589,7 +589,7 @@ class WorldArtRu implements Filler
      *
      * @param string $name
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Genre
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Genre
      */
     private function getGenreByName($name) {
         if (isset($this->genres[$name])) {
@@ -605,7 +605,7 @@ class WorldArtRu implements Filler
      *
      * @param string $name
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Type
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Type
      */
     private function getTypeByName($name) {
         if (isset($this->types[$name])) {

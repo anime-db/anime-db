@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Form\Filler;
+namespace AnimeDB\Bundle\CatalogBundle\Form\Filler;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,7 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 /**
  * Search item from filler
  *
- * @package AnimeDB\CatalogBundle\Form\Filler
+ * @package AnimeDB\Bundle\CatalogBundle\Form\Filler
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Search extends AbstractType

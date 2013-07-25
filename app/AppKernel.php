@@ -16,7 +16,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-            new AnimeDB\CatalogBundle\AnimeDBCatalogBundle(),
+            new AnimeDB\Bundle\CatalogBundle\AnimeDBCatalogBundle(),
             new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
         );
 

@@ -8,12 +8,12 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Entity;
+namespace AnimeDB\Bundle\CatalogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
-use AnimeDB\CatalogBundle\Entity\Item;
+use AnimeDB\Bundle\CatalogBundle\Entity\Item;
 
 /**
  * Item images
@@ -23,7 +23,7 @@ use AnimeDB\CatalogBundle\Entity\Item;
  * @ORM\HasLifecycleCallbacks
  * @IgnoreAnnotation("ORM")
  *
- * @package AnimeDB\CatalogBundle\Entity
+ * @package AnimeDB\Bundle\CatalogBundle\Entity
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Image
@@ -55,7 +55,7 @@ class Image
      * @ORM\ManyToOne(targetEntity="Item", inversedBy="images", cascade={"persist"})
      * @ORM\JoinColumn(name="item", referencedColumnName="id")
      *
-     * @var \AnimeDB\CatalogBundle\Entity\Item
+     * @var \AnimeDB\Bundle\CatalogBundle\Entity\Item
      */
     protected $item;
 
@@ -81,7 +81,7 @@ class Image
      *
      * @param string $source
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Image
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Image
      */
     public function setSource($source)
     {
@@ -105,9 +105,9 @@ class Image
     /**
      * Set item
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Item $item
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item $item
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Image
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Image
      */
     public function setItem(Item $item = null)
     {
@@ -123,7 +123,7 @@ class Image
     /**
      * Get item
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Item
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
      */
     public function getItem()
     {

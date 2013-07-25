@@ -8,16 +8,16 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle;
+namespace AnimeDB\Bundle\CatalogBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use AnimeDB\CatalogBundle\Service\Autofill\CompilerPass;
+use AnimeDB\Bundle\CatalogBundle\Service\Autofill\CompilerPass;
 
 /**
  * Bundle
  *
- * @package AnimeDB\CatalogBundle
+ * @package AnimeDB\Bundle\CatalogBundle
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class AnimeDBCatalogBundle extends Bundle

@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Entity;
+namespace AnimeDB\Bundle\CatalogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -21,7 +21,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="genre")
  * @IgnoreAnnotation("ORM")
  *
- * @package AnimeDB\CatalogBundle\Entity
+ * @package AnimeDB\Bundle\CatalogBundle\Entity
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Genre
@@ -79,7 +79,7 @@ class Genre
      *
      * @param string $name
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Genre
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Genre
      */
     public function setName($name)
     {
@@ -100,11 +100,11 @@ class Genre
     /**
      * Add items
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Item $item
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item $item
      *
      * @return Genre
      */
-    public function addItem(\AnimeDB\CatalogBundle\Entity\Item $item)
+    public function addItem(\AnimeDB\Bundle\CatalogBundle\Entity\Item $item)
     {
         if (!$this->items->contains($item)) {
             $this->items->add($item);
@@ -116,9 +116,9 @@ class Genre
     /**
      * Remove items
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Item $item
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item $item
      */
-    public function removeItem(\AnimeDB\CatalogBundle\Entity\Item $item)
+    public function removeItem(\AnimeDB\Bundle\CatalogBundle\Entity\Item $item)
     {
         if ($this->items->contains($item)) {
             $this->items->removeElement($item);

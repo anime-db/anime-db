@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Form;
+namespace AnimeDB\Bundle\CatalogBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,7 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 /**
  * Search simple form for home page
  *
- * @package AnimeDB\CatalogBundle\Form
+ * @package AnimeDB\Bundle\CatalogBundle\Form
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class SearchSimple extends AbstractType

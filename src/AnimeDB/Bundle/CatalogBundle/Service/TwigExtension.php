@@ -8,14 +8,14 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Service;
+namespace AnimeDB\Bundle\CatalogBundle\Service;
 
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 /**
  * Twig extension
  *
- * @package AnimeDB\CatalogBundle\Service
+ * @package AnimeDB\Bundle\CatalogBundle\Service
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class TwigExtension extends \Twig_Extension

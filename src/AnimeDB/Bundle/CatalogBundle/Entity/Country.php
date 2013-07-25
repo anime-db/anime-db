@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Entity;
+namespace AnimeDB\Bundle\CatalogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -21,7 +21,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="country")
  * @IgnoreAnnotation("ORM")
  *
- * @package AnimeDB\CatalogBundle\Entity
+ * @package AnimeDB\Bundle\CatalogBundle\Entity
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Country
@@ -70,7 +70,7 @@ class Country
      *
      * @param string $id
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Country
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Country
      */
     public function setId($id)
     {
@@ -93,7 +93,7 @@ class Country
      *
      * @param string $name
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Country
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Country
      */
     public function setName($name)
     {
@@ -114,11 +114,11 @@ class Country
     /**
      * Add item
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Item $item
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item $item
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Country
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Country
      */
-    public function addItem(\AnimeDB\CatalogBundle\Entity\Item $item)
+    public function addItem(\AnimeDB\Bundle\CatalogBundle\Entity\Item $item)
     {
         if (!$this->items->contains($item)) {
             $this->items[] = $item->setManufacturer($this);
@@ -129,9 +129,9 @@ class Country
     /**
      * Remove item
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Item $item
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item $item
      */
-    public function removeItem(\AnimeDB\CatalogBundle\Entity\Item $item)
+    public function removeItem(\AnimeDB\Bundle\CatalogBundle\Entity\Item $item)
     {
         $this->items->removeElement($item);
         $item->setManufacturer(null);

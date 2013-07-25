@@ -8,14 +8,14 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Entity;
+namespace AnimeDB\Bundle\CatalogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
-use AnimeDB\CatalogBundle\Entity\Country;
-use AnimeDB\CatalogBundle\Entity\Storage;
-use AnimeDB\CatalogBundle\Entity\Type;
+use AnimeDB\Bundle\CatalogBundle\Entity\Country;
+use AnimeDB\Bundle\CatalogBundle\Entity\Storage;
+use AnimeDB\Bundle\CatalogBundle\Entity\Type;
 use Doctrine\ORM\EntityManager;
 
 /**
@@ -26,7 +26,7 @@ use Doctrine\ORM\EntityManager;
  * @ORM\HasLifecycleCallbacks
  * @IgnoreAnnotation("ORM")
  *
- * @package AnimeDB\CatalogBundle\Entity
+ * @package AnimeDB\Bundle\CatalogBundle\Entity
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Item
@@ -67,7 +67,7 @@ class Item
      * @ORM\ManyToOne(targetEntity="Type", inversedBy="items", cascade={"persist"})
      * @ORM\JoinColumn(name="type", referencedColumnName="id")
      *
-     * @var \AnimeDB\CatalogBundle\Entity\Type
+     * @var \AnimeDB\Bundle\CatalogBundle\Entity\Type
      */
     protected $type;
 
@@ -107,7 +107,7 @@ class Item
      * @ORM\ManyToOne(targetEntity="Country", inversedBy="items", cascade={"persist"})
      * @ORM\JoinColumn(name="manufacturer", referencedColumnName="id")
      *
-     * @var \AnimeDB\CatalogBundle\Entity\Country
+     * @var \AnimeDB\Bundle\CatalogBundle\Entity\Country
      */
     protected $manufacturer;
 
@@ -236,7 +236,7 @@ class Item
      *
      * @param string $name
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Item
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
      */
     public function setName($name)
     {
@@ -259,7 +259,7 @@ class Item
      *
      * @param \DateTime|null $dateStart
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Item
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
      */
     public function setDateStart(\DateTime $dateStart = null)
     {
@@ -282,7 +282,7 @@ class Item
      *
      * @param \DateTime|null $dateEnd
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Item
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
      */
     public function setDateEnd(\DateTime $dateEnd = null)
     {
@@ -305,7 +305,7 @@ class Item
      *
      * @param integer $duration
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Item
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
      */
     public function setDuration($duration)
     {
@@ -328,7 +328,7 @@ class Item
      *
      * @param string $summary
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Item
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
      */
     public function setSummary($summary)
     {
@@ -351,7 +351,7 @@ class Item
      *
      * @param string $path
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Item
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
      */
     public function setPath($path)
     {
@@ -374,7 +374,7 @@ class Item
      *
      * @param string $episodes
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Item
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
      */
     public function setEpisodes($episodes)
     {
@@ -397,7 +397,7 @@ class Item
      *
      * @param string $translate
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Item
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
      */
     public function setTranslate($translate)
     {
@@ -420,7 +420,7 @@ class Item
      *
      * @param string $fileInfo
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Item
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
      */
     public function setFileInfo($fileInfo)
     {
@@ -441,11 +441,11 @@ class Item
     /**
      * Add name
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Name $name
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Name $name
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Item
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
      */
-    public function addName(\AnimeDB\CatalogBundle\Entity\Name $name)
+    public function addName(\AnimeDB\Bundle\CatalogBundle\Entity\Name $name)
     {
         if (!$this->names->contains($name)) {
             $this->names->add($name);
@@ -457,9 +457,9 @@ class Item
     /**
      * Remove name
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Name $name
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Name $name
      */
-    public function removeName(\AnimeDB\CatalogBundle\Entity\Name $name)
+    public function removeName(\AnimeDB\Bundle\CatalogBundle\Entity\Name $name)
     {
         if ($this->names->contains($name)) {
             $this->names->removeElement($name);
@@ -480,9 +480,9 @@ class Item
     /**
      * Set type
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Type $type
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Type $type
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Item
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
      */
     public function setType(Type $type = null)
     {
@@ -505,7 +505,7 @@ class Item
     /**
      * Get type
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Type
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Type
      */
     public function getType()
     {
@@ -515,11 +515,11 @@ class Item
     /**
      * Add genres
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Genre $genre
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Genre $genre
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Item
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
      */
-    public function addGenre(\AnimeDB\CatalogBundle\Entity\Genre $genre)
+    public function addGenre(\AnimeDB\Bundle\CatalogBundle\Entity\Genre $genre)
     {
         if (!$this->genres->contains($genre)) {
             $this->genres->add($genre);
@@ -531,9 +531,9 @@ class Item
     /**
      * Remove genres
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Genre $genre
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Genre $genre
      */
-    public function removeGenre(\AnimeDB\CatalogBundle\Entity\Genre $genre)
+    public function removeGenre(\AnimeDB\Bundle\CatalogBundle\Entity\Genre $genre)
     {
         if ($this->genres->contains($genre)) {
             $this->genres->removeElement($genre);
@@ -554,9 +554,9 @@ class Item
     /**
      * Set manufacturer
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Country $manufacturer
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Country $manufacturer
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Item
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
      */
     public function setManufacturer(Country $manufacturer = null)
     {
@@ -579,7 +579,7 @@ class Item
     /**
      * Get manufacturer
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Country
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Country
      */
     public function getManufacturer()
     {
@@ -589,9 +589,9 @@ class Item
     /**
      * Set storage
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Storage $storage
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Storage $storage
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Item
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
      */
     public function setStorage(Storage $storage = null)
     {
@@ -614,7 +614,7 @@ class Item
     /**
      * Get storage
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Storage
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Storage
      */
     public function getStorage()
     {
@@ -626,7 +626,7 @@ class Item
      *
      * @param string $cover
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Item
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
      */
     public function setCover($cover)
     {
@@ -651,11 +651,11 @@ class Item
     /**
      * Add source
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Source $source
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Source $source
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Item
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
      */
-    public function addSource(\AnimeDB\CatalogBundle\Entity\Source $source)
+    public function addSource(\AnimeDB\Bundle\CatalogBundle\Entity\Source $source)
     {
         if (!$this->sources->contains($source)) {
             $this->sources->add($source);
@@ -667,9 +667,9 @@ class Item
     /**
      * Remove source
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Source $source
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Source $source
      */
-    public function removeSource(\AnimeDB\CatalogBundle\Entity\Source $source)
+    public function removeSource(\AnimeDB\Bundle\CatalogBundle\Entity\Source $source)
     {
         if ($this->sources->contains($source)) {
             $this->sources->removeElement($source);
@@ -690,11 +690,11 @@ class Item
     /**
      * Add image
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Image $image
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Image $image
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Item
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
      */
-    public function addImage(\AnimeDB\CatalogBundle\Entity\Image $image)
+    public function addImage(\AnimeDB\Bundle\CatalogBundle\Entity\Image $image)
     {
         if (!$this->images->contains($image)) {
             $this->images->add($image);
@@ -706,9 +706,9 @@ class Item
     /**
      * Remove image
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Image $image
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Image $image
      */
-    public function removeImage(\AnimeDB\CatalogBundle\Entity\Image $image)
+    public function removeImage(\AnimeDB\Bundle\CatalogBundle\Entity\Image $image)
     {
         if ($this->images->contains($image)) {
             $this->images->removeElement($image);

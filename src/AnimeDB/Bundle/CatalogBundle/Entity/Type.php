@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Entity;
+namespace AnimeDB\Bundle\CatalogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -21,7 +21,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="type")
  * @IgnoreAnnotation("ORM")
  *
- * @package AnimeDB\CatalogBundle\Entity
+ * @package AnimeDB\Bundle\CatalogBundle\Entity
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Type
@@ -68,7 +68,7 @@ class Type
      *
      * @param string $id
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Type
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Type
      */
     public function setId($id)
     {
@@ -91,7 +91,7 @@ class Type
      *
      * @param string $name
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Type
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Type
      */
     public function setName($name)
     {
@@ -112,11 +112,11 @@ class Type
     /**
      * Add items
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Item $items
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item $items
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Type
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Type
      */
-    public function addItem(\AnimeDB\CatalogBundle\Entity\Item $items)
+    public function addItem(\AnimeDB\Bundle\CatalogBundle\Entity\Item $items)
     {
         $this->items[] = $items->setType($this);
         return $this;
@@ -125,9 +125,9 @@ class Type
     /**
      * Remove item
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Item $item
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item $item
      */
-    public function removeItem(\AnimeDB\CatalogBundle\Entity\Item $item)
+    public function removeItem(\AnimeDB\Bundle\CatalogBundle\Entity\Item $item)
     {
         $this->items->removeElement($item);
         $item->setType(null);

@@ -8,23 +8,23 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Controller;
+namespace AnimeDB\Bundle\CatalogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use AnimeDB\CatalogBundle\Form\Filler\Search;
-use AnimeDB\CatalogBundle\Form\Filler\Get;
-use AnimeDB\CatalogBundle\Service\Autofill\Filler\Filler;
-use AnimeDB\CatalogBundle\Form\ItemType;
-use AnimeDB\CatalogBundle\Entity\Item;
-use AnimeDB\CatalogBundle\Entity\Name;
-use AnimeDB\CatalogBundle\Entity\Image;
-use AnimeDB\CatalogBundle\Entity\Source;
+use AnimeDB\Bundle\CatalogBundle\Form\Filler\Search;
+use AnimeDB\Bundle\CatalogBundle\Form\Filler\Get;
+use AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler\Filler;
+use AnimeDB\Bundle\CatalogBundle\Form\ItemType;
+use AnimeDB\Bundle\CatalogBundle\Entity\Item;
+use AnimeDB\Bundle\CatalogBundle\Entity\Name;
+use AnimeDB\Bundle\CatalogBundle\Entity\Image;
+use AnimeDB\Bundle\CatalogBundle\Entity\Source;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Filler item
  *
- * @package AnimeDB\CatalogBundle\Controller
+ * @package AnimeDB\Bundle\CatalogBundle\Controller
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class FillerController extends Controller
@@ -37,7 +37,7 @@ class FillerController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function searchAction(Request $request) {
-        /* @var $chain \AnimeDB\CatalogBundle\Service\Autofill\Chain */
+        /* @var $chain \AnimeDB\Bundle\CatalogBundle\Service\Autofill\Chain */
         $chain = $this->get('anime_db.autofill');
 
         /* @var $form \Symfony\Component\Form\Form */
@@ -49,7 +49,7 @@ class FillerController extends Controller
             if ($form->isValid()) {
 
                 $data = $form->getData();
-                /* @var $filler \AnimeDB\CatalogBundle\Service\Autofill\Filler\Filler */
+                /* @var $filler \AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler\Filler */
                 $filler = $chain->getFiller($data['filler']);
                 $list = $filler->search($data['name']);
             }
@@ -75,13 +75,13 @@ class FillerController extends Controller
         $form->handleRequest($request);
         if ($form->isValid()) {
             $source = $form->getData()['url'];
-            /* @var $chain \AnimeDB\CatalogBundle\Service\Autofill\Chain */
+            /* @var $chain \AnimeDB\Bundle\CatalogBundle\Service\Autofill\Chain */
             $chain = $this->get('anime_db.autofill');
             $filler = $chain->getFillerBySource($source);
             if (!($filler instanceof Filler)) {
                 $error = 'Unable to find any filler for the specified source';
             } else {
-                /* @var $item \AnimeDB\CatalogBundle\Entity\Item */
+                /* @var $item \AnimeDB\Bundle\CatalogBundle\Entity\Item */
                 $item = $filler->fill($source);
                 if (!$item) {
                     $error = 'Can`t get content from the specified source';

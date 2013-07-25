@@ -8,14 +8,14 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Controller;
+namespace AnimeDB\Bundle\CatalogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Application settings
  *
- * @package AnimeDB\CatalogBundle\Controller
+ * @package AnimeDB\Bundle\CatalogBundle\Controller
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class SettingsController extends Controller

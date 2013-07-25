@@ -8,20 +8,20 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Controller;
+namespace AnimeDB\Bundle\CatalogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 // use Symfony\Component\HttpFoundation\File\UploadedFile;
-use AnimeDB\CatalogBundle\Entity\Field\Image as ImageField;
-use AnimeDB\CatalogBundle\Form\Field\Image\Upload as UploadImage;
+use AnimeDB\Bundle\CatalogBundle\Entity\Field\Image as ImageField;
+use AnimeDB\Bundle\CatalogBundle\Form\Field\Image\Upload as UploadImage;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Form
  *
- * @package AnimeDB\CatalogBundle\Controller
+ * @package AnimeDB\Bundle\CatalogBundle\Controller
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class FormController extends Controller

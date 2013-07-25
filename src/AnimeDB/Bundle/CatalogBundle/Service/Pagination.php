@@ -8,20 +8,20 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Service;
+namespace AnimeDB\Bundle\CatalogBundle\Service;
 
-use AnimeDB\CatalogBundle\Service\Pagination\Node;
-use AnimeDB\CatalogBundle\Service\Pagination\Node\Current;
-use AnimeDB\CatalogBundle\Service\Pagination\Node\First;
-use AnimeDB\CatalogBundle\Service\Pagination\Node\Last;
-use AnimeDB\CatalogBundle\Service\Pagination\Node\Next;
-use AnimeDB\CatalogBundle\Service\Pagination\Node\Page;
-use AnimeDB\CatalogBundle\Service\Pagination\Node\Previous;
+use AnimeDB\Bundle\CatalogBundle\Service\Pagination\Node;
+use AnimeDB\Bundle\CatalogBundle\Service\Pagination\Node\Current;
+use AnimeDB\Bundle\CatalogBundle\Service\Pagination\Node\First;
+use AnimeDB\Bundle\CatalogBundle\Service\Pagination\Node\Last;
+use AnimeDB\Bundle\CatalogBundle\Service\Pagination\Node\Next;
+use AnimeDB\Bundle\CatalogBundle\Service\Pagination\Node\Page;
+use AnimeDB\Bundle\CatalogBundle\Service\Pagination\Node\Previous;
 
 /**
  * Pagination service
  *
- * @package AnimeDB\CatalogBundle\Service
+ * @package AnimeDB\Bundle\CatalogBundle\Service
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Pagination
@@ -209,7 +209,7 @@ class Pagination
      *
      * @param string $type
      *
-     * @return \AnimeDB\CatalogBundle\Service\Pagination\Node
+     * @return \AnimeDB\Bundle\CatalogBundle\Service\Pagination\Node
      */
     protected function getNode($type) {
         switch ($type) {

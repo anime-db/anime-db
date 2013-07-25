@@ -8,12 +8,12 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Entity;
+namespace AnimeDB\Bundle\CatalogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
-use AnimeDB\CatalogBundle\Entity\Item;
+use AnimeDB\Bundle\CatalogBundle\Entity\Item;
 
 /**
  * Source for item fill
@@ -22,7 +22,7 @@ use AnimeDB\CatalogBundle\Entity\Item;
  * @ORM\Table(name="source")
  * @IgnoreAnnotation("ORM")
  *
- * @package AnimeDB\CatalogBundle\Entity
+ * @package AnimeDB\Bundle\CatalogBundle\Entity
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Source
@@ -55,7 +55,7 @@ class Source
      * @ORM\ManyToOne(targetEntity="Item", inversedBy="sources", cascade={"persist"})
      * @ORM\JoinColumn(name="item", referencedColumnName="id")
      *
-     * @var \AnimeDB\CatalogBundle\Entity\Item
+     * @var \AnimeDB\Bundle\CatalogBundle\Entity\Item
      */
     protected $item;
 
@@ -74,7 +74,7 @@ class Source
      *
      * @param string $url
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Source
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Source
      */
     public function setUrl($url)
     {
@@ -95,9 +95,9 @@ class Source
     /**
      * Set item
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Item $item
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item $item
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Source
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Source
      */
     public function setItem(Item $item = null)
     {
@@ -113,7 +113,7 @@ class Source
     /**
      * Get item
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Item
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
      */
     public function getItem()
     {

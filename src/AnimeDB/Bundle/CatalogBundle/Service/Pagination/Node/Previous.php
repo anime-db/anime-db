@@ -8,15 +8,15 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Service\Pagination\Node;
+namespace AnimeDB\Bundle\CatalogBundle\Service\Pagination\Node;
 
-use AnimeDB\CatalogBundle\Service\Pagination;
-use AnimeDB\CatalogBundle\Service\Pagination\Node;
+use AnimeDB\Bundle\CatalogBundle\Service\Pagination;
+use AnimeDB\Bundle\CatalogBundle\Service\Pagination\Node;
 
 /**
  * Node for previous page
  *
- * @package AnimeDB\CatalogBundle\Service\Pagination\Node
+ * @package AnimeDB\Bundle\CatalogBundle\Service\Pagination\Node
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Previous extends Node

@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Entity;
+namespace AnimeDB\Bundle\CatalogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -21,7 +21,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="storage")
  * @IgnoreAnnotation("ORM")
  *
- * @package AnimeDB\CatalogBundle\Entity
+ * @package AnimeDB\Bundle\CatalogBundle\Entity
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Storage
@@ -88,7 +88,7 @@ class Storage
      *
      * @param string $name
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Storage
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Storage
      */
     public function setName($name)
     {
@@ -111,7 +111,7 @@ class Storage
      *
      * @param string $description
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Storage
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Storage
      */
     public function setDescription($description)
     {
@@ -132,11 +132,11 @@ class Storage
     /**
      * Add item
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Item $item
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item $item
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Storage
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Storage
      */
-    public function addItem(\AnimeDB\CatalogBundle\Entity\Item $item)
+    public function addItem(\AnimeDB\Bundle\CatalogBundle\Entity\Item $item)
     {
         $this->items[] = $item->setStorage($this);
         return $this;
@@ -145,9 +145,9 @@ class Storage
     /**
      * Remove item
      *
-     * @param \AnimeDB\CatalogBundle\Entity\Item $item
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item $item
      */
-    public function removeItem(\AnimeDB\CatalogBundle\Entity\Item $item)
+    public function removeItem(\AnimeDB\Bundle\CatalogBundle\Entity\Item $item)
     {
         $this->items->removeElement($item);
         $item->setStorage(null);

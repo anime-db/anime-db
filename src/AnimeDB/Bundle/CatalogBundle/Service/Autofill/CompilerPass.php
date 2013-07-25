@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Service\Autofill;
+namespace AnimeDB\Bundle\CatalogBundle\Service\Autofill;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -17,7 +17,7 @@ use Symfony\Component\DependencyInjection\Reference;
 /**
  * Autofill compiler pass
  *
- * @package AnimeDB\CatalogBundle\Service\Autofill
+ * @package AnimeDB\Bundle\CatalogBundle\Service\Autofill
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class CompilerPass implements CompilerPassInterface

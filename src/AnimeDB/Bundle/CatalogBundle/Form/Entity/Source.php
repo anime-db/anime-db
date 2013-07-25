@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Form\Entity;
+namespace AnimeDB\Bundle\CatalogBundle\Form\Entity;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,7 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 /**
  * Source form
  *
- * @package AnimeDB\CatalogBundle\Form\Entity
+ * @package AnimeDB\Bundle\CatalogBundle\Form\Entity
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Source extends AbstractType
@@ -38,7 +38,7 @@ class Source extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'AnimeDB\CatalogBundle\Entity\Source'
+            'data_class' => 'AnimeDB\Bundle\CatalogBundle\Entity\Source'
         ]);
     }
 

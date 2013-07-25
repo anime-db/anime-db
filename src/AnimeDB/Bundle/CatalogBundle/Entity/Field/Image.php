@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Entity\Field;
+namespace AnimeDB\Bundle\CatalogBundle\Entity\Field;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Validator;
 /**
  * Item images
  *
- * @package AnimeDB\CatalogBundle\Entity\Field
+ * @package AnimeDB\Bundle\CatalogBundle\Entity\Field
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Image
@@ -60,7 +60,7 @@ class Image
      *
      * @param string $remote
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Field\Image
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Field\Image
      */
     public function setRemote($remote)
     {
@@ -83,7 +83,7 @@ class Image
      *
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $local
      *
-     * @return \AnimeDB\CatalogBundle\Entity\Field\Image
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Field\Image
      */
     public function setLocal(UploadedFile $local)
     {

@@ -8,14 +8,14 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Service\Pagination;
+namespace AnimeDB\Bundle\CatalogBundle\Service\Pagination;
 
-use AnimeDB\CatalogBundle\Service\Pagination;
+use AnimeDB\Bundle\CatalogBundle\Service\Pagination;
 
 /**
  * Pagination node
  *
- * @package AnimeDB\CatalogBundle\Service\Pagination
+ * @package AnimeDB\Bundle\CatalogBundle\Service\Pagination
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Node
@@ -67,7 +67,7 @@ class Node
      *
      * @param boolean $is_current
      *
-     * @return \AnimeDB\CatalogBundle\Service\Pagination\Node
+     * @return \AnimeDB\Bundle\CatalogBundle\Service\Pagination\Node
      */
     public function setIsCurrent($is_current) {
         $this->is_current = $is_current;
@@ -79,7 +79,7 @@ class Node
      *
      * @param string $link
      *
-     * @return \AnimeDB\CatalogBundle\Service\Pagination\Node
+     * @return \AnimeDB\Bundle\CatalogBundle\Service\Pagination\Node
      */
     public function setLink($link) {
         $this->link = $link;
@@ -91,7 +91,7 @@ class Node
      *
      * @param string $name
      *
-     * @return \AnimeDB\CatalogBundle\Service\Pagination\Node
+     * @return \AnimeDB\Bundle\CatalogBundle\Service\Pagination\Node
      */
     public function setName($name) {
         $this->name = $name;
@@ -103,7 +103,7 @@ class Node
      *
      * @param integer $page
      *
-     * @return \AnimeDB\CatalogBundle\Service\Pagination\Node
+     * @return \AnimeDB\Bundle\CatalogBundle\Service\Pagination\Node
      */
     public function setPage($page) {
         $this->page = $page;
@@ -115,7 +115,7 @@ class Node
      *
      * @param integer $title
      *
-     * @return \AnimeDB\CatalogBundle\Service\Pagination\Node
+     * @return \AnimeDB\Bundle\CatalogBundle\Service\Pagination\Node
      */
     public function setTitle($title) {
         $this->title = $title;

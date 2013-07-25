@@ -8,24 +8,24 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\CatalogBundle\Controller;
+namespace AnimeDB\Bundle\CatalogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use AnimeDB\CatalogBundle\Form\SearchSimple;
-use AnimeDB\CatalogBundle\Form\Search;
+use AnimeDB\Bundle\CatalogBundle\Form\SearchSimple;
+use AnimeDB\Bundle\CatalogBundle\Form\Search;
 use Symfony\Component\HttpFoundation\Request;
-use AnimeDB\CatalogBundle\Entity\Type as TypeEntity;
-use AnimeDB\CatalogBundle\Entity\Country as CountryEntity;
-use AnimeDB\CatalogBundle\Entity\Genre as GenreEntity;
-use AnimeDB\CatalogBundle\Entity\Storage as StorageEntity;
+use AnimeDB\Bundle\CatalogBundle\Entity\Type as TypeEntity;
+use AnimeDB\Bundle\CatalogBundle\Entity\Country as CountryEntity;
+use AnimeDB\Bundle\CatalogBundle\Entity\Genre as GenreEntity;
+use AnimeDB\Bundle\CatalogBundle\Entity\Storage as StorageEntity;
 use Doctrine\ORM\Query\Expr;
-use AnimeDB\CatalogBundle\Service\Pagination;
+use AnimeDB\Bundle\CatalogBundle\Service\Pagination;
 
 /**
  * Main page of the catalog
  *
- * @package AnimeDB\CatalogBundle\Controller
+ * @package AnimeDB\Bundle\CatalogBundle\Controller
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class HomeController extends Controller
