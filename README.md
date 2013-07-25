@@ -27,16 +27,22 @@ Installation of dependencies using Composer
 
     php composer.phar install
 
-*For Windows you can download PHP sourse from [php.net](http://windows.php.net/downloads/releases/php-5.4.17-nts-Win32-VC9-x86.zip)
-and extract to folder bin/php for a quick start. Then you can install from the Composer, the following command:*
+**Note:** For Windows you can download PHP sourse from [php.net](http://windows.php.net/downloads/releases/php-5.4.17-nts-Win32-VC9-x86.zip)
+and extract to folder bin/php for a quick start. Then you can install from the Composer, the following command:
 
     bin/php/php.exe composer.phar install
 
-*Do not forget list of extensions specified in the depending section of this document*
+**Note:** Do not forget list of extensions specified in the depending section of this document
 
 ## Quick start ##
 
 ### From Windows ###
+
+**Note:** The default is expected that PHP is installed on your computer.
+If you put in the PHP directory bin/php, you need edit startup-file of the application to specify the path to PHP.
+Open file bin/Run.vbs and set real path to PHP.
+
+    sPhp = sPath & "/bin/php/php.exe"
 
 To run the application, call the script
 
@@ -69,7 +75,7 @@ where **IP_ADDRES** is the IP address of the computer on which the application i
 
 ## Install as service ##
 
-*Work only in Linux*
+**Note:** Work only in Linux
 
 To start the application as a service, you need edit startup-file of the application to specify the path to it
 
