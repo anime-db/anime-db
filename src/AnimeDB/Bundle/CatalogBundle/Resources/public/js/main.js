@@ -61,7 +61,7 @@ var FormImageModelField = function(file, image, button) {
 	this.button = button;
 };
 FormImageModelField.prototype = {
-	chenge: function(field) {
+	chenge: function() {
 		Cap.show(FormImagePopUp.block);
 	},
 	// update field data
@@ -122,7 +122,7 @@ var FormImageController = function(image) {
 		image.find('.chenge-button')
 	);
 	field.button.click(function() {
-		field.chenge(field);
+		field.chenge();
 	});
 
 	// create popup
@@ -139,8 +139,6 @@ var FormImageController = function(image) {
 				);
 				FormImagePopUp.hide();
 				$('body').append(FormImagePopUp.block);
-				// apply buttons
-				UI.button(FormImagePopUp.block);
 				// subscribe field on upload image in pop-up
 				FormImagePopUp.onUpload = function(data) {
 					field.update(data);
@@ -175,24 +173,10 @@ var Cap = {
 	}
 };
 
-/**
- * UI
- */
-var UI = {
-	// add button jQuery UI style
-	button: function(context) {
-		if (typeof(context) == 'undefined') {
-			context = document;
-		}
-		$(context).find('input:submit, input:button, input:reset, button').button();
-	}
-}
-
 
 // init after document load
 $(function(){
 
-UI.button();
 // init form collection
 Form.Collection.init();
 // init cap

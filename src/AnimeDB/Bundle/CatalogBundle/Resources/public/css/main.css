@@ -19,28 +19,18 @@ a:visited {
 ul {
 	padding-left: 25px;
 }
-a,
-a .ui-button-text,
-input[type~=button],
-input[type~=reset],
-input[type~=submit],
-button,
-.ui-button .ui-button-text,
-h1, h2, h3, h4, h5, h6, b,
+a, h1, h2, h3, h4, h5, h6, b,
 .content strong {
 	color: #db3400;
 }
-a:visited,
-a:visited .ui-button-text {
+a:visited {
 	color: #ff6600;
 }
 a:hover,
-a:hover .ui-button-text,
 input[type~=button]:hover,
 input[type~=reset]:hover,
 input[type~=submit]:hover,
-button:hover,
-.ui-button.ui-state-hover .ui-button-text {
+button:hover {
 	color: #b00;
 	text-decoration: none;
 }
@@ -98,8 +88,25 @@ textarea {
 .b-col-rm-item {
 	float: right;
 }
-.ui-corner-all {
-	border-radius: 4px 4px 4px 4px;
+input[type~=button],
+input[type~=reset],
+input[type~=submit],
+button {
+	display: inline-block;
+	position: relative;
+	margin-right: .1em;
+	text-decoration: none !important;
+	cursor: pointer;
+	text-align: center;
+	zoom: 1;
+	overflow: visible;
+	border-radius: 4px;
+	border: 1px solid #d8dcdf;
+	background: #eeeeee url(jquery-ui/images/ui-bg_highlight-hard_100_eeeeee_1x100.png) 50% 50% repeat-x;
+	font-weight: bold;
+	padding: .4em 1em;
+	font-size: 1.1em;
+	color: #db3400;
 }
 
 
@@ -652,7 +659,7 @@ div.ui-widget div.ui-state-highlight {
  */
 #f-image-popup {
 	width: 380px;
-	margin-top: -67px;
+	margin-top: -73px;
 	margin-left: -218px;
 	background-position: -750px -144px;
 }
