@@ -64,12 +64,6 @@ media_favicon:
     defaults: { _controller: AnimeDBCatalogBundle:Media:favicon }
 
 
-form_template:
-    pattern:  /form/template/{template}.html
-    requirements:
-        template: "[-a-z]+"
-    defaults: { _controller: AnimeDBCatalogBundle:Form:template }
-
 form_local_path:
     pattern:  /form/local_path.html
     defaults: { _controller: AnimeDBCatalogBundle:Form:localPath }

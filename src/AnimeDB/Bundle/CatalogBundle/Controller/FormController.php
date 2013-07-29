@@ -128,17 +128,4 @@ class FormController extends Controller
             return new JsonResponse(['error' => $this->get('translator')->trans($e->getMessage())], 404);
         }
     }
-
-    /**
-     * Rand and return template
-     *
-     * @param string $template
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function templateAction($template, Request $request)
-    {
-        return $this->render('AnimeDBCatalogBundle:Form:plug/'.$template.'.html.twig', $request->query->all());
-    }
 }
