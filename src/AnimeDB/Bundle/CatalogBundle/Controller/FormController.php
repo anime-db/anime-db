@@ -13,10 +13,10 @@ namespace AnimeDB\Bundle\CatalogBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-// use Symfony\Component\HttpFoundation\File\UploadedFile;
 use AnimeDB\Bundle\CatalogBundle\Entity\Field\Image as ImageField;
 use AnimeDB\Bundle\CatalogBundle\Form\Field\Image\Upload as UploadImage;
-use Symfony\Component\Filesystem\Filesystem;
+use AnimeDB\Bundle\CatalogBundle\Form\Field\LocalPath\Choice as ChoiceLocalPath;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Form
@@ -27,35 +27,40 @@ use Symfony\Component\Filesystem\Filesystem;
 class FormController extends Controller
 {
     /**
-     * Allowed image extensions
-     *
-     * @var array
-     */
-    protected static $allowed_exts = ['bmp','gif','jpeg','jpg','jpe','png'];
-
-    /**
-     * Allowed image MIME-types
-     *
-     * @var array
-     */
-    protected static $allowed_mime = ['image/bmp','image/gif','image/jpeg','image/png'];
-
-    /**
-     * Return list folders for directory
+     * Form field local path
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function foldersAction(Request $request)
+    public function localPathAction(Request $request)
     {
-        $path = realpath($request->get('path', __DIR__.'/../../../../'));
+        $form = $this->createForm(new ChoiceLocalPath(), ['path' => $request->get('path')]);
+
+        return $this->render('AnimeDBCatalogBundle:Form:local_path.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * Return list folders for path
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function localPathFoldersAction(Request $request)
+    {
+        $form = $this->createForm(new ChoiceLocalPath());
+        $form->handleRequest($request);
+        $path = $form->get('path')->getData();
+
         if (!$path || !is_dir($path) || !is_readable($path)) {
-            throw $this->createNotFoundException('Cen\'t read directory: '.$path);
+            throw new NotFoundHttpException('Cen\'t read directory: '.$path);
         }
+
         // add slash if need
         $path .= $path[strlen($path)-1] != DIRECTORY_SEPARATOR ? DIRECTORY_SEPARATOR : '';
-        $show_hidden = (int)$request->get('show_hidden', 0);
 
         // scan directory
         $d = dir($path);
@@ -67,10 +72,10 @@ class FormController extends Controller
             $realpath = realpath($path.$entry.DIRECTORY_SEPARATOR);
             // if read path is root path then parent path is also equal to root
             if ($realpath && $realpath != $path && is_dir($realpath) && is_readable($realpath)) {
-                if ($entry == '..' || $entry[0] != '.' || $show_hidden) {
+                if ($entry == '..' || $entry[0] != '.') {
                     $folders[$entry] = [
                         'name' => $entry,
-                        'path' => $realpath.DIRECTORY_SEPARATOR
+                        'path' => ($realpath != '/' ? $realpath.DIRECTORY_SEPARATOR : '/')
                     ];
                 }
             }
@@ -91,7 +96,7 @@ class FormController extends Controller
     public function imageAction(Request $request) {
         return $this->render('AnimeDBCatalogBundle:Form:image.html.twig', [
             'form' => $this->createForm(new UploadImage())->createView(),
-            'chenge' => (bool)$request->get('chenge', false)
+            'change' => (bool)$request->get('change', false)
         ]);
     }
 

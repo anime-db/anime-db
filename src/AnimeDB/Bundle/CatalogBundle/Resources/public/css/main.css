@@ -679,11 +679,65 @@ div.ui-widget div.ui-state-highlight {
 	margin-bottom: 2px;
 	float: left;
 }
-.f-image .chenge-button {
+.f-image .change-button {
 	cursor: pointer;
 }
 .f-image img {
 	max-height: 100%;
 	max-width: 100%;
 	vertical-align: middle;
+}
+
+/**
+ * Form local path
+ */
+.f-local-path .change-path {
+	background: url(images/folder.png) no-repeat;
+	border: none;
+	height: 16px;
+	width: 16px;
+	overflow: hidden;
+	padding: 0 0 0 16px;
+	margin-left: 5px;
+}
+#f-path-popup {
+	margin-top: -141px;
+	width: 400px;
+	background-position: -731px -144px;
+}
+#f-path-popup .folders {
+	height: 182px;
+	background: white;
+	overflow: auto;
+	border: 1px #ff9f0b solid;
+	padding: 3px 5px;
+}
+#f-path-popup input {
+	width: 372px;
+}
+#f-path-popup .change-path {
+	display: inline-block;
+	margin: 5px 0 5px 5px;
+	height: 16px;
+	width: 16px;
+	padding: 0 0 0 16px;
+	border: 0;
+	background: url(images/right.png) no-repeat;
+	overflow: hidden;
+	float: right;
+}
+#f-path-popup .f-row {
+	height: 26px;
+}
+#f-path-popup .folder {
+	height: 16px;
+	line-height: 16px;
+	padding-left: 19px;
+	margin: 2px 0;
+	display: block;
+	text-decoration: none;
+	background: url(images/folder.png) no-repeat;
+}
+#f-path-popup.updating .folders {
+	background: white url(images/loader.gif) no-repeat center center;
 }

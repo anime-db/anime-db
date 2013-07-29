@@ -307,8 +307,12 @@
                 <target>Добавить картинку</target>
             </trans-unit>
             <trans-unit id="77">
-                <source>Chenge image</source>
+                <source>Change image</source>
                 <target>Изменить картинку</target>
+            </trans-unit>
+            <trans-unit id="78">
+                <source>Change path</source>
+                <target>Изменить путь</target>
             </trans-unit>
         </body>
     </file>

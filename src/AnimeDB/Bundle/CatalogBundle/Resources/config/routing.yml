@@ -70,9 +70,13 @@ form_template:
         template: "[-a-z]+"
     defaults: { _controller: AnimeDBCatalogBundle:Form:template }
 
-form_scandir:
-    pattern:  /form/folders.json
-    defaults: { _controller: AnimeDBCatalogBundle:Form:folders, _format: json }
+form_local_path:
+    pattern:  /form/local_path.html
+    defaults: { _controller: AnimeDBCatalogBundle:Form:localPath }
+
+form_local_path_folders:
+    pattern:  /form/local_path/folders.json
+    defaults: { _controller: AnimeDBCatalogBundle:Form:localPathFolders, _format: json }
 
 
 form_image:

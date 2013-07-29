@@ -51,6 +51,8 @@ Form.Collection = {
 	}
 };
 
+
+
 /**
  * Form image
  */
@@ -61,7 +63,7 @@ var FormImageModelField = function(file, image, button) {
 	this.button = button;
 };
 FormImageModelField.prototype = {
-	chenge: function() {
+	change: function() {
 		Cap.show(FormImagePopUp.block);
 	},
 	// update field data
@@ -76,6 +78,8 @@ var FormImageModelPopUp = function(block, remote, local) {
 	this.block = block;
 	this.remote = remote;
 	this.local = local;
+
+	this.hide();
 	this.form = block.find('form').submit(function() {
 		that.upload();
 		return false;
@@ -119,10 +123,10 @@ var FormImageController = function(image) {
 	var field = new FormImageModelField(
 		image.find('input'),
 		image.find('img'),
-		image.find('.chenge-button')
+		image.find('.change-button')
 	);
 	field.button.click(function() {
-		field.chenge();
+		field.change();
 	});
 
 	// create popup
@@ -137,7 +141,6 @@ var FormImageController = function(image) {
 					$('#image-popup-remote'),
 					$('#image-popup-local')
 				);
-				FormImagePopUp.hide();
 				$('body').append(FormImagePopUp.block);
 				// subscribe field on upload image in pop-up
 				FormImagePopUp.onUpload = function(data) {
@@ -147,6 +150,157 @@ var FormImageController = function(image) {
 		});
 	}
 };
+
+
+
+/**
+ * Form local path
+ */
+// model field
+var FormLocalPathModelField = function(path, button) {
+	this.path = path;
+	this.button = button;
+
+	var that = this;
+	this.button.click(function() {
+		that.change();
+	});
+};
+FormLocalPathModelField.prototype = {
+	change: function() {
+		FormLocalPathPopUp.change(this.path.val());
+		Cap.show(FormLocalPathPopUp.block);
+	}
+};
+
+// model folder
+var FormLocalPathModelFolder = function(folder, path) {
+	this.path = path;
+
+	var that = this;
+	this.folder = folder.click(function() {
+		that.select();
+		return false;
+	});
+};
+FormLocalPathModelFolder.prototype = {
+	select: function() {
+		FormLocalPathPopUp.change(this.folder.attr('href'));
+	}
+};
+
+// model pop-up
+var FormLocalPathModelPopUp = function(block, path, button, folders, prototype, field) {
+	this.block = block;
+	this.path = path;
+	this.button = button;
+	this.field = field;
+	this.form = block.find('form');
+	this.folders = folders;
+	this.folder_prototype = prototype;
+	this.folder_models = [];
+
+	var that = this;
+	this.hide();
+	Cap.observe(this);
+	// chenge input element
+	this.path.change(function() {
+		that.change();
+	});
+	this.form.submit(function() {
+		that.change();
+	});
+	// apply chenges
+	this.button.click(function() {
+		that.apply();
+		return false;
+	});
+}
+FormLocalPathModelPopUp.prototype = {
+	show: function() {
+		this.block.show();
+	},
+	hide: function() {
+		this.block.hide();
+	},
+	change: function(value) {
+		if (typeof(value) != 'undefined') {
+			this.path.val(value);
+		}
+
+		// start updating
+		this.block.addClass('updating');
+
+		var that = this;
+		// send form as ajax
+		this.form.ajaxSubmit({
+			dataType: 'json',
+			success: function(data) {
+				// remove old folders
+				that.clearFoldersList();
+
+				// create folders
+				for (var i in data.folders) {
+					// prototype of new item
+					var new_item = that.folder_prototype
+						.replace('__name__', data.folders[i].name)
+						.replace('__link__', data.folders[i].path);
+					that.addFolder(new FormLocalPathModelFolder($(new_item), that.path));
+				}
+			},
+			error: function(data, error, message) {
+				alert(message);
+			},
+			complete: function() {
+				that.block.removeClass('updating');
+			}
+		});
+	},
+	clearFoldersList: function() {
+		this.folder_models = [];
+		this.folders.text('');
+	},
+	addFolder: function(folder) {
+		this.folder_models.push(folder);
+		this.folders.append(folder.folder);
+	},
+	apply: function() {
+		this.field.path.val(this.path.val());
+		Cap.hide();
+	}
+};
+// Form local path controller
+var FormLocalPathController = function(path) {
+	// create field model
+	var field = new FormLocalPathModelField(
+		path.find('input'),
+		path.find('.change-path')
+	);
+
+	// create popup
+	if (typeof(FormLocalPathPopUp) == 'undefined') {
+		$.ajax({
+			url: path.data('popup'),
+			type: 'get',
+			success: function (data) {
+				var popup = $(data);
+				var folders = popup.find('.folders');
+				// create model
+				FormLocalPathPopUp = new FormLocalPathModelPopUp(
+					popup,
+					popup.find('#local_path_popup_path'),
+					popup.find('.change-path'),
+					folders,
+					folders.data('prototype'),
+					field
+				);
+				$('body').append(FormLocalPathPopUp.block);
+			}
+		});
+	}
+};
+
+
 
 var Cap = {
 	element: null,
@@ -162,16 +316,15 @@ var Cap = {
 		Cap.element.hide();
 	},
 	// show cup and observers
-	show: function() {
-		for (key in Cap.observers) {
-			Cap.observers[key].show();
-		}
+	show: function(observer) {
 		Cap.element.show();
+		observer.show();
 	},
 	observe: function(observer) {
 		Cap.observers.push(observer);
 	}
 };
+
 
 
 // init after document load
@@ -184,6 +337,10 @@ Cap.setElement($('#cap'));
 // init form image
 $('.f-image').each(function(){
 	new FormImageController($(this));
+});
+// init form local path
+$('.f-local-path').each(function(){
+	new FormLocalPathController($(this));
 });
 
 });

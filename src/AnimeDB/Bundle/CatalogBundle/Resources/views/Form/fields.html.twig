@@ -50,11 +50,11 @@
     {% spaceless %}
     <div
         class="f-image"
-        data-popup="{% if value is empty %}{{ path('form_image') }}{% else %}{{ path('form_image', {'chenge': 1}) }}{% endif %}"
+        data-popup="{% if value is empty %}{{ path('form_image') }}{% else %}{{ path('form_image', {'change': 1}) }}{% endif %}"
     >
         {% set type = 'hidden' %}
         {{ block('form_widget') }}
-        <img src="{% if value is not empty %}/media/{{ value }}{% endif %}" class="chenge-button" />
+        <img src="{% if value is not empty %}/media/{{ value }}{% endif %}" class="change-button" />
     </div>
     {% endspaceless %}
 {% endblock %}
@@ -62,9 +62,12 @@
 
 {% block local_path_widget %}
     {% spaceless %}
-    <div class="f-path">
+    <div
+        class="f-local-path"
+        data-popup="{{ path('form_local_path', {'path': value}) }}"
+    >
         {{ block('form_widget') }}
-        <!-- <button type="button" class="change-path">{% trans %}Change{% endtrans %}</button> -->
+        <button type="button" class="change-path" title="{% trans %}Change{% endtrans %}">{% trans %}Change{% endtrans %}</button>
     </div>
     {% endspaceless %}
 {% endblock %}
