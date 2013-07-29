@@ -64,7 +64,7 @@ var FormImageModelField = function(file, image, button) {
 };
 FormImageModelField.prototype = {
 	change: function() {
-		Cap.show(FormImagePopUp.block);
+		FormImagePopup.popup.show();
 	},
 	// update field data
 	update: function(data) {
@@ -72,29 +72,22 @@ FormImageModelField.prototype = {
 		this.image.attr('src', data.image);
 	}
 }
-// Model PopUp
-var FormImageModelPopUp = function(block, remote, local) {
+// Model Popup
+var FormImageModelPopup = function(popup, remote, local) {
 	var that = this;
-	this.block = block;
 	this.remote = remote;
 	this.local = local;
+	this.popup = popup;
 
-	this.hide();
-	this.form = block.find('form').submit(function() {
+	this.popup.hide();
+	this.form = popup.body.find('form').submit(function() {
 		that.upload();
 		return false;
 	});
-	Cap.observe(this);
 };
-FormImageModelPopUp.prototype = {
+FormImageModelPopup.prototype = {
 	// update callback
 	onUpload: function() {},
-	show: function() {
-		this.block.show();
-	},
-	hide: function() {
-		this.block.hide();
-	},
 	upload: function() {
 		var that = this;
 		// send form as ajax and call onUpload handler
@@ -102,7 +95,7 @@ FormImageModelPopUp.prototype = {
 			dataType: 'json',
 			success: function(data) {
 				that.onUpload(data);
-				Cap.hide();
+				that.popup.hide();
 				that.form.resetForm();
 			},
 			error: function(data, error, message) {
@@ -130,20 +123,18 @@ var FormImageController = function(image) {
 	});
 
 	// create popup
-	if (typeof(FormImagePopUp) == 'undefined') {
-		$.ajax({
+	if (typeof(FormImagePopup) == 'undefined') {
+		new PopupFromUrl({
 			url: image.data('popup'),
-			type: 'get',
-			success: function (data) {
+			success: function (popup) {
 				// create model
-				FormImagePopUp = new FormImageModelPopUp(
-					$(data),
+				FormImagePopup = new FormImageModelPopup(
+					popup,
 					$('#image-popup-remote'),
 					$('#image-popup-local')
 				);
-				$('body').append(FormImagePopUp.block);
 				// subscribe field on upload image in pop-up
-				FormImagePopUp.onUpload = function(data) {
+				FormImagePopup.onUpload = function(data) {
 					field.update(data);
 				};
 			}
@@ -168,8 +159,8 @@ var FormLocalPathModelField = function(path, button) {
 };
 FormLocalPathModelField.prototype = {
 	change: function() {
-		FormLocalPathPopUp.change(this.path.val());
-		Cap.show(FormLocalPathPopUp.block);
+		FormLocalPathPopup.change(this.path.val());
+		FormLocalPathPopup.popup.show();
 	}
 };
 
@@ -185,24 +176,23 @@ var FormLocalPathModelFolder = function(folder, path) {
 };
 FormLocalPathModelFolder.prototype = {
 	select: function() {
-		FormLocalPathPopUp.change(this.folder.attr('href'));
+		FormLocalPathPopup.change(this.folder.attr('href'));
 	}
 };
 
 // model pop-up
-var FormLocalPathModelPopUp = function(block, path, button, folders, prototype, field) {
-	this.block = block;
+var FormLocalPathModelPopup = function(popup, path, button, folders, prototype, field) {
+	this.popup = popup;
 	this.path = path;
 	this.button = button;
 	this.field = field;
-	this.form = block.find('form');
+	this.form = popup.body.find('form');
 	this.folders = folders;
 	this.folder_prototype = prototype;
 	this.folder_models = [];
 
 	var that = this;
-	this.hide();
-	Cap.observe(this);
+	this.popup.hide();
 	// chenge input element
 	this.path.change(function() {
 		that.change();
@@ -215,21 +205,15 @@ var FormLocalPathModelPopUp = function(block, path, button, folders, prototype, 
 		that.apply();
 		return false;
 	});
-}
-FormLocalPathModelPopUp.prototype = {
-	show: function() {
-		this.block.show();
-	},
-	hide: function() {
-		this.block.hide();
-	},
+};
+FormLocalPathModelPopup.prototype = {
 	change: function(value) {
 		if (typeof(value) != 'undefined') {
 			this.path.val(value);
 		}
 
 		// start updating
-		this.block.addClass('updating');
+		this.popup.body.addClass('updating');
 
 		var that = this;
 		// send form as ajax
@@ -252,7 +236,7 @@ FormLocalPathModelPopUp.prototype = {
 				alert(message);
 			},
 			complete: function() {
-				that.block.removeClass('updating');
+				that.popup.body.removeClass('updating');
 			}
 		});
 	},
@@ -266,7 +250,7 @@ FormLocalPathModelPopUp.prototype = {
 	},
 	apply: function() {
 		this.field.path.val(this.path.val());
-		Cap.hide();
+		this.popup.hide();
 	}
 };
 // Form local path controller
@@ -278,23 +262,20 @@ var FormLocalPathController = function(path) {
 	);
 
 	// create popup
-	if (typeof(FormLocalPathPopUp) == 'undefined') {
-		$.ajax({
+	if (typeof(FormLocalPathPopup) == 'undefined') {
+		new PopupFromUrl({
 			url: path.data('popup'),
-			type: 'get',
-			success: function (data) {
-				var popup = $(data);
-				var folders = popup.find('.folders');
+			success: function (popup) {
+				var folders = popup.body.find('.folders');
 				// create model
-				FormLocalPathPopUp = new FormLocalPathModelPopUp(
+				FormLocalPathPopup = new FormLocalPathModelPopup(
 					popup,
-					popup.find('#local_path_popup_path'),
-					popup.find('.change-path'),
+					popup.body.find('#local_path_popup_path'),
+					popup.body.find('.change-path'),
 					folders,
 					folders.data('prototype'),
 					field
 				);
-				$('body').append(FormLocalPathPopUp.block);
 			}
 		});
 	}
@@ -306,12 +287,18 @@ var Cap = {
 	element: null,
 	observers: [],
 	setElement: function(el) {
-		Cap.element = el.click(Cap.hide);
+		Cap.element = el.click(function() {
+			Cap.hide();
+		});
 	},
 	// hide cup and observers
-	hide: function() {
-		for (key in Cap.observers) {
-			Cap.observers[key].hide();
+	hide: function(observer) {
+		if (typeof(observer) !== 'undefined') {
+			observer.hide();
+		} else {
+			for (key in Cap.observers) {
+				Cap.observers[key].hide();
+			}
 		}
 		Cap.element.hide();
 	},
@@ -325,6 +312,41 @@ var Cap = {
 	}
 };
 
+
+var Popup = function(body) {
+	var that = this;
+	this.body = body;
+	this.close = body.find('.bt-popup-close').click(function() {
+		that.hide();
+	});
+	Cap.observe(this);
+};
+Popup.prototype = {
+	show: function() {
+		Cap.show(this.body);
+	},
+	hide: function() {
+		Cap.hide(this.body);
+	},
+	load: function(options) {
+	}
+}
+
+var PopupFromUrl = function(options) {
+	options = $.extend({
+		success: function() {},
+	}, options||{});
+
+	// init popup on success load popup content
+	var success = options.success;
+	options.success = function(data) {
+		var popup = new Popup($(data));
+		success(popup);
+		$('body').append(popup.body);
+	}
+	// load
+	$.ajax(options);
+}
 
 
 // init after document load

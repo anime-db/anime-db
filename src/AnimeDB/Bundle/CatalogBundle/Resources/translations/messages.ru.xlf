@@ -314,6 +314,10 @@
                 <source>Change path</source>
                 <target>Изменить путь</target>
             </trans-unit>
+            <trans-unit id="79">
+                <source>Close pop-up window</source>
+                <target>Закрыть всплывающее окно</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
