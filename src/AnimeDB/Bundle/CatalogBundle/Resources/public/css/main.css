@@ -102,7 +102,7 @@ button {
 	overflow: visible;
 	border-radius: 4px;
 	border: 1px solid #d8dcdf;
-	background: #eeeeee url(jquery-ui/images/ui-bg_highlight-hard_100_eeeeee_1x100.png) 50% 50% repeat-x;
+	background: #eeeeee url(jquery-ui/../images/ui-bg_highlight-hard_100_eeeeee_1x100.png) 50% 50% repeat-x;
 	font-weight: bold;
 	padding: .4em 1em;
 	font-size: 1.1em;
@@ -129,7 +129,7 @@ h1.logo a {
 
 h1.logo a {
 	display: block;
-	background: url(images/logo.gif) no-repeat;
+	background: url(../images/logo.gif) no-repeat;
 }
 
 h1.logo a span {
@@ -147,19 +147,19 @@ h1.logo a span {
 	top: 30px;
 }
 #navigation .left {
-	background: url(images/navigation-l.png) no-repeat scroll left top transparent;
+	background: url(../images/navigation-l.png) no-repeat scroll left top transparent;
 	float: left;
 	height: 41px;
 	width: 5px;
 }
 #navigation .right {
-	background: url(images/navigation.png) no-repeat scroll right top transparent;
+	background: url(../images/navigation.png) no-repeat scroll right top transparent;
 	float: left;
 	height: 41px;
 	width: 3px;
 }
 #navigation ul {
-	background: url(images/navigation.png) repeat-x scroll 0 -41px transparent;
+	background: url(../images/navigation.png) repeat-x scroll 0 -41px transparent;
 	height: 41px;
 }
 #navigation ul,
@@ -172,7 +172,7 @@ h1.logo a span {
 	line-height: 38px;
 }
 #navigation ul li a {
-	background: url(images/navigation-s.png) no-repeat scroll right top transparent;
+	background: url(../images/navigation-s.png) no-repeat scroll right top transparent;
 	color: #ccc;
 	display: block;
 	float: left;
@@ -202,13 +202,13 @@ h1.logo a span {
 	height: 1431px;
 }
 #bg-buttom {
-	background: #e9cd8e url(images/bg.jpg) repeat-x bottom left;
+	background: #e9cd8e url(../images/bg.jpg) repeat-x bottom left;
 }
 #bg-left {
-	background: url(images/bg-left.jpg) no-repeat bottom left;
+	background: url(../images/bg-left.jpg) no-repeat bottom left;
 }
 #bg-right {
-	background: url(images/bg-right.jpg) no-repeat bottom right;
+	background: url(../images/bg-right.jpg) no-repeat bottom right;
 }
 #wrapper {
 	position:absolute;
@@ -250,13 +250,13 @@ h1.logo a span {
 #content-wrapper {
 	width: 950px;
 	min-height: 100%;
-	background: #fff url(images/bg-home-right.gif) no-repeat -231px -144px;
+	background: #fff url(../images/bg-home-right.gif) no-repeat -231px -144px;
 	border: 3px #ff9f0b solid;
 	border-bottom: 0;
 }
 .content {
 	min-height: 271px;
-	background: url(images/bg-home-top.gif) no-repeat 0 0;
+	background: url(../images/bg-home-top.gif) no-repeat 0 0;
 	overflow: hidden;
 	padding: 30px 35px 30px 35px;
 }
@@ -267,7 +267,7 @@ h1.logo a span {
 #footer {
 	height: 53px;
 	padding-top: 12px;
-	background: url(images/bg-footer.png) no-repeat left top;
+	background: url(../images/bg-footer.png) no-repeat left top;
 }
 #footer div {
 	margin: 0 15px;
@@ -293,10 +293,10 @@ h1.logo a span {
  * Home
  */
 .home #content-wrapper {
-	background: #fff url(images/bg-home-top.gif) no-repeat 0 0;
+	background: #fff url(../images/bg-home-top.gif) no-repeat 0 0;
 }
 .home .content {
-	background: url(images/bg-home-right.gif) no-repeat right 34px;
+	background: url(../images/bg-home-right.gif) no-repeat right 34px;
 	min-height: 327px;
 }
 .home-center-header {
@@ -325,7 +325,7 @@ h1.logo a span {
 	color: #000;
 }
 .home-search input {
-	background: url(images/magglass.png) no-repeat scroll 5px 7px #FFFFFF;
+	background: url(../images/magglass.png) no-repeat scroll 5px 7px #FFFFFF;
 	/*border: 1px #C0CAD5 solid;*/
 	border: 2px #fff100 solid;
 	margin: 2px 15px 0 0;
@@ -469,16 +469,16 @@ h1.logo a span {
 	margin-bottom: 2px;
 }
 .item-controls .fill {
-	background: url(images/polygon.png) no-repeat 0 -32px;
+	background: url(../images/polygon.png) no-repeat 0 -32px;
 }
 .item-controls .complement {
-	background: url(images/polygon.png) no-repeat 0 -48px;
+	background: url(../images/polygon.png) no-repeat 0 -48px;
 }
 .item-controls .change {
-	background: url(images/polygon.png) no-repeat 0 -16px;
+	background: url(../images/polygon.png) no-repeat 0 -16px;
 }
 .item-controls .remove {
-	background: url(images/polygon.png) no-repeat 0 0;
+	background: url(../images/polygon.png) no-repeat 0 0;
 }
 .item-summary {
 	min-height: 300px;
@@ -650,7 +650,7 @@ div.ui-widget div.ui-state-highlight {
 	margin-left: -280px;
 	width: 560px;
 	padding: 20px 25px 15px 25px;
-	background: #fff url(images/bg-home-right.gif) no-repeat -570px -144px;
+	background: #fff url(../images/bg-home-right.gif) no-repeat -570px -144px;
 	border: 3px #ff9f0b solid;
 }
 .popup .bt-popup-close {
@@ -662,7 +662,7 @@ div.ui-widget div.ui-state-highlight {
 	margin: 0;
 	padding: 0 0 0 24px;
 	overflow: hidden;
-	background: url(images/close.png) no-repeat 24px 0;
+	background: url(../images/close.png) no-repeat 24px 0;
 	border: 0;
 	opacity: 0.7;
 	filter: alpha(Opacity=70);
@@ -709,7 +709,7 @@ div.ui-widget div.ui-state-highlight {
  * Form local path
  */
 .f-local-path .change-path {
-	background: url(images/folder.png) no-repeat;
+	background: url(../images/folder.png) no-repeat;
 	border: none;
 	height: 16px;
 	width: 16px;
@@ -739,7 +739,7 @@ div.ui-widget div.ui-state-highlight {
 	width: 16px;
 	padding: 0 0 0 16px;
 	border: 0;
-	background: url(images/right.png) no-repeat;
+	background: url(../images/right.png) no-repeat;
 	overflow: hidden;
 	float: right;
 }
@@ -753,8 +753,8 @@ div.ui-widget div.ui-state-highlight {
 	margin: 2px 0;
 	display: block;
 	text-decoration: none;
-	background: url(images/folder.png) no-repeat;
+	background: url(../images/folder.png) no-repeat;
 }
 #f-path-popup.updating .folders {
-	background: white url(images/loader.gif) no-repeat center center;
+	background: white url(../images/loader.gif) no-repeat center center;
 }
