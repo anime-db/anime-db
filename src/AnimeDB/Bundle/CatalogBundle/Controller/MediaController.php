@@ -43,7 +43,7 @@ class MediaController extends Controller
     {
         $status = 200;
         $content = '';
-        $file = realpath(__DIR__.'/../../../../web').'/media/favicon/'.$host.'.ico';
+        $file = realpath(__DIR__.'/../../../../../web').'/media/favicon/'.$host.'.ico';
         if (!file_exists($file)) {
             $fs = new Filesystem();
             // download favicon

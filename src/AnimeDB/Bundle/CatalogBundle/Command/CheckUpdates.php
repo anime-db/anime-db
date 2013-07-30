@@ -37,6 +37,6 @@ class CheckUpdates extends Command
      * @see Symfony\Component\Console\Command.Command::execute()
      */
     protected function execute(InputInterface $input, OutputInterface $output) {
-        // TODO do check updates
+        // TODO do check app updates
     }
 }

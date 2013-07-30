@@ -541,7 +541,7 @@ class WorldArtRu implements Filler
     private function uploadImage($url) {
         // TODO correct upload images
         // training directory
-        $root = realpath(__DIR__.'/../../../../../../web/media');
+        $root = realpath(__DIR__.'/../../../../../../../web/media');
         $path = $root.date('/Y/m/');
         $this->fs->mkdir($path);
         // create file name
