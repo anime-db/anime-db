@@ -1,14 +1,42 @@
-var FormCollection = function(collection, button_add, rows, remove_selector) {
+var BlockLoadHandler = function() {
+	this.observers = [];
+};
+BlockLoadHandler.prototype = {
+	registr: function(observer) {
+		if (typeof(observer.update) != 'undefined') {
+			this.observers.push(observer);
+		}
+	},
+	unregistr: function(observer) {
+		for (var i in this.observers) {
+			if (this.observers[i] === observer) {
+				delete this.observers[i];
+			}
+		}
+	},
+	notify: function(block) {
+		for (var i in this.observers) {
+			this.observers[i].update(block);
+		}
+	}
+};
+
+
+/**
+ * Form collection
+ */
+//Model collection
+var FormCollection = function(collection, button_add, rows, remove_selector, handler) {
 	var that = this;
 	this.collection = collection;
 	this.index = rows.length;
 	this.rows = rows;
 	this.remove_selector = remove_selector;
 	this.button_add = button_add.click(function() {
-		console.log(that);
 		that.add();
 	});
 	this.row_prototype = collection.data('prototype');
+	this.handler = handler;
 };
 FormCollection.prototype = {
 	add: function() {
@@ -19,11 +47,14 @@ FormCollection.prototype = {
 			$(this.row_prototype.replace(/__name__(label__)?/g, this.index)),
 			this
 		);
+		// notify observers
+		this.handler.notify(new_row.row);
 		// add row
 		this.rows.push(new_row);
 		this.button_add.parent().before(new_row.row);
 	}
 };
+// Model collection row
 var FormCollectionRow = function(row, collection) {
 	this.row = row;
 	this.collection = collection;
@@ -51,44 +82,56 @@ FormCollectionRow.prototype = {
  * Form image
  */
 // Model Field
-var FormImageModelField = function(file, image, button) {
-	this.file = file;
+var FormImageModelField = function(field, image, button) {
+	this.field = field;
 	this.image = image;
-	this.button = button;
+	this.popup = null;
+	var that = this;
+	this.button = button.click(function() {
+		that.change();
+	});
 };
 FormImageModelField.prototype = {
 	change: function() {
-		FormImagePopup.popup.show();
+		this.popup.show();
 	},
 	// update field data
 	update: function(data) {
-		this.file.val(data.path);
+		this.field.val(data.path);
 		this.image.attr('src', data.image);
+	},
+	setPopup: function(popup) {
+		this.popup = popup;
 	}
 }
 // Model Popup
-var FormImageModelPopup = function(popup, remote, local) {
-	var that = this;
+var FormImageModelPopup = function(popup, remote, local, field) {
 	this.remote = remote;
 	this.local = local;
 	this.popup = popup;
-
+	this.field = field;
+	this.field.setPopup(this);
+	this.form = popup.body.find('form')
 	this.popup.hide();
-	this.form = popup.body.find('form').submit(function() {
-		that.upload();
-		return false;
-	});
 };
 FormImageModelPopup.prototype = {
-	// update callback
-	onUpload: function() {},
+	show: function() {
+		// unbund old hendlers and bind new
+		var that = this;
+		this.form.unbind('submit').bind('submit', function() {
+			that.upload();
+			return false;
+		});
+		// show popup
+		this.popup.show();
+	},
 	upload: function() {
 		var that = this;
 		// send form as ajax and call onUpload handler
 		this.form.ajaxSubmit({
 			dataType: 'json',
 			success: function(data) {
-				that.onUpload(data);
+				that.field.update(data);
 				that.popup.hide();
 				that.form.resetForm();
 			},
@@ -112,26 +155,24 @@ var FormImageController = function(image) {
 		image.find('img'),
 		image.find('.change-button')
 	);
-	field.button.click(function() {
-		field.change();
-	});
+	// on load popup
+	var init_obj = function (popup) {
+		// create model
+		new FormImageModelPopup(
+			popup,
+			$('#image-popup-remote'),
+			$('#image-popup-local'),
+			field
+		);
+	};
 
 	// create popup
-	if (typeof(FormImagePopup) == 'undefined') {
-		new PopupFromUrl({
+	if (popup = PopupList.get('image')) {
+		init_obj(popup);
+	} else {
+		PopupList.load('image', {
 			url: image.data('popup'),
-			success: function (popup) {
-				// create model
-				FormImagePopup = new FormImageModelPopup(
-					popup,
-					$('#image-popup-remote'),
-					$('#image-popup-local')
-				);
-				// subscribe field on upload image in pop-up
-				FormImagePopup.onUpload = function(data) {
-					field.update(data);
-				};
-			}
+			success: init_obj
 		});
 	}
 };
@@ -145,6 +186,7 @@ var FormImageController = function(image) {
 var FormLocalPathModelField = function(path, button) {
 	this.path = path;
 	this.button = button;
+	this.popup = null;
 
 	var that = this;
 	this.button.click(function() {
@@ -153,14 +195,18 @@ var FormLocalPathModelField = function(path, button) {
 };
 FormLocalPathModelField.prototype = {
 	change: function() {
-		FormLocalPathPopup.change(this.path.val());
-		FormLocalPathPopup.popup.show();
+		this.popup.change(this.path.val());
+		this.popup.show();
+	},
+	setPopup: function(popup) {
+		this.popup = popup;
 	}
 };
 
 // model folder
 var FormLocalPathModelFolder = function(folder, path) {
 	this.path = path;
+	this.popup = null;
 
 	var that = this;
 	this.folder = folder.click(function() {
@@ -170,7 +216,10 @@ var FormLocalPathModelFolder = function(folder, path) {
 };
 FormLocalPathModelFolder.prototype = {
 	select: function() {
-		FormLocalPathPopup.change(this.folder.attr('href'));
+		this.popup.change(this.folder.attr('href'));
+	},
+	setPopup: function(popup) {
+		this.popup = popup;
 	}
 };
 
@@ -180,6 +229,7 @@ var FormLocalPathModelPopup = function(popup, path, button, folders, prototype, 
 	this.path = path;
 	this.button = button;
 	this.field = field;
+	this.field.setPopup(this);
 	this.form = popup.body.find('form');
 	this.folders = folders;
 	this.folder_prototype = prototype;
@@ -187,13 +237,6 @@ var FormLocalPathModelPopup = function(popup, path, button, folders, prototype, 
 
 	var that = this;
 	this.popup.hide();
-	// chenge input element
-	this.path.change(function() {
-		that.change();
-	});
-	this.form.submit(function() {
-		that.change();
-	});
 	// apply chenges
 	this.button.click(function() {
 		that.apply();
@@ -201,6 +244,20 @@ var FormLocalPathModelPopup = function(popup, path, button, folders, prototype, 
 	});
 };
 FormLocalPathModelPopup.prototype = {
+	show: function() {
+		// unbund old hendlers and bind new
+		var that = this;
+		this.form.unbind('submit').bind('submit', function() {
+			that.change();
+			return false;
+		});
+		this.path.unbind('change').bind('change', function() {
+			that.change();
+			return false;
+		});
+		// show popup
+		this.popup.show();
+	},
 	change: function(value) {
 		if (typeof(value) != 'undefined') {
 			this.path.val(value);
@@ -239,6 +296,7 @@ FormLocalPathModelPopup.prototype = {
 		this.folders.text('');
 	},
 	addFolder: function(folder) {
+		folder.setPopup(this);
 		this.folder_models.push(folder);
 		this.folders.append(folder.folder);
 	},
@@ -254,34 +312,40 @@ var FormLocalPathController = function(path) {
 		path.find('input'),
 		path.find('.change-path')
 	);
+	// on load popup
+	var init_obj = function (popup) {
+		var folders = popup.body.find('.folders');
+		// create model
+		new FormLocalPathModelPopup(
+			popup,
+			popup.body.find('#local_path_popup_path'),
+			popup.body.find('.change-path'),
+			folders,
+			folders.data('prototype'),
+			field
+		);
+	};
 
 	// create popup
-	if (typeof(FormLocalPathPopup) == 'undefined') {
-		new PopupFromUrl({
+	if (popup = PopupList.get('local-path')) {
+		init_obj(popup);
+	} else {
+		PopupList.load('local-path', {
 			url: path.data('popup'),
-			success: function (popup) {
-				var folders = popup.body.find('.folders');
-				// create model
-				FormLocalPathPopup = new FormLocalPathModelPopup(
-					popup,
-					popup.body.find('#local_path_popup_path'),
-					popup.body.find('.change-path'),
-					folders,
-					folders.data('prototype'),
-					field
-				);
-			}
+			success: init_obj
 		});
 	}
 };
 
 
-
+/**
+ * Cap for block site
+ */
 var Cap = {
 	element: null,
 	observers: [],
-	setElement: function(el) {
-		Cap.element = el.click(function() {
+	setElement: function(element) {
+		Cap.element = element.click(function() {
 			Cap.hide();
 		});
 	},
@@ -290,8 +354,8 @@ var Cap = {
 		if (typeof(observer) !== 'undefined') {
 			observer.hide();
 		} else {
-			for (key in Cap.observers) {
-				Cap.observers[key].hide();
+			for (var i in Cap.observers) {
+				Cap.observers[i].hide();
 			}
 		}
 		Cap.element.hide();
@@ -301,19 +365,32 @@ var Cap = {
 		Cap.element.show();
 		observer.show();
 	},
-	observe: function(observer) {
-		Cap.observers.push(observer);
-	}
+	// need methods 'show' and 'hide'
+	registr: function(observer) {
+		Cap.observers.push($.extend({
+			show: function() {},
+			hide: function() {}
+		}, observer));
+	},
+	unregistr: function(observer) {
+		for (var i in Cap.observers) {
+			if (Cap.observers[i] === observer) {
+				delete Cap.observers[i];
+			}
+		}
+	},
 };
 
-
+/**
+ * Popup
+ */
 var Popup = function(body) {
 	var that = this;
 	this.body = body;
 	this.close = body.find('.bt-popup-close').click(function() {
 		that.hide();
 	});
-	Cap.observe(this);
+	Cap.registr(this);
 };
 Popup.prototype = {
 	show: function() {
@@ -321,25 +398,37 @@ Popup.prototype = {
 	},
 	hide: function() {
 		Cap.hide(this.body);
-	},
-	load: function(options) {
 	}
 }
 
-var PopupFromUrl = function(options) {
-	options = $.extend({
-		success: function() {},
-	}, options||{});
+var PopupList = {
+	list: [],
+	load: function(name, options) {
+		if (typeof(this.list[name]) == 'undefined') {
+			options = $.extend({
+				success: function() {}
+			}, options||{});
 
-	// init popup on success load popup content
-	var success = options.success;
-	options.success = function(data) {
-		var popup = new Popup($(data));
-		success(popup);
-		$('body').append(popup.body);
+			// init popup on success load popup content
+			var success = options.success;
+			var that = this;
+			options.success = function(data) {
+				var popup = new Popup($(data));
+				that.list[name] = popup;
+				success(popup);
+				$('body').append(popup.body);
+			}
+			// load
+			$.ajax(options);
+		}
+	},
+	get: function(name) {
+		if (typeof(this.list[name]) != 'undefined') {
+			return this.list[name];
+		} else {
+			return null;
+		}
 	}
-	// load
-	$.ajax(options);
 }
 
 
@@ -351,12 +440,32 @@ Cap.setElement($('#cap'));
 
 // init form collection
 $('.f-collection > div').each(function(){
+	// init handler for new row
+	var handler = new BlockLoadHandler();
+	// form image
+	handler.registr({
+		update: function(block) {
+			block.find('.f-image').each(function(){
+				new FormImageController($(this));
+			});
+		}
+	});
+	// form local path
+	handler.registr({
+		update: function(block) {
+			block.find('.f-local-path').each(function(){
+				new FormLocalPathController($(this));
+			});
+		}
+	});
+	// create collection
 	var collection = $(this);
 	new FormCollection(
 		collection,
 		collection.find('.bt-add-item'),
 		collection.find('.f-row'),
-		'.bt-remove-item'
+		'.bt-remove-item',
+		handler
 	);
 });
 
