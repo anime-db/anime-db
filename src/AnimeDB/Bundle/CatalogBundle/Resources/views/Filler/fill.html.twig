@@ -2,20 +2,6 @@
 
 {% block title %}{% trans %}Autofill record{% endtrans %}{% endblock %}
 
-{% block stylesheets %}
-	{% if form %}
-		<link href="{{ asset('uploadify/uploadify.css') }}" rel="stylesheet" />
-	{% endif %}
-	{{ parent() }}
-{% endblock %}
-
-{% block javascripts %}
-	{{ parent() }}
-	{% if form %}
-		<script src="{{ asset('uploadify/jquery.uploadify.min.js') }}"></script>
-	{% endif %}
-{% endblock %}
-
 {% if form %}
 	{% form_theme form 'AnimeDBCatalogBundle:Form:fields.html.twig' %}
 {% endif %}
