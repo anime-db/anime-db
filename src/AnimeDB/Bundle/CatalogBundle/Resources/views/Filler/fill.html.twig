@@ -2,6 +2,11 @@
 
 {% block title %}{% trans %}Autofill record{% endtrans %}{% endblock %}
 
+{% block javascripts %}
+	{{ parent() }}
+	<script type="text/javascript" src="{{ asset('/bundles/animedbcatalog/js/jquery.form.min.js') }}"></script>
+{% endblock %}
+
 {% if form %}
 	{% form_theme form 'AnimeDBCatalogBundle:Form:fields.html.twig' %}
 {% endif %}
