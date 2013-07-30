@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AnimeDB\Bundle\CatalogBundle\Form\Filler\Search;
 use AnimeDB\Bundle\CatalogBundle\Form\Filler\Get;
 use AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler\Filler;
-use AnimeDB\Bundle\CatalogBundle\Form\ItemType;
+use AnimeDB\Bundle\CatalogBundle\Form\Entity\Item as ItemEntity;
 use AnimeDB\Bundle\CatalogBundle\Entity\Item;
 use AnimeDB\Bundle\CatalogBundle\Entity\Name;
 use AnimeDB\Bundle\CatalogBundle\Entity\Image;
@@ -89,7 +89,7 @@ class FillerController extends Controller
                     // persist entity
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($item);
-                    $fill_form = $this->createForm(new ItemType(), $item)->createView();
+                    $fill_form = $this->createForm(new ItemEntity(), $item)->createView();
                 }
             }
         } else {
