@@ -105,7 +105,8 @@
     >
         {% set type = 'hidden' %}
         {{ block('form_widget') }}
-        <img src="{% if value is not empty %}/media/{{ value }}{% endif %}" class="change-button" />
+        <button type="button" class="change-button" title="{% trans %}Change image{% endtrans %}">{% trans %}Change image{% endtrans %}</button>
+        <img src="{% if value is not empty %}/media/{{ value }}{% endif %}" />
     </div>
     {% endspaceless %}
 {% endblock %}

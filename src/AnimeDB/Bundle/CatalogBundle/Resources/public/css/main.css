@@ -688,10 +688,25 @@ div.ui-widget div.ui-state-highlight {
 	line-height: 150px;
 	text-align: center;
 	margin-bottom: 2px;
+	position: relative;
 	float: left;
 }
 .f-image .change-button {
 	cursor: pointer;
+	position: absolute;
+	top: 1px;
+	right: 1px;
+	padding: 0;
+	margin: 0;
+	width: 16px;
+	height: 16px;
+	text-indent: 16px;
+	overflow: hidden;
+	border: none;
+	background: url(../images/image_edit.png) no-repeat 0 0;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
 }
 .f-image img {
 	max-height: 100%;
