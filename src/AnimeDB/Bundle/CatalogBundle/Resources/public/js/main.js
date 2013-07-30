@@ -1,56 +1,50 @@
-
-var Form = {};
-Form.Collection = {
-	classes: {
-		collection: 'b-col-r',
-		button_add: 'b-col-add-item',
-		button_remove: 'b-col-rm-item'
-	},
-	templates: {
-		row: '<div class="f-row">__data__</div>',
-	},
-
-	init: function() {
-		var fc = Form.Collection;
-		// each collections
-		$.each($('.'+fc.classes.collection), function() {
-			var collection = $(this);
-			collection.data('index', collection.find(':input').length);
-
-			// add "remove" button
-			var tpl = '<a href="#" class="'+fc.classes.button_remove+'">'+collection.data('remove')+'</a>';
-			collection.children().append($(tpl));
-
-			// add "add" button
-			var tpl = '<a href="#" class="'+fc.classes.button_add+'">'+collection.data('add')+'</a>';
-			collection.append($(fc.templates.row.replace(/__data__/, tpl)));
-		});
-		// add "remove" and "add" buttons
-		$('.'+fc.classes.button_add).bind('click', fc.onAdd);
-		$('.'+fc.classes.button_remove).bind('click', fc.orRemove);
-	},
-
-	onAdd: function(e) {
-		e.preventDefault();
-		var fc = Form.Collection;
-		var collection = $(this).parent().parent();
+var FormCollection = function(collection, button_add, rows, remove_selector) {
+	var that = this;
+	this.collection = collection;
+	this.index = rows.length;
+	this.rows = rows;
+	this.remove_selector = remove_selector;
+	this.button_add = button_add.click(function() {
+		console.log(that);
+		that.add();
+	});
+	this.row_prototype = collection.data('prototype');
+};
+FormCollection.prototype = {
+	add: function() {
 		// increment index
-		var index = collection.data('index');
-		collection.data('index', index + 1);
+		this.index++;
 		// prototype of new item
-		var new_item = collection.data('prototype').replace(/__name__(label__)?/g, index);
-		// remove button temaplte
-		var tpl = '<a href="#" class="'+fc.classes.button_remove+'">'+fc.templates.remove+'</a>';
-		new_item = $(new_item).append($(tpl).bind('click', fc.orRemove));
-		// add new item
-		collection.find('.'+fc.classes.button_add).parent().before(new_item);
-	},
-	orRemove: function(e) {
-		e.preventDefault();
-		$(this).parent().remove();
+		var new_row = new FormCollectionRow(
+			$(this.row_prototype.replace(/__name__(label__)?/g, this.index)),
+			this
+		);
+		// add row
+		this.rows.push(new_row);
+		this.button_add.parent().before(new_row.row);
 	}
 };
-
+var FormCollectionRow = function(row, collection) {
+	this.row = row;
+	this.collection = collection;
+	// add handler for remove button
+	var that = this;
+	row.find(collection.remove_selector).click(function() {
+		that.remove();
+	});
+};
+FormCollectionRow.prototype = {
+	remove: function() {
+		this.row.remove();
+		// remove row in collection
+		for (var i in this.collection.rows) {
+			if (this.collection.rows[i] === row) {
+				delete this.collection.rows[i];
+				break;
+			}
+		}
+	}
+};
 
 
 /**
@@ -352,10 +346,20 @@ var PopupFromUrl = function(options) {
 // init after document load
 $(function(){
 
-// init form collection
-Form.Collection.init();
 // init cap
 Cap.setElement($('#cap'));
+
+// init form collection
+$('.f-collection > div').each(function(){
+	var collection = $(this);
+	new FormCollection(
+		collection,
+		collection.find('.bt-add-item'),
+		collection.find('.f-row'),
+		'.bt-remove-item'
+	);
+});
+
 // init form image
 $('.f-image').each(function(){
 	new FormImageController($(this));

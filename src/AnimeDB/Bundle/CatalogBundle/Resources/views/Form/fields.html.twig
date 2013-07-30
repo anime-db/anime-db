@@ -1,12 +1,62 @@
+{% block collection_widget %}
+{% spaceless %}
+    <div class="f-collection">
+        {% if prototype is defined %}
+            {% set attr = attr|merge({'data-prototype': block('collection_item_widget') }) %}
+        {% endif %}
+        <div {{ block('widget_container_attributes') }}>
+            {{ form_errors(form) }}
+            {% for rows in form %}
+                {% for row in rows %}
+                    <div class="f-row">
+                        <div class="f-fields">
+                            {{ form_label(row) }}
+                            {{ form_widget(row) }}
+                        </div>
+                        <button
+                            type="button"
+                            class="icon icon-minus bt-remove-item"
+                            title="{% trans %}Remove row{% endtrans %}"
+                        >{% trans %}Remove row{% endtrans %}</button>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            {{ form_rest(form) }}
+            <div class="f-row f-coll-button">
+                <div class="f-fields"></div>
+                <button
+                    type="button"
+                    class="icon icon-plus bt-add-item"
+                    title="{% trans %}Add row{% endtrans %}"
+                >{% trans %}Add row{% endtrans %}</button>
+            </div>
+        </div>
+    </div>
+{% endspaceless %}
+{% endblock collection_widget %}
+ 
+{% block collection_item_widget %}
+{% spaceless %}
+    {% for row in prototype %}
+        <div class="f-row">
+            <div class="f-fields">
+                {{ form_label(row) }}
+                {{ form_widget(row) }}
+            </div>
+            <button
+                type="button"
+                class="icon icon-minus bt-remove-item"
+                title="{% trans %}Remove row{% endtrans %}"
+            >{% trans %}Remove row{% endtrans %}</button>
+        </div>
+    {% endfor %}
+{% endspaceless %}
+{% endblock collection_item_widget %}
+
 
 {% block form_widget_compound %}
 {% spaceless %}
-    <div
-        {{ block('widget_container_attributes') }}
-        class="f-group"
-        data-add="{% trans %}Add{% endtrans %}"
-        data-remove="{% trans %}Remove{% endtrans %}"
-    >
+    <div {{ block('widget_container_attributes') }} class="f-group">
         {% if form.parent is empty %}
             {{ form_errors(form) }}
         {% endif %}
@@ -27,6 +77,7 @@
 {% endblock form_row %}
 
 
+{# use html5 data #}
 {% block date_widget %}
 {% spaceless %}
     {% if widget == 'single_text' %}

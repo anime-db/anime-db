@@ -42,11 +42,9 @@ class Item extends AbstractType
                 'allow_add'    => true,
                 'by_reference' => false,
                 'allow_delete' => true,
-                'attr'         => ['class' => 'b-col-r'],
                 'label'        => 'Other names',
                 'options'      => [
-                    'required' => false,
-                    'attr'     => ['class' => 'b-col-i']
+                    'required' => false
                 ],
             ])
             ->add('cover', new ImageField(), [
@@ -68,10 +66,8 @@ class Item extends AbstractType
                 'by_reference' => false,
                 'allow_delete' => true,
                 'label'        => 'Other images',
-                'attr'         => ['class' => 'b-col-r'],
                 'options'      => [
-                    'required' => false,
-                    'attr'     => ['class' => 'b-col-i'],
+                    'required' => false
                 ],
             ])
             ->add('type', 'entity', [
@@ -109,11 +105,9 @@ class Item extends AbstractType
                 'allow_add'    => true,
                 'by_reference' => false,
                 'allow_delete' => true,
-                'attr'         => ['class' => 'b-col-r'],
                 'label'        => 'External sources',
                 'options'      => [
-                    'required' => false,
-                    'attr'     => ['class' => 'b-col-i']
+                    'required' => false
                 ],
             ])
         ;

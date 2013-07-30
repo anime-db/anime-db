@@ -318,6 +318,14 @@
                 <source>Close pop-up window</source>
                 <target>Закрыть всплывающее окно</target>
             </trans-unit>
+            <trans-unit id="80">
+                <source>Add row</source>
+                <target>Добавить строку</target>
+            </trans-unit>
+            <trans-unit id="81">
+                <source>Remove row</source>
+                <target>Удалить строку</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

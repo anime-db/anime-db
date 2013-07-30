@@ -75,18 +75,18 @@ textarea {
 .f-row {
 	margin-bottom: 5px;
 }
-.b-col-r {
+.f-collection {
 	margin: 0 0 10px 30px;
 	clear: both;
 }
-.b-col-r > .f-row > label {
-	display: none;
-}
-.b-col-i {
+.f-collection .f-fields {
 	display: inline-block;
+	width: 564px;
 }
-.b-col-rm-item {
-	float: right;
+.f-collection .bt-remove-item,
+.f-collection .bt-add-item {
+	vertical-align: top;
+	margin-top: 5px;
 }
 input[type~=button],
 input[type~=reset],
@@ -102,7 +102,7 @@ button {
 	overflow: visible;
 	border-radius: 4px;
 	border: 1px solid #d8dcdf;
-	background: #eeeeee url(jquery-ui/../images/ui-bg_highlight-hard_100_eeeeee_1x100.png) 50% 50% repeat-x;
+	background: #eeeeee url(jquery-ui/images/ui-bg_highlight-hard_100_eeeeee_1x100.png) 50% 50% repeat-x;
 	font-weight: bold;
 	padding: .4em 1em;
 	font-size: 1.1em;
@@ -413,19 +413,13 @@ h1.logo a span {
 #animedb_catalogbundle_itemtype_file_info {
 	width: 500px;
 }
-.b-addition-form .b-col-r .b-col-i label {
-	width: 220px;
-}
-.b-addition-form .b-col-r .b-col-i {
-	float: left;
-}
-.b-addition-form .b-col-r .b-col-rm-item {
+.b-addition-form .f-collection .b-col-rm-item {
 	height: 31px;
 	line-height: 31px;
 	margin-left: 20px;
 	float: left;
 }
-.b-addition-form .b-col-r,
+.b-addition-form .f-collection,
 .b-addition-form .f-row {
 	clear: both;
 }
@@ -714,7 +708,8 @@ div.ui-widget div.ui-state-highlight {
 	height: 16px;
 	width: 16px;
 	overflow: hidden;
-	padding: 0 0 0 16px;
+	padding: 0;
+	text-indent: 16px;
 	margin-left: 5px;
 }
 #f-path-popup {
@@ -737,7 +732,8 @@ div.ui-widget div.ui-state-highlight {
 	margin: 5px 0 5px 5px;
 	height: 16px;
 	width: 16px;
-	padding: 0 0 0 16px;
+	padding: 0;
+	text-indent: 16px;
 	border: 0;
 	background: url(../images/right.png) no-repeat;
 	overflow: hidden;
@@ -749,12 +745,41 @@ div.ui-widget div.ui-state-highlight {
 #f-path-popup .folder {
 	height: 16px;
 	line-height: 16px;
-	padding-left: 19px;
 	margin: 2px 0;
 	display: block;
 	text-decoration: none;
+	text-indent: 19px;
 	background: url(../images/folder.png) no-repeat;
 }
 #f-path-popup.updating .folders {
 	background: white url(../images/loader.gif) no-repeat center center;
+}
+
+/**
+ * Icons
+ */
+.icon {
+	background: none;
+	border: 0;
+	width: 17px;
+	height: 17px;
+	padding: 0;
+	text-indent: 17px;
+}
+.icon-plus {
+	background: #33bb33 url(../images/incut-plus.png) no-repeat center center;
+}
+.icon-minus {
+	background: #bbbbbb url(../images/incut-minus.png) no-repeat center center;
+}
+.icon-plus,
+.icon-minus {
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	box-shadow: 0 0 1px rgba(0,0,0,.3);
+}
+.icon-minus[disabled~=disabled] {
+	background-color: #dddddd;
+	cursor: default;
 }
