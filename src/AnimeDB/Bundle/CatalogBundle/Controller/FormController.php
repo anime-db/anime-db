@@ -35,7 +35,10 @@ class FormController extends Controller
      */
     public function localPathAction(Request $request)
     {
-        $form = $this->createForm(new ChoiceLocalPath(), ['path' => $request->get('path')]);
+        $form = $this->createForm(
+            new ChoiceLocalPath(),
+            ['path' => $request->get('path') ?: $this->getUserHomeDir()]
+        );
 
         return $this->render('AnimeDBCatalogBundle:Form:local_path.html.twig', [
             'form' => $form->createView()
@@ -53,9 +56,9 @@ class FormController extends Controller
     {
         $form = $this->createForm(new ChoiceLocalPath());
         $form->handleRequest($request);
-        $path = $form->get('path')->getData();
+        $path = $form->get('path')->getData() ?: $this->getUserHomeDir();
 
-        if (!$path || !is_dir($path) || !is_readable($path)) {
+        if (!is_dir($path) || !is_readable($path)) {
             throw new NotFoundHttpException('Cen\'t read directory: '.$path);
         }
 
@@ -126,6 +129,19 @@ class FormController extends Controller
             ]);
         } catch (\InvalidArgumentException $e) {
             return new JsonResponse(['error' => $this->get('translator')->trans($e->getMessage())], 404);
+        }
+    }
+
+    /**
+     * Get user home dir
+     *
+     * @return string
+     */
+    private function getUserHomeDir() {
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            return 'C:\Documents and Settings\\'.get_current_user().'\My Documents\\';
+        } else {
+            return '/home/'.get_current_user().'/';
         }
     }
 }

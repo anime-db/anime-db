@@ -28,9 +28,17 @@ class Choice extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $placeholder = 'C:\Documents and Settings\\'.get_current_user().'\My Documents\\';
+        } else {
+            $placeholder = '/home/'.get_current_user().'/';
+        }
         $builder->add('path', 'text', [
             'label' => 'Path',
-            'required' => true
+            'required' => true,
+            'attr' => [
+                'placeholder' => $placeholder
+            ]
         ]);
     }
 
