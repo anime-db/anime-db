@@ -115,8 +115,9 @@ class Image
      * Upload image
      *
      * @param \Symfony\Component\Validator\Validator $validator
+     * @param string|null $name
      */
-    public function upload(Validator $validator) {
+    public function upload(Validator $validator, $name = null) {
         // upload remote file
         if ($this->getRemote() && $this->getLocal() === null) {
             if (!($content = file_get_contents($this->getRemote()))) {
@@ -150,10 +151,17 @@ class Image
 
         // upload local file
         if ($this->getLocal() !== null) {
-            $name = $this->getUniqueFileName(
-                $this->getUploadRootDir().'/'.$this->getLocal()->getClientOriginalName()
-            );
-            $this->getLocal()->move($this->getUploadRootDir(), $name);
+            if (!$name) {
+                // upload from original name
+                $name = $this->getUniqueFileName(
+                    $this->getUploadRootDir().'/'.$this->getLocal()->getClientOriginalName()
+                );
+                $this->getLocal()->move($this->getUploadRootDir(), $name);
+            } else {
+                // upload to another name
+                $info = pathinfo($name);
+                $this->getLocal()->move($this->getUploadRootDir().'/'.$info['dirname'], $info['basename']);
+            }
             $this->path = date('Y/m/').$name;
         }
     }
@@ -177,7 +185,7 @@ class Image
      */
     public function getAbsolutePath()
     {
-        return $this->local !== null ? $this->getUploadRootDir().'/'.$this->local : null;
+        return $this->path !== null ? $this->getUploadRootDir().'/../../'.$this->path : null;
     }
 
     /**
