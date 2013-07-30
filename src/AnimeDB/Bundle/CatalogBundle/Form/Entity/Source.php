@@ -48,6 +48,6 @@ class Source extends AbstractType
      */
     public function getName()
     {
-        return 'animedb_catalogbundle_sourcetype';
+        return 'animedb_catalogbundle_entity_source';
     }
 }

@@ -130,6 +130,6 @@ class Item extends AbstractType
      */
     public function getName()
     {
-        return 'animedb_catalogbundle_itemtype';
+        return 'animedb_catalogbundle_entity_item';
     }
 }

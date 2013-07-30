@@ -51,6 +51,6 @@ class Image extends AbstractType
      */
     public function getName()
     {
-        return 'animedb_catalogbundle_imagetype';
+        return 'animedb_catalogbundle_entity_image';
     }
 }

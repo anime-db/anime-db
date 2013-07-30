@@ -405,8 +405,8 @@ h1.logo a span {
 /**
  * Addition form
  */
-#animedb_catalogbundle_itemtype_summary,
-#animedb_catalogbundle_itemtype_episodes {
+#animedb_catalogbundle_entity_item_summary,
+#animedb_catalogbundle_entity_item_episodes {
 	width: 500px;
 	height: 200px;
 }
