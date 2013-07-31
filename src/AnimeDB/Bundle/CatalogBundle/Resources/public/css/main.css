@@ -595,6 +595,9 @@ div.ui-widget div.ui-state-highlight {
 /**
  * Pagination
  */
+.pagination {
+	clear: both;
+}
 .pagination nav {
 	text-align: center;
 }
@@ -621,7 +624,7 @@ div.ui-widget div.ui-state-highlight {
 }
 .pagination nav span {
 	border: 1px solid #cccccd;
-	background: none;
+	background: white;
 	color: inherit;
 	-webkit-border-radius: 20px;
 	-moz-border-radius: 20px;
