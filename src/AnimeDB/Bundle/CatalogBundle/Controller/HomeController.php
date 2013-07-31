@@ -144,8 +144,11 @@ class HomeController extends Controller
 
                 // main name
                 if ($data['name']) {
-                    $selector->andWhere('i.name = :name')
-                        ->setParameter('name', $data['name']);
+                    // TODO create index name for rapid and accurate search
+                    $selector
+                        ->innerJoin('i.names', 'n')
+                        ->andWhere('i.name LIKE :name OR n.name LIKE :name')
+                        ->setParameter('name', str_replace('%', '%%', $data['name']).'%');
                 }
                 // date start
                 if ($data['date_start'] instanceof \DateTime) {
