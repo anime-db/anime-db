@@ -114,13 +114,6 @@ class WorldArtRu implements Filler
     private $fs;
 
     /**
-     * Entity field image
-     *
-     * @var \AnimeDB\Bundle\CatalogBundle\Entity\Field\Image
-     */
-    private $image;
-
-    /**
      * World-Art countrys
      *
      * TODO Fill countrys list
@@ -248,7 +241,6 @@ class WorldArtRu implements Filler
         $this->doctrine = $doctrine;
         $this->validator = $validator;
         $this->fs = new Filesystem();
-        $this->image = new ImageField();
     }
 
     /**
@@ -348,7 +340,7 @@ class WorldArtRu implements Filler
         $this->fillHeadData($item, $xpath, $head->item(0));
 
         // fill body data
-        $this->fillBodyData($item, $xpath, $body);
+        $this->fillBodyData($item, $xpath, $body, $source);
 
         // add source link on world-art
         $item->addSource((new Source())->setUrl($source));
@@ -385,7 +377,9 @@ class WorldArtRu implements Filler
             if (strpos($src, 'http://') === false) {
                 $src = self::HOST.'animation/'.$src;
             }
-            return $this->uploadImage($src);
+            if (preg_match('/\/(?<id>\d+)\/(?<file>\d+\.(?:jpe?g|png|gif))$/', $src, $mat)) {
+                return $this->uploadImage($src, $mat['id'].'/'.$mat['file']);
+            }
         }
         return null;
     }
@@ -499,10 +493,17 @@ class WorldArtRu implements Filler
      * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item $item
      * @param \DOMXPath $xpath
      * @param \DOMElement $body
+     * @param string $source
      *
      * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
      */
-    private function fillBodyData(Item $item, \DOMXPath $xpath, \DOMElement $body) {
+    private function fillBodyData(Item $item, \DOMXPath $xpath, \DOMElement $body, $source) {
+        // id from source
+        $id = 0;
+        if (preg_match('/id=(?<id>\d+)/', $source, $mat)) {
+            $id = $mat['id'];
+        }
+
         for ($i = 0; $i < $body->childNodes->length; $i++) {
             if ($value = trim($body->childNodes->item($i)->nodeValue)) {
                 switch ($value) {
@@ -535,18 +536,21 @@ class WorldArtRu implements Filler
                         }
                         break;
                     default:
-                        // find other images
-                        $images = $xpath->query('table[2]/tr[3]/td[3]/a', $body->childNodes->item($i));
-                        foreach ($images as $image) {
-                            $crawler = $this->getCrawlerFromUrl($this->getAttrAsArray($image)['href']);
-                            $images = $crawler->filter('table table table table table img');
+                        // get frames
+                        if (strpos($value, 'кадры из аниме') !== false && $id) {
+                            $crawler = $this->getCrawlerFromUrl(self::HOST.'animation/animation_photos.php?id='.$id);
+                            $images = $crawler->filter('table table table img');
                             foreach ($images as $image) {
                                 $src = $this->getAttrAsArray($image)['src'];
                                 $src = str_replace('optimize_b', 'optimize_d', $src);
                                 if (strpos($src, 'http://') === false) {
                                     $src = self::HOST.'animation/'.$src;
                                 }
-                                $item->addImage((new Image())->setSource($this->uploadImage($src)));
+                                if (preg_match('/\-(?<image>\d+)\-optimize_d(?<ext>\.jpe?g|png|gif)/', $src, $mat) &&
+                                    $src = $this->uploadImage($src, $id.'/'.$mat['image'].$mat['ext'])
+                                ) {
+                                    $item->addImage((new Image())->setSource($src));
+                                }
                             }
                         }
                 }
@@ -558,16 +562,15 @@ class WorldArtRu implements Filler
      * Upload image from url
      *
      * @param string $url
+     * @param string|null $target
      *
      * @return string
      */
-    private function uploadImage($url) {
-        if (!preg_match('/\/(?<folder>\d+)\/(?<file>\d+\.(?:jpe?g|png|gif))$/', $url, $mat)) {
-            return '';
-        }
-        $this->image->setRemote($url);
-        $this->image->upload($this->validator, $mat['folder'].'/'.$mat['file']);
-        return $this->image->getPath();
+    private function uploadImage($url, $target = null) {
+        $image = new ImageField();
+        $image->setRemote($url);
+        $image->upload($this->validator, $target);
+        return $image->getPath();
     }
 
     /**
