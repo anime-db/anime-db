@@ -24,6 +24,8 @@ use AnimeDB\Bundle\CatalogBundle\Entity\Type;
 use AnimeDB\Bundle\CatalogBundle\Entity\Image;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Filesystem\Filesystem;
+use AnimeDB\Bundle\CatalogBundle\Entity\Field\Image as ImageField;
+use Symfony\Component\Validator\Validator;
 
 /**
  * Autofill from site world-art.ru
@@ -98,11 +100,25 @@ class WorldArtRu implements Filler
     private $doctrine;
 
     /**
+     * Validator
+     *
+     * @var \Symfony\Component\Validator\Validator
+     */
+    private $validator;
+
+    /**
      * Filesystem
      *
      * @var \Symfony\Component\Filesystem\Filesystem
      */
     private $fs;
+
+    /**
+     * Entity field image
+     *
+     * @var \AnimeDB\Bundle\CatalogBundle\Entity\Field\Image
+     */
+    private $image;
 
     /**
      * World-Art countrys
@@ -219,13 +235,20 @@ class WorldArtRu implements Filler
      * @param \Buzz\Browser $browser
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Doctrine\Bundle\DoctrineBundle\Registry $doctrine
+     * @param \Symfony\Component\Validator\Validator $validator
      */
-    public function __construct(Browser $browser, Request $request, Registry $doctrine)
-    {
+    public function __construct(
+        Browser $browser,
+        Request $request,
+        Registry $doctrine,
+        Validator $validator
+    ) {
         $this->browser  = $browser;
         $this->request  = $request;
         $this->doctrine = $doctrine;
+        $this->validator = $validator;
         $this->fs = new Filesystem();
+        $this->image = new ImageField();
     }
 
     /**
@@ -539,18 +562,12 @@ class WorldArtRu implements Filler
      * @return string
      */
     private function uploadImage($url) {
-        // TODO correct upload images
-        // training directory
-        $root = realpath(__DIR__.'/../../../../../../../web/media');
-        $path = $root.date('/Y/m/');
-        $this->fs->mkdir($path);
-        // create file name
-        $ext = pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION);
-        $dest = $this->createFileName($path, $ext);
-        // upload
-        $this->fs->copy($url, $dest);
-        // return relative path
-        return str_replace($root.'/', '', $dest);
+        if (!preg_match('/\/(?<folder>\d+)\/(?<file>\d+\.(?:jpe?g|png|gif))$/', $url, $mat)) {
+            return '';
+        }
+        $this->image->setRemote($url);
+        $this->image->upload($this->validator, $mat['folder'].'/'.$mat['file']);
+        return $this->image->getPath();
     }
 
     /**

@@ -4,7 +4,7 @@ services:
         scope: request
     anime_db.autofill.worldartru:
         class: AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler\WorldArtRu
-        arguments: [@buzz.browser, @request, @doctrine]
+        arguments: [@buzz.browser, @request, @doctrine, @validator]
         scope: request
         tags:
             -  { name: autofill.filler, alias: worldartru }
