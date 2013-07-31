@@ -317,7 +317,10 @@ class WorldArtRu implements Filler
 
         $item = new Item();
 
-        // add source links
+        // add source link on world-art
+        $item->addSource((new Source())->setUrl($source));
+
+        // add other source links
         /* @var $links \DOMNodeList */
         $links = $xpath->query('a', $nodes->item(1));
         for ($i = 0; $i < $links->length; $i++) {
@@ -341,9 +344,6 @@ class WorldArtRu implements Filler
 
         // fill body data
         $this->fillBodyData($item, $xpath, $body, $source);
-
-        // add source link on world-art
-        $item->addSource((new Source())->setUrl($source));
         return $item;
     }
 
