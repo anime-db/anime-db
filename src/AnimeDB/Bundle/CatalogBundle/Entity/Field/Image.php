@@ -124,7 +124,7 @@ class Image
                 throw new \InvalidArgumentException('Unable to read remote file');
             }
             // download remote file
-            $tempname = tempnam(sys_get_temp_dir(), '');
+            $tempname = tempnam(sys_get_temp_dir(), 'php');
             file_put_contents($tempname, $content);
 
             // create local file from remote
