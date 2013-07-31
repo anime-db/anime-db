@@ -186,7 +186,7 @@ class HomeController extends Controller
                 // get count all items
                 $count = clone $selector;
                 $count = $count
-                    ->select('count(i.id)')
+                    ->select('COUNT(DISTINCT i)')
                     ->getQuery()
                     ->getSingleScalarResult();
 
@@ -199,6 +199,7 @@ class HomeController extends Controller
                     ->setFirstResult(($current_page - 1) * self::SEARCH_ITEMS_PER_PAGE)
                     ->setMaxResults(self::SEARCH_ITEMS_PER_PAGE)
                     ->orderBy('i.'.($data['sort_field'] ?: 'id'), ($data['sort_direction'] ?: 'DESC'))
+                    ->groupBy('i')
                     ->getQuery()
                     ->getResult();
 
