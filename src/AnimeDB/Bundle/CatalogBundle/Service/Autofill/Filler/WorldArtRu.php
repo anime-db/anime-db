@@ -69,7 +69,7 @@ class WorldArtRu implements Filler
      *
      * @var string
      */
-    const XPATH_FOR_FILL = '//center/table[7]/tr/td/table[1]/tr/td';
+    const XPATH_FOR_FILL = '//center/table[@height="58%"]/tr/td/table[1]/tr/td';
 
     /**
      * Default HTTP User-Agent
@@ -330,7 +330,9 @@ class WorldArtRu implements Filler
             }
         }
         /* @var $body \DOMElement */
-        $body = $nodes->item(4);
+        if (!($body = $nodes->item(4))) {
+            throw new \LogicException('Incorrect data structure at source');
+        }
 
         // add cover
         $item->setCover($this->getCover($xpath, $body));
@@ -712,7 +714,10 @@ class WorldArtRu implements Filler
         $tidy->ParseString($html, $config, 'utf8');
         $tidy->cleanRepair();
         $html = $tidy->root()->value;
+        // ignore blocks
+        $html = preg_replace('/<noembed>.*?<\/noembed>/is', '', $html);
+        $html = preg_replace('/<noindex>.*?<\/noindex>/is', '', $html);
         // remove noembed
-        return preg_replace('/<noembed>.*?<\/noembed>/is', '', $html);
+        return $html;
     }
 }
