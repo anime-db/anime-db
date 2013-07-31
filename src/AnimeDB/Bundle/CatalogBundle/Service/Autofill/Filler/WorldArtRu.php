@@ -275,11 +275,30 @@ class WorldArtRu implements Filler
         $name = iconv('utf-8', 'cp1251', $name);
         $url = str_replace('#NAME#', urlencode($name), self::SEARH_URL);
         // get list from xpath
-        $crawler = $this->getCrawlerFromUrl(self::HOST.$url)
-            ->filterXPath(self::XPATH_FOR_LIST);
+        $crawler = $this->getCrawlerFromUrl(self::HOST.$url);
+
+        // if for request is found only one result is produced forwarding
+        $refresh = $crawler->filterXPath('//meta[@http-equiv="Refresh"]/@content');
+        if ($refresh->count()) {
+            $refresh->rewind();
+            list(, $url) = explode('url=', $refresh->current()->nodeValue, 2);
+            // add http if need
+            if ($url[0] == '/') {
+                $url = self::HOST.substr($url, 1);
+            }
+            return [
+                [
+                    'name'        => iconv('cp1251', 'utf-8', $name),
+                    'source'      => $url,
+                    'description' => '',
+                ]
+            ];
+        }
+
+        $rows = $crawler->filterXPath(self::XPATH_FOR_LIST);
 
         $list = [];
-        foreach ($crawler as $el) {
+        foreach ($rows as $el) {
             $elc = new Crawler($el);
             /* @var $link Crawler */
             $link = $elc->filter('a')->first();
