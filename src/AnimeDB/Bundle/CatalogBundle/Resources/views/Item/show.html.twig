@@ -2,6 +2,16 @@
 
 {% block title %}{{ item.name }}{% endblock %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	<link href="{{ asset('/bundles/animedbcatalog/css/lightbox.css') }}" type="text/css" rel="stylesheet">
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script type="text/javascript" src="{{ asset('/bundles/animedbcatalog/js/lightbox-2.6.min.js') }}"></script>
+{% endblock %}
+
 {% block content %}
 <section class="item-show-left">
 	<h2>{{ item.name }}</h2>
@@ -16,11 +26,11 @@
 	{% if item.images is not empty %}
 		<section class="item-images">
 			<header>{% trans %}Image{% endtrans %}</header>
-			<ul>
+			<article>
 				{% for image in item.images %}
-					<li><img src="{{ image.source|apply_filter('frame') }}" alt="" /></li>
+					<a href="{{ '/media/'~image.source }}" data-lightbox="frame" title="{{ item.name }}"><img src="{{ image.source|apply_filter('frame') }}" alt="{{ item.name }}" /></a>
 				{% endfor %}
-			</ul>
+			</article>
 		</section>
 	{% endif %}
 </section>

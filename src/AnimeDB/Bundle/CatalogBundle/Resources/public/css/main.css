@@ -493,18 +493,13 @@ h1.logo a span {
 	margin: 2px;
 	display: inline-block;
 }
-.item-images ul {
-	padding: 0;
+.content .item-images article {
+	margin: 0;
 }
-.item-images li {
-	list-style: none;
+.item-images a {
 	height: 140px;
 	margin: 5px;
 	float: left;
-}
-.item-images li img {
-	display: inline-block;
-	margin: 0;
 }
 
 /**
