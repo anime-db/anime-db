@@ -30,12 +30,12 @@ class Get extends AbstractType
     {
         $builder
             ->setMethod('GET')
-            ->add('url', 'text', array(
+            ->add('url', 'text', [
                 'label' => 'URL address',
-                'attr' => array(
+                'attr' => [
                     'placeholder' => 'http://',
-                ),
-            ));
+                ],
+            ]);
     }
 
     /**

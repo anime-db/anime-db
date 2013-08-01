@@ -28,7 +28,7 @@ if ($request->server->get('HTTP_CLIENT_IP') ||
     $request->server->get('HTTP_X_FORWARDED_FOR') ||
     !($addr = $request->server->get('REMOTE_ADDR')) ||
     ( // localhost
-        !in_array($addr, array('127.0.0.1', 'fe80::1', '::1')) &&
+        !in_array($addr, ['127.0.0.1', 'fe80::1', '::1']) &&
         (
             // local network IPv6
             (($ipv6 = (strpos($addr, ':') !== false)) && strpos($addr, 'fc00::') !== 0) ||

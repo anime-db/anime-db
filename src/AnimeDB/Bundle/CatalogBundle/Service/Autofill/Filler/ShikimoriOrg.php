@@ -55,7 +55,7 @@ class ShikimoriOrg implements Filler
     public function search($name)
     {
         // TODO requires the implementation of
-        return array();
+        return [];
     }
 
     /**

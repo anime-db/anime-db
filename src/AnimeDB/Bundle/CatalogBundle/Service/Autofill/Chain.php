@@ -25,14 +25,14 @@ class Chain
      *
      * @var array
      */
-    private $fillers = array();
+    private $fillers = [];
 
     /**
      * List filler titles
      *
      * @var array
      */
-    private $filler_titles = array();
+    private $filler_titles = [];
 
     /**
      * Add autofill filler

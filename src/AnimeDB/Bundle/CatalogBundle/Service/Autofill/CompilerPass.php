@@ -40,7 +40,7 @@ class CompilerPass implements CompilerPassInterface
             foreach ($tagAttributes as $attributes) {
                 $definition->addMethodCall(
                     'addFiller',
-                    array(new Reference($id), $attributes['alias'])
+                    [new Reference($id), $attributes['alias']]
                 );
             }
         }

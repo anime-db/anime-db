@@ -36,18 +36,33 @@ class TwigExtension extends \Twig_Extension
         $this->router = $router;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Twig_Extension::getFilters()
+     */
     public function getFilters()
     {
-        return array(
+        return [
             'favicon' => new \Twig_Filter_Method($this, 'favicon'),
-        );
+        ];
     }
 
+    /**
+     * Favicon
+     *
+     * @param string $url
+     *
+     * @return boolean
+     */
     public function favicon($url)
     {
         return $url ? $this->router->generate('media_favicon', ['host' => parse_url($url, PHP_URL_HOST)]) : false;
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see Twig_ExtensionInterface::getName()
+     */
     public function getName()
     {
         return 'animedb_extension';

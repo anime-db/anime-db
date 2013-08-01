@@ -44,9 +44,7 @@ class ItemController extends Controller
         if (!$item) {
             throw $this->createNotFoundException('No found items for id '.$id);
         }
-        return $this->render('AnimeDBCatalogBundle:Item:show.html.twig',
-            array('item' => $item)
-        );
+        return $this->render('AnimeDBCatalogBundle:Item:show.html.twig', ['item' => $item]);
     }
 
     /**
@@ -65,10 +63,10 @@ class ItemController extends Controller
         /* @var $source \Symfony\Component\Form\Form */
         $source = $this->createForm(new Get());
 
-        return $this->render('AnimeDBCatalogBundle:Item:add.html.twig', array(
+        return $this->render('AnimeDBCatalogBundle:Item:add.html.twig', [
             'source_form' => $source->createView(),
             'search_form' => $search->createView(),
-        ));
+        ]);
     }
 
     /**
@@ -93,14 +91,14 @@ class ItemController extends Controller
                 $em->flush();
                 return $this->redirect($this->generateUrl(
                     'item_show',
-                    array('id' => $item->getId(), 'name' => $item->getName())
+                    ['id' => $item->getId(), 'name' => $item->getName()]
                 ));
             }
         }
 
-        return $this->render('AnimeDBCatalogBundle:Item:add-manually.html.twig', array(
+        return $this->render('AnimeDBCatalogBundle:Item:add-manually.html.twig', [
             'form' => $form->createView()
-        ));
+        ]);
     }
 
     /**
@@ -132,15 +130,15 @@ class ItemController extends Controller
                 $em->flush();
                 return $this->redirect($this->generateUrl(
                     'item_show',
-                    array('id' => $item->getId(), 'name' => $item->getName())
+                    ['id' => $item->getId(), 'name' => $item->getName()]
                 ));
             }
         }
 
-        return $this->render('AnimeDBCatalogBundle:Item:change.html.twig', array(
+        return $this->render('AnimeDBCatalogBundle:Item:change.html.twig', [
             'item' => $item,
             'form' => $form->createView()
-        ));
+        ]);
     }
 
     /**
@@ -176,7 +174,7 @@ class ItemController extends Controller
 
         return $this->redirect($this->generateUrl(
             'item_show',
-            array('id' => $item->getId(), 'name' => $item->getName())
+            ['id' => $item->getId(), 'name' => $item->getName()]
         ));
     }
 }

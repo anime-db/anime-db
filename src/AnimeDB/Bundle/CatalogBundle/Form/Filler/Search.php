@@ -27,7 +27,7 @@ class Search extends AbstractType
      *
      * @var array
      */
-    private $filler_titles = array();
+    private $filler_titles = [];
 
     /**
      * Construct
@@ -46,16 +46,16 @@ class Search extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', array(
+            ->add('name', 'text', [
                 'label' => 'Name',
-                'attr' => array(
+                'attr' => [
                     'placeholder' => 'One Piece',
-                ),
-            ))
-            ->add('filler', 'choice', array(
+                ],
+            ])
+            ->add('filler', 'choice', [
                 'label' => 'Source',
                 'choices' => $this->filler_titles
-            ));
+            ]);
     }
 
     /**
