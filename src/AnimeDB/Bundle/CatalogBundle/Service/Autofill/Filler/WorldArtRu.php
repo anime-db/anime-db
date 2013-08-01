@@ -13,7 +13,6 @@ namespace AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler;
 use AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler\Filler;
 use Buzz\Browser;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\DomCrawler\Crawler;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use AnimeDB\Bundle\CatalogBundle\Entity\Item;
 use AnimeDB\Bundle\CatalogBundle\Entity\Source;
@@ -560,8 +559,8 @@ class WorldArtRu implements Filler
                     default:
                         // get frames
                         if (strpos($value, 'кадры из аниме') !== false && $id) {
-                            $crawler = $this->getCrawlerFromUrl(self::HOST.'animation/animation_photos.php?id='.$id);
-                            $images = $crawler->filter('table table table img');
+                            $dom = $this->getDomDocumentFromUrl(self::HOST.'animation/animation_photos.php?id='.$id);
+                            $images = (new \DOMXPath($dom))->query('//table//table//table//img');
                             foreach ($images as $image) {
                                 $src = $this->getAttrAsArray($image)['src'];
                                 $src = str_replace('optimize_b', 'optimize_d', $src);
@@ -667,21 +666,6 @@ class WorldArtRu implements Filler
      */
     public function isSupportSource($source) {
         return is_string($source) && strpos($source, self::HOST) === 0;
-    }
-
-    /**
-     * Get Crawler from url
-     *
-     * Receive content from the URL, cleaning using Tidy and creating Crawler
-     *
-     * @param string $url
-     *
-     * @return \Symfony\Component\DomCrawler\Crawler
-     */
-    private function getCrawlerFromUrl($url) {
-        $crawler = new Crawler();
-        $crawler->addHtmlContent($this->getContentFromUrl($url));
-        return $crawler;
     }
 
     /**
