@@ -75,3 +75,6 @@ avalanche_imagine:
         home_cover:
             type:    thumbnail
             options: { size: [200, 250], mode: outbound }
+        frame:
+            type:    thumbnail
+            options: { size: [190, 142], mode: outbound } # 12:9

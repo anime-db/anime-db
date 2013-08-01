@@ -18,7 +18,7 @@
 			<header>{% trans %}Image{% endtrans %}</header>
 			<ul>
 				{% for image in item.images %}
-					<li><img src="{{ image.source }}" alt="" /></li>
+					<li><img src="{{ image.source|apply_filter('frame') }}" alt="" /></li>
 				{% endfor %}
 			</ul>
 		</section>
