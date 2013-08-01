@@ -153,10 +153,10 @@ h1.logo a span {
 	width: 5px;
 }
 #navigation .right {
-	background: url(../images/navigation.png) no-repeat scroll right top transparent;
+	background: url(../images/navigation-r.png) no-repeat scroll right top transparent;
 	float: left;
 	height: 41px;
-	width: 3px;
+	width: 5px;
 }
 #navigation ul {
 	background: url(../images/navigation.png) repeat-x scroll 0 -41px transparent;
