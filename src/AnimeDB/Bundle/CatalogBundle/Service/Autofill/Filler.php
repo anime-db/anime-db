@@ -8,12 +8,12 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler;
+namespace AnimeDB\Bundle\CatalogBundle\Service\Autofill;
 
 /**
  * Autofill filler interface
  * 
- * @package AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler
+ * @package AnimeDB\Bundle\CatalogBundle\Service\Autofill
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 interface Filler

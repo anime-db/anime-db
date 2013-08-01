@@ -10,7 +10,7 @@
 
 namespace AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler;
 
-use AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler\Filler;
+use AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler;
 
 /**
  * Autofill from site shikimori.org

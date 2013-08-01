@@ -10,7 +10,7 @@
 
 namespace AnimeDB\Bundle\CatalogBundle\Service\Autofill;
 
-use AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler\Filler;
+use AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler;
 
 /**
  * Chain
@@ -37,7 +37,7 @@ class Chain
     /**
      * Add autofill filler
      *
-     * @param \AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler\Filler $filler
+     * @param \AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler $filler
      * @param string $alias
      */
     public function addFiller(Filler $filler, $alias) {
@@ -50,7 +50,7 @@ class Chain
      *
      * @param string $alias
      *
-     * @return \AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler\Filler|null
+     * @return \AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler|null
      */
     public function getFiller($alias) {
         if (array_key_exists($alias, $this->fillers)) {
@@ -64,7 +64,7 @@ class Chain
      *
      * @param string $source
      *
-     * @return \AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler\Filler|null
+     * @return \AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler|null
      */
     public function getFillerBySource($source) {
         foreach ($this->fillers as $filler) {

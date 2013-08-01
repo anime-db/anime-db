@@ -10,7 +10,7 @@
  
 namespace AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler;
 
-use AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler\Filler;
+use AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler;
 use Buzz\Browser;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Bundle\DoctrineBundle\Registry;
