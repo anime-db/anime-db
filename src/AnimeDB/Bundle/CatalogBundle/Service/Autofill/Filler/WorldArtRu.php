@@ -275,13 +275,13 @@ class WorldArtRu implements Filler
         $name = iconv('utf-8', 'cp1251', $name);
         $url = str_replace('#NAME#', urlencode($name), self::SEARH_URL);
         // get list from xpath
-        $crawler = $this->getCrawlerFromUrl(self::HOST.$url);
+        $dom = $this->getDomDocumentFromUrl(self::HOST.$url);
+        $xpath = new \DOMXPath($dom);
 
         // if for request is found only one result is produced forwarding
-        $refresh = $crawler->filterXPath('//meta[@http-equiv="Refresh"]/@content');
-        if ($refresh->count()) {
-            $refresh->rewind();
-            list(, $url) = explode('url=', $refresh->current()->nodeValue, 2);
+        $refresh = $xpath->query('//meta[@http-equiv="Refresh"]/@content');
+        if ($refresh->length) {
+            list(, $url) = explode('url=', $refresh->item(0)->nodeValue, 2);
             // add http if need
             if ($url[0] == '/') {
                 $url = self::HOST.substr($url, 1);
@@ -295,19 +295,20 @@ class WorldArtRu implements Filler
             ];
         }
 
-        $rows = $crawler->filterXPath(self::XPATH_FOR_LIST);
+        $rows = $xpath->query(self::XPATH_FOR_LIST);
 
         $list = [];
         foreach ($rows as $el) {
-            $elc = new Crawler($el);
-            /* @var $link Crawler */
-            $link = $elc->filter('a')->first();
+            $link = $xpath->query('a', $el);
             // has link on source
-            if ($link->count() && ($href = $link->attr('href')) && ($name = $link->text())) {
+            if ($link->length &&
+                ($href = $link->item(0)->getAttribute('href')) &&
+                ($name = $link->item(0)->nodeValue)
+            ) {
                 $list[] = [
                     'name'        => str_replace(["\r\n", "\n"], ' ', $name),
                     'source'      => self::HOST.$href,
-                    'description' => trim(str_replace($name, '', $elc->text())),
+                    'description' => trim(str_replace($name, '', $el->nodeValue)),
                 ];
             }
         }
