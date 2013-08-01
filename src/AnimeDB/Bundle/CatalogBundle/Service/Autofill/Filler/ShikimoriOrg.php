@@ -11,6 +11,7 @@
 namespace AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler;
 
 use AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler;
+use AnimeDB\Bundle\CatalogBundle\Service\Autofill\Search\Item;
 
 /**
  * Autofill from site shikimori.org
@@ -39,6 +40,13 @@ class ShikimoriOrg implements Filler
 
     /**
      * Search source by name
+     *
+     * Return structure
+     * <code>
+     * [
+     *     \AnimeDB\Bundle\CatalogBundle\Service\Autofill\Search\Item
+     * ]
+     * </code>
      *
      * @param string $name
      *

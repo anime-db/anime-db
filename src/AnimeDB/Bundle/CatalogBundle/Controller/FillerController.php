@@ -43,7 +43,7 @@ class FillerController extends Controller
         /* @var $form \Symfony\Component\Form\Form */
         $form = $this->createForm(new Search($chain->getFillerTitles()));
 
-        $list = array();
+        $list = [];
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
@@ -54,9 +54,9 @@ class FillerController extends Controller
                 $list = $filler->search($data['name']);
             }
         }
-        return $this->render('AnimeDBCatalogBundle:Filler:search.html.twig', array(
+        return $this->render('AnimeDBCatalogBundle:Filler:search.html.twig', [
             'list' => $list
-        ));
+        ]);
     }
 
     /**
@@ -96,9 +96,9 @@ class FillerController extends Controller
             $error = 'Not specified source';
         }
 
-        return $this->render('AnimeDBCatalogBundle:Filler:fill.html.twig', array(
+        return $this->render('AnimeDBCatalogBundle:Filler:fill.html.twig', [
             'error' => $error,
             'form' => $fill_form,
-        ));
+        ]);
     }
 }

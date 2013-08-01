@@ -31,11 +31,7 @@ interface Filler
      * Return structure
      * <code>
      * [
-     *     {
-     *         'name': string,
-     *         'source': string,
-     *         'description': string
-     *     }
+     *     \AnimeDB\Bundle\CatalogBundle\Service\Autofill\Search\Item
      * ]
      * </code>
      *

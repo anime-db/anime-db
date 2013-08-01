@@ -25,6 +25,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Filesystem\Filesystem;
 use AnimeDB\Bundle\CatalogBundle\Entity\Field\Image as ImageField;
 use Symfony\Component\Validator\Validator;
+use AnimeDB\Bundle\CatalogBundle\Service\Autofill\Search\Item as ItemSearch;
 
 /**
  * Autofill from site world-art.ru
@@ -257,11 +258,7 @@ class WorldArtRu implements Filler
      * Return structure
      * <code>
      * [
-     *     {
-     *         'name': string,
-     *         'source': string,
-     *         'description': string
-     *     }
+     *     \AnimeDB\Bundle\CatalogBundle\Service\Autofill\Search\Item
      * ]
      * </code>
      *
@@ -286,11 +283,7 @@ class WorldArtRu implements Filler
                 $url = self::HOST.substr($url, 1);
             }
             return [
-                [
-                    'name'        => iconv('cp1251', 'utf-8', $name),
-                    'source'      => $url,
-                    'description' => '',
-                ]
+                new ItemSearch(iconv('cp1251', 'utf-8', $name), $url, '')
             ];
         }
 
@@ -304,11 +297,11 @@ class WorldArtRu implements Filler
                 ($href = $link->item(0)->getAttribute('href')) &&
                 ($name = $link->item(0)->nodeValue)
             ) {
-                $list[] = [
-                    'name'        => str_replace(["\r\n", "\n"], ' ', $name),
-                    'source'      => self::HOST.$href,
-                    'description' => trim(str_replace($name, '', $el->nodeValue)),
-                ];
+                $list[] = new ItemSearch(
+                    str_replace(["\r\n", "\n"], ' ', $name),
+                    self::HOST.$href,
+                    trim(str_replace($name, '', $el->nodeValue))
+                );
             }
         }
 
