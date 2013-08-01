@@ -59,6 +59,10 @@ class Item extends AbstractType
                 'widget' => 'single_text',
                 'required' => false
             ])
+            ->add('episodes_number', null, [
+                'required' => false,
+                'label'    => 'Number of episodes',
+            ])
             ->add('duration')
             ->add('images', 'collection', [
                 'type'         => new Image(),

@@ -468,17 +468,28 @@ class WorldArtRu implements Filler
                     // set type and add file info
                     case 'Тип':
                         $type = $data->childNodes->item($i+1)->nodeValue;
-                        if (preg_match('/(?<type>[\w\s]+)(?: \((?<file_info>.+)\))?, (?<duration>\d{1,3}) мин\.$/u', $type, $match)) {
+                        if (preg_match('/(?<type>[\w\s]+)(?: \((?:(?<episodes_number>\>?\d+) эп.)?(?<file_info>.+)\))?, (?<duration>\d{1,3}) мин\.$/u', $type, $match)) {
                             // add type
                             if ($type = $this->getTypeByName(trim($match['type']))) {
                                 $item->setType($type);
                             }
                             // add duration
                             $item->setDuration((int)$match['duration']);
+                            // add number of episodes
+                            if (!empty($match['episodes_number'])) {
+                                if ($match['episodes_number'][0] == '>') {
+                                    $item->setEpisodesNumber(substr($match['episodes_number'], 1).'+');
+                                } else {
+                                    $item->setEpisodesNumber((int)$match['episodes_number']);
+                                }
+                            } elseif ($item->getType()->getId() != 'tv') {
+                                // everything except the TV series consist of a single episode
+                                $item->setEpisodesNumber(1);
+                            }
                             // add file info
                             if (!empty($match['file_info'])) {
                                 $file_info = $item->getFileInfo();
-                                $item->setFileInfo(($file_info ? $file_info."\n" : '').$match['file_info']);
+                                $item->setFileInfo(($file_info ? $file_info."\n" : '').trim($match['file_info']));
                             }
                         }
                         $i++;

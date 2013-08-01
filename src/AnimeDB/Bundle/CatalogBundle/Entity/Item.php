@@ -17,6 +17,7 @@ use AnimeDB\Bundle\CatalogBundle\Entity\Country;
 use AnimeDB\Bundle\CatalogBundle\Entity\Storage;
 use AnimeDB\Bundle\CatalogBundle\Entity\Type;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Validator\ExecutionContextInterface;
 
 /**
  * Item
@@ -194,6 +195,19 @@ class Item
      * @var string
      */
     protected $cover = '';
+
+    /**
+     * Number of episodes
+     *
+     * @ORM\Column(type="string", length=5, nullable=true)
+     * @Assert\Regex(
+     *     pattern="/^(\d{1,4}\+?)$/",
+     *     message="The number of episodes should be a number and can contain a '+' to denote the continuation of production"
+     * )
+     *
+     * @var string
+     */
+    protected $episodes_number = '';
 
     /**
      * Image list
@@ -781,5 +795,28 @@ class Item
     protected function getUploadDir()
     {
         return 'media';
+    }
+
+    /**
+     * Set number of episodes
+     *
+     * @param string $episodes_number
+     *
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
+     */
+    public function setEpisodesNumber($episodes_number)
+    {
+        $this->episodes_number = $episodes_number;
+        return $this;
+    }
+
+    /**
+     * Get number of episodes
+     *
+     * @return string 
+     */
+    public function getEpisodesNumber()
+    {
+        return $this->episodes_number;
     }
 }

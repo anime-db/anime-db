@@ -52,9 +52,9 @@
 			<div>
 				<strong>{% trans %}Type{% endtrans %}</strong> <a href="{{ path('home_search', {'search_items[type]': item.type.id}) }}">{{ item.type.name }}</a>
 			</div>
-			<!-- <div>
-				<strong>{% trans %}Episodes{% endtrans %}</strong> 13
-			</div> -->
+			<div>
+				<strong>{% trans %}Number of episodes{% endtrans %}</strong> {{ item.episodesnumber }} {% trans %}ep.{% endtrans %} 
+			</div>
 			<div>
 				<strong>{% trans %}The duration of the episode{% endtrans %}</strong> {{ item.duration }} мин.
 			</div>

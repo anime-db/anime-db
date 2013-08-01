@@ -326,6 +326,14 @@
                 <source>Remove row</source>
                 <target>Удалить строку</target>
             </trans-unit>
+            <trans-unit id="82">
+                <source>Number of episodes</source>
+                <target>Число эпизодов</target>
+            </trans-unit>
+            <trans-unit id="83">
+                <source>ep.</source>
+                <target>эп.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
