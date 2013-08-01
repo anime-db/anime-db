@@ -15,12 +15,12 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Scan storages for new items
+ * Check for updates
  *
  * @package AnimeDB\Bundle\CatalogBundle\Command
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class ScanStorages extends Command
+class CheckUpdatesCommand extends Command
 {
     /**
      * (non-PHPdoc)
@@ -28,8 +28,8 @@ class ScanStorages extends Command
      */
     protected function configure()
     {
-        $this->setName('animedb:scan-storage')
-            ->setDescription('Scan storages for new items');
+        $this->setName('animedb:check-updates')
+            ->setDescription('Check updates for application');
     }
 
     /**
@@ -37,6 +37,6 @@ class ScanStorages extends Command
      * @see Symfony\Component\Console\Command.Command::execute()
      */
     protected function execute(InputInterface $input, OutputInterface $output) {
-        // TODO do scan storages
+        // TODO do check app updates
     }
 }

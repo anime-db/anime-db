@@ -20,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @package AnimeDB\Bundle\CatalogBundle\Command
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class EventListener extends ContainerAwareCommand
+class EventListenerCommand extends ContainerAwareCommand
 {
     /**
      * (non-PHPdoc)

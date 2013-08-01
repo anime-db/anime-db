@@ -21,7 +21,7 @@ use Symfony\Component\Console\Input\InputArgument;
  * @package AnimeDB\Bundle\CatalogBundle\Command
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class CheckItem extends Command
+class CheckItemCommand extends Command
 {
     /**
      * (non-PHPdoc)
