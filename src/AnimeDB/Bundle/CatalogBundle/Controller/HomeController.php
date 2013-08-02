@@ -197,11 +197,17 @@ class HomeController extends Controller
                 $current_page = $request->get('page', 1);
                 $current_page = $current_page > 1 ? $current_page : 1;
 
+                // add order
+                $data['sort_field'] = $data['sort_field'] ?: 'date_update';
+                $data['sort_direction'] = $data['sort_direction'] ?: 'DESC';
+                $selector
+                    ->orderBy('i.'.$data['sort_field'], $data['sort_direction'])
+                    ->orderBy('i.id', $data['sort_direction']);
+
                 // get items
                 $items = $selector
                     ->setFirstResult(($current_page - 1) * self::SEARCH_ITEMS_PER_PAGE)
                     ->setMaxResults(self::SEARCH_ITEMS_PER_PAGE)
-                    ->orderBy('i.'.($data['sort_field'] ?: 'id'), ($data['sort_direction'] ?: 'DESC'))
                     ->groupBy('i')
                     ->getQuery()
                     ->getResult();

@@ -69,7 +69,7 @@ class Search extends AbstractType
                 'label' => 'Sort by',
                 'data' => 'id',
                 'choices' => [
-                    'id' => 'Date add', // really sort by ID, not by date
+                    'date_update' => 'Last updated',
                     'name' => 'Name',
                     'date_start' => 'Date start',
                     'date_end' => 'Date end'
