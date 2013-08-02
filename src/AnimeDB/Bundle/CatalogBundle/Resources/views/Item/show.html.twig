@@ -15,7 +15,7 @@
 {% block content %}
 <section class="item-show-left">
 	<h2>{{ item.name }}</h2>
-	<img src="{{ item.cover|apply_filter('card_cover') }}" alt="{{ item.name }}" class="cover" />
+	<img src="{{ item.cover|apply_filter('card') }}" alt="{{ item.name }}" class="cover" />
 	<section class="item-summary">{{ item.summary }}</section>
 	{% if item.episodes %}
 		<section class="item-episodes">

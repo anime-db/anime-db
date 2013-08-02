@@ -66,10 +66,10 @@ avalanche_imagine:
     cache_prefix: media/suit
     driver:       gd
     filters:
-        card_cover:
+        card:
             type:    thumbnail
             options: { size: %avalanche_card%, mode: outbound }
-        home_cover:
+        catalog:
             type:    thumbnail
             options: { size: %avalanche_catalog%, mode: outbound }
         frame:
