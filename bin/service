@@ -1,87 +1,66 @@
 #!/bin/sh
 
 
-# Set the address to 0.0.0.0 in order to open access to the application from outside
-addr='localhost'
+# IP-address of the server with application
+addr='0.0.0.0'
 
-# Port on the service
+# Port on the application server
 port=56780
 
 # Path to the directory with the application
-path=../src
+path=.
 
 
-run_service() {
-    if [ ! -f ${path}/router.php ]
+if [ ! -f ${path}/app/router.php ] || [ ! -f ${path}/app/console ];
+then
+    echo "Cent run Application" >&2
+    exit 1
+fi
+
+
+stop_server() {
+    if [ -f ${path}/bin/.spid ]
     then
-        echo "Cent run service" >&2
-        exit 1 
+        kill `cat ${path}/bin/.spid` 2> /dev/null
+        rm ${path}/bin/.spid
     fi
-    php -S ${addr}:${port} -t $path ${path}/router.php > /dev/null 2> /dev/null &
-    echo $! > .hpid
 }
-
-run_task_manager() {
-    if [ ! -f ${path}/task_manager.php ]
+stop_event_listener() {
+    if [ -f ${path}/bin/.elpid ]
     then
-        echo "Cent run task manager" >&2
-        exit 1 
+        kill `cat ${path}/bin/.elpid` 2> /dev/null
+        rm ${path}/bin/.elpid
     fi
-    php -f ${path}/task_manager.php > /dev/null 2> /dev/null &
-    echo $! > .mpid
 }
-
-stop_service() {
-    kill `cat .hpid` 2> /dev/null
-    rm .hpid
-}
-
-stop_task_manager() {
-    kill `cat .mpid` 2> /dev/null
-    rm .mpid
+stop_task_scheduler() {
+    if [ -f ${path}/bin/.tspid ]
+    then
+        kill `cat ${path}/bin/.tspid` 2> /dev/null
+        rm ${path}/bin/.tspid
+    fi
 }
 
 
 case "$1" in
-    start)
-        if [ -f .hpid ]
-        then
-            echo "Server is already running" >&2
-            exit 1
-        fi
-        if [ -f .mpid ]
-        then
-            echo "Task manager is already running" >&2
-            exit 1
-        fi
-        run_service
-        run_task_manager
-        ;;
     stop)
-        if [ ! -f .hpid ]
-        then
-            echo "Server is not running" >&2
-            exit 1
-        fi
-        if [ ! -f .mpid ]
-        then
-            echo "Task manager is not running" >&2
-            exit 1
-        fi
-        stop_service
-        stop_task_manager
+        stop_server
+        stop_event_listener
+        stop_task_scheduler
         ;;
-    reload|restart|force-reload)
-        if [ -f .hpid ]
-        then
-            stop_service
-        fi
-        if [ -f .mpid ]
-        then
-            stop_task_manager
-        fi
-        run_service
-        run_task_manager
+    start|reload|restart|force-reload)
+        stop_server
+        stop_event_listener
+        stop_task_scheduler
+
+        # run server
+        php -S ${addr}:${port} -t ${path}/web ${path}/app/router.php > /dev/null 2> /dev/null &
+        echo $! > ${path}/bin/.spid
+        # run event listener
+        ${path}/app/console animedb:event-listener > /dev/null 2> /dev/null &
+        echo $! > ${path}/bin/.elpid
+        # run task scheduler
+        ${path}/app/console animedb:task-scheduler > /dev/null 2> /dev/null &
+        echo $! > ${path}/bin/.tspid
         ;;
     *)
         echo "Usage: $N {start|stop|restart}" >&2

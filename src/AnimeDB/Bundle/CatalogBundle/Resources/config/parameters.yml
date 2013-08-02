@@ -1,0 +1,7 @@
+parameters:
+    serial_number: ""
+
+    task-scheduler:
+        enabled: false
+    event-listener:
+        enabled: false
