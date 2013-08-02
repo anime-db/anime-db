@@ -78,7 +78,7 @@ class Item
      * @ORM\Column(type="date")
      * @Assert\Date()
      *
-     * @var DateTime
+     * @var \DateTime
      */
     protected $date_start;
 
@@ -88,7 +88,7 @@ class Item
      * @ORM\Column(type="date", nullable=true)
      * @Assert\Date()
      *
-     * @var DateTime|null
+     * @var \DateTime|null
      */
     protected $date_end;
 
@@ -208,6 +208,24 @@ class Item
      * @var string
      */
     protected $episodes_number = '';
+
+    /**
+     * Date add item
+     *
+     * @ORM\Column(type="date")
+     *
+     * @var \DateTime
+     */
+    protected $date_add;
+
+    /**
+     * Date last update item
+     *
+     * @ORM\Column(type="date")
+     *
+     * @var \DateTime
+     */
+    protected $date_update;
 
     /**
      * Image list
@@ -818,5 +836,73 @@ class Item
     public function getEpisodesNumber()
     {
         return $this->episodes_number;
+    }
+
+    /**
+     * Set date add item
+     *
+     * @param \DateTime $date_add
+     *
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
+     */
+    public function setDateAdd(\DateTime $date_add)
+    {
+        $this->date_add = $date_add;
+        return $this;
+    }
+
+    /**
+     * Get date add item
+     *
+     * @return \DateTime 
+     */
+    public function getDateAdd()
+    {
+        return $this->date_add;
+    }
+
+    /**
+     * Set date last update item
+     *
+     * @param \DateTime $date_update
+     *
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
+     */
+    public function setDateUpdate(\DateTime $date_update)
+    {
+        $this->date_update = $date_update;
+        return $this;
+    }
+
+    /**
+     * Get date last update item
+     *
+     * @return \DateTime
+     */
+    public function getDateUpdate()
+    {
+        return $this->date_update;
+    }
+
+    /**
+     * Update date item change
+     *
+     * @ORM\PrePersist
+     */
+    public function doUpdateDateItemChange()
+    {
+        $this->date_update = new \DateTime();
+    }
+
+    /**
+     * Set date item add
+     *
+     * @ORM\PrePersist
+     */
+    public function doSetDateItemAdd()
+    {
+        if (!$this->date_add) {
+            $this->date_add = new \DateTime();
+        }
     }
 }
