@@ -403,10 +403,9 @@ class WorldArtRu implements Filler
      * @return string|null
      */
     private function getCover($id) {
-        $name = (ceil($id/1000)*1000).'/'.$id.'/1.jpg';
-        $cover = self::HOST.'animation/img/'.$name;
+        $cover = self::HOST.'animation/img/'.(ceil($id/1000)*1000).'/'.$id.'/1.jpg';
         try {
-            return $this->uploadImage($cover, $name);
+            return $this->uploadImage($cover, $id.'/1.jpg');
         } catch (\Exception $e) {}
         return null;
     }
