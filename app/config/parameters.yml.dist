@@ -1,0 +1,24 @@
+parameters:
+    database_driver: pdo_sqlite
+    database_host: localhost
+    database_port: ~
+    database_name: anime.db
+    database_user: root
+    database_password: ~
+    database_path: anime.db
+
+#    mailer_transport: smtp
+#    mailer_host: 127.0.0.1
+#    mailer_user: ~
+#    mailer_password: ~
+
+    locale: ru
+    secret: a996943667c670ed1dcd4fb3822fd659
+
+    # Serial number for application
+    serial_number: ''
+
+    # Avalanche
+    avalanche_card: [240, 300]
+    avalanche_catalog: [200, 250]
+    avalanche_frame: [190, 142] # 12:9

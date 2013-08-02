@@ -1,8 +1,43 @@
-# Services pid files
-bin/.hpid
-bin/.mpid
+# Application #
+###############
+web/media/[0-9]*
+web/media/suit
+web/media/favicon
 
-# Eclipse files
+# Services pid files #
+######################
+bin/.spid
+bin/.elpid
+bin/.tspid
+
+# Symfony directories #
+#######################
+web/bundles/
+app/cache/
+app/logs/
+app/bootstrap.php.cache
+app/config/parameters.yml
+vendor/
+composer.lock
+
+# Eclipse files #
+#################
 .buildpath
 .project
 .settings
+
+# SQL #
+#######
+*.sql
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+*~
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db

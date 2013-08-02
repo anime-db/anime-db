@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>Go to the first page</source>
+                <target>Перейти на первую страницу</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>Go to the previous page</source>
+                <target>Перейти на предыдущую страницу</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>Go to page number: %page%</source>
+                <target>Перейти на страницу номер: %page%</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>Go to the next page</source>
+                <target>Перейти на следующую страницу</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>Go to the last page</source>
+                <target>Перейти на последнюю страницу</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>Current page</source>
+                <target>Текущая страница</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -1,0 +1,4 @@
+<div class="popup"{% if popup_id is defined %} id="{{ popup_id }}"{% endif %}>
+<button type="button" class="bt-popup-close" title="{% trans %}Close pop-up window{% endtrans %}">{% trans %}Close pop-up window{% endtrans %}</button>
+{% block content %}{% endblock %}
+</div>
