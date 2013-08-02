@@ -21,9 +21,6 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-    #form:
-    #    resources:
-    #        - 'AnimeDBCatalogBundle:Form:fields.html.twig'
 
 # Assetic Configuration
 assetic:
@@ -71,10 +68,10 @@ avalanche_imagine:
     filters:
         card_cover:
             type:    thumbnail
-            options: { size: [240, 300], mode: outbound }
+            options: { size: %avalanche_card%, mode: outbound }
         home_cover:
             type:    thumbnail
-            options: { size: [200, 250], mode: outbound }
+            options: { size: %avalanche_catalog%, mode: outbound }
         frame:
             type:    thumbnail
-            options: { size: [190, 142], mode: outbound } # 12:9
+            options: { size: %avalanche_frame%, mode: outbound }

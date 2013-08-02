@@ -13,3 +13,6 @@ parameters:
     mailer_password: null
     locale: ru
     secret: a996943667c670ed1dcd4fb3822fd659
+    avalanche_card: [240, 300]
+    avalanche_catalog: [200, 250]
+    avalanche_frame: [190, 142]
