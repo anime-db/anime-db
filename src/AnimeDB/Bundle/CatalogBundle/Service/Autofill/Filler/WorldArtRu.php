@@ -26,6 +26,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use AnimeDB\Bundle\CatalogBundle\Entity\Field\Image as ImageField;
 use Symfony\Component\Validator\Validator;
 use AnimeDB\Bundle\CatalogBundle\Service\Autofill\Search\Item as ItemSearch;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Autofill from site world-art.ru
@@ -282,8 +283,17 @@ class WorldArtRu implements Filler
             if ($url[0] == '/') {
                 $url = self::HOST.substr($url, 1);
             }
+            $name = iconv('cp1251', 'utf-8', $name);
+            if (!preg_match('/id=(?<id>\d+)/', $url, $mat)) {
+                throw new NotFoundHttpException('Incorrect URL for found item');
+            }
             return [
-                new ItemSearch(iconv('cp1251', 'utf-8', $name), $url, '')
+                new ItemSearch(
+                    $name,
+                    $url,
+                    self::HOST.'animation/img/'.(ceil($mat['id']/1000)*1000).'/'.$mat['id'].'/1.jpg',
+                    ''
+                )
             ];
         }
 
@@ -295,11 +305,13 @@ class WorldArtRu implements Filler
             // has link on source
             if ($link->length &&
                 ($href = $link->item(0)->getAttribute('href')) &&
-                ($name = $link->item(0)->nodeValue)
+                ($name = $link->item(0)->nodeValue) &&
+                preg_match('/id=(?<id>\d+)/', $href, $mat)
             ) {
                 $list[] = new ItemSearch(
                     str_replace(["\r\n", "\n"], ' ', $name),
                     self::HOST.$href,
+                    self::HOST.'animation/img/'.(ceil($mat['id']/1000)*1000).'/'.$mat['id'].'/1.jpg',
                     trim(str_replace($name, '', $el->nodeValue))
                 );
             }
@@ -327,6 +339,12 @@ class WorldArtRu implements Filler
         $xpath = new \DOMXPath($dom);
         $nodes = $xpath->query(self::XPATH_FOR_FILL);
 
+        // item id from source
+        $id = 0;
+        if (preg_match('/id=(?<id>\d+)/', $source, $mat)) {
+            $id = (int)$mat['id'];
+        }
+
         $item = new Item();
 
         // add source link on world-art
@@ -347,7 +365,7 @@ class WorldArtRu implements Filler
         }
 
         // add cover
-        $item->setCover($this->getCover($xpath, $body));
+        $item->setCover($this->getCover($id));
 
         // fill main data
         $head = $xpath->query('table[3]/tr[2]/td[3]', $body);
@@ -357,7 +375,7 @@ class WorldArtRu implements Filler
         $this->fillHeadData($item, $xpath, $head->item(0));
 
         // fill body data
-        $this->fillBodyData($item, $xpath, $body, $source);
+        $this->fillBodyData($item, $xpath, $body, $id);
         return $item;
     }
 
@@ -377,24 +395,18 @@ class WorldArtRu implements Filler
     }
 
     /**
-     * Get cover from source
+     * Get cover from source id
      *
-     * @param \DOMXPath $xpath
-     * @param \DOMElement $body
+     * @param string $id
      *
      * @return string|null
      */
-    private function getCover(\DOMXPath $xpath, \DOMElement $body) {
-        $imgs = $xpath->query('table/tr/td//img', $body);
-        if ($imgs->length) {
-            $src = $this->getAttrAsArray($imgs->item(0))['src'];
-            if (strpos($src, 'http://') === false) {
-                $src = self::HOST.'animation/'.$src;
-            }
-            if (preg_match('/\/(?<id>\d+)\/(?<file>\d+\.(?:jpe?g|png|gif))$/', $src, $mat)) {
-                return $this->uploadImage($src, $mat['id'].'/'.$mat['file']);
-            }
-        }
+    private function getCover($id) {
+        $name = (ceil($id/1000)*1000).'/'.$id.'/1.jpg';
+        $cover = self::HOST.'animation/img/'.$name;
+        try {
+            return $this->uploadImage($cover, $name);
+        } catch (\Exception $e) {}
         return null;
     }
 
@@ -518,17 +530,11 @@ class WorldArtRu implements Filler
      * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item $item
      * @param \DOMXPath $xpath
      * @param \DOMElement $body
-     * @param string $source
+     * @param integer $id
      *
      * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
      */
-    private function fillBodyData(Item $item, \DOMXPath $xpath, \DOMElement $body, $source) {
-        // id from source
-        $id = 0;
-        if (preg_match('/id=(?<id>\d+)/', $source, $mat)) {
-            $id = $mat['id'];
-        }
-
+    private function fillBodyData(Item $item, \DOMXPath $xpath, \DOMElement $body, $id) {
         for ($i = 0; $i < $body->childNodes->length; $i++) {
             if ($value = trim($body->childNodes->item($i)->nodeValue)) {
                 switch ($value) {

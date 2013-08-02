@@ -11,8 +11,14 @@
 	<ul>
 		{% for item in list %}
 			<li>
-				<a href="{{ path('filler_fill') }}?filler_get[url]={{ item.source|url_encode }}">{{ item.name }}</a>
-				<div>{{ item.description|nl2br }}</div>
+				<a href="{{ path('filler_fill') }}?filler_get[url]={{ item.source|url_encode }}" class="image">
+					<img src="{{ item.image }}" alt="{{ item.name }}" />
+				</a>
+				<div class="info">
+					<a href="{{ path('filler_fill') }}?filler_get[url]={{ item.source|url_encode }}">{{ item.name }}</a>
+					<div>{{ item.description|nl2br }}</div>
+				</div>
+				<br clear="both">
 			</li>
 		{% endfor %}
 	</ul>

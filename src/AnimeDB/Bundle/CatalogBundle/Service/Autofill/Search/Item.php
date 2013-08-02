@@ -33,6 +33,13 @@ class Item
     protected $source = '';
 
     /**
+     * Image
+     *
+     * @var string
+     */
+    protected $image = '';
+
+    /**
      * Description
      *
      * @var string
@@ -44,12 +51,14 @@ class Item
      *
      * @param string $name
      * @param string $source
+     * @param string $image
      * @param string $description
      */
-    public function __construct($name, $source, $description)
+    public function __construct($name, $source, $image, $description)
     {
         $this->name = $name;
         $this->source = $source;
+        $this->image = $image;
         $this->description = $description;
     }
 
@@ -71,6 +80,16 @@ class Item
     public function getSource()
     {
         return $this->source;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 
     /**

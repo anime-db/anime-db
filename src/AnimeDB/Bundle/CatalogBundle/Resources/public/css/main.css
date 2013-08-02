@@ -397,7 +397,21 @@ h1.logo a span {
 	list-style: none;
 	margin-bottom: 10px;
 }
-.b-filler-search a {
+.b-filler-search .image {
+	width: 120px;
+	height: 150px;
+	text-align: center;
+	float: left;
+}
+.b-filler-search .image img {
+	max-width: 120px;
+	max-height: 150px;
+}
+.b-filler-search .info {
+	margin-left: 15px;
+	float: left;
+}
+.b-filler-search .info a {
 	margin-bottom: 3px;
 	display: block;
 }
