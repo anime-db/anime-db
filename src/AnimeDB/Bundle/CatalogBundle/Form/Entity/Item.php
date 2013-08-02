@@ -64,16 +64,6 @@ class Item extends AbstractType
                 'label'    => 'Number of episodes',
             ])
             ->add('duration')
-            ->add('images', 'collection', [
-                'type'         => new Image(),
-                'allow_add'    => true,
-                'by_reference' => false,
-                'allow_delete' => true,
-                'label'        => 'Other images',
-                'options'      => [
-                    'required' => false
-                ],
-            ])
             ->add('type', 'entity', [
                 'class'    => 'AnimeDBCatalogBundle:Type',
                 'property' => 'name'
@@ -110,6 +100,16 @@ class Item extends AbstractType
                 'by_reference' => false,
                 'allow_delete' => true,
                 'label'        => 'External sources',
+                'options'      => [
+                    'required' => false
+                ],
+            ])
+            ->add('images', 'collection', [
+                'type'         => new Image(),
+                'allow_add'    => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'label'        => 'Other images',
                 'options'      => [
                     'required' => false
                 ],
