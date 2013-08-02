@@ -334,6 +334,14 @@
                 <source>ep.</source>
                 <target>эп.</target>
             </trans-unit>
+            <trans-unit id="84">
+                <source>Date added</source>
+                <target>Дата добавления</target>
+            </trans-unit>
+            <trans-unit id="85">
+                <source>Last updated</source>
+                <target>Последнее обновление</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

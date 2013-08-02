@@ -92,6 +92,12 @@
 					</ul>
 				</div>
 			{% endif %}
+			<div>
+				<strong>{% trans %}Date added{% endtrans %}</strong> {{ item.dateadd|date('d.m.Y') }}
+			</div>
+			<div>
+				<strong>{% trans %}Last updated{% endtrans %}</strong> {{ item.dateupdate|date('d.m.Y') }}
+			</div>
 		</article>
 	</section>
 	{% if item.genres is not empty %}
