@@ -212,7 +212,7 @@ class Item
     /**
      * Date add item
      *
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      *
      * @var \DateTime
      */
@@ -221,7 +221,7 @@ class Item
     /**
      * Date last update item
      *
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      *
      * @var \DateTime
      */
