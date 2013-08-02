@@ -266,10 +266,6 @@
                 <source>Sort by</source>
                 <target>Сортировать по</target>
             </trans-unit>
-            <trans-unit id="67">
-                <source>Date add</source>
-                <target>Дата добавления</target>
-            </trans-unit>
             <trans-unit id="68">
                 <source>Sort direction</source>
                 <target>Направление сортировки</target>
