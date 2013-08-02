@@ -79,7 +79,7 @@ where **IP_ADDRES** is the IP address of the computer on which the application i
 
 To start the application as a service, you need edit startup-file of the application to specify the path to it
 
-    vim bin/service
+    vim ./animedb
 
 Set real path to application
 
