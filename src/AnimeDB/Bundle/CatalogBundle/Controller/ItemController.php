@@ -31,18 +31,14 @@ class ItemController extends Controller
     /**
      * Show item
      *
-     * @param integer $id
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item|null $item
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showAction($id)
+    public function showAction(Item $item = null)
     {
-        /* @var $item \AnimeDB\Bundle\CatalogBundle\Entity\Item */
-        $item = $this->getDoctrine()
-            ->getRepository('AnimeDBCatalogBundle:Item')
-            ->find($id);
         if (!$item) {
-            throw $this->createNotFoundException('No found items for id '.$id);
+            throw $this->createNotFoundException('No item found');
         }
         return $this->render('AnimeDBCatalogBundle:Item:show.html.twig', ['item' => $item]);
     }
@@ -104,19 +100,15 @@ class ItemController extends Controller
     /**
      * Change item
      *
-     * @param integer $id
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item|null $item
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function changeAction($id, Request $request)
+    public function changeAction(Item $item = null, Request $request)
     {
-        /* @var $item \AnimeDB\Bundle\CatalogBundle\Entity\Item */
-        $item = $this->getDoctrine()
-            ->getRepository('AnimeDBCatalogBundle:Item')
-            ->find($id);
         if (!$item) {
-            throw $this->createNotFoundException('No found items for id '.$id);
+            throw $this->createNotFoundException('No item found');
         }
 
         /* @var $form \Symfony\Component\Form\Form */
@@ -144,30 +136,32 @@ class ItemController extends Controller
     /**
      * Remove item
      *
-     * @param integer $id
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item|null $item
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function removeAction($id)
+    public function removeAction(Item $item = null)
     {
-        // TODO requires the implementation of
+        if (!$item) {
+            throw $this->createNotFoundException('No item found');
+        }
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($item);
+        $em->flush();
         return $this->redirect($this->generateUrl('home'));
     }
 
     /**
      * Complement item directory
      *
-     * @param integer $id
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item|null $item
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function complementAction($id) {
-        /* @var $item \AnimeDB\Bundle\CatalogBundle\Entity\Item */
-        $item = $this->getDoctrine()
-            ->getRepository('AnimeDBCatalogBundle:Item')
-            ->find($id);
+    public function complementAction(Item $item = null)
+    {
         if (!$item) {
-            throw $this->createNotFoundException('No found items for id '.$id);
+            throw $this->createNotFoundException('No item found');
         }
 
         // TODO requires the implementation complement directory
