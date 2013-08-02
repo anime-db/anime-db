@@ -12,7 +12,7 @@
 		{% for item in list %}
 			<li>
 				<a href="{{ path('filler_fill') }}?filler_get[url]={{ item.source|url_encode }}" class="image">
-					<img src="{{ item.image }}" alt="{{ item.name }}" />
+					<img src="{{ item.image|dummy('card') }}" alt="{{ item.name }}" />
 				</a>
 				<div class="info">
 					<a href="{{ path('filler_fill') }}?filler_get[url]={{ item.source|url_encode }}">{{ item.name }}</a>

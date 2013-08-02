@@ -44,6 +44,7 @@ class TwigExtension extends \Twig_Extension
     {
         return [
             'favicon' => new \Twig_Filter_Method($this, 'favicon'),
+            'dummy' => new \Twig_Filter_Method($this, 'dummy')
         ];
     }
 
@@ -57,6 +58,19 @@ class TwigExtension extends \Twig_Extension
     public function favicon($url)
     {
         return $url ? $this->router->generate('media_favicon', ['host' => parse_url($url, PHP_URL_HOST)]) : false;
+    }
+
+    /**
+     * Dummy for images
+     *
+     * @param string $path
+     * @param string $filter
+     *
+     * @return boolean
+     */
+    public function dummy($path, $filter)
+    {
+        return $path ?: '/media/dummy/'.$filter.'.jpg';
     }
 
     /**
