@@ -339,6 +339,11 @@ class WorldArtRu implements Filler
         $xpath = new \DOMXPath($dom);
         $nodes = $xpath->query(self::XPATH_FOR_FILL);
 
+        /* @var $body \DOMElement */
+        if (!($body = $nodes->item(4))) {
+            throw new \LogicException('Incorrect data structure at source');
+        }
+
         // item id from source
         $id = 0;
         if (preg_match('/id=(?<id>\d+)/', $source, $mat)) {
@@ -358,10 +363,6 @@ class WorldArtRu implements Filler
             if (strpos($link['href'], 'http://') !== false && strpos($link['href'], self::HOST) === false) {
                 $item->addSource((new Source())->setUrl($link['href']));
             }
-        }
-        /* @var $body \DOMElement */
-        if (!($body = $nodes->item(4))) {
-            throw new \LogicException('Incorrect data structure at source');
         }
 
         // add cover
