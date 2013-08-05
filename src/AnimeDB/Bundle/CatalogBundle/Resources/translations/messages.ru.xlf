@@ -1,0 +1,343 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>The product is licensed under the %license%.</source>
+                <target>Продукт распространяется под лицензией %license%.</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>%AnimeDB% is a system for making the home catalog of the anime. The system is designed for home use only.</source>
+                <target>%AnimeDB% это система для составления домашнего каталога аниме. Система предназначена только для домашнего использования.</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>Search options</source>
+                <target>Параметры поиска</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>Search results</source>
+                <target>Результаты поиска</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>Search this site</source>
+                <target>Поиск по сайту</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>Add record</source>
+                <target>Добавить запись</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>Change record</source>
+                <target>Изменить запись</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>Autofill record</source>
+                <target>Автозаполнениие записи</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>Delete record</source>
+                <target>Удалить запись</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>Search</source>
+                <target>Поиск</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>Add manually</source>
+                <target>Добавление вручную</target>
+            </trans-unit>
+            <trans-unit id="12">
+                <source>From source</source>
+                <target>Из источника</target>
+            </trans-unit>
+            <trans-unit id="13">
+                <source>Name</source>
+                <target>Название</target>
+            </trans-unit>
+            <trans-unit id="14">
+                <source>Filler</source>
+                <target>Наполнитель</target>
+            </trans-unit>
+            <trans-unit id="15">
+                <source>URL address</source>
+                <target>URL адрес</target>
+            </trans-unit>
+            <trans-unit id="16">
+                <source>Manually</source>
+                <target>Вручную</target>
+            </trans-unit>
+            <trans-unit id="17">
+                <source><![CDATA[Jump to the <a href="%link%">form</a> of drafting record.]]></source>
+                <target><![CDATA[Перейти к <a href="%link%">форме</a> составления описания записи.]]></target>
+            </trans-unit>
+            <trans-unit id="18">
+                <source>Find</source>
+                <target>Найти</target>
+            </trans-unit>
+            <trans-unit id="19">
+                <source>Add</source>
+                <target>Добавить</target>
+            </trans-unit>
+            <trans-unit id="20">
+                <source>Source</source>
+                <target>Источник</target>
+            </trans-unit>
+            <trans-unit id="21">
+                <source>List of results</source>
+                <target>Список результатов</target>
+            </trans-unit>
+            <trans-unit id="22">
+                <source>Nothing was found</source>
+                <target>Ничего не найдено</target>
+            </trans-unit>
+            <trans-unit id="23">
+                <source>Select the entry you want to add</source>
+                <target>Выберите запись, которую Вы хотите добавить</target>
+            </trans-unit>
+            <trans-unit id="24">
+                <source>Unable to find any filler for the specified source</source>
+                <target>Не найден ни один наполнитель для указанного источника</target>
+            </trans-unit>
+            <trans-unit id="25">
+                <source>Names</source>
+                <target>Названия</target>
+            </trans-unit>
+            <trans-unit id="26">
+                <source>Source</source>
+                <target>Источник</target>
+            </trans-unit>
+            <trans-unit id="27">
+                <source>Date start</source>
+                <target>Дата начала</target>
+            </trans-unit>
+            <trans-unit id="28">
+                <source>Date end</source>
+                <target>Дата окончания</target>
+            </trans-unit>
+            <trans-unit id="29">
+                <source>Duration</source>
+                <target>Продолжительность</target>
+            </trans-unit>
+            <trans-unit id="30">
+                <source>Summary</source>
+                <target>Описание</target>
+            </trans-unit>
+            <trans-unit id="31">
+                <source>Path</source>
+                <target>Путь</target>
+            </trans-unit>
+            <trans-unit id="32">
+                <source>Episodes</source>
+                <target>Эпизоды</target>
+            </trans-unit>
+            <trans-unit id="33">
+                <source>Translate</source>
+                <target>Переводы</target>
+            </trans-unit>
+            <trans-unit id="34">
+                <source>File info</source>
+                <target>Информация о файле</target>
+            </trans-unit>
+            <trans-unit id="35">
+                <source>Image</source>
+                <target>Изображение</target>
+            </trans-unit>
+            <trans-unit id="36">
+                <source>Images</source>
+                <target>Изображения</target>
+            </trans-unit>
+            <trans-unit id="37">
+                <source>Type</source>
+                <target>Тип</target>
+            </trans-unit>
+            <trans-unit id="38">
+                <source>Genres</source>
+                <target>Жанры</target>
+            </trans-unit>
+            <trans-unit id="39">
+                <source>Manufacturer</source>
+                <target>Производитель</target>
+            </trans-unit>
+            <trans-unit id="40">
+                <source>Storage</source>
+                <target>Хранилище</target>
+            </trans-unit>
+            <trans-unit id="41">
+                <source>Sources</source>
+                <target>Источники</target>
+            </trans-unit>
+            <trans-unit id="42">
+                <source>Main name</source>
+                <target>Основное название</target>
+            </trans-unit>
+            <trans-unit id="43">
+                <source>Other names</source>
+                <target>Другие названия</target>
+            </trans-unit>
+            <trans-unit id="44">
+                <source>Cover</source>
+                <target>Обложка</target>
+            </trans-unit>
+            <trans-unit id="45">
+                <source>Other images</source>
+                <target>Другие изображения</target>
+            </trans-unit>
+            <trans-unit id="46">
+                <source>External sources</source>
+                <target>Внешние источники</target>
+            </trans-unit>
+            <trans-unit id="47">
+                <source>URL adress</source>
+                <target>URL адрес</target>
+            </trans-unit>
+            <trans-unit id="48">
+                <source>Can`t get content from the specified source</source>
+                <target>Не удается получить содержимое из указанного источника</target>
+            </trans-unit>
+            <trans-unit id="49">
+                <source>Add record</source>
+                <target>Добавление записи</target>
+            </trans-unit>
+            <trans-unit id="50">
+                <source>Change</source>
+                <target>Изменить</target>
+            </trans-unit>
+            <trans-unit id="51">
+                <source>Complement directory</source>
+                <target>Укомплектовать директорию</target>
+            </trans-unit>
+            <trans-unit id="52">
+                <source>The path to the files</source>
+                <target>Путь к файлам</target>
+            </trans-unit>
+            <trans-unit id="53">
+                <source>Record</source>
+                <target>Запись</target>
+            </trans-unit>
+            <trans-unit id="54">
+                <source>Information</source>
+                <target>Информация</target>
+            </trans-unit>
+            <trans-unit id="55">
+                <source>The duration of the episode</source>
+                <target>Длительность эпизода</target>
+            </trans-unit>
+            <trans-unit id="56">
+                <source>Status</source>
+                <target>Статус</target>
+            </trans-unit>
+            <trans-unit id="57">
+                <source>came out in</source>
+                <target>вышло в</target>
+            </trans-unit>
+            <trans-unit id="58">
+                <source>goes from</source>
+                <target>выходит с</target>
+            </trans-unit>
+            <trans-unit id="59">
+                <source>From</source>
+                <target>С</target>
+            </trans-unit>
+            <trans-unit id="60">
+                <source>from</source>
+                <target>с</target>
+            </trans-unit>
+            <trans-unit id="61">
+                <source>to</source>
+                <target>по</target>
+            </trans-unit>
+            <trans-unit id="62">
+                <source>y.</source>
+                <target>г.</target>
+            </trans-unit>
+            <trans-unit id="63">
+                <source>Production</source>
+                <target>Производство</target>
+            </trans-unit>
+            <trans-unit id="64">
+                <source>Alternative names</source>
+                <target>Альтернативные названия</target>
+            </trans-unit>
+            <trans-unit id="65">
+                <source>Genre</source>
+                <target>Жанр</target>
+            </trans-unit>
+            <trans-unit id="66">
+                <source>Sort by</source>
+                <target>Сортировать по</target>
+            </trans-unit>
+            <trans-unit id="68">
+                <source>Sort direction</source>
+                <target>Направление сортировки</target>
+            </trans-unit>
+            <trans-unit id="69">
+                <source>Ascending</source>
+                <target>По возрастанию</target>
+            </trans-unit>
+            <trans-unit id="70">
+                <source>Descending</source>
+                <target>По убыванию</target>
+            </trans-unit>
+            <trans-unit id="71">
+                <source>Not specified source</source>
+                <target>Не указан источник</target>
+            </trans-unit>
+            <trans-unit id="72">
+                <source>Add</source>
+                <target>Добавить</target>
+            </trans-unit>
+            <trans-unit id="73">
+                <source>Remove</source>
+                <target>Удалить</target>
+            </trans-unit>
+            <trans-unit id="74">
+                <source>Image from URL</source>
+                <target>Кортинка из URL</target>
+            </trans-unit>
+            <trans-unit id="75">
+                <source>Local image</source>
+                <target>Локальная кортинка</target>
+            </trans-unit>
+            <trans-unit id="76">
+                <source>Add image</source>
+                <target>Добавить картинку</target>
+            </trans-unit>
+            <trans-unit id="77">
+                <source>Change image</source>
+                <target>Изменить картинку</target>
+            </trans-unit>
+            <trans-unit id="78">
+                <source>Change path</source>
+                <target>Изменить путь</target>
+            </trans-unit>
+            <trans-unit id="79">
+                <source>Close pop-up window</source>
+                <target>Закрыть всплывающее окно</target>
+            </trans-unit>
+            <trans-unit id="80">
+                <source>Add row</source>
+                <target>Добавить строку</target>
+            </trans-unit>
+            <trans-unit id="81">
+                <source>Remove row</source>
+                <target>Удалить строку</target>
+            </trans-unit>
+            <trans-unit id="82">
+                <source>Number of episodes</source>
+                <target>Число эпизодов</target>
+            </trans-unit>
+            <trans-unit id="83">
+                <source>ep.</source>
+                <target>эп.</target>
+            </trans-unit>
+            <trans-unit id="84">
+                <source>Date added</source>
+                <target>Дата добавления</target>
+            </trans-unit>
+            <trans-unit id="85">
+                <source>Last updated</source>
+                <target>Последнее обновление</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

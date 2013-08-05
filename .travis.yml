@@ -1,0 +1,12 @@
+language: php
+php:
+    - 5.4
+
+notifications:
+    email: dev@anime-db.org
+
+before_script:
+    - composer install
+
+script:
+    - phpunit -c app/

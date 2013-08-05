@@ -1,0 +1,46 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+	<link href="{{ asset('/bundles/animedbcatalog/css/jquery-ui/jquery-ui-1.8.16.custom.css') }}" type="text/css" rel="stylesheet">
+	<link href="{{ asset('/bundles/animedbcatalog/css/main.css') }}" type="text/css" rel="stylesheet">
+{% endblock %}
+
+{% block javascripts %}
+	<script type="text/javascript" src="{{ asset('/bundles/animedbcatalog/js/jquery-1.10.2.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('/bundles/animedbcatalog/js/jquery-ui-1.8.16.custom.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('/bundles/animedbcatalog/js/main.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+<div id="wrapper">
+	<div id="header">
+		<h1 class="logo">
+			<a href="{{ path('home') }}" title="Home Anime DB"><span>Home Anime DB</span></a>
+		</h1>
+		<div id="navigation">
+			<div class="left"></div>
+			<ul>
+				<li><a href="{{ path('home_search') }}">{% trans %}Search{% endtrans %}</a></li>
+				<li class="last"><a href="{{ path('item_add') }}">{% trans %}Add record{% endtrans %}</a></li>
+			</ul>
+			<div class="right"></div>
+		</div>
+	</div>
+	<div id="content-wrapper">
+		<div class="content">
+			{% block content %}{% endblock %}
+		</div>
+	</div>
+	<div id="footer">
+		<div class="license">{% trans with {'%license%': '<a href="http://opensource.org/licenses/GPL-3.0">GPLv3</a>'}%}The product is licensed under the %license%.{% endtrans %}</div>
+		<div class="copy">&copy; 2011-{{ "now"|date("Y") }} <a href="http://anime-db.org/">AnimeDB</a></div>
+	</div>
+	<div id="line"></div>
+	<div id="bg-buttom"></div>
+	<div id="bg-left"></div>
+	<div id="bg-right"></div>
+</div>
+<div id="cap"></div>
+</body>
+</html>
+{% endblock %}
