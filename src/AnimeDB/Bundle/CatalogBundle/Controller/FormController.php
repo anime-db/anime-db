@@ -138,10 +138,14 @@ class FormController extends Controller
      * @return string
      */
     private function getUserHomeDir() {
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            return 'C:\Documents and Settings\\'.get_current_user().'\My Documents\\';
+        if ($home = getenv('HOME')) {
+            return $home;
+        } elseif (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
+            return '/home/'.get_current_user();
+        } elseif (is_dir($win7path = 'C:\Users'.DIRECTORY_SEPARATOR.get_current_user())) { // is Windows 7 or Vista
+            return $win7path;
         } else {
-            return '/home/'.get_current_user().'/';
+            return 'C:\Documents and Settings'.DIRECTORY_SEPARATOR.get_current_user();
         }
     }
 }
