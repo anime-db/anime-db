@@ -272,6 +272,7 @@ FormLocalPathModelPopup.prototype = {
 		this.form.ajaxSubmit({
 			dataType: 'json',
 			success: function(data) {
+				that.path.val(data.path);
 				// remove old folders
 				that.clearFoldersList();
 
