@@ -37,7 +37,7 @@ class FormController extends Controller
     {
         $form = $this->createForm(
             new ChoiceLocalPath(),
-            ['path' => $request->get('path') ?: $this->getUserHomeDir()]
+            ['path' => $request->get('path') ?: '']
         );
 
         return $this->render('AnimeDBCatalogBundle:Form:local_path.html.twig', [
@@ -86,7 +86,10 @@ class FormController extends Controller
         $d->close();
         ksort($folders);
 
-        return new JsonResponse(['folders' => array_values($folders)]);
+        return new JsonResponse([
+            'path' => $path,
+            'folders' => array_values($folders)
+        ]);
     }
 
     /**
@@ -138,10 +141,14 @@ class FormController extends Controller
      * @return string
      */
     private function getUserHomeDir() {
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            return 'C:\Documents and Settings\\'.get_current_user().'\My Documents\\';
+        if ($home = getenv('HOME')) {
+            return $home;
+        } elseif (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
+            return '/home/'.get_current_user();
+        } elseif (is_dir($win7path = 'C:\Users'.DIRECTORY_SEPARATOR.get_current_user())) { // is Windows 7 or Vista
+            return $win7path;
         } else {
-            return '/home/'.get_current_user().'/';
+            return 'C:\Documents and Settings'.DIRECTORY_SEPARATOR.get_current_user();
         }
     }
 }
