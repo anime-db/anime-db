@@ -251,7 +251,7 @@ FormLocalPathModelPopup.prototype = {
 			that.change();
 			return false;
 		});
-		this.path.unbind('change').bind('change', function() {
+		this.path.unbind('change keyup').bind('change keyup', function() {
 			that.change();
 			return false;
 		});
@@ -261,6 +261,10 @@ FormLocalPathModelPopup.prototype = {
 	change: function(value) {
 		if (typeof(value) !== 'undefined') {
 			this.path.val(value);
+		}
+		// return if not full path
+		if (this.path.val().length && !(/[\\\/]$/.test(this.path.val()))) {
+			return false;
 		}
 
 		// start updating
