@@ -259,9 +259,10 @@ FormLocalPathModelPopup.prototype = {
 		this.popup.show();
 	},
 	change: function(value) {
-		if (typeof(value) != 'undefined') {
-			this.path.val(value);
+		if (typeof(value) !== 'undefined' || value != '') {
+			return false;
 		}
+		this.path.val(value);
 
 		// start updating
 		this.popup.body.addClass('updating');
