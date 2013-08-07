@@ -37,7 +37,7 @@ class FormController extends Controller
     {
         $form = $this->createForm(
             new ChoiceLocalPath(),
-            ['path' => $request->get('path') ?: $this->getUserHomeDir()]
+            ['path' => $request->get('path') ?: '']
         );
 
         return $this->render('AnimeDBCatalogBundle:Form:local_path.html.twig', [
@@ -86,7 +86,10 @@ class FormController extends Controller
         $d->close();
         ksort($folders);
 
-        return new JsonResponse(['folders' => array_values($folders)]);
+        return new JsonResponse([
+            'path' => $path,
+            'folders' => array_values($folders)
+        ]);
     }
 
     /**
