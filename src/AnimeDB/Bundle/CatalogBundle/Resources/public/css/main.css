@@ -528,19 +528,21 @@ h1.logo a span {
 	float: left;
 }
 .list-items .item:hover .name {
-	display: block;
-	text-decoration: none;
+	opacity: 0.8;
+	filter: alpha(Opacity=80);
 }
 .list-items .name {
-	display: none;
 	position: absolute;
 	left: 0;
 	top: 0;
 	width: 200px;
 	height: 250px;
 	background: #222;
-	opacity: 0.8;
-	filter: alpha(Opacity=80);
+	text-decoration: none;
+	opacity: 0;
+	filter: alpha(Opacity=0);
+	transition: opacity .20s ease-in-out;
+	-webkit-transition: opacity .20s ease-in-out;
 }
 .list-items .name strong {
 	display: block;
@@ -805,6 +807,7 @@ div.ui-widget div.ui-state-highlight {
 	height: 17px;
 	padding: 0;
 	text-indent: 17px;
+	overflow: hidden;
 }
 .icon-plus {
 	background: #33bb33 url(../images/incut-plus.png) no-repeat center center;
