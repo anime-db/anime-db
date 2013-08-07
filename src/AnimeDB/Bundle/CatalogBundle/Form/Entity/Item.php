@@ -77,7 +77,11 @@ class Item extends AbstractType
                 'class'    => 'AnimeDBCatalogBundle:Country',
                 'property' => 'name'
             ])
-            ->add('path', new LocalPathField())
+            ->add('path', new LocalPathField(), [
+                'attr' => [
+                    'placeholder' => $this->getUserHomeDir()
+                ]
+            ])
             ->add('translate', null, [
                 'required' => false
             ])
@@ -135,5 +139,22 @@ class Item extends AbstractType
     public function getName()
     {
         return 'animedb_catalogbundle_entity_item';
+    }
+
+    /**
+     * Get user home dir
+     *
+     * @return string
+     */
+    private function getUserHomeDir() {
+        if ($home = getenv('HOME')) {
+            return $home;
+        } elseif (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
+            return '/home/'.get_current_user();
+        } elseif (is_dir($win7path = 'C:\Users'.DIRECTORY_SEPARATOR.get_current_user())) { // is Windows 7 or Vista
+            return $win7path;
+        } else {
+            return 'C:\Documents and Settings'.DIRECTORY_SEPARATOR.get_current_user();
+        }
     }
 }
