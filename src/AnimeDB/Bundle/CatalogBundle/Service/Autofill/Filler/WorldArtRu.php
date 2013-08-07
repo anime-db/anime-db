@@ -216,7 +216,7 @@ class WorldArtRu implements Filler
         'ТВ-спэшл' => ['speshl', 'TV-speshl'],
         'OVA' => ['ova', 'OVA'],
         'ONA' => ['ona', 'ONA'],
-        'OAV' => ['oav', 'OAV'],
+        'OAV' => ['ova', 'OVA'],
         'полнометражный фильм' => ['feature', 'Feature'],
         'короткометражный фильм' => ['featurette', 'Featurette'],
         'музыкальное видео' => ['music', 'Music video'],
