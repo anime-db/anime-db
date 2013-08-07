@@ -807,6 +807,7 @@ div.ui-widget div.ui-state-highlight {
 	height: 17px;
 	padding: 0;
 	text-indent: 17px;
+	overflow: hidden;
 }
 .icon-plus {
 	background: #33bb33 url(../images/incut-plus.png) no-repeat center center;
