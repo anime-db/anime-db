@@ -13,27 +13,28 @@ namespace AnimeDB\Bundle\CatalogBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
- * Application settings
+ * Storages
  *
  * @package AnimeDB\Bundle\CatalogBundle\Controller
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class SettingsController extends Controller
+class StorageController extends Controller
 {
     /**
      * Storages list
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function storagesAction() {
+    public function listAction()
+    {
         $repository = $this->getDoctrine()->getRepository('AnimeDBCatalogBundle:Storage');
         $storages = $repository->createQueryBuilder('s')
             ->orderBy('s.id', 'DESC')
             ->getQuery()
             ->getResult();
 
-        return $this->render('AnimeDBCatalogBundle:Settings:storages.html.twig',
-            ['storages' => $storages]
-        );
+        return $this->render('AnimeDBCatalogBundle:Storage:list.html.twig', [
+            'storages' => $storages
+        ]);
     }
 }
