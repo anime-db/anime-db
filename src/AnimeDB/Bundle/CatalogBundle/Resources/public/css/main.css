@@ -858,20 +858,31 @@ div.ui-widget div.ui-state-highlight {
 /**
  * Icons
  */
-.icon {
+.icon,
+.icon-label {
+	display: inline-block;
 	background: none;
 	border: 0;
-	width: 17px;
-	height: 17px;
+	width: 16px;
+	height: 16px;
 	padding: 0;
-	text-indent: 17px;
+	text-indent: 16px;
 	overflow: hidden;
+	background-position: top left;
+	background-repeat: no-repeat;
+}
+.icon-label {
+	overflow: visible;
+	width: auto;
+	text-indent: 18px;
 }
 .icon-plus {
-	background: #33bb33 url(../images/incut-plus.png) no-repeat center center;
+	background-image: url(../images/incut-plus.png);
+	background-color: #33bb33;
 }
 .icon-minus {
-	background: #bbbbbb url(../images/incut-minus.png) no-repeat center center;
+	background-image: url(../images/incut-minus.png);
+	background-color: #bbbbbb;
 }
 .icon-plus,
 .icon-minus {
@@ -879,10 +890,26 @@ div.ui-widget div.ui-state-highlight {
 	-moz-border-radius: 50%;
 	border-radius: 50%;
 	box-shadow: 0 0 1px rgba(0,0,0,.3);
+	background-position: center center;
+	width: 17px;
+	height: 17px;
+	text-indent: 17px;
 }
 .icon-minus[disabled~=disabled] {
 	background-color: #dddddd;
 	cursor: default;
+}
+.icon-storage {
+	background-image: url(../images/storage.png);
+}
+.icon-storage-new {
+	background-image: url(../images/storage_new.png);
+}
+.icon-storage-delete {
+	background-image: url(../images/storage_delete.png);
+}
+.icon-storage-edit {
+	background-image: url(../images/storage_edit.png);
 }
 
 /**
@@ -897,4 +924,9 @@ div.ui-widget div.ui-state-highlight {
 }
 .storages-list h3:first-child {
 	margin-top: 0;
+}
+.storages-list .list .control {
+	width: 16px;
+}
+.storages-list .name {
 }

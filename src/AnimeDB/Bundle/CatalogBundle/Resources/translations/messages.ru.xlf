@@ -359,16 +359,16 @@
                 <target>Описание</target>
             </trans-unit>
             <trans-unit id="92">
-                <source>Number records</source>
-                <target>Число записей</target>
-            </trans-unit>
-            <trans-unit id="93">
                 <source>List of storages</source>
                 <target>Список хранилищ</target>
             </trans-unit>
-            <trans-unit id="94">
+            <trans-unit id="93">
                 <source><![CDATA[Jump to the <a href="%link%">form</a> of adding storage.]]></source>
                 <target><![CDATA[Перейти к <a href="%link%">форме</a> добавления хранилища.]]></target>
+            </trans-unit>
+            <trans-unit id="94">
+                <source>{0} No items in storage|{1} Is one item in storage|]1,Inf] %count% items in storage</source>
+                <target>{0} Нет записей в хранилище|{1} Одна запись в хранилище|]1,Inf] %count% записей в храниалище</target>
             </trans-unit>
         </body>
     </file>

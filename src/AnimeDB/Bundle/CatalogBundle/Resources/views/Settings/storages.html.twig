@@ -12,20 +12,24 @@
 			<tr>
 				<th>{% trans %}Name{% endtrans %}</th>
 				<th>{% trans %}Description{% endtrans %}</th>
-				<th>{% trans %}Number records{% endtrans %}</th>
 				<th>{% trans %}Path{% endtrans %}</th>
-				<th></th>
+				<th class="control"></th>
 			</tr>
 			{% for storage in storages %}
 				<tr>
-					<td><a href="{{ path('home_search', {'search_items[storage]': storage.id}) }}">{{ storage.name }}</a></td>
-					<td>{{ storage.description }}</td>
-					<td><a href="{{ path('home_search', {'search_items[storage]': storage.id}) }}">{{ storage.items.count }}</a></td>
-					<td></td>
 					<td>
-						<a href="">{% trans %}Change storage{% endtrans %}</a>
+						<a href="" title="{% trans %}Change storage{% endtrans %}" class="icon-label icon-storage">{{ storage.name }}</a>
+						(<a
+							href="{{ path('home_search', {'search_items[storage]': storage.id}) }}"
+							title="{{ '{0} No items in storage|{1} Is one item in storage|]1,Inf] %count% items in storage' | transchoice(storage.items.count) }}"
+						>{{ storage.items.count }}</a>)
+					</td>
+					<td>{{ storage.description }}</td>
+					<td></td>
+					<td class="control">
+						<a href="" class="icon icon-storage-edit">{% trans %}Change storage{% endtrans %}</a>
 						{% if storage.items.count == 0 %}
-							<a href="">{% trans %}Delete storage{% endtrans %}</a>
+							<a href="" class="icon icon-storage-delete">{% trans %}Delete storage{% endtrans %}</a>
 						{% endif %}
 					</td>
 				</tr>
