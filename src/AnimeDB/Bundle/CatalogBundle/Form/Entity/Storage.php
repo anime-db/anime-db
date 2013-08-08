@@ -31,8 +31,8 @@ class Storage extends AbstractType
     {
         $builder
             ->add('name', null, ['label' => 'Name'])
-            ->add('description', null, ['label' => 'Description'])
-            ->add('path', new LocalPathField(), ['label' => 'Path']);
+            ->add('path', new LocalPathField(), ['label' => 'Path'])
+            ->add('description', null, ['label' => 'Description']);
     }
 
     /**
