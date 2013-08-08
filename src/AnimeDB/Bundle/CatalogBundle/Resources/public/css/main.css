@@ -926,7 +926,7 @@ div.ui-widget div.ui-state-highlight {
 	margin-top: 0;
 }
 .storages-list .list .control {
-	width: 16px;
+	max-width: 16px;
 }
 .storages-list .name {
 }

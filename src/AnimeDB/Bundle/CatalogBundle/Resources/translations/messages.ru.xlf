@@ -367,8 +367,8 @@
                 <target><![CDATA[Перейти к <a href="%link%">форме</a> добавления хранилища.]]></target>
             </trans-unit>
             <trans-unit id="94">
-                <source>{0} No items in storage|{1} Is one item in storage|]1,Inf] %count% items in storage</source>
-                <target>{0} Нет записей в хранилище|{1} Одна запись в хранилище|]1,Inf] %count% записей в храниалище</target>
+                <source>{1} Is one item in storage|]1,Inf] %count% items in storage</source>
+                <target>{1} Одна запись в хранилище|]1,Inf] %count% записей в храниалище</target>
             </trans-unit>
         </body>
     </file>

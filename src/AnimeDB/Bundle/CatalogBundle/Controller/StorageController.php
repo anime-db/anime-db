@@ -42,7 +42,7 @@ class StorageController extends Controller
     }
 
     /**
-     * Storages list
+     * Change storages
      *
      * @param \AnimeDB\Bundle\CatalogBundle\Entity\Storage|null $storage
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -70,6 +70,35 @@ class StorageController extends Controller
 
         return $this->render('AnimeDBCatalogBundle:Storage:change.html.twig', [
             'storage' => $storage,
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * Add storages
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function addAction(Request $request)
+    {
+        $storage = new Storage();
+
+        /* @var $form \Symfony\Component\Form\Form */
+        $form = $this->createForm(new StorageForm(), $storage);
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($storage);
+                $em->flush();
+                return $this->redirect($this->generateUrl('storage_list'));
+            }
+        }
+
+        return $this->render('AnimeDBCatalogBundle:Storage:add.html.twig', [
             'form' => $form->createView()
         ]);
     }

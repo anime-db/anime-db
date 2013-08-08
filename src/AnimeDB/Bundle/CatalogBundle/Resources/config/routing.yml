@@ -92,3 +92,7 @@ storage_change:
     defaults: { _controller: AnimeDBCatalogBundle:Storage:change }
     requirements:
         id:  \d+
+
+storage_add:
+    pattern:  /settings/storage/add.html
+    defaults: { _controller: AnimeDBCatalogBundle:Storage:add }
