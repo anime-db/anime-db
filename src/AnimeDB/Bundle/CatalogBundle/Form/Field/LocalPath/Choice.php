@@ -28,16 +28,11 @@ class Choice extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            $placeholder = 'C:\Documents and Settings\\'.get_current_user().'\My Documents\\';
-        } else {
-            $placeholder = '/home/'.get_current_user().'/';
-        }
         $builder->add('path', 'text', [
             'label' => 'Path',
             'required' => true,
             'attr' => [
-                'placeholder' => $placeholder
+                'placeholder' => $this->getUserHomeDir()
             ]
         ]);
     }
@@ -49,5 +44,22 @@ class Choice extends AbstractType
     public function getName()
     {
         return 'local_path_popup';
+    }
+
+    /**
+     * Get user home dir
+     *
+     * @return string
+     */
+    private function getUserHomeDir() {
+        if ($home = getenv('HOME')) {
+            return $home;
+        } elseif (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
+            return '/home/'.get_current_user();
+        } elseif (is_dir($win7path = 'C:\Users'.DIRECTORY_SEPARATOR.get_current_user())) { // is Windows 7 or Vista
+            return $win7path;
+        } else {
+            return 'C:\Documents and Settings'.DIRECTORY_SEPARATOR.get_current_user();
+        }
     }
 }
