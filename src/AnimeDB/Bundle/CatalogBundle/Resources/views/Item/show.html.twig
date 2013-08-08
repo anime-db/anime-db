@@ -39,10 +39,10 @@
 		<header>{% trans %}Record{% endtrans %}</header>
 		<article>
 			<nav>
-				<!-- <a href="#fill {{ item.id }}" class="fill">{% trans %}Autofill record{% endtrans %}</a> -->
-				<!-- <a href="{{ path('item_complement', {'id': item.id, 'name': item.name}) }}" class="complement">{% trans %}Complement directory{% endtrans %}</a> -->
+				<!-- <a href="#fill" class="fill">{% trans %}Autofill record{% endtrans %}</a> -->
+				<!-- <a href="#item_complement" class="complement">{% trans %}Complement directory{% endtrans %}</a> -->
 				<a href="{{ path('item_change', {'id': item.id, 'name': item.name}) }}" class="change">{% trans %}Change record{% endtrans %}</a>
-				<a href="{{ path('item_remove', {'id': item.id, 'name': item.name}) }}" class="remove">{% trans %}Delete record{% endtrans %}</a>
+				<a href="{{ path('item_delete', {'id': item.id, 'name': item.name}) }}" class="delete">{% trans %}Delete record{% endtrans %}</a>
 			</nav>
 		</article>
 	</section>

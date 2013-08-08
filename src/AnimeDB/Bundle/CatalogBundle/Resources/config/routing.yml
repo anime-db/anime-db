@@ -35,15 +35,9 @@ item_change:
     requirements:
         id:  \d+
 
-item_remove:
-    pattern:  /{id}-{name}/remove.html
-    defaults: { _controller: AnimeDBCatalogBundle:Item:remove }
-    requirements:
-        id:  \d+
-
-item_complement:
-    pattern:  /{id}-{name}/complement.html
-    defaults: { _controller: AnimeDBCatalogBundle:Item:complement }
+item_delete:
+    pattern:  /{id}-{name}/delete.html
+    defaults: { _controller: AnimeDBCatalogBundle:Item:delete }
     requirements:
         id:  \d+
 
@@ -82,3 +76,23 @@ form_image_upload:
     defaults: { _controller: AnimeDBCatalogBundle:Form:imageUpload, _format: json }
     requirements:
         _method:  POST
+
+storage_list:
+    pattern:  /settings/storage.html
+    defaults: { _controller: AnimeDBCatalogBundle:Storage:list }
+
+storage_add:
+    pattern:  /settings/storage/add.html
+    defaults: { _controller: AnimeDBCatalogBundle:Storage:add }
+
+storage_change:
+    pattern:  /settings/storage/{id}/change.html
+    defaults: { _controller: AnimeDBCatalogBundle:Storage:change }
+    requirements:
+        id:  \d+
+
+storage_delete:
+    pattern:  /settings/storage/{id}/delete.html
+    defaults: { _controller: AnimeDBCatalogBundle:Storage:delete }
+    requirements:
+        id:  \d+

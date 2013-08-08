@@ -57,6 +57,15 @@ class Storage
     protected $description;
 
     /**
+     * Path on computer
+     *
+     * @ORM\Column(type="text")
+     *
+     * @var string
+     */
+    protected $path;
+
+    /**
      * Items list
      *
      * @ORM\OneToMany(targetEntity="Item", mappedBy="storage")
@@ -127,6 +136,29 @@ class Storage
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set path
+     *
+     * @param string $path
+     *
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Storage
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+        return $this;
+    }
+
+    /**
+     * Get path
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
     }
 
     /**
