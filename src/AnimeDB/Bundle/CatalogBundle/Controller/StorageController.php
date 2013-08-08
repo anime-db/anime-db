@@ -58,6 +58,16 @@ class StorageController extends Controller
         /* @var $form \Symfony\Component\Form\Form */
         $form = $this->createForm(new StorageForm(), $storage);
 
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($storage);
+                $em->flush();
+                return $this->redirect($this->generateUrl('storage_list'));
+            }
+        }
+
         return $this->render('AnimeDBCatalogBundle:Storage:change.html.twig', [
             'storage' => $storage,
             'form' => $form->createView()

@@ -18,7 +18,7 @@
 			{% for storage in storages %}
 				<tr>
 					<td>
-						<a href="" title="{% trans %}Change storage{% endtrans %}" class="icon-label icon-storage">{{ storage.name }}</a>
+						<a href="{{ path('storage_change', {'id': storage.id}) }}" title="{% trans %}Change storage{% endtrans %}" class="icon-label icon-storage">{{ storage.name }}</a>
 						(<a
 							href="{{ path('home_search', {'search_items[storage]': storage.id}) }}"
 							title="{{ '{0} No items in storage|{1} Is one item in storage|]1,Inf] %count% items in storage' | transchoice(storage.items.count) }}"
