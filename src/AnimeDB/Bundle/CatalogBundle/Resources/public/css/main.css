@@ -540,7 +540,7 @@ h1.logo a span {
 .item-controls .change {
 	background: url(../images/polygon.png) no-repeat 0 -16px;
 }
-.item-controls .remove {
+.item-controls .delete {
 	background: url(../images/polygon.png) no-repeat 0 0;
 }
 .item-summary {

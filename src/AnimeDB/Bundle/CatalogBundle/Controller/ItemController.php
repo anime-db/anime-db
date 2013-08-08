@@ -134,13 +134,13 @@ class ItemController extends Controller
     }
 
     /**
-     * Remove item
+     * Delete item
      *
      * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item|null $item
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function removeAction(Item $item = null)
+    public function deleteAction(Item $item = null)
     {
         if (!$item) {
             throw $this->createNotFoundException('No item found');

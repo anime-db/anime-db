@@ -35,9 +35,9 @@ item_change:
     requirements:
         id:  \d+
 
-item_remove:
-    pattern:  /{id}-{name}/remove.html
-    defaults: { _controller: AnimeDBCatalogBundle:Item:remove }
+item_delete:
+    pattern:  /{id}-{name}/delete.html
+    defaults: { _controller: AnimeDBCatalogBundle:Item:delete }
     requirements:
         id:  \d+
 
@@ -87,12 +87,12 @@ storage_list:
     pattern:  /settings/storage.html
     defaults: { _controller: AnimeDBCatalogBundle:Storage:list }
 
+storage_add:
+    pattern:  /settings/storage/add.html
+    defaults: { _controller: AnimeDBCatalogBundle:Storage:add }
+
 storage_change:
     pattern:  /settings/storage/{id}/change.html
     defaults: { _controller: AnimeDBCatalogBundle:Storage:change }
     requirements:
         id:  \d+
-
-storage_add:
-    pattern:  /settings/storage/add.html
-    defaults: { _controller: AnimeDBCatalogBundle:Storage:add }
