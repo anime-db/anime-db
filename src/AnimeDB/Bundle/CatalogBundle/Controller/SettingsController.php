@@ -20,4 +20,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  */
 class SettingsController extends Controller
 {
+    /**
+     * Storages list
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function storagesAction() {
+        $repository = $this->getDoctrine()->getRepository('AnimeDBCatalogBundle:Storage');
+        $storages = $repository->createQueryBuilder('s')
+            ->orderBy('s.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        return $this->render('AnimeDBCatalogBundle:Settings:storages.html.twig',
+            ['storages' => $storages]
+        );
+    }
 }

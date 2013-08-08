@@ -194,10 +194,6 @@
                 <source>Can`t get content from the specified source</source>
                 <target>Не удается получить содержимое из указанного источника</target>
             </trans-unit>
-            <trans-unit id="49">
-                <source>Add record</source>
-                <target>Добавление записи</target>
-            </trans-unit>
             <trans-unit id="50">
                 <source>Change</source>
                 <target>Изменить</target>
@@ -337,6 +333,42 @@
             <trans-unit id="85">
                 <source>Last updated</source>
                 <target>Последнее обновление</target>
+            </trans-unit>
+            <trans-unit id="86">
+                <source>Settings</source>
+                <target>Настройки</target>
+            </trans-unit>
+            <trans-unit id="87">
+                <source>Storages</source>
+                <target>Хранилища</target>
+            </trans-unit>
+            <trans-unit id="88">
+                <source>Add storage</source>
+                <target>Добавить хранилище</target>
+            </trans-unit>
+            <trans-unit id="89">
+                <source>Change storage</source>
+                <target>Изменить хранилище</target>
+            </trans-unit>
+            <trans-unit id="90">
+                <source>Delete storage</source>
+                <target>Удалить хранилище</target>
+            </trans-unit>
+            <trans-unit id="91">
+                <source>Description</source>
+                <target>Описание</target>
+            </trans-unit>
+            <trans-unit id="92">
+                <source>Number records</source>
+                <target>Число записей</target>
+            </trans-unit>
+            <trans-unit id="93">
+                <source>List of storages</source>
+                <target>Список хранилищ</target>
+            </trans-unit>
+            <trans-unit id="94">
+                <source><![CDATA[Jump to the <a href="%link%">form</a> of adding storage.]]></source>
+                <target><![CDATA[Перейти к <a href="%link%">форме</a> добавления хранилища.]]></target>
             </trans-unit>
         </body>
     </file>

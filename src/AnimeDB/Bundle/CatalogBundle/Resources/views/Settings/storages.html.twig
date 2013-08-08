@@ -1,0 +1,36 @@
+{% extends 'AnimeDBCatalogBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Storages{% endtrans %}{% endblock %}
+
+{% block content %}
+<div class="storages-list">
+	<h3>{% trans %}Add storage{% endtrans %}</h3>
+	<p>{% trans with {'%link%': ''}%}Jump to the <a href="%link%">form</a> of adding storage.{% endtrans %}</p>
+	{% if storages is not empty %}
+		<h3>{% trans %}List of storages{% endtrans %}</h3>
+		<table class="list">
+			<tr>
+				<th>{% trans %}Name{% endtrans %}</th>
+				<th>{% trans %}Description{% endtrans %}</th>
+				<th>{% trans %}Number records{% endtrans %}</th>
+				<th>{% trans %}Path{% endtrans %}</th>
+				<th></th>
+			</tr>
+			{% for storage in storages %}
+				<tr>
+					<td><a href="{{ path('home_search', {'search_items[storage]': storage.id}) }}">{{ storage.name }}</a></td>
+					<td>{{ storage.description }}</td>
+					<td><a href="{{ path('home_search', {'search_items[storage]': storage.id}) }}">{{ storage.items.count }}</a></td>
+					<td></td>
+					<td>
+						<a href="">{% trans %}Change storage{% endtrans %}</a>
+						{% if storage.items.count == 0 %}
+							<a href="">{% trans %}Delete storage{% endtrans %}</a>
+						{% endif %}
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+	{% endif %}
+</div>
+{% endblock %}

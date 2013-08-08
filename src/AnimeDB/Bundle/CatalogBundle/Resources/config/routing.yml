@@ -82,3 +82,7 @@ form_image_upload:
     defaults: { _controller: AnimeDBCatalogBundle:Form:imageUpload, _format: json }
     requirements:
         _method:  POST
+
+settings_storages:
+    pattern:  /settings/storages.html
+    defaults: { _controller: AnimeDBCatalogBundle:Settings:storages }
