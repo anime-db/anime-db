@@ -31,15 +31,12 @@ class ItemController extends Controller
     /**
      * Show item
      *
-     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item|null $item
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item $item
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showAction(Item $item = null)
+    public function showAction(Item $item)
     {
-        if (!$item) {
-            throw $this->createNotFoundException('No item found');
-        }
         return $this->render('AnimeDBCatalogBundle:Item:show.html.twig', ['item' => $item]);
     }
 
@@ -100,17 +97,13 @@ class ItemController extends Controller
     /**
      * Change item
      *
-     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item|null $item
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item $item
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function changeAction(Item $item = null, Request $request)
+    public function changeAction(Item $item, Request $request)
     {
-        if (!$item) {
-            throw $this->createNotFoundException('No item found');
-        }
-
         /* @var $form \Symfony\Component\Form\Form */
         $form = $this->createForm(new ItemForm(), $item);
 
@@ -136,39 +129,15 @@ class ItemController extends Controller
     /**
      * Delete item
      *
-     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item|null $item
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item $item
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deleteAction(Item $item = null)
+    public function deleteAction(Item $item)
     {
-        if (!$item) {
-            throw $this->createNotFoundException('No item found');
-        }
         $em = $this->getDoctrine()->getManager();
         $em->remove($item);
         $em->flush();
         return $this->redirect($this->generateUrl('home'));
-    }
-
-    /**
-     * Complement item directory
-     *
-     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item|null $item
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function complementAction(Item $item = null)
-    {
-        if (!$item) {
-            throw $this->createNotFoundException('No item found');
-        }
-
-        // TODO requires the implementation complement directory
-
-        return $this->redirect($this->generateUrl(
-            'item_show',
-            ['id' => $item->getId(), 'name' => $item->getName()]
-        ));
     }
 }

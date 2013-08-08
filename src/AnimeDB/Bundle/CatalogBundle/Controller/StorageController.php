@@ -44,17 +44,13 @@ class StorageController extends Controller
     /**
      * Change storages
      *
-     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Storage|null $storage
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Storage $storage
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function changeAction(Storage $storage = null, Request $request)
+    public function changeAction(Storage $storage, Request $request)
     {
-        if (!$storage) {
-            throw $this->createNotFoundException('Storage no found');
-        }
-
         /* @var $form \Symfony\Component\Form\Form */
         $form = $this->createForm(new StorageForm(), $storage);
 
@@ -106,15 +102,12 @@ class StorageController extends Controller
     /**
      * Delete storages
      *
-     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Storage|null $storage
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Storage $storage
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deleteAction(Storage $storage = null)
+    public function deleteAction(Storage $storage)
     {
-        if (!$storage) {
-            throw $this->createNotFoundException('Storage no found');
-        }
         $em = $this->getDoctrine()->getManager();
         $em->remove($storage);
         $em->flush();

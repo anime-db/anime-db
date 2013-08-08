@@ -41,12 +41,6 @@ item_delete:
     requirements:
         id:  \d+
 
-item_complement:
-    pattern:  /{id}-{name}/complement.html
-    defaults: { _controller: AnimeDBCatalogBundle:Item:complement }
-    requirements:
-        id:  \d+
-
 
 filler_search:
     pattern:  /filler/search.html
