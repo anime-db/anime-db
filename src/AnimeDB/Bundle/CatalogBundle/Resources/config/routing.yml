@@ -96,3 +96,9 @@ storage_change:
     defaults: { _controller: AnimeDBCatalogBundle:Storage:change }
     requirements:
         id:  \d+
+
+storage_delete:
+    pattern:  /settings/storage/{id}/delete.html
+    defaults: { _controller: AnimeDBCatalogBundle:Storage:delete }
+    requirements:
+        id:  \d+

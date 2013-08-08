@@ -102,4 +102,22 @@ class StorageController extends Controller
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * Delete storages
+     *
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Storage|null $storage
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteAction(Storage $storage = null)
+    {
+        if (!$storage) {
+            throw $this->createNotFoundException('Storage no found');
+        }
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($storage);
+        $em->flush();
+        return $this->redirect($this->generateUrl('storage_list'));
+    }
 }

@@ -31,7 +31,7 @@
 					<td class="control">
 						<a href="{{ path('storage_change', {'id': storage.id}) }}" class="icon icon-storage-edit" title="{% trans %}Change storage{% endtrans %}">{% trans %}Change storage{% endtrans %}</a>
 						{% if storage.items.count == 0 %}
-							<a href="" class="icon icon-storage-delete" title="{% trans %}Delete storage{% endtrans %}">{% trans %}Delete storage{% endtrans %}</a>
+							<a href="{{ path('storage_delete', {'id': storage.id}) }}" class="icon icon-storage-delete" title="{% trans %}Delete storage{% endtrans %}">{% trans %}Delete storage{% endtrans %}</a>
 						{% endif %}
 					</td>
 				</tr>
