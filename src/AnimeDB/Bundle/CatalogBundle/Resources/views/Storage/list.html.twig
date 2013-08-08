@@ -27,7 +27,7 @@
 					<td>{{ storage.description }}</td>
 					<td>{{ storage.path }}</td>
 					<td class="control">
-						<a href="" class="icon icon-storage-edit">{% trans %}Change storage{% endtrans %}</a>
+						<a href="{{ path('storage_change', {'id': storage.id}) }}" class="icon icon-storage-edit">{% trans %}Change storage{% endtrans %}</a>
 						{% if storage.items.count == 0 %}
 							<a href="" class="icon icon-storage-delete">{% trans %}Delete storage{% endtrans %}</a>
 						{% endif %}

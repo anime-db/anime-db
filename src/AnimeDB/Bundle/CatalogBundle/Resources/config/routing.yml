@@ -84,5 +84,11 @@ form_image_upload:
         _method:  POST
 
 storage_list:
-    pattern:  /settings/storages.html
+    pattern:  /settings/storage.html
     defaults: { _controller: AnimeDBCatalogBundle:Storage:list }
+
+storage_change:
+    pattern:  /settings/storage/{id}/change.html
+    defaults: { _controller: AnimeDBCatalogBundle:Storage:change }
+    requirements:
+        id:  \d+

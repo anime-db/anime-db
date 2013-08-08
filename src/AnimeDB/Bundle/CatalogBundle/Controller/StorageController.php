@@ -11,6 +11,9 @@
 namespace AnimeDB\Bundle\CatalogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AnimeDB\Bundle\CatalogBundle\Entity\Storage;
+use Symfony\Component\HttpFoundation\Request;
+use AnimeDB\Bundle\CatalogBundle\Form\Entity\Storage as StorageForm;
 
 /**
  * Storages
@@ -35,6 +38,29 @@ class StorageController extends Controller
 
         return $this->render('AnimeDBCatalogBundle:Storage:list.html.twig', [
             'storages' => $storages
+        ]);
+    }
+
+    /**
+     * Storages list
+     *
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Storage|null $storage
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function changeAction(Storage $storage = null, Request $request)
+    {
+        if (!$storage) {
+            throw $this->createNotFoundException('Storage no found');
+        }
+
+        /* @var $form \Symfony\Component\Form\Form */
+        $form = $this->createForm(new StorageForm(), $storage);
+
+        return $this->render('AnimeDBCatalogBundle:Storage:change.html.twig', [
+            'storage' => $storage,
+            'form' => $form->createView()
         ]);
     }
 }
