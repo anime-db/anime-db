@@ -368,7 +368,7 @@
             </trans-unit>
             <trans-unit id="94">
                 <source>{1} Is one item in storage|]1,Inf] %count% items in storage</source>
-                <target>{1} Одна запись в хранилище|]1,Inf] %count% записей в храниалище</target>
+                <target>%count% запись в хранилище|%count% записи в храниалище|%count% записей в храниалище</target>
             </trans-unit>
         </body>
     </file>
