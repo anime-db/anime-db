@@ -212,8 +212,8 @@ h1.logo a span {
 #navigation .last span {
 	background-image: none;
 }
-#navigation a:hover,
-#navigation span:hover {
+#navigation li:hover a,
+#navigation li:hover span {
 	color: #fff;
 }
 

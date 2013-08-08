@@ -13,18 +13,47 @@
 
 {% block body %}
 <div id="wrapper">
+	<div id="navigation">
+		<nav>
+			<div class="left"></div>
+			<ul>
+				<li><a href="{{ path('home_search') }}">{% trans %}Search{% endtrans %}</a></li>
+				<li>
+					<a href="{{ path('item_add') }}">{% trans %}Add record{% endtrans %}</a>
+					<!-- <ul>
+						<li>
+							<span>Найти источник</span>
+							<ul>
+								<li><a href="#">World-Art.ru</a></li>
+								<li><a href="#">Shikimori.org</a></li>
+							</ul>
+						</li>
+						<li>
+							<span>Заполнить из источника</span>
+							<ul>
+								<li><a href="#">World-Art.ru</a></li>
+								<li><a href="#">Shikimori.org</a></li>
+							</ul>
+						</li>
+						<li><span>Импорт</span></li>
+						<li><a href="#">Добавить вручную</a></li>
+					</ul> -->
+				</li>
+				<li class="last">
+					<span>{% trans %}Settings{% endtrans %}</span>
+					<ul>
+						<li><a href="{{ path('settings_storages') }}">{% trans %}Storages{% endtrans %}</a></li>
+						<!-- <li><a href="#">Общие</a></li> -->
+					</ul>
+				</li>
+			</ul>
+			<div class="right"></div>
+		</nav>
+	</div>
 	<div id="header">
 		<h1 class="logo">
 			<a href="{{ path('home') }}" title="Home Anime DB"><span>Home Anime DB</span></a>
 		</h1>
-		<div id="navigation">
-			<div class="left"></div>
-			<ul>
-				<li><a href="{{ path('home_search') }}">{% trans %}Search{% endtrans %}</a></li>
-				<li class="last"><a href="{{ path('item_add') }}">{% trans %}Add record{% endtrans %}</a></li>
-			</ul>
-			<div class="right"></div>
-		</div>
 	</div>
 	<div id="content-wrapper">
 		<div class="content">
