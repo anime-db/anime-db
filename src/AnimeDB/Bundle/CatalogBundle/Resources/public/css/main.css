@@ -54,6 +54,15 @@ p {
 abbr {
 	cursor: default;
 }
+table, tr, th, td {
+	border-collapse: collapse;
+	padding: 0;
+	margin: 0;
+	border: gray 1px solid;
+}
+td, th {
+	padding: 5px 10px;
+}
 
 /**
  * Forms
@@ -140,39 +149,47 @@ h1.logo a span {
  * Navigation
  */
 #navigation {
+	width: 956px;
+	position: relative;
+	z-index: 6;
+	top: 30px;
+	margin: 0 auto;
+}
+#navigation nav {
+	float: right;
+}
+#navigation nav > ul,
+#navigation .left,
+#navigation .right {
+	background: url(../images/navigation.png) repeat-x scroll 0 -41px transparent;
 	float: left;
 	height: 41px;
-	position: absolute;
-	right: 0;
-	top: 30px;
 }
 #navigation .left {
 	background: url(../images/navigation-l.png) no-repeat scroll left top transparent;
-	float: left;
-	height: 41px;
 	width: 5px;
 }
 #navigation .right {
 	background: url(../images/navigation-r.png) no-repeat scroll right top transparent;
-	float: left;
-	height: 41px;
 	width: 5px;
-}
-#navigation ul {
-	background: url(../images/navigation.png) repeat-x scroll 0 -41px transparent;
-	height: 41px;
 }
 #navigation ul,
 #navigation ul li {
-	float: left;
 	margin: 0;
 	padding: 0;
 	list-style: none;
 	font-size: 13px;
 	line-height: 38px;
 }
-#navigation ul li a {
-	background: url(../images/navigation-s.png) no-repeat scroll right top transparent;
+#navigation ul {
+	white-space: nowrap;
+	position: relative;
+}
+#navigation nav > ul > li {
+	float: left;
+}
+#navigation a,
+#navigation span {
 	color: #ccc;
 	display: block;
 	float: left;
@@ -180,14 +197,52 @@ h1.logo a span {
 	padding: 0 18px;
 	text-decoration: none;
 }
-#navigation ul li.selected a {
+#navigation span {
+	cursor: default;
+}
+#navigation nav > ul > li > a,
+#navigation nav > ul > li > span {
+	background: url(../images/navigation-s.png) no-repeat scroll right top transparent;
+}
+#navigation .selected a,
+#navigation .selected span {
 	color: #fff;
 }
-#navigation ul li.last a {
+#navigation .last a,
+#navigation .last span {
 	background-image: none;
 }
-#navigation ul li a:hover {
+#navigation a:hover,
+#navigation span:hover {
 	color: #fff;
+}
+
+
+#navigation ul ul {
+	position: absolute;
+	top: 100%;
+	background: black;
+	visibility: hidden;
+	opacity: 0;
+	filter: alpha(Opacity=0);
+	transition: opacity .20s ease-in-out;
+	-webkit-transition: opacity .20s ease-in-out;
+	-moz-box-shadow: 0 0 10px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5);
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+#navigation li:hover > ul {
+	visibility: visible;
+	opacity: 1;
+	filter: alpha(Opacity=100);
+}
+#navigation ul ul li {
+	position: relative;
+	clear: both;
+}
+#navigation ul ul ul {
+	right: 100%;
+	top: 0;
 }
 
 /**
@@ -673,6 +728,9 @@ div.ui-widget div.ui-state-highlight {
 	padding: 20px 25px 15px 25px;
 	background: #fff url(../images/bg-home-right.gif) no-repeat -570px -144px;
 	border: 3px #ff9f0b solid;
+	-moz-box-shadow: 0 0 20px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0 0 20px rgba(0,0,0,0.5);
+	box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
 .popup .bt-popup-close {
 	position: absolute;
@@ -825,4 +883,18 @@ div.ui-widget div.ui-state-highlight {
 .icon-minus[disabled~=disabled] {
 	background-color: #dddddd;
 	cursor: default;
+}
+
+/**
+ * Storages list
+ */
+.storages-list table {
+	width: 700px;
+}
+.storages-list h3 {
+	margin-top: 20px;
+	font-weight: bold;
+}
+.storages-list h3:first-child {
+	margin-top: 0;
 }
