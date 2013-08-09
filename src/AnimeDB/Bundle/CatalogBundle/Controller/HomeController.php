@@ -45,6 +45,13 @@ class HomeController extends Controller
     const SEARCH_ITEMS_PER_PAGE = 6;
 
     /**
+     * Limits on the number of items per page
+     *
+     * @var array
+     */
+    public static $show_limit = [8, 16, 32, -1];
+
+    /**
      * Home
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -57,35 +64,56 @@ class HomeController extends Controller
         $page = $request->get('page', 1);
         $current_page = $page > 1 ? $page : 1;
 
-        // get items
+        // get items limit
+        $limit = (int)$request->get('limit', self::HOME_ITEMS_PER_PAGE);
+        $limit = in_array($limit, self::$show_limit) ? $limit : self::HOME_ITEMS_PER_PAGE;
+
+        // get query
         $repository = $this->getDoctrine()->getRepository('AnimeDBCatalogBundle:Item');
-        $items = $repository->createQueryBuilder('i')
-            ->orderBy('i.id', 'DESC')
-            ->setFirstResult(($current_page - 1) * self::HOME_ITEMS_PER_PAGE)
-            ->setMaxResults(self::HOME_ITEMS_PER_PAGE)
-            ->getQuery()
-            ->getResult();
+        $query = $repository->createQueryBuilder('i')->orderBy('i.id', 'DESC');
 
-        // get count all items
-        $count = $repository->createQueryBuilder('i')
-            ->select('count(i.id)')
-            ->getQuery()
-            ->getSingleScalarResult();
+        $pagination = null;
+        // show not all items
+        if ($limit != -1) {
+            $query->setFirstResult(($current_page - 1) * $limit)
+                ->setMaxResults($limit);
 
-        $that = $this;
-        $pagination = $this->get('anime_db.pagination')->createNavigation(
-            ceil($count/self::HOME_ITEMS_PER_PAGE),
-            $current_page,
-            Pagination::DEFAULT_LIST_LENGTH,
-            function ($page) use ($that) {
-                return $that->generateUrl('home', ['page' => $page]);
-            },
-            $this->generateUrl('home')
-        );
+            // get count all items
+            $count = $repository->createQueryBuilder('i')
+                ->select('count(i.id)')
+                ->getQuery()
+                ->getSingleScalarResult();
 
-        return $this->render('AnimeDBCatalogBundle:Home:index.html.twig',
-            ['items' => $items, 'pagination' => $pagination]
-        );
+            $that = $this;
+            $pagination = $this->get('anime_db.pagination')->createNavigation(
+                ceil($count/$limit),
+                $current_page,
+                Pagination::DEFAULT_LIST_LENGTH,
+                function ($page) use ($that) {
+                    return $that->generateUrl('home', ['page' => $page]);
+                },
+                $this->generateUrl('home')
+            );
+        }
+
+        // get items
+        $items = $query->getQuery()->getResult();
+
+        // assembly parameters limit output
+        $show_limit = [];
+        foreach (self::$show_limit as $value) {
+            $show_limit[] = [
+                'link' => $this->generateUrl('home', ['limit' => $value]),
+                'name' => $value != -1 ? $value : 'All',
+                'count' => $value
+            ];
+        }
+
+        return $this->render('AnimeDBCatalogBundle:Home:index.html.twig', [
+            'items' => $items,
+            'show_limit' => $show_limit,
+            'pagination' => $pagination
+        ]);
     }
 
     /**
