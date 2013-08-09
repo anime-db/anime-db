@@ -13,14 +13,12 @@ sPhp = "php"
 
 ' Pid files
 sSpid  = sPath & "/bin/.spid"
-sElpid = sPath & "/bin/.elpid"
 sTspid = sPath & "/bin/.tspid"
 
 sConsole = sPhp & " -f " & sPath & "/app/console "
 
-' Commands to run server, Event listener and cron
+' Commands to run server and Task Scheduler
 sServer        = sPhp & " -S " & sAddr & ":" & sPort & " -t " & sPath & "/web " & sPath & "/app/router.php > nul 2> nul"
-sEventListener = sConsole & "animedb:event-listener > nul 2> nul"
 sTaskScheduler = sConsole & "animedb:task-scheduler > nul 2> nul"
 
 ' Stop Server if running
@@ -28,14 +26,6 @@ if oFileSystem.FileExists(sSpid) then
     iErrorReturn = StopProc(sSpid)
     if iErrorReturn <> 0 then
         Wscript.echo "Could not stop Server: ", iErrorReturn
-        WScript.Quit
-    end if
-end if
-' Stop Event listener if running
-if oFileSystem.FileExists(sElpid) then
-    iErrorReturn = StopProc(sElpid)
-    if iErrorReturn <> 0 then
-        Wscript.echo "Could not stop Event listener: ", iErrorReturn
         WScript.Quit
     end if
 end if
@@ -53,12 +43,6 @@ end if
 iErrorReturn = StartProc(sServer, sSpid)
 if iErrorReturn <> 0 then
     Wscript.echo "Could not start Server: ", iErrorReturn
-    WScript.Quit
-end if
-' Run Event listener
-iErrorReturn = StartProc(sEventListener, sElpid)
-if iErrorReturn <> 0 then
-    Wscript.echo "Could not start Event listener: ", iErrorReturn
     WScript.Quit
 end if
 ' Run Task scheduler
