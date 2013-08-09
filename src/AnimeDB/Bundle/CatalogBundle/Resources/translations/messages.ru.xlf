@@ -378,6 +378,18 @@
                 <source>Show one item on page|Show %count% items on page|{-1} Show all items on page</source>
                 <target>Показать %count% запись на странице|Показать %count% записи на странице|Показать %count% записей на странице|{-1} Показать все записи на странице</target>
             </trans-unit>
+            <trans-unit id="97">
+                <source>Sorting</source>
+                <target>Сортировка</target>
+            </trans-unit>
+            <trans-unit id="98">
+                <source>Sort ascending</source>
+                <target>Сортировать по возрастанию</target>
+            </trans-unit>
+            <trans-unit id="99">
+                <source>Sort descending</source>
+                <target>Сортировать по убыванию</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

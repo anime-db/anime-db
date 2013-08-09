@@ -1,15 +1,21 @@
 {% if items is defined and items %}
 <div class="list-items">
-	{% if (sort_by is defined and sort_by) or (show_limit is defined and show_limit) %}
+	{% if (sort_by|default is not empty and sort_direction|default is not empty) or (show_limit|default is not empty) %}
 		<div class="controls">
-			{% if sort_by is defined and sort_by %}
+			{% if sort_by|default is not empty and sort_direction|default is not empty %}
 				<ul class="sort-by">
+					<li>{% trans %}Sorting{% endtrans %}:</li>
 					{% for button in sort_by %}
 						<li><a href="{{ button.link }}" title="{{ button.title|trans }}">{{ button.name }}</a></li>
 					{% endfor %}
+					{% if sort_direction.type == 'desc' %}
+						<li><a href="{{ sort_direction.link }}" title="{{ 'Sort descending'|trans }}">↓</a></li>
+					{% else %}
+						<li><a href="{{ sort_direction.link }}" title="{{ 'Sort ascending'|trans }}">↑</a></li>
+					{% endif %}
 				</ul>
 			{% endif %}
-			{% if show_limit is defined and show_limit %}
+			{% if show_limit|default is not empty %}
 				<ul class="show-limit">
 					<li>{% trans %}Items on page{% endtrans %}:</li>
 					{% for button in show_limit %}
