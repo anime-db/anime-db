@@ -1,22 +1,30 @@
 {% if items is defined and items %}
 <div class="list-items">
-	{% if (sort_by is defined and sort_by is not empty) or (show_limit is defined and show_limit is not empty) %}
+	{% if (sort_by is defined and sort_by) or (show_limit is defined and show_limit) %}
 		<div class="controls">
-			{% if sort_by is defined and sort_by is not empty %}
+			{% if sort_by is defined and sort_by %}
 				<ul class="sort-by">
 					{% for button in sort_by %}
 						<li><a href="{{ button.link }}" title="{{ button.title|trans }}">{{ button.name }}</a></li>
 					{% endfor %}
 				</ul>
 			{% endif %}
-			{% if show_limit is defined and show_limit is not empty %}
+			{% if show_limit is defined and show_limit %}
 				<ul class="show-limit">
+					<li>{% trans %}Items on page{% endtrans %}:</li>
 					{% for button in show_limit %}
-						<li><a href="{{ button.link }}" title="{{ button.title|trans }}">{{ button.name }}</a></li>
+						{% if button.current %}
+							<li><span title="{{ 'Show one item on page|Show %count% items on page|{-1} Show all items on page'|transchoice(button.count) }}">{{ button.name|trans }}</span></li>
+						{% else %}
+							<li><a href="{{ button.link }}" title="{{ 'Show one item on page|Show %count% items on page|{-1} Show all items on page'|transchoice(button.count) }}">{{ button.name|trans }}</a></li>
+						{% endif %}
 					{% endfor %}
 				</ul>
 			{% endif %}
 		</div>
+	{% endif %}
+	{% if items|length > 16 %}
+		{% include 'AnimeDBCatalogBundle::pagination.html.twig' %}
 	{% endif %}
 	{% for item in items %}
 		<div class="item">
@@ -36,3 +44,4 @@
 	{% endfor %}
 </div>
 {% endif %}
+{% include 'AnimeDBCatalogBundle::pagination.html.twig' %}
