@@ -4,11 +4,16 @@
 		<div class="controls">
 			{% if sort_by|default is not empty and sort_direction|default is not empty %}
 				<ul class="sort-by">
-					<li>{% trans %}Sorting{% endtrans %}:</li>
+					<li><strong>{% trans %}Sorting{% endtrans %}:</strong></li>
 					{% for button in sort_by %}
-						<li><a href="{{ button.link }}" title="{{ button.title|trans }}">{{ button.name }}</a></li>
+						{% set title = button.title|trans %}
+						{% if button.current %}
+							<li><span title="{{ 'Search by \'%field%\''|trans({'%field%': title}) }}">{{ button.name|trans }}</span></li>
+						{% else %}
+							<li><a href="{{ button.link }}" title="{{ 'Search by \'%field%\''|trans({'%field%': title}) }}">{{ button.name|trans }}</a></li>
+						{% endif %}
 					{% endfor %}
-					{% if sort_direction.type == 'desc' %}
+					{% if sort_direction.type == 'DESC' %}
 						<li><a href="{{ sort_direction.link }}" title="{{ 'Sort descending'|trans }}">↓</a></li>
 					{% else %}
 						<li><a href="{{ sort_direction.link }}" title="{{ 'Sort ascending'|trans }}">↑</a></li>
@@ -17,7 +22,7 @@
 			{% endif %}
 			{% if show_limit|default is not empty %}
 				<ul class="show-limit">
-					<li>{% trans %}Items on page{% endtrans %}:</li>
+					<li><strong>{% trans %}On page{% endtrans %}:</strong></li>
 					{% for button in show_limit %}
 						{% if button.current %}
 							<li><span title="{{ 'Show one item on page|Show %count% items on page|{-1} Show all items on page'|transchoice(button.count) }}">{{ button.name|trans }}</span></li>

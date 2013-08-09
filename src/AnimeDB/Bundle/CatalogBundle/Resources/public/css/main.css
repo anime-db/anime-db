@@ -655,6 +655,12 @@ h1.logo a span {
 .list-items .controls .show-limit {
 	float: right;
 }
+.list-items .controls a {
+	text-decoration: none;
+}
+.list-items .controls a:hover {
+	text-decoration: underline;
+}
 
 /*
  * UI State
