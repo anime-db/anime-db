@@ -370,6 +370,14 @@
                 <source>{1} Is one item in storage|]1,Inf] %count% items in storage</source>
                 <target>%count% запись в хранилище|%count% записи в храниалище|%count% записей в храниалище</target>
             </trans-unit>
+            <trans-unit id="95">
+                <source>Items on page</source>
+                <target>Записи на странице</target>
+            </trans-unit>
+            <trans-unit id="96">
+                <source>Show one item on page|Show %count% items on page|{-1} Show all items on page</source>
+                <target>Показать %count% запись на странице|Показать %count% записи на странице|Показать %count% записей на странице|{-1} Показать все записи на странице</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

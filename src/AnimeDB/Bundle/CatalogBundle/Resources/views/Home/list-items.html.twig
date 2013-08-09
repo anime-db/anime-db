@@ -1,14 +1,13 @@
 {% if items is defined and items %}
 <div class="list-items">
-	{% if show_limit is defined and show_limit is not empty %}
+	{% if show_limit is defined and show_limit %}
 		<div class="controls">
-			{% if show_limit is defined and show_limit is not empty %}
-				<ul class="show-limit">
-					{% for button in show_limit %}
-						<li><a href="{{ button.link }}" title="{{ button.title|trans }}">{{ button.name }}</a></li>
-					{% endfor %}
-				</ul>
-			{% endif %}
+			<ul class="show-limit">
+				<li>{% trans %}Items on page{% endtrans %}:</li>
+				{% for button in show_limit %}
+					<li><a href="{{ button.link }}" title="{{ 'Show one item on page|Show %count% items on page|{-1} Show all items on page'|transchoice(button.count) }}">{{ button.name|trans }}</a></li>
+				{% endfor %}
+			</ul>
 		</div>
 	{% endif %}
 	{% for item in items %}
