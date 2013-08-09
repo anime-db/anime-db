@@ -10,6 +10,9 @@
 			</ul>
 		</div>
 	{% endif %}
+	{% if items|length > 16 %}
+		{% include 'AnimeDBCatalogBundle::pagination.html.twig' %}
+	{% endif %}
 	{% for item in items %}
 		<div class="item">
 			<img src="{{ item.cover|apply_filter('catalog')|dummy('catalog') }}" alt="{{ item.name }}" />
