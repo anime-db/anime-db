@@ -639,7 +639,7 @@ h1.logo a span {
 }
 .list-items .controls {
 	height: 16px;
-	margin: 10px 10px 0 10px;
+	margin-top: 10px;
 	color: #666;
 }
 .list-items .controls ul,
