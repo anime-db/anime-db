@@ -637,6 +637,24 @@ h1.logo a span {
 .list-items .type a:hover {
 	background: #ff6600;
 }
+.list-items .controls {
+	height: 16px;
+	margin: 10px 10px 0 10px;
+	color: #666;
+}
+.list-items .controls ul,
+.list-items .controls li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.list-items .controls li {
+	margin-left: 4px;
+	float: left;
+}
+.list-items .controls .show-limit {
+	float: right;
+}
 
 /*
  * UI State
