@@ -1,7 +1,14 @@
 {% if items is defined and items %}
 <div class="list-items">
-	{% if show_limit is defined and show_limit is not empty %}
+	{% if (sort_by is defined and sort_by is not empty) or (show_limit is defined and show_limit is not empty) %}
 		<div class="controls">
+			{% if sort_by is defined and sort_by is not empty %}
+				<ul class="sort-by">
+					{% for button in sort_by %}
+						<li><a href="{{ button.link }}" title="{{ button.title|trans }}">{{ button.name }}</a></li>
+					{% endfor %}
+				</ul>
+			{% endif %}
 			{% if show_limit is defined and show_limit is not empty %}
 				<ul class="show-limit">
 					{% for button in show_limit %}
