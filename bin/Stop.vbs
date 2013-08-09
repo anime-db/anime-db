@@ -7,7 +7,6 @@ sPath = oFileSystem.GetAbsolutePathName("..")
 
 ' Pid files
 sSpid  = sPath & "/bin/.spid"
-sElpid = sPath & "/bin/.elpid"
 sTspid = sPath & "/bin/.tspid"
 
 
@@ -16,14 +15,6 @@ if oFileSystem.FileExists(sSpid) then
     iErrorReturn = StopProc(sSpid)
     if iErrorReturn <> 0 then
         Wscript.echo "Could not stop Server: ", iErrorReturn
-        WScript.Quit
-    end if
-end if
-' Stop Event listener
-if oFileSystem.FileExists(sElpid) then
-    iErrorReturn = StopProc(sElpid)
-    if iErrorReturn <> 0 then
-        Wscript.echo "Could not stop Event listener: ", iErrorReturn
         WScript.Quit
     end if
 end if
