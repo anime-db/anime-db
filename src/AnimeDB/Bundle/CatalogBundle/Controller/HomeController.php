@@ -59,6 +59,40 @@ class HomeController extends Controller
     public static $search_show_limit = [6, 12, 24, -1];
 
     /**
+     * Sort items by field
+     *
+     * @var array
+     */
+    public static $sort_by_field = [
+        'name'        => [
+            'title' => 'Item name',
+            'name'  => 'Name'
+        ],
+        'date_update' => [
+            'title' => 'Last updated item',
+            'name'  => 'Update'
+        ],
+        'date_start'  => [
+            'title' => 'Start date of production',
+            'name'  => 'Date start'
+        ],
+        'date_end'    => [
+            'title' => 'End date of production',
+            'name'  => 'Date end'
+        ]
+    ];
+
+    /**
+     * Sort direction
+     *
+     * @var array
+     */
+    public static $sort_direction = [
+        'DESC' => 'Descending',
+        'ASC'  => 'Ascending'
+    ];
+
+    /**
      * Home
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -167,6 +201,10 @@ class HomeController extends Controller
         $form = $this->createForm(new Search());
         $items = [];
         $pagination = null;
+        // list items controls
+        $show_limit = null;
+        $sort_by = null;
+        $sort_direction = null;
 
         if ($request->query->count()) {
             $form->handleRequest($request);
@@ -239,11 +277,38 @@ class HomeController extends Controller
                 $limit = in_array($limit, self::$search_show_limit) ? $limit : self::SEARCH_ITEMS_PER_PAGE;
 
                 // add order
-                $data['sort_field'] = $data['sort_field'] ?: 'date_update';
-                $data['sort_direction'] = $data['sort_direction'] ?: 'DESC';
+                $current_sort_by = $request->get('sort_by', 'date_update');
+                if (!isset(self::$sort_by_field[$current_sort_by])) {
+                    $current_sort_by = 'date_update';
+                }
+                $current_sort_direction = $request->get('sort_direction', 'DESC');
+                if (!isset(self::$sort_direction[$current_sort_direction])) {
+                    $current_sort_direction = 'DESC';
+                }
+
+                // apply order
                 $selector
-                    ->orderBy('i.'.$data['sort_field'], $data['sort_direction'])
-                    ->orderBy('i.id', $data['sort_direction']);
+                    ->orderBy('i.'.$current_sort_by, $current_sort_direction)
+                    ->addOrderBy('i.id', $current_sort_direction);
+
+                // build sort params for tamplate
+                $sort_by = [];
+                foreach (self::$sort_by_field as $field => $info) {
+                    $sort_by[] = [
+                        'name' => $info['name'],
+                        'title' => $info['title'],
+                        'current' => $current_sort_by == $field,
+                        'link' => $this->generateUrl(
+                            'home_search',
+                            array_merge($request->query->all(), ['sort_by' => $field])
+                        )
+                    ];
+                }
+                $sort_direction['type'] = ($current_sort_direction == 'ASC' ? 'DESC' : 'ASC');
+                $sort_direction['link'] = $this->generateUrl(
+                    'home_search',
+                    array_merge($request->query->all(), ['sort_direction' => $sort_direction['type']])
+                );
 
                 if ($limit != -1) {
                     $selector
@@ -259,10 +324,10 @@ class HomeController extends Controller
                         function ($page) use ($that, $request) {
                             return $that->generateUrl(
                                 'home_search',
-                                ['search_items' => $request->query->get('search_items'), 'page' => $page]
+                                array_merge($request->query->all(), ['page' => $page])
                             );
                         },
-                        $this->generateUrl('home_search', ['search_items' => $request->query->get('search_items')])
+                        $this->generateUrl('home_search', $request->query->all())
                     );
                 }
 
@@ -271,28 +336,29 @@ class HomeController extends Controller
                     ->groupBy('i')
                     ->getQuery()
                     ->getResult();
-            }
-        }
 
-        // assembly parameters limit output
-        $show_limit = [];
-        foreach (self::$search_show_limit as $value) {
-            $show_limit[] = [
-                'link' => $this->generateUrl(
-                    'home_search',
-                    ['search_items' => $request->query->get('search_items'), 'limit' => $value]
-                ),
-                'name' => $value != -1 ? $value : 'All',
-                'count' => $value,
-                'current' => !empty($limit) && $limit == $value
-            ];
+                // assembly parameters limit output
+                foreach (self::$search_show_limit as $value) {
+                    $show_limit[] = [
+                        'link' => $this->generateUrl(
+                            'home_search',
+                            array_merge($request->query->all(), ['limit' => $value])
+                        ),
+                        'name' => $value != -1 ? $value : 'All',
+                        'count' => $value,
+                        'current' => !empty($limit) && $limit == $value
+                    ];
+                }
+            }
         }
 
         return $this->render('AnimeDBCatalogBundle:Home:search.html.twig', [
             'form'  => $form->createView(),
             'items' => $items,
             'show_limit' => $show_limit,
-            'pagination' => $pagination
+            'pagination' => $pagination,
+            'sort_by' => $sort_by,
+            'sort_direction' => $sort_direction
         ]);
     }
 }

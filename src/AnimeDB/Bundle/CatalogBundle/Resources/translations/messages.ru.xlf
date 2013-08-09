@@ -258,14 +258,6 @@
                 <source>Genre</source>
                 <target>Жанр</target>
             </trans-unit>
-            <trans-unit id="66">
-                <source>Sort by</source>
-                <target>Сортировать по</target>
-            </trans-unit>
-            <trans-unit id="68">
-                <source>Sort direction</source>
-                <target>Направление сортировки</target>
-            </trans-unit>
             <trans-unit id="69">
                 <source>Ascending</source>
                 <target>По возрастанию</target>
@@ -371,12 +363,48 @@
                 <target>%count% запись в хранилище|%count% записи в храниалище|%count% записей в храниалище</target>
             </trans-unit>
             <trans-unit id="95">
-                <source>Items on page</source>
-                <target>Записи на странице</target>
+                <source>On page</source>
+                <target>На странице</target>
             </trans-unit>
             <trans-unit id="96">
                 <source>Show one item on page|Show %count% items on page|{-1} Show all items on page</source>
                 <target>Показать %count% запись на странице|Показать %count% записи на странице|Показать %count% записей на странице|{-1} Показать все записи на странице</target>
+            </trans-unit>
+            <trans-unit id="97">
+                <source>Sorting </source>
+                <target>Сортировка</target>
+            </trans-unit>
+            <trans-unit id="98">
+                <source>Sort ascending</source>
+                <target>Сортировать по возрастанию</target>
+            </trans-unit>
+            <trans-unit id="99">
+                <source>Sort descending</source>
+                <target>Сортировать по убыванию</target>
+            </trans-unit>
+            <trans-unit id="100">
+                <source>Last updated item</source>
+                <target>Дата последнего обновления</target>
+            </trans-unit>
+            <trans-unit id="101">
+                <source>Start date of production</source>
+                <target>Дата начала производства</target>
+            </trans-unit>
+            <trans-unit id="102">
+                <source>End date of production</source>
+                <target>Дата окончания производства</target>
+            </trans-unit>
+            <trans-unit id="103">
+                <source>Search by '%field%'</source>
+                <target>Сортировать по '%field%'</target>
+            </trans-unit>
+            <trans-unit id="104">
+                <source>Item name</source>
+                <target>Название элемента</target>
+            </trans-unit>
+            <trans-unit id="105">
+                <source>Update</source>
+                <target>Обновление</target>
             </trans-unit>
         </body>
     </file>
