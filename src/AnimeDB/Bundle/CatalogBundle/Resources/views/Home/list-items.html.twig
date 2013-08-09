@@ -5,7 +5,11 @@
 			<ul class="show-limit">
 				<li>{% trans %}Items on page{% endtrans %}:</li>
 				{% for button in show_limit %}
-					<li><a href="{{ button.link }}" title="{{ 'Show one item on page|Show %count% items on page|{-1} Show all items on page'|transchoice(button.count) }}">{{ button.name|trans }}</a></li>
+					{% if button.current %}
+						<li><span title="{{ 'Show one item on page|Show %count% items on page|{-1} Show all items on page'|transchoice(button.count) }}">{{ button.name|trans }}</span></li>
+					{% else %}
+						<li><a href="{{ button.link }}" title="{{ 'Show one item on page|Show %count% items on page|{-1} Show all items on page'|transchoice(button.count) }}">{{ button.name|trans }}</a></li>
+					{% endif %}
 				{% endfor %}
 			</ul>
 		</div>

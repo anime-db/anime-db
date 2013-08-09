@@ -113,7 +113,8 @@ class HomeController extends Controller
             $show_limit[] = [
                 'link' => $this->generateUrl('home', ['limit' => $value]),
                 'name' => $value != -1 ? $value : 'All',
-                'count' => $value
+                'count' => $value,
+                'current' => $limit == $value
             ];
         }
 
@@ -282,7 +283,8 @@ class HomeController extends Controller
                     ['search_items' => $request->query->get('search_items'), 'limit' => $value]
                 ),
                 'name' => $value != -1 ? $value : 'All',
-                'count' => $value
+                'count' => $value,
+                'current' => !empty($limit) && $limit == $value
             ];
         }
 
