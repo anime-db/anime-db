@@ -213,7 +213,7 @@ class WorldArtRu implements Filler
      */
     private $types = [
         'ТВ' => ['tv', 'TV'],
-        'ТВ-спэшл' => ['speshl', 'TV-speshl'],
+        'ТВ-спэшл' => ['special', 'TV-special'],
         'OVA' => ['ova', 'OVA'],
         'ONA' => ['ona', 'ONA'],
         'OAV' => ['ova', 'OVA'],
