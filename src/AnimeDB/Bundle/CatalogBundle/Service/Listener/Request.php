@@ -12,6 +12,7 @@ namespace AnimeDB\Bundle\CatalogBundle\Service\Listener;
 
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Gedmo\Translatable\TranslatableListener;
 
 /**
  * Request listener
@@ -21,6 +22,30 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
  */
 class Request
 {
+    /**
+     * Session name for the locale
+     *
+     * @var string
+     */
+    const SESSION_LOCALE = '_locale';
+
+    /**
+     * Translatable listener
+     *
+     * @var \Gedmo\Translatable\TranslatableListener
+     */
+    protected $translatable;
+
+    /**
+     * Construct
+     *
+     * @param \Gedmo\Translatable\TranslatableListener $translatable
+     */
+    public function __construct(TranslatableListener $translatable)
+    {
+        $this->translatable = $translatable;
+    }
+
     /**
      * Kernel request handler
      *
@@ -39,5 +64,26 @@ class Request
         if ($locale = $request->getPreferredLanguage()) {
             $request->setDefaultLocale($locale);
         }
+
+        // set locale from request attribute
+        /* if ($locale = $request->attributes->get(self::SESSION_LOCALE)) {
+            $request->setLocale($locale);
+        } */
+
+        // set locale from session
+        /* if ($request->hasPreviousSession()) {
+            if ($locale = $request->getSession()->get(self::SESSION_LOCALE)) {
+                $request->setLocale($locale);
+            } else {
+                $request->getSession()->set(self::SESSION_LOCALE, $request->getLocale());
+            }
+        } */
+
+        // set translatable language from locale
+        $language = $request->getLocale();
+        if (false !== ($position = strpos($language, '_'))) {
+            $language = substr($language, 0, $position);
+        }
+        $this->translatable->setTranslatableLocale($language);
     }
 }
