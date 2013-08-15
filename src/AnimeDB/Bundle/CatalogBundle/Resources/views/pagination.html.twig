@@ -3,9 +3,9 @@
 		<nav>
 			{% for item in pagination.list %}
 				{% if item.iscurrent %}
-					<span title="{{ item.title | trans({}, 'pagination') }}">{{ item.name | trans({}, 'pagination') }}</span>
+					<span title="{{ item.title|trans({}, 'pagination') }}">{{ item.name | trans({}, 'pagination') }}</span>
 				{% elseif item.type != 'first' and item.type != 'last' %}
-					<a href="{{ item.link }}" title="{{ item.title | trans({'%page%': item.page}, 'pagination') }}">{{ item.name | trans({}, 'pagination') }}</a>
+					<a href="{{ item.link }}" title="{{ item.title|trans({'%page%': item.page}, 'pagination') }}">{{ item.name | trans({}, 'pagination') }}</a>
 				{% endif %}
 			{% endfor %}
 		</nav>
