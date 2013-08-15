@@ -15,12 +15,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
+use AnimeDB\Bundle\CatalogBundle\Entity\CountryTranslation;
 
 /**
  * Country
  *
  * @ORM\Entity
  * @ORM\Table(name="country")
+ * @Gedmo\TranslationEntity(class="AnimeDB\Bundle\CatalogBundle\Entity\CountryTranslation")
  * @IgnoreAnnotation("ORM")
  *
  * @package AnimeDB\Bundle\CatalogBundle\Entity
@@ -70,11 +72,21 @@ class Country implements Translatable
     protected $locale;
 
     /**
+     * @ORM\OneToMany(
+     *     targetEntity="CountryTranslation",
+     *     mappedBy="object",
+     *     cascade={"persist", "remove"}
+     * )
+     */
+    protected $translations;
+
+    /**
      * Construct
      */
     public function __construct()
     {
         $this->items = new ArrayCollection();
+        $this->translations = new ArrayCollection();
     }
 
     /**
@@ -164,11 +176,37 @@ class Country implements Translatable
      *
      * @param string $locale
      *
-     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Type
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Country
      */
     public function setTranslatableLocale($locale)
     {
         $this->locale = $locale;
+        return $this;
+    }
+
+    /**
+     * Get translations
+     *
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getTranslations()
+    {
+        return $this->translations;
+    }
+
+    /**
+     * Add translation
+     *
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\CountryTranslation $t
+     *
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Country
+     */
+    public function addTranslation(CountryTranslation $t)
+    {
+        if (!$this->translations->contains($t)) {
+            $this->translations[] = $t;
+            $t->setObject($this);
+        }
         return $this;
     }
 }
