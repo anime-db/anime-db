@@ -1,8 +1,9 @@
 {
-    "name": "symfony/framework-standard-edition",
+    "name": "anime-db/application",
     "license": "MIT",
     "type": "project",
-    "description": "The \"Symfony Standard Edition\" distribution",
+    "description": "The application for making home collection anime",
+    "homepage": "http://anime-db.org",
     "autoload": {
         "psr-0": { "": "src/" }
     },
