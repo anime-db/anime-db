@@ -34,6 +34,8 @@ class CountryTranslation extends AbstractPersonalTranslation
      *
      * @ORM\ManyToOne(targetEntity="Country", inversedBy="translations")
      * @ORM\JoinColumn(name="object_id", referencedColumnName="id", onDelete="CASCADE")
+     *
+     * @var \AnimeDB\Bundle\CatalogBundle\Entity\Country
      */
     protected $object;
 
