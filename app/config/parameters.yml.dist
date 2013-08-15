@@ -12,7 +12,7 @@ parameters:
 #    mailer_user: ~
 #    mailer_password: ~
 
-    locale: ru
+    locale: en
     secret: a996943667c670ed1dcd4fb3822fd659
 
     # Serial number for application
