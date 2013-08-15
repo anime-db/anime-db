@@ -13,6 +13,8 @@ namespace AnimeDB\Bundle\CatalogBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Translatable\Translatable;
 
 /**
  * Genre
@@ -24,7 +26,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @package AnimeDB\Bundle\CatalogBundle\Entity
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Genre
+class Genre implements Translatable
 {
     /**
      * Id
@@ -42,6 +44,7 @@ class Genre
      *
      * @ORM\Column(type="string", length=16)
      * @Assert\NotBlank()
+     * @Gedmo\Translatable
      *
      * @var string
      */
@@ -55,6 +58,15 @@ class Genre
      * @var \Doctrine\Common\Collections\ArrayCollection
      */
     protected $items;
+
+    /**
+     * Entity locale
+     *
+     * @Gedmo\Locale
+     *
+     * @var string
+     */
+    protected $locale;
 
     /**
      * Construct
@@ -134,5 +146,18 @@ class Genre
     public function getItems()
     {
         return $this->items;
+    }
+
+    /**
+     * Set locale
+     *
+     * @param string $locale
+     *
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Type
+     */
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
+        return $this;
     }
 }
