@@ -36,4 +36,3 @@ services:
     anime_db.listener.request:
         class: AnimeDB\Bundle\CatalogBundle\Service\Listener\Request
         tags: [{ name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: -255 }]
-        arguments: [ @service_container ]
