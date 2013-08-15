@@ -25,13 +25,6 @@ stop_server() {
         rm ${path}/bin/.spid
     fi
 }
-stop_event_listener() {
-    if [ -f ${path}/bin/.elpid ]
-    then
-        kill `cat ${path}/bin/.elpid` 2> /dev/null
-        rm ${path}/bin/.elpid
-    fi
-}
 stop_task_scheduler() {
     if [ -f ${path}/bin/.tspid ]
     then
@@ -44,20 +37,15 @@ stop_task_scheduler() {
 case "$1" in
     stop)
         stop_server
-        stop_event_listener
         stop_task_scheduler
         ;;
     start|reload|restart|force-reload)
         stop_server
-        stop_event_listener
         stop_task_scheduler
 
         # run server
         php -S ${addr}:${port} -t ${path}/web ${path}/app/router.php > /dev/null 2> /dev/null &
         echo $! > ${path}/bin/.spid
-        # run event listener
-        ${path}/app/console animedb:event-listener > /dev/null 2> /dev/null &
-        echo $! > ${path}/bin/.elpid
         # run task scheduler
         ${path}/app/console animedb:task-scheduler > /dev/null 2> /dev/null &
         echo $! > ${path}/bin/.tspid

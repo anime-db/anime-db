@@ -45,6 +45,54 @@ class HomeController extends Controller
     const SEARCH_ITEMS_PER_PAGE = 6;
 
     /**
+     * Limits on the number of items per page for home page
+     *
+     * @var array
+     */
+    public static $home_show_limit = [8, 16, 32, -1];
+
+    /**
+     * Limits on the number of items per page for search page
+     *
+     * @var array
+     */
+    public static $search_show_limit = [6, 12, 24, -1];
+
+    /**
+     * Sort items by field
+     *
+     * @var array
+     */
+    public static $sort_by_field = [
+        'name'        => [
+            'title' => 'Item name',
+            'name'  => 'Name'
+        ],
+        'date_update' => [
+            'title' => 'Last updated item',
+            'name'  => 'Update'
+        ],
+        'date_start'  => [
+            'title' => 'Start date of production',
+            'name'  => 'Date start'
+        ],
+        'date_end'    => [
+            'title' => 'End date of production',
+            'name'  => 'Date end'
+        ]
+    ];
+
+    /**
+     * Sort direction
+     *
+     * @var array
+     */
+    public static $sort_direction = [
+        'DESC' => 'Descending',
+        'ASC'  => 'Ascending'
+    ];
+
+    /**
      * Home
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -57,35 +105,58 @@ class HomeController extends Controller
         $page = $request->get('page', 1);
         $current_page = $page > 1 ? $page : 1;
 
-        // get items
+        // get items limit
+        $limit = (int)$request->get('limit', self::HOME_ITEMS_PER_PAGE);
+        $limit = in_array($limit, self::$home_show_limit) ? $limit : self::HOME_ITEMS_PER_PAGE;
+
+        // get query
         $repository = $this->getDoctrine()->getRepository('AnimeDBCatalogBundle:Item');
-        $items = $repository->createQueryBuilder('i')
-            ->orderBy('i.id', 'DESC')
-            ->setFirstResult(($current_page - 1) * self::HOME_ITEMS_PER_PAGE)
-            ->setMaxResults(self::HOME_ITEMS_PER_PAGE)
-            ->getQuery()
-            ->getResult();
+        $query = $repository->createQueryBuilder('i')->orderBy('i.id', 'DESC');
 
-        // get count all items
-        $count = $repository->createQueryBuilder('i')
-            ->select('count(i.id)')
-            ->getQuery()
-            ->getSingleScalarResult();
+        $pagination = null;
+        // show not all items
+        if ($limit != -1) {
+            $query
+                ->setFirstResult(($current_page - 1) * $limit)
+                ->setMaxResults($limit);
 
-        $that = $this;
-        $pagination = $this->get('anime_db.pagination')->createNavigation(
-            ceil($count/self::HOME_ITEMS_PER_PAGE),
-            $current_page,
-            Pagination::DEFAULT_LIST_LENGTH,
-            function ($page) use ($that) {
-                return $that->generateUrl('home', ['page' => $page]);
-            },
-            $this->generateUrl('home')
-        );
+            // get count all items
+            $count = $repository->createQueryBuilder('i')
+                ->select('count(i.id)')
+                ->getQuery()
+                ->getSingleScalarResult();
 
-        return $this->render('AnimeDBCatalogBundle:Home:index.html.twig',
-            ['items' => $items, 'pagination' => $pagination]
-        );
+            $that = $this;
+            $pagination = $this->get('anime_db.pagination')->createNavigation(
+                ceil($count/$limit),
+                $current_page,
+                Pagination::DEFAULT_LIST_LENGTH,
+                function ($page) use ($that) {
+                    return $that->generateUrl('home', ['page' => $page]);
+                },
+                $this->generateUrl('home')
+            );
+        }
+
+        // get items
+        $items = $query->getQuery()->getResult();
+
+        // assembly parameters limit output
+        $show_limit = [];
+        foreach (self::$home_show_limit as $value) {
+            $show_limit[] = [
+                'link' => $this->generateUrl('home', ['limit' => $value]),
+                'name' => $value != -1 ? $value : 'All',
+                'count' => $value,
+                'current' => $limit == $value
+            ];
+        }
+
+        return $this->render('AnimeDBCatalogBundle:Home:index.html.twig', [
+            'items' => $items,
+            'show_limit' => $show_limit,
+            'pagination' => $pagination
+        ]);
     }
 
     /**
@@ -129,7 +200,11 @@ class HomeController extends Controller
         /* @var $form \Symfony\Component\Form\Form */
         $form = $this->createForm(new Search());
         $items = [];
-        $pagination = [];
+        $pagination = null;
+        // list items controls
+        $show_limit = null;
+        $sort_by = null;
+        $sort_direction = null;
 
         if ($request->query->count()) {
             $form->handleRequest($request);
@@ -197,42 +272,93 @@ class HomeController extends Controller
                 $current_page = $request->get('page', 1);
                 $current_page = $current_page > 1 ? $current_page : 1;
 
+                // get items limit
+                $limit = (int)$request->get('limit', self::SEARCH_ITEMS_PER_PAGE);
+                $limit = in_array($limit, self::$search_show_limit) ? $limit : self::SEARCH_ITEMS_PER_PAGE;
+
                 // add order
-                $data['sort_field'] = $data['sort_field'] ?: 'date_update';
-                $data['sort_direction'] = $data['sort_direction'] ?: 'DESC';
+                $current_sort_by = $request->get('sort_by', 'date_update');
+                if (!isset(self::$sort_by_field[$current_sort_by])) {
+                    $current_sort_by = 'date_update';
+                }
+                $current_sort_direction = $request->get('sort_direction', 'DESC');
+                if (!isset(self::$sort_direction[$current_sort_direction])) {
+                    $current_sort_direction = 'DESC';
+                }
+
+                // apply order
                 $selector
-                    ->orderBy('i.'.$data['sort_field'], $data['sort_direction'])
-                    ->orderBy('i.id', $data['sort_direction']);
+                    ->orderBy('i.'.$current_sort_by, $current_sort_direction)
+                    ->addOrderBy('i.id', $current_sort_direction);
+
+                // build sort params for tamplate
+                $sort_by = [];
+                foreach (self::$sort_by_field as $field => $info) {
+                    $sort_by[] = [
+                        'name' => $info['name'],
+                        'title' => $info['title'],
+                        'current' => $current_sort_by == $field,
+                        'link' => $this->generateUrl(
+                            'home_search',
+                            array_merge($request->query->all(), ['sort_by' => $field])
+                        )
+                    ];
+                }
+                $sort_direction['type'] = ($current_sort_direction == 'ASC' ? 'DESC' : 'ASC');
+                $sort_direction['link'] = $this->generateUrl(
+                    'home_search',
+                    array_merge($request->query->all(), ['sort_direction' => $sort_direction['type']])
+                );
+
+                if ($limit != -1) {
+                    $selector
+                        ->setFirstResult(($current_page - 1) * $limit)
+                        ->setMaxResults($limit);
+
+                    // build pagination
+                    $that = $this;
+                    $pagination = $this->get('anime_db.pagination')->createNavigation(
+                        ceil($count/$limit),
+                        $current_page,
+                        Pagination::DEFAULT_LIST_LENGTH,
+                        function ($page) use ($that, $request) {
+                            return $that->generateUrl(
+                                'home_search',
+                                array_merge($request->query->all(), ['page' => $page])
+                            );
+                        },
+                        $this->generateUrl('home_search', $request->query->all())
+                    );
+                }
 
                 // get items
                 $items = $selector
-                    ->setFirstResult(($current_page - 1) * self::SEARCH_ITEMS_PER_PAGE)
-                    ->setMaxResults(self::SEARCH_ITEMS_PER_PAGE)
                     ->groupBy('i')
                     ->getQuery()
                     ->getResult();
 
-                // build pagination
-                $that = $this;
-                $pagination = $this->get('anime_db.pagination')->createNavigation(
-                    ceil($count/self::HOME_ITEMS_PER_PAGE),
-                    $current_page,
-                    Pagination::DEFAULT_LIST_LENGTH,
-                    function ($page) use ($that, $request) {
-                        return $that->generateUrl(
+                // assembly parameters limit output
+                foreach (self::$search_show_limit as $value) {
+                    $show_limit[] = [
+                        'link' => $this->generateUrl(
                             'home_search',
-                            ['search_items' => $request->query->get('search_items'), 'page' => $page]
-                        );
-                    },
-                    $this->generateUrl('home_search', ['search_items' => $request->query->get('search_items')])
-                );
+                            array_merge($request->query->all(), ['limit' => $value])
+                        ),
+                        'name' => $value != -1 ? $value : 'All',
+                        'count' => $value,
+                        'current' => !empty($limit) && $limit == $value
+                    ];
+                }
             }
         }
 
         return $this->render('AnimeDBCatalogBundle:Home:search.html.twig', [
             'form'  => $form->createView(),
             'items' => $items,
-            'pagination' => $pagination
+            'show_limit' => $show_limit,
+            'pagination' => $pagination,
+            'sort_by' => $sort_by,
+            'sort_direction' => $sort_direction
         ]);
     }
 }

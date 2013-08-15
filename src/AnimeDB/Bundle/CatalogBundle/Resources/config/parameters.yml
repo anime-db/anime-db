@@ -3,5 +3,3 @@ parameters:
 
     task-scheduler:
         enabled: false
-    event-listener:
-        enabled: false
