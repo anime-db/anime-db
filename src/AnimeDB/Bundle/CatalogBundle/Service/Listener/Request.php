@@ -13,7 +13,7 @@ namespace AnimeDB\Bundle\CatalogBundle\Service\Listener;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\HttpFoundation\Session\Session;
+
 /**
  * Request listener
  *
@@ -30,22 +30,13 @@ class Request
     protected $container;
 
     /**
-     * Default locale
-     *
-     * @var string
-     */
-    protected $default = 'en';
-
-    /**
      * Construct
      *
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param string $default
      */
-    public function __construct(ContainerInterface $container, $default = 'en')
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->default = $default;
     }
 
     /**
@@ -60,7 +51,8 @@ class Request
         }
 
         $request = $event->getRequest();
-        $locale = $request->getPreferredLanguage() ?: $this->default;
-        $request->setLocale($locale);
+        if ($locale = $request->getPreferredLanguage()) {
+            $request->setDefaultLocale($locale);
+        }
     }
 }
