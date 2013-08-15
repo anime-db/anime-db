@@ -6,7 +6,7 @@
     "homepage": "http://anime-db.org",
     "version":"0.1.2",
     "autoload": {
-        "psr-0": { "": "src/" }
+        "psr-0": { "AnimeDB\\": "src/" }
     },
     "require": {
         "php": ">=5.4.0",
