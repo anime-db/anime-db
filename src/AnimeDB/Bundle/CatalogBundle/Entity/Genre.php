@@ -153,7 +153,7 @@ class Genre implements Translatable
      *
      * @param string $locale
      *
-     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Type
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Genre
      */
     public function setTranslatableLocale($locale)
     {
