@@ -115,46 +115,6 @@ class WorldArtRu implements Filler
     private $fs;
 
     /**
-     * World-Art countrys
-     *
-     * TODO Fill countrys list
-     *
-     * @var array
-     */
-    private $countrys = [
-        'Россия' => ['RU', 'Russia'],
-        'Япония' => ['JP', 'Japan'],
-        'США' => ['US', 'United States'],
-        'Австралия' => ['AU', 'Australia'],
-        'Австрия' => ['AT', 'Austria'],
-        'Азербайджан' => ['AZ', 'Azerbaijan'],
-        'Албания' => ['AL', 'Albania'],
-        'Алжир' => ['DZ', 'Algeria'],
-        'Ангола' => ['AO', 'Angola'],
-        'Андорра' => ['AD', 'Andorra'],
-        'Аргентина' => ['AR', 'Argentina'],
-        'Армения' => ['AM', 'Armenia'],
-        'Аруба' => ['AW', 'Aruba'],
-        'Афганистан' => ['AF', 'Afghanistan'],
-        'Беларусь' => ['BY', 'Belarus'],
-        'Бельгия' => ['BE', 'Belgium'],
-        'Болгария' => ['BG', 'Bulgaria'],
-        'Боливия' => ['BO', 'Bolivia'],
-        'Бразилия' => ['BR', 'Brazil'],
-        'Буркина-Фасо' => ['BF', 'Burkina Faso'],
-        'Вануату' => ['VU', 'Vanuatu'],
-        'Великобритания' => ['GB', 'United Kingdom'],
-        'Венгрия' => ['HU', 'Hungary'],
-        'Вьетнам' => ['VN', 'Vietnam'],
-        'Германия' => ['DE', 'Germany'],
-        'Греция' => ['GR', 'Greece'],
-        'Грузия' => ['GE', 'Georgia'],
-        'Дания' => ['DK', 'Denmark'],
-        'Египет' => ['EG', 'Egypt'],
-        'Замбия' => ['ZM', 'Zambia'],
-    ];
-
-    /**
      * World-Art genres
      *
      * @var array
@@ -212,15 +172,15 @@ class WorldArtRu implements Filler
      * @var array
      */
     private $types = [
-        'ТВ' => ['tv', 'TV'],
-        'ТВ-спэшл' => ['special', 'TV-special'],
-        'OVA' => ['ova', 'OVA'],
-        'ONA' => ['ona', 'ONA'],
-        'OAV' => ['ova', 'OVA'],
-        'полнометражный фильм' => ['feature', 'Feature'],
-        'короткометражный фильм' => ['featurette', 'Featurette'],
-        'музыкальное видео' => ['music', 'Music video'],
-        'рекламный ролик' => ['commercial', 'Commercial'],
+        'ТВ' => 'tv',
+        'ТВ-спэшл' => 'special',
+        'OVA' => 'ova',
+        'ONA' => 'ona',
+        'OAV' => 'ova',
+        'полнометражный фильм' => 'feature',
+        'короткометражный фильм' => 'featurette',
+        'музыкальное видео' => 'music',
+        'рекламный ролик' => 'commercial',
     ];
 
     /**
@@ -627,10 +587,9 @@ class WorldArtRu implements Filler
      * @return \AnimeDB\Bundle\CatalogBundle\Entity\Country|null
      */
     private function getCountryByName($name) {
-        if (isset($this->countrys[$name])) {
-            return (new Country())
-                ->setId($this->countrys[$name][0])
-                ->setName($this->countrys[$name][1]);
+        $rep = $this->doctrine->getRepository('AnimeDBCatalogBundle:CountryTranslation');
+        if ($country = $rep->findOneBy(['locale' => 'ru', 'content' => $name])) {
+            return $country->getObject();
         }
         return null;
     }
@@ -640,7 +599,7 @@ class WorldArtRu implements Filler
      *
      * @param string $name
      *
-     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Genre
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Genre|null
      */
     private function getGenreByName($name) {
         if (isset($this->genres[$name])) {
@@ -656,13 +615,13 @@ class WorldArtRu implements Filler
      *
      * @param string $name
      *
-     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Type
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Type|null
      */
     private function getTypeByName($name) {
         if (isset($this->types[$name])) {
-            return (new Type())
-                ->setId($this->types[$name][0])
-                ->setName($this->types[$name][1]);
+            return $this->doctrine
+                ->getRepository('AnimeDBCatalogBundle:Type')
+                ->find($this->types[$name]);
         }
         return null;
     }
