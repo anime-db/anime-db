@@ -7,7 +7,6 @@ web/media/favicon
 # Services pid files #
 ######################
 bin/.spid
-bin/.elpid
 bin/.tspid
 
 # Symfony directories #
