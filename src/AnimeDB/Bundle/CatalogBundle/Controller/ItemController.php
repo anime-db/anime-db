@@ -47,14 +47,11 @@ class ItemController extends Controller
      */
     public function addAction()
     {
-        /* @var $chain \AnimeDB\Bundle\CatalogBundle\Service\Autofill\Chain */
-        $chain = $this->get('anime_db.autofill');
-
         /* @var $search \Symfony\Component\Form\Form */
-        $search = $this->createForm(new Search($chain->getFillerTitles()));
+        $search = $this->createForm(new Search($this->get('anime_db.plugin.search')->getTitles()));
 
         /* @var $source \Symfony\Component\Form\Form */
-        $source = $this->createForm(new Get());
+        $source = $this->createForm(new Get($this->get('anime_db.plugin.filler')->getTitles()));
 
         return $this->render('AnimeDBCatalogBundle:Item:add.html.twig', [
             'source_form' => $source->createView(),
