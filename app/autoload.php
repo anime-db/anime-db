@@ -11,7 +11,6 @@ if (!function_exists('intl_get_error_code')) {
 
     $loader->add('', __DIR__.'/../vendor/symfony/symfony/src/Symfony/Component/Locale/Resources/stubs');
 }
-$loader->add('Buzz', __DIR__.'/../vendor/buzz/lib');
 
 AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
 

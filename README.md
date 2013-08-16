@@ -1,5 +1,5 @@
 <img src="http://anime-db.org/images/logo.jpg" /><br />
-[![Build Status](https://travis-ci.org/peter-gribanov/application.png?branch=framework)](https://travis-ci.org/peter-gribanov/application)<br />
+[![Build Status](https://travis-ci.org/anime-db/application.png)](https://travis-ci.org/anime-db/application)<br />
 <img src="http://www.php.net/images/logos/php5-power-micro.png" />
 
 # AnimeDB #
@@ -102,9 +102,4 @@ For the application is launched after the computer start, run the command
 SQLite >= 3 <br />
 PHP version >= 5.4.x<br />
 PHP extensions:
-* curl
-* gd2
-* intl
-* mbstring
 * pdo_sqlite
-* tidy
