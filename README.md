@@ -1,5 +1,5 @@
 <img src="http://anime-db.org/images/logo.jpg" /><br />
-[![Build Status](https://travis-ci.org/anime-db/application.png)](https://travis-ci.org/anime-db/application)<br />
+[![Build Status](https://travis-ci.org/anime-db/anime-db.png)](https://travis-ci.org/anime-db/anime-db)<br />
 <img src="http://www.php.net/images/logos/php5-power-micro.png" />
 
 # AnimeDB #
@@ -11,13 +11,13 @@ As of PHP 5.4.0
 ## Repositories ##
 
 The official source code for this application can be retrieved from<br />
-<http://github.com/anime-db/application>
+<http://github.com/anime-db/anime-db>
 
 ## Installation ##
 
 Clone this repository to fetch the latest version of this application
 
-    git clone git://github.com/anime-db/application.git && cd application
+    git clone git://github.com/anime-db/anime-db.git && cd anime-db
 
 Start by downloading Composer. If you have curl installed, it's as easy as:
 
@@ -83,11 +83,11 @@ To start the application as a service, you need edit startup-file of the applica
 
 Set real path to application
 
-    path=/path/to/application
+    path=/path/to/anime-db
 
 Create a symbolic link on service
 
-    ln -s /path/to/application/bin/service /etc/init.d/animedb
+    ln -s /path/to/anime-db/bin/service /etc/init.d/animedb
 
 Run service
 
