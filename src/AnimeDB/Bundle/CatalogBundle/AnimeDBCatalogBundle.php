@@ -12,7 +12,7 @@ namespace AnimeDB\Bundle\CatalogBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use AnimeDB\Bundle\CatalogBundle\Service\Autofill\CompilerPass;
+use AnimeDB\Bundle\CatalogBundle\Service\Plugin\CompilerPass;
 
 /**
  * Bundle

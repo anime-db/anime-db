@@ -13,7 +13,7 @@ namespace AnimeDB\Bundle\CatalogBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AnimeDB\Bundle\CatalogBundle\Form\Filler\Search;
 use AnimeDB\Bundle\CatalogBundle\Form\Filler\Get;
-use AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler;
+use AnimeDB\Bundle\CatalogBundle\Service\Plugin\Filler\FillerInterface;
 use AnimeDB\Bundle\CatalogBundle\Form\Entity\Item as ItemEntity;
 use AnimeDB\Bundle\CatalogBundle\Entity\Item;
 use AnimeDB\Bundle\CatalogBundle\Entity\Name;
@@ -37,25 +37,26 @@ class FillerController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function searchAction(Request $request) {
-        /* @var $chain \AnimeDB\Bundle\CatalogBundle\Service\Autofill\Chain */
-        $chain = $this->get('anime_db.autofill');
+        /* @var $chain \AnimeDB\Bundle\CatalogBundle\Service\Plugin\Search\Chain */
+        $chain = $this->get('anime_db.plugin.search');
 
         /* @var $form \Symfony\Component\Form\Form */
-        $form = $this->createForm(new Search($chain->getFillerTitles()));
+        $form = $this->createForm(new Search($chain->getTitles()));
 
         $list = [];
+        $filler_name = null;
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
-
-                $data = $form->getData();
-                /* @var $filler \AnimeDB\Bundle\CatalogBundle\Service\Autofill\Filler\Filler */
-                $filler = $chain->getFiller($data['filler']);
-                $list = $filler->search($data['name']);
+                $filler_name = $form->getData()['filler'];
+                /* @var $filler \AnimeDB\Bundle\CatalogBundle\Service\Plugin\Search\SearchInterface */
+                $filler = $chain->getPlugin($filler_name);
+                $list = $filler->search($form->getData()['name']);
             }
         }
         return $this->render('AnimeDBCatalogBundle:Filler:search.html.twig', [
-            'list' => $list
+            'list' => $list,
+            'filler' => $filler_name
         ]);
     }
 
@@ -68,17 +69,17 @@ class FillerController extends Controller
      */
     public function fillAction(Request $request) {
         /* @var $form \Symfony\Component\Form\Form */
-        $form = $this->createForm(new Get());
+        $form = $this->createForm(new Get($this->get('anime_db.plugin.filler')->getTitles()));
 
         $error = '';
         $fill_form = null;
         $form->handleRequest($request);
         if ($form->isValid()) {
             $source = $form->getData()['url'];
-            /* @var $chain \AnimeDB\Bundle\CatalogBundle\Service\Autofill\Chain */
-            $chain = $this->get('anime_db.autofill');
-            $filler = $chain->getFillerBySource($source);
-            if (!($filler instanceof Filler)) {
+            $filler = $form->getData()['filler'];
+            /* @var $filler \AnimeDB\Bundle\CatalogBundle\Service\Plugin\Filler\FillerInterface */
+            $filler = $this->get('anime_db.plugin.filler')->getPlugin($filler);
+            if (!($filler instanceof FillerInterface)) {
                 $error = 'Unable to find any filler for the specified source';
             } else {
                 /* @var $item \AnimeDB\Bundle\CatalogBundle\Entity\Item */

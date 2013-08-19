@@ -23,6 +23,23 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class Get extends AbstractType
 {
     /**
+     * Filler titles
+     *
+     * @var array
+     */
+    private $filler_titles = [];
+
+    /**
+     * Construct
+     *
+     * @param array $filler_titles Filler titles
+     */
+    public function __construct(array $filler_titles)
+    {
+        $this->filler_titles = $filler_titles;
+    }
+
+    /**
      * (non-PHPdoc)
      * @see \Symfony\Component\Form\AbstractType::buildForm()
      */
@@ -35,6 +52,10 @@ class Get extends AbstractType
                 'attr' => [
                     'placeholder' => 'http://',
                 ],
+            ])
+            ->add('filler', 'choice', [
+                'label' => 'Source',
+                'choices' => $this->filler_titles
             ]);
     }
 
