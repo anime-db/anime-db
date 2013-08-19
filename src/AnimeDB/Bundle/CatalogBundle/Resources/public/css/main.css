@@ -208,8 +208,8 @@ h1.logo a span {
 #navigation .selected span {
 	color: #fff;
 }
-#navigation .last a,
-#navigation .last span {
+#navigation .settings > a,
+#navigation .settings > span {
 	background-image: none;
 }
 #navigation li:hover a,

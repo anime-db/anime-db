@@ -10,7 +10,11 @@
 	{% if nodes is not empty %}
 		<ul>
 			{% for node in nodes %}
-				<li>
+				<li
+					{% if node.class != '' %}
+						class="{{ node.class }}"
+					{% endif %}
+				>
 					{% if node.link != '' %}
 						<a href="{{ node.link }}">{{ node.title|trans }}</a>
 					{% else %}

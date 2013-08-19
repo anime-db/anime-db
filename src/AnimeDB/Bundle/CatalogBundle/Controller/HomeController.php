@@ -387,11 +387,13 @@ class HomeController extends Controller
             [
                 'title' => 'Search',
                 'link'  => $this->generateUrl('home_search'),
+                'class' => 'search',
                 'children' => [],
             ],
             [
                 'title' => 'Add record',
                 'link' => '',
+                'class' => 'add',
                 'children' => array_merge(
                     $search_nodes ? [ $search_nodes ] : [],
                     $filler_nodes ? [ $filler_nodes ] : [],
@@ -399,6 +401,7 @@ class HomeController extends Controller
                         [
                             'title' => 'Manually add',
                             'link' => $this->generateUrl('item_add_manually'),
+                            'class' => 'manually',
                             'children' => [],
                         ]
                     ],
@@ -408,17 +411,20 @@ class HomeController extends Controller
             [
                 'title' => 'Settings',
                 'link' => '',
+                'class' => 'settings',
                 'children' => array_merge(
                     $setting_nodes ? [ $setting_nodes ] : [],
                     [
                         [
                             'title' => 'Storages',
                             'link' => $this->generateUrl('storage_list'),
+                            'class' => 'storages',
                             'children' => [],
                         ]/* ,
                         [ // TODO requires the implementation of
                             'title' => 'General',
                             'route' => $this->generateUrl('home_general'),
+                            'class' => 'general',
                             'children' => [],
                         ] */
                     ]
@@ -450,6 +456,7 @@ class HomeController extends Controller
             $nodes[] = [
                 'title' => $plugin->getTitle(),
                 'link'  => $this->generateUrl($route, ['plugin' => $plugin->getName()]),
+                'class' => 'plugin',
                 'children' => [],
             ];
         }
@@ -459,6 +466,7 @@ class HomeController extends Controller
             return [
                 'title' => $group_title,
                 'link'  => $group_link,
+                'class' => 'plugin_group',
                 'children' => $nodes,
             ];
         }
