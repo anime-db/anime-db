@@ -4,10 +4,16 @@
     "type": "project",
     "description": "The application for making home collection anime",
     "homepage": "http://anime-db.org",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "autoload": {
         "psr-0": { "AnimeDB\\": "src/" }
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git://github.com/anime-db/worldart-filler-bundle.git"
+        }
+    ],
     "require": {
         "php": ">=5.4.0",
         "ext-pdo_sqlite": ">=1.0.1",
@@ -24,7 +30,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "sensio/buzz-bundle": "dev-master",
         "avalanche123/imagine-bundle": "v2.1",
-        "gedmo/doctrine-extensions": "dev-master"
+        "gedmo/doctrine-extensions": "dev-master",
+        "anime-db/worldart-filler-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [
