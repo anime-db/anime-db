@@ -399,7 +399,7 @@ class HomeController extends Controller
                     $filler_nodes ? [ $filler_nodes ] : [],
                     [
                         [
-                            'title' => 'Manually add',
+                            'title' => 'Add manually',
                             'link' => $this->generateUrl('item_add_manually'),
                             'class' => 'manually',
                             'children' => [],

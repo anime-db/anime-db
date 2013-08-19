@@ -406,6 +406,26 @@
                 <source>Update</source>
                 <target>Обновление</target>
             </trans-unit>
+            <trans-unit id="106">
+                <source>Add manually</source>
+                <target>Добавить вручную</target>
+            </trans-unit>
+            <trans-unit id="107">
+                <source>General</source>
+                <target>Общие</target>
+            </trans-unit>
+            <trans-unit id="108">
+                <source>Search source</source>
+                <target>Поиск источника</target>
+            </trans-unit>
+            <trans-unit id="109">
+                <source>Fill from source</source>
+                <target>Заполнение из источника</target>
+            </trans-unit>
+            <trans-unit id="110">
+                <source>Import items</source>
+                <target>Импорт записей</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
