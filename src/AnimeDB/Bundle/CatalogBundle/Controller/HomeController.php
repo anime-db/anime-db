@@ -10,6 +10,8 @@
 
 namespace AnimeDB\Bundle\CatalogBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AnimeDB\Bundle\CatalogBundle\Form\SearchSimple;
@@ -21,6 +23,7 @@ use AnimeDB\Bundle\CatalogBundle\Entity\Genre as GenreEntity;
 use AnimeDB\Bundle\CatalogBundle\Entity\Storage as StorageEntity;
 use Doctrine\ORM\Query\Expr;
 use AnimeDB\Bundle\CatalogBundle\Service\Pagination;
+use AnimeDB\Bundle\CatalogBundle\Service\Plugin\Chain as ChainPlugin;
 
 /**
  * Main page of the catalog
@@ -360,5 +363,118 @@ class HomeController extends Controller
             'sort_by' => $sort_by,
             'sort_direction' => $sort_direction
         ]);
+    }
+
+    /**
+     * Search item
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function menuAction(Request $request)
+    {
+        // build search nodes
+        $search_nodes = $this->buildMenuBranch($this->get('anime_db.plugin.search'), 'item_search', 'Search source');
+        // build filler nodes
+        $filler_nodes = $this->buildMenuBranch($this->get('anime_db.plugin.filler'), 'item_fill', 'Fill from source');
+        // build import nodes
+        $import_nodes = $this->buildMenuBranch($this->get('anime_db.plugin.import'), 'item_import', 'Import items');
+        // build settings nodes
+        $setting_nodes = $this->buildMenuBranch($this->get('anime_db.plugin.setting'), 'home_setting');
+
+        $menu = [
+            [
+                'title' => 'Search',
+                'link'  => $this->generateUrl('home_search'),
+                'children' => [],
+            ],
+            [
+                'title' => 'Add record',
+                'link' => '',
+                'children' => array_merge(
+                    $search_nodes ? [ $search_nodes ] : [],
+                    $filler_nodes ? [ $filler_nodes ] : [],
+                    [
+                        [
+                            'title' => 'Manually add',
+                            'link' => $this->generateUrl('item_add_manually'),
+                            'children' => [],
+                        ]
+                    ],
+                    $import_nodes ? [ $import_nodes ] : []
+                ),
+            ],
+            [
+                'title' => 'Settings',
+                'link' => '',
+                'children' => array_merge(
+                    $setting_nodes ? [ $setting_nodes ] : [],
+                    [
+                        [
+                            'title' => 'Storages',
+                            'link' => $this->generateUrl('storage_list'),
+                            'children' => [],
+                        ]/* ,
+                        [ // TODO requires the implementation of
+                            'title' => 'General',
+                            'route' => $this->generateUrl('home_general'),
+                            'children' => [],
+                        ] */
+                    ]
+                ),
+            ]
+        ];
+
+        return $this->render('AnimeDBCatalogBundle:Home:menu.html.twig', [
+            'menu' => $menu
+        ]);
+    }
+
+    /**
+     * Build menu branch from plugin chain
+     *
+     * If $group_title is set then node list is grouped under one node
+     *
+     * @param \AnimeDB\Bundle\CatalogBundle\Service\Plugin\Chain $chain
+     * @param string $route
+     * @param string|null $group_title
+     * @param string|null $group_link
+     *
+     * @return array
+     */
+    private function buildMenuBranch(ChainPlugin $chain, $route, $group_title = '', $group_link = '')
+    {
+        $nodes = [];
+        foreach ($chain->getPlugins() as $plugin) {
+            $nodes[] = [
+                'title' => $plugin->getTitle(),
+                'link'  => $this->generateUrl($route, ['plugin' => $plugin->getName()]),
+                'children' => [],
+            ];
+        }
+
+        // group node list
+        if ($group_title && $nodes) {
+            return [
+                'title' => $group_title,
+                'link'  => $group_link,
+                'children' => $nodes,
+            ];
+        }
+
+        return $nodes;
+    }
+
+    /**
+     * Setting from plugin
+     *
+     * @param string $plugin
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function settingAction($plugin)
+    {
+        return new Response();
     }
 }

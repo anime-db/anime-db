@@ -1,0 +1,24 @@
+{% if menu is not empty %}
+<nav>
+	<div class="left"></div>
+	{{ _self.list(menu) }}
+	<div class="right"></div>
+</nav>
+{% endif %}
+
+{% macro list(nodes) %}
+	{% if nodes is not empty %}
+		<ul>
+			{% for node in nodes %}
+				<li>
+					{% if node.link != '' %}
+						<a href="{{ node.link }}">{{ node.title|trans }}</a>
+					{% else %}
+						<span>{{ node.title|trans }}</span>
+					{% endif %}
+					{{ _self.list(node.children) }}
+				</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+{% endmacro %}

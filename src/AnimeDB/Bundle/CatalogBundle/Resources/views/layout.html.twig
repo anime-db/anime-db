@@ -14,41 +14,7 @@
 {% block body %}
 <div id="wrapper">
 	<div id="navigation">
-		<nav>
-			<div class="left"></div>
-			<ul>
-				<li><a href="{{ path('home_search') }}">{% trans %}Search{% endtrans %}</a></li>
-				<li>
-					<a href="{{ path('item_add') }}">{% trans %}Add record{% endtrans %}</a>
-					<!-- <ul>
-						<li>
-							<span>Найти источник</span>
-							<ul>
-								<li><a href="#">World-Art.ru</a></li>
-								<li><a href="#">Shikimori.org</a></li>
-							</ul>
-						</li>
-						<li>
-							<span>Заполнить из источника</span>
-							<ul>
-								<li><a href="#">World-Art.ru</a></li>
-								<li><a href="#">Shikimori.org</a></li>
-							</ul>
-						</li>
-						<li><span>Импорт</span></li>
-						<li><a href="#">Добавить вручную</a></li>
-					</ul> -->
-				</li>
-				<li class="last">
-					<span>{% trans %}Settings{% endtrans %}</span>
-					<ul>
-						<li><a href="{{ path('storage_list') }}">{% trans %}Storages{% endtrans %}</a></li>
-						<!-- <li><a href="#">Общие</a></li> -->
-					</ul>
-				</li>
-			</ul>
-			<div class="right"></div>
-		</nav>
+		{% render controller('AnimeDBCatalogBundle:Home:menu') %}
 	</div>
 	<div id="header">
 		<h1 class="logo">

@@ -10,6 +10,8 @@
 
 namespace AnimeDB\Bundle\CatalogBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AnimeDB\Bundle\CatalogBundle\Form\Filler\Search;
 use AnimeDB\Bundle\CatalogBundle\Form\Filler\Get;
@@ -136,5 +138,41 @@ class ItemController extends Controller
         $em->remove($item);
         $em->flush();
         return $this->redirect($this->generateUrl('home'));
+    }
+
+    /**
+     * Create new item from source fill
+     *
+     * @param string $plugin
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function fillAction($plugin)
+    {
+        return new Response();
+    }
+
+    /**
+     * Search source fill for item
+     *
+     * @param string $plugin
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function searchAction($plugin)
+    {
+        return new Response();
+    }
+
+    /**
+     * Import items
+     *
+     * @param string $plugin
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function importAction($plugin)
+    {
+        return new Response();
     }
 }

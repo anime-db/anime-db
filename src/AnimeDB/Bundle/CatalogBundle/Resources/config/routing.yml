@@ -10,6 +10,10 @@ home_autocomplete_name:
     pattern:  /autocomplete-name.json
     defaults: { _controller: AnimeDBCatalogBundle:Home:autocompleteName, _format: json }
 
+home_setting:
+    pattern:  /setting/{plugin}.html
+    defaults: { _controller: AnimeDBCatalogBundle:Home:setting }
+
 
 item_add:
     pattern:  /add.html
@@ -36,6 +40,18 @@ item_delete:
     defaults: { _controller: AnimeDBCatalogBundle:Item:delete }
     requirements:
         id:  \d+
+
+item_fill:
+    pattern:  /fill/{plugin}.html
+    defaults: { _controller: AnimeDBCatalogBundle:Item:fill }
+
+item_search:
+    pattern:  /search/{plugin}.html
+    defaults: { _controller: AnimeDBCatalogBundle:Item:search }
+
+item_import:
+    pattern:  /import/{plugin}.html
+    defaults: { _controller: AnimeDBCatalogBundle:Item:import }
 
 
 filler_search:
