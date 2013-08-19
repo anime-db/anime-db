@@ -10,8 +10,8 @@
     },
     "repositories": [
         {
-            "type": "git",
-            "url": "git@github.com:anime-db/worldart-filler-bundle.git"
+            "type": "vcs",
+            "url": "git://github.com/anime-db/worldart-filler-bundle.git"
         }
     ],
     "require": {
