@@ -35,7 +35,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AnimeDB\Bundle\CatalogBundle\AnimeDBCatalogBundle(),
             new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
-            new AnimeDB\Bundle\WorldArtBundle\AnimeDBWorldArtBundle(),
+            new AnimeDB\Bundle\WorldArtFillerBundle\AnimeDBWorldArtFillerBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
