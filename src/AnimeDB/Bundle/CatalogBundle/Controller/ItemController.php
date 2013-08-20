@@ -148,7 +148,49 @@ class ItemController extends Controller
      */
     public function searchAction($plugin, Request $request)
     {
-        return new Response();
+        /* @var $chain \AnimeDB\Bundle\CatalogBundle\Service\Plugin\Search\Chain */
+        $chain = $this->get('anime_db.plugin.search');
+        if (!($search = $chain->getPlugin($plugin))) {
+            throw $this->createNotFoundException('Plugin \''.$plugin.'\' is not found');
+        }
+
+        /* @var $form \Symfony\Component\Form\Form */
+        if ($search instanceof CustomFormSearch) {
+            $form = $this->createForm($search->getForm());
+        } else {
+            $form = $this->createForm(new SearchPluginForm());
+        }
+
+        $list = [];
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                // url bulder for fill items in list
+                $that = $this;
+                $url_builder = function ($source) use ($that, $plugin) {
+                    return $that->generateUrl(
+                        'item_filler',
+                        [
+                            'plugin' => $plugin,
+                            (new FillerPluginForm())->getName() => ['url' => $source]
+                        ]
+                    );
+                };
+
+                // search items
+                if ($search instanceof CustomFormSearch) {
+                    $list = $search->search($form->getData(), $url_builder);
+                } else {
+                    $list = $search->search($form->getData()['name'], $url_builder);
+                }
+            }
+        }
+
+        return $this->render('AnimeDBCatalogBundle:Item:search.html.twig', [
+            'plugin' => $plugin,
+            'list'   => $list,
+            'form'   => $form->createView()
+        ]);
     }
 
     /**
