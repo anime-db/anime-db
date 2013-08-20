@@ -23,6 +23,8 @@ interface SearchInterface extends PluginInterface
     /**
      * Search source by name
      *
+     * Use $url_bulder for build link to fill item from source or build their own links
+     *
      * Return structure
      * <code>
      * [
@@ -31,8 +33,9 @@ interface SearchInterface extends PluginInterface
      * </code>
      *
      * @param string $name
+     * @param \Closure $url_bulder
      *
      * @return array
      */
-    public function search($name);
+    public function search($name, \Closure $url_bulder);
 }

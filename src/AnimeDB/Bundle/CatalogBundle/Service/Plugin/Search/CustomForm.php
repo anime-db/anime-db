@@ -30,6 +30,8 @@ interface CustomForm extends SearchInterface
     /**
      * Search source by form data
      *
+     * Use $url_bulder for build link to fill item from source or build their own links
+     *
      * Return structure
      * <code>
      * [
@@ -38,8 +40,9 @@ interface CustomForm extends SearchInterface
      * </code>
      *
      * @param array $data
+     * @param \Closure $url_bulder
      *
      * @return array
      */
-    public function search(array $data);
+    public function search(array $data, \Closure $url_bulder);
 }

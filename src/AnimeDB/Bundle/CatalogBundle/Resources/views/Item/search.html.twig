@@ -23,11 +23,11 @@
 		<ul>
 			{% for item in list %}
 				<li>
-					<a href="{{ path('filler_fill') }}?filler_get[url]={{ item.source|url_encode }}" class="image">
+					<a href="{{ item.link }}" class="image">
 						<img src="{{ item.image|dummy('card') }}" alt="{{ item.name }}" />
 					</a>
 					<div class="info">
-						<a href="{{ path('filler_fill', {'filler_get': {'url': item.source, 'filler': plugin }}) }}">{{ item.name }}</a>
+						<a href="{{ item.link }}">{{ item.name }}</a>
 						<div>{{ item.description|nl2br }}</div>
 					</div>
 					<br clear="both">
