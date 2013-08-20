@@ -24,6 +24,8 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Filler item
  *
+ * @deprecated Use plugins
+ *
  * @package AnimeDB\Bundle\CatalogBundle\Controller
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */

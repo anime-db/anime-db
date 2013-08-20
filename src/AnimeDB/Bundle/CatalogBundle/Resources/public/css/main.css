@@ -412,36 +412,6 @@ h1.logo a span {
 }
 
 
-
-/**
- * Main page for add item
- */
-.b-add-item section {
-	margin-bottom: 50px;
-}
-.b-add-item .b-add-manually {
-	margin-bottom: 0;
-}
-.b-add-item section h3 {
-	font-size: 120%;
-	font-weight: bold;
-}
-.b-add-item label {
-	padding-right: 5px;
-	display: block;
-	width: 63px;
-	float: left;
-}
-#f-add-item-search div,
-#f-add-item-source div {
-	margin: 5px 15px 0 0;
-	float: left;
-}
-.b-add-item input {
-	width: 300px;
-}
-
-
 /**
  * Filler search page
  */

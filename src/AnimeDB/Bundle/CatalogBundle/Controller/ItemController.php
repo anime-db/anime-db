@@ -21,6 +21,10 @@ use AnimeDB\Bundle\CatalogBundle\Entity\Image;
 use AnimeDB\Bundle\CatalogBundle\Entity\Source;
 use AnimeDB\Bundle\CatalogBundle\Form\Entity\Item as ItemForm;
 use Symfony\Component\HttpFoundation\Request;
+use AnimeDB\Bundle\CatalogBundle\Form\Plugin\Search as SearchPluginForm;
+use AnimeDB\Bundle\CatalogBundle\Form\Plugin\Filler as FillerPluginForm;
+use AnimeDB\Bundle\CatalogBundle\Service\Plugin\Search\CustomForm as CustomFormSearch;
+use AnimeDB\Bundle\CatalogBundle\Service\Plugin\Filler\CustomForm as CustomFormFiller;
 
 /**
  * Item
@@ -40,25 +44,6 @@ class ItemController extends Controller
     public function showAction(Item $item)
     {
         return $this->render('AnimeDBCatalogBundle:Item:show.html.twig', ['item' => $item]);
-    }
-
-    /**
-     * Add item
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function addAction()
-    {
-        /* @var $search \Symfony\Component\Form\Form */
-        $search = $this->createForm(new Search($this->get('anime_db.plugin.search')->getTitles()));
-
-        /* @var $source \Symfony\Component\Form\Form */
-        $source = $this->createForm(new Get($this->get('anime_db.plugin.filler')->getTitles()));
-
-        return $this->render('AnimeDBCatalogBundle:Item:add.html.twig', [
-            'source_form' => $source->createView(),
-            'search_form' => $search->createView(),
-        ]);
     }
 
     /**
@@ -144,10 +129,11 @@ class ItemController extends Controller
      * Create new item from source fill
      *
      * @param string $plugin
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function fillAction($plugin)
+    public function fillerAction($plugin, Request $request)
     {
         return new Response();
     }
@@ -156,10 +142,11 @@ class ItemController extends Controller
      * Search source fill for item
      *
      * @param string $plugin
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function searchAction($plugin)
+    public function searchAction($plugin, Request $request)
     {
         return new Response();
     }

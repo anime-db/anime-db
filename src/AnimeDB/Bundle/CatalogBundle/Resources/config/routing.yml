@@ -15,10 +15,6 @@ home_setting:
     defaults: { _controller: AnimeDBCatalogBundle:Home:setting }
 
 
-item_add:
-    pattern:  /add.html
-    defaults: { _controller: AnimeDBCatalogBundle:Item:add }
-
 item_add_manually:
     pattern:  /add-manually.html
     defaults: { _controller: AnimeDBCatalogBundle:Item:addManually }
@@ -41,9 +37,9 @@ item_delete:
     requirements:
         id:  \d+
 
-item_fill:
-    pattern:  /fill/{plugin}.html
-    defaults: { _controller: AnimeDBCatalogBundle:Item:fill }
+item_filler:
+    pattern:  /filler/{plugin}.html
+    defaults: { _controller: AnimeDBCatalogBundle:Item:filler }
 
 item_search:
     pattern:  /search/{plugin}.html

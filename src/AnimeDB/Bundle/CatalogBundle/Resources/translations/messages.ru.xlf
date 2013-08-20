@@ -86,10 +86,6 @@
                 <source>List of results</source>
                 <target>Список результатов</target>
             </trans-unit>
-            <trans-unit id="22">
-                <source>Nothing was found</source>
-                <target>Ничего не найдено</target>
-            </trans-unit>
             <trans-unit id="23">
                 <source>Select the entry you want to add</source>
                 <target>Выберите запись, которую Вы хотите добавить</target>

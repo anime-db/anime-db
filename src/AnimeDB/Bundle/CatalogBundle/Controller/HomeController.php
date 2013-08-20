@@ -377,7 +377,7 @@ class HomeController extends Controller
         // build search nodes
         $search_nodes = $this->buildMenuBranch($this->get('anime_db.plugin.search'), 'item_search', 'Search source');
         // build filler nodes
-        $filler_nodes = $this->buildMenuBranch($this->get('anime_db.plugin.filler'), 'item_fill', 'Fill from source');
+        $filler_nodes = $this->buildMenuBranch($this->get('anime_db.plugin.filler'), 'item_filler', 'Fill from source');
         // build import nodes
         $import_nodes = $this->buildMenuBranch($this->get('anime_db.plugin.import'), 'item_import', 'Import items');
         // build settings nodes

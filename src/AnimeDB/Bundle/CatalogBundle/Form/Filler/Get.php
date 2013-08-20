@@ -17,6 +17,8 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 /**
  * Get item from filler
  *
+ * @deprecated Use plugins
+ *
  * @package AnimeDB\Bundle\CatalogBundle\Form\Filler
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
