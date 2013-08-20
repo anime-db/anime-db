@@ -924,3 +924,15 @@ div.ui-widget div.ui-state-highlight {
 }
 .storages-list .name {
 }
+
+/**
+ * Form for plugin search
+ */
+#animedb_catalogbundle_plugin_search {
+	margin: 3px 10px 0 0;
+	float: left;
+}
+#animedb_catalogbundle_plugin_search label {
+	width: auto;
+	margin-right: 10px;
+}
