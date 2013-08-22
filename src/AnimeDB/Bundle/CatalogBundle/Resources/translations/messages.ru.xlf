@@ -367,7 +367,7 @@
                 <target>Показать %count% запись на странице|Показать %count% записи на странице|Показать %count% записей на странице|{-1} Показать все записи на странице</target>
             </trans-unit>
             <trans-unit id="97">
-                <source>Sorting </source>
+                <source>Sorting</source>
                 <target>Сортировка</target>
             </trans-unit>
             <trans-unit id="98">
@@ -421,6 +421,10 @@
             <trans-unit id="110">
                 <source>Import items</source>
                 <target>Импорт записей</target>
+            </trans-unit>
+            <trans-unit id="111">
+                <source>All</source>
+                <target>Все</target>
             </trans-unit>
         </body>
     </file>
