@@ -418,6 +418,14 @@
                 <source>Fill</source>
                 <target>Заполнить</target>
             </trans-unit>
+            <trans-unit id="113">
+                <source>Import</source>
+                <target>Импорт</target>
+            </trans-unit>
+            <trans-unit id="114">
+                <source>Find</source>
+                <target>Найти</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -232,10 +232,11 @@ class ItemController extends Controller
      * Import items
      *
      * @param string $plugin
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function importAction($plugin)
+    public function importAction($plugin, Request $request)
     {
         /* @var $chain \AnimeDB\Bundle\CatalogBundle\Service\Plugin\Search\Chain */
         $chain = $this->get('anime_db.plugin.import');
@@ -243,6 +244,31 @@ class ItemController extends Controller
             throw $this->createNotFoundException('Plugin \''.$plugin.'\' is not found');
         }
 
-        return new Response();
+        $form = $this->createForm($import->getForm());
+
+        $list = [];
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                // import items
+                $list = (array)$import->import($form->getData());
+
+                // persist entity
+                $em = $this->getDoctrine()->getManager();
+                foreach ($list as $key => $item) {
+                    if ($item instanceof Item) {
+                        $em->persist($item);
+                    } else {
+                        unset($list[$key]);
+                    }
+                }
+            }
+        }
+
+        return $this->render('AnimeDBCatalogBundle:Item:import.html.twig', [
+            'plugin' => $plugin,
+            'items'  => $list,
+            'form'   => $form->createView()
+        ]);
     }
 }
