@@ -20,4 +20,19 @@ use AnimeDB\Bundle\CatalogBundle\Service\Plugin\PluginInterface;
  */
 interface ImportInterface extends PluginInterface
 {
+    /**
+     * Get form
+     *
+     * @return \Symfony\Component\Form\AbstractType
+     */
+    public function getForm();
+
+    /**
+     * Import items from source data
+     *
+     * @param array $data
+     *
+     * @return array [ \AnimeDB\Bundle\CatalogBundle\Entity\Item ]
+     */
+    public function import(array $data);
 }
