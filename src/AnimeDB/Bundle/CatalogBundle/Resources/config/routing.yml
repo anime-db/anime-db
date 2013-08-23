@@ -50,15 +50,6 @@ item_import:
     defaults: { _controller: AnimeDBCatalogBundle:Item:import }
 
 
-filler_search:
-    pattern:  /filler/search.html
-    defaults: { _controller: AnimeDBCatalogBundle:Filler:search }
-
-filler_fill:
-    pattern:  /filler/fill.html
-    defaults: { _controller: AnimeDBCatalogBundle:Filler:fill }
-
-
 media_favicon:
     pattern:  /media/favicon/{host}.ico
     requirements:
