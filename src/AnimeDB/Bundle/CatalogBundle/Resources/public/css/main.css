@@ -928,11 +928,13 @@ div.ui-widget div.ui-state-highlight {
 /**
  * Form for plugin search
  */
-#animedb_catalogbundle_plugin_search {
+#animedb_catalogbundle_plugin_search,
+#animedb_catalogbundle_plugin_filler {
 	margin: 3px 10px 0 0;
 	float: left;
 }
-#animedb_catalogbundle_plugin_search label {
+#animedb_catalogbundle_plugin_search label,
+#animedb_catalogbundle_plugin_filler label {
 	width: auto;
 	margin-right: 10px;
 }

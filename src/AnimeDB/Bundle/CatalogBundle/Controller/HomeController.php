@@ -374,6 +374,8 @@ class HomeController extends Controller
      */
     public function menuAction(Request $request)
     {
+        // TODO if necessary, transfer the task of building menu to plugins
+
         // build search nodes
         $search_nodes = $this->buildMenuBranch($this->get('anime_db.plugin.search'), 'item_search', 'Search source');
         // build filler nodes

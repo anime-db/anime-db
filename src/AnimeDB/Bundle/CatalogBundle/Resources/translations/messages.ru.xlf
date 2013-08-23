@@ -30,10 +30,6 @@
                 <source>Change record</source>
                 <target>Изменить запись</target>
             </trans-unit>
-            <trans-unit id="8">
-                <source>Autofill record</source>
-                <target>Автозаполнениие записи</target>
-            </trans-unit>
             <trans-unit id="9">
                 <source>Delete record</source>
                 <target>Удалить запись</target>
@@ -89,10 +85,6 @@
             <trans-unit id="23">
                 <source>Select the entry you want to add</source>
                 <target>Выберите запись, которую Вы хотите добавить</target>
-            </trans-unit>
-            <trans-unit id="24">
-                <source>Unable to find any filler for the specified source</source>
-                <target>Не найден ни один наполнитель для указанного источника</target>
             </trans-unit>
             <trans-unit id="25">
                 <source>Names</source>
@@ -262,10 +254,6 @@
                 <source>Descending</source>
                 <target>По убыванию</target>
             </trans-unit>
-            <trans-unit id="71">
-                <source>Not specified source</source>
-                <target>Не указан источник</target>
-            </trans-unit>
             <trans-unit id="72">
                 <source>Add</source>
                 <target>Добавить</target>
@@ -425,6 +413,10 @@
             <trans-unit id="111">
                 <source>All</source>
                 <target>Все</target>
+            </trans-unit>
+            <trans-unit id="112">
+                <source>Fill</source>
+                <target>Заполнить</target>
             </trans-unit>
         </body>
     </file>

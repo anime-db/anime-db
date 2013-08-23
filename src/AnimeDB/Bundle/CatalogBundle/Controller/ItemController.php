@@ -135,7 +135,42 @@ class ItemController extends Controller
      */
     public function fillerAction($plugin, Request $request)
     {
-        return new Response();
+        /* @var $chain \AnimeDB\Bundle\CatalogBundle\Service\Plugin\Search\Chain */
+        $chain = $this->get('anime_db.plugin.filler');
+        if (!($filler = $chain->getPlugin($plugin))) {
+            throw $this->createNotFoundException('Plugin \''.$plugin.'\' is not found');
+        }
+
+        /* @var $form \Symfony\Component\Form\Form */
+        if ($filler instanceof CustomFormFiller) {
+            $form = $this->createForm($filler->getForm()); // use plugin form
+        } else {
+            $form = $this->createForm(new FillerPluginForm());
+        }
+
+        $fill_form = null;
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            // fill item
+            if ($filler instanceof CustomFormSearch) {
+                $item = $filler->fill($form->getData());
+            } else {
+                $item = $filler->fill($form->getData()['url']);
+            }
+            if (!($item instanceof Item)) {
+                throw new \Exception('Can`t get content from the specified source');
+            }
+            // persist entity
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($item);
+            $fill_form = $this->createForm(new ItemForm(), $item)->createView();
+        }
+
+        return $this->render('AnimeDBCatalogBundle:Item:filler.html.twig', [
+            'plugin' => $plugin,
+            'form' => $form->createView(),
+            'fill_form' => $fill_form,
+        ]);
     }
 
     /**
@@ -156,7 +191,7 @@ class ItemController extends Controller
 
         /* @var $form \Symfony\Component\Form\Form */
         if ($search instanceof CustomFormSearch) {
-            $form = $this->createForm($search->getForm());
+            $form = $this->createForm($search->getForm()); // use plugin form
         } else {
             $form = $this->createForm(new SearchPluginForm());
         }
@@ -202,6 +237,12 @@ class ItemController extends Controller
      */
     public function importAction($plugin)
     {
+        /* @var $chain \AnimeDB\Bundle\CatalogBundle\Service\Plugin\Search\Chain */
+        $chain = $this->get('anime_db.plugin.import');
+        if (!($import = $chain->getPlugin($plugin))) {
+            throw $this->createNotFoundException('Plugin \''.$plugin.'\' is not found');
+        }
+
         return new Response();
     }
 }
