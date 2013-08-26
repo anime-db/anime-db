@@ -24,6 +24,7 @@ use AnimeDB\Bundle\CatalogBundle\Entity\Storage as StorageEntity;
 use Doctrine\ORM\Query\Expr;
 use AnimeDB\Bundle\CatalogBundle\Service\Pagination;
 use AnimeDB\Bundle\CatalogBundle\Service\Plugin\Chain as ChainPlugin;
+use AnimeDB\Bundle\CatalogBundle\Service\Plugin\CustomController;
 
 /**
  * Main page of the catalog
@@ -383,7 +384,7 @@ class HomeController extends Controller
         // build import nodes
         $import_nodes = $this->buildMenuBranch($this->get('anime_db.plugin.import'), 'item_import', 'Import items');
         // build settings nodes
-        $setting_nodes = $this->buildMenuBranch($this->get('anime_db.plugin.setting'), 'home_setting');
+        $setting_nodes = $this->buildMenuBranch($this->get('anime_db.plugin.setting'));
 
         $menu = [
             [
@@ -451,13 +452,21 @@ class HomeController extends Controller
      *
      * @return array
      */
-    private function buildMenuBranch(ChainPlugin $chain, $route, $group_title = '', $group_link = '')
+    private function buildMenuBranch(ChainPlugin $chain, $route = '', $group_title = '', $group_link = '')
     {
         $nodes = [];
         foreach ($chain->getPlugins() as $plugin) {
+            if ($plugin instanceof CustomController) {
+                $link = $this->generateUrl($plugin->getRoute());
+            } elseif ($route) {
+                $link = $this->generateUrl($route, ['plugin' => $plugin->getName()]);
+            } else {
+                continue;
+            }
+
             $nodes[] = [
                 'title' => $plugin->getTitle(),
-                'link'  => $this->generateUrl($route, ['plugin' => $plugin->getName()]),
+                'link'  => $link,
                 'class' => 'plugin',
                 'children' => [],
             ];
@@ -474,17 +483,5 @@ class HomeController extends Controller
         }
 
         return $nodes;
-    }
-
-    /**
-     * Setting from plugin
-     *
-     * @param string $plugin
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function settingAction($plugin)
-    {
-        return new Response();
     }
 }
