@@ -11,7 +11,7 @@
 namespace AnimeDB\Bundle\CatalogBundle\Service\Plugin\Setting;
 
 use AnimeDB\Bundle\CatalogBundle\Service\Plugin\PluginInterface;
-use AnimeDB\Bundle\CatalogBundle\Service\Plugin\CustomController;
+use AnimeDB\Bundle\CatalogBundle\Service\Plugin\CustomMenu;
 
 /**
  * Plugin setting interface
@@ -19,6 +19,6 @@ use AnimeDB\Bundle\CatalogBundle\Service\Plugin\CustomController;
  * @package AnimeDB\Bundle\CatalogBundle\Service\Plugin\Setting
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-interface ImportInterface extends PluginInterface, CustomController
+interface ImportInterface extends PluginInterface, CustomMenu
 {
 }

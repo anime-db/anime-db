@@ -36,6 +36,7 @@ class AppKernel extends Kernel
             new AnimeDB\Bundle\CatalogBundle\AnimeDBCatalogBundle(),
             new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
             new AnimeDB\Bundle\WorldArtFillerBundle\AnimeDBWorldArtFillerBundle(),
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

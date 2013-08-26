@@ -31,7 +31,8 @@
         "sensio/buzz-bundle": "dev-master",
         "avalanche123/imagine-bundle": "v2.1",
         "gedmo/doctrine-extensions": "dev-master",
-        "anime-db/worldart-filler-bundle": "dev-master"
+        "anime-db/worldart-filler-bundle": "dev-master",
+        "knplabs/knp-menu-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

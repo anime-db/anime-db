@@ -10,18 +10,23 @@
 
 namespace AnimeDB\Bundle\CatalogBundle\Service\Plugin;
 
+use Knp\Menu\ItemInterface;
+
 /**
- * Custom controller interface
+ * Custom menu interface
  * 
  * @package AnimeDB\Bundle\CatalogBundle\Service\Plugin
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-interface CustomController
+interface CustomMenu
 {
+
     /**
-     * Возвращает роут для контроллера
+     * Строит меню для плагина
      *
-     * @return string
+     * @param \Knp\Menu\ItemInterface $item
+     *
+     * @return \Knp\Menu\ItemInterface
      */
-    public function getRoute();
+    public function buildMenu(ItemInterface $item);
 }

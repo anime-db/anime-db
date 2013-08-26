@@ -14,7 +14,11 @@
 {% block body %}
 <div id="wrapper">
 	<div id="navigation">
-		{% render controller('AnimeDBCatalogBundle:Home:menu') %}
+		<nav>
+			<div class="left"></div>
+			{{ knp_menu_render('AnimeDBCatalogBundle:Builder:mainMenu') }}
+			<div class="right"></div>
+		</nav>
 	</div>
 	<div id="header">
 		<h1 class="logo">
