@@ -131,8 +131,8 @@ class Builder extends ContainerAware
             $plugin->buildMenu($menu);
         }
 
-        //$menu->addChild('Refill from source');
-        //$menu->addChild('Complement directory');
+        //$menu->addChild('Refill from source'); // TODO issue #38
+        //$menu->addChild('Complement directory'); // TODO issue #34
         $menu->addChild('Change record', ['route' => 'item_change', 'routeParameters' => $params])
             ->setLinkAttribute('class', 'change');
         $menu->addChild('Delete record', ['route' => 'item_delete', 'routeParameters' => $params])
