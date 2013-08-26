@@ -208,8 +208,8 @@ h1.logo a span {
 #navigation .selected span {
 	color: #fff;
 }
-#navigation .last a,
-#navigation .last span {
+#navigation .settings > a,
+#navigation .settings > span {
 	background-image: none;
 }
 #navigation li:hover a,
@@ -412,36 +412,6 @@ h1.logo a span {
 }
 
 
-
-/**
- * Main page for add item
- */
-.b-add-item section {
-	margin-bottom: 50px;
-}
-.b-add-item .b-add-manually {
-	margin-bottom: 0;
-}
-.b-add-item section h3 {
-	font-size: 120%;
-	font-weight: bold;
-}
-.b-add-item label {
-	padding-right: 5px;
-	display: block;
-	width: 63px;
-	float: left;
-}
-#f-add-item-search div,
-#f-add-item-source div {
-	margin: 5px 15px 0 0;
-	float: left;
-}
-.b-add-item input {
-	width: 300px;
-}
-
-
 /**
  * Filler search page
  */
@@ -525,13 +495,19 @@ h1.logo a span {
 	margin: 0 15px 10px 0;
 	float: left;
 }
+.item-controls ul,
+.item-controls li {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
 .item-controls a {
 	display: block;
 	height: 16px;
 	padding-left: 20px;
 	margin-bottom: 2px;
 }
-.item-controls .fill {
+.item-controls .refill {
 	background: url(../images/polygon.png) no-repeat 0 -32px;
 }
 .item-controls .complement {
@@ -953,4 +929,18 @@ div.ui-widget div.ui-state-highlight {
 	max-width: 16px;
 }
 .storages-list .name {
+}
+
+/**
+ * Form for plugin search
+ */
+#animedb_catalogbundle_plugin_search,
+#animedb_catalogbundle_plugin_filler {
+	margin: 3px 10px 0 0;
+	float: left;
+}
+#animedb_catalogbundle_plugin_search label,
+#animedb_catalogbundle_plugin_filler label {
+	width: auto;
+	margin-right: 10px;
 }

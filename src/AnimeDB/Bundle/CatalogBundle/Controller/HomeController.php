@@ -21,6 +21,8 @@ use AnimeDB\Bundle\CatalogBundle\Entity\Genre as GenreEntity;
 use AnimeDB\Bundle\CatalogBundle\Entity\Storage as StorageEntity;
 use Doctrine\ORM\Query\Expr;
 use AnimeDB\Bundle\CatalogBundle\Service\Pagination;
+use AnimeDB\Bundle\CatalogBundle\Service\Plugin\Chain as ChainPlugin;
+use AnimeDB\Bundle\CatalogBundle\Service\Plugin\CustomController;
 
 /**
  * Main page of the catalog

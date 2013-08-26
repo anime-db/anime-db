@@ -53,10 +53,6 @@ class Request
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
-        if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType()) {
-            return;
-        }
-
         /* @var $request \Symfony\Component\HttpFoundation\Request */
         $request = $event->getRequest();
 

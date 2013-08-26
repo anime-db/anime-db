@@ -10,18 +10,25 @@
 
 namespace AnimeDB\Bundle\CatalogBundle\Service\Plugin\Search;
 
-use AnimeDB\Bundle\CatalogBundle\Service\Plugin\PluginInterface;
+use AnimeDB\Bundle\CatalogBundle\Service\Plugin\Search\SearchInterface;
 
 /**
- * Plugin search interface
+ * Plugin has custom form for search
  * 
  * @package AnimeDB\Bundle\CatalogBundle\Service\Plugin\Search
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-interface SearchInterface extends PluginInterface
+interface CustomForm extends SearchInterface
 {
     /**
-     * Search source by name
+     * Get form
+     *
+     * @return \Symfony\Component\Form\AbstractType
+     */
+    public function getForm();
+
+    /**
+     * Search source by form data
      *
      * Use $url_bulder for build link to fill item from source or build their own links
      *
@@ -32,10 +39,10 @@ interface SearchInterface extends PluginInterface
      * ]
      * </code>
      *
-     * @param string $name
+     * @param array $data
      * @param \Closure $url_bulder
      *
      * @return array
      */
-    public function search($name, \Closure $url_bulder);
+    public function search(array $data, \Closure $url_bulder);
 }
