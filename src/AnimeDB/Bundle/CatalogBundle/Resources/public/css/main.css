@@ -495,13 +495,19 @@ h1.logo a span {
 	margin: 0 15px 10px 0;
 	float: left;
 }
+.item-controls ul,
+.item-controls li {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
 .item-controls a {
 	display: block;
 	height: 16px;
 	padding-left: 20px;
 	margin-bottom: 2px;
 }
-.item-controls .fill {
+.item-controls .refill {
 	background: url(../images/polygon.png) no-repeat 0 -32px;
 }
 .item-controls .complement {

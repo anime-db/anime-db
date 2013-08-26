@@ -107,4 +107,37 @@ class Builder extends ContainerAware
             $root->removeChild($title);
         }
     }
+
+    /**
+     * Builder main menu
+     * 
+     * @param \Knp\Menu\FactoryInterface $factory
+     * @param array $options
+     *
+     * @return 
+     */
+    public function itemMenu(FactoryInterface $factory, array $options)
+    {
+        if (empty($options['id']) || empty($options['name'])) {
+            throw new \InvalidArgumentException('Unknown element id or name');
+        }
+        /* @var $menu \Knp\Menu\ItemInterface */
+        $menu = $factory->createItem('root');
+        $params = ['id' => $options['id'], 'name' => $options['name']];
+
+        // add settings plugin items
+        $chain = $this->container->get('anime_db.plugin.item');
+        foreach ($chain->getPlugins() as $plugin) {
+            $plugin->buildMenu($menu);
+        }
+
+        //$menu->addChild('Refill from source');
+        //$menu->addChild('Complement directory');
+        $menu->addChild('Change record', ['route' => 'item_change', 'routeParameters' => $params])
+            ->setLinkAttribute('class', 'change');
+        $menu->addChild('Delete record', ['route' => 'item_delete', 'routeParameters' => $params])
+            ->setLinkAttribute('class', 'delete');
+
+        return $menu;
+    }
 }
