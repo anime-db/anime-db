@@ -8,12 +8,12 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\Bundle\CatalogBundle\Service\Plugin;
+namespace AnimeDB\Bundle\CatalogBundle\Plugin;
 
 /**
  * Plugin interface
  * 
- * @package AnimeDB\Bundle\CatalogBundle\Service\Plugin
+ * @package AnimeDB\Bundle\CatalogBundle\Plugin
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 interface PluginInterface

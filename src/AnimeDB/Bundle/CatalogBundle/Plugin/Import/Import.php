@@ -8,17 +8,17 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\Bundle\CatalogBundle\Service\Plugin\Import;
+namespace AnimeDB\Bundle\CatalogBundle\Plugin\Import;
 
-use AnimeDB\Bundle\CatalogBundle\Service\Plugin\PluginInterface;
+use AnimeDB\Bundle\CatalogBundle\Plugin\PluginInterface;
 
 /**
  * Plugin import interface
  * 
- * @package AnimeDB\Bundle\CatalogBundle\Service\Plugin\Import
+ * @package AnimeDB\Bundle\CatalogBundle\Plugin\Import
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-interface ImportInterface extends PluginInterface
+interface Import extends PluginInterface
 {
     /**
      * Get form

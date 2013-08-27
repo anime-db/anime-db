@@ -8,17 +8,17 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\Bundle\CatalogBundle\Service\Plugin\Setting;
+namespace AnimeDB\Bundle\CatalogBundle\Plugin\Setting;
 
-use AnimeDB\Bundle\CatalogBundle\Service\Plugin\PluginInterface;
-use AnimeDB\Bundle\CatalogBundle\Service\Plugin\CustomMenu;
+use AnimeDB\Bundle\CatalogBundle\Plugin\PluginInterface;
+use AnimeDB\Bundle\CatalogBundle\Plugin\CustomMenu;
 
 /**
  * Plugin setting interface
  * 
- * @package AnimeDB\Bundle\CatalogBundle\Service\Plugin\Setting
+ * @package AnimeDB\Bundle\CatalogBundle\Plugin\Setting
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-interface ImportInterface extends PluginInterface, CustomMenu
+interface Setting extends PluginInterface, CustomMenu
 {
 }
