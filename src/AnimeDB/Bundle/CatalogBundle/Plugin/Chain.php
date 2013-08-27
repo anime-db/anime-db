@@ -10,7 +10,7 @@
 
 namespace AnimeDB\Bundle\CatalogBundle\Plugin;
 
-use AnimeDB\Bundle\CatalogBundle\Plugin\PluginInterface;
+use AnimeDB\Bundle\CatalogBundle\Plugin\Plugin;
 
 /**
  * Chain plugins
@@ -37,9 +37,9 @@ abstract class Chain
     /**
      * Add plugin
      *
-     * @param \AnimeDB\Bundle\CatalogBundle\Plugin\PluginInterface $plugin
+     * @param \AnimeDB\Bundle\CatalogBundle\Plugin\Plugin $plugin
      */
-    public function addPlugin(PluginInterface $plugin) {
+    public function addPlugin(Plugin $plugin) {
         $this->plugins[$plugin->getName()] = $plugin;
         $this->titles[$plugin->getName()] = $plugin->getTitle();
     }
@@ -49,7 +49,7 @@ abstract class Chain
      *
      * @param string $name
      *
-     * @return \AnimeDB\Bundle\CatalogBundle\Plugin\PluginInterface|null
+     * @return \AnimeDB\Bundle\CatalogBundle\Plugin\Plugin|null
      */
     public function getPlugin($name) {
         if (array_key_exists($name, $this->plugins)) {
@@ -61,7 +61,7 @@ abstract class Chain
     /**
      * Get plugins
      *
-     * @return array [ \AnimeDB\Bundle\CatalogBundle\Plugin\PluginInterface ]
+     * @return array [ \AnimeDB\Bundle\CatalogBundle\Plugin\Plugin ]
      */
     public function getPlugins() {
         return $this->plugins;

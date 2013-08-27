@@ -10,7 +10,7 @@
 
 namespace AnimeDB\Bundle\CatalogBundle\Plugin\Search;
 
-use AnimeDB\Bundle\CatalogBundle\Plugin\PluginInterface;
+use AnimeDB\Bundle\CatalogBundle\Plugin\Plugin;
 
 /**
  * Plugin search interface
@@ -18,7 +18,7 @@ use AnimeDB\Bundle\CatalogBundle\Plugin\PluginInterface;
  * @package AnimeDB\Bundle\CatalogBundle\Plugin\Search
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-interface Search extends PluginInterface
+interface Search extends Plugin
 {
     /**
      * Search source by name

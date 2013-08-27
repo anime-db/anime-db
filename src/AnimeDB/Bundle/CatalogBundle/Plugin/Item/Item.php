@@ -10,7 +10,7 @@
 
 namespace AnimeDB\Bundle\CatalogBundle\Plugin\Item;
 
-use AnimeDB\Bundle\CatalogBundle\Plugin\PluginInterface;
+use AnimeDB\Bundle\CatalogBundle\Plugin\Plugin;
 use AnimeDB\Bundle\CatalogBundle\Plugin\CustomMenu;
 
 /**
@@ -19,6 +19,6 @@ use AnimeDB\Bundle\CatalogBundle\Plugin\CustomMenu;
  * @package AnimeDB\Bundle\CatalogBundle\Plugin\Item
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-interface Item extends PluginInterface, CustomMenu
+interface Item extends Plugin, CustomMenu
 {
 }

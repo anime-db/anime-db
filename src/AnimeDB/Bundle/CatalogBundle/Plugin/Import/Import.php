@@ -10,7 +10,7 @@
 
 namespace AnimeDB\Bundle\CatalogBundle\Plugin\Import;
 
-use AnimeDB\Bundle\CatalogBundle\Plugin\PluginInterface;
+use AnimeDB\Bundle\CatalogBundle\Plugin\Plugin;
 
 /**
  * Plugin import interface
@@ -18,7 +18,7 @@ use AnimeDB\Bundle\CatalogBundle\Plugin\PluginInterface;
  * @package AnimeDB\Bundle\CatalogBundle\Plugin\Import
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-interface Import extends PluginInterface
+interface Import extends Plugin
 {
     /**
      * Get form
