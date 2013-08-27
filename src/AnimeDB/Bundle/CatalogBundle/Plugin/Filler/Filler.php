@@ -10,7 +10,7 @@
 
 namespace AnimeDB\Bundle\CatalogBundle\Plugin\Filler;
 
-use AnimeDB\Bundle\CatalogBundle\Plugin\PluginInterface;
+use AnimeDB\Bundle\CatalogBundle\Plugin\Plugin;
 
 /**
  * Plugin filler interface
@@ -18,7 +18,7 @@ use AnimeDB\Bundle\CatalogBundle\Plugin\PluginInterface;
  * @package AnimeDB\Bundle\CatalogBundle\Plugin\Filler
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-interface Filler extends PluginInterface
+interface Filler extends Plugin
 {
     /**
      * Fill item from source

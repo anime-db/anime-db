@@ -16,7 +16,7 @@ namespace AnimeDB\Bundle\CatalogBundle\Plugin;
  * @package AnimeDB\Bundle\CatalogBundle\Plugin
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-interface PluginInterface
+interface Plugin
 {
     /**
      * Get name
