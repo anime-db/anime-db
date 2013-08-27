@@ -8,14 +8,14 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\Bundle\CatalogBundle\Service\Plugin\Import;
+namespace AnimeDB\Bundle\CatalogBundle\Plugin\Item;
 
-use AnimeDB\Bundle\CatalogBundle\Service\Plugin\Chain as ChainPlugin;
+use AnimeDB\Bundle\CatalogBundle\Plugin\Chain as ChainPlugin;
 
 /**
- * Chain import plugins
+ * Chain item plugins
  * 
- * @package AnimeDB\Bundle\CatalogBundle\Service\Plugin\Import
+ * @package AnimeDB\Bundle\CatalogBundle\Plugin\Item
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Chain extends ChainPlugin

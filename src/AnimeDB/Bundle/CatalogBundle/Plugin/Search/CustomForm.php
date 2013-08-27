@@ -8,14 +8,14 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\Bundle\CatalogBundle\Service\Plugin\Search;
+namespace AnimeDB\Bundle\CatalogBundle\Plugin\Search;
 
-use AnimeDB\Bundle\CatalogBundle\Service\Plugin\Search\SearchInterface;
+use AnimeDB\Bundle\CatalogBundle\Plugin\Search\SearchInterface;
 
 /**
  * Plugin has custom form for search
  * 
- * @package AnimeDB\Bundle\CatalogBundle\Service\Plugin\Search
+ * @package AnimeDB\Bundle\CatalogBundle\Plugin\Search
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 interface CustomForm extends SearchInterface

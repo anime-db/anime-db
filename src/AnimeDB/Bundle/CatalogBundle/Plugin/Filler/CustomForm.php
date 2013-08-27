@@ -8,14 +8,14 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\Bundle\CatalogBundle\Service\Plugin\Filler;
+namespace AnimeDB\Bundle\CatalogBundle\Plugin\Filler;
 
-use AnimeDB\Bundle\CatalogBundle\Service\Plugin\Filler\FillerInterface;
+use AnimeDB\Bundle\CatalogBundle\Plugin\Filler\FillerInterface;
 
 /**
  * Plugin has custom form for search
  * 
- * @package AnimeDB\Bundle\CatalogBundle\Service\Plugin\Filler
+ * @package AnimeDB\Bundle\CatalogBundle\Plugin\Filler
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 interface CustomForm extends FillerInterface

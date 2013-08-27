@@ -13,8 +13,8 @@ namespace AnimeDB\Bundle\CatalogBundle\Menu;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Symfony\Component\DependencyInjection\ContainerAware;
-use AnimeDB\Bundle\CatalogBundle\Service\Plugin\CustomMenu;
-use AnimeDB\Bundle\CatalogBundle\Service\Plugin\Chain;
+use AnimeDB\Bundle\CatalogBundle\Plugin\CustomMenu;
+use AnimeDB\Bundle\CatalogBundle\Plugin\Chain;
 
 /**
  * Menu builder

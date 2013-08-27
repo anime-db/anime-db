@@ -10,8 +10,6 @@
 
 namespace AnimeDB\Bundle\CatalogBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AnimeDB\Bundle\CatalogBundle\Form\Filler\Search;
 use AnimeDB\Bundle\CatalogBundle\Form\Filler\Get;
@@ -23,8 +21,8 @@ use AnimeDB\Bundle\CatalogBundle\Form\Entity\Item as ItemForm;
 use Symfony\Component\HttpFoundation\Request;
 use AnimeDB\Bundle\CatalogBundle\Form\Plugin\Search as SearchPluginForm;
 use AnimeDB\Bundle\CatalogBundle\Form\Plugin\Filler as FillerPluginForm;
-use AnimeDB\Bundle\CatalogBundle\Service\Plugin\Search\CustomForm as CustomFormSearch;
-use AnimeDB\Bundle\CatalogBundle\Service\Plugin\Filler\CustomForm as CustomFormFiller;
+use AnimeDB\Bundle\CatalogBundle\Service\Search\CustomForm as CustomFormSearch;
+use AnimeDB\Bundle\CatalogBundle\Service\Filler\CustomForm as CustomFormFiller;
 
 /**
  * Item
@@ -135,7 +133,7 @@ class ItemController extends Controller
      */
     public function fillerAction($plugin, Request $request)
     {
-        /* @var $chain \AnimeDB\Bundle\CatalogBundle\Service\Plugin\Search\Chain */
+        /* @var $chain \AnimeDB\Bundle\CatalogBundle\Plugin\Search\Chain */
         $chain = $this->get('anime_db.plugin.filler');
         if (!($filler = $chain->getPlugin($plugin))) {
             throw $this->createNotFoundException('Plugin \''.$plugin.'\' is not found');
@@ -183,7 +181,7 @@ class ItemController extends Controller
      */
     public function searchAction($plugin, Request $request)
     {
-        /* @var $chain \AnimeDB\Bundle\CatalogBundle\Service\Plugin\Search\Chain */
+        /* @var $chain \AnimeDB\Bundle\CatalogBundle\Plugin\Search\Chain */
         $chain = $this->get('anime_db.plugin.search');
         if (!($search = $chain->getPlugin($plugin))) {
             throw $this->createNotFoundException('Plugin \''.$plugin.'\' is not found');
@@ -238,7 +236,7 @@ class ItemController extends Controller
      */
     public function importAction($plugin, Request $request)
     {
-        /* @var $chain \AnimeDB\Bundle\CatalogBundle\Service\Plugin\Search\Chain */
+        /* @var $chain \AnimeDB\Bundle\CatalogBundle\Plugin\Search\Chain */
         $chain = $this->get('anime_db.plugin.import');
         if (!($import = $chain->getPlugin($plugin))) {
             throw $this->createNotFoundException('Plugin \''.$plugin.'\' is not found');

@@ -8,14 +8,14 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\Bundle\CatalogBundle\Service\Plugin;
+namespace AnimeDB\Bundle\CatalogBundle\Plugin;
 
 use Knp\Menu\ItemInterface;
 
 /**
  * Custom menu interface
  * 
- * @package AnimeDB\Bundle\CatalogBundle\Service\Plugin
+ * @package AnimeDB\Bundle\CatalogBundle\Plugin
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 interface CustomMenu

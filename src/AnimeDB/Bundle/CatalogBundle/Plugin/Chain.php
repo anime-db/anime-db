@@ -8,14 +8,14 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\Bundle\CatalogBundle\Service\Plugin;
+namespace AnimeDB\Bundle\CatalogBundle\Plugin;
 
-use AnimeDB\Bundle\CatalogBundle\Service\Plugin\PluginInterface;
+use AnimeDB\Bundle\CatalogBundle\Plugin\PluginInterface;
 
 /**
  * Chain plugins
  * 
- * @package AnimeDB\Bundle\CatalogBundle\Service\Plugin
+ * @package AnimeDB\Bundle\CatalogBundle\Plugin
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 abstract class Chain
@@ -37,7 +37,7 @@ abstract class Chain
     /**
      * Add plugin
      *
-     * @param \AnimeDB\Bundle\CatalogBundle\Service\Plugin\PluginInterface $plugin
+     * @param \AnimeDB\Bundle\CatalogBundle\Plugin\PluginInterface $plugin
      */
     public function addPlugin(PluginInterface $plugin) {
         $this->plugins[$plugin->getName()] = $plugin;
@@ -49,7 +49,7 @@ abstract class Chain
      *
      * @param string $name
      *
-     * @return \AnimeDB\Bundle\CatalogBundle\Service\Plugin\PluginInterface|null
+     * @return \AnimeDB\Bundle\CatalogBundle\Plugin\PluginInterface|null
      */
     public function getPlugin($name) {
         if (array_key_exists($name, $this->plugins)) {
@@ -61,7 +61,7 @@ abstract class Chain
     /**
      * Get plugins
      *
-     * @return array [ \AnimeDB\Bundle\CatalogBundle\Service\Plugin\PluginInterface ]
+     * @return array [ \AnimeDB\Bundle\CatalogBundle\Plugin\PluginInterface ]
      */
     public function getPlugins() {
         return $this->plugins;

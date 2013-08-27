@@ -8,17 +8,17 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\Bundle\CatalogBundle\Service\Plugin\Search;
+namespace AnimeDB\Bundle\CatalogBundle\Plugin\Search;
 
-use AnimeDB\Bundle\CatalogBundle\Service\Plugin\PluginInterface;
+use AnimeDB\Bundle\CatalogBundle\Plugin\PluginInterface;
 
 /**
  * Plugin search interface
  * 
- * @package AnimeDB\Bundle\CatalogBundle\Service\Plugin\Search
+ * @package AnimeDB\Bundle\CatalogBundle\Plugin\Search
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-interface SearchInterface extends PluginInterface
+interface Search extends PluginInterface
 {
     /**
      * Search source by name
@@ -28,7 +28,7 @@ interface SearchInterface extends PluginInterface
      * Return structure
      * <code>
      * [
-     *     \AnimeDB\Bundle\CatalogBundle\Service\Plugin\Search\Item
+     *     \AnimeDB\Bundle\CatalogBundle\Plugin\Search\Item
      * ]
      * </code>
      *
