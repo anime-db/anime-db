@@ -5,11 +5,11 @@
     "description": "The application for making home collection anime",
     "homepage": "http://anime-db.org",
     "version": "0.1.5",
-    "authors": [,
+    "authors": [
         {
             "name":     "AnimeDB",
             "homepage": "http://anime-db.org"
-        }
+        },
         {
             "name":     "Peter Gribanov",
             "email":    "info@peter-gribanov.ru"
@@ -45,8 +45,8 @@
         "sensio/buzz-bundle": "dev-master",
         "avalanche123/imagine-bundle": "v2.1",
         "gedmo/doctrine-extensions": "dev-master",
-        "anime-db/worldart-filler-bundle": "dev-master",
-        "knplabs/knp-menu-bundle": "dev-master"
+        "knplabs/knp-menu-bundle": "dev-master",
+        "anime-db/worldart-filler-bundle": "0.1.*"
     },
     "scripts": {
         "post-install-cmd": [
