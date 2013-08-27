@@ -39,10 +39,8 @@
 		<header>{% trans %}Record{% endtrans %}</header>
 		<article>
 			<nav>
-				<!-- <a href="#fill" class="fill">{% trans %}Autofill record{% endtrans %}</a> -->
-				<!-- <a href="#item_complement" class="complement">{% trans %}Complement directory{% endtrans %}</a> -->
-				<a href="{{ path('item_change', {'id': item.id, 'name': item.name}) }}" class="change">{% trans %}Change record{% endtrans %}</a>
-				<a href="{{ path('item_delete', {'id': item.id, 'name': item.name}) }}" class="delete">{% trans %}Delete record{% endtrans %}</a>
+				{% set itemMenu = knp_menu_get('AnimeDBCatalogBundle:Builder:itemMenu', [], {'id': item.id, 'name': item.name}) %}
+				{{ knp_menu_render(itemMenu) }}
 			</nav>
 		</article>
 	</section>

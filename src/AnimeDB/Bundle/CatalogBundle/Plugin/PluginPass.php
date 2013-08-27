@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\Bundle\CatalogBundle\Service\Plugin;
+namespace AnimeDB\Bundle\CatalogBundle\Plugin;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -17,10 +17,10 @@ use Symfony\Component\DependencyInjection\Reference;
 /**
  * Plugin compiler pass
  *
- * @package AnimeDB\Bundle\CatalogBundle\Service\Plugin
+ * @package AnimeDB\Bundle\CatalogBundle\Plugin
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class CompilerPass implements CompilerPassInterface
+class PluginPass implements CompilerPassInterface
 {
     /**
      * Process container builder
@@ -29,8 +29,11 @@ class CompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $this->compilerChain($container, 'anime_db.plugin.filler', 'anime_db.filler');
-        $this->compilerChain($container, 'anime_db.plugin.search', 'anime_db.search');
+        $this->compilerChain($container, 'anime_db.plugin.filler',  'anime_db.filler');
+        $this->compilerChain($container, 'anime_db.plugin.search',  'anime_db.search');
+        $this->compilerChain($container, 'anime_db.plugin.import',  'anime_db.import');
+        $this->compilerChain($container, 'anime_db.plugin.item',    'anime_db.item');
+        $this->compilerChain($container, 'anime_db.plugin.setting', 'anime_db.setting');
     }
 
     /**
@@ -50,6 +53,5 @@ class CompilerPass implements CompilerPassInterface
                 }
             }
         }
-
     }
 }

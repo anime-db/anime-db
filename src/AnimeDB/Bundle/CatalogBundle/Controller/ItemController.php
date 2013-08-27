@@ -19,6 +19,10 @@ use AnimeDB\Bundle\CatalogBundle\Entity\Image;
 use AnimeDB\Bundle\CatalogBundle\Entity\Source;
 use AnimeDB\Bundle\CatalogBundle\Form\Entity\Item as ItemForm;
 use Symfony\Component\HttpFoundation\Request;
+use AnimeDB\Bundle\CatalogBundle\Form\Plugin\Search as SearchPluginForm;
+use AnimeDB\Bundle\CatalogBundle\Form\Plugin\Filler as FillerPluginForm;
+use AnimeDB\Bundle\CatalogBundle\Service\Search\CustomForm as CustomFormSearch;
+use AnimeDB\Bundle\CatalogBundle\Service\Filler\CustomForm as CustomFormFiller;
 
 /**
  * Item
@@ -38,25 +42,6 @@ class ItemController extends Controller
     public function showAction(Item $item)
     {
         return $this->render('AnimeDBCatalogBundle:Item:show.html.twig', ['item' => $item]);
-    }
-
-    /**
-     * Add item
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function addAction()
-    {
-        /* @var $search \Symfony\Component\Form\Form */
-        $search = $this->createForm(new Search($this->get('anime_db.plugin.search')->getTitles()));
-
-        /* @var $source \Symfony\Component\Form\Form */
-        $source = $this->createForm(new Get($this->get('anime_db.plugin.filler')->getTitles()));
-
-        return $this->render('AnimeDBCatalogBundle:Item:add.html.twig', [
-            'source_form' => $source->createView(),
-            'search_form' => $search->createView(),
-        ]);
     }
 
     /**
@@ -136,5 +121,152 @@ class ItemController extends Controller
         $em->remove($item);
         $em->flush();
         return $this->redirect($this->generateUrl('home'));
+    }
+
+    /**
+     * Create new item from source fill
+     *
+     * @param string $plugin
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function fillerAction($plugin, Request $request)
+    {
+        /* @var $chain \AnimeDB\Bundle\CatalogBundle\Plugin\Search\Chain */
+        $chain = $this->get('anime_db.plugin.filler');
+        if (!($filler = $chain->getPlugin($plugin))) {
+            throw $this->createNotFoundException('Plugin \''.$plugin.'\' is not found');
+        }
+
+        /* @var $form \Symfony\Component\Form\Form */
+        if ($filler instanceof CustomFormFiller) {
+            $form = $this->createForm($filler->getForm()); // use plugin form
+        } else {
+            $form = $this->createForm(new FillerPluginForm());
+        }
+
+        $fill_form = null;
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            // fill item
+            if ($filler instanceof CustomFormSearch) {
+                $item = $filler->fill($form->getData());
+            } else {
+                $item = $filler->fill($form->getData()['url']);
+            }
+            if (!($item instanceof Item)) {
+                throw new \Exception('Can`t get content from the specified source');
+            }
+            // persist entity
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($item);
+            $fill_form = $this->createForm(new ItemForm(), $item)->createView();
+        }
+
+        return $this->render('AnimeDBCatalogBundle:Item:filler.html.twig', [
+            'plugin' => $plugin,
+            'form' => $form->createView(),
+            'fill_form' => $fill_form,
+        ]);
+    }
+
+    /**
+     * Search source fill for item
+     *
+     * @param string $plugin
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function searchAction($plugin, Request $request)
+    {
+        /* @var $chain \AnimeDB\Bundle\CatalogBundle\Plugin\Search\Chain */
+        $chain = $this->get('anime_db.plugin.search');
+        if (!($search = $chain->getPlugin($plugin))) {
+            throw $this->createNotFoundException('Plugin \''.$plugin.'\' is not found');
+        }
+
+        /* @var $form \Symfony\Component\Form\Form */
+        if ($search instanceof CustomFormSearch) {
+            $form = $this->createForm($search->getForm()); // use plugin form
+        } else {
+            $form = $this->createForm(new SearchPluginForm());
+        }
+
+        $list = [];
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                // url bulder for fill items in list
+                $that = $this;
+                $url_builder = function ($source) use ($that, $plugin) {
+                    return $that->generateUrl(
+                        'item_filler',
+                        [
+                            'plugin' => $plugin,
+                            (new FillerPluginForm())->getName() => ['url' => $source]
+                        ]
+                    );
+                };
+
+                // search items
+                if ($search instanceof CustomFormSearch) {
+                    $list = $search->search($form->getData(), $url_builder);
+                } else {
+                    $list = $search->search($form->getData()['name'], $url_builder);
+                }
+            }
+        }
+
+        return $this->render('AnimeDBCatalogBundle:Item:search.html.twig', [
+            'plugin' => $plugin,
+            'list'   => $list,
+            'form'   => $form->createView()
+        ]);
+    }
+
+    /**
+     * Import items
+     *
+     * @param string $plugin
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function importAction($plugin, Request $request)
+    {
+        /* @var $chain \AnimeDB\Bundle\CatalogBundle\Plugin\Search\Chain */
+        $chain = $this->get('anime_db.plugin.import');
+        if (!($import = $chain->getPlugin($plugin))) {
+            throw $this->createNotFoundException('Plugin \''.$plugin.'\' is not found');
+        }
+
+        $form = $this->createForm($import->getForm());
+
+        $list = [];
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                // import items
+                $list = (array)$import->import($form->getData());
+
+                // persist entity
+                $em = $this->getDoctrine()->getManager();
+                foreach ($list as $key => $item) {
+                    if ($item instanceof Item) {
+                        $em->persist($item);
+                    } else {
+                        unset($list[$key]);
+                    }
+                }
+            }
+        }
+
+        return $this->render('AnimeDBCatalogBundle:Item:import.html.twig', [
+            'plugin' => $plugin,
+            'items'  => $list,
+            'form'   => $form->createView()
+        ]);
     }
 }

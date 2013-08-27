@@ -8,12 +8,12 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\Bundle\CatalogBundle\Service\Plugin\Search;
+namespace AnimeDB\Bundle\CatalogBundle\Plugin\Search;
 
 /**
  * Element search results
  * 
- * @package AnimeDB\Bundle\CatalogBundle\Service\Plugin\Search
+ * @package AnimeDB\Bundle\CatalogBundle\Plugin\Search
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Item
@@ -26,11 +26,11 @@ class Item
     protected $name = '';
 
     /**
-     * Source
+     * Link to fill item from source
      *
      * @var string
      */
-    protected $source = '';
+    protected $link = '';
 
     /**
      * Image
@@ -50,14 +50,14 @@ class Item
      * Construct
      *
      * @param string $name
-     * @param string $source
+     * @param string $link
      * @param string $image
      * @param string $description
      */
-    public function __construct($name, $source, $image, $description)
+    public function __construct($name, $link, $image, $description)
     {
         $this->name = $name;
-        $this->source = $source;
+        $this->link = $link;
         $this->image = $image;
         $this->description = $description;
     }
@@ -73,13 +73,13 @@ class Item
     }
 
     /**
-     * Get source
+     * Get link to fill item from source
      *
      * @return string
      */
-    public function getSource()
+    public function getLink()
     {
-        return $this->source;
+        return $this->link;
     }
 
     /**

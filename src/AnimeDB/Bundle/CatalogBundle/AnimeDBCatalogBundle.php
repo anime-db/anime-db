@@ -12,7 +12,7 @@ namespace AnimeDB\Bundle\CatalogBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use AnimeDB\Bundle\CatalogBundle\Service\Plugin\CompilerPass;
+use AnimeDB\Bundle\CatalogBundle\Plugin\PluginPass;
 
 /**
  * Bundle
@@ -25,6 +25,6 @@ class AnimeDBCatalogBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         parent::build($container);
-        $container->addCompilerPass(new CompilerPass());
+        $container->addCompilerPass(new PluginPass());
     }
 }

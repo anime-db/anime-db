@@ -6,18 +6,10 @@ home_search:
     pattern:  /search.html
     defaults: { _controller: AnimeDBCatalogBundle:Home:search }
 
-home_search_simple_form:
-    pattern:  /search-simple-form.html
-    defaults: { _controller: AnimeDBCatalogBundle:Home:searchSimpleForm }
-
 home_autocomplete_name:
     pattern:  /autocomplete-name.json
     defaults: { _controller: AnimeDBCatalogBundle:Home:autocompleteName, _format: json }
 
-
-item_add:
-    pattern:  /add.html
-    defaults: { _controller: AnimeDBCatalogBundle:Item:add }
 
 item_add_manually:
     pattern:  /add-manually.html
@@ -41,14 +33,17 @@ item_delete:
     requirements:
         id:  \d+
 
+item_filler:
+    pattern:  /filler/{plugin}.html
+    defaults: { _controller: AnimeDBCatalogBundle:Item:filler }
 
-filler_search:
-    pattern:  /filler/search.html
-    defaults: { _controller: AnimeDBCatalogBundle:Filler:search }
+item_search:
+    pattern:  /search/{plugin}.html
+    defaults: { _controller: AnimeDBCatalogBundle:Item:search }
 
-filler_fill:
-    pattern:  /filler/fill.html
-    defaults: { _controller: AnimeDBCatalogBundle:Filler:fill }
+item_import:
+    pattern:  /import/{plugin}.html
+    defaults: { _controller: AnimeDBCatalogBundle:Item:import }
 
 
 media_favicon:

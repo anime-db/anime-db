@@ -8,14 +8,14 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\Bundle\CatalogBundle\Service\Plugin\Filler;
+namespace AnimeDB\Bundle\CatalogBundle\Plugin\Search;
 
-use AnimeDB\Bundle\CatalogBundle\Service\Plugin\Chain as ChainPlugin;
+use AnimeDB\Bundle\CatalogBundle\Plugin\Chain as ChainPlugin;
 
 /**
- * Chain filler plugins
+ * Chain search plugins
  * 
- * @package AnimeDB\Bundle\CatalogBundle\Service\Plugin\Filler
+ * @package AnimeDB\Bundle\CatalogBundle\Plugin\Search
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Chain extends ChainPlugin

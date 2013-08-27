@@ -8,17 +8,17 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\Bundle\CatalogBundle\Service\Plugin\Filler;
+namespace AnimeDB\Bundle\CatalogBundle\Plugin\Filler;
 
-use AnimeDB\Bundle\CatalogBundle\Service\Plugin\PluginInterface;
+use AnimeDB\Bundle\CatalogBundle\Plugin\Plugin;
 
 /**
  * Plugin filler interface
  * 
- * @package AnimeDB\Bundle\CatalogBundle\Service\Plugin\Filler
+ * @package AnimeDB\Bundle\CatalogBundle\Plugin\Filler
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-interface FillerInterface extends PluginInterface
+interface Filler extends Plugin
 {
     /**
      * Fill item from source

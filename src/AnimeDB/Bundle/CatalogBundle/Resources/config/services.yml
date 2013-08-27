@@ -2,12 +2,21 @@ services:
     anime_db.pagination:
         class: AnimeDB\Bundle\CatalogBundle\Service\Pagination
 
-    # Plugin chain
+    # Plugins chain
     anime_db.plugin.filler:
-        class: AnimeDB\Bundle\CatalogBundle\Service\Plugin\Filler\Chain
+        class: AnimeDB\Bundle\CatalogBundle\Plugin\Filler\Chain
         scope: request
     anime_db.plugin.search:
-        class: AnimeDB\Bundle\CatalogBundle\Service\Plugin\Search\Chain
+        class: AnimeDB\Bundle\CatalogBundle\Plugin\Search\Chain
+        scope: request
+    anime_db.plugin.import:
+        class: AnimeDB\Bundle\CatalogBundle\Plugin\Import\Chain
+        scope: request
+    anime_db.plugin.item:
+        class: AnimeDB\Bundle\CatalogBundle\Plugin\Item\Chain
+        scope: request
+    anime_db.plugin.setting:
+        class: AnimeDB\Bundle\CatalogBundle\Plugin\Setting\Chain
         scope: request
 
     # Twig extension

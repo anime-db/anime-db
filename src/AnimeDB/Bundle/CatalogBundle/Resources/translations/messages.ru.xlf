@@ -30,10 +30,6 @@
                 <source>Change record</source>
                 <target>Изменить запись</target>
             </trans-unit>
-            <trans-unit id="8">
-                <source>Autofill record</source>
-                <target>Автозаполнениие записи</target>
-            </trans-unit>
             <trans-unit id="9">
                 <source>Delete record</source>
                 <target>Удалить запись</target>
@@ -86,17 +82,9 @@
                 <source>List of results</source>
                 <target>Список результатов</target>
             </trans-unit>
-            <trans-unit id="22">
-                <source>Nothing was found</source>
-                <target>Ничего не найдено</target>
-            </trans-unit>
             <trans-unit id="23">
                 <source>Select the entry you want to add</source>
                 <target>Выберите запись, которую Вы хотите добавить</target>
-            </trans-unit>
-            <trans-unit id="24">
-                <source>Unable to find any filler for the specified source</source>
-                <target>Не найден ни один наполнитель для указанного источника</target>
             </trans-unit>
             <trans-unit id="25">
                 <source>Names</source>
@@ -266,10 +254,6 @@
                 <source>Descending</source>
                 <target>По убыванию</target>
             </trans-unit>
-            <trans-unit id="71">
-                <source>Not specified source</source>
-                <target>Не указан источник</target>
-            </trans-unit>
             <trans-unit id="72">
                 <source>Add</source>
                 <target>Добавить</target>
@@ -371,7 +355,7 @@
                 <target>Показать %count% запись на странице|Показать %count% записи на странице|Показать %count% записей на странице|{-1} Показать все записи на странице</target>
             </trans-unit>
             <trans-unit id="97">
-                <source>Sorting </source>
+                <source>Sorting</source>
                 <target>Сортировка</target>
             </trans-unit>
             <trans-unit id="98">
@@ -405,6 +389,42 @@
             <trans-unit id="105">
                 <source>Update</source>
                 <target>Обновление</target>
+            </trans-unit>
+            <trans-unit id="106">
+                <source>Add manually</source>
+                <target>Добавить вручную</target>
+            </trans-unit>
+            <trans-unit id="107">
+                <source>General</source>
+                <target>Общие</target>
+            </trans-unit>
+            <trans-unit id="108">
+                <source>Search source</source>
+                <target>Поиск источника</target>
+            </trans-unit>
+            <trans-unit id="109">
+                <source>Fill from source</source>
+                <target>Заполнение из источника</target>
+            </trans-unit>
+            <trans-unit id="110">
+                <source>Import items</source>
+                <target>Импорт записей</target>
+            </trans-unit>
+            <trans-unit id="111">
+                <source>All</source>
+                <target>Все</target>
+            </trans-unit>
+            <trans-unit id="112">
+                <source>Fill</source>
+                <target>Заполнить</target>
+            </trans-unit>
+            <trans-unit id="113">
+                <source>Import</source>
+                <target>Импорт</target>
+            </trans-unit>
+            <trans-unit id="114">
+                <source>Find</source>
+                <target>Найти</target>
             </trans-unit>
         </body>
     </file>

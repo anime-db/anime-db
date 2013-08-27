@@ -1,0 +1,21 @@
+{% extends 'AnimeDBCatalogBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Import items{% endtrans %}{% endblock %}
+
+{% form_theme form 'AnimeDBCatalogBundle:Form:fields.html.twig' %}
+
+{% block content %}
+<div class="b-import-items b-import-items-{{ plugin }}">
+	<h2>{% trans %}Import items{% endtrans %}</h2>
+	<form action="" method="post" {{ form_enctype(form) }}>
+		{{ form_widget(form) }}
+		<button type="submit">{% trans %}Import{% endtrans %}</button>
+	</form>
+	{% if items is not empty %}
+		<div class="b-import-items">
+		<h2>{% trans %}List of results{% endtrans %}</h2>
+		{% include 'AnimeDBCatalogBundle:Home:list-items.html.twig' %}
+		</div>
+	{% endif%}
+</div>
+{% endblock %}
