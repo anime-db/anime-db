@@ -46,7 +46,7 @@
         "avalanche123/imagine-bundle": "v2.1",
         "gedmo/doctrine-extensions": "dev-master",
         "anime-db/worldart-filler-bundle": "dev-master",
-        "knplabs/knp-menu-bundle": "dev-master"
+        "knplabs/knp-menu-bundle": "1.1.*"
     },
     "scripts": {
         "post-install-cmd": [
