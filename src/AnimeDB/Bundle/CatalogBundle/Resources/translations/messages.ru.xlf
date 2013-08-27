@@ -426,6 +426,10 @@
                 <source>Find</source>
                 <target>Найти</target>
             </trans-unit>
+            <trans-unit id="115">
+                <source>Wrong date/time format</source>
+                <target>Неверный формат даты/времени</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
