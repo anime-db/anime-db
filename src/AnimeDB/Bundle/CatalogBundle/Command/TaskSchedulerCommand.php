@@ -55,6 +55,13 @@ class TaskSchedulerCommand extends ContainerAwareCommand
         $finder = new PhpExecutableFinder();
         $php = $finder->find();
 
+        // output streams
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $streams = '> null 2 > &1';
+        } else {
+            $streams = '> /dev/null 2 > &1';
+        }
+
         $output->writeln('Task Scheduler');
 
         while (true) {
@@ -63,7 +70,7 @@ class TaskSchedulerCommand extends ContainerAwareCommand
             // task is exists
             if ($task instanceof Task) {
                 $output->writeln('Run <info>'.$task->getCommand().'</info>');
-                exec($php.' '.__DIR__.'/../../../../../app/console '.$task->getCommand().' >/dev/null 2>&1 &');
+                exec($php.' '.__DIR__.'/../../../../../app/console '.$task->getCommand().' '.$streams.' &');
             }
 
             // fall asleep waiting for next task
