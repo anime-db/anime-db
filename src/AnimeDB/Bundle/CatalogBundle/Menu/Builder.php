@@ -46,14 +46,16 @@ class Builder extends ContainerAware
             $this->container->get('anime_db.plugin.search'),
             $add,
             'item_search',
-            'Search source'
+            'Search source of filling',
+            'Search the source and fill record from it'
         );
         // add filler plugin items
         $this->addPluginItems(
             $this->container->get('anime_db.plugin.filler'),
             $add,
             'item_filler',
-            'Fill from source'
+            'Fill from source',
+            'Fill record from source (example source is URL)'
         );
         // add import plugin items
         $this->addPluginItems(
@@ -71,7 +73,7 @@ class Builder extends ContainerAware
         // add manually
         $add->addChild('Add manually', ['route' => 'item_add_manually']);
         $settings->addChild('Storages', ['route' => 'storage_list']);
-        // TODO requires the implementation of
+        // TODO requires the implementation of. Issue #36, #33, #18
         //$settings->addChild('General', ['route' => 'home_general']);
 
         return $menu;
@@ -83,11 +85,16 @@ class Builder extends ContainerAware
      * @param \AnimeDB\Bundle\CatalogBundle\Service\Plugin\Chain $chain
      * @param \Knp\Menu\ItemInterface $root
      * @param string $route
+     * @param string $label
+     * @param string|null $title
      */
-    private function addPluginItems(Chain $chain, ItemInterface $root, $route, $title)
+    private function addPluginItems(Chain $chain, ItemInterface $root, $route, $label, $title = '')
     {
         if (count($chain->getPlugins())) {
-            $group = $root->addChild($title);
+            $group = $root->addChild($label);
+            if ($title) {
+                $group->setAttribute('title', $this->container->get('translator')->trans($title));
+            }
         }
 
         // add child items
@@ -104,7 +111,7 @@ class Builder extends ContainerAware
 
         // if group is empty, remove it
         if (count($chain->getPlugins()) && !count($group)) {
-            $root->removeChild($title);
+            $root->removeChild($label);
         }
     }
 
