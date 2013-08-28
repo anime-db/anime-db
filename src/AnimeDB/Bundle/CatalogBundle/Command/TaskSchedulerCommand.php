@@ -29,7 +29,7 @@ class TaskSchedulerCommand extends ContainerAwareCommand
      *
      * @var integer
      */
-    const MAX_SLEEP_TIME = 86400;
+    const MAX_SLEEP_TIME = 3600;
 
     /**
      * (non-PHPdoc)
@@ -55,11 +55,13 @@ class TaskSchedulerCommand extends ContainerAwareCommand
         $finder = new PhpExecutableFinder();
         $php = $finder->find();
 
+        $em = $this->getContainer()->get('doctrine')->getManager();
+
         // output streams
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            $streams = '> null 2 > &1';
+            $streams = '>null 2>&1';
         } else {
-            $streams = '> /dev/null 2 > &1';
+            $streams = '>/dev/null 2>&1';
         }
 
         $output->writeln('Task Scheduler');
@@ -71,6 +73,11 @@ class TaskSchedulerCommand extends ContainerAwareCommand
             if ($task instanceof Task) {
                 $output->writeln('Run <info>'.$task->getCommand().'</info>');
                 exec($php.' '.__DIR__.'/../../../../../app/console '.$task->getCommand().' '.$streams.' &');
+
+                // обнавляем информацию о запуске
+                $task->executed();
+                $em->persist($task);
+                $em->flush();
             }
 
             // fall asleep waiting for next task
