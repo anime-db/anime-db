@@ -62,9 +62,8 @@ class TaskSchedulerCommand extends ContainerAwareCommand
         $finder = new PhpExecutableFinder();
         $console = $finder->find().' '.__DIR__.'/../../../../../app/console';
 
-        $repository = $this->getContainer()->get('doctrine')
-            ->getRepository('AnimeDBCatalogBundle:Task');
         $em = $this->getContainer()->get('doctrine')->getManager();
+        $repository = $em->getRepository('AnimeDBCatalogBundle:Task');
 
         // output streams
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
@@ -95,6 +94,9 @@ class TaskSchedulerCommand extends ContainerAwareCommand
                 $output->writeln('Wait <comment>'.$time.'</comment> s.');
                 sleep($time);
             }
+
+            unset($task);
+            gc_collect_cycles();
         }
     }
 
