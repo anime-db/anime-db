@@ -15,6 +15,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use AnimeDB\Bundle\CatalogBundle\Entity\Task;
 use Symfony\Component\Process\PhpExecutableFinder;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * Task Scheduler
@@ -25,7 +26,7 @@ use Symfony\Component\Process\PhpExecutableFinder;
 class TaskSchedulerCommand extends ContainerAwareCommand
 {
     /**
-     * Maximum sleep time
+     * Maximum standby time
      *
      * Between scans tasks can interpose new task.
      * If no limit standby scheduler can not handle the new task before
@@ -61,6 +62,8 @@ class TaskSchedulerCommand extends ContainerAwareCommand
         $finder = new PhpExecutableFinder();
         $console = $finder->find().' '.__DIR__.'/../../../../../app/console';
 
+        $repository = $this->getContainer()->get('doctrine')
+            ->getRepository('AnimeDBCatalogBundle:Task');
         $em = $this->getContainer()->get('doctrine')->getManager();
 
         // output streams
@@ -73,7 +76,7 @@ class TaskSchedulerCommand extends ContainerAwareCommand
         $output->writeln('Task Scheduler');
 
         while (true) {
-            $task = $this->getNextTask();
+            $task = $this->getNextTask($repository);
 
             // task is exists
             if ($task instanceof Task) {
@@ -87,9 +90,9 @@ class TaskSchedulerCommand extends ContainerAwareCommand
             }
 
             // standby for the next task
-            $time = $this->getWaitingTime();
+            $time = $this->getWaitingTime($repository);
             if ($time) {
-                $output->writeln('Sleep <comment>'.$time.'</comment> s.');
+                $output->writeln('Wait <comment>'.$time.'</comment> s.');
                 sleep($time);
             }
         }
@@ -98,32 +101,31 @@ class TaskSchedulerCommand extends ContainerAwareCommand
     /**
      * Get next task
      *
+     * @param \Doctrine\ORM\EntityRepository $repository
+     *
      * @return \AnimeDB\Bundle\CatalogBundle\Entity\Task|null
      */
-    protected function getNextTask()
+    protected function getNextTask(EntityRepository $repository)
     {
-        $repository = $this->getContainer()->get('doctrine')
-            ->getRepository('AnimeDBCatalogBundle:Task');
-
-        return $repository->createQueryBuilder('t')
-                ->where('t.status = :status AND t.next_run <= :time')
-                ->setParameter('status', Task::STATUS_ENABLED)
-                ->setParameter('time', date('Y-m-d H:i:s'))
-                ->orderBy('t.next_run', 'ASC')
-                ->getQuery()
-                ->getOneOrNullResult();
+        return $repository
+            ->createQueryBuilder('t')
+            ->where('t.status = :status AND t.next_run <= :time')
+            ->setParameter('status', Task::STATUS_ENABLED)
+            ->setParameter('time', date('Y-m-d H:i:s'))
+            ->orderBy('t.next_run', 'ASC')
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     /**
      * Get waiting time for the next task
      *
+     * @param \Doctrine\ORM\EntityRepository $repository
+     *
      * @return integer
      */
-    protected function getWaitingTime()
+    protected function getWaitingTime(EntityRepository $repository)
     {
-        $repository = $this->getContainer()->get('doctrine')
-            ->getRepository('AnimeDBCatalogBundle:Task');
-
         // get next task
         $task = $repository->createQueryBuilder('t')
             ->where('t.status = :status')
