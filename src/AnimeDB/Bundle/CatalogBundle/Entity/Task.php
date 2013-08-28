@@ -31,13 +31,6 @@ use Symfony\Component\Validator\ExecutionContextInterface;
 class Task
 {
     /**
-     * Disabled interval
-     *
-     * @var integer
-     */
-    const INTERVAL_DISABLED = 0;
-
-    /**
      * Status enabled
      *
      * @var integer
@@ -52,9 +45,19 @@ class Task
     const STATUS_DISABLED = 0;
 
     /**
-     * Command
+     * Id
      *
      * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     *
+     * @var integer
+     */
+    protected $id;
+
+    /**
+     * Command
+     *
      * @ORM\Column(type="string", length=128)
      *
      * @var string
@@ -82,22 +85,12 @@ class Task
     protected $next_run;
 
     /**
-     * Interval run in seconds
-     *
-     * @ORM\Column(type="integer")
-     * @Assert\Type(type="integer", message="The value {{ value }} is not a valid {{ type }}.")
-     *
-     * @var integer
-     */
-    protected $interval = self::INTERVAL_DISABLED;
-
-    /**
      * A date/time string
      *
      * Valid formats are explained in Date and Time Formats.
      *
-     * @ORM\Column(type="string", length=128)
      * @link http://www.php.net/manual/en/datetime.formats.php
+     * @ORM\Column(type="string", length=128, nullable=true)
      *
      * @var string
      */
@@ -155,6 +148,16 @@ class Task
     }
 
     /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * Set last_run
      *
      * @param \DateTime $last_run
@@ -201,7 +204,7 @@ class Task
     }
 
     /**
-     * Set interval
+     * Set interval of seconds
      *
      * @param integer $interval
      *
@@ -209,24 +212,16 @@ class Task
      */
     public function setInterval($interval)
     {
-        $this->interval = $interval;
+        if ($interval) {
+            $this->setModify('+'.$interval.' second');
+        }
         return $this;
-    }
-
-    /**
-     * Get interval
-     *
-     * @return integer 
-     */
-    public function getInterval()
-    {
-        return $this->interval;
     }
 
     /**
      * Set modify
      *
-     * @param string $modify
+     * @param string|null $modify
      *
      * @return \AnimeDB\Bundle\CatalogBundle\Entity\Task
      */
@@ -299,11 +294,13 @@ class Task
     public function executed()
     {
         $this->last_run = $this->next_run;
-        // change next run date
-        if ($this->interval != self::INTERVAL_DISABLED) {
-            $this->next_run->setTimestamp(time() + $this->interval);
-        } elseif ($this->modify) {
-            $this->next_run->modify($this->modify);
+        if (!$this->modify) {
+            $this->status = self::STATUS_DISABLED;
+        } elseif (!$this->next_run->modify($this->modify)) {
+            // failed to compute time of next run
+            $this->next_run = $this->last_run;
+            $this->modify = '';
+            $this->status = self::STATUS_DISABLED;
         }
     }
 }
