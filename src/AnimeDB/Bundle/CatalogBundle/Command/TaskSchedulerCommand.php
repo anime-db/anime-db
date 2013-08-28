@@ -108,7 +108,7 @@ class TaskSchedulerCommand extends ContainerAwareCommand
         return $repository->createQueryBuilder('t')
                 ->where('t.status = :status AND t.next_run <= :time')
                 ->setParameter('status', Task::STATUS_ENABLED)
-                ->setParameter('time', date('Y-m-d H:m:s'))
+                ->setParameter('time', date('Y-m-d H:i:s'))
                 ->orderBy('t.next_run', 'ASC')
                 ->getQuery()
                 ->getOneOrNullResult();
