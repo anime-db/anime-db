@@ -315,8 +315,8 @@
                 <target>Настройки</target>
             </trans-unit>
             <trans-unit id="87">
-                <source>Storages</source>
-                <target>Хранилища</target>
+                <source>File storages</source>
+                <target>Файловые хранилища</target>
             </trans-unit>
             <trans-unit id="88">
                 <source>Add storage</source>
