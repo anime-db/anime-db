@@ -27,9 +27,15 @@ class TaskSchedulerCommand extends ContainerAwareCommand
     /**
      * Maximum sleep time
      *
+     * Between scans tasks can interpose new task.
+     * If no limit standby scheduler can not handle the new task before
+     * the arrival of the start time of the next task.
+     * For example the scheduler can expect a few days before the execution of the tasks
+     * that must be performed every hour.
+     * 
      * @var integer
      */
-    const MAX_SLEEP_TIME = 3600;
+    const MAX_STANDBY_TIME = 3600;
 
     /**
      * (non-PHPdoc)
@@ -53,7 +59,7 @@ class TaskSchedulerCommand extends ContainerAwareCommand
 
         // path to php executable
         $finder = new PhpExecutableFinder();
-        $php = $finder->find();
+        $console = $finder->find().' '.__DIR__.'/../../../../../app/console';
 
         $em = $this->getContainer()->get('doctrine')->getManager();
 
@@ -72,7 +78,7 @@ class TaskSchedulerCommand extends ContainerAwareCommand
             // task is exists
             if ($task instanceof Task) {
                 $output->writeln('Run <info>'.$task->getCommand().'</info>');
-                exec($php.' '.__DIR__.'/../../../../../app/console '.$task->getCommand().' '.$streams.' &');
+                exec($console.' '.$task->getCommand().' '.$streams.' &');
 
                 // обнавляем информацию о запуске
                 $task->executed();
@@ -80,10 +86,12 @@ class TaskSchedulerCommand extends ContainerAwareCommand
                 $em->flush();
             }
 
-            // fall asleep waiting for next task
-            $time = $this->getSleepTime();
-            $output->writeln('Sleep <comment>'.$time.'</comment> s.');
-            sleep($time);
+            // standby for the next task
+            $time = $this->getWaitingTime();
+            if ($time) {
+                $output->writeln('Sleep <comment>'.$time.'</comment> s.');
+                sleep($time);
+            }
         }
     }
 
@@ -107,31 +115,33 @@ class TaskSchedulerCommand extends ContainerAwareCommand
     }
 
     /**
-     * Get sleep time
+     * Get waiting time for the next task
      *
      * @return integer
      */
-    protected function getSleepTime()
+    protected function getWaitingTime()
     {
-        $current = time();
-        $time = self::MAX_SLEEP_TIME;
         $repository = $this->getContainer()->get('doctrine')
             ->getRepository('AnimeDBCatalogBundle:Task');
 
         // get next task
         $task = $repository->createQueryBuilder('t')
-            ->where('t.status = :status AND t.next_run > :time')
+            ->where('t.status = :status')
             ->setParameter('status', Task::STATUS_ENABLED)
-            ->setParameter('time', date('Y-m-d H:m:s', $current))
             ->orderBy('t.next_run', 'ASC')
             ->getQuery()
             ->getOneOrNullResult();
 
         // task is exists
         if ($task instanceof Task) {
-            $time = $task->getNextRun()->getTimestamp() - $current;
+            $task_time = $task->getNextRun()->getTimestamp() - time();
+            if ($task_time > 0) {
+                return min($task_time, self::MAX_STANDBY_TIME);
+            } else {
+                return 0;
+            }
         }
 
-        return min($time, self::MAX_SLEEP_TIME);
+        return self::MAX_STANDBY_TIME;
     }
 }
