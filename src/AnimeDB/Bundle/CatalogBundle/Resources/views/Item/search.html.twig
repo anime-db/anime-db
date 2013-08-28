@@ -1,12 +1,12 @@
 {% extends 'AnimeDBCatalogBundle::layout.html.twig' %}
 
-{% block title %}{% trans %}Search source{% endtrans %}{% endblock %}
+{% block title %}{% trans %}Search source of filling{% endtrans %}{% endblock %}
 
 {% form_theme form 'AnimeDBCatalogBundle:Form:fields.html.twig' %}
 
 {% block content %}
 <div class="b-search-source b-search-source-{{ plugin }}">
-	<h2>{% trans %}Search source{% endtrans %}</h2>
+	<h2>{% trans %}Search source of filling{% endtrans %}</h2>
 	<form action="" method="post" {{ form_enctype(form) }}>
 		{{ form_widget(form) }}
 		<button type="submit">{% trans %}Find{% endtrans %}</button>
