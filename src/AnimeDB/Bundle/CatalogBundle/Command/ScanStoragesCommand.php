@@ -37,8 +37,6 @@ class ScanStoragesCommand extends Command
      * @see Symfony\Component\Console\Command.Command::execute()
      */
     protected function execute(InputInterface $input, OutputInterface $output) {
-        file_put_contents(__DIR__.'/../../../../../scan.log', 'Start '.date('Y-m-d H:m:s')."\n", FILE_APPEND);
-        sleep(30);
-        file_put_contents(__DIR__.'/../../../../../scan.log', 'End '.date('Y-m-d H:m:s')."\n", FILE_APPEND);
+        // TODO do scan storages
     }
 }
