@@ -21,7 +21,6 @@ use Symfony\Component\Validator\ExecutionContextInterface;
  * @ORM\Table(name="task", indexes={
  *   @ORM\Index(name="idx_task_next_start", columns={"next_run", "status"})
  * })
- * @ORM\HasLifecycleCallbacks
  * @Assert\Callback(methods={"isModifyValid"})
  * @IgnoreAnnotation("ORM")
  *
@@ -265,18 +264,6 @@ class Task
     }
 
     /**
-     * Remove cover file
-     *
-     * @ORM\PreUpdate
-     */
-    public function doDisableIfCantRun()
-    {
-        if ($this->next_run->getTimestamp() < time()) {
-            $this->status = self::STATUS_DISABLED;
-        }
-    }
-
-    /**
      * Is valid modify date/time format
      *
      * @param \Symfony\Component\Validator\ExecutionContextInterface $context
@@ -289,18 +276,24 @@ class Task
     }
 
     /**
-     * Update entity after execution
+     * Update task after execution
      */
     public function executed()
     {
         $this->last_run = $this->next_run;
         if (!$this->modify) {
             $this->status = self::STATUS_DISABLED;
-        } elseif (!$this->next_run->modify($this->modify)) {
-            // failed to compute time of next run
-            $this->next_run = $this->last_run;
-            $this->modify = '';
-            $this->status = self::STATUS_DISABLED;
+        } else {
+            // find near time task launch
+            do {
+                // failed to compute time of next run
+                if (!$this->next_run->modify($this->modify)) {
+                    $this->modify = '';
+                    $this->status = self::STATUS_DISABLED;
+                    $this->next_run = $this->last_run;
+                    break;
+                }
+            } while ($this->next_run->getTimestamp() <= time());
         }
     }
 }
