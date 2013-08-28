@@ -82,7 +82,7 @@ class TaskSchedulerCommand extends ContainerAwareCommand
                 $output->writeln('Run <info>'.$task->getCommand().'</info>');
                 exec($console.' '.$task->getCommand().' '.$streams.' &');
 
-                // обнавляем информацию о запуске
+                // update information on starting
                 $task->executed();
                 $em->persist($task);
                 $em->flush();
