@@ -61,6 +61,8 @@ class Request
             $request->setDefaultLocale($locale);
         }
 
+        setlocale(LC_ALL, $request->getLocale());
+
         // set locale from request attribute
         /* if ($locale = $request->attributes->get(self::SESSION_LOCALE)) {
             $request->setLocale($locale);
