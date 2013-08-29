@@ -315,8 +315,8 @@
                 <target>Настройки</target>
             </trans-unit>
             <trans-unit id="87">
-                <source>Storages</source>
-                <target>Хранилища</target>
+                <source>File storages</source>
+                <target>Файловые хранилища</target>
             </trans-unit>
             <trans-unit id="88">
                 <source>Add storage</source>
@@ -399,8 +399,8 @@
                 <target>Общие</target>
             </trans-unit>
             <trans-unit id="108">
-                <source>Search source</source>
-                <target>Поиск источника</target>
+                <source>Search source of filling</source>
+                <target>Поиск источника заполнения</target>
             </trans-unit>
             <trans-unit id="109">
                 <source>Fill from source</source>
@@ -425,6 +425,18 @@
             <trans-unit id="114">
                 <source>Find</source>
                 <target>Найти</target>
+            </trans-unit>
+            <trans-unit id="115">
+                <source>Search the source and fill record from it</source>
+                <target>Найти источник и заполнить запись из него</target>
+            </trans-unit>
+            <trans-unit id="116">
+                <source>Fill record from source (example source is URL)</source>
+                <target>Заполните запись из источника (например источник URL)</target>
+            </trans-unit>
+            <trans-unit id="117">
+                <source>Wrong date/time format</source>
+                <target>Неверный формат даты/времени</target>
             </trans-unit>
         </body>
     </file>

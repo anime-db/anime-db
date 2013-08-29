@@ -204,6 +204,10 @@ h1.logo a span {
 #navigation nav > ul > li > span {
 	background: url(../images/navigation-s.png) no-repeat scroll right top transparent;
 }
+#navigation nav > ul > li.last > a,
+#navigation nav > ul > li.last > span {
+	background: none;
+}
 #navigation .selected a,
 #navigation .selected span {
 	color: #fff;

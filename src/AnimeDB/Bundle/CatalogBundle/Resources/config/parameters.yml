@@ -2,4 +2,4 @@ parameters:
     serial_number: ""
 
     task-scheduler:
-        enabled: false
+        enabled: true
