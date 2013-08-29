@@ -163,9 +163,9 @@ class Task
      *
      * @return \AnimeDB\Bundle\CatalogBundle\Entity\Task
      */
-    public function setLastRun($last_run)
+    public function setLastRun(\DateTime $last_run)
     {
-        $this->last_run = $last_run;
+        $this->last_run = clone $last_run;
         return $this;
     }
 
@@ -176,7 +176,7 @@ class Task
      */
     public function getLastRun()
     {
-        return $this->last_run;
+        return clone $this->last_run;
     }
 
     /**
@@ -186,9 +186,9 @@ class Task
      *
      * @return \AnimeDB\Bundle\CatalogBundle\Entity\Task
      */
-    public function setNextRun($next_run)
+    public function setNextRun(\DateTime $next_run)
     {
-        $this->next_run = $next_run;
+        $this->next_run = clone $next_run;
         return $this;
     }
 
@@ -199,7 +199,7 @@ class Task
      */
     public function getNextRun()
     {
-        return $this->next_run;
+        return clone $this->next_run;
     }
 
     /**
@@ -280,20 +280,21 @@ class Task
      */
     public function executed()
     {
-        $this->last_run = $this->next_run;
-        if (!$this->modify) {
-            $this->status = self::STATUS_DISABLED;
+        $this->setLastRun(new \DateTime());
+        if (!$this->getModify()) {
+            $this->setStatus(self::STATUS_DISABLED);
         } else {
             // find near time task launch
+            $next_run = $this->getNextRun();
             do {
                 // failed to compute time of next run
-                if (!$this->next_run->modify($this->modify)) {
-                    $this->modify = '';
-                    $this->status = self::STATUS_DISABLED;
-                    $this->next_run = $this->last_run;
+                if ($next_run->modify($this->getModify()) === false) {
+                    $this->setModify(null);
+                    $this->setStatus(self::STATUS_DISABLED);
                     break;
                 }
-            } while ($this->next_run->getTimestamp() <= time());
+            } while ($next_run->getTimestamp() <= time());
+            $this->setNextRun($next_run);
         }
     }
 }
