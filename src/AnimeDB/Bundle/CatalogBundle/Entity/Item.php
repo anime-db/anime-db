@@ -251,6 +251,8 @@ class Item
         $this->names   = new ArrayCollection();
         $this->sources = new ArrayCollection();
         $this->images  = new ArrayCollection();
+        $this->date_add = new \DateTime();
+        $this->date_update = new \DateTime();
     }
 
     /**
@@ -306,19 +308,19 @@ class Item
      */
     public function getDateStart()
     {
-        return clone $this->date_start;
+        return $this->date_start ? clone $this->date_start : null;
     }
 
     /**
      * Set date_end
      *
-     * @param \DateTime|null $dateEnd
+     * @param \DateTime|null $date_end
      *
      * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
      */
-    public function setDateEnd(\DateTime $dateEnd = null)
+    public function setDateEnd(\DateTime $date_end = null)
     {
-        $this->date_end = clone $dateEnd;
+        $this->date_end = $date_end ? clone $date_end : null;
         return $this;
     }
 
