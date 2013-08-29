@@ -295,7 +295,7 @@ class Item
      */
     public function setDateStart(\DateTime $dateStart = null)
     {
-        $this->date_start = $dateStart;
+        $this->date_start = clone $dateStart;
         return $this;
     }
 
@@ -306,7 +306,7 @@ class Item
      */
     public function getDateStart()
     {
-        return $this->date_start;
+        return clone $this->date_start;
     }
 
     /**
@@ -318,18 +318,18 @@ class Item
      */
     public function setDateEnd(\DateTime $dateEnd = null)
     {
-        $this->date_end = $dateEnd;
+        $this->date_end = clone $dateEnd;
         return $this;
     }
 
     /**
      * Get date_end
      *
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getDateEnd()
     {
-        return $this->date_end;
+        return $this->date_end ? clone $this->date_end : null;
     }
 
     /**
@@ -847,7 +847,7 @@ class Item
      */
     public function setDateAdd(\DateTime $date_add)
     {
-        $this->date_add = $date_add;
+        $this->date_add = clone $date_add;
         return $this;
     }
 
@@ -858,7 +858,7 @@ class Item
      */
     public function getDateAdd()
     {
-        return $this->date_add;
+        return clone $this->date_add;
     }
 
     /**
@@ -870,7 +870,7 @@ class Item
      */
     public function setDateUpdate(\DateTime $date_update)
     {
-        $this->date_update = $date_update;
+        $this->date_update = clone $date_update;
         return $this;
     }
 
@@ -881,7 +881,7 @@ class Item
      */
     public function getDateUpdate()
     {
-        return $this->date_update;
+        return clone $this->date_update;
     }
 
     /**

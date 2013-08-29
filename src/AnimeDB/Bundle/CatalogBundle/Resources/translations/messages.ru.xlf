@@ -434,6 +434,10 @@
                 <source>Fill record from source (example source is URL)</source>
                 <target>Заполните запись из источника (например источник URL)</target>
             </trans-unit>
+            <trans-unit id="117">
+                <source>Wrong date/time format</source>
+                <target>Неверный формат даты/времени</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
