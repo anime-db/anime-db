@@ -107,7 +107,7 @@ class TaskSchedulerCommand extends ContainerAwareCommand
      *
      * @return \AnimeDB\Bundle\CatalogBundle\Entity\Task|null
      */
-    protected function getNextTask(EntityRepository $repository)
+    private function getNextTask(EntityRepository $repository)
     {
         return $repository
             ->createQueryBuilder('t')
@@ -126,7 +126,7 @@ class TaskSchedulerCommand extends ContainerAwareCommand
      *
      * @return integer
      */
-    protected function getWaitingTime(EntityRepository $repository)
+    private function getWaitingTime(EntityRepository $repository)
     {
         // get next task
         $task = $repository->createQueryBuilder('t')

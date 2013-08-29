@@ -325,11 +325,11 @@ class Item
     /**
      * Get date_end
      *
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getDateEnd()
     {
-        return clone $this->date_end;
+        return $this->date_end ? clone $this->date_end : null;
     }
 
     /**

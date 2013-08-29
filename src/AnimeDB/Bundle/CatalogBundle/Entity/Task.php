@@ -172,11 +172,11 @@ class Task
     /**
      * Get last_run
      *
-     * @return \DateTime 
+     * @return \DateTime|null
      */
     public function getLastRun()
     {
-        return clone $this->last_run;
+        return $this->last_run ? clone $this->last_run : null;
     }
 
     /**
