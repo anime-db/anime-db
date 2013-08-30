@@ -69,13 +69,25 @@
 {% block form_row %}
 {% spaceless %}
     <div class="f-row">
-        {{ form_label(form) }}
         {{ form_errors(form) }}
+        {{ form_label(form) }}
         {{ form_widget(form) }}
     </div>
 {% endspaceless %}
 {% endblock form_row %}
 
+{% block form_errors %}
+{% spaceless %}
+    {% if errors|length > 0 %}
+        {% for error in errors %}
+            <div class="ui-state-error ui-corner-all">
+                <span class="ui-icon ui-icon-alert"></span>
+                {{ error.messageTemplate|trans(error.messageParameters, 'validators')|trans }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endspaceless %}
+{% endblock %}
 
 {# use html5 data #}
 {% block date_widget %}
