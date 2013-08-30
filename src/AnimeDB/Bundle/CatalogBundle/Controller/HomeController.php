@@ -370,7 +370,7 @@ class HomeController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function settingsAction()
+    public function settingsAction(Request $request)
     {
         /* @var $form \Symfony\Component\Form\Form */
         $form = $this->createForm(
@@ -379,6 +379,15 @@ class HomeController extends Controller
                 'serial' => $this->container->getParameter('serial_number')
             ]
         );
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                // update params
+//                 $this->container->setParameter('serial_number', $form->get('serial')->getData());
+
+                return $this->redirect($this->generateUrl('home_settings'));
+            }
+        }
 
         return $this->render('AnimeDBCatalogBundle:Home:settings.html.twig', [
             'form'  => $form->createView()
