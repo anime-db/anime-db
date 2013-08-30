@@ -438,6 +438,18 @@
                 <source>Wrong date/time format</source>
                 <target>Неверный формат даты/времени</target>
             </trans-unit>
+            <trans-unit id="118">
+                <source>General settings</source>
+                <target>Общие настройки</target>
+            </trans-unit>
+            <trans-unit id="119">
+                <source>Serial number</source>
+                <target>Серийный номер</target>
+            </trans-unit>
+            <trans-unit id="120">
+                <source>Save</source>
+                <target>Сохранить</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

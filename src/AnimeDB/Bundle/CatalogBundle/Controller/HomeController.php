@@ -21,6 +21,7 @@ use AnimeDB\Bundle\CatalogBundle\Entity\Genre as GenreEntity;
 use AnimeDB\Bundle\CatalogBundle\Entity\Storage as StorageEntity;
 use Doctrine\ORM\Query\Expr;
 use AnimeDB\Bundle\CatalogBundle\Service\Pagination;
+use AnimeDB\Bundle\CatalogBundle\Form\Settings\General;
 
 /**
  * Main page of the catalog
@@ -359,6 +360,28 @@ class HomeController extends Controller
             'pagination' => $pagination,
             'sort_by' => $sort_by,
             'sort_direction' => $sort_direction
+        ]);
+    }
+
+    /**
+     * General settings
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function settingsAction()
+    {
+        /* @var $form \Symfony\Component\Form\Form */
+        $form = $this->createForm(
+            new General(),
+            [
+                'serial' => $this->container->getParameter('serial_number')
+            ]
+        );
+
+        return $this->render('AnimeDBCatalogBundle:Home:settings.html.twig', [
+            'form'  => $form->createView()
         ]);
     }
 }
