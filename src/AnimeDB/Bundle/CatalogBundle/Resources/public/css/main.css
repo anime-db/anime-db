@@ -78,6 +78,10 @@ input,
 textarea {
 	width: 300px;
 }
+input[type~=checkbox],
+input[type~=radio] {
+	width: auto;
+}
 textarea {
 	height: 100px;
 }
