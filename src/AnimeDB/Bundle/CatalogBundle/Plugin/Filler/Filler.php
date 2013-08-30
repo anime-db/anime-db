@@ -28,4 +28,13 @@ interface Filler extends Plugin
      * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item|null
      */
     public function fill($source);
+
+    /**
+     * Filler is support this source
+     *
+     * @param string $source
+     *
+     * @return boolean
+     */
+    public function isSupportSource($source);
 }
