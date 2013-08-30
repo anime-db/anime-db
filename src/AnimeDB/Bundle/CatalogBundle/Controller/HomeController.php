@@ -376,6 +376,8 @@ class HomeController extends Controller
     {
         $entity = new GeneralEntity();
         $entity->setSerialNumber($this->container->getParameter('serial_number'));
+        $entity->setTaskScheduler($this->container->getParameter('task-scheduler')['enabled']);
+
         /* @var $form \Symfony\Component\Form\Form */
         $form = $this->createForm(new GeneralForm(), $entity);
 
@@ -386,6 +388,7 @@ class HomeController extends Controller
                 $file = __DIR__.'/../../../../../app/config/parameters.yml';
                 $parameters = Yaml::parse($file);
                 $parameters['parameters']['serial_number'] = $entity->getSerialNumber();
+                $parameters['parameters']['task-scheduler']['enabled'] = $entity->getTaskScheduler();
                 file_put_contents($file, Yaml::dump($parameters));
 
                 return $this->redirect($this->generateUrl('home_settings'));
