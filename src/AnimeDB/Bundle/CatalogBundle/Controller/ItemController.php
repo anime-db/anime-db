@@ -150,7 +150,7 @@ class ItemController extends Controller
         $form->handleRequest($request);
         if ($form->isValid()) {
             // fill item
-            if ($filler instanceof CustomFormSearch) {
+            if ($filler instanceof CustomFormFiller) {
                 $item = $filler->fill($form->getData());
             } else {
                 $item = $filler->fill($form->getData()['url']);
