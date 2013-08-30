@@ -645,15 +645,15 @@ h1.logo a span {
 /*
  * UI State
  */
-div.ui-widget div.ui-state-error,
-div.ui-widget div.ui-state-highlight {
-	padding: 10px;
-	margin-bottom: 10px;
+.ui-state-error,
+.ui-state-highlight {
+	padding: .5em 1em;
+	margin: 5px 0;
 }
-.ui-widget .ui-state-error .ui-icon-alert,
+.ui-state-error .ui-icon-alert,
 .ui-widget .ui-state-highlight .ui-icon-info {
 	float: left;
-	margin-right: 5px;
+	margin-right: .5em;
 }
 
 /**
