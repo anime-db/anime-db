@@ -200,12 +200,13 @@ class ItemController extends Controller
             if ($form->isValid()) {
                 // url bulder for fill items in list
                 $that = $this;
-                $url_builder = function ($source) use ($that, $plugin) {
+                $form_name = (new FillerPluginForm())->getName();
+                $url_builder = function ($source) use ($that, $plugin, $form_name) {
                     return $that->generateUrl(
                         'item_filler',
                         [
                             'plugin' => $plugin,
-                            (new FillerPluginForm())->getName() => ['url' => $source]
+                            $form_name => ['url' => $source]
                         ]
                     );
                 };
