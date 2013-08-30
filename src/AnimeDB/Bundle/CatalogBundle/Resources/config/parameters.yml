@@ -1,5 +1,0 @@
-parameters:
-    serial_number: ""
-
-    task-scheduler:
-        enabled: true
