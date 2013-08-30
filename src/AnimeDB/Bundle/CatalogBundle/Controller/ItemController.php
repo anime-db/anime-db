@@ -89,7 +89,7 @@ class ItemController extends Controller
         /* @var $form \Symfony\Component\Form\Form */
         $form = $this->createForm(new ItemForm(), $item);
 
-        if ($request->getMethod() == 'POST') {
+        if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
