@@ -4,7 +4,7 @@
         <body>
             <trans-unit id="1">
                 <source>The number of episodes should be a number and can contain a '+' to denote the continuation of production</source>
-                <target>Количество эпизодов должно быть числом и может содержать '+', чтобы обозначить продолжение выпуска</target>
+                <target>Число эпизодов должно быть числом и может содержать '+', чтобы обозначить продолжение выпуска</target>
             </trans-unit>
         </body>
     </file>
