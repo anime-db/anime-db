@@ -31,6 +31,10 @@ class General extends AbstractType
         $builder
             ->add('serial_number', 'text', [
                 'label' => 'Serial number'
+            ])
+            ->add('task_scheduler', 'checkbox', [
+                'required' => false,
+                'label' => 'Task scheduler'
             ]);
     }
 

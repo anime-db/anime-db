@@ -36,6 +36,15 @@ class General
     protected $serial_number;
 
     /**
+     * Task scheduler
+     *
+     * @Assert\Type(type="bool", message="The value {{ value }} is not a valid {{ type }}.")
+     *
+     * @var string
+     */
+    protected $task_scheduler = true;
+
+    /**
      * Get serial number
      * 
      * @return string
@@ -55,6 +64,29 @@ class General
     public function setSerialNumber($serial_number)
     {
         $this->serial_number = $serial_number;
+        return $this;
+    }
+
+    /**
+     * Get task scheduler
+     * 
+     * @return string
+     */
+    public function getTaskScheduler()
+    {
+        return $this->task_scheduler;
+    }
+
+    /**
+     * Set task scheduler
+     *
+     * @param string $task_scheduler
+     *
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Settings\General
+     */
+    public function setTaskScheduler($task_scheduler)
+    {
+        $this->task_scheduler = $task_scheduler;
         return $this;
     }
 }

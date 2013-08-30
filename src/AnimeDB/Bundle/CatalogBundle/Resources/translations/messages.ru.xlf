@@ -450,6 +450,14 @@
                 <source>Save</source>
                 <target>Сохранить</target>
             </trans-unit>
+            <trans-unit id="121">
+                <source>Task scheduler</source>
+                <target>Планировщик задач</target>
+            </trans-unit>
+            <trans-unit id="122">
+                <source>Task scheduler - a separate process to perform various tasks in the background, such as checks for system updates.</source>
+                <target>Планировщик задач - отдельный процесс выполняющий различные задачи в фоновом режиме, например проверяет наличие обновлений системы.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
