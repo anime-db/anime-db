@@ -21,8 +21,8 @@ use AnimeDB\Bundle\CatalogBundle\Form\Entity\Item as ItemForm;
 use Symfony\Component\HttpFoundation\Request;
 use AnimeDB\Bundle\CatalogBundle\Form\Plugin\Search as SearchPluginForm;
 use AnimeDB\Bundle\CatalogBundle\Form\Plugin\Filler as FillerPluginForm;
-use AnimeDB\Bundle\CatalogBundle\Service\Search\CustomForm as CustomFormSearch;
-use AnimeDB\Bundle\CatalogBundle\Service\Filler\CustomForm as CustomFormFiller;
+use AnimeDB\Bundle\CatalogBundle\Plugin\Search\CustomForm as CustomFormSearch;
+use AnimeDB\Bundle\CatalogBundle\Plugin\Filler\CustomForm as CustomFormFiller;
 
 /**
  * Item
