@@ -21,7 +21,9 @@ use AnimeDB\Bundle\CatalogBundle\Entity\Genre as GenreEntity;
 use AnimeDB\Bundle\CatalogBundle\Entity\Storage as StorageEntity;
 use Doctrine\ORM\Query\Expr;
 use AnimeDB\Bundle\CatalogBundle\Service\Pagination;
-use AnimeDB\Bundle\CatalogBundle\Form\Settings\General;
+use AnimeDB\Bundle\CatalogBundle\Form\Settings\General as GeneralForm;
+use AnimeDB\Bundle\CatalogBundle\Entity\Settings\General as GeneralEntity;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Main page of the catalog
@@ -372,18 +374,19 @@ class HomeController extends Controller
      */
     public function settingsAction(Request $request)
     {
+        $entity = new GeneralEntity();
+        $entity->setSerialNumber($this->container->getParameter('serial_number'));
         /* @var $form \Symfony\Component\Form\Form */
-        $form = $this->createForm(
-            new General(),
-            [
-                'serial' => $this->container->getParameter('serial_number')
-            ]
-        );
+        $form = $this->createForm(new GeneralForm(), $entity);
+
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
                 // update params
-//                 $this->container->setParameter('serial_number', $form->get('serial')->getData());
+                $file = __DIR__.'/../../../../../app/config/parameters.yml';
+                $parameters = Yaml::parse($file);
+                $parameters['parameters']['serial_number'] = $entity->getSerialNumber();
+                file_put_contents($file, Yaml::dump($parameters));
 
                 return $this->redirect($this->generateUrl('home_settings'));
             }

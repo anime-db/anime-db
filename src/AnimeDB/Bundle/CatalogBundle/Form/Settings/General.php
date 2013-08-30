@@ -29,7 +29,7 @@ class General extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('serial', 'text', [
+            ->add('serial_number', 'text', [
                 'label' => 'Serial number'
             ]);
     }
