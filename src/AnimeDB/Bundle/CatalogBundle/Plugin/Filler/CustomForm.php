@@ -10,7 +10,7 @@
 
 namespace AnimeDB\Bundle\CatalogBundle\Plugin\Filler;
 
-use AnimeDB\Bundle\CatalogBundle\Plugin\Filler\FillerInterface;
+use AnimeDB\Bundle\CatalogBundle\Plugin\Filler\Filler;
 
 /**
  * Plugin has custom form for search
@@ -18,7 +18,7 @@ use AnimeDB\Bundle\CatalogBundle\Plugin\Filler\FillerInterface;
  * @package AnimeDB\Bundle\CatalogBundle\Plugin\Filler
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-interface CustomForm extends FillerInterface
+interface CustomForm extends Filler
 {
     /**
      * Get form
@@ -34,5 +34,5 @@ interface CustomForm extends FillerInterface
      *
      * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item|null
      */
-    public function fill(array $data);
+    public function fill($data);
 }
