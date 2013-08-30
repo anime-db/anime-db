@@ -6,6 +6,10 @@
                 <source>The number of episodes should be a number and can contain a '+' to denote the continuation of production</source>
                 <target>Число эпизодов должно быть числом и может содержать '+', чтобы обозначить продолжение выпуска</target>
             </trans-unit>
+            <trans-unit id="2">
+                <source>Serial number must consist of numbers and letters, and have the form of XXXX-XXXX-XXXX-XXXX</source>
+                <target>Серийный номер должен состоять из цифр и букв, и иметь вид XXXX-XXXX-XXXX-XXXX</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

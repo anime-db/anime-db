@@ -8,19 +8,19 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDB\Bundle\CatalogBundle\Form;
+namespace AnimeDB\Bundle\CatalogBundle\Form\Settings;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Search simple form for home page
+ * General settings form
  *
- * @package AnimeDB\Bundle\CatalogBundle\Form
+ * @package AnimeDB\Bundle\CatalogBundle\Form\Settings
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class SearchSimple extends AbstractType
+class General extends AbstractType
 {
     /**
      * (non-PHPdoc)
@@ -28,11 +28,9 @@ class SearchSimple extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        // TODO add autocomplete name
         $builder
-            ->add('name', 'search', [
-                'label' => 'Name',
-                'required' => false
+            ->add('serial_number', 'text', [
+                'label' => 'Serial number'
             ]);
     }
 
@@ -42,6 +40,6 @@ class SearchSimple extends AbstractType
      */
     public function getName()
     {
-        return 'animedb_catalogbundle_search_items';
+        return 'animedb_catalogbundle_settings_general';
     }
 }
