@@ -21,8 +21,8 @@ use AnimeDB\Bundle\CatalogBundle\Form\Entity\Item as ItemForm;
 use Symfony\Component\HttpFoundation\Request;
 use AnimeDB\Bundle\CatalogBundle\Form\Plugin\Search as SearchPluginForm;
 use AnimeDB\Bundle\CatalogBundle\Form\Plugin\Filler as FillerPluginForm;
-use AnimeDB\Bundle\CatalogBundle\Service\Search\CustomForm as CustomFormSearch;
-use AnimeDB\Bundle\CatalogBundle\Service\Filler\CustomForm as CustomFormFiller;
+use AnimeDB\Bundle\CatalogBundle\Plugin\Search\CustomForm as CustomFormSearch;
+use AnimeDB\Bundle\CatalogBundle\Plugin\Filler\CustomForm as CustomFormFiller;
 
 /**
  * Item
@@ -200,12 +200,13 @@ class ItemController extends Controller
             if ($form->isValid()) {
                 // url bulder for fill items in list
                 $that = $this;
-                $url_builder = function ($source) use ($that, $plugin) {
+                $form_name = (new FillerPluginForm())->getName();
+                $url_builder = function ($source) use ($that, $plugin, $form_name) {
                     return $that->generateUrl(
                         'item_filler',
                         [
                             'plugin' => $plugin,
-                            (new FillerPluginForm())->getName() => ['url' => $source]
+                            $form_name => ['url' => $source]
                         ]
                     );
                 };
