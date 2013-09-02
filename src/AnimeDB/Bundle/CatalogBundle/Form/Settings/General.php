@@ -35,6 +35,9 @@ class General extends AbstractType
             ->add('task_scheduler', 'checkbox', [
                 'required' => false,
                 'label' => 'Task scheduler'
+            ])
+            ->add('locale', 'locale', [
+                'label' => 'Locale'
             ]);
     }
 
