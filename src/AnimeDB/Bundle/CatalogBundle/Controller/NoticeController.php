@@ -13,7 +13,7 @@ namespace AnimeDB\Bundle\CatalogBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AnimeDB\Bundle\CatalogBundle\Entity\Notice;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
+use Symfony\Component\HttpFoundation\Request;
 /**
  * Notice
  *
@@ -22,6 +22,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class NoticeController extends Controller
 {
+    /**
+     * Number of notices per page
+     *
+     * @var integer
+     */
+    const NOTICE_PER_PAGE = 30;
+
     /**
      * Show last notice
      *
@@ -91,9 +98,28 @@ class NoticeController extends Controller
 
     /**
      * Get notice list
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getListAction($page)
+    public function getListAction(Request $request)
     {
+        $current_page = $request->get('page', 1);
+        $current_page = $current_page > 1 ? $current_page : 1;
+
+        $repository = $this->getDoctrine()->getManager()
+            ->getRepository('AnimeDBCatalogBundle:Notice');
+
+        $notices = $repository
+            ->createQueryBuilder('n')
+            ->addOrderBy('n.date_created', 'ASC')
+            ->setFirstResult(($current_page - 1) * self::NOTICE_PER_PAGE)
+            ->setMaxResults(self::NOTICE_PER_PAGE)
+            ->getQuery()
+            ->getResult();
+
+        return $this->render('AnimeDBCatalogBundle:Notice:list.html.twig', ['list' => $notices]);
     }
 
     /**
