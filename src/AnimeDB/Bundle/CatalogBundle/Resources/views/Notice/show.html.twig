@@ -1,4 +1,4 @@
-<section class="b-notice" data-id="{{ notice.id }}">
-	<header><button type="button" class="bt-close">Close</button></header>
+<section class="b-notice">
+	<header><button type="button" class="bt-close" data-close="{{ path('notice_close', {id: notice.id}) }}">Close</button></header>
 	<article>{{ notice.message }}</article>
 </section>
