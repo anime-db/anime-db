@@ -113,7 +113,7 @@ class NoticeController extends Controller
 
         $notices = $repository
             ->createQueryBuilder('n')
-            ->addOrderBy('n.date_created', 'ASC')
+            ->addOrderBy('n.date_created', 'DESC')
             ->setFirstResult(($current_page - 1) * self::NOTICE_PER_PAGE)
             ->setMaxResults(self::NOTICE_PER_PAGE)
             ->getQuery()

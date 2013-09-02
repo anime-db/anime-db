@@ -1002,3 +1002,13 @@ h1.logo a span {
 	overflow: hidden;
 	float: right;
 }
+
+/**
+ * Notice list
+ */
+.b-notice-list .t-massage {
+	width: 500px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}

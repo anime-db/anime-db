@@ -8,7 +8,11 @@
 	<strong>{% trans %}Date created{% endtrans %}:</strong>
 		{{ notice.datecreated|date('Y.m.d H:i') }}<br />
 	<strong>{% trans %}Date closed{% endtrans %}:</strong>
-		{% if notice.dateclosed is not empty %}{{ notice.dateclosed|date('Y.m.d H:i') }}{% endif %}<br />
+		{% if notice.dateclosed is not empty %}
+			{{ notice.dateclosed|date('Y.m.d H:i') }}
+		{% else %}
+			-
+		{% endif %}<br />
 	<strong>{% trans %}Status{% endtrans %}:</strong>
 		{% if notice.status == 0 %}
 			{% trans %}Created{% endtrans %}

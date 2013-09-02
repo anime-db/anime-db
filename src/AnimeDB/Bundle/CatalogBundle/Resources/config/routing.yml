@@ -111,3 +111,7 @@ notice_get:
     defaults: { _controller: AnimeDBCatalogBundle:Notice:get }
     requirements:
         id:  \d+
+
+notice_get_list:
+    pattern:  /notice/
+    defaults: { _controller: AnimeDBCatalogBundle:Notice:getList }

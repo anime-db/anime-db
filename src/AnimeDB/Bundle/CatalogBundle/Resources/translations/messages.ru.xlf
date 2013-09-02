@@ -486,6 +486,18 @@
                 <source>Closed</source>
                 <target>Закрыто</target>
             </trans-unit>
+            <trans-unit id="130">
+                <source>Show full info of notice</source>
+                <target>Показать полную информацию о уведомлении</target>
+            </trans-unit>
+            <trans-unit id="131">
+                <source>List of notice</source>
+                <target>Список уведомлений</target>
+            </trans-unit>
+            <trans-unit id="132">
+                <source>No notices</source>
+                <target>Нет уведомлений</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
