@@ -43,6 +43,13 @@ class Notice
     const STATUS_SHOWN = 1;
 
     /**
+     * Status notice closed
+     *
+     * @var integer
+     */
+    const STATUS_CLOSED = 2;
+
+    /**
      * Id
      *
      * @ORM\Id
@@ -127,9 +134,9 @@ class Notice
      */
     public function shown()
     {
-        if (is_null($this->end)) {
-            $this->end = new \DateTime();
-            $this->end->modify('+'.$this->lifetime.' seconds');
+        if (is_null($this->date_closed)) {
+            $this->date_closed = new \DateTime();
+            $this->date_closed->modify('+'.$this->lifetime.' seconds');
         }
         $this->status = self::STATUS_SHOWN;
     }
