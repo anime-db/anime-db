@@ -436,6 +436,66 @@ var PopupList = {
 	}
 }
 
+/**
+ * Notice
+ */
+var NoticeModel = function(container, block, close_url, close) {
+	this.container = container;
+	this.block = block;
+	this.close_url = close_url;
+	this.close_button = close;
+	var that = this;
+	this.close_button.click(function(){
+		that.close();
+	});
+};
+NoticeModel.prototype = {
+	close: function() {
+		var that = this;
+		this.block.animate({opacity: 0}, 300, function() {
+			// report to backend
+			$.ajax({
+				url: that.close_url,
+				success: function() {
+					// remove this
+					that.block.remove();
+					delete that.container.notice;
+					// load new notice
+					that.container.load();
+				}
+			});
+		});
+	}
+};
+/**
+ * Notice container
+ */
+var NoticeContainerModel = function(container, from) {
+	this.container = container;
+	this.from = from;
+	this.notice = null;
+	this.load();
+};
+NoticeContainerModel.prototype = {
+	load: function() {
+		var that = this;
+		this.notice = null;
+		$.ajax({
+			url: this.from,
+			success: function(data) {
+				if (data) {
+					that.show(data)
+				}
+			}
+		});
+	},
+	show: function(data) {
+		data.notice;
+		var block = $(data.content);
+		this.notice = new NoticeModel(this, block, data.close, block.find('.bt-close'));
+		this.container.append(this.notice.block);
+	}
+};
 
 // init after document load
 $(function(){
@@ -483,4 +543,9 @@ $('.f-local-path').each(function(){
 	new FormLocalPathController($(this));
 });
 
+// init notice container
+var container = $('#notice-container');
+if (container.size() && (from = container.data('from'))) {
+	new NoticeContainerModel(container, from);
+}
 });
