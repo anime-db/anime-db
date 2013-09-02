@@ -105,3 +105,9 @@ notice_close:
     defaults: { _controller: AnimeDBCatalogBundle:Notice:close, _format: json }
     requirements:
         id:  \d+
+
+notice_get:
+    pattern:  /notice/{id}/
+    defaults: { _controller: AnimeDBCatalogBundle:Notice:get }
+    requirements:
+        id:  \d+

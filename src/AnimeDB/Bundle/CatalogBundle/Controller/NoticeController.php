@@ -86,6 +86,7 @@ class NoticeController extends Controller
      */
     public function getAction(Notice $notice)
     {
+        return $this->render('AnimeDBCatalogBundle:Notice:get.html.twig', ['notice' => $notice]);
     }
 
     /**
