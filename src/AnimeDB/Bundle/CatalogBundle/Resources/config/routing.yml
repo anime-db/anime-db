@@ -95,3 +95,13 @@ storage_delete:
     defaults: { _controller: AnimeDBCatalogBundle:Storage:delete }
     requirements:
         id:  \d+
+
+notice_show:
+    pattern:  /notice/show.json
+    defaults: { _controller: AnimeDBCatalogBundle:Notice:show, _format: json }
+
+notice_close:
+    pattern:  /notice/{id}/close.json
+    defaults: { _controller: AnimeDBCatalogBundle:Notice:close, _format: json }
+    requirements:
+        id:  \d+

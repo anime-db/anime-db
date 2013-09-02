@@ -1,0 +1,108 @@
+<?php
+/**
+ * AnimeDB package
+ *
+ * @package   AnimeDB
+ * @author    Peter Gribanov <info@peter-gribanov.ru>
+ * @copyright Copyright (c) 2011, Peter Gribanov
+ * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
+ */
+
+namespace AnimeDB\Bundle\CatalogBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AnimeDB\Bundle\CatalogBundle\Entity\Notice;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
+/**
+ * Notice
+ *
+ * @package AnimeDB\Bundle\CatalogBundle\Controller
+ * @author  Peter Gribanov <info@peter-gribanov.ru>
+ */
+class NoticeController extends Controller
+{
+    /**
+     * Show last notice
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('AnimeDBCatalogBundle:Notice');
+
+        $notice = $repository
+            ->createQueryBuilder('n')
+            ->andWhere('n.status != :closed')
+            ->andWhere('(n.date_closed IS NULL OR n.date_closed >= :time)')
+            ->setParameter('closed', Notice::STATUS_CLOSED)
+            ->setParameter('time', date('Y-m-d H:i:s'))
+            ->addOrderBy('n.date_created', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        // shown notice
+        if (!is_null($notice)) {
+            $notice->shown();
+            $em->persist($notice);
+            $em->flush();
+
+            return new JsonResponse([
+                'notice' => $notice->getId(),
+                'close' => $this->generateUrl('notice_close', ['id' => $notice->getId()]),
+                'content' => $this->renderView('AnimeDBCatalogBundle:Notice:show.html.twig', ['notice' => $notice])
+            ]);
+        }
+
+        return new JsonResponse([]);
+    }
+
+    /**
+     * Close notice
+     *
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Notice $notice
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function closeAction(Notice $notice)
+    {
+        // mark as closed
+        $notice->setStatus(Notice::STATUS_CLOSED);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($notice);
+        $em->flush();
+
+        return new JsonResponse([]);
+    }
+
+    /**
+     * Get one notice
+     *
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Notice $notice
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function getAction(Notice $notice)
+    {
+    }
+
+    /**
+     * Get notice list
+     */
+    public function getListAction($page)
+    {
+    }
+
+    /**
+     * Delete notice
+     *
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Notice $notice
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteAction(Notice $notice)
+    {
+    }
+}
