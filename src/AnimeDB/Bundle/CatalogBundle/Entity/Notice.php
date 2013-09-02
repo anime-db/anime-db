@@ -50,6 +50,13 @@ class Notice
     const STATUS_CLOSED = 2;
 
     /**
+     * Default lifetime
+     *
+     * @var integer
+     */
+    const DEFAULT_LIFETIME = 300;
+
+    /**
      * Id
      *
      * @ORM\Id
@@ -99,7 +106,7 @@ class Notice
      *
      * @var string
      */
-    protected $lifetime;
+    protected $lifetime = self::DEFAULT_LIFETIME;
 
     /**
      * Status
