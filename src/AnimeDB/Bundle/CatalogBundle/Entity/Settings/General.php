@@ -45,6 +45,15 @@ class General
     protected $task_scheduler = true;
 
     /**
+     * Locale
+     *
+     * @Assert\Locale
+     *
+     * @var string
+     */
+    protected $locale;
+
+    /**
      * Get serial number
      * 
      * @return string
@@ -87,6 +96,29 @@ class General
     public function setTaskScheduler($task_scheduler)
     {
         $this->task_scheduler = $task_scheduler;
+        return $this;
+    }
+
+    /**
+     * Get locale
+     * 
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * Set locale
+     *
+     * @param string $locale
+     *
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Settings\General
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
         return $this;
     }
 }

@@ -87,6 +87,7 @@ textarea {
 }
 .f-row {
 	margin-bottom: 5px;
+	clear: both;
 }
 .f-collection {
 	margin: 0 0 10px 30px;

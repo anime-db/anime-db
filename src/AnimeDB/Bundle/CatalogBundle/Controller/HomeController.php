@@ -24,6 +24,7 @@ use AnimeDB\Bundle\CatalogBundle\Service\Pagination;
 use AnimeDB\Bundle\CatalogBundle\Form\Settings\General as GeneralForm;
 use AnimeDB\Bundle\CatalogBundle\Entity\Settings\General as GeneralEntity;
 use Symfony\Component\Yaml\Yaml;
+use AnimeDB\Bundle\CatalogBundle\Service\Listener\Request as RequestListener;
 
 /**
  * Main page of the catalog
@@ -377,6 +378,7 @@ class HomeController extends Controller
         $entity = new GeneralEntity();
         $entity->setSerialNumber($this->container->getParameter('serial_number'));
         $entity->setTaskScheduler($this->container->getParameter('task-scheduler')['enabled']);
+        $entity->setLocale($request->getLocale());
 
         /* @var $form \Symfony\Component\Form\Form */
         $form = $this->createForm(new GeneralForm(), $entity);
@@ -390,6 +392,8 @@ class HomeController extends Controller
                 $parameters['parameters']['serial_number'] = $entity->getSerialNumber();
                 $parameters['parameters']['task-scheduler']['enabled'] = $entity->getTaskScheduler();
                 file_put_contents($file, Yaml::dump($parameters));
+                // change locale
+                $this->get('anime_db.listener.request')->setLocale($request, $entity->getLocale());
 
                 return $this->redirect($this->generateUrl('home_settings'));
             }
