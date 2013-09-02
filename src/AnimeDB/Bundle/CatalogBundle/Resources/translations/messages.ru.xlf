@@ -7,8 +7,8 @@
                 <target>Продукт распространяется под лицензией %license%.</target>
             </trans-unit>
             <trans-unit id="2">
-                <source>%AnimeDB% is a system for making the home catalog of the anime. The system is designed for home use only.</source>
-                <target>%AnimeDB% это система для составления домашнего каталога аниме. Система предназначена только для домашнего использования.</target>
+                <source><![CDATA[<strong>AnimeDB</strong> is a system for making the home catalog of the anime. The system is designed for home use only.]]></source>
+                <target><![CDATA[<strong>AnimeDB</strong> это система для составления домашнего каталога аниме. Система предназначена только для домашнего использования.]]></target>
             </trans-unit>
             <trans-unit id="3">
                 <source>Search options</source>

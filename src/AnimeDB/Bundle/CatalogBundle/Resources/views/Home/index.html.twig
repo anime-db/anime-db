@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="home-center-header">
-	<p class="intro-message">{% trans with {'%AnimeDB%': '<strong>AnimeDB</strong>'}%}%AnimeDB% is a system for making the home catalog of the anime. The system is designed for home use only.{% endtrans %}</p>
+	<p class="intro-message">{% trans %}<strong>AnimeDB</strong> is a system for making the home catalog of the anime. The system is designed for home use only.{% endtrans %}</p>
 	<div class="home-search">
 		{% render controller('AnimeDBCatalogBundle:Home:searchSimpleForm') %}
 	</div>
