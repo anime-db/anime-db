@@ -961,8 +961,7 @@ h1.logo a span {
  */
 .b-notice {
 	position: absolute;
-	width: 900px;
-	padding: 15px 25px;
+	width: 950px;
 	background-color: #fafad2;
 	-moz-box-shadow: 0 0 10px rgba(0,0,0,0.5);
 	-webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5);
@@ -979,18 +978,21 @@ h1.logo a span {
 	from {top:-60px;}
 	to {top:0;}
 }
-.b-notice header {
-	float: right;
-}
-.b-notice article {
-	max-width: 880px;
+.b-notice a {
+	width: 874px;
+	padding: 15px 0 15px 20px;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+	color: inherit;
+	text-decoration: none;
 	float: left;
 }
+.b-notice a:hover {
+	color: #b00;
+}
 .b-notice .bt-close {
-	margin: 0;
+	margin: 15px 20px;
 	padding: 0;
 	background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAWlBMVEV/f3+BgYGgoKDOzs7JycnFxcW8vLzj4+OHh4efn5/Q0NDi4uLc3NyCgoL9/f3f39/g4ODn5+fe3t62traFhYXl5eW1tbWampr4+PiZmZm7u7vGxsa3t7f///+ueh03AAAAHnRSTlP//////////////////////////////////////wDsGBxeAAAAc0lEQVQY02WPNxIDMRDDsCvpcs5nm///pgtXPrWcIQkgSRpTUaRRkoSk1g3AvP0FTQV+HA5VI6Fy494lab/ZSjHUnFcXpNBdJ/XAZDYvPTHSL7PZRMIVACDISRSsUjSwKK28nsHnWXnno9ltBpaj53L/+l8etw1tLADaAAAAAABJRU5ErkJggg==') 0 0 no-repeat;
 	border: none;
@@ -998,4 +1000,5 @@ h1.logo a span {
 	height: 16px;
 	text-indent: 16px;
 	overflow: hidden;
+	float: right;
 }
