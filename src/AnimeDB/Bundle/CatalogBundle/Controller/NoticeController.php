@@ -108,9 +108,10 @@ class NoticeController extends Controller
         $current_page = $request->get('page', 1);
         $current_page = $current_page > 1 ? $current_page : 1;
 
-        $repository = $this->getDoctrine()->getManager()
-            ->getRepository('AnimeDBCatalogBundle:Notice');
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('AnimeDBCatalogBundle:Notice');
 
+        // get notices
         $notices = $repository
             ->createQueryBuilder('n')
             ->addOrderBy('n.date_created', 'DESC')
@@ -119,17 +120,27 @@ class NoticeController extends Controller
             ->getQuery()
             ->getResult();
 
-        return $this->render('AnimeDBCatalogBundle:Notice:list.html.twig', ['list' => $notices]);
-    }
+        // remove notices if need
+        if ($request->isMethod('POST') && $notices) {
+            if ((int)$request->request->get('check-all', 0)) { // remove all entitys
+                foreach ($notices as $notice) {
+                    $em->remove($notice);
+                }
+                $em->flush();
+            } elseif ($ids = (array)$request->request->get('id', [])) { // remove selected entitys
+                foreach ($ids as $id) {
+                    foreach ($notices as $notice) {
+                        if ($notice->getId() == $id) {
+                            $em->remove($notice);
+                            break;
+                        }
+                    }
+                }
+                $em->flush();
+            }
+            return $this->redirect($this->generateUrl('notice_get_list'));
+        }
 
-    /**
-     * Delete notice
-     *
-     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Notice $notice
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function deleteAction(Notice $notice)
-    {
+        return $this->render('AnimeDBCatalogBundle:Notice:list.html.twig', ['list' => $notices]);
     }
 }

@@ -12,7 +12,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th><input type="checkbox" name="check-all" class="bt-table-check-all" /></th>
+					<th><input type="checkbox" name="check-all" class="bt-table-check-all" value="1" /></th>
 					<th>{% trans %}Message{% endtrans %}</th>
 					<th>{% trans %}Date created{% endtrans %}</th>
 					<th>{% trans %}Date closed{% endtrans %}</th>
@@ -47,6 +47,8 @@
 				</tr>
 			{% endfor %}
 		</table>
+		<br />
+		<button type="submit">{% trans %}Remove{% endtrans %}</button>
 		</form>
 	{% endif %}
 </section>
