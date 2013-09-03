@@ -452,7 +452,7 @@ var NoticeModel = function(container, block, close_url, close) {
 NoticeModel.prototype = {
 	close: function() {
 		var that = this;
-		this.block.animate({opacity: 0}, 300, function() {
+		this.block.animate({opacity: 0}, 400, function() {
 			// report to backend
 			$.ajax({
 				type: 'POST',
