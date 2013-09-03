@@ -48,7 +48,7 @@
 			{% endfor %}
 		</table>
 		<br />
-		<button type="submit">{% trans %}Remove{% endtrans %}</button>
+		<button type="submit" data-massage="{% trans %}Are you sure want to delete item(s)?{% endtrans %}">{% trans %}Remove{% endtrans %}</button>
 		</form>
 		{% include 'AnimeDBCatalogBundle::pagination.html.twig' %}
 	{% endif %}

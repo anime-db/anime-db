@@ -550,6 +550,23 @@ var TableCheckAllController = function(checker) {
 	new CheckAllModel(checker, list);
 }
 
+/**
+ * Confirm delete
+ */
+var ConfirmDeleteModel = function(link) {
+	this.massage = link.data('massage') || 'Are you sure want to delete this item(s)?';
+	this.link = link;
+	var that = this;
+	link.click(function() {
+		return that.remove();
+	});
+};
+ConfirmDeleteModel.prototype = {
+	remove: function() {
+		return confirm(this.massage);
+	}
+};
+
 
 // init after document load
 $(function(){
@@ -603,5 +620,11 @@ if (container.size() && (from = container.data('from'))) {
 	new NoticeContainerModel(container, from);
 }
 
+// check all
 new TableCheckAllController($('.f-table-check-all'));
+
+// confirm delete
+$('.item-controls .delete, .storages-list .icon-storage-delete, .b-notice-list button[type=submit]').each(function(){
+	new ConfirmDeleteModel($(this));
+});
 });
