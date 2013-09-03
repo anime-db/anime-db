@@ -554,7 +554,7 @@ var TableCheckAllController = function(checker) {
  * Confirm delete
  */
 var ConfirmDeleteModel = function(link) {
-	this.massage = link.data('massage') || 'Are you sure want to delete this item?';
+	this.massage = link.data('massage') || 'Are you sure want to delete this item(s)?';
 	this.link = link;
 	var that = this;
 	link.click(function() {
@@ -624,7 +624,7 @@ if (container.size() && (from = container.data('from'))) {
 new TableCheckAllController($('.f-table-check-all'));
 
 // confirm delete
-$('.item-controls .delete, .storages-list .icon-storage-delete').each(function(){
+$('.item-controls .delete, .storages-list .icon-storage-delete, .b-notice-list button[type=submit]').each(function(){
 	new ConfirmDeleteModel($(this));
 });
 });

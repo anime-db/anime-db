@@ -519,6 +519,10 @@
                 <target>Накопитель видеозаписей (DVD/BD/VHS)</target>
             </trans-unit>
             <trans-unit id="138">
+                <source>Are you sure want to delete item(s)?</source>
+                <target>Вы уверены, что хотите удалить запись(и)?</target>
+            </trans-unit>
+            <trans-unit id="139">
                 <source>Are you sure want to delete %name%?</source>
                 <target>Вы уверены, что хотите удалить %name%?</target>
             </trans-unit>
