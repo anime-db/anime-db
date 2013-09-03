@@ -78,6 +78,7 @@ class Item extends AbstractType
                 'property' => 'name'
             ])
             ->add('path', new LocalPathField(), [
+                'required' => false,
                 'attr' => [
                     'placeholder' => $this->getUserHomeDir()
                 ]
