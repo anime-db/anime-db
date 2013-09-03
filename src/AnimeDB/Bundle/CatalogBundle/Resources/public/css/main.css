@@ -927,7 +927,7 @@ h1.logo a span {
  * Storages list
  */
 .storages-list table {
-	width: 700px;
+	width: 100%;
 }
 .storages-list h3 {
 	margin-top: 20px;
