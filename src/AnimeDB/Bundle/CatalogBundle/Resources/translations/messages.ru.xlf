@@ -502,6 +502,22 @@
                 <source>Language</source>
                 <target>Язык</target>
             </trans-unit>
+            <trans-unit id="134">
+                <source>Folder on computer (local/network)</source>
+                <target>Папка на компьютере (локальная/сетевая)</target>
+            </trans-unit>
+            <trans-unit id="135">
+                <source>External storage (HDD/Flash/SD)</source>
+                <target>Внешний накопитель (HDD/Flash/SD)</target>
+            </trans-unit>
+            <trans-unit id="136">
+                <source>External storage read-only (CD/DVD)</source>
+                <target>Внешний накопитель только для чтения (CD/DVD)</target>
+            </trans-unit>
+            <trans-unit id="137">
+                <source>Video storage (DVD/BD/VHS)</source>
+                <target>Накопитель видеозаписей (DVD/BD/VHS)</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

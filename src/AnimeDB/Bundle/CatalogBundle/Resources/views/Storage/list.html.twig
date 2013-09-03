@@ -12,6 +12,7 @@
 			<tr>
 				<th>{% trans %}Name{% endtrans %}</th>
 				<th>{% trans %}Description{% endtrans %}</th>
+				<th>{% trans %}Type{% endtrans %}</th>
 				<th>{% trans %}Path{% endtrans %}</th>
 				<th class="control"></th>
 			</tr>
@@ -27,6 +28,7 @@
 						{% endif %}
 					</td>
 					<td>{{ storage.description }}</td>
+					<td>{{ storage.typetitle|trans }}</td>
 					<td>{{ storage.path }}</td>
 					<td class="control">
 						<a href="{{ path('storage_change', {'id': storage.id}) }}" class="icon icon-storage-edit" title="{% trans %}Change storage{% endtrans %}">{% trans %}Change storage{% endtrans %}</a>

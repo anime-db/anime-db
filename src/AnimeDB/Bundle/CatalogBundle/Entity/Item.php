@@ -25,6 +25,7 @@ use Symfony\Component\Validator\ExecutionContextInterface;
  * @ORM\Entity
  * @ORM\Table(name="item")
  * @ORM\HasLifecycleCallbacks
+ * @Assert\Callback(methods={"isPathValid"})
  * @IgnoreAnnotation("ORM")
  *
  * @package AnimeDB\Bundle\CatalogBundle\Entity
@@ -134,8 +135,7 @@ class Item
     /**
      * Disk path
      *
-     * @ORM\Column(type="string", length=256)
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=256, nullable=true)
      *
      * @var string
      */
@@ -905,6 +905,18 @@ class Item
     {
         if (!$this->date_add) {
             $this->date_add = new \DateTime();
+        }
+    }
+
+    /**
+     * Is valid path for current type
+     *
+     * @param \Symfony\Component\Validator\ExecutionContextInterface $context
+     */
+    public function isPathValid(ExecutionContextInterface $context)
+    {
+        if ($this->storage->isPathRequired() && !$this->getPath()) {
+            $context->addViolationAt('path', 'Path is required to fill for current type of storage');
         }
     }
 }

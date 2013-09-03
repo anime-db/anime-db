@@ -927,7 +927,7 @@ h1.logo a span {
  * Storages list
  */
 .storages-list table {
-	width: 700px;
+	width: 100%;
 }
 .storages-list h3 {
 	margin-top: 20px;
@@ -937,7 +937,7 @@ h1.logo a span {
 	margin-top: 0;
 }
 .storages-list .list .control {
-	max-width: 16px;
+	max-width: 24px;
 }
 .storages-list .name {
 }
