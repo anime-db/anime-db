@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AnimeDB\Bundle\CatalogBundle\Entity\Notice;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use AnimeDB\Bundle\CatalogBundle\Service\Pagination;
 /**
  * Notice
  *
@@ -141,6 +142,26 @@ class NoticeController extends Controller
             return $this->redirect($this->generateUrl('notice_list'));
         }
 
-        return $this->render('AnimeDBCatalogBundle:Notice:list.html.twig', ['list' => $notices]);
+        // get count all items
+        $count = $repository->createQueryBuilder('n')
+            ->select('count(n.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        $that = $this;
+        $pagination = $this->get('anime_db.pagination')->createNavigation(
+            ceil($count/self::NOTICE_PER_PAGE),
+            $current_page,
+            Pagination::DEFAULT_LIST_LENGTH,
+            function ($page) use ($that) {
+                return $that->generateUrl('notice_list', ['page' => $page]);
+            },
+            $this->generateUrl('notice_list')
+        );
+
+        return $this->render('AnimeDBCatalogBundle:Notice:list.html.twig', [
+            'list' => $notices,
+            'pagination' => $pagination
+        ]);
     }
 }
