@@ -13,12 +13,14 @@ namespace AnimeDB\Bundle\CatalogBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\ExecutionContextInterface;
 
 /**
  * Storage of item files
  *
  * @ORM\Entity
  * @ORM\Table(name="storage")
+ * @Assert\Callback(methods={"isPathValid"})
  * @IgnoreAnnotation("ORM")
  *
  * @package AnimeDB\Bundle\CatalogBundle\Entity
@@ -26,6 +28,34 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Storage
 {
+    /**
+     * Type folder on computer (local/network)
+     *
+     * @var string
+     */
+    const TYPE_FOLDER = 'folder';
+
+    /**
+     * Type external storage for reading or writing (HDD/Flash/SD)
+     *
+     * @var string
+     */
+    const TYPE_EXTERNAL_RW = 'external-rw';
+
+    /**
+     * Type external storage is read-only (CD/DVD)
+     *
+     * @var string
+     */
+    const TYPE_EXTERNAL_R = 'external-r';
+
+    /**
+     * Type video storage (DVD/BD/VHS)
+     *
+     * @var string
+     */
+    const TYPE_VIDEO = 'video';
+
     /**
      * Id
      *
@@ -57,9 +87,19 @@ class Storage
     protected $description;
 
     /**
+     * Type
+     *
+     * @ORM\Column(type="string", length=16)
+     * @Assert\Choice(callback = "getTypes")
+     *
+     * @var string
+     */
+    protected $type;
+
+    /**
      * Path on computer
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      *
      * @var string
      */
@@ -73,6 +113,30 @@ class Storage
      * @var \Doctrine\Common\Collections\ArrayCollection
      */
     protected $items;
+
+    /**
+     * Type names
+     *
+     * @var array
+     */
+    public static $type_names = [
+        self::TYPE_FOLDER,
+        self::TYPE_EXTERNAL_RW,
+        self::TYPE_EXTERNAL_R,
+        self::TYPE_VIDEO
+    ];
+
+    /**
+     * Type titles
+     *
+     * @var array
+     */
+    public static $type_titles = [
+        self::TYPE_FOLDER => 'Folder on computer (local/network)',
+        self::TYPE_EXTERNAL_RW => 'External storage for reading or writing (HDD/Flash/SD)',
+        self::TYPE_EXTERNAL_R => 'External storage is read-only (CD/DVD)',
+        self::TYPE_VIDEO => 'Video storage (DVD/BD/VHS)'
+    ];
 
     /**
      * Construct
@@ -193,5 +257,70 @@ class Storage
     public function getItems()
     {
         return $this->items;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     *
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Storage
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Get supported types
+     *
+     * @return array
+     */
+    public static function getTypes()
+    {
+        return self::$type_names;
+    }
+
+    /**
+     * Get title for current type
+     *
+     * @return string
+     */
+    public function getTypeTitle()
+    {
+        return self::$type_titles[$this->type];
+    }
+
+    /**
+     * Is path required to fill for current type of storage
+     *
+     * @return boolean
+     */
+    public function isPathRequired()
+    {
+        return in_array($this->getType(), [self::TYPE_FOLDER, self::TYPE_EXTERNAL_RW]);
+    }
+
+    /**
+     * Is valid path for current type
+     *
+     * @param \Symfony\Component\Validator\ExecutionContextInterface $context
+     */
+    public function isPathValid(ExecutionContextInterface $context)
+    {
+        if ($this->isPathRequired() && !$this->getPath()) {
+            $context->addViolationAt('path', 'Path is required to fill for current type of storage');
+        }
     }
 }
