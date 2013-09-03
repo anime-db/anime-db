@@ -36,14 +36,14 @@ class Storage
     const TYPE_FOLDER = 'folder';
 
     /**
-     * Type external storage for reading or writing (HDD/Flash/SD)
+     * Type external storage (HDD/Flash/SD)
      *
      * @var string
      */
-    const TYPE_EXTERNAL_RW = 'external-rw';
+    const TYPE_EXTERNAL = 'external';
 
     /**
-     * Type external storage is read-only (CD/DVD)
+     * Type external storage read-only (CD/DVD)
      *
      * @var string
      */
@@ -121,7 +121,7 @@ class Storage
      */
     public static $type_names = [
         self::TYPE_FOLDER,
-        self::TYPE_EXTERNAL_RW,
+        self::TYPE_EXTERNAL,
         self::TYPE_EXTERNAL_R,
         self::TYPE_VIDEO
     ];
@@ -133,8 +133,8 @@ class Storage
      */
     public static $type_titles = [
         self::TYPE_FOLDER => 'Folder on computer (local/network)',
-        self::TYPE_EXTERNAL_RW => 'External storage for reading or writing (HDD/Flash/SD)',
-        self::TYPE_EXTERNAL_R => 'External storage is read-only (CD/DVD)',
+        self::TYPE_EXTERNAL => 'External storage (HDD/Flash/SD)',
+        self::TYPE_EXTERNAL_R => 'External storage read-only (CD/DVD)',
         self::TYPE_VIDEO => 'Video storage (DVD/BD/VHS)'
     ];
 
@@ -309,7 +309,7 @@ class Storage
      */
     public function isPathRequired()
     {
-        return in_array($this->getType(), [self::TYPE_FOLDER, self::TYPE_EXTERNAL_RW]);
+        return in_array($this->getType(), [self::TYPE_FOLDER, self::TYPE_EXTERNAL]);
     }
 
     /**
