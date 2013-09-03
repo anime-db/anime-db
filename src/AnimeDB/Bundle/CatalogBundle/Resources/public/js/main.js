@@ -498,6 +498,59 @@ NoticeContainerModel.prototype = {
 	}
 };
 
+/**
+ * Check all
+ */
+var CheckAllModel = function(checker, list) {
+	this.checker = checker;
+	this.list = list;
+	var that = this;
+	this.checker.click(function(){
+		that.change();
+	});
+};
+CheckAllModel.prototype = {
+	change: function() {
+		if (this.checker.is(':checked')) {
+			this.all();
+		} else {
+			this.neither();
+		}
+	},
+	all: function() {
+		for (var i in this.list) {
+			this.list[i].check();
+		}
+	},
+	neither: function() {
+		for (var i in this.list) {
+			this.list[i].uncheck();
+		}
+	}
+};
+// Check all node
+var CheckAllNodeModel = function(checkbox) {
+	this.checkbox = checkbox;
+};
+CheckAllNodeModel.prototype = {
+	check: function() {
+		this.checkbox.prop('checked', true);
+	},
+	uncheck: function() {
+		this.checkbox.prop('checked', false);
+	}
+};
+// Check all in table
+var TableCheckAllController = function(checker) {
+	var checkboxes = checker.parents('table').find('.'+checker.data('target'));
+	var list = [];
+	for (var i = 0; i < checkboxes.length; i++) {
+		list.push(new CheckAllNodeModel($(checkboxes[i])));
+	}
+	new CheckAllModel(checker, list);
+}
+
+
 // init after document load
 $(function(){
 
@@ -549,4 +602,6 @@ var container = $('#notice-container');
 if (container.size() && (from = container.data('from'))) {
 	new NoticeContainerModel(container, from);
 }
+
+new TableCheckAllController($('.f-table-check-all'));
 });

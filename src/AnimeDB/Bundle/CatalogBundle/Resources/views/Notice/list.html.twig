@@ -12,7 +12,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th><input type="checkbox" name="check-all" class="bt-table-check-all" value="1" /></th>
+					<th><input type="checkbox" name="check-all" class="f-table-check-all" data-target="f-notice-id" value="1" /></th>
 					<th>{% trans %}Message{% endtrans %}</th>
 					<th>{% trans %}Date created{% endtrans %}</th>
 					<th>{% trans %}Date closed{% endtrans %}</th>
@@ -21,7 +21,7 @@
 			</thead>
 			{% for notice in list %}
 				<tr>
-					<th><input type="checkbox" name="id[]" value="{{ notice.id }}" /></th>
+					<th><input type="checkbox" name="id[]" value="{{ notice.id }}" class="f-notice-id" /></th>
 					<td class="t-massage">
 						<a href="{{ path('notice_get', {id: notice.id}) }}" title="{% trans %}Show full info of notice{% endtrans %}">
 							{{ notice.message }}
