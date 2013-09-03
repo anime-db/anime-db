@@ -37,7 +37,7 @@ class General extends AbstractType
                 'label' => 'Task scheduler'
             ])
             ->add('locale', 'locale', [
-                'label' => 'Locale'
+                'label' => 'Language'
             ]);
     }
 

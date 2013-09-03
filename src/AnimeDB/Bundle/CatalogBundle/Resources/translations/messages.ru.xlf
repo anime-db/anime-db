@@ -498,6 +498,10 @@
                 <source>No notices</source>
                 <target>Нет уведомлений</target>
             </trans-unit>
+            <trans-unit id="133">
+                <source>Language</source>
+                <target>Язык</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
