@@ -624,7 +624,7 @@ if (container.size() && (from = container.data('from'))) {
 new TableCheckAllController($('.f-table-check-all'));
 
 // confirm delete
-$('.item-controls .delete').each(function(){
+$('.item-controls .delete, .storages-list .icon-storage-delete').each(function(){
 	new ConfirmDeleteModel($(this));
 });
 });
