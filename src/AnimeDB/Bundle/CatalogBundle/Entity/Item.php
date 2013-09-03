@@ -136,7 +136,6 @@ class Item
      * Disk path
      *
      * @ORM\Column(type="string", length=256, nullable=true)
-     * @Assert\NotBlank()
      *
      * @var string
      */
