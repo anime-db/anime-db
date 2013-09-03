@@ -103,7 +103,7 @@ class NoticeController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getListAction(Request $request)
+    public function listAction(Request $request)
     {
         $current_page = $request->get('page', 1);
         $current_page = $current_page > 1 ? $current_page : 1;
@@ -138,7 +138,7 @@ class NoticeController extends Controller
                 }
                 $em->flush();
             }
-            return $this->redirect($this->generateUrl('notice_get_list'));
+            return $this->redirect($this->generateUrl('notice_list'));
         }
 
         return $this->render('AnimeDBCatalogBundle:Notice:list.html.twig', ['list' => $notices]);
