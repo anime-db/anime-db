@@ -26,6 +26,7 @@
 		</h1>
 	</div>
 	<div id="content-wrapper">
+		{% block notice %}<div id="notice-container" data-from="{{ path('notice_show') }}"></div>{% endblock %}
 		<div class="content">
 			{% block content %}{% endblock %}
 		</div>

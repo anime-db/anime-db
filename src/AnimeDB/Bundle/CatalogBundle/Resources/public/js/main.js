@@ -436,6 +436,120 @@ var PopupList = {
 	}
 }
 
+/**
+ * Notice
+ */
+var NoticeModel = function(container, block, close_url, close) {
+	this.container = container;
+	this.block = block;
+	this.close_url = close_url;
+	this.close_button = close;
+	var that = this;
+	this.close_button.click(function(){
+		that.close();
+	});
+};
+NoticeModel.prototype = {
+	close: function() {
+		var that = this;
+		this.block.animate({opacity: 0}, 400, function() {
+			// report to backend
+			$.ajax({
+				type: 'POST',
+				url: that.close_url,
+				success: function() {
+					// remove this
+					that.block.remove();
+					delete that.container.notice;
+					// load new notice
+					that.container.load();
+				}
+			});
+		});
+	}
+};
+/**
+ * Notice container
+ */
+var NoticeContainerModel = function(container, from) {
+	this.container = container;
+	this.from = from;
+	this.notice = null;
+	this.load();
+};
+NoticeContainerModel.prototype = {
+	load: function() {
+		var that = this;
+		this.notice = null;
+		$.ajax({
+			url: this.from,
+			success: function(data) {
+				if (data) {
+					that.show(data)
+				}
+			}
+		});
+	},
+	show: function(data) {
+		data.notice;
+		var block = $(data.content);
+		this.notice = new NoticeModel(this, block, data.close, block.find('.bt-close'));
+		this.container.append(this.notice.block);
+	}
+};
+
+/**
+ * Check all
+ */
+var CheckAllModel = function(checker, list) {
+	this.checker = checker;
+	this.list = list;
+	var that = this;
+	this.checker.click(function(){
+		that.change();
+	});
+};
+CheckAllModel.prototype = {
+	change: function() {
+		if (this.checker.is(':checked')) {
+			this.all();
+		} else {
+			this.neither();
+		}
+	},
+	all: function() {
+		for (var i in this.list) {
+			this.list[i].check();
+		}
+	},
+	neither: function() {
+		for (var i in this.list) {
+			this.list[i].uncheck();
+		}
+	}
+};
+// Check all node
+var CheckAllNodeModel = function(checkbox) {
+	this.checkbox = checkbox;
+};
+CheckAllNodeModel.prototype = {
+	check: function() {
+		this.checkbox.prop('checked', true);
+	},
+	uncheck: function() {
+		this.checkbox.prop('checked', false);
+	}
+};
+// Check all in table
+var TableCheckAllController = function(checker) {
+	var checkboxes = checker.parents('table').find('.'+checker.data('target'));
+	var list = [];
+	for (var i = 0; i < checkboxes.length; i++) {
+		list.push(new CheckAllNodeModel($(checkboxes[i])));
+	}
+	new CheckAllModel(checker, list);
+}
+
 
 // init after document load
 $(function(){
@@ -483,4 +597,11 @@ $('.f-local-path').each(function(){
 	new FormLocalPathController($(this));
 });
 
+// init notice container
+var container = $('#notice-container');
+if (container.size() && (from = container.data('from'))) {
+	new NoticeContainerModel(container, from);
+}
+
+new TableCheckAllController($('.f-table-check-all'));
 });
