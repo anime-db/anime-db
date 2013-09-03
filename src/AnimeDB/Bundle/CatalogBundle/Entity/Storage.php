@@ -303,13 +303,33 @@ class Storage
     }
 
     /**
+     * Get types storage allow write
+     *
+     * @return array
+     */
+    public function getTypesWritable()
+    {
+        return [self::TYPE_FOLDER, self::TYPE_EXTERNAL];
+    }
+
+    /**
+     * Get types storage allow read
+     *
+     * @return array
+     */
+    public function getTypesReadable()
+    {
+        return [self::TYPE_FOLDER, self::TYPE_EXTERNAL, self::TYPE_EXTERNAL_R];
+    }
+
+    /**
      * Is path required to fill for current type of storage
      *
      * @return boolean
      */
     public function isPathRequired()
     {
-        return in_array($this->getType(), [self::TYPE_FOLDER, self::TYPE_EXTERNAL]);
+        return in_array($this->getType(), $this->getTypesWritable());
     }
 
     /**
