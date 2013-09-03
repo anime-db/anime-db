@@ -458,6 +458,10 @@
                 <source>Task scheduler - a separate process to perform various tasks in the background, such as checks for system updates.</source>
                 <target>Планировщик задач - отдельный процесс выполняющий различные задачи в фоновом режиме, например проверяет наличие обновлений системы.</target>
             </trans-unit>
+            <trans-unit id="123">
+                <source>Language</source>
+                <target>Язык</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
