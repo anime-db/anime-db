@@ -455,6 +455,7 @@ NoticeModel.prototype = {
 		this.block.animate({opacity: 0}, 300, function() {
 			// report to backend
 			$.ajax({
+				type: 'POST',
 				url: that.close_url,
 				success: function() {
 					// remove this

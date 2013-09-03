@@ -104,6 +104,7 @@ notice_close:
     pattern:  /notice/{id}/close.json
     defaults: { _controller: AnimeDBCatalogBundle:Notice:close, _format: json }
     requirements:
+        _method:  POST
         id:  \d+
 
 notice_get:
