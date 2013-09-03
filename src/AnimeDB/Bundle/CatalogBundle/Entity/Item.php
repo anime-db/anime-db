@@ -25,6 +25,7 @@ use Symfony\Component\Validator\ExecutionContextInterface;
  * @ORM\Entity
  * @ORM\Table(name="item")
  * @ORM\HasLifecycleCallbacks
+ * @Assert\Callback(methods={"isPathValid"})
  * @IgnoreAnnotation("ORM")
  *
  * @package AnimeDB\Bundle\CatalogBundle\Entity
@@ -134,8 +135,7 @@ class Item
     /**
      * Disk path
      *
-     * @ORM\Column(type="string", length=256)
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=256, nullable=true)
      *
      * @var string
      */
@@ -251,6 +251,8 @@ class Item
         $this->names   = new ArrayCollection();
         $this->sources = new ArrayCollection();
         $this->images  = new ArrayCollection();
+        $this->date_add = new \DateTime();
+        $this->date_update = new \DateTime();
     }
 
     /**
@@ -306,19 +308,19 @@ class Item
      */
     public function getDateStart()
     {
-        return clone $this->date_start;
+        return $this->date_start ? clone $this->date_start : null;
     }
 
     /**
      * Set date_end
      *
-     * @param \DateTime|null $dateEnd
+     * @param \DateTime|null $date_end
      *
      * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
      */
-    public function setDateEnd(\DateTime $dateEnd = null)
+    public function setDateEnd(\DateTime $date_end = null)
     {
-        $this->date_end = clone $dateEnd;
+        $this->date_end = $date_end ? clone $date_end : null;
         return $this;
     }
 
@@ -903,6 +905,18 @@ class Item
     {
         if (!$this->date_add) {
             $this->date_add = new \DateTime();
+        }
+    }
+
+    /**
+     * Is valid path for current type
+     *
+     * @param \Symfony\Component\Validator\ExecutionContextInterface $context
+     */
+    public function isPathValid(ExecutionContextInterface $context)
+    {
+        if ($this->storage->isPathRequired() && !$this->getPath()) {
+            $context->addViolationAt('path', 'Path is required to fill for current type of storage');
         }
     }
 }

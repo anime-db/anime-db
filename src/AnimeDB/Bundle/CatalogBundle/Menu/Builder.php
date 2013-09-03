@@ -73,8 +73,8 @@ class Builder extends ContainerAware
         // add manually
         $add->addChild('Add manually', ['route' => 'item_add_manually']);
         $settings->addChild('File storages', ['route' => 'storage_list']);
-        // TODO requires the implementation of. Issue #36, #33, #18
-        //$settings->addChild('General', ['route' => 'home_general']);
+        $settings->addChild('List of notice', ['route' => 'notice_list']);
+        $settings->addChild('General', ['route' => 'home_settings']);
 
         return $menu;
     }

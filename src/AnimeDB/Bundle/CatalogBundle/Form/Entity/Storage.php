@@ -14,6 +14,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use AnimeDB\Bundle\CatalogBundle\Form\Field\LocalPath as LocalPathField;
+use AnimeDB\Bundle\CatalogBundle\Entity\Storage as StorageEntity;
 
 /**
  * Storage form
@@ -30,9 +31,20 @@ class Storage extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', null, ['label' => 'Name'])
-            ->add('path', new LocalPathField(), ['label' => 'Path'])
-            ->add('description', null, ['label' => 'Description']);
+            ->add('name', null, [
+                'label' => 'Name'
+            ])
+            ->add('path', new LocalPathField(), [
+                'label' => 'Path',
+                'required' => false
+            ])
+            ->add('type', 'choice', [
+                'choices' => StorageEntity::$type_titles,
+                'label' => 'Type'
+            ])
+            ->add('description', null, [
+                'label' => 'Description'
+            ]);
     }
 
     /**

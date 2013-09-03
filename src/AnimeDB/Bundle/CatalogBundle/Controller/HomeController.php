@@ -21,6 +21,10 @@ use AnimeDB\Bundle\CatalogBundle\Entity\Genre as GenreEntity;
 use AnimeDB\Bundle\CatalogBundle\Entity\Storage as StorageEntity;
 use Doctrine\ORM\Query\Expr;
 use AnimeDB\Bundle\CatalogBundle\Service\Pagination;
+use AnimeDB\Bundle\CatalogBundle\Form\Settings\General as GeneralForm;
+use AnimeDB\Bundle\CatalogBundle\Entity\Settings\General as GeneralEntity;
+use Symfony\Component\Yaml\Yaml;
+use AnimeDB\Bundle\CatalogBundle\Service\Listener\Request as RequestListener;
 
 /**
  * Main page of the catalog
@@ -359,6 +363,44 @@ class HomeController extends Controller
             'pagination' => $pagination,
             'sort_by' => $sort_by,
             'sort_direction' => $sort_direction
+        ]);
+    }
+
+    /**
+     * General settings
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function settingsAction(Request $request)
+    {
+        $entity = new GeneralEntity();
+        $entity->setSerialNumber($this->container->getParameter('serial_number'));
+        $entity->setTaskScheduler($this->container->getParameter('task-scheduler')['enabled']);
+        $entity->setLocale($request->getLocale());
+
+        /* @var $form \Symfony\Component\Form\Form */
+        $form = $this->createForm(new GeneralForm(), $entity);
+
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                // update params
+                $file = __DIR__.'/../../../../../app/config/parameters.yml';
+                $parameters = Yaml::parse($file);
+                $parameters['parameters']['serial_number'] = $entity->getSerialNumber();
+                $parameters['parameters']['task-scheduler']['enabled'] = $entity->getTaskScheduler();
+                file_put_contents($file, Yaml::dump($parameters));
+                // change locale
+                $this->get('anime_db.listener.request')->setLocale($request, $entity->getLocale());
+
+                return $this->redirect($this->generateUrl('home_settings'));
+            }
+        }
+
+        return $this->render('AnimeDBCatalogBundle:Home:settings.html.twig', [
+            'form'  => $form->createView()
         ]);
     }
 }

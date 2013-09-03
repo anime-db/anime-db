@@ -1,0 +1,16 @@
+{% extends 'AnimeDBCatalogBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}General{% endtrans %}{% endblock %}
+
+{% form_theme form 'AnimeDBCatalogBundle:Form:fields.html.twig' %}
+
+{% block content %}
+<div class="b-settings-general">
+	<h2>{% trans %}General settings{% endtrans %}</h2>
+	<form action="" method="post" {{ form_enctype(form) }}>
+		{{ form_widget(form) }}
+		<button type="submit">{% trans %}Save{% endtrans %}</button>
+	</form>
+	<p>{% trans %}Task scheduler - a separate process to perform various tasks in the background, such as checks for system updates.{% endtrans %}</p>
+</div>
+{% endblock %}

@@ -1,0 +1,4 @@
+<section class="b-notice">
+	<a href="{{ path('notice_get', {id: notice.id}) }}" title="{% trans %}Show full info of notice{% endtrans %}">{{ notice.message }}</a>
+	<button type="button" class="bt-close" data-close="{{ path('notice_close', {id: notice.id}) }}">Close</button>
+</section>

@@ -7,8 +7,8 @@
                 <target>Продукт распространяется под лицензией %license%.</target>
             </trans-unit>
             <trans-unit id="2">
-                <source>%AnimeDB% is a system for making the home catalog of the anime. The system is designed for home use only.</source>
-                <target>%AnimeDB% это система для составления домашнего каталога аниме. Система предназначена только для домашнего использования.</target>
+                <source><![CDATA[<strong>AnimeDB</strong> is a system for making the home catalog of the anime. The system is designed for home use only.]]></source>
+                <target><![CDATA[<strong>AnimeDB</strong> это система для составления домашнего каталога аниме. Система предназначена только для домашнего использования.]]></target>
             </trans-unit>
             <trans-unit id="3">
                 <source>Search options</source>
@@ -437,6 +437,86 @@
             <trans-unit id="117">
                 <source>Wrong date/time format</source>
                 <target>Неверный формат даты/времени</target>
+            </trans-unit>
+            <trans-unit id="118">
+                <source>General settings</source>
+                <target>Общие настройки</target>
+            </trans-unit>
+            <trans-unit id="119">
+                <source>Serial number</source>
+                <target>Серийный номер</target>
+            </trans-unit>
+            <trans-unit id="120">
+                <source>Save</source>
+                <target>Сохранить</target>
+            </trans-unit>
+            <trans-unit id="121">
+                <source>Task scheduler</source>
+                <target>Планировщик задач</target>
+            </trans-unit>
+            <trans-unit id="122">
+                <source>Task scheduler - a separate process to perform various tasks in the background, such as checks for system updates.</source>
+                <target>Планировщик задач - отдельный процесс выполняющий различные задачи в фоновом режиме, например проверяет наличие обновлений системы.</target>
+            </trans-unit>
+            <trans-unit id="123">
+                <source>Notice</source>
+                <target>Уведомление</target>
+            </trans-unit>
+            <trans-unit id="124">
+                <source>Date created</source>
+                <target>Дата создания</target>
+            </trans-unit>
+            <trans-unit id="125">
+                <source>Date closed</source>
+                <target>Дата закрытия</target>
+            </trans-unit>
+            <trans-unit id="126">
+                <source>Message</source>
+                <target>Сообщание</target>
+            </trans-unit>
+            <trans-unit id="127">
+                <source>Created</source>
+                <target>Создано</target>
+            </trans-unit>
+            <trans-unit id="128">
+                <source>Shown</source>
+                <target>Показано</target>
+            </trans-unit>
+            <trans-unit id="129">
+                <source>Closed</source>
+                <target>Закрыто</target>
+            </trans-unit>
+            <trans-unit id="130">
+                <source>Show full info of notice</source>
+                <target>Показать полную информацию о уведомлении</target>
+            </trans-unit>
+            <trans-unit id="131">
+                <source>List of notice</source>
+                <target>Список уведомлений</target>
+            </trans-unit>
+            <trans-unit id="132">
+                <source>No notices</source>
+                <target>Нет уведомлений</target>
+            </trans-unit>
+            <trans-unit id="133">
+                <source>Language</source>
+                <target>Язык</target>
+            </trans-unit>
+            <trans-unit id="134">
+                <source>Folder on computer (local/network)</source>
+                <target>Папка на компьютере (локальная/сетевая)</target>
+            </trans-unit>
+            <trans-unit id="135">
+                <source>External storage (HDD/Flash/SD)</source>
+                <target>Внешний накопитель (HDD/Flash/SD)</target>
+            </trans-unit>
+            <trans-unit id="136">
+                <source>External storage read-only (CD/DVD)</source>
+                <target>Внешний накопитель только для чтения (CD/DVD)</target>
+            </trans-unit>
+            <trans-unit id="137">
+                <source>Video storage (DVD/BD/VHS)</source>
+                <target>Накопитель видеозаписей (DVD/BD/VHS)</target>
             </trans-unit>
         </body>
     </file>

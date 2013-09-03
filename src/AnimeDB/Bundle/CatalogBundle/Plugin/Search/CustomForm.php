@@ -10,7 +10,7 @@
 
 namespace AnimeDB\Bundle\CatalogBundle\Plugin\Search;
 
-use AnimeDB\Bundle\CatalogBundle\Plugin\Search\SearchInterface;
+use AnimeDB\Bundle\CatalogBundle\Plugin\Search\Search;
 
 /**
  * Plugin has custom form for search
@@ -18,7 +18,7 @@ use AnimeDB\Bundle\CatalogBundle\Plugin\Search\SearchInterface;
  * @package AnimeDB\Bundle\CatalogBundle\Plugin\Search
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-interface CustomForm extends SearchInterface
+interface CustomForm extends Search
 {
     /**
      * Get form
@@ -44,5 +44,5 @@ interface CustomForm extends SearchInterface
      *
      * @return array
      */
-    public function search(array $data, \Closure $url_bulder);
+    public function search($data, \Closure $url_bulder);
 }
