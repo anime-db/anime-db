@@ -30,14 +30,10 @@ class StorageController extends Controller
      */
     public function listAction()
     {
+        /* @var $repository \AnimeDB\Bundle\CatalogBundle\Repository\Storage */
         $repository = $this->getDoctrine()->getRepository('AnimeDBCatalogBundle:Storage');
-        $storages = $repository->createQueryBuilder('s')
-            ->orderBy('s.id', 'DESC')
-            ->getQuery()
-            ->getResult();
-
         return $this->render('AnimeDBCatalogBundle:Storage:list.html.twig', [
-            'storages' => $storages
+            'storages' => $repository->getList()
         ]);
     }
 
