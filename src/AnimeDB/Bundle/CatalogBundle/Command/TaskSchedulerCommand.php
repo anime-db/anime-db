@@ -55,7 +55,7 @@ class TaskSchedulerCommand extends ContainerAwareCommand
 
         // output streams
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            $streams = '>null 2>&1';
+            $streams = '>nul 2>&1';
         } else {
             $streams = '>/dev/null 2>&1';
         }
