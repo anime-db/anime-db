@@ -25,6 +25,7 @@ use Symfony\Component\Validator\ExecutionContextInterface;
  * @ORM\Entity
  * @ORM\Table(name="item")
  * @ORM\HasLifecycleCallbacks
+ * @ORM\Entity(repositoryClass="AnimeDB\Bundle\CatalogBundle\Repository\Item")
  * @Assert\Callback(methods={"isPathValid"})
  * @IgnoreAnnotation("ORM")
  *
