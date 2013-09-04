@@ -22,6 +22,7 @@ use Symfony\Component\Validator\ExecutionContextInterface;
  *   @ORM\Index(name="idx_task_next_start", columns={"next_run", "status"})
  * })
  * @Assert\Callback(methods={"isModifyValid"})
+ * @ORM\Entity(repositoryClass="AnimeDB\Bundle\CatalogBundle\Repository\Task")
  * @IgnoreAnnotation("ORM")
  *
  * @package AnimeDB\Bundle\CatalogBundle\Entity
