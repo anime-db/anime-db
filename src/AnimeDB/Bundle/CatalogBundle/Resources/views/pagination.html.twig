@@ -1,4 +1,4 @@
-{% if pagination and pagination.list %}
+{% if pagination|default is not empty and pagination.list is not empty %}
 	<div class="pagination">
 		<nav>
 			{% for item in pagination.list %}
