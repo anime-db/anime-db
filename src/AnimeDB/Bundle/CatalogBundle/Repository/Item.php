@@ -11,6 +11,7 @@
 namespace AnimeDB\Bundle\CatalogBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use AnimeDB\Bundle\CatalogBundle\Entity\Item as ItemEntity;
 
 /**
  * Item repository
@@ -60,5 +61,55 @@ class Item extends EntityRepository
                 ->setMaxResults($limit);
         }
         return $query->getResult();
+    }
+
+    /**
+     * Find duplicate
+     *
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item $item
+     *
+     * @return array
+     */
+    public function findDuplicate(ItemEntity $item)
+    {
+        // get all names
+        $names = [$item->getName()];
+        foreach ($item->getNames() as $name) {
+            $names[] = $name->getName();
+        }
+
+        // find from item main name
+        $duplicate = $this->getEntityManager()->createQuery('
+            SELECT
+                i
+            FROM
+                AnimeDBCatalogBundle:Item i
+            WHERE
+                i.name IN (:names)
+        ')
+            ->setParameter(':names', $names)
+            ->getResult();
+
+        // find frim item other names
+        $item_names = $this->getEntityManager()->createQuery('
+            SELECT
+                n
+            FROM
+                AnimeDBCatalogBundle:Name n
+            WHERE
+                n.name IN (:names)
+        ')
+            ->setParameter(':names', $names)
+            ->getResult();
+
+        foreach ($item_names as $item_name) {
+            foreach ($duplicate as $item) {
+                if ($item !== $item_name->getItem()) {
+                    $duplicate[] = $item_name->getItem();
+                }
+            }
+        }
+
+        return $duplicate;
     }
 }
