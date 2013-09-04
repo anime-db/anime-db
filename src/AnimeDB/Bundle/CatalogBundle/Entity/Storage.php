@@ -21,6 +21,7 @@ use Symfony\Component\Validator\ExecutionContextInterface;
  * @ORM\Entity
  * @ORM\Table(name="storage")
  * @Assert\Callback(methods={"isPathValid"})
+ * @ORM\Entity(repositoryClass="AnimeDB\Bundle\CatalogBundle\Repository\Storage")
  * @IgnoreAnnotation("ORM")
  *
  * @package AnimeDB\Bundle\CatalogBundle\Entity

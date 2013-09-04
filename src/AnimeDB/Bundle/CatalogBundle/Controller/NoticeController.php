@@ -38,18 +38,10 @@ class NoticeController extends Controller
     public function showAction()
     {
         $em = $this->getDoctrine()->getManager();
+        /* @var $repository \AnimeDB\Bundle\CatalogBundle\Repository\Notice */
         $repository = $em->getRepository('AnimeDBCatalogBundle:Notice');
 
-        $notice = $repository
-            ->createQueryBuilder('n')
-            ->andWhere('n.status != :closed')
-            ->andWhere('(n.date_closed IS NULL OR n.date_closed >= :time)')
-            ->setParameter('closed', Notice::STATUS_CLOSED)
-            ->setParameter('time', date('Y-m-d H:i:s'))
-            ->addOrderBy('n.date_created', 'ASC')
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult();
+        $notice = $repository->getFirstShow();
 
         // shown notice
         if (!is_null($notice)) {
@@ -110,16 +102,11 @@ class NoticeController extends Controller
         $current_page = $current_page > 1 ? $current_page : 1;
 
         $em = $this->getDoctrine()->getManager();
+        /* @var $repository \AnimeDB\Bundle\CatalogBundle\Repository\Notice */
         $repository = $em->getRepository('AnimeDBCatalogBundle:Notice');
 
         // get notices
-        $notices = $repository
-            ->createQueryBuilder('n')
-            ->addOrderBy('n.date_created', 'DESC')
-            ->setFirstResult(($current_page - 1) * self::NOTICE_PER_PAGE)
-            ->setMaxResults(self::NOTICE_PER_PAGE)
-            ->getQuery()
-            ->getResult();
+        $notices = $repository->getList(self::NOTICE_PER_PAGE, ($current_page - 1) * self::NOTICE_PER_PAGE);
 
         // remove notices if need
         if ($request->isMethod('POST') && $notices) {
@@ -143,10 +130,7 @@ class NoticeController extends Controller
         }
 
         // get count all items
-        $count = $repository->createQueryBuilder('n')
-            ->select('count(n.id)')
-            ->getQuery()
-            ->getSingleScalarResult();
+        $count = $repository->count();
 
         $that = $this;
         $pagination = $this->get('anime_db.pagination')->createNavigation(

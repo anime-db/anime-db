@@ -49,18 +49,25 @@ class HomeController extends Controller
     const SEARCH_ITEMS_PER_PAGE = 6;
 
     /**
+     * Limit for show all items
+     *
+     * @var integer
+     */
+    const SHOW_LIMIT_ALL = -1;
+
+    /**
      * Limits on the number of items per page for home page
      *
      * @var array
      */
-    public static $home_show_limit = [8, 16, 32, -1];
+    public static $home_show_limit = [8, 16, 32, self::SHOW_LIMIT_ALL];
 
     /**
      * Limits on the number of items per page for search page
      *
      * @var array
      */
-    public static $search_show_limit = [6, 12, 24, -1];
+    public static $search_show_limit = [6, 12, 24, self::SHOW_LIMIT_ALL];
 
     /**
      * Sort items by field
@@ -113,26 +120,16 @@ class HomeController extends Controller
         $limit = (int)$request->get('limit', self::HOME_ITEMS_PER_PAGE);
         $limit = in_array($limit, self::$home_show_limit) ? $limit : self::HOME_ITEMS_PER_PAGE;
 
-        // get query
+        /* @var $repository \AnimeDB\Bundle\CatalogBundle\Repository\Item */
         $repository = $this->getDoctrine()->getRepository('AnimeDBCatalogBundle:Item');
-        $query = $repository->createQueryBuilder('i')->orderBy('i.id', 'DESC');
 
         $pagination = null;
         // show not all items
-        if ($limit != -1) {
-            $query
-                ->setFirstResult(($current_page - 1) * $limit)
-                ->setMaxResults($limit);
-
-            // get count all items
-            $count = $repository->createQueryBuilder('i')
-                ->select('count(i.id)')
-                ->getQuery()
-                ->getSingleScalarResult();
+        if ($limit != self::SHOW_LIMIT_ALL) {
 
             $that = $this;
             $pagination = $this->get('anime_db.pagination')->createNavigation(
-                ceil($count/$limit),
+                ceil($repository->count()/$limit),
                 $current_page,
                 Pagination::DEFAULT_LIST_LENGTH,
                 function ($page) use ($that) {
@@ -143,7 +140,10 @@ class HomeController extends Controller
         }
 
         // get items
-        $items = $query->getQuery()->getResult();
+        $items = $repository->getList(
+            ($limit != self::SHOW_LIMIT_ALL ? $limit : 0),
+            ($limit != self::SHOW_LIMIT_ALL ? ($current_page - 1) * $limit : 0)
+        );
 
         // assembly parameters limit output
         $show_limit = [];
@@ -314,7 +314,7 @@ class HomeController extends Controller
                     array_merge($request->query->all(), ['sort_direction' => $sort_direction['type']])
                 );
 
-                if ($limit != -1) {
+                if ($limit != self::SHOW_LIMIT_ALL) {
                     $selector
                         ->setFirstResult(($current_page - 1) * $limit)
                         ->setMaxResults($limit);

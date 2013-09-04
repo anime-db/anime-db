@@ -21,6 +21,7 @@ use Symfony\Component\Validator\ExecutionContextInterface;
  * @ORM\Table(name="notice", indexes={
  *   @ORM\Index(name="idx_notice_show", columns={"date_closed", "date_created"})
  * })
+ * @ORM\Entity(repositoryClass="AnimeDB\Bundle\CatalogBundle\Repository\Notice")
  * @IgnoreAnnotation("ORM")
  *
  * @package AnimeDB\Bundle\CatalogBundle\Entity

@@ -26,19 +26,6 @@ use Doctrine\ORM\EntityRepository;
 class TaskSchedulerCommand extends ContainerAwareCommand
 {
     /**
-     * Maximum standby time
-     *
-     * Between scans tasks can interpose new task.
-     * If no limit standby scheduler can not handle the new task before
-     * the arrival of the start time of the next task.
-     * For example the scheduler can expect a few days before the execution of the tasks
-     * that must be performed every hour.
-     * 
-     * @var integer
-     */
-    const MAX_STANDBY_TIME = 3600;
-
-    /**
      * (non-PHPdoc)
      * @see Symfony\Component\Console\Command.Command::configure()
      */
@@ -63,11 +50,12 @@ class TaskSchedulerCommand extends ContainerAwareCommand
         $console = $finder->find().' '.__DIR__.'/../../../../../app/console';
 
         $em = $this->getContainer()->get('doctrine')->getManager();
+        /* @var $repository \AnimeDB\Bundle\CatalogBundle\Repository\Task */
         $repository = $em->getRepository('AnimeDBCatalogBundle:Task');
 
         // output streams
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            $streams = '>null 2>&1';
+            $streams = '>nul 2>&1';
         } else {
             $streams = '>/dev/null 2>&1';
         }
@@ -75,7 +63,7 @@ class TaskSchedulerCommand extends ContainerAwareCommand
         $output->writeln('Task Scheduler');
 
         while (true) {
-            $task = $this->getNextTask($repository);
+            $task = $repository->getNextTask();
 
             // task is exists
             if ($task instanceof Task) {
@@ -89,7 +77,7 @@ class TaskSchedulerCommand extends ContainerAwareCommand
             }
 
             // standby for the next task
-            $time = $this->getWaitingTime($repository);
+            $time = $repository->getWaitingTime();
             if ($time) {
                 $output->writeln('Wait <comment>'.$time.'</comment> s.');
                 sleep($time);
@@ -98,54 +86,5 @@ class TaskSchedulerCommand extends ContainerAwareCommand
             unset($task);
             gc_collect_cycles();
         }
-    }
-
-    /**
-     * Get next task
-     *
-     * @param \Doctrine\ORM\EntityRepository $repository
-     *
-     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Task|null
-     */
-    private function getNextTask(EntityRepository $repository)
-    {
-        return $repository
-            ->createQueryBuilder('t')
-            ->where('t.status = :status AND t.next_run <= :time')
-            ->setParameter('status', Task::STATUS_ENABLED)
-            ->setParameter('time', date('Y-m-d H:i:s'))
-            ->orderBy('t.next_run', 'ASC')
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
-
-    /**
-     * Get waiting time for the next task
-     *
-     * @param \Doctrine\ORM\EntityRepository $repository
-     *
-     * @return integer
-     */
-    private function getWaitingTime(EntityRepository $repository)
-    {
-        // get next task
-        $task = $repository->createQueryBuilder('t')
-            ->where('t.status = :status')
-            ->setParameter('status', Task::STATUS_ENABLED)
-            ->orderBy('t.next_run', 'ASC')
-            ->getQuery()
-            ->getOneOrNullResult();
-
-        // task is exists
-        if ($task instanceof Task) {
-            $task_time = $task->getNextRun()->getTimestamp() - time();
-            if ($task_time > 0) {
-                return min($task_time, self::MAX_STANDBY_TIME);
-            } else {
-                return 0;
-            }
-        }
-
-        return self::MAX_STANDBY_TIME;
     }
 }
