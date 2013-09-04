@@ -25,7 +25,7 @@ class Item extends EntityRepository
      *
      * @return integer
      */
-    public function getCount()
+    public function count()
     {
         return $this->getEntityManager()->createQuery('
             SELECT
@@ -45,17 +45,20 @@ class Item extends EntityRepository
      */
     public function getList($limit = 0, $offset = 0)
     {
-        $query = $this->getEntityManager()
-            ->createQueryBuilder()
-            ->from('AnimeDBCatalogBundle:Item', 'i')
-            ->select('i')
-            ->orderBy('i.id', 'DESC');
+        $query = $this->getEntityManager()->createQuery('
+            SELECT
+                i
+            FROM
+                AnimeDBCatalogBundle:Item i
+            ORDER BY
+                i.id DESC
+        ');
 
         if ($limit) {
             $query
                 ->setFirstResult($offset)
                 ->setMaxResults($limit);
         }
-        return $query->getQuery()->getResult();
+        return $query->getResult();
     }
 }

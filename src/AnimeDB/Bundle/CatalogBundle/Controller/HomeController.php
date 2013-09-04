@@ -129,7 +129,7 @@ class HomeController extends Controller
 
             $that = $this;
             $pagination = $this->get('anime_db.pagination')->createNavigation(
-                ceil($repository->getCount()/$limit),
+                ceil($repository->count()/$limit),
                 $current_page,
                 Pagination::DEFAULT_LIST_LENGTH,
                 function ($page) use ($that) {
