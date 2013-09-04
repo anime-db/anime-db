@@ -49,6 +49,10 @@ item_import:
     pattern:  /import/{plugin}.html
     defaults: { _controller: AnimeDBCatalogBundle:Item:import }
 
+item_duplicate:
+    pattern:  /duplicate.html
+    defaults: { _controller: AnimeDBCatalogBundle:Item:duplicate }
+
 
 media_favicon:
     pattern:  /media/favicon/{host}.ico

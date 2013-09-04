@@ -920,4 +920,23 @@ class Item
             $context->addViolationAt('path', 'Path is required to fill for current type of storage');
         }
     }
+
+    /**
+     * Freeze item
+     *
+     * @param \Doctrine\ORM\EntityManager $em
+     *
+     * @return \AnimeDB\Bundle\CatalogBundle\Entity\Item
+     */
+    public function freez(EntityManager $em)
+    {
+        // create reference to existing entity
+        $this->manufacturer = $em->getReference(get_class($this->manufacturer), $this->manufacturer->getId());
+        $this->type = $em->getReference(get_class($this->type), $this->type->getId());
+        $this->storage = $em->getReference(get_class($this->storage), $this->storage->getId());
+        foreach ($this->genres as $key => $genre) {
+            $this->genres[$key] = $em->getReference(get_class($genre), $genre->getId());
+        }
+        return $this;
+    }
 }
