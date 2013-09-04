@@ -1012,3 +1012,11 @@ h1.logo a span {
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
+
+/**
+ * Confirm duplicate item
+ */
+.b-item-duplicate .b-form {
+	clear: both;
+	text-align: right;
+}

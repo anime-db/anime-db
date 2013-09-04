@@ -526,6 +526,18 @@
                 <source>Are you sure want to delete %name%?</source>
                 <target>Вы уверены, что хотите удалить %name%?</target>
             </trans-unit>
+            <trans-unit id="140">
+                <source>Cancel</source>
+                <target>Отмена</target>
+            </trans-unit>
+            <trans-unit id="141">
+                <source>List of found duplicates</source>
+                <target>Список найденных дубликатов</target>
+            </trans-unit>
+            <trans-unit id="142">
+                <source>Confirm duplicate item</source>
+                <target>Подтверждение дупликатов записей</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

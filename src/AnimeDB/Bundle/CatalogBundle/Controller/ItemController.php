@@ -33,6 +33,13 @@ use AnimeDB\Bundle\CatalogBundle\Plugin\Filler\CustomForm as CustomFormFiller;
 class ItemController extends Controller
 {
     /**
+     * Name of session to store item to be added
+     *
+     * @var string
+     */
+    const NAME_ITEM_ADDED = '_item_added';
+
+    /**
      * Show item
      *
      * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item $item
@@ -61,13 +68,23 @@ class ItemController extends Controller
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($item);
-                $em->flush();
-                return $this->redirect($this->generateUrl(
-                    'item_show',
-                    ['id' => $item->getId(), 'name' => $item->getName()]
-                ));
+                /* @var $repository \AnimeDB\Bundle\CatalogBundle\Repository\Item */
+                $repository = $this->getDoctrine()->getRepository('AnimeDBCatalogBundle:Item');
+
+                // Add a new entry only if no duplicates
+                $duplicate = $repository->findDuplicate($item);
+                if ($duplicate) {
+                    $request->getSession()->set(self::NAME_ITEM_ADDED, $item);
+                    return $this->redirect($this->generateUrl('item_duplicate'));
+                } else {
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($item);
+                    $em->flush();
+                    return $this->redirect($this->generateUrl(
+                        'item_show',
+                        ['id' => $item->getId(), 'name' => $item->getName()]
+                    ));
+                }
             }
         }
 
@@ -268,6 +285,41 @@ class ItemController extends Controller
             'plugin' => $plugin,
             'items'  => $list,
             'form'   => $form->createView()
+        ]);
+    }
+
+    /**
+     * Confirm duplicate item
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function duplicateAction(Request $request) {
+        /* @var $repository \AnimeDB\Bundle\CatalogBundle\Repository\Item */
+        $repository = $this->getDoctrine()->getRepository('AnimeDBCatalogBundle:Item');
+
+        // get store item
+        $item = $request->getSession()->get(self::NAME_ITEM_ADDED);
+        if (!($item instanceof Item)) {
+            throw $this->createNotFoundException('Not found item for confirm duplicate');
+        }
+
+        // re searching for duplicates
+        $duplicate = $repository->findDuplicate($item);
+        // now there is no duplication
+        if (!$duplicate) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($item);
+            $em->flush();
+            return $this->redirect($this->generateUrl(
+                'item_show',
+                ['id' => $item->getId(), 'name' => $item->getName()]
+            ));
+        }
+
+        return $this->render('AnimeDBCatalogBundle:Item:duplicate.html.twig', [
+            'items' => $duplicate
         ]);
     }
 }
