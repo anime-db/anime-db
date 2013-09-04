@@ -77,13 +77,7 @@ class ItemController extends Controller
                     $request->getSession()->set(self::NAME_ITEM_ADDED, $item);
                     return $this->redirect($this->generateUrl('item_duplicate'));
                 } else {
-                    $em = $this->getDoctrine()->getManager();
-                    $em->persist($item);
-                    $em->flush();
-                    return $this->redirect($this->generateUrl(
-                        'item_show',
-                        ['id' => $item->getId(), 'name' => $item->getName()]
-                    ));
+                    return $this->addItem($item);
                 }
             }
         }
@@ -305,21 +299,48 @@ class ItemController extends Controller
             throw $this->createNotFoundException('Not found item for confirm duplicate');
         }
 
+        // confirm duplicate
+        if ($request->isMethod('POST')) {
+            $request->getSession()->remove(self::NAME_ITEM_ADDED);
+            switch ($request->request->get('do')) {
+                case 'add':
+                    $item->freez($this->getDoctrine()->getManager());
+                    return $this->addItem($item);
+                    break;
+                case 'cancel':
+                default:
+                    return $this->redirect($this->generateUrl('home'));
+            }
+        }
+
         // re searching for duplicates
         $duplicate = $repository->findDuplicate($item);
         // now there is no duplication
         if (!$duplicate) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($item);
-            $em->flush();
-            return $this->redirect($this->generateUrl(
-                'item_show',
-                ['id' => $item->getId(), 'name' => $item->getName()]
-            ));
+            $item->freez($this->getDoctrine()->getManager());
+            return $this->addItem($item);
         }
 
         return $this->render('AnimeDBCatalogBundle:Item:duplicate.html.twig', [
             'items' => $duplicate
         ]);
+    }
+
+    /**
+     * Add item
+     *
+     * @param \AnimeDB\Bundle\CatalogBundle\Entity\Item $item
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    private function addItem(Item $item)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($item);
+        $em->flush();
+        return $this->redirect($this->generateUrl(
+            'item_show',
+            ['id' => $item->getId(), 'name' => $item->getName()]
+        ));
     }
 }
