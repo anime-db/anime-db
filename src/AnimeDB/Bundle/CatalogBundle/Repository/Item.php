@@ -105,11 +105,13 @@ class Item extends EntityRepository
             ->getResult();
 
         foreach ($item_names as $item_name) {
+            // element has been added
             foreach ($duplicate as $item) {
-                if ($item !== $item_name->getItem()) {
-                    $duplicate[] = $item_name->getItem();
+                if ($item === $item_name->getItem()) {
+                    continue 2;
                 }
             }
+            $duplicate[] = $item_name->getItem();
         }
 
         return $duplicate;
