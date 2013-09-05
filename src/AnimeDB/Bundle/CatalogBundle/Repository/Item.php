@@ -98,6 +98,8 @@ class Item extends EntityRepository
                 AnimeDBCatalogBundle:Name n
             WHERE
                 n.name IN (:names)
+            GROUP BY
+                n.item
         ')
             ->setParameter(':names', $names)
             ->getResult();
