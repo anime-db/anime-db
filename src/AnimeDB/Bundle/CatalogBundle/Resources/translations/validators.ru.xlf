@@ -14,6 +14,10 @@
                 <source>Path is required to fill for current type of storage</source>
                 <target>Путь требуется заполнить для данного типа храненилища</target>
             </trans-unit>
+            <trans-unit id="4">
+                <source>Path to item does not match path to storage</source>
+                <target>Путь к записе не соответствует пути к хранилищу</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

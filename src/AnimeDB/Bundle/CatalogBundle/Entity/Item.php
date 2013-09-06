@@ -916,8 +916,12 @@ class Item
      */
     public function isPathValid(ExecutionContextInterface $context)
     {
-        if ($this->storage->isPathRequired() && !$this->getPath()) {
-            $context->addViolationAt('path', 'Path is required to fill for current type of storage');
+        if ($this->getStorage()->isPathRequired()) {
+            if (!$this->getPath()) {
+                $context->addViolationAt('path', 'Path is required to fill for current type of storage');
+            } elseif (strpos($this->getPath(), $this->getStorage()->getPath()) !== 0) {
+                $context->addViolationAt('path', 'Path to item does not match path to storage');
+            }
         }
     }
 
