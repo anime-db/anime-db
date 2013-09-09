@@ -225,8 +225,6 @@ h1.logo a span {
 #navigation li:hover span {
 	color: #fff;
 }
-
-
 #navigation ul ul {
 	position: absolute;
 	top: 100%;
@@ -252,6 +250,9 @@ h1.logo a span {
 #navigation ul ul ul {
 	right: 100%;
 	top: 0;
+}
+#navigation .last .menu_level_1 {
+	right: 0;
 }
 
 /**
