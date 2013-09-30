@@ -46,6 +46,7 @@
         "avalanche123/imagine-bundle": "v2.1",
         "gedmo/doctrine-extensions": "dev-master",
         "knplabs/knp-menu-bundle": "1.1.*",
+        "doctrine/migrations": "dev-master",
         "doctrine/doctrine-migrations-bundle": "dev-master",
         "anime-db/worldart-filler-bundle": "0.1.*"
     },
@@ -68,7 +69,7 @@
     "config": {
         "bin-dir": "bin"
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",
