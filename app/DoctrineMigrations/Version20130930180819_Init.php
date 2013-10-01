@@ -25,23 +25,6 @@ class Version20130930180819_Init extends AbstractMigration
         $this->createTableNotice($schema);
         $this->createTableStorage($schema);
         $this->createTableItem($schema);
-
-        // add index
-        $this->addSql('
-            CREATE INDEX image_item_idx ON image (item);
-            CREATE INDEX name_item_idx ON name (item);
-            CREATE INDEX item_genres_item_id_idx ON items_genres (item_id);
-            CREATE INDEX item_genres_genre_id_idx ON items_genres (genre_id);
-            CREATE INDEX source_item_idx ON source (item);
-            CREATE INDEX translations_lookup_idx ON ext_translations (locale, object_class, foreign_key);
-            CREATE UNIQUE INDEX lookup_unique_idx ON ext_translations (locale, object_class, field, foreign_key);
-            CREATE INDEX country_translation_object_id_idx ON country_translation (object_id);
-            CREATE UNIQUE INDEX country_translation_idx ON country_translation (locale, object_id, field);
-            CREATE INDEX notice_show_idx ON notice (date_closed, date_created);
-            CREATE INDEX item_manufacturer_idx ON item (manufacturer);
-            CREATE INDEX item_storage_idx ON item (storage);
-            CREATE INDEX item_type_idx ON item (type);
-        ');
     }
 
     public function down(Schema $schema)
@@ -65,16 +48,8 @@ class Version20130930180819_Init extends AbstractMigration
     {
         // clear sqlite sequence
         $this->addSql('DELETE FROM sqlite_sequence;');
-
-        // add sqlite sequence
-        $this->addSql('
-            INSERT INTO "sqlite_sequence" VALUES("image",0);
-            INSERT INTO "sqlite_sequence" VALUES("name",55);
-            INSERT INTO "sqlite_sequence" VALUES("source",118);
-            INSERT INTO "sqlite_sequence" VALUES("genre",64);
-            INSERT INTO "sqlite_sequence" VALUES("storage",1);
-            INSERT INTO "sqlite_sequence" VALUES("item",12);
-        ');
+        // add sequence for item
+        $this->addSql('INSERT INTO "sqlite_sequence" VALUES("image",0);');
 
         $this->addDataTypes();
         $this->addDataName();
@@ -101,6 +76,8 @@ class Version20130930180819_Init extends AbstractMigration
             item INTEGER DEFAULT NULL,
             source VARCHAR(256) NOT NULL
         );');
+        // add index
+        $this->addSql('CREATE INDEX image_item_idx ON image (item);');
     }
 
     protected function createTableType(Schema $schema)
@@ -118,6 +95,8 @@ class Version20130930180819_Init extends AbstractMigration
             item INTEGER DEFAULT NULL,
             name VARCHAR(256) NOT NULL
         );');
+        // add index
+        $this->addSql('CREATE INDEX name_item_idx ON name (item);');
     }
 
     protected function createTableItemsGenres(Schema $schema)
@@ -127,6 +106,11 @@ class Version20130930180819_Init extends AbstractMigration
             genre_id INTEGER NOT NULL,
             PRIMARY KEY(item_id, genre_id)
         );');
+        // add index
+        $this->addSql('
+            CREATE INDEX item_genres_item_id_idx ON items_genres (item_id);
+            CREATE INDEX item_genres_genre_id_idx ON items_genres (genre_id);
+        ');
     }
 
     protected function createTableSource(Schema $schema)
@@ -136,6 +120,8 @@ class Version20130930180819_Init extends AbstractMigration
             item INTEGER DEFAULT NULL,
             url VARCHAR(256) NOT NULL
         );');
+        // add index
+        $this->addSql('CREATE INDEX source_item_idx ON source (item);');
     }
 
     protected function createTableCountry(Schema $schema)
@@ -165,6 +151,11 @@ class Version20130930180819_Init extends AbstractMigration
             content CLOB DEFAULT NULL,
             PRIMARY KEY(id)
         );');
+        // add index
+        $this->addSql('
+            CREATE INDEX translations_lookup_idx ON ext_translations (locale, object_class, foreign_key);
+            CREATE UNIQUE INDEX lookup_unique_idx ON ext_translations (locale, object_class, field, foreign_key);
+        ');
     }
 
     protected function createTableCountryTranslation(Schema $schema)
@@ -177,6 +168,11 @@ class Version20130930180819_Init extends AbstractMigration
             content CLOB DEFAULT NULL,
             PRIMARY KEY(id)
         );');
+        // add index
+        $this->addSql('
+            CREATE INDEX country_translation_object_id_idx ON country_translation (object_id);
+            CREATE UNIQUE INDEX country_translation_idx ON country_translation (locale, object_id, field);
+        ');
     }
 
     protected function createTableTask(Schema $schema)
@@ -203,6 +199,8 @@ class Version20130930180819_Init extends AbstractMigration
             status INTEGER NOT NULL,
             PRIMARY KEY(id)
         );');
+        // add index
+        $this->addSql('CREATE INDEX notice_show_idx ON notice (date_closed, date_created);');
     }
 
     protected function createTableStorage(Schema $schema)
@@ -237,6 +235,12 @@ class Version20130930180819_Init extends AbstractMigration
             date_add DATETIME NOT NULL,
             date_update DATETIME NOT NULL
         );');
+        // add index
+        $this->addSql('
+            CREATE INDEX item_manufacturer_idx ON item (manufacturer);
+            CREATE INDEX item_storage_idx ON item (storage);
+            CREATE INDEX item_type_idx ON item (type);
+        ');
     }
 
     protected function addDataTypes()
@@ -312,6 +316,8 @@ class Version20130930180819_Init extends AbstractMigration
             INSERT INTO "name" VALUES(54,12,"Tengen Toppa Gurren Lagann: Ore no Gurren wa Pikka Pika!!");
             INSERT INTO "name" VALUES(55,12,"天元突破 グレンラガン 俺のグレンはピッカピカ!!");
         ');
+        // add sequence
+        $this->addSql('INSERT INTO "sqlite_sequence" VALUES("name",55);');
     }
 
     protected function addDataItemsGenres()
@@ -483,6 +489,8 @@ class Version20130930180819_Init extends AbstractMigration
             INSERT INTO "source" VALUES(117,12,"http://www.fansubs.ru/base.php?id=1769");
             INSERT INTO "source" VALUES(118,12,"http://www.world-art.ru/animation/animation.php?id=5959");
         ');
+        // add sequence
+        $this->addSql('INSERT INTO "sqlite_sequence" VALUES("source",118);');
     }
 
     protected function addDataCountry()
@@ -801,6 +809,8 @@ class Version20130930180819_Init extends AbstractMigration
             INSERT INTO "genre" VALUES(63,"Vampires");
             INSERT INTO "genre" VALUES(64,"Cyberpunk");
         ');
+        // add sequence
+        $this->addSql('INSERT INTO "sqlite_sequence" VALUES("genre",64);');
     }
 
     protected function addDataExtTranslations()
@@ -1398,6 +1408,8 @@ class Version20130930180819_Init extends AbstractMigration
         $this->addSql('
             INSERT INTO "storage" VALUES(1,"Local","Storage on local computer","folder","/home/user/");
         ');
+        // add sequence
+        $this->addSql('INSERT INTO "sqlite_sequence" VALUES("storage",1);');
     }
 
     protected function addDataItem()
@@ -1628,5 +1640,7 @@ class Version20130930180819_Init extends AbstractMigration
 26. Let`s Go, Comrades! (23.09.2007, 25 мин.)
 27. All the Lights in the Sky are Stars (30.09.2007, 25 мин.)","27",NULL,"+ 2 спэшла","example/tengen-toppa-gurren-lagann.jpg","2013-07-24 00:00:00","2013-07-24 00:00:00");
         ');
+        // add sequence
+        $this->addSql('INSERT INTO "sqlite_sequence" VALUES("item",12);');
     }
 }
