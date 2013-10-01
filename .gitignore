@@ -3,6 +3,7 @@
 web/media/[0-9]*
 web/media/suit
 web/media/favicon
+app/Resources/anime.db
 
 # Services pid files #
 ######################
