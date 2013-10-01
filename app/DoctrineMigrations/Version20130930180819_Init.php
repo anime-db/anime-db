@@ -26,17 +26,6 @@ class Version20130930180819_Init extends AbstractMigration
         $this->createTableStorage($schema);
         $this->createTableItem($schema);
 
-        // change sqlite sequence
-        $this->addSql('
-            DELETE FROM sqlite_sequence;
-            INSERT INTO "sqlite_sequence" VALUES("image",0);
-            INSERT INTO "sqlite_sequence" VALUES("name",55);
-            INSERT INTO "sqlite_sequence" VALUES("source",118);
-            INSERT INTO "sqlite_sequence" VALUES("genre",64);
-            INSERT INTO "sqlite_sequence" VALUES("storage",1);
-            INSERT INTO "sqlite_sequence" VALUES("item",12);
-        ');
-
         // add index
         $this->addSql('
             CREATE INDEX image_item_idx ON image (item);
@@ -74,7 +63,184 @@ class Version20130930180819_Init extends AbstractMigration
 
     public function postUp(Schema $schema)
     {
-        // add types
+        // clear sqlite sequence
+        $this->addSql('DELETE FROM sqlite_sequence;');
+
+        // add sqlite sequence
+        $this->addSql('
+            INSERT INTO "sqlite_sequence" VALUES("image",0);
+            INSERT INTO "sqlite_sequence" VALUES("name",55);
+            INSERT INTO "sqlite_sequence" VALUES("source",118);
+            INSERT INTO "sqlite_sequence" VALUES("genre",64);
+            INSERT INTO "sqlite_sequence" VALUES("storage",1);
+            INSERT INTO "sqlite_sequence" VALUES("item",12);
+        ');
+
+        $this->addDataTypes();
+        $this->addDataName();
+        $this->addDataItemsGenres();
+        $this->addDataSource();
+        $this->addDataCountry();
+        $this->addDataGenre();
+        $this->addDataExtTranslations();
+        $this->addDataCountryTranslation();
+        $this->addDataStorage();
+        $this->addDataItem();
+    }
+
+    public function postDown(Schema $schema)
+    {
+        // clear sqlite sequence
+        $this->addSql('DELETE FROM sqlite_sequence;');
+    }
+
+    protected function createTableImage(Schema $schema)
+    {
+        $this->addSql('CREATE TABLE image (
+            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+            item INTEGER DEFAULT NULL,
+            source VARCHAR(256) NOT NULL
+        );');
+    }
+
+    protected function createTableType(Schema $schema)
+    {
+        $this->addSql('CREATE TABLE type (
+            id VARCHAR(16) PRIMARY KEY NOT NULL,
+            name VARCHAR(32) NOT NULL
+        );');
+    }
+
+    protected function createTableName(Schema $schema)
+    {
+        $this->addSql('CREATE TABLE name (
+            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+            item INTEGER DEFAULT NULL,
+            name VARCHAR(256) NOT NULL
+        );');
+    }
+
+    protected function createTableItemsGenres(Schema $schema)
+    {
+        $this->addSql('CREATE TABLE items_genres (
+            item_id INTEGER NOT NULL,
+            genre_id INTEGER NOT NULL,
+            PRIMARY KEY(item_id, genre_id)
+        );');
+    }
+
+    protected function createTableSource(Schema $schema)
+    {
+        $this->addSql('CREATE TABLE source (
+            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+            item INTEGER DEFAULT NULL,
+            url VARCHAR(256) NOT NULL
+        );');
+    }
+
+    protected function createTableCountry(Schema $schema)
+    {
+        $this->addSql('CREATE TABLE country (
+            id VARCHAR(2) PRIMARY KEY NOT NULL,
+            name VARCHAR(16) NOT NULL
+        );');
+    }
+
+    protected function createTableGenre(Schema $schema)
+    {
+        $this->addSql('CREATE TABLE genre (
+            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+            name VARCHAR(16) NOT NULL
+        );');
+    }
+
+    protected function createTableExtTranslations(Schema $schema)
+    {
+        $this->addSql('CREATE TABLE ext_translations (
+            id INTEGER NOT NULL,
+            locale VARCHAR(8) NOT NULL,
+            object_class VARCHAR(255) NOT NULL,
+            field VARCHAR(32) NOT NULL,
+            foreign_key VARCHAR(64) NOT NULL,
+            content CLOB DEFAULT NULL,
+            PRIMARY KEY(id)
+        );');
+    }
+
+    protected function createTableCountryTranslation(Schema $schema)
+    {
+        $this->addSql('CREATE TABLE country_translation (
+            id INTEGER NOT NULL,
+            object_id VARCHAR(2) DEFAULT NULL,
+            locale VARCHAR(8) NOT NULL,
+            field VARCHAR(32) NOT NULL,
+            content CLOB DEFAULT NULL,
+            PRIMARY KEY(id)
+        );');
+    }
+
+    protected function createTableTask(Schema $schema)
+    {
+        $this->addSql('CREATE TABLE `task` (
+            `id` INTEGER NOT NULL,
+            `command` VARCHAR(128) NOT NULL,
+            `last_run` DATETIME DEFAULT NULL,
+            `next_run` DATETIME NOT NULL,
+            `modify` VARCHAR(128) DEFAULT NULL,
+            `status` INTEGER NOT NULL,
+            PRIMARY KEY(`id`)
+        );');
+    }
+
+    protected function createTableNotice(Schema $schema)
+    {
+        $this->addSql('CREATE TABLE notice (
+            id INTEGER NOT NULL,
+            message CLOB NOT NULL,
+            date_closed DATETIME DEFAULT NULL,
+            date_created DATETIME NOT NULL,
+            lifetime INTEGER NOT NULL,
+            status INTEGER NOT NULL,
+            PRIMARY KEY(id)
+        );');
+    }
+
+    protected function createTableStorage(Schema $schema)
+    {
+        $this->addSql('CREATE TABLE "storage" (
+            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+            name VARCHAR(128) NOT NULL,
+            description CLOB NOT NULL,
+            type VARCHAR(16) NOT NULL,
+            path CLOB DEFAULT NULL
+        );');
+    }
+
+    protected function createTableItem(Schema $schema)
+    {
+        $this->addSql('CREATE TABLE "item"  (
+            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+            type VARCHAR(16) DEFAULT NULL,
+            manufacturer VARCHAR(2) DEFAULT NULL,
+            storage INTEGER DEFAULT NULL,
+            name VARCHAR(256) NOT NULL,
+            date_start DATE NOT NULL,
+            date_end DATE DEFAULT NULL,
+            duration INTEGER DEFAULT NULL,
+            summary CLOB DEFAULT NULL,
+            path VARCHAR(256) DEFAULT NULL,
+            episodes CLOB DEFAULT NULL,
+            episodes_number VARCHAR(5) DEFAULT NULL,
+            translate VARCHAR(256) DEFAULT NULL,
+            file_info CLOB DEFAULT NULL,
+            cover VARCHAR(256) DEFAULT NULL,
+            date_add DATETIME NOT NULL,
+            date_update DATETIME NOT NULL
+        );');
+    }
+
+    protected function addDataTypes()
+    {
         $this->addSql('
             INSERT INTO "type" VALUES("feature","Feature");
             INSERT INTO "type" VALUES("featurette","Featurette");
@@ -85,7 +251,10 @@ class Version20130930180819_Init extends AbstractMigration
             INSERT INTO "type" VALUES("music","Music video");
             INSERT INTO "type" VALUES("commercial","Commercial");
         ');
-        // add names
+    }
+
+    protected function addDataName()
+    {
         $this->addSql('
             INSERT INTO "name" VALUES(1,1,"One Piece");
             INSERT INTO "name" VALUES(2,1,"Одним куском");
@@ -143,7 +312,10 @@ class Version20130930180819_Init extends AbstractMigration
             INSERT INTO "name" VALUES(54,12,"Tengen Toppa Gurren Lagann: Ore no Gurren wa Pikka Pika!!");
             INSERT INTO "name" VALUES(55,12,"天元突破 グレンラガン 俺のグレンはピッカピカ!!");
         ');
-        // add relations items of genres 
+    }
+
+    protected function addDataItemsGenres()
+    {
         $this->addSql('
             INSERT INTO "items_genres" VALUES(1,1);
             INSERT INTO "items_genres" VALUES(1,2);
@@ -187,7 +359,10 @@ class Version20130930180819_Init extends AbstractMigration
             INSERT INTO "items_genres" VALUES(12,4);
             INSERT INTO "items_genres" VALUES(12,12);
         ');
-        // add source
+    }
+
+    protected function addDataSource()
+    {
         $this->addSql('
             INSERT INTO "source" VALUES(1,1,"http://www.animenewsnetwork.com/encyclopedia/anime.php?id=836");
             INSERT INTO "source" VALUES(2,1,"http://anidb.net/perl-bin/animedb.pl?show=anime&aid=69");
@@ -308,7 +483,10 @@ class Version20130930180819_Init extends AbstractMigration
             INSERT INTO "source" VALUES(117,12,"http://www.fansubs.ru/base.php?id=1769");
             INSERT INTO "source" VALUES(118,12,"http://www.world-art.ru/animation/animation.php?id=5959");
         ');
-        // add country
+    }
+
+    protected function addDataCountry()
+    {
         $this->addSql('
             INSERT INTO "country" VALUES("AF","Afghanistan");
             INSERT INTO "country" VALUES("AL","Albania");
@@ -575,7 +753,10 @@ class Version20130930180819_Init extends AbstractMigration
             INSERT INTO "country" VALUES("ZW","Zimbabwe");
             INSERT INTO "country" VALUES("AX","Åland Islands");
         ');
-        // add genre
+    }
+
+    protected function addDataGenre()
+    {
         $this->addSql('
             INSERT INTO "genre" VALUES(1,"Adventure");
             INSERT INTO "genre" VALUES(2,"Comedy");
@@ -620,7 +801,10 @@ class Version20130930180819_Init extends AbstractMigration
             INSERT INTO "genre" VALUES(63,"Vampires");
             INSERT INTO "genre" VALUES(64,"Cyberpunk");
         ');
-        // add ext_translations
+    }
+
+    protected function addDataExtTranslations()
+    {
         $this->addSql('
             INSERT INTO "ext_translations" VALUES(1,"ru","AnimeDB\Bundle\CatalogBundle\Entity\Type","name","feature","Полнометражный фильм");
             INSERT INTO "ext_translations" VALUES(2,"ru","AnimeDB\Bundle\CatalogBundle\Entity\Type","name","featurette","Короткометражный фильм");
@@ -673,7 +857,10 @@ class Version20130930180819_Init extends AbstractMigration
             INSERT INTO "ext_translations" VALUES(49,"ru","AnimeDB\Bundle\CatalogBundle\Entity\Genre","name","63","Вампиры");
             INSERT INTO "ext_translations" VALUES(50,"ru","AnimeDB\Bundle\CatalogBundle\Entity\Genre","name","64","Киберпанк");
         ');
-        // add country_translation
+    }
+
+    protected function addDataCountryTranslation()
+    {
         $this->addSql('
             INSERT INTO "country_translation" VALUES(1,"AF","en","name","Afghanistan");
             INSERT INTO "country_translation" VALUES(2,"AF","ru","name","Афганистан");
@@ -1204,11 +1391,17 @@ class Version20130930180819_Init extends AbstractMigration
             INSERT INTO "country_translation" VALUES(527,"AX","en","name","Åland Islands");
             INSERT INTO "country_translation" VALUES(528,"AX","ru","name","Аландские острова");
         ');
-        // add storage
+    }
+
+    protected function addDataStorage()
+    {
         $this->addSql('
             INSERT INTO "storage" VALUES(1,"Local","Storage on local computer","folder","/home/user/");
         ');
-        // add item
+    }
+
+    protected function addDataItem()
+    {
         $this->addSql('
             INSERT INTO "item" VALUES(1,"tv","JP",1,"Ван-Пис","1999-10-20",NULL,25,"Последние слова, произнесенные Королем Пиратов перед казнью, вдохновили многих: «Мои сокровища? Коли хотите, забирайте. Ищите – я их все оставил там!». Легендарная фраза Золотого Роджера ознаменовала начало Великой Эры Пиратов – тысячи людей в погоне за своими мечтами отправились на Гранд Лайн, самое опасное место в мире, желая стать обладателями мифических сокровищ... Но с каждым годом романтиков становилось все меньше, их постепенно вытесняли прагматичные пираты-разбойники, которым награбленное добро было куда ближе, чем какие-то «никчемные мечты». Но вот, одним прекрасным днем, семнадцатилетний Монки Д. Луффи исполнил заветную мечту детства - отправился в море. Его цель - ни много, ни мало стать новым Королем Пиратов. За достаточно короткий срок юному капитану удается собрать команду, состоящую из не менее амбициозных искателей приключений. И пусть ими движут совершенно разные устремления, главное, этим ребятам важны не столько деньги и слава, сколько куда более ценное – принципы и верность друзьям. И еще – служение Мечте. Что ж, пока по Гранд Лайн плавают такие люди, Великая Эра Пиратов всегда будет с нами!","/home/user/Video/One Piece (2011) [TV]","","602+",NULL,"+ 6 спэшлов","example/one-piece.jpg","2013-07-24 00:00:00","2013-07-24 00:00:00");
             INSERT INTO "item" VALUES(2,"tv","JP",1,"Самурай Чамплу","2004-05-20","2005-03-19",25,"Потеряв маму, юная Фуу год проработала в чайной, а потом решила отправиться на поиски человека, который, кажется, виновен во всех её несчастьях. У Фуу была надёжная примета: это самурай, пахнущий подсолнухами. Но как выжить в Японии эпохи Эдо, когда за каждым поворотом – бандиты, которые могут тебя похитить и продать в бордель, а единственный друг – ручная белка-летяга? Фуу повезло: она встретила двух юных и при этом весьма сноровистых бойцов – бывшего пирата Мугэна и ронина Дзина. Заручившись их поддержкой, девушка отправилась в путь через всю страну. Не важно, что в животе всё время бурчит, и нет ни денег, ни документов – зато есть несравненные способности ввязываться в неприятности! При первой встрече Мугэн и Дзин попытались выяснить, кто из них круче – и они готовы продолжить дуэль при первой возможности, однако главная проблема в том, что у каждого из путешественников своё прошлое и опасные враги, о которых они даже не подозревают. И неизвестно ещё, у кого этих врагов и старых грехов больше – у пирата, грабившего корабли, у ронина, убившего своего учителя, или у девушки-сиротки?
@@ -1435,150 +1628,5 @@ class Version20130930180819_Init extends AbstractMigration
 26. Let`s Go, Comrades! (23.09.2007, 25 мин.)
 27. All the Lights in the Sky are Stars (30.09.2007, 25 мин.)","27",NULL,"+ 2 спэшла","example/tengen-toppa-gurren-lagann.jpg","2013-07-24 00:00:00","2013-07-24 00:00:00");
         ');
-    }
-
-    protected function createTableImage(Schema $schema)
-    {
-        $this->addSql('CREATE TABLE image (
-            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-            item INTEGER DEFAULT NULL,
-            source VARCHAR(256) NOT NULL
-        );');
-    }
-
-    protected function createTableType(Schema $schema)
-    {
-        $this->addSql('CREATE TABLE type (
-            id VARCHAR(16) PRIMARY KEY NOT NULL,
-            name VARCHAR(32) NOT NULL
-        );');
-    }
-
-    protected function createTableName(Schema $schema)
-    {
-        $this->addSql('CREATE TABLE name (
-            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-            item INTEGER DEFAULT NULL,
-            name VARCHAR(256) NOT NULL
-        );');
-    }
-
-    protected function createTableItemsGenres(Schema $schema)
-    {
-        $this->addSql('CREATE TABLE items_genres (
-            item_id INTEGER NOT NULL,
-            genre_id INTEGER NOT NULL,
-            PRIMARY KEY(item_id, genre_id)
-        );');
-    }
-
-    protected function createTableSource(Schema $schema)
-    {
-        $this->addSql('CREATE TABLE source (
-            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-            item INTEGER DEFAULT NULL,
-            url VARCHAR(256) NOT NULL
-        );');
-    }
-
-    protected function createTableCountry(Schema $schema)
-    {
-        $this->addSql('CREATE TABLE country (
-            id VARCHAR(2) PRIMARY KEY NOT NULL,
-            name VARCHAR(16) NOT NULL
-        );');
-    }
-
-    protected function createTableGenre(Schema $schema)
-    {
-        $this->addSql('CREATE TABLE genre (
-            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-            name VARCHAR(16) NOT NULL
-        );');
-    }
-
-    protected function createTableExtTranslations(Schema $schema)
-    {
-        $this->addSql('CREATE TABLE ext_translations (
-            id INTEGER NOT NULL,
-            locale VARCHAR(8) NOT NULL,
-            object_class VARCHAR(255) NOT NULL,
-            field VARCHAR(32) NOT NULL,
-            foreign_key VARCHAR(64) NOT NULL,
-            content CLOB DEFAULT NULL,
-            PRIMARY KEY(id)
-        );');
-    }
-
-    protected function createTableCountryTranslation(Schema $schema)
-    {
-        $this->addSql('CREATE TABLE country_translation (
-            id INTEGER NOT NULL,
-            object_id VARCHAR(2) DEFAULT NULL,
-            locale VARCHAR(8) NOT NULL,
-            field VARCHAR(32) NOT NULL,
-            content CLOB DEFAULT NULL,
-            PRIMARY KEY(id)
-        );');
-    }
-
-    protected function createTableTask(Schema $schema)
-    {
-        $this->addSql('CREATE TABLE `task` (
-            `id` INTEGER NOT NULL,
-            `command` VARCHAR(128) NOT NULL,
-            `last_run` DATETIME DEFAULT NULL,
-            `next_run` DATETIME NOT NULL,
-            `modify` VARCHAR(128) DEFAULT NULL,
-            `status` INTEGER NOT NULL,
-            PRIMARY KEY(`id`)
-        );');
-    }
-
-    protected function createTableNotice(Schema $schema)
-    {
-        $this->addSql('CREATE TABLE notice (
-            id INTEGER NOT NULL,
-            message CLOB NOT NULL,
-            date_closed DATETIME DEFAULT NULL,
-            date_created DATETIME NOT NULL,
-            lifetime INTEGER NOT NULL,
-            status INTEGER NOT NULL,
-            PRIMARY KEY(id)
-        );');
-    }
-
-    protected function createTableStorage(Schema $schema)
-    {
-        $this->addSql('CREATE TABLE "storage" (
-            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-            name VARCHAR(128) NOT NULL,
-            description CLOB NOT NULL,
-            type VARCHAR(16) NOT NULL,
-            path CLOB DEFAULT NULL
-        );');
-    }
-
-    protected function createTableItem(Schema $schema)
-    {
-        $this->addSql('CREATE TABLE "item"  (
-            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-            type VARCHAR(16) DEFAULT NULL,
-            manufacturer VARCHAR(2) DEFAULT NULL,
-            storage INTEGER DEFAULT NULL,
-            name VARCHAR(256) NOT NULL,
-            date_start DATE NOT NULL,
-            date_end DATE DEFAULT NULL,
-            duration INTEGER DEFAULT NULL,
-            summary CLOB DEFAULT NULL,
-            path VARCHAR(256) DEFAULT NULL,
-            episodes CLOB DEFAULT NULL,
-            episodes_number VARCHAR(5) DEFAULT NULL,
-            translate VARCHAR(256) DEFAULT NULL,
-            file_info CLOB DEFAULT NULL,
-            cover VARCHAR(256) DEFAULT NULL,
-            date_add DATETIME NOT NULL,
-            date_update DATETIME NOT NULL
-        );');
     }
 }
