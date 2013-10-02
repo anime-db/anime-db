@@ -27,13 +27,12 @@ class Version20130930180819_Init extends AbstractMigration
         $this->createTableStorage($schema);
         $this->createTableItem($schema);
 
-        // add data
-
         // clear sqlite sequence
-        $this->addSql('DELETE FROM sqlite_sequence');
-        // add sequence for item
+        $this->addSql('DELETE FROM sqlite_sequence WHERE name IN ("image", "name", "source", "genre", "storage", "item")');
+        // add sequence for image
         $this->addSql('INSERT INTO "sqlite_sequence" VALUES("image",0)');
 
+        // add data
         $this->addDataTypes();
         $this->addDataName();
         $this->addDataItemsGenres();
@@ -63,7 +62,7 @@ class Version20130930180819_Init extends AbstractMigration
         $schema->dropTable('storage');
         $schema->dropTable('item');
         // clear sqlite sequence
-        $this->addSql('DELETE FROM sqlite_sequence');
+        $this->addSql('DELETE FROM sqlite_sequence WHERE name IN ("image", "name", "source", "genre", "storage", "item")');
     }
 
     protected function createTableImage(Schema $schema)
