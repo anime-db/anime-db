@@ -4,6 +4,8 @@ web/media/[0-9]*
 web/media/suit
 web/media/favicon
 app/Resources/anime.db
+bin/doctrine
+bin/doctrine.php
 
 # Services pid files #
 ######################
