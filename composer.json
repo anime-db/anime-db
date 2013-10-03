@@ -46,6 +46,8 @@
         "avalanche123/imagine-bundle": "v2.1",
         "gedmo/doctrine-extensions": "dev-master",
         "knplabs/knp-menu-bundle": "1.1.*",
+        "doctrine/migrations": "dev-master",
+        "doctrine/doctrine-migrations-bundle": "dev-master",
         "anime-db/worldart-filler-bundle": "0.1.*"
     },
     "scripts": {
@@ -54,14 +56,31 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "app/console doctrine:migrations:migrate --no-interaction"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "app/console doctrine:migrations:migrate --no-interaction"
+        ],
+        "post-package-install": [
+            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::addPluginToAppKernel",
+            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::addPluginToRouting",
+            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migratePlugin",
+            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::savePlugin"
+        ],
+        "post-package-update": [
+            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migratePlugin"
+        ],
+        "pre-package-uninstall": [
+            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::removePluginFromAppKernel",
+            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::removePluginFromRouting",
+            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migratePlugin",
+            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::deletePlugin"
         ]
     },
     "config": {

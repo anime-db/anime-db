@@ -19,7 +19,7 @@ use Symfony\Component\Validator\ExecutionContextInterface;
  *
  * @ORM\Entity
  * @ORM\Table(name="notice", indexes={
- *   @ORM\Index(name="idx_notice_show", columns={"date_closed", "date_created"})
+ *   @ORM\Index(name="notice_show_idx", columns={"date_closed", "date_created"})
  * })
  * @ORM\Entity(repositoryClass="AnimeDB\Bundle\CatalogBundle\Repository\Notice")
  * @IgnoreAnnotation("ORM")
