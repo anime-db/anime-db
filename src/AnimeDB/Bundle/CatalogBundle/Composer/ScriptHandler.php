@@ -27,7 +27,7 @@ class ScriptHandler
     /**
      * Add plugin to AppKernel
      *
-     * @param \Composer\Script\CommandEvent $event
+     * @param \Composer\Script\PackageEvent $event
      */
     public static function addPluginToAppKernel(PackageEvent $event)
     {
@@ -37,7 +37,7 @@ class ScriptHandler
     /**
      * Remove plugin from AppKernel
      *
-     * @param \Composer\Script\CommandEvent $event
+     * @param \Composer\Script\PackageEvent $event
      */
     public static function removePluginFromAppKernel(PackageEvent $event)
     {
@@ -47,7 +47,7 @@ class ScriptHandler
     /**
      * Migrate plugin
      *
-     * @param PackageEvent $event
+     * @param \Composer\Script\PackageEvent $event
      */
     public static function migratePlugin(PackageEvent $event)
     {
@@ -77,7 +77,7 @@ class ScriptHandler
     /**
      * Add plugin to routing
      *
-     * @param \Composer\Script\CommandEvent $event
+     * @param \Composer\Script\PackageEvent $event
      */
     public static function addPluginToRouting(PackageEvent $event)
     {
@@ -87,11 +87,31 @@ class ScriptHandler
     /**
      * Remove plugin from routing
      *
-     * @param \Composer\Script\CommandEvent $event
+     * @param \Composer\Script\PackageEvent $event
      */
     public static function removePluginFromRouting(PackageEvent $event)
     {
         // TODO remove @PluginBundle/Resources/config/routing.yml from app/config/routing.yml
+    }
+
+    /**
+     * Save plugin into DB
+     *
+     * @param \Composer\Script\PackageEvent $event
+     */
+    public static function savePlugin()
+    {
+        // TODO save plugin into db
+    }
+
+    /**
+     * Delete plugin from DB
+     *
+     * @param \Composer\Script\PackageEvent $event
+     */
+    public static function deletePlugin()
+    {
+        // TODO delete plugin from db
     }
 
     /**

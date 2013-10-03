@@ -70,7 +70,8 @@
         "post-package-install": [
             "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::addPluginToAppKernel",
             "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::addPluginToRouting",
-            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migratePlugin"
+            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migratePlugin",
+            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::savePlugin"
         ],
         "post-package-update": [
             "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migratePlugin"
@@ -78,7 +79,8 @@
         "pre-package-uninstall": [
             "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::removePluginFromAppKernel",
             "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::removePluginFromRouting",
-            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migratePlugin"
+            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migratePlugin",
+            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::deletePlugin"
         ]
     },
     "config": {
