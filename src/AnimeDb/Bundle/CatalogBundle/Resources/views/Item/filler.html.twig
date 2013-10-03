@@ -1,0 +1,31 @@
+{% extends 'AnimeDbCatalogBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Fill from source{% endtrans %}{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script type="text/javascript" src="{{ asset('/bundles/animedbcatalog/js/jquery.form.min.js') }}"></script>
+{% endblock %}
+
+{% if fill_form %}
+	{% form_theme fill_form 'AnimeDbCatalogBundle:Form:fields.html.twig' %}
+{% endif %}
+
+{% block content %}
+<div class="b-source-filler b-source-filler-{{ plugin }}">
+	<h2>{% trans %}Fill from source{% endtrans %}</h2>
+	<form action="" method="get" {{ form_enctype(form) }}>
+		{{ form_widget(form) }}
+		<button type="submit">{% trans %}Fill{% endtrans %}</button>
+	</form>
+	{% if fill_form %}
+		<div class="b-addition-form">
+			<h2>{% trans %}Add record{% endtrans %}</h2>
+			<form action="{{ path('item_add_manually') }}" method="post">
+				{{ form_widget(fill_form) }}
+				<button type="submit">{% trans %}Add{% endtrans %}</button>
+			</form>
+		</div>
+	{% endif %}
+</div>
+{% endblock %}

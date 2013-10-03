@@ -7,7 +7,7 @@
     "version": "0.1.8",
     "authors": [
         {
-            "name":     "AnimeDB",
+            "name":     "Anime DB",
             "homepage": "http://anime-db.org"
         },
         {
@@ -15,17 +15,17 @@
             "email":    "info@peter-gribanov.ru"
         },
         {
-            "name":     "AnimeDB Community",
+            "name":     "Anime DB Community",
             "homepage": "https://github.com/anime-db/anime-db/graphs/contributors"
         }
     ],
     "autoload": {
-        "psr-0": { "AnimeDB\\": "src/" }
+        "psr-0": { "AnimeDb\\": "src/" }
     },
     "repositories": [
         {
             "type": "vcs",
-            "url": "git://github.com/anime-db/worldart-filler-bundle.git"
+            "url": "git://github.com/anime-db/world-art-filler-bundle.git"
         }
     ],
     "require": {
@@ -48,7 +48,7 @@
         "knplabs/knp-menu-bundle": "1.1.*",
         "doctrine/migrations": "dev-master",
         "doctrine/doctrine-migrations-bundle": "dev-master",
-        "anime-db/worldart-filler-bundle": "0.1.*"
+        "anime-db/world-art-filler-bundle": "0.1.*"
     },
     "scripts": {
         "post-install-cmd": [
@@ -68,19 +68,19 @@
             "app/console doctrine:migrations:migrate --no-interaction"
         ],
         "post-package-install": [
-            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::addPluginToAppKernel",
-            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::addPluginToRouting",
-            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migratePlugin",
-            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::savePlugin"
+            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::addPluginToAppKernel",
+            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::addPluginToRouting",
+            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migratePlugin",
+            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::savePlugin"
         ],
         "post-package-update": [
-            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migratePlugin"
+            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migratePlugin"
         ],
         "pre-package-uninstall": [
-            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::removePluginFromAppKernel",
-            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::removePluginFromRouting",
-            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migratePlugin",
-            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::deletePlugin"
+            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::removePluginFromAppKernel",
+            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::removePluginFromRouting",
+            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migratePlugin",
+            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::deletePlugin"
         ]
     },
     "config": {
