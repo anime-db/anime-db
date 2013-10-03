@@ -1,0 +1,35 @@
+{% extends 'AnimeDbCatalogBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Search source of filling{% endtrans %}{% endblock %}
+
+{% form_theme form 'AnimeDbCatalogBundle:Form:fields.html.twig' %}
+
+{% block content %}
+<div class="b-search-source b-search-source-{{ plugin }}">
+	<h2>{% trans %}Search source of filling{% endtrans %}</h2>
+	<form action="" method="post" {{ form_enctype(form) }}>
+		{{ form_widget(form) }}
+		<button type="submit">{% trans %}Find{% endtrans %}</button>
+	</form>
+	{% if list is not empty %}
+		<div class="b-filler-search">
+		<h2>{% trans %}List of results{% endtrans %}</h2>
+		<span>{% trans %}Select the entry you want to add{% endtrans %}</span>
+		<ul>
+			{% for item in list %}
+				<li>
+					<a href="{{ item.link }}" class="image">
+						<img src="{{ item.image|dummy('card') }}" alt="{{ item.name }}" />
+					</a>
+					<div class="info">
+						<a href="{{ item.link }}">{{ item.name }}</a>
+						<div>{{ item.description|nl2br }}</div>
+					</div>
+					<br clear="both">
+				</li>
+			{% endfor %}
+		</ul>
+		</div>
+	{% endif%}
+</div>
+{% endblock %}
