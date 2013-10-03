@@ -66,6 +66,19 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "app/console doctrine:migrations:migrate --no-interaction"
+        ],
+        "post-package-install": [
+            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::addPluginToAppKernel",
+            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::addPluginToRouting",
+            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migratePlugin"
+        ],
+        "post-package-update": [
+            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migratePlugin"
+        ],
+        "pre-package-uninstall": [
+            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::removePluginFromAppKernel",
+            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::removePluginFromRouting",
+            "AnimeDB\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migratePlugin"
         ]
     },
     "config": {
