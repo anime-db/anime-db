@@ -142,7 +142,7 @@ class Version20130930180819_Init extends AbstractMigration
             object_class VARCHAR(255) NOT NULL,
             field VARCHAR(32) NOT NULL,
             foreign_key VARCHAR(64) NOT NULL,
-            content CLOB DEFAULT NULL,
+            content TEXT DEFAULT NULL,
             PRIMARY KEY(id)
         )');
         // add index
@@ -157,7 +157,7 @@ class Version20130930180819_Init extends AbstractMigration
             object_id VARCHAR(2) DEFAULT NULL,
             locale VARCHAR(8) NOT NULL,
             field VARCHAR(32) NOT NULL,
-            content CLOB DEFAULT NULL,
+            content TEXT DEFAULT NULL,
             PRIMARY KEY(id)
         )');
         // add index
@@ -182,7 +182,7 @@ class Version20130930180819_Init extends AbstractMigration
     {
         $this->addSql('CREATE TABLE notice (
             id INTEGER NOT NULL,
-            message CLOB NOT NULL,
+            message TEXT NOT NULL,
             date_closed DATETIME DEFAULT NULL,
             date_created DATETIME NOT NULL,
             lifetime INTEGER NOT NULL,
@@ -198,9 +198,9 @@ class Version20130930180819_Init extends AbstractMigration
         $this->addSql('CREATE TABLE "storage" (
             id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
             name VARCHAR(128) NOT NULL,
-            description CLOB NOT NULL,
+            description TEXT NOT NULL,
             type VARCHAR(16) NOT NULL,
-            path CLOB DEFAULT NULL
+            path TEXT DEFAULT NULL
         )');
     }
 
@@ -215,12 +215,12 @@ class Version20130930180819_Init extends AbstractMigration
             date_start DATE NOT NULL,
             date_end DATE DEFAULT NULL,
             duration INTEGER DEFAULT NULL,
-            summary CLOB DEFAULT NULL,
+            summary TEXT DEFAULT NULL,
             path VARCHAR(256) DEFAULT NULL,
-            episodes CLOB DEFAULT NULL,
+            episodes TEXT DEFAULT NULL,
             episodes_number VARCHAR(5) DEFAULT NULL,
             translate VARCHAR(256) DEFAULT NULL,
-            file_info CLOB DEFAULT NULL,
+            file_info TEXT DEFAULT NULL,
             cover VARCHAR(256) DEFAULT NULL,
             date_add DATETIME NOT NULL,
             date_update DATETIME NOT NULL
