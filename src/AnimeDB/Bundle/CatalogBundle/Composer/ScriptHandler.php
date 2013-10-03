@@ -14,6 +14,7 @@ use Composer\Script\PackageEvent;
 use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
 use Composer\Script\Event;
+use Composer\Package\PackageInterface;
 
 /**
  * Composer script handler
@@ -68,18 +69,8 @@ class ScriptHandler
            return;
         }
 
-        if ($dir = self::getBundleRootDirFromPackage($package->getName())) {
-            // get path to migrations config
-            $dir .= '/Resources/config/';
-            if (file_exists($dir.'migrations.yml')) {
-                $command .= ' --configuration='.$dir.'migrations.yml';
-            } elseif (file_exists($dir.'migrations.xml')) {
-                $command .= ' --configuration='.$dir.'migrations.xml';
-            } else {
-                return;
-            }
-
-            self::executeCommand($event, $command);
+        if ($config = self::getMigrationsConfig($package)) {
+            self::executeCommand($event, $command.' --configuration='.$config);
         }
     }
 
@@ -104,15 +95,48 @@ class ScriptHandler
     }
 
     /**
-     * Get bundle class from package name
+     * Get path to migrations config file from package
      *
-     * @param string $package
+     * @param \Composer\Package\PackageInterface $package
+     *
+     * @return string|boolean
+     */
+    protected static function getMigrationsConfig(PackageInterface $package)
+    {
+        $options = self::getPluginOptions($package);
+        // specific location
+        if ($options['anime-db-migrations']) {
+            return $options['anime-db-migrations'];
+        }
+
+        if ($dir = self::getBundleRootDir($package)) {
+            // get path to migrations config
+            $dir .= '/Resources/config/';
+            if (file_exists($dir.'migrations.yml')) {
+                return $dir.'migrations.yml';
+            } elseif (file_exists($dir.'migrations.xml')) {
+                return $dir.'migrations.xml';
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Get bundle class from package
+     *
+     * @param \Composer\Package\PackageInterface $package
      *
      * @return string
      */
-    protected static function getBundleClassFromPackage($package)
+    protected static function getBundleClass(PackageInterface $package)
     {
-        $bundle = str_replace(['-', '/'], [' ', '/ '], $package);
+        $options = self::getPluginOptions($package);
+        // specific name
+        if ($options['anime-db-bundle']) {
+            return $options['anime-db-bundle'];
+        }
+
+        $bundle = str_replace(['-', '/'], [' ', '/ '], $package->getName());
         $bundle = ucwords(strtolower($bundle));
         // TODO rename vendor AnimeDB to AnimeDb #53
         // TODO rename package anime-db/worldart-filler-bundle to anime-db/world-art-filler-bundle #5
@@ -122,15 +146,15 @@ class ScriptHandler
     }
 
     /**
-     * Get bundle class from package name
+     * Get bundle root dir from package
      *
-     * @param string $package
+     * @param \Composer\Package\PackageInterface $package
      *
-     * @return string
+     * @return string|boolean
      */
-    protected static function getBundleRootDirFromPackage($package)
+    protected static function getBundleRootDir(PackageInterface $package)
     {
-        $bundle = self::getBundleClassFromPackage($package);
+        $bundle = self::getBundleClass($package);
 
         $loader = require __DIR__.'/../../../../../vendor/autoload.php';
         if ($file = $loader->findFile($bundle)) {
@@ -166,6 +190,22 @@ class ScriptHandler
         if (!$process->isSuccessful()) {
             throw new \RuntimeException(sprintf('An error occurred when executing the "%s" command.', escapeshellarg($cmd)));
         }
+    }
+
+    /**
+     * Get plugin options
+     *
+     * @param \Composer\Package\PackageInterface $package
+     *
+     * @return array
+     */
+    protected static function getPluginOptions(PackageInterface $package)
+    {
+        return array_merge(array(
+            'anime-db-bundle' => '',
+            'anime-db-routing' => '',
+            'anime-db-migrations' => '',
+        ), $package->getExtra());
     }
 
     /**
