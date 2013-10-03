@@ -308,7 +308,7 @@ class Storage
      *
      * @return array
      */
-    public function getTypesWritable()
+    public static function getTypesWritable()
     {
         return [self::TYPE_FOLDER, self::TYPE_EXTERNAL];
     }
@@ -318,7 +318,7 @@ class Storage
      *
      * @return array
      */
-    public function getTypesReadable()
+    public static function getTypesReadable()
     {
         return [self::TYPE_FOLDER, self::TYPE_EXTERNAL, self::TYPE_EXTERNAL_R];
     }
@@ -330,7 +330,7 @@ class Storage
      */
     public function isPathRequired()
     {
-        return in_array($this->getType(), $this->getTypesWritable());
+        return in_array($this->getType(), self::getTypesWritable());
     }
 
     /**
