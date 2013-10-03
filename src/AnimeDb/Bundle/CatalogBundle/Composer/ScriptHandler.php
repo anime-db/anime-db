@@ -175,6 +175,7 @@ class ScriptHandler
     {
         $bundle = self::getBundleClass($package);
 
+        // TODO on first installation a autoload is not created
         if (file_exists(__DIR__.'/../../../../../vendor/autoload.php')) {
             $loader = require __DIR__.'/../../../../../vendor/autoload.php';
             if ($file = $loader->findFile($bundle)) {
