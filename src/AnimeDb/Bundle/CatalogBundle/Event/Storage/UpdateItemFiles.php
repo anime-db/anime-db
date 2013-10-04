@@ -19,7 +19,7 @@ use AnimeDb\Bundle\CatalogBundle\Entity\Item;
  * @package AnimeDb\Bundle\CatalogBundle\Event\Storage
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class UpdateItem extends Event
+class UpdateItemFiles extends Event
 {
     /**
      * Item

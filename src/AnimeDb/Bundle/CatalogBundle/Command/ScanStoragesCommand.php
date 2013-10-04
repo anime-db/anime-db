@@ -17,7 +17,7 @@ use AnimeDb\Bundle\CatalogBundle\Entity\Storage;
 use Symfony\Component\Finder\Finder;
 use AnimeDb\Bundle\CatalogBundle\Event\Storage\StoreEvents;
 use AnimeDb\Bundle\CatalogBundle\Event\Storage\UpdateItemFiles;
-use AnimeDb\Bundle\CatalogBundle\Event\Storage\NewItem;
+use AnimeDb\Bundle\CatalogBundle\Event\Storage\DetectedNewFiles;
 use AnimeDb\Bundle\CatalogBundle\Event\Storage\DeleteItemFiles;
 use AnimeDb\Bundle\CatalogBundle\Entity\Notice;
 
@@ -101,7 +101,7 @@ class ScanStoragesCommand extends ContainerAwareCommand
                         // item is exists and modified
                         if ($item->getDateUpdate()->getTimestamp() < $file->getPathInfo()->getMTime()) {
                             // send event
-                            $dispatcher->dispatch(StoreEvents::UPDATE_ITEM, new UpdateItemFiles($item));
+                            $dispatcher->dispatch(StoreEvents::UPDATE_ITEM_FILES, new UpdateItemFiles($item));
                             // send notice
                             $notice = new Notice();
                             $notice->setMessage(sprintf(self::MESSAGE_UPDATE_ITEM, '"'.$item->getName().'"'));
@@ -116,7 +116,7 @@ class ScanStoragesCommand extends ContainerAwareCommand
                 // it is a new item
                 $name = $file->isDir() ? $file->getFilename() : pathinfo($file->getFilename(), PATHINFO_BASENAME);
                 // send event
-                $dispatcher->dispatch(StoreEvents::NEW_ITEM, new NewItem($storage, $file));
+                $dispatcher->dispatch(StoreEvents::DETECTED_NEW_FILES, new DetectedNewFiles($storage, $file));
                 // send notice
                 $notice = new Notice();
                 $notice->setMessage(sprintf(self::MESSAGE_NEW_ITEM, '"'.$name.'"'));
@@ -133,7 +133,7 @@ class ScanStoragesCommand extends ContainerAwareCommand
                     }
                 }
                 // send event
-                $dispatcher->dispatch(StoreEvents::DELETE_ITEM, new DeleteItemFiles($item));
+                $dispatcher->dispatch(StoreEvents::DELETE_ITEM_FILES, new DeleteItemFiles($item));
                 // send notice
                 $notice = new Notice();
                 $notice->setMessage(sprintf(self::MESSAGE_DELETE_ITEM, '"'.$item->getName().'"'));

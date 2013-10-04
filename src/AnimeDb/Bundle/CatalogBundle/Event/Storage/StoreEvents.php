@@ -23,19 +23,19 @@ final class StoreEvents
      *
      * @var string
      */
-    const UPDATE_ITEM = 'anime_db.update_item_on_storage';
+    const UPDATE_ITEM_FILES = 'anime_db.storage.update_item_files';
 
     /**
-     * Event thrown when a new item is detected
+     * Event thrown when a new item files is detected
      *
      * @var string
      */
-    const NEW_ITEM = 'anime_db.new_item_on_storage';
+    const DETECTED_NEW_FILES = 'anime_db.storage.detected_new_files';
 
     /**
      * Event thrown when item is removed
      *
      * @var string
      */
-    const DELETE_ITEM = 'anime_db.delete_item_on_storage';
+    const DELETE_ITEM_FILES = 'anime_db.storage.delete_item_files';
 }

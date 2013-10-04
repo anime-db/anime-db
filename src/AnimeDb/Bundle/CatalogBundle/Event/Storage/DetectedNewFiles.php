@@ -15,12 +15,12 @@ use AnimeDb\Bundle\CatalogBundle\Entity\Storage;
 use Symfony\Component\Finder\SplFileInfo;
 
 /**
- * Event thrown when a new item is detected
+ * Event thrown when a new item files is detected
  *
  * @package AnimeDb\Bundle\CatalogBundle\Event\Storage
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class NewItem extends Event
+class DetectedNewFiles extends Event
 {
     /**
      * Storage
