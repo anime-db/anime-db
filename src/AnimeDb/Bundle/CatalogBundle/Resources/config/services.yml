@@ -39,7 +39,7 @@ services:
 
     # Kernel request listener
     anime_db.listener.request:
-        class: AnimeDb\Bundle\CatalogBundle\Service\Listener\Request
+        class: AnimeDb\Bundle\CatalogBundle\Event\Listener\Request
         tags: [{ name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: -255 }]
         arguments: [ @gedmo.listener.translatable, @validator ]
 
