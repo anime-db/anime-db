@@ -16,9 +16,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use AnimeDb\Bundle\CatalogBundle\Entity\Storage;
 use Symfony\Component\Finder\Finder;
 use AnimeDb\Bundle\CatalogBundle\Event\Storage\StoreEvents;
-use AnimeDb\Bundle\CatalogBundle\Event\Storage\UpdateItem;
+use AnimeDb\Bundle\CatalogBundle\Event\Storage\UpdateItemFiles;
 use AnimeDb\Bundle\CatalogBundle\Event\Storage\NewItem;
-use AnimeDb\Bundle\CatalogBundle\Event\Storage\DeleteItem;
+use AnimeDb\Bundle\CatalogBundle\Event\Storage\DeleteItemFiles;
 use AnimeDb\Bundle\CatalogBundle\Entity\Notice;
 
 /**
@@ -101,7 +101,7 @@ class ScanStoragesCommand extends ContainerAwareCommand
                         // item is exists and modified
                         if ($item->getDateUpdate()->getTimestamp() < $file->getPathInfo()->getMTime()) {
                             // send event
-                            $dispatcher->dispatch(StoreEvents::UPDATE_ITEM, new UpdateItem($item));
+                            $dispatcher->dispatch(StoreEvents::UPDATE_ITEM, new UpdateItemFiles($item));
                             // send notice
                             $notice = new Notice();
                             $notice->setMessage(sprintf(self::MESSAGE_UPDATE_ITEM, '"'.$item->getName().'"'));
@@ -133,7 +133,7 @@ class ScanStoragesCommand extends ContainerAwareCommand
                     }
                 }
                 // send event
-                $dispatcher->dispatch(StoreEvents::DELETE_ITEM, new DeleteItem($item));
+                $dispatcher->dispatch(StoreEvents::DELETE_ITEM, new DeleteItemFiles($item));
                 // send notice
                 $notice = new Notice();
                 $notice->setMessage(sprintf(self::MESSAGE_DELETE_ITEM, '"'.$item->getName().'"'));
