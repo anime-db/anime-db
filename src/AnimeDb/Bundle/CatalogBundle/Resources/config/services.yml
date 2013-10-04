@@ -43,6 +43,11 @@ services:
         tags: [{ name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: -255 }]
         arguments: [ @gedmo.listener.translatable, @validator ]
 
+    anime_db.subscriber.scan_storage:
+        class: AnimeDb\Bundle\CatalogBundle\Event\Subscriber\ScanStorage
+        arguments: [ @doctrine.orm.entity_manager ]
+        tags: [{ name:kernel.event_subscriber }]
+
     gedmo.listener.translatable:
         class: Gedmo\Translatable\TranslatableListener
         tags:

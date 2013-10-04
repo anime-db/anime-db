@@ -19,7 +19,6 @@ use AnimeDb\Bundle\CatalogBundle\Event\Storage\StoreEvents;
 use AnimeDb\Bundle\CatalogBundle\Event\Storage\UpdateItemFiles;
 use AnimeDb\Bundle\CatalogBundle\Event\Storage\DetectedNewFiles;
 use AnimeDb\Bundle\CatalogBundle\Event\Storage\DeleteItemFiles;
-use AnimeDb\Bundle\CatalogBundle\Entity\Notice;
 use Symfony\Component\Finder\SplFileInfo;
 
 /**
@@ -30,27 +29,6 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 class ScanStoragesCommand extends ContainerAwareCommand
 {
-    /**
-     * Message for update item
-     *
-     * @var string
-     */
-    const MESSAGE_UPDATE_ITEM = 'Changes are detected in files of item %s';
-
-    /**
-     * Message for new item
-     *
-     * @var string
-     */
-    const MESSAGE_NEW_ITEM = 'Detected files for new item %s';
-
-    /**
-     * Message for delete item
-     *
-     * @var string
-     */
-    const MESSAGE_DELETE_ITEM = 'Files for item %s is removed';
-
     /**
      * (non-PHPdoc)
      * @see Symfony\Component\Console\Command.Command::configure()
@@ -66,7 +44,7 @@ class ScanStoragesCommand extends ContainerAwareCommand
      * @see Symfony\Component\Console\Command.Command::execute()
      */
     protected function execute(InputInterface $input, OutputInterface $output) {
-        $em = $this->getContainer()->get('doctrine')->getManager();
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $dispatcher = $this->getContainer()->get('event_dispatcher');
 
         $start = microtime(true);
@@ -97,38 +75,20 @@ class ScanStoragesCommand extends ContainerAwareCommand
             /* @var $file \Symfony\Component\Finder\SplFileInfo */
             foreach ($finder as $file) {
                 if ($item = $this->getItemOfUpdatedFiles($storage, $file)) {
-                    // send event
                     $dispatcher->dispatch(StoreEvents::UPDATE_ITEM_FILES, new UpdateItemFiles($item));
-                    // send notice
-                    $notice = new Notice();
-                    $notice->setMessage(sprintf(self::MESSAGE_UPDATE_ITEM, '"'.$item->getName().'"'));
-                    $em->persist($notice);
-                    // write output
-                    $output->writeln(sprintf(self::MESSAGE_UPDATE_ITEM, '<info>'.$item->getName().'</info>'));
+                    $output->writeln('Changes are detected in files of item <info>'.$item->getName().'</info>');
                 } else {
                     // it is a new item
                     $name = $file->isDir() ? $file->getFilename() : pathinfo($file->getFilename(), PATHINFO_BASENAME);
-                    // send event
                     $dispatcher->dispatch(StoreEvents::DETECTED_NEW_FILES, new DetectedNewFiles($storage, $file));
-                    // send notice
-                    $notice = new Notice();
-                    $notice->setMessage(sprintf(self::MESSAGE_NEW_ITEM, '"'.$name.'"'));
-                    $em->persist($notice);
-                    // write output
-                    $output->writeln(sprintf(self::MESSAGE_NEW_ITEM, '<info>'.$name.'</info>'));
+                    $output->writeln('Detected files for new item <info>'.$name.'</info>');
                 }
             }
 
             // check of delete file for item
             foreach ($this->getItemsOfDeletedFiles($storage, $finder) as $item) {
-                // send event
                 $dispatcher->dispatch(StoreEvents::DELETE_ITEM_FILES, new DeleteItemFiles($item));
-                // send notice
-                $notice = new Notice();
-                $notice->setMessage(sprintf(self::MESSAGE_DELETE_ITEM, '"'.$item->getName().'"'));
-                $em->persist($notice);
-                // write output
-                $output->writeln('<error>'.sprintf(self::MESSAGE_DELETE_ITEM, '"'.$item->getName().'"').'</error>');
+                $output->writeln('<error>Files for item "'.$item->getName().'" is removed</error>');
             }
 
             // update date modified
