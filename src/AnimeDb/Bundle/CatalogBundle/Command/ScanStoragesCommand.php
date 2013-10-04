@@ -20,6 +20,7 @@ use AnimeDb\Bundle\CatalogBundle\Event\Storage\UpdateItemFiles;
 use AnimeDb\Bundle\CatalogBundle\Event\Storage\DetectedNewFiles;
 use AnimeDb\Bundle\CatalogBundle\Event\Storage\DeleteItemFiles;
 use AnimeDb\Bundle\CatalogBundle\Entity\Notice;
+use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Scan storages for new items
@@ -68,11 +69,11 @@ class ScanStoragesCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getManager();
         $dispatcher = $this->getContainer()->get('event_dispatcher');
 
-        /* @var $repository \AnimeDb\Bundle\CatalogBundle\Repository\Storage */
-        $repository = $em->getRepository('AnimeDbCatalogBundle:Storage');
-        $storages = $repository->getList(Storage::getTypesWritable());
-
         $start = microtime(true);
+
+        $storages = $em->getRepository('AnimeDbCatalogBundle:Storage')
+            ->getList(Storage::getTypesWritable());
+
         $is_first_storage = true;
 
         /* @var $storage \AnimeDb\Bundle\CatalogBundle\Entity\Storage */
@@ -95,43 +96,31 @@ class ScanStoragesCommand extends ContainerAwareCommand
 
             /* @var $file \Symfony\Component\Finder\SplFileInfo */
             foreach ($finder as $file) {
-                /* @var $item \AnimeDb\Bundle\CatalogBundle\Entity\Item */
-                foreach ($storage->getItems() as $item) {
-                    if ($item->getPath() == $file->getPathname()) {
-                        // item is exists and modified
-                        if ($item->getDateUpdate()->getTimestamp() < $file->getPathInfo()->getMTime()) {
-                            // send event
-                            $dispatcher->dispatch(StoreEvents::UPDATE_ITEM_FILES, new UpdateItemFiles($item));
-                            // send notice
-                            $notice = new Notice();
-                            $notice->setMessage(sprintf(self::MESSAGE_UPDATE_ITEM, '"'.$item->getName().'"'));
-                            $em->persist($notice);
-                            // write output
-                            $output->writeln(sprintf(self::MESSAGE_UPDATE_ITEM, '<info>'.$item->getName().'</info>'));
-                        }
-                        continue 2;
-                    }
+                if ($item = $this->getItemOfUpdatedFiles($storage, $file)) {
+                    // send event
+                    $dispatcher->dispatch(StoreEvents::UPDATE_ITEM_FILES, new UpdateItemFiles($item));
+                    // send notice
+                    $notice = new Notice();
+                    $notice->setMessage(sprintf(self::MESSAGE_UPDATE_ITEM, '"'.$item->getName().'"'));
+                    $em->persist($notice);
+                    // write output
+                    $output->writeln(sprintf(self::MESSAGE_UPDATE_ITEM, '<info>'.$item->getName().'</info>'));
+                } else {
+                    // it is a new item
+                    $name = $file->isDir() ? $file->getFilename() : pathinfo($file->getFilename(), PATHINFO_BASENAME);
+                    // send event
+                    $dispatcher->dispatch(StoreEvents::DETECTED_NEW_FILES, new DetectedNewFiles($storage, $file));
+                    // send notice
+                    $notice = new Notice();
+                    $notice->setMessage(sprintf(self::MESSAGE_NEW_ITEM, '"'.$name.'"'));
+                    $em->persist($notice);
+                    // write output
+                    $output->writeln(sprintf(self::MESSAGE_NEW_ITEM, '<info>'.$name.'</info>'));
                 }
-
-                // it is a new item
-                $name = $file->isDir() ? $file->getFilename() : pathinfo($file->getFilename(), PATHINFO_BASENAME);
-                // send event
-                $dispatcher->dispatch(StoreEvents::DETECTED_NEW_FILES, new DetectedNewFiles($storage, $file));
-                // send notice
-                $notice = new Notice();
-                $notice->setMessage(sprintf(self::MESSAGE_NEW_ITEM, '"'.$name.'"'));
-                $em->persist($notice);
-                // write output
-                $output->writeln(sprintf(self::MESSAGE_NEW_ITEM, '<info>'.$name.'</info>'));
             }
 
             // check of delete file for item
-            foreach ($storage->getItems() as $item) {
-                foreach ($finder as $file) {
-                    if ($item->getPath() == $file->getPathname()) {
-                        continue 2;
-                    }
-                }
+            foreach ($this->getItemsOfDeletedFiles($storage, $finder) as $item) {
                 // send event
                 $dispatcher->dispatch(StoreEvents::DELETE_ITEM_FILES, new DeleteItemFiles($item));
                 // send notice
@@ -143,12 +132,58 @@ class ScanStoragesCommand extends ContainerAwareCommand
             }
 
             // update date modified
-            $storage->setModified(new \DateTime(filemtime($storage->getPath())));
+            $storage->setModified(new \DateTime(date('Y-m-d H:i:s', filemtime($storage->getPath()))));
             $em->persist($storage);
         }
+        $em->flush();
+
         $output->writeln('');
         $output->writeln('Time: <info>'.round((microtime(true)-$start)*1000, 2).'</info> s.');
+    }
 
-        $em->flush();
+    /**
+     * Get items of deleted files
+     *
+     * @param \AnimeDb\Bundle\CatalogBundle\Entity\Storage $storage
+     * @param \Symfony\Component\Finder\Finder $finder
+     *
+     * @return array
+     */
+    protected function getItemsOfDeletedFiles(Storage $storage, Finder $finder)
+    {
+        $items = [];
+        // check of delete file for item
+        foreach ($storage->getItems() as $item) {
+            foreach ($finder as $file) {
+                if ($item->getPath() == $file->getPathname()) {
+                    continue 2;
+                }
+            }
+            $items[] = $item;
+        }
+        return $items;
+    }
+
+    /**
+     * Get item of updated files
+     *
+     * @param \AnimeDb\Bundle\CatalogBundle\Entity\Storage $storage
+     * @param \Symfony\Component\Finder\SplFileInfo $file
+     *
+     * @return \AnimeDb\Bundle\CatalogBundle\Entity\Item|boolean
+     */
+    protected function getItemOfUpdatedFiles(Storage $storage, SplFileInfo $file)
+    {
+        /* @var $item \AnimeDb\Bundle\CatalogBundle\Entity\Item */
+        foreach ($storage->getItems() as $item) {
+            if ($item->getPath() == $file->getPathname()) {
+                // item is exists and modified
+                if ($item->getDateUpdate()->getTimestamp() < $file->getPathInfo()->getMTime()) {
+                    return $item;
+                }
+                return false;
+            }
+        }
+        return false;
     }
 }
