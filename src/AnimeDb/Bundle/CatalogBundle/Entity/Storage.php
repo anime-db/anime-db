@@ -107,6 +107,15 @@ class Storage
     protected $path;
 
     /**
+     * Date of last modified
+     *
+     * @ORM\Column(type="datetime")
+     *
+     * @var \DateTime
+     */
+    protected $modified;
+
+    /**
      * Items list
      *
      * @ORM\OneToMany(targetEntity="Item", mappedBy="storage")
@@ -343,5 +352,28 @@ class Storage
         if ($this->isPathRequired() && !$this->getPath()) {
             $context->addViolationAt('path', 'Path is required to fill for current type of storage');
         }
+    }
+
+    /**
+     * Set date of last modified
+     *
+     * @param \DateTime $modified
+     *
+     * @return \AnimeDb\Bundle\CatalogBundle\Entity\Storage
+     */
+    public function setModified(\DateTime $modified)
+    {
+        $this->modified = $modified;
+        return $this;
+    }
+
+    /**
+     * Get date of last modified
+     *
+     * @return \DateTime
+     */
+    public function getModified()
+    {
+        return $this->modified;
     }
 }
