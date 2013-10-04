@@ -26,17 +26,6 @@ services:
         tags:
             - { name: twig.extension }
 
-    # cURL client for Buzz
-    buzz.client.curl:
-        class:  Buzz\Client\Curl
-        public: false
-        calls:
-            - [setVerifyPeer, [false]]
-    # Buzz browser
-    buzz.browser:
-        class:     Buzz\Browser
-        arguments: ['@buzz.client.curl']
-
     # Kernel request listener
     anime_db.listener.request:
         class: AnimeDb\Bundle\CatalogBundle\Service\Listener\Request
