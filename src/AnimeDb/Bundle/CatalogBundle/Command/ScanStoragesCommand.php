@@ -52,16 +52,9 @@ class ScanStoragesCommand extends ContainerAwareCommand
         $storages = $em->getRepository('AnimeDbCatalogBundle:Storage')
             ->getList(Storage::getTypesWritable());
 
-        $is_first_storage = true;
-
         /* @var $storage \AnimeDb\Bundle\CatalogBundle\Entity\Storage */
         foreach ($storages as $storage) {
-            // create a visual space between storages
-            if (!$is_first_storage) {
-                $output->writeln('');
-            }
-            $is_first_storage = false;
-
+            $output->writeln('');
             $output->writeln('Scan storage <info>'.$storage->getName().'</info>:');
 
             // storage is not modified
