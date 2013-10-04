@@ -34,6 +34,8 @@ class Version20131004103102_AddStorageLastModified extends AbstractMigration
         $this->addSql('ALTER TABLE storage RENAME TO _origin');
         $this->addSql('ALTER TABLE _new RENAME TO storage');
         $this->addSql('DROP TABLE _origin');
+
+        $this->addSql('CREATE INDEX storage_type_idx ON storage (type)');
     }
 
     public function down(Schema $schema)
@@ -58,5 +60,7 @@ class Version20131004103102_AddStorageLastModified extends AbstractMigration
         $this->addSql('ALTER TABLE storage RENAME TO _origin');
         $this->addSql('ALTER TABLE _new RENAME TO storage');
         $this->addSql('DROP TABLE _origin');
+
+        $this->addSql('DROP INDEX storage_type_idx');
     }
 }
