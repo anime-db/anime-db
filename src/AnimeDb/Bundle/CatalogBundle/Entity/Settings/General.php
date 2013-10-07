@@ -54,6 +54,13 @@ class General
     protected $locale;
 
     /**
+     * Plugin default search to fill
+     *
+     * @var string
+     */
+    protected $default_search;
+
+    /**
      * Get serial number
      * 
      * @return string
@@ -119,6 +126,29 @@ class General
     public function setLocale($locale)
     {
         $this->locale = $locale;
+        return $this;
+    }
+
+    /**
+     * Get plugin default search to fill
+     * 
+     * @return string
+     */
+    public function getDefaultSearch()
+    {
+        return $this->default_search;
+    }
+
+    /**
+     * Set plugin default search to fill
+     *
+     * @param string $default_search
+     *
+     * @return \AnimeDb\Bundle\CatalogBundle\Entity\Settings\General
+     */
+    public function setDefaultSearch($default_search)
+    {
+        $this->default_search = $default_search;
         return $this;
     }
 }
