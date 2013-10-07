@@ -17,6 +17,7 @@ use AnimeDb\Bundle\CatalogBundle\Event\Storage\DetectedNewFiles;
 use AnimeDb\Bundle\CatalogBundle\Event\Storage\UpdateItemFiles;
 use AnimeDb\Bundle\CatalogBundle\Entity\Notice;
 use Doctrine\ORM\EntityManager;
+use Symfony\Bundle\TwigBundle\TwigEngine;
 
 /**
  * Storages scan subscriber
@@ -34,13 +35,22 @@ class ScanStorage implements EventSubscriberInterface
     protected $em;
 
     /**
+     * Templating
+     *
+     * @var \Symfony\Bundle\TwigBundle\TwigEngine
+     */
+    private $templating;
+
+    /**
      * Construct
      *
      * @param \Doctrine\ORM\EntityManager $em
+     * @param \Symfony\Bundle\TwigBundle\TwigEngine $templating
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, TwigEngine $templating)
     {
         $this->em = $em;
+        $this->templating = $templating;
     }
 
     /**
@@ -64,7 +74,10 @@ class ScanStorage implements EventSubscriberInterface
     public function onDeleteItemFiles(DeleteItemFiles $event)
     {
         $notice = new Notice();
-        $notice->setMessage('Changes are detected in files of item "'.$event->getItem()->getName().'"');
+        $notice->setMessage($this->templating->render(
+            'AnimeDbCatalogBundle:Notice:massages/delete_item_files.html.twig',
+            ['item' => $event->getItem()]
+        ));
         $this->em->persist($notice);
     }
 
@@ -82,7 +95,10 @@ class ScanStorage implements EventSubscriberInterface
         }
 
         $notice = new Notice();
-        $notice->setMessage('Detected files for new item "'.$name.'" on storage "'.$event->getStorage()->getName().'"');
+        $notice->setMessage($this->templating->render(
+            'AnimeDbCatalogBundle:Notice:massages/detected_new_files.html.twig',
+            ['item' => $name, 'storage' => $event->getStorage()]
+        ));
         $this->em->persist($notice);
     }
 
@@ -94,7 +110,10 @@ class ScanStorage implements EventSubscriberInterface
     public function onUpdateItemFiles(UpdateItemFiles $event)
     {
         $notice = new Notice();
-        $notice->setMessage('Files for item "'.$event->getItem()->getName().'" is removed');
+        $notice->setMessage($this->templating->render(
+            'AnimeDbCatalogBundle:Notice:massages/update_item_files.html.twig',
+            ['item' => $event->getItem()]
+        ));
         $this->em->persist($notice);
     }
 }

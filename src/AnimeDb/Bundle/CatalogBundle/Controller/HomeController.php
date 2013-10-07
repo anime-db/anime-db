@@ -389,6 +389,7 @@ class HomeController extends Controller
                 // update params
                 $file = __DIR__.'/../../../../../app/config/parameters.yml';
                 $parameters = Yaml::parse($file);
+                $parameters['parameters']['locale'] = $entity->getLocale();
                 $parameters['parameters']['serial_number'] = $entity->getSerialNumber();
                 $parameters['parameters']['task-scheduler']['enabled'] = $entity->getTaskScheduler();
                 file_put_contents($file, Yaml::dump($parameters));
