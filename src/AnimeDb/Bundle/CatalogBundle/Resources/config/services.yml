@@ -9,6 +9,7 @@ services:
     anime_db.plugin.search:
         class: AnimeDb\Bundle\CatalogBundle\Plugin\Search\Chain
         scope: request
+        arguments: [ %default_search% ]
     anime_db.plugin.import:
         class: AnimeDb\Bundle\CatalogBundle\Plugin\Import\Chain
         scope: request
