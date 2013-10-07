@@ -57,7 +57,7 @@ class ScanStoragesCommand extends ContainerAwareCommand
             $output->writeln('');
             $output->writeln('Scan storage <info>'.$storage->getName().'</info>:');
 
-            // storage is not modified
+            // storage is exists and not modified
             if (!file_exists($storage->getPath()) ||
                 ($storage->getModified() && filemtime($storage->getPath()) == $storage->getModified()->getTimestamp())
             ) {
