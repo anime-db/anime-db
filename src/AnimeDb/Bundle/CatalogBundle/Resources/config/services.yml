@@ -5,20 +5,15 @@ services:
     # Plugins chain
     anime_db.plugin.filler:
         class: AnimeDb\Bundle\CatalogBundle\Plugin\Filler\Chain
-        scope: request
     anime_db.plugin.search:
         class: AnimeDb\Bundle\CatalogBundle\Plugin\Search\Chain
-        scope: request
         arguments: [ %default_search% ]
     anime_db.plugin.import:
         class: AnimeDb\Bundle\CatalogBundle\Plugin\Import\Chain
-        scope: request
     anime_db.plugin.item:
         class: AnimeDb\Bundle\CatalogBundle\Plugin\Item\Chain
-        scope: request
     anime_db.plugin.setting:
         class: AnimeDb\Bundle\CatalogBundle\Plugin\Setting\Chain
-        scope: request
 
     # Twig extension
     anime_db.twig_extension:
@@ -35,7 +30,7 @@ services:
 
     anime_db.subscriber.scan_storage:
         class: AnimeDb\Bundle\CatalogBundle\Event\Subscriber\ScanStorage
-        arguments: [ @doctrine.orm.entity_manager, @templating ]
+        arguments: [ @doctrine.orm.entity_manager, @templating, @anime_db.plugin.search ]
         tags: [{ name:kernel.event_subscriber }]
 
     gedmo.listener.translatable:

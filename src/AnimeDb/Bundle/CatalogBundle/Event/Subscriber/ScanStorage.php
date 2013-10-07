@@ -18,6 +18,7 @@ use AnimeDb\Bundle\CatalogBundle\Event\Storage\UpdateItemFiles;
 use AnimeDb\Bundle\CatalogBundle\Entity\Notice;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\TwigBundle\TwigEngine;
+use AnimeDb\Bundle\CatalogBundle\Plugin\Search\Chain as SearchChain;
 
 /**
  * Storages scan subscriber
@@ -42,15 +43,23 @@ class ScanStorage implements EventSubscriberInterface
     private $templating;
 
     /**
+     * Search chain
+     *
+     * @var \AnimeDb\Bundle\CatalogBundle\Plugin\Search\Chain
+     */
+    private $search;
+
+    /**
      * Construct
      *
      * @param \Doctrine\ORM\EntityManager $em
      * @param \Symfony\Bundle\TwigBundle\TwigEngine $templating
      */
-    public function __construct(EntityManager $em, TwigEngine $templating)
+    public function __construct(EntityManager $em, TwigEngine $templating, SearchChain $search)
     {
         $this->em = $em;
         $this->templating = $templating;
+        $this->search = $search;
     }
 
     /**
@@ -94,10 +103,15 @@ class ScanStorage implements EventSubscriberInterface
             $name = pathinfo($event->getFile()->getFilename(), PATHINFO_BASENAME);
         }
 
+        // default search plugin
+        if ($plugin = $this->search->getDafeultPlugin()) {
+            $plugin = $plugin->getName();
+        }
+
         $notice = new Notice();
         $notice->setMessage($this->templating->render(
             'AnimeDbCatalogBundle:Notice:massages/detected_new_files.html.twig',
-            ['item' => $name, 'storage' => $event->getStorage()]
+            ['item' => $name, 'storage' => $event->getStorage(), 'plugin' => $plugin]
         ));
         $this->em->persist($notice);
     }
