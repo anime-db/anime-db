@@ -18,7 +18,7 @@ parameters:
     # Serial number for application
     serial_number: ''
 
-    task-scheduler:
+    task_scheduler:
         enabled: true
 
     # Avalanche
