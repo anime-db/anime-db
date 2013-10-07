@@ -41,7 +41,7 @@ class TaskSchedulerCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output) {
         // exit if disabled
-        if (!$this->getContainer()->getParameter('task-scheduler')['enabled']) {
+        if (!$this->getContainer()->getParameter('task_scheduler')['enabled']) {
             return null;
         }
 

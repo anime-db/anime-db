@@ -18,8 +18,9 @@ parameters:
     # Serial number for application
     serial_number: ''
 
-    task-scheduler:
+    task_scheduler:
         enabled: true
+    default_search: null
 
     # Avalanche
     avalanche_card: [240, 300]

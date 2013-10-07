@@ -65,7 +65,7 @@ class ItemController extends Controller
         /* @var $form \Symfony\Component\Form\Form */
         $form = $this->createForm(new ItemForm(), $item);
 
-        if ($request->getMethod() == 'POST') {
+        if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
                 /* @var $repository \AnimeDb\Bundle\CatalogBundle\Repository\Item */
@@ -206,28 +206,26 @@ class ItemController extends Controller
         }
 
         $list = [];
-        if ($request->isMethod('POST')) {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                // url bulder for fill items in list
-                $that = $this;
-                $form_name = (new FillerPluginForm())->getName();
-                $url_builder = function ($source) use ($that, $plugin, $form_name) {
-                    return $that->generateUrl(
-                        'item_filler',
-                        [
-                            'plugin' => $plugin,
-                            $form_name => ['url' => $source]
-                        ]
-                    );
-                };
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            // url bulder for fill items in list
+            $that = $this;
+            $form_name = (new FillerPluginForm())->getName();
+            $url_builder = function ($source) use ($that, $plugin, $form_name) {
+                return $that->generateUrl(
+                    'item_filler',
+                    [
+                        'plugin' => $plugin,
+                        $form_name => ['url' => $source]
+                    ]
+                );
+            };
 
-                // search items
-                if ($search instanceof CustomFormSearch) {
-                    $list = $search->search($form->getData(), $url_builder);
-                } else {
-                    $list = $search->search($form->getData()['name'], $url_builder);
-                }
+            // search items
+            if ($search instanceof CustomFormSearch) {
+                $list = $search->search($form->getData(), $url_builder);
+            } else {
+                $list = $search->search($form->getData()['name'], $url_builder);
             }
         }
 

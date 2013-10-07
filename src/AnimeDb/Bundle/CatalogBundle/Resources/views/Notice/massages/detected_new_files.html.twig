@@ -1,4 +1,7 @@
 {% set storage %}
 <a href="{{ path('notice_show', {'id': storage.id }) }}">{{ storage.name }}</a>
 {% endset %}
-{% trans with {'%name%': item, '%storage%': storage } %}Detected files for new item %name% on storage %storage%{% endtrans %}
+{% set name %}
+<a href="{{ path('item_search', {'plugin': plugin, 'animedb_catalogbundle_plugin_search[name]': item}) }}">{{ item }}</a>
+{% endset %}
+{% trans with {'%name%': name, '%storage%': storage } %}Detected files for new item %name% on storage %storage%{% endtrans %}
