@@ -551,8 +551,8 @@
                 <target>Обнаружены изменения файлов записи %name%</target>
             </trans-unit>
             <trans-unit id="146">
-                <source>Plugin default search</source>
-                <target>Плагин по умолчанию для поиска</target>
+                <source>Default search plugin</source>
+                <target>Плагин поиска по умолчанию</target>
             </trans-unit>
             <trans-unit id="147">
                 <source>No</source>
