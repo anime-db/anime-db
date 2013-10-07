@@ -7,7 +7,7 @@
 {% block content %}
 <div class="b-search-source b-search-source-{{ plugin }}">
 	<h2>{% trans %}Search source of filling{% endtrans %}</h2>
-	<form action="" method="post" {{ form_enctype(form) }}>
+	<form action="" method="get" {{ form_enctype(form) }}>
 		{{ form_widget(form) }}
 		<button type="submit">{% trans %}Find{% endtrans %}</button>
 	</form>
