@@ -19,6 +19,8 @@ use AnimeDb\Bundle\CatalogBundle\Entity\Notice;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 use AnimeDb\Bundle\CatalogBundle\Plugin\Search\Chain as SearchChain;
+use AnimeDb\Bundle\CatalogBundle\Form\Plugin\Search as SearchPluginForm;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 /**
  * Storages scan subscriber
@@ -40,26 +42,36 @@ class ScanStorage implements EventSubscriberInterface
      *
      * @var \Symfony\Bundle\TwigBundle\TwigEngine
      */
-    private $templating;
+    protected $templating;
 
     /**
      * Search chain
      *
      * @var \AnimeDb\Bundle\CatalogBundle\Plugin\Search\Chain
      */
-    private $search;
+    protected $search;
+
+    /**
+     * Router
+     *
+     * @var \Symfony\Bundle\FrameworkBundle\Routing\Router
+     */
+    protected $router;
 
     /**
      * Construct
      *
      * @param \Doctrine\ORM\EntityManager $em
      * @param \Symfony\Bundle\TwigBundle\TwigEngine $templating
+     * @param \AnimeDb\Bundle\CatalogBundle\Plugin\Search\Chain $search
+     * @param \Symfony\Bundle\FrameworkBundle\Routing\Router $search
      */
-    public function __construct(EntityManager $em, TwigEngine $templating, SearchChain $search)
+    public function __construct(EntityManager $em, TwigEngine $templating, SearchChain $search, Router $router)
     {
         $this->em = $em;
         $this->templating = $templating;
         $this->search = $search;
+        $this->router = $router;
     }
 
     /**
@@ -103,15 +115,26 @@ class ScanStorage implements EventSubscriberInterface
             $name = pathinfo($event->getFile()->getFilename(), PATHINFO_BASENAME);
         }
 
+        $link = null;
         // default search plugin
         if ($plugin = $this->search->getDafeultPlugin()) {
-            $plugin = $plugin->getName();
+            // get form name
+            if ($plugin instanceof CustomFormSearch) {
+                $form = $plugin->getForm(); // use plugin form
+            } else {
+                $form = new SearchPluginForm();
+            }
+
+            $link = $this->router->generate('item_search', [
+                'plugin' => $plugin->getName(),
+                $form->getName().'[name]' => $name
+            ]);
         }
 
         $notice = new Notice();
         $notice->setMessage($this->templating->render(
             'AnimeDbCatalogBundle:Notice:massages/detected_new_files.html.twig',
-            ['item' => $name, 'storage' => $event->getStorage(), 'plugin' => $plugin]
+            ['storage' => $event->getStorage(), 'name' => $name, 'link' => $link]
         ));
         $this->em->persist($notice);
     }
