@@ -30,7 +30,7 @@ services:
 
     anime_db.subscriber.scan_storage:
         class: AnimeDb\Bundle\CatalogBundle\Event\Subscriber\ScanStorage
-        arguments: [ @doctrine.orm.entity_manager, @templating, @anime_db.plugin.search ]
+        arguments: [ @doctrine.orm.entity_manager, @templating, @anime_db.plugin.search, @router ]
         tags: [{ name:kernel.event_subscriber }]
 
     gedmo.listener.translatable:
