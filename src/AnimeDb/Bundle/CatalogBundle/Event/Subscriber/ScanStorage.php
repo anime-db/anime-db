@@ -82,7 +82,7 @@ class ScanStorage implements EventSubscriberInterface
         }
 
         $notice = new Notice();
-        $notice->setMessage('Detected files for new item "'.$name.'"');
+        $notice->setMessage('Detected files for new item "'.$name.'" on storage "'.$event->getStorage()->getName().'"');
         $this->em->persist($notice);
     }
 

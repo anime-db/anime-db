@@ -37,7 +37,7 @@ class Notice extends EntityRepository
                 n.status != :closed AND
                 (n.date_closed IS NULL OR n.date_closed >= :time)
             ORDER BY
-                n.date_created ASC
+                n.date_created, n.id ASC
         ')
             ->setMaxResults(1)
             ->setParameter('closed', NoticeEntity::STATUS_CLOSED)
