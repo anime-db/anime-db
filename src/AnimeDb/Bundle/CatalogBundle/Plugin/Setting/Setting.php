@@ -11,7 +11,7 @@
 namespace AnimeDb\Bundle\CatalogBundle\Plugin\Setting;
 
 use AnimeDb\Bundle\CatalogBundle\Plugin\Plugin;
-use AnimeDb\Bundle\CatalogBundle\Plugin\CustomMenu;
+use AnimeDb\Bundle\CatalogBundle\Plugin;
 
 /**
  * Plugin setting interface
@@ -19,6 +19,6 @@ use AnimeDb\Bundle\CatalogBundle\Plugin\CustomMenu;
  * @package AnimeDb\Bundle\CatalogBundle\Plugin\Setting
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-interface Setting extends Plugin, CustomMenu
+abstract class Setting extends Plugin
 {
 }

@@ -11,14 +11,15 @@
 namespace AnimeDb\Bundle\CatalogBundle\Plugin\Search;
 
 use AnimeDb\Bundle\CatalogBundle\Plugin\Plugin;
+use Knp\Menu\ItemInterface;
 
 /**
- * Plugin search interface
+ * Plugin search
  * 
  * @package AnimeDb\Bundle\CatalogBundle\Plugin\Search
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-interface Search extends Plugin
+abstract class Search extends Plugin
 {
     /**
      * Search source by name
@@ -37,5 +38,20 @@ interface Search extends Plugin
      *
      * @return array
      */
-    public function search($name, \Closure $url_bulder);
+    abstract public function search($name, \Closure $url_bulder);
+
+    /**
+     * Build menu for plugin
+     *
+     * @param \Knp\Menu\ItemInterface $item
+     *
+     * @return \Knp\Menu\ItemInterface
+     */
+    public function buildMenu(ItemInterface $item)
+    {
+        $item->addChild($this->getTitle(), [
+            'route' => 'item_search',
+            'routeParameters' => ['plugin' => $this->getName()]
+        ]);
+    }
 }

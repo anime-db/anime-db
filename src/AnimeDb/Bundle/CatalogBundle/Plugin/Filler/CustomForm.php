@@ -18,21 +18,12 @@ use AnimeDb\Bundle\CatalogBundle\Plugin\Filler\Filler;
  * @package AnimeDb\Bundle\CatalogBundle\Plugin\Filler
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-interface CustomForm extends Filler
+abstract class CustomForm extends Filler
 {
     /**
      * Get form
      *
      * @return \Symfony\Component\Form\AbstractType
      */
-    public function getForm();
-
-    /**
-     * Fill item from source data
-     *
-     * @param array $data
-     *
-     * @return \AnimeDb\Bundle\CatalogBundle\Entity\Item|null
-     */
-    public function fill($data);
+    abstract public function getForm();
 }

@@ -18,14 +18,14 @@ use AnimeDb\Bundle\CatalogBundle\Plugin\Search\Search;
  * @package AnimeDb\Bundle\CatalogBundle\Plugin\Search
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-interface CustomForm extends Search
+abstract class CustomForm extends Search
 {
     /**
      * Get form
      *
      * @return \Symfony\Component\Form\AbstractType
      */
-    public function getForm();
+    abstract public function getForm();
 
     /**
      * Search source by form data
@@ -44,5 +44,5 @@ interface CustomForm extends Search
      *
      * @return array
      */
-    public function search($data, \Closure $url_bulder);
+    abstract public function search($data, \Closure $url_bulder);
 }

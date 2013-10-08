@@ -11,14 +11,15 @@
 namespace AnimeDb\Bundle\CatalogBundle\Plugin\Filler;
 
 use AnimeDb\Bundle\CatalogBundle\Plugin\Plugin;
+use Knp\Menu\ItemInterface;
 
 /**
- * Plugin filler interface
+ * Plugin filler
  * 
  * @package AnimeDb\Bundle\CatalogBundle\Plugin\Filler
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-interface Filler extends Plugin
+abstract class Filler extends Plugin
 {
     /**
      * Fill item from source
@@ -27,7 +28,7 @@ interface Filler extends Plugin
      *
      * @return \AnimeDb\Bundle\CatalogBundle\Entity\Item|null
      */
-    public function fill($source);
+    abstract public function fill($source);
 
     /**
      * Filler is support this source
@@ -36,5 +37,20 @@ interface Filler extends Plugin
      *
      * @return boolean
      */
-    public function isSupportSource($source);
+    abstract public function isSupportSource($source);
+
+    /**
+     * Build menu for plugin
+     *
+     * @param \Knp\Menu\ItemInterface $item
+     *
+     * @return \Knp\Menu\ItemInterface
+     */
+    public function buildMenu(ItemInterface $item)
+    {
+        $item->addChild($this->getTitle(), [
+            'route' => 'item_filler',
+            'routeParameters' => ['plugin' => $this->getName()]
+        ]);
+    }
 }
