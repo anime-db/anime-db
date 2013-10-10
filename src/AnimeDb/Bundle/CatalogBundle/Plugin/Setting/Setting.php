@@ -11,7 +11,6 @@
 namespace AnimeDb\Bundle\CatalogBundle\Plugin\Setting;
 
 use AnimeDb\Bundle\CatalogBundle\Plugin\Plugin;
-use AnimeDb\Bundle\CatalogBundle\Plugin;
 
 /**
  * Plugin setting interface
