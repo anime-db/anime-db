@@ -190,21 +190,7 @@ class ItemController extends Controller
         $list = [];
         $form->handleRequest($request);
         if ($form->isValid()) {
-            // url bulder for fill items in list
-            $that = $this;
-            $form_name = $this->get('anime_db.plugin.filler')->getPlugin($plugin)->getForm()->getName();
-            $url_builder = function ($source) use ($that, $plugin, $form_name) {
-                return $that->generateUrl(
-                    'item_filler',
-                    [
-                        'plugin' => $plugin,
-                        $form_name => ['url' => $source]
-                    ]
-                );
-            };
-
-            // search items
-            $list = $search->search($form->getData(), $url_builder);
+            $list = $search->search($form->getData());
         }
 
         return $this->render('AnimeDbCatalogBundle:Item:search.html.twig', [

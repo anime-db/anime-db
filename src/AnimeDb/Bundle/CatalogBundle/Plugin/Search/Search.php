@@ -12,7 +12,8 @@ namespace AnimeDb\Bundle\CatalogBundle\Plugin\Search;
 
 use AnimeDb\Bundle\CatalogBundle\Plugin\Plugin;
 use Knp\Menu\ItemInterface;
-use AnimeDb\Bundle\CatalogBundle\Form\Plugin\Search as SearchPluginForm;
+use AnimeDb\Bundle\CatalogBundle\Form\Plugin\Search as SearchForm;
+use AnimeDb\Bundle\CatalogBundle\Plugin\Filler\Filler;
 
 /**
  * Plugin search
@@ -23,9 +24,14 @@ use AnimeDb\Bundle\CatalogBundle\Form\Plugin\Search as SearchPluginForm;
 abstract class Search extends Plugin
 {
     /**
-     * Search source by name
+     * Filler
      *
-     * Use $url_bulder for build link to fill item from source or build their own links
+     * @var \AnimeDb\Bundle\CatalogBundle\Plugin\Filler\Filler
+     */
+    protected $filler;
+
+    /**
+     * Search source by name
      *
      * Return structure
      * <code>
@@ -35,11 +41,10 @@ abstract class Search extends Plugin
      * </code>
      *
      * @param array $data
-     * @param \Closure $url_bulder
      *
      * @return array
      */
-    abstract public function search(array $data, \Closure $url_bulder);
+    abstract public function search(array $data);
 
     /**
      * Build menu for plugin
@@ -65,6 +70,31 @@ abstract class Search extends Plugin
      */
     public function getForm()
     {
-        return new SearchPluginForm();
+        return new SearchForm();
+    }
+
+    /**
+     * Set filler
+     *
+     * @param \AnimeDb\Bundle\CatalogBundle\Plugin\Filler\Filler $filler
+     */
+    public function setFiller(Filler $filler)
+    {
+        $this->filler = $filler;
+    }
+
+    /**
+     * Get link for fill item
+     *
+     * @param mixed $data
+     *
+     * @return string
+     */
+    public function getLinkForFill($data)
+    {
+        if (!($this->filler instanceof Filler)) {
+            throw new \LogicException('Link cannot be built without a Filler');
+        }
+        return $this->filler->getLinkForFill($data);
     }
 }

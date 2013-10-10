@@ -64,7 +64,7 @@ class ScanStorage implements EventSubscriberInterface
      * @param \Doctrine\ORM\EntityManager $em
      * @param \Symfony\Bundle\TwigBundle\TwigEngine $templating
      * @param \AnimeDb\Bundle\CatalogBundle\Plugin\Search\Chain $search
-     * @param \Symfony\Bundle\FrameworkBundle\Routing\Router $search
+     * @param \Symfony\Bundle\FrameworkBundle\Routing\Router $router
      */
     public function __construct(EntityManager $em, TwigEngine $templating, SearchChain $search, Router $router)
     {

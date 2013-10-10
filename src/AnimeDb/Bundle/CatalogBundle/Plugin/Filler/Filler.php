@@ -12,7 +12,8 @@ namespace AnimeDb\Bundle\CatalogBundle\Plugin\Filler;
 
 use AnimeDb\Bundle\CatalogBundle\Plugin\Plugin;
 use Knp\Menu\ItemInterface;
-use AnimeDb\Bundle\CatalogBundle\Form\Plugin\Filler as FillerPluginForm;
+use AnimeDb\Bundle\CatalogBundle\Form\Plugin\Filler as FillerForm;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 /**
  * Plugin filler
@@ -23,6 +24,13 @@ use AnimeDb\Bundle\CatalogBundle\Form\Plugin\Filler as FillerPluginForm;
 abstract class Filler extends Plugin
 {
     /**
+     * Router
+     *
+     * @var \Symfony\Bundle\FrameworkBundle\Routing\Router
+     */
+    protected $router;
+
+    /**
      * Fill item from source
      *
      * @param array $data
@@ -30,15 +38,6 @@ abstract class Filler extends Plugin
      * @return \AnimeDb\Bundle\CatalogBundle\Entity\Item|null
      */
     abstract public function fill(array $data);
-
-    /**
-     * Filler is support this source
-     *
-     * @param string $source
-     *
-     * @return boolean
-     */
-    abstract public function isSupportSource($source);
 
     /**
      * Build menu for plugin
@@ -61,6 +60,40 @@ abstract class Filler extends Plugin
      */
     public function getForm()
     {
-        return new FillerPluginForm();
+        return new FillerForm();
+    }
+
+    /**
+     * Set router
+     *
+     * @param \Symfony\Bundle\FrameworkBundle\Routing\Router $router
+     */
+    public function setRouter(Router $router)
+    {
+        $this->router = $router;
+    }
+
+    /**
+     * Get link for fill item
+     *
+     * @throws \LogicException
+     *
+     * @param mixed $data
+     *
+     * @return string
+     */
+    public function getLinkForFill($data)
+    {
+        if (!($this->router instanceof Router)) {
+            throw new \LogicException('Link cannot be built without a Router');
+        }
+
+        return $this->router->generate(
+            'item_filler',
+            [
+                'plugin' => $this->getName(),
+                $this->getForm()->getName() => ['url' => $data]
+            ]
+        );
     }
 }
