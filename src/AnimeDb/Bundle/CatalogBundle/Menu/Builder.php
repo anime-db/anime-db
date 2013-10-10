@@ -13,7 +13,6 @@ namespace AnimeDb\Bundle\CatalogBundle\Menu;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Symfony\Component\DependencyInjection\ContainerAware;
-use AnimeDb\Bundle\CatalogBundle\Plugin\CustomMenu;
 use AnimeDb\Bundle\CatalogBundle\Plugin\Chain;
 
 /**
@@ -45,7 +44,6 @@ class Builder extends ContainerAware
         $this->addPluginItems(
             $this->container->get('anime_db.plugin.search'),
             $add,
-            'item_search',
             'Search source of filling',
             'Search the source and fill record from it'
         );
@@ -53,20 +51,13 @@ class Builder extends ContainerAware
         $this->addPluginItems(
             $this->container->get('anime_db.plugin.filler'),
             $add,
-            'item_filler',
             'Fill from source',
             'Fill record from source (example source is URL)'
         );
         // add import plugin items
-        $this->addPluginItems(
-            $this->container->get('anime_db.plugin.import'),
-            $add,
-            'item_import',
-            'Import items'
-        );
+        $this->addPluginItems($this->container->get('anime_db.plugin.import'), $add, 'Import items');
         // add settings plugin items
-        $chain = $this->container->get('anime_db.plugin.setting');
-        foreach ($chain->getPlugins() as $plugin) {
+        foreach ($this->container->get('anime_db.plugin.setting')->getPlugins() as $plugin) {
             $plugin->buildMenu($settings);
         }
 
@@ -84,11 +75,10 @@ class Builder extends ContainerAware
      *
      * @param \AnimeDb\Bundle\CatalogBundle\Service\Plugin\Chain $chain
      * @param \Knp\Menu\ItemInterface $root
-     * @param string $route
      * @param string $label
      * @param string|null $title
      */
-    private function addPluginItems(Chain $chain, ItemInterface $root, $route, $label, $title = '')
+    private function addPluginItems(Chain $chain, ItemInterface $root, $label, $title = '')
     {
         if (count($chain->getPlugins())) {
             $group = $root->addChild($label);
@@ -99,19 +89,7 @@ class Builder extends ContainerAware
 
         // add child items
         foreach ($chain->getPlugins() as $plugin) {
-            if ($plugin instanceof CustomMenu) {
-                $plugin->buildMenu($group);
-            } else {
-                $group->addChild($plugin->getTitle(), [
-                    'route' => $route,
-                    'routeParameters' => ['plugin' => $plugin->getName()]
-                ]);
-            }
-        }
-
-        // if group is empty, remove it
-        if (count($chain->getPlugins()) && !count($group)) {
-            $root->removeChild($label);
+            $plugin->buildMenu($group);
         }
     }
 

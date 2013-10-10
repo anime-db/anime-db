@@ -64,7 +64,7 @@ class ScanStorage implements EventSubscriberInterface
      * @param \Doctrine\ORM\EntityManager $em
      * @param \Symfony\Bundle\TwigBundle\TwigEngine $templating
      * @param \AnimeDb\Bundle\CatalogBundle\Plugin\Search\Chain $search
-     * @param \Symfony\Bundle\FrameworkBundle\Routing\Router $search
+     * @param \Symfony\Bundle\FrameworkBundle\Routing\Router $router
      */
     public function __construct(EntityManager $em, TwigEngine $templating, SearchChain $search, Router $router)
     {
@@ -116,19 +116,9 @@ class ScanStorage implements EventSubscriberInterface
         }
 
         $link = null;
-        // default search plugin
+        // build link for search item by name from default plugin
         if ($plugin = $this->search->getDafeultPlugin()) {
-            // get form name
-            if ($plugin instanceof CustomFormSearch) {
-                $form = $plugin->getForm(); // use plugin form
-            } else {
-                $form = new SearchPluginForm();
-            }
-
-            $link = $this->router->generate('item_search', [
-                'plugin' => $plugin->getName(),
-                $form->getName().'[name]' => $name
-            ]);
+            $link = $plugin->getLinkForSearch($name);
         }
 
         $notice = new Notice();
