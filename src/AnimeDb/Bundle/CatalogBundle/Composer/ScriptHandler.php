@@ -11,6 +11,7 @@
 namespace AnimeDb\Bundle\CatalogBundle\Composer;
 
 use Composer\Script\PackageEvent;
+use Composer\Script\CommandEvent;
 use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
 use Composer\Script\Event;
@@ -243,5 +244,15 @@ class ScriptHandler
             throw new \RuntimeException('The php executable could not be found, add it to your PATH environment variable and try again');
         }
         return $phpPath;
+    }
+
+    /**
+     * Global migrate
+     *
+     * @param \Composer\Script\CommandEvent $event
+     */
+    public static function migrate(CommandEvent $event)
+    {
+        self::executeCommand($event, 'doctrine:migrations:migrate --no-interaction');
     }
 }

@@ -56,7 +56,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "app/console doctrine:migrations:migrate --no-interaction"
+            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migrate"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
@@ -64,7 +64,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "app/console doctrine:migrations:migrate --no-interaction"
+            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migrate"
         ],
         "post-package-install": [
             "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::addPluginToAppKernel",
