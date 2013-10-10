@@ -12,6 +12,7 @@ namespace AnimeDb\Bundle\CatalogBundle\Plugin\Search;
 
 use AnimeDb\Bundle\CatalogBundle\Plugin\Plugin;
 use Knp\Menu\ItemInterface;
+use AnimeDb\Bundle\CatalogBundle\Form\Plugin\Search as SearchPluginForm;
 
 /**
  * Plugin search
@@ -33,12 +34,12 @@ abstract class Search extends Plugin
      * ]
      * </code>
      *
-     * @param string $name
+     * @param array $data
      * @param \Closure $url_bulder
      *
      * @return array
      */
-    abstract public function search($name, \Closure $url_bulder);
+    abstract public function search(array $data, \Closure $url_bulder);
 
     /**
      * Build menu for plugin
@@ -53,5 +54,17 @@ abstract class Search extends Plugin
             'route' => 'item_search',
             'routeParameters' => ['plugin' => $this->getName()]
         ]);
+    }
+
+    /**
+     * Get form
+     *
+     * Form must contain the "name" field to enter the name of the desired item
+     *
+     * @return \AnimeDb\Bundle\CatalogBundle\Form\Plugin\Search
+     */
+    public function getForm()
+    {
+        return new SearchPluginForm();
     }
 }

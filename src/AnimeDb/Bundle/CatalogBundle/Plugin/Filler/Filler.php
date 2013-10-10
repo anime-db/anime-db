@@ -12,6 +12,7 @@ namespace AnimeDb\Bundle\CatalogBundle\Plugin\Filler;
 
 use AnimeDb\Bundle\CatalogBundle\Plugin\Plugin;
 use Knp\Menu\ItemInterface;
+use AnimeDb\Bundle\CatalogBundle\Form\Plugin\Filler as FillerPluginForm;
 
 /**
  * Plugin filler
@@ -24,11 +25,11 @@ abstract class Filler extends Plugin
     /**
      * Fill item from source
      *
-     * @param string $source
+     * @param array $data
      *
      * @return \AnimeDb\Bundle\CatalogBundle\Entity\Item|null
      */
-    abstract public function fill($source);
+    abstract public function fill(array $data);
 
     /**
      * Filler is support this source
@@ -52,5 +53,14 @@ abstract class Filler extends Plugin
             'route' => 'item_filler',
             'routeParameters' => ['plugin' => $this->getName()]
         ]);
+    }
+    /**
+     * Get form
+     *
+     * @return \AnimeDb\Bundle\CatalogBundle\Form\Plugin\Filler
+     */
+    public function getForm()
+    {
+        return new FillerPluginForm();
     }
 }

@@ -118,16 +118,10 @@ class ScanStorage implements EventSubscriberInterface
         $link = null;
         // default search plugin
         if ($plugin = $this->search->getDafeultPlugin()) {
-            // get form name
-            if ($plugin instanceof CustomFormSearch) {
-                $form = $plugin->getForm(); // use plugin form
-            } else {
-                $form = new SearchPluginForm();
-            }
-
+            // build link for search item by name
             $link = $this->router->generate('item_search', [
                 'plugin' => $plugin->getName(),
-                $form->getName().'[name]' => $name
+                $plugin->getForm()->getName().'[name]' => $name
             ]);
         }
 
