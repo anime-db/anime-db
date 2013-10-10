@@ -1,8 +1,8 @@
 <?php
 /**
- * AnimeDB package
+ * AnimeDb package
  *
- * @package   AnimeDB
+ * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
@@ -33,10 +33,11 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-            new AnimeDB\Bundle\CatalogBundle\AnimeDBCatalogBundle(),
+            new AnimeDb\Bundle\CatalogBundle\AnimeDbCatalogBundle(),
             new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
-            new AnimeDB\Bundle\WorldArtFillerBundle\AnimeDBWorldArtFillerBundle(),
+            new AnimeDb\Bundle\WorldArtFillerBundle\AnimeDbWorldArtFillerBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

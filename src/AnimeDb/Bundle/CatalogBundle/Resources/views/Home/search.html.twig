@@ -1,0 +1,23 @@
+{% extends 'AnimeDbCatalogBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Search{% endtrans %}{% endblock %}
+
+{% block content %}
+<div class="b-search">
+	<section class="params">
+		<header>{% trans %}Search options{% endtrans %}</header>
+		<article>
+			<form action="{{ path('home_search') }}" method="get" {{ form_enctype(form) }}>
+				{{ form_widget(form, {'id': 'f-search'}) }}
+				<button type="submit">{% trans %}Search{% endtrans %}</button>
+			</form>
+		</article>
+	</section>
+	<section class="result">
+		<header>{% trans %}Search results{% endtrans %}</header>
+		<article>
+			{% include 'AnimeDbCatalogBundle:Home:list-items.html.twig' %}
+		</article>
+	</section>
+</div>
+{% endblock %}

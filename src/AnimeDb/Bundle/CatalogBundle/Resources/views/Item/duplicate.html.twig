@@ -1,0 +1,19 @@
+{% extends 'AnimeDbCatalogBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Confirm duplicate item{% endtrans %}{% endblock %}
+
+{% block content %}
+<div class="b-item-duplicate">
+	<h2>{% trans %}Confirm duplicate item{% endtrans %}</h2>
+	<section class="b-duplicates">
+		<header>{% trans %}List of found duplicates{% endtrans %}</header>
+		<article>{% include 'AnimeDbCatalogBundle:Home:list-items.html.twig' %}</article>
+	</section>
+	<div class="b-form">
+		<form action="{{ path('item_duplicate') }}" method="post">
+			<button type="submit" name="do" value="cancel">{% trans %}Cancel{% endtrans %}</button>
+			<button type="submit" name="do" value="add">{% trans %}Add{% endtrans %}</button>
+		</form>
+	</div>
+</div>
+{% endblock %}

@@ -15,11 +15,9 @@ sPhp = "php"
 sSpid  = sPath & "/bin/.spid"
 sTspid = sPath & "/bin/.tspid"
 
-sConsole = sPhp & " -f " & sPath & "/app/console "
-
 ' Commands to run server and Task Scheduler
-sServer        = sPhp & " -S " & sAddr & ":" & sPort & " -t " & sPath & "/web " & sPath & "/app/router.php > nul 2> nul"
-sTaskScheduler = sConsole & "animedb:task-scheduler > nul 2> nul"
+sServer        = chr(34) & sPhp & chr(34) & " -S " & sAddr & ":" & sPort & " -t " & chr(34) & sPath & "/web" & chr(34) & " " & chr(34) & sPath & "/app/router.php" & chr(34) & " >nul 2>&1"
+sTaskScheduler = chr(34) & sPhp & chr(34) & " -f " & chr(34) & sPath & "/app/console" & chr(34) & " animedb:task-scheduler"
 
 ' Stop Server if running
 if oFileSystem.FileExists(sSpid) then

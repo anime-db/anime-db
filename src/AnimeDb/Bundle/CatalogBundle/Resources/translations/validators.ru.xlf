@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>The number of episodes should be a number and can contain a '+' to denote the continuation of production</source>
+                <target>Число эпизодов должно быть числом и может содержать '+', чтобы обозначить продолжение выпуска</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>Serial number must consist of numbers and letters, and have the form of XXXX-XXXX-XXXX-XXXX</source>
+                <target>Серийный номер должен состоять из цифр и букв, и иметь вид XXXX-XXXX-XXXX-XXXX</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>Path is required to fill for current type of storage</source>
+                <target>Путь требуется заполнить для данного типа храненилища</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>Path to item does not match path to storage</source>
+                <target>Путь к записе не соответствует пути к хранилищу</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

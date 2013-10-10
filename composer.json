@@ -4,10 +4,10 @@
     "type": "project",
     "description": "The application for making home collection anime",
     "homepage": "http://anime-db.org",
-    "version": "0.1.8",
+    "version": "0.2.0",
     "authors": [
         {
-            "name":     "AnimeDB",
+            "name":     "Anime DB",
             "homepage": "http://anime-db.org"
         },
         {
@@ -15,17 +15,17 @@
             "email":    "info@peter-gribanov.ru"
         },
         {
-            "name":     "AnimeDB Community",
+            "name":     "Anime DB Community",
             "homepage": "https://github.com/anime-db/anime-db/graphs/contributors"
         }
     ],
     "autoload": {
-        "psr-0": { "AnimeDB\\": "src/" }
+        "psr-0": { "AnimeDb\\": "src/" }
     },
     "repositories": [
         {
             "type": "vcs",
-            "url": "git://github.com/anime-db/worldart-filler-bundle.git"
+            "url": "git://github.com/anime-db/world-art-filler-bundle.git"
         }
     ],
     "require": {
@@ -42,11 +42,12 @@
         "sensio/framework-extra-bundle": "2.3.*",
         "sensio/generator-bundle": "2.3.*",
         "incenteev/composer-parameter-handler": "~2.0",
-        "sensio/buzz-bundle": "dev-master",
         "avalanche123/imagine-bundle": "v2.1",
         "gedmo/doctrine-extensions": "dev-master",
         "knplabs/knp-menu-bundle": "1.1.*",
-        "anime-db/worldart-filler-bundle": "0.1.*"
+        "doctrine/migrations": "dev-master",
+        "doctrine/doctrine-migrations-bundle": "dev-master",
+        "anime-db/world-art-filler-bundle": "0.1.*"
     },
     "scripts": {
         "post-install-cmd": [
@@ -54,20 +55,37 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migrate"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migrate"
+        ],
+        "post-package-install": [
+            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::addPluginToAppKernel",
+            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::addPluginToRouting",
+            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migratePlugin",
+            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::savePlugin"
+        ],
+        "post-package-update": [
+            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migratePlugin"
+        ],
+        "pre-package-uninstall": [
+            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::removePluginFromAppKernel",
+            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::removePluginFromRouting",
+            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migratePlugin",
+            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::deletePlugin"
         ]
     },
     "config": {
         "bin-dir": "bin"
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",

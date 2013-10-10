@@ -1,0 +1,20 @@
+{% extends 'AnimeDbCatalogBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Add storage{% endtrans %}{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script type="text/javascript" src="{{ asset('/bundles/animedbcatalog/js/jquery.form.min.js') }}"></script>
+{% endblock %}
+
+{% form_theme form 'AnimeDbCatalogBundle:Form:fields.html.twig' %}
+
+{% block content %}
+<div class="b-addition-form">
+	<h2>{% trans %}Add storage{% endtrans %}</h2>
+	<form action="{{ path('storage_add') }}" method="post" {{ form_enctype(form) }}>
+		{{ form_widget(form) }}
+		<button type="submit">{% trans %}Add{% endtrans %}</button>
+	</form>
+</div>
+{% endblock %}

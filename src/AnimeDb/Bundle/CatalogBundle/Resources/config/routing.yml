@@ -1,0 +1,122 @@
+home:
+    pattern:  /
+    defaults: { _controller: AnimeDbCatalogBundle:Home:index }
+
+home_search:
+    pattern:  /search.html
+    defaults: { _controller: AnimeDbCatalogBundle:Home:search }
+
+home_autocomplete_name:
+    pattern:  /autocomplete-name.json
+    defaults: { _controller: AnimeDbCatalogBundle:Home:autocompleteName, _format: json }
+
+home_settings:
+    pattern:  /settings.html
+    defaults: { _controller: AnimeDbCatalogBundle:Home:settings }
+
+
+item_add_manually:
+    pattern:  /add-manually.html
+    defaults: { _controller: AnimeDbCatalogBundle:Item:addManually }
+
+item_show:
+    pattern:  /{id}-{name}/
+    defaults: { _controller: AnimeDbCatalogBundle:Item:show }
+    requirements:
+        id:  \d+
+
+item_change:
+    pattern:  /{id}-{name}/change.html
+    defaults: { _controller: AnimeDbCatalogBundle:Item:change }
+    requirements:
+        id:  \d+
+
+item_delete:
+    pattern:  /{id}-{name}/delete.html
+    defaults: { _controller: AnimeDbCatalogBundle:Item:delete }
+    requirements:
+        id:  \d+
+
+item_filler:
+    pattern:  /filler/{plugin}.html
+    defaults: { _controller: AnimeDbCatalogBundle:Item:filler }
+
+item_search:
+    pattern:  /search/{plugin}.html
+    defaults: { _controller: AnimeDbCatalogBundle:Item:search }
+
+item_import:
+    pattern:  /import/{plugin}.html
+    defaults: { _controller: AnimeDbCatalogBundle:Item:import }
+
+item_duplicate:
+    pattern:  /duplicate.html
+    defaults: { _controller: AnimeDbCatalogBundle:Item:duplicate }
+
+
+media_favicon:
+    pattern:  /media/favicon/{host}.ico
+    requirements:
+        host: .+
+    defaults: { _controller: AnimeDbCatalogBundle:Media:favicon }
+
+
+form_local_path:
+    pattern:  /form/local_path.html
+    defaults: { _controller: AnimeDbCatalogBundle:Form:localPath }
+
+form_local_path_folders:
+    pattern:  /form/local_path/folders.json
+    defaults: { _controller: AnimeDbCatalogBundle:Form:localPathFolders, _format: json }
+
+
+form_image:
+    pattern:  /form/image.html
+    defaults: { _controller: AnimeDbCatalogBundle:Form:image }
+
+form_image_upload:
+    pattern:  /form/imageUpload.json
+    defaults: { _controller: AnimeDbCatalogBundle:Form:imageUpload, _format: json }
+    requirements:
+        _method:  POST
+
+storage_list:
+    pattern:  /settings/storage.html
+    defaults: { _controller: AnimeDbCatalogBundle:Storage:list }
+
+storage_add:
+    pattern:  /settings/storage/add.html
+    defaults: { _controller: AnimeDbCatalogBundle:Storage:add }
+
+storage_change:
+    pattern:  /settings/storage/{id}/change.html
+    defaults: { _controller: AnimeDbCatalogBundle:Storage:change }
+    requirements:
+        id:  \d+
+
+storage_delete:
+    pattern:  /settings/storage/{id}/delete.html
+    defaults: { _controller: AnimeDbCatalogBundle:Storage:delete }
+    requirements:
+        id:  \d+
+
+notice_show:
+    pattern:  /notice/show.json
+    defaults: { _controller: AnimeDbCatalogBundle:Notice:show, _format: json }
+
+notice_close:
+    pattern:  /notice/{id}/close.json
+    defaults: { _controller: AnimeDbCatalogBundle:Notice:close, _format: json }
+    requirements:
+        _method:  POST
+        id:  \d+
+
+notice_get:
+    pattern:  /notice/{id}/
+    defaults: { _controller: AnimeDbCatalogBundle:Notice:get }
+    requirements:
+        id:  \d+
+
+notice_list:
+    pattern:  /notice/
+    defaults: { _controller: AnimeDbCatalogBundle:Notice:list }
