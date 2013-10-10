@@ -116,13 +116,9 @@ class ScanStorage implements EventSubscriberInterface
         }
 
         $link = null;
-        // default search plugin
+        // build link for search item by name from default plugin
         if ($plugin = $this->search->getDafeultPlugin()) {
-            // build link for search item by name
-            $link = $this->router->generate('item_search', [
-                'plugin' => $plugin->getName(),
-                $plugin->getForm()->getName().'[name]' => $name
-            ]);
+            $link = $plugin->getLinkForSearch($name);
         }
 
         $notice = new Notice();

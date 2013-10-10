@@ -13,16 +13,25 @@ namespace AnimeDb\Bundle\CatalogBundle\Plugin\Search;
 use AnimeDb\Bundle\CatalogBundle\Plugin\Plugin;
 use Knp\Menu\ItemInterface;
 use AnimeDb\Bundle\CatalogBundle\Form\Plugin\Search as SearchForm;
+use AnimeDb\Bundle\CatalogBundle\Form\Plugin\Filler as FillerForm;
 use AnimeDb\Bundle\CatalogBundle\Plugin\Filler\Filler;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 /**
  * Plugin search
- * 
+ *
  * @package AnimeDb\Bundle\CatalogBundle\Plugin\Search
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 abstract class Search extends Plugin
 {
+    /**
+     * Router
+     *
+     * @var \Symfony\Bundle\FrameworkBundle\Routing\Router
+     */
+    protected $router;
+
     /**
      * Filler
      *
@@ -62,9 +71,17 @@ abstract class Search extends Plugin
     }
 
     /**
-     * Get form
+     * Set router
      *
-     * Form must contain the "name" field to enter the name of the desired item
+     * @param \Symfony\Bundle\FrameworkBundle\Routing\Router $router
+     */
+    public function setRouter(Router $router)
+    {
+        $this->router = $router;
+    }
+
+    /**
+     * Get form
      *
      * @return \AnimeDb\Bundle\CatalogBundle\Form\Plugin\Search
      */
@@ -92,9 +109,31 @@ abstract class Search extends Plugin
      */
     public function getLinkForFill($data)
     {
-        if (!($this->filler instanceof Filler)) {
-            throw new \LogicException('Link cannot be built without a Filler');
+        if ($this->filler instanceof Filler) {
+            return $this->filler->getLinkForFill($data);
+        } else {
+            return $this->router->generate(
+                'item_filler',
+                [
+                    'plugin' => $this->getName(),
+                    FillerForm::FORM_NAME => ['url' => $data]
+                ]
+            );
         }
-        return $this->filler->getLinkForFill($data);
+    }
+
+    /**
+     * Get link for search items
+     *
+     * @param string $name
+     *
+     * @return string
+     */
+    public function getLinkForSearch($name)
+    {
+        return $this->router->generate('item_search', [
+            'plugin' => $this->getName(),
+            $this->getForm()->getName().'[name]' => $name
+        ]);
     }
 }

@@ -17,7 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 /**
  * Plugin filler
- * 
+ *
  * @package AnimeDb\Bundle\CatalogBundle\Plugin\Filler
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
