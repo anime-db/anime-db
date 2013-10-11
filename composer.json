@@ -1,6 +1,6 @@
 {
     "name": "anime-db/anime-db",
-    "license": "MIT",
+    "license": "GPL-3.0",
     "type": "project",
     "description": "The application for making home collection anime",
     "homepage": "http://anime-db.org",
