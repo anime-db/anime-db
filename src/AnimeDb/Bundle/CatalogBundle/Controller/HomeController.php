@@ -406,4 +406,36 @@ class HomeController extends Controller
             'form'  => $form->createView()
         ]);
     }
+
+    /**
+     * Assets stylesheets
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function assetsStylesheetsAction()
+    {
+        $plugins = $this->get('anime_db.plugin.assets')->getPlugins();
+        $paths = [];
+        /* @var $plugin \AnimeDb\Bundle\CatalogBundle\Plugin\Assets\Assets */
+        foreach ($plugins as $plugin) {
+            $paths[] = $plugin->getCssPaths();
+        }
+        return $this->render('AnimeDbCatalogBundle:Home:assets/stylesheets.html.twig', ['paths'  => $paths]);
+    }
+
+    /**
+     * Assets javascripts
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function assetsJavaScriptsAction()
+    {
+        $plugins = $this->get('anime_db.plugin.assets')->getPlugins();
+        $paths = [];
+        /* @var $plugin \AnimeDb\Bundle\CatalogBundle\Plugin\Assets\Assets */
+        foreach ($plugins as $plugin) {
+            $paths[] = $plugin->getJsPaths();
+        }
+        return $this->render('AnimeDbCatalogBundle:Home:assets/javascripts.html.twig', ['paths'  => $paths]);
+    }
 }
