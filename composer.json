@@ -1,10 +1,10 @@
 {
     "name": "anime-db/anime-db",
-    "license": "MIT",
+    "license": "GPL-3.0",
     "type": "project",
     "description": "The application for making home collection anime",
     "homepage": "http://anime-db.org",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "authors": [
         {
             "name":     "Anime DB",
@@ -22,12 +22,6 @@
     "autoload": {
         "psr-0": { "AnimeDb\\": "src/" }
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git://github.com/anime-db/world-art-filler-bundle.git"
-        }
-    ],
     "require": {
         "php": ">=5.4.0",
         "ext-pdo_sqlite": ">=1.0.1",
@@ -85,16 +79,11 @@
     "config": {
         "bin-dir": "bin"
     },
-    "minimum-stability": "dev",
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",
-        "symfony-assets-install": "symlink",
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
-        },
-        "branch-alias": {
-            "dev-master": "2.3-dev"
         }
     }
 }
