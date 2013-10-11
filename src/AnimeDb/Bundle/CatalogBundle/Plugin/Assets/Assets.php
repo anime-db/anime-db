@@ -21,4 +21,17 @@ use Knp\Menu\ItemInterface;
  */
 abstract class Assets extends Plugin
 {
+    /**
+     * Get links on js files
+     *
+     * @return array
+     */
+    abstract public function getJsPaths();
+
+    /**
+     * Get links on css files
+     *
+     * @return array
+     */
+    abstract public function getCssPaths();
 }
