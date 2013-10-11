@@ -33,13 +33,4 @@ abstract class Plugin
      * @return string
      */
     abstract public function getTitle();
-
-    /**
-     * Build menu for plugin
-     *
-     * @param \Knp\Menu\ItemInterface $item
-     *
-     * @return \Knp\Menu\ItemInterface
-     */
-    abstract public function buildMenu(ItemInterface $item);
 }
