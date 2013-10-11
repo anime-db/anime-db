@@ -22,12 +22,6 @@
     "autoload": {
         "psr-0": { "AnimeDb\\": "src/" }
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git://github.com/anime-db/world-art-filler-bundle.git"
-        }
-    ],
     "require": {
         "php": ">=5.4.0",
         "ext-pdo_sqlite": ">=1.0.1",
