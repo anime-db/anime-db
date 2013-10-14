@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use AnimeDb\Bundle\CatalogBundle\Entity\Item;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Item images
@@ -185,5 +186,20 @@ class Image
     protected function getUploadDir()
     {
         return 'media';
+    }
+
+    /**
+     * Rename cover if in temp folder
+     *
+     * @ORM\PrePersist
+     */
+    public function doRenameImageFile()
+    {
+        if ($this->source && strpos($this->source, 'tmp') !== false) {
+            $filename = pathinfo($this->source, PATHINFO_BASENAME);
+            $file = new File($this->getAbsolutePath());
+            $this->source = date('Y/m/d/His/', $this->item->getDateAdd()->getTimestamp()).$filename;
+            $file->move(pathinfo($this->getAbsolutePath(), PATHINFO_DIRNAME), $filename);
+        }
     }
 }
