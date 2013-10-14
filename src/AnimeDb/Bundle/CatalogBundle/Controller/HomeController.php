@@ -414,12 +414,7 @@ class HomeController extends Controller
      */
     public function assetsStylesheetsAction()
     {
-        $plugins = $this->get('anime_db.plugin.assets')->getPlugins();
-        $paths = [];
-        /* @var $plugin \AnimeDb\Bundle\CatalogBundle\Plugin\Assets\Assets */
-        foreach ($plugins as $plugin) {
-            $paths[] = $plugin->getCssPaths();
-        }
+        $paths = $this->get('anime_db.assets')->getStylesheetPaths();
         return $this->render('AnimeDbCatalogBundle:Home:assets/stylesheets.html.twig', ['paths'  => $paths]);
     }
 
@@ -430,12 +425,7 @@ class HomeController extends Controller
      */
     public function assetsJavaScriptsAction()
     {
-        $plugins = $this->get('anime_db.plugin.assets')->getPlugins();
-        $paths = [];
-        /* @var $plugin \AnimeDb\Bundle\CatalogBundle\Plugin\Assets\Assets */
-        foreach ($plugins as $plugin) {
-            $paths[] = $plugin->getJsPaths();
-        }
+        $paths = $this->get('anime_db.assets')->getJavaScriptsPaths();
         return $this->render('AnimeDbCatalogBundle:Home:assets/javascripts.html.twig', ['paths'  => $paths]);
     }
 }
