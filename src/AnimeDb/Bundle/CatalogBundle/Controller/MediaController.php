@@ -76,12 +76,15 @@ class MediaController extends Controller
 
             // search favicon in html
             $html = file_get_contents('http://'.$host.'/');
-            if (preg_match('/<link\s+rel="(?:shortcut )?icon"\s+(?:type=".+?"\s+)?href="(?<url>.+?)"\s*(?:\/)?>/is', $html, $mat)) {
-                $fs->copy($mat['url'], $target);
-                if (@getimagesize($target) !== false) {
-                    return $response->setContent(file_get_contents($target));
+            preg_match_all('/<link[^>]+rel="(?:shortcut )?icon"[^>]+\/?>/is', $html, $icons);
+            foreach ($icons[0] as $icon) {
+                if (preg_match('/href="(?<url>.+?)"/', $icon, $mat)) {
+                    $fs->copy($mat['url'], $target);
+                    if (@getimagesize($target) !== false) {
+                        return $response->setContent(file_get_contents($target));
+                    }
+                    $fs->remove($target);
                 }
-                $fs->remove($target);
             }
 
             // no found favicon
