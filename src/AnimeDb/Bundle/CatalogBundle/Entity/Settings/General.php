@@ -25,7 +25,8 @@ class General
     /**
      * Serial number
      *
-     * @Assert\NotBlank()
+     * TODO temporarily disabled #69
+     * @ Assert\NotBlank()
      * @Assert\Regex(
      *     pattern="/^([A-Z0-9]{4}\-[A-Z0-9]{4}\-[A-Z0-9]{4}\-[A-Z0-9]{4})$/",
      *     message="Serial number must consist of numbers and letters, and have the form of XXXX-XXXX-XXXX-XXXX"
