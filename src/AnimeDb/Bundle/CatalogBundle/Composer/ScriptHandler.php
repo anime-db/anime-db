@@ -16,6 +16,7 @@ use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
 use Composer\Script\Event;
 use Composer\Package\PackageInterface;
+use Symfony\Component\Finder\Finder;
 
 /**
  * Composer script handler
@@ -130,58 +131,14 @@ class ScriptHandler
             return $options['anime-db-migrations'];
         }
 
-        if ($dir = self::getBundleRootDir($package)) {
-            // get path to migrations config
-            $dir .= '/Resources/config/';
-            if (file_exists($dir.'migrations.yml')) {
-                return $dir.'migrations.yml';
-            } elseif (file_exists($dir.'migrations.xml')) {
-                return $dir.'migrations.xml';
-            }
-        }
-        return false;
-    }
+        $finder = new Finder();
+        $finder->files()
+            ->in(__DIR__.'/../../../../../vendor/'.$package->getName())
+            ->name('/^migrations\.(yml|xml)$/');
 
-    /**
-     * Get bundle class from package
-     *
-     * @param \Composer\Package\PackageInterface $package
-     *
-     * @return string
-     */
-    protected static function getBundleClass(PackageInterface $package)
-    {
-        $options = self::getPluginOptions($package);
-        // specific name
-        if ($options['anime-db-bundle']) {
-            return $options['anime-db-bundle'];
-        }
-
-        $bundle = str_replace(['-', '/'], [' ', '/ '], $package->getName());
-        $bundle = ucwords(strtolower($bundle));
-        // TODO rename package anime-db/worldart-filler-bundle to anime-db/world-art-filler-bundle #5
-        $bundle = str_replace([' ', 'art'], ['', 'Art'], $bundle);
-        $bundle = explode('/', $bundle);
-        return '\\'.$bundle[0].'\Bundle\\'.$bundle[1].'\\'.$bundle[0].$bundle[1];
-    }
-
-    /**
-     * Get bundle root dir from package
-     *
-     * @param \Composer\Package\PackageInterface $package
-     *
-     * @return string|boolean
-     */
-    protected static function getBundleRootDir(PackageInterface $package)
-    {
-        $bundle = self::getBundleClass($package);
-
-        // TODO on first installation a autoload is not created
-        if (file_exists(__DIR__.'/../../../../../vendor/autoload.php')) {
-            $loader = require __DIR__.'/../../../../../vendor/autoload.php';
-            if ($file = $loader->findFile($bundle)) {
-                return pathinfo($file, PATHINFO_DIRNAME);
-            }
+        /* @var $file \SplFileInfo */
+        foreach ($finder as $file) {
+            return $file->getRealPath();
         }
         return false;
     }
@@ -224,7 +181,6 @@ class ScriptHandler
     protected static function getPluginOptions(PackageInterface $package)
     {
         return array_merge(array(
-            'anime-db-bundle' => '',
             'anime-db-routing' => '',
             'anime-db-migrations' => '',
         ), $package->getExtra());
