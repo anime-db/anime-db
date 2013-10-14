@@ -53,15 +53,16 @@ class General extends AbstractType
         }
 
         $builder
-            ->add('serial_number', 'text', [
+            // TODO temporarily disabled #69
+            /* ->add('serial_number', 'text', [
                 'label' => 'Serial number'
+            ]) */
+            ->add('locale', 'locale', [
+                'label' => 'Language'
             ])
             ->add('task_scheduler', 'checkbox', [
                 'required' => false,
                 'label' => 'Task scheduler'
-            ])
-            ->add('locale', 'locale', [
-                'label' => 'Language'
             ])
             ->add('default_search', 'choice', [
                 'required' => false,
