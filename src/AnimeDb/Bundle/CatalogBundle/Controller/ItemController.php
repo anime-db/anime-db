@@ -156,9 +156,6 @@ class ItemController extends Controller
             if (!($item instanceof Item)) {
                 throw new \Exception('Can`t get content from the specified source');
             }
-            // persist entity
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($item);
             $fill_form = $this->createForm(new ItemForm(), $item)->createView();
         }
 
