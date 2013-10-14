@@ -1,14 +1,11 @@
 {% extends '::base.html.twig' %}
 
 {% block stylesheets %}
-	<link href="{{ asset('/bundles/animedbcatalog/css/jquery-ui/jquery-ui-1.8.16.custom.css') }}" type="text/css" rel="stylesheet">
-	<link href="{{ asset('/bundles/animedbcatalog/css/main.css') }}" type="text/css" rel="stylesheet">
+	{% render controller('AnimeDbCatalogBundle:Home:assetsStylesheets') %}
 {% endblock %}
 
 {% block javascripts %}
-	<script type="text/javascript" src="{{ asset('/bundles/animedbcatalog/js/jquery-1.10.2.min.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('/bundles/animedbcatalog/js/jquery-ui-1.8.16.custom.min.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('/bundles/animedbcatalog/js/main.js') }}"></script>
+	{% render controller('AnimeDbCatalogBundle:Home:assetsJavaScripts') %}
 {% endblock %}
 
 {% block body %}

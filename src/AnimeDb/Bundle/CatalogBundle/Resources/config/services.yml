@@ -15,6 +15,9 @@ services:
     anime_db.plugin.setting:
         class: AnimeDb\Bundle\CatalogBundle\Plugin\Setting\Chain
 
+    anime_db.assets:
+        class: AnimeDb\Bundle\CatalogBundle\Service\Assets
+
     # Twig extension
     anime_db.twig_extension:
         class: AnimeDb\Bundle\CatalogBundle\Service\TwigExtension
