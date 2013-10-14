@@ -9,11 +9,11 @@ use AnimeDb\Bundle\CatalogBundle\Entity\Task;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20131007112432_AddScanStoragesTask extends AbstractMigration
+class Version20131014155050_AddClearMediaTempTask extends AbstractMigration
 {
     public function up(Schema $schema)
     {
-        // run a scan of the storages every day at 1 am
+        // run a clear temporary folder every day at 1 am
         $this->addSql('
             INSERT INTO
                 "task"
@@ -25,7 +25,7 @@ class Version20131007112432_AddScanStoragesTask extends AbstractMigration
                 )
             VALUES
                 (
-                    "animedb:scan-storage",
+                    "animedb:clear-media-temp",
                     "'.date('Y-m-d 01:00:00', time()+86400).'",
                     "+1 day",
                     '.Task::STATUS_ENABLED.'
@@ -38,7 +38,7 @@ class Version20131007112432_AddScanStoragesTask extends AbstractMigration
             DELETE FROM
                 "task"
             WHERE
-                "command" = "animedb:scan-storage"
+                "command" = "animedb:clear-media-temp"
         ');
     }
 }
