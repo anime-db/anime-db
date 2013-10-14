@@ -41,7 +41,8 @@
         "knplabs/knp-menu-bundle": "1.1.*",
         "doctrine/migrations": "dev-master",
         "doctrine/doctrine-migrations-bundle": "dev-master",
-        "anime-db/world-art-filler-bundle": "0.1.*"
+        
+        "composer/composer": "1.0.0-alpha7"
     },
     "scripts": {
         "post-install-cmd": [
