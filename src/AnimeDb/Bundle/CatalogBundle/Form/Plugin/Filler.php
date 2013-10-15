@@ -44,6 +44,6 @@ class Filler extends AbstractType
      */
     public function getName()
     {
-        return 'animedb_catalogbundle_plugin_filler';
+        return 'anime_db_catalog_plugin_filler';
     }
 }

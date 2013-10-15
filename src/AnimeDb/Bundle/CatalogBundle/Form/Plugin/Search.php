@@ -43,6 +43,6 @@ class Search extends AbstractType
      */
     public function getName()
     {
-        return 'animedb_catalogbundle_plugin_search';
+        return 'anime_db_catalog_plugin_search';
     }
 }

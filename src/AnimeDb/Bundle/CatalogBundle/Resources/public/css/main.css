@@ -456,12 +456,12 @@ h1.logo a span {
 /**
  * Addition form
  */
-#animedb_catalogbundle_entity_item_summary,
-#animedb_catalogbundle_entity_item_episodes {
+#anime_db_catalog_entity_item_summary,
+#anime_db_catalog_entity_item_episodes {
 	width: 500px;
 	height: 200px;
 }
-#animedb_catalogbundle_itemtype_file_info {
+#anime_db_catalog_itemtype_file_info {
 	width: 500px;
 }
 .b-addition-form .f-collection .b-col-rm-item {
@@ -946,13 +946,13 @@ h1.logo a span {
 /**
  * Form for plugin search
  */
-#animedb_catalogbundle_plugin_search,
-#animedb_catalogbundle_plugin_filler {
+#anime_db_catalog_plugin_search,
+#anime_db_catalog_plugin_filler {
 	margin: 3px 10px 0 0;
 	float: left;
 }
-#animedb_catalogbundle_plugin_search label,
-#animedb_catalogbundle_plugin_filler label {
+#anime_db_catalog_plugin_search label,
+#anime_db_catalog_plugin_filler label {
 	width: auto;
 	margin-right: 10px;
 }
