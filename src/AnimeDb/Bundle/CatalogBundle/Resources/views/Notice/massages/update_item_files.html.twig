@@ -1,0 +1,4 @@
+{% set name %}
+	<a href="{{ path('item_show', {'id': item.id, 'name': item.name}) }}">{{ item.name }}</a>
+{% endset %}
+{% trans with {'%name%': name} %}Changes are detected in files of item %name%{% endtrans %}

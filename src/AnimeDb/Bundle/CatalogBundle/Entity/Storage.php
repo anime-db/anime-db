@@ -107,6 +107,15 @@ class Storage
     protected $path;
 
     /**
+     * Date of last modified
+     *
+     * @ORM\Column(type="datetime")
+     *
+     * @var \DateTime
+     */
+    protected $modified;
+
+    /**
      * Items list
      *
      * @ORM\OneToMany(targetEntity="Item", mappedBy="storage")
@@ -308,7 +317,7 @@ class Storage
      *
      * @return array
      */
-    public function getTypesWritable()
+    public static function getTypesWritable()
     {
         return [self::TYPE_FOLDER, self::TYPE_EXTERNAL];
     }
@@ -318,7 +327,7 @@ class Storage
      *
      * @return array
      */
-    public function getTypesReadable()
+    public static function getTypesReadable()
     {
         return [self::TYPE_FOLDER, self::TYPE_EXTERNAL, self::TYPE_EXTERNAL_R];
     }
@@ -330,7 +339,7 @@ class Storage
      */
     public function isPathRequired()
     {
-        return in_array($this->getType(), $this->getTypesWritable());
+        return in_array($this->getType(), self::getTypesWritable());
     }
 
     /**
@@ -343,5 +352,28 @@ class Storage
         if ($this->isPathRequired() && !$this->getPath()) {
             $context->addViolationAt('path', 'Path is required to fill for current type of storage');
         }
+    }
+
+    /**
+     * Set date of last modified
+     *
+     * @param \DateTime $modified
+     *
+     * @return \AnimeDb\Bundle\CatalogBundle\Entity\Storage
+     */
+    public function setModified(\DateTime $modified)
+    {
+        $this->modified = $modified;
+        return $this;
+    }
+
+    /**
+     * Get date of last modified
+     *
+     * @return \DateTime
+     */
+    public function getModified()
+    {
+        return $this->modified;
     }
 }

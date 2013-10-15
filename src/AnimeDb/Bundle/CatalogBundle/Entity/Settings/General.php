@@ -25,7 +25,8 @@ class General
     /**
      * Serial number
      *
-     * @Assert\NotBlank()
+     * TODO temporarily disabled #69
+     * @ Assert\NotBlank()
      * @Assert\Regex(
      *     pattern="/^([A-Z0-9]{4}\-[A-Z0-9]{4}\-[A-Z0-9]{4}\-[A-Z0-9]{4})$/",
      *     message="Serial number must consist of numbers and letters, and have the form of XXXX-XXXX-XXXX-XXXX"
@@ -52,6 +53,13 @@ class General
      * @var string
      */
     protected $locale;
+
+    /**
+     * Plugin default search to fill
+     *
+     * @var string
+     */
+    protected $default_search;
 
     /**
      * Get serial number
@@ -119,6 +127,29 @@ class General
     public function setLocale($locale)
     {
         $this->locale = $locale;
+        return $this;
+    }
+
+    /**
+     * Get plugin default search to fill
+     * 
+     * @return string
+     */
+    public function getDefaultSearch()
+    {
+        return $this->default_search;
+    }
+
+    /**
+     * Set plugin default search to fill
+     *
+     * @param string $default_search
+     *
+     * @return \AnimeDb\Bundle\CatalogBundle\Entity\Settings\General
+     */
+    public function setDefaultSearch($default_search)
+    {
+        $this->default_search = $default_search;
         return $this;
     }
 }

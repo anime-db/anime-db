@@ -10,25 +10,27 @@
 
 namespace AnimeDb\Bundle\CatalogBundle\Plugin;
 
+use Knp\Menu\ItemInterface;
+
 /**
- * Plugin interface
+ * Plugin
  * 
  * @package AnimeDb\Bundle\CatalogBundle\Plugin
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-interface Plugin
+abstract class Plugin
 {
     /**
      * Get name
      *
      * @return string
      */
-    public function getName();
+    abstract public function getName();
 
     /**
      * Get title
      *
      * @return string
      */
-    public function getTitle();
+    abstract public function getTitle();
 }

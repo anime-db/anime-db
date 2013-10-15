@@ -162,7 +162,7 @@ class Image
                 $info = pathinfo($name);
                 $this->getLocal()->move($this->getUploadRootDir().'/'.$info['dirname'], $info['basename']);
             }
-            $this->path = date('Y/m/').$name;
+            $this->path = 'tmp/'.date('Ymd/').$name;
         }
     }
 
@@ -215,7 +215,7 @@ class Image
      */
     protected function getUploadDir()
     {
-        return 'media'.date('/Y/m');
+        return 'media/tmp'.date('/Ymd');
     }
 
     /**

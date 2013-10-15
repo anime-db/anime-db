@@ -1377,7 +1377,7 @@ class Version20130930180819_Init extends AbstractMigration
 
     protected function addDataStorage()
     {
-        $this->addSql('INSERT INTO "storage" VALUES(1,"Local","Storage on local computer","folder","'.$this->getUserHomeDir().'")');
+        $this->addSql('INSERT INTO "storage" VALUES(1,"Local","Storage on local computer","folder","'.$this->getUserHomeDir().'Videos'.DIRECTORY_SEPARATOR.'")');
         // add sequence
         $this->addSql('INSERT INTO "sqlite_sequence" VALUES("storage",1)');
     }
@@ -1385,7 +1385,7 @@ class Version20130930180819_Init extends AbstractMigration
     protected function addDataItem()
     {
         // default path for store items
-        $path = $this->getUserHomeDir().'Video'.DIRECTORY_SEPARATOR;
+        $path = $this->getUserHomeDir().'Videos'.DIRECTORY_SEPARATOR;
 
         $this->addSql('INSERT INTO "item" VALUES(1,"tv","JP",1,"Ван-Пис","1999-10-20",NULL,25,"Последние слова, произнесенные Королем Пиратов перед казнью, вдохновили многих: «Мои сокровища? Коли хотите, забирайте. Ищите – я их все оставил там!». Легендарная фраза Золотого Роджера ознаменовала начало Великой Эры Пиратов – тысячи людей в погоне за своими мечтами отправились на Гранд Лайн, самое опасное место в мире, желая стать обладателями мифических сокровищ... Но с каждым годом романтиков становилось все меньше, их постепенно вытесняли прагматичные пираты-разбойники, которым награбленное добро было куда ближе, чем какие-то «никчемные мечты». Но вот, одним прекрасным днем, семнадцатилетний Монки Д. Луффи исполнил заветную мечту детства - отправился в море. Его цель - ни много, ни мало стать новым Королем Пиратов. За достаточно короткий срок юному капитану удается собрать команду, состоящую из не менее амбициозных искателей приключений. И пусть ими движут совершенно разные устремления, главное, этим ребятам важны не столько деньги и слава, сколько куда более ценное – принципы и верность друзьям. И еще – служение Мечте. Что ж, пока по Гранд Лайн плавают такие люди, Великая Эра Пиратов всегда будет с нами!","'.$path.'One Piece (2011) [TV]",\'Первый сезон (эп. 1-61)
 Второй сезон (эп. 62-77)

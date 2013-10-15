@@ -23,6 +23,13 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class Filler extends AbstractType
 {
     /**
+     * Form name
+     *
+     * @var string
+     */
+    const FORM_NAME = 'anime_db_catalog_plugin_filler';
+
+    /**
      * (non-PHPdoc)
      * @see \Symfony\Component\Form\AbstractType::buildForm()
      */
@@ -44,6 +51,6 @@ class Filler extends AbstractType
      */
     public function getName()
     {
-        return 'anime_db_catalog_plugin_filler';
+        return self::FORM_NAME;
     }
 }

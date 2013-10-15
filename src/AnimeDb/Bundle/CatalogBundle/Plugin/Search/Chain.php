@@ -20,4 +20,30 @@ use AnimeDb\Bundle\CatalogBundle\Plugin\Chain as ChainPlugin;
  */
 class Chain extends ChainPlugin
 {
+    /**
+     * Name of default search plugin
+     *
+     * @var string
+     */
+    protected $default_search = '';
+
+    /**
+     * Construct
+     *
+     * @param string $default_search
+     */
+    public function __construct($default_search)
+    {
+        $this->default_search = $default_search;
+    }
+
+    /**
+     * Get default search plugin
+     *
+     * @return \AnimeDb\Bundle\CatalogBundle\Plugin\Plugin|null
+     */
+    public function getDafeultPlugin()
+    {
+        return $this->getPlugin($this->default_search);
+    }
 }

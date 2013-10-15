@@ -11,21 +11,22 @@
 namespace AnimeDb\Bundle\CatalogBundle\Plugin\Import;
 
 use AnimeDb\Bundle\CatalogBundle\Plugin\Plugin;
+use Knp\Menu\ItemInterface;
 
 /**
- * Plugin import interface
+ * Plugin import
  * 
  * @package AnimeDb\Bundle\CatalogBundle\Plugin\Import
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-interface Import extends Plugin
+abstract class Import extends Plugin
 {
     /**
      * Get form
      *
      * @return \Symfony\Component\Form\AbstractType
      */
-    public function getForm();
+    abstract public function getForm();
 
     /**
      * Import items from source data
@@ -34,5 +35,20 @@ interface Import extends Plugin
      *
      * @return array [ \AnimeDb\Bundle\CatalogBundle\Entity\Item ]
      */
-    public function import(array $data);
+    abstract public function import(array $data);
+
+    /**
+     * Build menu for plugin
+     *
+     * @param \Knp\Menu\ItemInterface $item
+     *
+     * @return \Knp\Menu\ItemInterface
+     */
+    public function buildMenu(ItemInterface $item)
+    {
+        $item->addChild($this->getTitle(), [
+            'route' => 'item_import',
+            'routeParameters' => ['plugin' => $this->getName()]
+        ]);
+    }
 }

@@ -23,6 +23,6 @@
 		{% endif %}
 	<br />
 	<strong>{% trans %}Message{% endtrans %}:</strong><br />
-	<p>{{ notice.message }}</p>
+	<p>{% autoescape false %}{{ notice.message }}{% endautoescape %}</p>
 </section>
 {% endblock %}

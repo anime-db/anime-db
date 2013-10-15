@@ -18,6 +18,7 @@ use AnimeDb\Bundle\CatalogBundle\Entity\Storage;
 use AnimeDb\Bundle\CatalogBundle\Entity\Type;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Validator\ExecutionContextInterface;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Item
@@ -942,5 +943,20 @@ class Item
             $this->genres[$key] = $em->getReference(get_class($genre), $genre->getId());
         }
         return $this;
+    }
+
+    /**
+     * Rename cover if in temp folder
+     *
+     * @ORM\PrePersist
+     */
+    public function doRenameCoverFile()
+    {
+        if ($this->cover && strpos($this->cover, 'tmp') !== false) {
+            $filename = pathinfo($this->cover, PATHINFO_BASENAME);
+            $file = new File($this->getAbsolutePath());
+            $this->cover = date('Y/m/d/His/', $this->date_add->getTimestamp()).$filename;
+            $file->move(pathinfo($this->getAbsolutePath(), PATHINFO_DIRNAME), $filename);
+        }
     }
 }

@@ -1,10 +1,10 @@
 {
     "name": "anime-db/anime-db",
-    "license": "MIT",
+    "license": "GPL-3.0",
     "type": "project",
     "description": "The application for making home collection anime",
     "homepage": "http://anime-db.org",
-    "version": "0.1.8",
+    "version": "0.2.1",
     "authors": [
         {
             "name":     "Anime DB",
@@ -22,12 +22,6 @@
     "autoload": {
         "psr-0": { "AnimeDb\\": "src/" }
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git://github.com/anime-db/world-art-filler-bundle.git"
-        }
-    ],
     "require": {
         "php": ">=5.4.0",
         "ext-pdo_sqlite": ">=1.0.1",
@@ -42,7 +36,6 @@
         "sensio/framework-extra-bundle": "2.3.*",
         "sensio/generator-bundle": "2.3.*",
         "incenteev/composer-parameter-handler": "~2.0",
-        "sensio/buzz-bundle": "dev-master",
         "avalanche123/imagine-bundle": "v2.1",
         "gedmo/doctrine-extensions": "dev-master",
         "knplabs/knp-menu-bundle": "1.1.*",
@@ -57,7 +50,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "app/console doctrine:migrations:migrate --no-interaction"
+            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migrate"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
@@ -65,7 +58,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "app/console doctrine:migrations:migrate --no-interaction"
+            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migrate"
         ],
         "post-package-install": [
             "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::addPluginToAppKernel",
@@ -86,16 +79,11 @@
     "config": {
         "bin-dir": "bin"
     },
-    "minimum-stability": "stable",
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",
-        "symfony-assets-install": "symlink",
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
-        },
-        "branch-alias": {
-            "dev-master": "2.3-dev"
         }
     }
 }

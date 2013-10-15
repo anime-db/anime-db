@@ -19,10 +19,6 @@ use AnimeDb\Bundle\CatalogBundle\Entity\Image;
 use AnimeDb\Bundle\CatalogBundle\Entity\Source;
 use AnimeDb\Bundle\CatalogBundle\Form\Entity\Item as ItemForm;
 use Symfony\Component\HttpFoundation\Request;
-use AnimeDb\Bundle\CatalogBundle\Form\Plugin\Search as SearchPluginForm;
-use AnimeDb\Bundle\CatalogBundle\Form\Plugin\Filler as FillerPluginForm;
-use AnimeDb\Bundle\CatalogBundle\Plugin\Search\CustomForm as CustomFormSearch;
-use AnimeDb\Bundle\CatalogBundle\Plugin\Filler\CustomForm as CustomFormFiller;
 
 /**
  * Item
@@ -65,7 +61,7 @@ class ItemController extends Controller
         /* @var $form \Symfony\Component\Form\Form */
         $form = $this->createForm(new ItemForm(), $item);
 
-        if ($request->getMethod() == 'POST') {
+        if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
                 /* @var $repository \AnimeDb\Bundle\CatalogBundle\Repository\Item */
@@ -151,27 +147,15 @@ class ItemController extends Controller
         }
 
         /* @var $form \Symfony\Component\Form\Form */
-        if ($filler instanceof CustomFormFiller) {
-            $form = $this->createForm($filler->getForm()); // use plugin form
-        } else {
-            $form = $this->createForm(new FillerPluginForm());
-        }
+        $form = $this->createForm($filler->getForm());
 
         $fill_form = null;
         $form->handleRequest($request);
         if ($form->isValid()) {
-            // fill item
-            if ($filler instanceof CustomFormFiller) {
-                $item = $filler->fill($form->getData());
-            } else {
-                $item = $filler->fill($form->getData()['url']);
-            }
+            $item = $filler->fill($form->getData());
             if (!($item instanceof Item)) {
                 throw new \Exception('Can`t get content from the specified source');
             }
-            // persist entity
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($item);
             $fill_form = $this->createForm(new ItemForm(), $item)->createView();
         }
 
@@ -192,43 +176,18 @@ class ItemController extends Controller
      */
     public function searchAction($plugin, Request $request)
     {
-        /* @var $chain \AnimeDb\Bundle\CatalogBundle\Plugin\Search\Chain */
-        $chain = $this->get('anime_db.plugin.search');
-        if (!($search = $chain->getPlugin($plugin))) {
+        /* @var $search \AnimeDb\Bundle\CatalogBundle\Plugin\Search\Search */
+        if (!($search = $this->get('anime_db.plugin.search')->getPlugin($plugin))) {
             throw $this->createNotFoundException('Plugin \''.$plugin.'\' is not found');
         }
 
         /* @var $form \Symfony\Component\Form\Form */
-        if ($search instanceof CustomFormSearch) {
-            $form = $this->createForm($search->getForm()); // use plugin form
-        } else {
-            $form = $this->createForm(new SearchPluginForm());
-        }
+        $form = $this->createForm($search->getForm());
 
         $list = [];
-        if ($request->isMethod('POST')) {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                // url bulder for fill items in list
-                $that = $this;
-                $form_name = (new FillerPluginForm())->getName();
-                $url_builder = function ($source) use ($that, $plugin, $form_name) {
-                    return $that->generateUrl(
-                        'item_filler',
-                        [
-                            'plugin' => $plugin,
-                            $form_name => ['url' => $source]
-                        ]
-                    );
-                };
-
-                // search items
-                if ($search instanceof CustomFormSearch) {
-                    $list = $search->search($form->getData(), $url_builder);
-                } else {
-                    $list = $search->search($form->getData()['name'], $url_builder);
-                }
-            }
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $list = $search->search($form->getData());
         }
 
         return $this->render('AnimeDbCatalogBundle:Item:search.html.twig', [

@@ -23,12 +23,20 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class Search extends AbstractType
 {
     /**
+     * Form name
+     *
+     * @var string
+     */
+    const FORM_NAME = 'anime_db_catalog_plugin_search';
+
+    /**
      * (non-PHPdoc)
      * @see \Symfony\Component\Form\AbstractType::buildForm()
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->setMethod('GET')
             ->add('name', 'text', [
                 'label' => 'Name',
                 'attr' => [
@@ -43,6 +51,6 @@ class Search extends AbstractType
      */
     public function getName()
     {
-        return 'anime_db_catalog_plugin_search';
+        return self::FORM_NAME;
     }
 }

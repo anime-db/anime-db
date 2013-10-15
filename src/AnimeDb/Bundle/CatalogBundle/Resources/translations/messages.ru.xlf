@@ -538,6 +538,26 @@
                 <source>Confirm duplicate item</source>
                 <target>Подтверждение дупликатов записей</target>
             </trans-unit>
+            <trans-unit id="143">
+                <source>Files for item %name% is removed</source>
+                <target>Файлы для записи %name% удалены</target>
+            </trans-unit>
+            <trans-unit id="144">
+                <source>Detected files for new item %name% on storage %storage%</source>
+                <target>Обнаруженные файлы для новой записи %name% на хранилище %storage%</target>
+            </trans-unit>
+            <trans-unit id="145">
+                <source>Changes are detected in files of item %name%</source>
+                <target>Обнаружены изменения файлов записи %name%</target>
+            </trans-unit>
+            <trans-unit id="146">
+                <source>Default search plugin</source>
+                <target>Плагин поиска по умолчанию</target>
+            </trans-unit>
+            <trans-unit id="147">
+                <source>No</source>
+                <target>Нет</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

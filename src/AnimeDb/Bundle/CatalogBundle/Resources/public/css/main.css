@@ -979,18 +979,13 @@ h1.logo a span {
 	from {top:-60px;}
 	to {top:0;}
 }
-.b-notice a {
+.b-notice .b-message {
 	width: 874px;
 	padding: 15px 0 15px 20px;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
-	color: inherit;
-	text-decoration: none;
 	float: left;
-}
-.b-notice a:hover {
-	color: #b00;
 }
 .b-notice .bt-close {
 	margin: 15px 20px;

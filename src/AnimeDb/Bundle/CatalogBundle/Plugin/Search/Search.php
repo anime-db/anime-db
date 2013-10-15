@@ -11,19 +11,36 @@
 namespace AnimeDb\Bundle\CatalogBundle\Plugin\Search;
 
 use AnimeDb\Bundle\CatalogBundle\Plugin\Plugin;
+use Knp\Menu\ItemInterface;
+use AnimeDb\Bundle\CatalogBundle\Form\Plugin\Search as SearchForm;
+use AnimeDb\Bundle\CatalogBundle\Form\Plugin\Filler as FillerForm;
+use AnimeDb\Bundle\CatalogBundle\Plugin\Filler\Filler;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 /**
- * Plugin search interface
- * 
+ * Plugin search
+ *
  * @package AnimeDb\Bundle\CatalogBundle\Plugin\Search
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-interface Search extends Plugin
+abstract class Search extends Plugin
 {
     /**
-     * Search source by name
+     * Router
      *
-     * Use $url_bulder for build link to fill item from source or build their own links
+     * @var \Symfony\Bundle\FrameworkBundle\Routing\Router
+     */
+    protected $router;
+
+    /**
+     * Filler
+     *
+     * @var \AnimeDb\Bundle\CatalogBundle\Plugin\Filler\Filler
+     */
+    protected $filler;
+
+    /**
+     * Search source by name
      *
      * Return structure
      * <code>
@@ -32,10 +49,91 @@ interface Search extends Plugin
      * ]
      * </code>
      *
-     * @param string $name
-     * @param \Closure $url_bulder
+     * @param array $data
      *
      * @return array
      */
-    public function search($name, \Closure $url_bulder);
+    abstract public function search(array $data);
+
+    /**
+     * Build menu for plugin
+     *
+     * @param \Knp\Menu\ItemInterface $item
+     *
+     * @return \Knp\Menu\ItemInterface
+     */
+    public function buildMenu(ItemInterface $item)
+    {
+        $item->addChild($this->getTitle(), [
+            'route' => 'item_search',
+            'routeParameters' => ['plugin' => $this->getName()]
+        ]);
+    }
+
+    /**
+     * Set router
+     *
+     * @param \Symfony\Bundle\FrameworkBundle\Routing\Router $router
+     */
+    public function setRouter(Router $router)
+    {
+        $this->router = $router;
+    }
+
+    /**
+     * Get form
+     *
+     * @return \AnimeDb\Bundle\CatalogBundle\Form\Plugin\Search
+     */
+    public function getForm()
+    {
+        return new SearchForm();
+    }
+
+    /**
+     * Set filler
+     *
+     * @param \AnimeDb\Bundle\CatalogBundle\Plugin\Filler\Filler $filler
+     */
+    public function setFiller(Filler $filler)
+    {
+        $this->filler = $filler;
+    }
+
+    /**
+     * Get link for fill item
+     *
+     * @param mixed $data
+     *
+     * @return string
+     */
+    public function getLinkForFill($data)
+    {
+        if ($this->filler instanceof Filler) {
+            return $this->filler->getLinkForFill($data);
+        } else {
+            return $this->router->generate(
+                'item_filler',
+                [
+                    'plugin' => $this->getName(),
+                    FillerForm::FORM_NAME => ['url' => $data]
+                ]
+            );
+        }
+    }
+
+    /**
+     * Get link for search items
+     *
+     * @param string $name
+     *
+     * @return string
+     */
+    public function getLinkForSearch($name)
+    {
+        return $this->router->generate('item_search', [
+            'plugin' => $this->getName(),
+            $this->getForm()->getName().'[name]' => $name
+        ]);
+    }
 }

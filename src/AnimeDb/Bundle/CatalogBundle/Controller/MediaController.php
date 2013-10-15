@@ -29,7 +29,8 @@ class MediaController extends Controller
      * @var array
      */
     private static $mime = [
-        'ico' => ['image/x-icon', 'image/vnd.microsoft.icon']
+        'ico' => ['image/x-icon', 'image/vnd.microsoft.icon'],
+        'png' => ['image/png']
     ];
 
     /**
@@ -41,25 +42,58 @@ class MediaController extends Controller
      */
     public function faviconAction($host)
     {
-        $status = 200;
-        $content = '';
-        $file = realpath(__DIR__.'/../../../../../web').'/media/favicon/'.$host.'.ico';
-        if (!file_exists($file)) {
-            $fs = new Filesystem();
-            // download favicon
-            try {
-                $fs->copy('http://'.$host.'/favicon.ico', $file);
-                // site does not have a favicon
-                if (($info = @getimagesize($file)) === false || !in_array($info['mime'], self::$mime['ico'])) {
-                    $fs->remove($file);
-                    $status = 404;
-                } else {
-                    $content = file_get_contents($file);
-                }
-            } catch (IOException $e) {
-                $status = 500;
-            }
+        $response = new Response('', 200, ['Content-Type' => self::$mime['ico'][0]]);
+
+        $file = __DIR__.'/../../../../../web/media/favicon/'.$host.'.ico';
+        if (file_exists($file)) {
+            $response->setContent(file_get_contents($file));
+        } else {
+            $response = $this->downloadFavicon($response, $host, $file);
         }
-        return new Response($content, $status, ['Content-Type' => self::$mime['ico'][0]]);
+        return $response;
+    }
+
+    /**
+     * Download favicon
+     *
+     * @param \Symfony\Component\HttpFoundation\Response $response
+     * @param string $host
+     * @param string $target
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function downloadFavicon(Response $response, $host, $target)
+    {
+        try {
+            $fs = new Filesystem();
+            $fs->copy('http://'.$host.'/favicon.ico', $target);
+
+            // site has a standard favicon
+            if (($info = @getimagesize($target)) !== false) {
+                return $response->setContent(file_get_contents($target));
+            }
+            $fs->remove($target);
+
+            // search favicon in html
+            $html = file_get_contents('http://'.$host.'/');
+            preg_match_all('/<link[^>]+rel="(?:shortcut )?icon"[^>]+\/?>/is', $html, $icons);
+            foreach ($icons[0] as $icon) {
+                if (preg_match('/href="(?<url>.+?)"/', $icon, $mat)) {
+                    $fs->copy($mat['url'], $target);
+                    if (@getimagesize($target) !== false) {
+                        return $response->setContent(file_get_contents($target));
+                    }
+                    $fs->remove($target);
+                }
+            }
+
+            // no found favicon
+            $response->setStatusCode(404);
+        } catch (IOException $e) {
+            $fs->remove($target);
+            $response->setStatusCode(500);
+        }
+
+        return $response;
     }
 }
