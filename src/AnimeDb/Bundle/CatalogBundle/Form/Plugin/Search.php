@@ -27,7 +27,7 @@ class Search extends AbstractType
      *
      * @var string
      */
-    const FORM_NAME = 'animedb_catalogbundle_plugin_search';
+    const FORM_NAME = 'anime_db_catalog_plugin_search';
 
     /**
      * (non-PHPdoc)
