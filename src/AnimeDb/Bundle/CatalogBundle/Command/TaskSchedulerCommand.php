@@ -54,7 +54,7 @@ class TaskSchedulerCommand extends ContainerAwareCommand
         $repository = $em->getRepository('AnimeDbCatalogBundle:Task');
 
         // output streams
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
             $streams = '>nul 2>&1';
         } else {
             $streams = '>/dev/null 2>&1';

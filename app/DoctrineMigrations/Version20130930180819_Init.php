@@ -2036,7 +2036,7 @@ class Version20130930180819_Init extends AbstractMigration
             } else {
                 return $home.DIRECTORY_SEPARATOR;
             }
-        } elseif (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
+        } elseif (!defined('PHP_WINDOWS_VERSION_BUILD')) {
             return '/home/'.get_current_user().'/';
         } elseif (is_dir($win7path = 'C:\Users\\'.get_current_user().'\\')) { // is Windows 7 or Vista
             return $win7path;
