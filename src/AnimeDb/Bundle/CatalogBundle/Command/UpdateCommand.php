@@ -51,15 +51,12 @@ class UpdateCommand extends Command
     protected function executeCommand($cmd)
     {
         $php = escapeshellarg($this->getPhp());
-        $composer = escapeshellarg('bin/composer');
-
-        $process = new Process($php.' '.$composer.' '.$cmd, __DIR__.'/../../../../../', null, null, null);
-
+        $process = new Process($php.' bin/composer '.$cmd, __DIR__.'/../../../../../', null, null, null);
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });
         if (!$process->isSuccessful()) {
-            throw new \RuntimeException(sprintf('An error occurred when executing the "%s" command.', escapeshellarg($cmd)));
+            throw new \RuntimeException(sprintf('An error occurred when executing the "%s" command.', $cmd));
         } else {
             echo "Update is complete\n";
         }

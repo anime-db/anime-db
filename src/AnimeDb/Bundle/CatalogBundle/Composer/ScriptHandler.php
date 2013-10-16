@@ -72,7 +72,7 @@ class ScriptHandler
         }
 
         if ($config = self::getMigrationsConfig($package)) {
-            self::executeCommand($event, $command.' --configuration='.$config);
+            self::executeCommand($event, $command.' --configuration='.$config, null);
         }
     }
 
@@ -154,20 +154,18 @@ class ScriptHandler
      */
     protected static function executeCommand(Event $event, $cmd, $timeout = 300)
     {
-        $options = array_merge(['symfony-app-dir' => 'app'], $event->getComposer()->getPackage()->getExtra());
-
         $php = escapeshellarg(self::getPhp());
-        $console = escapeshellarg($options['symfony-app-dir'].'/console');
+        $console = 'app/console';
         if ($event->getIO()->isDecorated()) {
             $console .= ' --ansi';
         }
 
-        $process = new Process($php.' '.$console.' '.$cmd, null, null, null, $timeout);
+        $process = new Process($php.' '.$console.' '.$cmd, __DIR__.'/../../../../../', null, null, $timeout);
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });
         if (!$process->isSuccessful()) {
-            throw new \RuntimeException(sprintf('An error occurred when executing the "%s" command.', escapeshellarg($cmd)));
+            throw new \RuntimeException(sprintf('An error occurred when executing the "%s" command.', $cmd));
         }
     }
 
