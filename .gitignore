@@ -7,6 +7,8 @@ web/media/tmp
 app/Resources/anime.db
 bin/doctrine
 bin/doctrine.php
+bin/composer
+bin/jsonlint
 
 # Services pid files #
 ######################
