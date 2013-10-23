@@ -13,9 +13,10 @@ namespace AnimeDb\Bundle\CatalogBundle\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\PhpExecutableFinder;
-use Symfony\Component\Process\Process;
-use Symfony\Component\Process\ProcessBuilder;
+use Symfony\Component\Console\Input\InputArgument;
+use Composer\Factory;
+use Composer\IO\ConsoleIO;
+use Composer\Installer;
 
 /**
  * Update Application
@@ -32,7 +33,10 @@ class UpdateCommand extends Command
     protected function configure()
     {
         $this->setName('animedb:update')
-            ->setDescription('Update application and plugins');
+            ->setDescription('Update application and plugins')
+            ->setDefinition([
+                new InputArgument('packages', InputArgument::IS_ARRAY | InputArgument::OPTIONAL, 'Packages that should be updated, if not provided all packages are.')
+            ]);
     }
 
     /**
@@ -40,41 +44,12 @@ class UpdateCommand extends Command
      * @see Symfony\Component\Console\Command.Command::execute()
      */
     protected function execute(InputInterface $input, OutputInterface $output) {
-        $this->executeCommand('update');
-    }
-
-    /**
-     * Execute command
-     *
-     * @param string $cmd
-     */
-    protected function executeCommand($cmd)
-    {
-        $php = escapeshellarg($this->getPhp());
-        $process = new Process($php.' bin/composer '.$cmd, __DIR__.'/../../../../../', null, null, null);
-        $process->run(function ($type, $buffer) {
-            echo $buffer;
-        });
-        if (!$process->isSuccessful()) {
-            throw new \RuntimeException(sprintf('An error occurred when executing the "%s" command.', $cmd));
-        } else {
-            echo "Update is complete\n";
-        }
-    }
-
-    /**
-     * Get path to php executable
-     *
-     * @throws \RuntimeException
-     *
-     * @return string
-     */
-    protected function getPhp()
-    {
-        $phpFinder = new PhpExecutableFinder;
-        if (!$phpPath = $phpFinder->find()) {
-            throw new \RuntimeException('The php executable could not be found, add it to your PATH environment variable and try again');
-        }
-        return $phpPath;
+        $io = new ConsoleIO($input, $output, $this->getHelperSet());
+        $f = new Factory();
+        $composer = $f->createComposer($io);
+        $install = Installer::create($io, $composer)
+            ->setUpdate(true)
+            ->setUpdateWhitelist($input->getArgument('packages'));
+        return $install->run() ? 0 : 1;
     }
 }
