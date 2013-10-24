@@ -42,7 +42,8 @@
         "doctrine/migrations": "dev-master",
         "doctrine/doctrine-migrations-bundle": "dev-master",
         "anime-db/world-art-filler-bundle": "0.1.*",
-        "composer/composer": "1.0.0-alpha7"
+        "composer/composer": "1.0.0-alpha7",
+        "guzzle/guzzle": "3.7.*"
     },
     "scripts": {
         "post-install-cmd": [
