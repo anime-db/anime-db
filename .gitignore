@@ -22,6 +22,8 @@ app/cache/
 app/logs/
 app/bootstrap.php.cache
 app/config/parameters.yml
+app/SymfonyRequirements.php
+app/check.php
 vendor/
 
 # Eclipse files #
