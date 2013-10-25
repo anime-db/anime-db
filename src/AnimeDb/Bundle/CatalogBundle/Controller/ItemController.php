@@ -11,8 +11,6 @@
 namespace AnimeDb\Bundle\CatalogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use AnimeDb\Bundle\CatalogBundle\Form\Filler\Search;
-use AnimeDb\Bundle\CatalogBundle\Form\Filler\Get;
 use AnimeDb\Bundle\CatalogBundle\Entity\Item;
 use AnimeDb\Bundle\CatalogBundle\Entity\Name;
 use AnimeDb\Bundle\CatalogBundle\Entity\Image;
@@ -140,7 +138,7 @@ class ItemController extends Controller
      */
     public function fillerAction($plugin, Request $request)
     {
-        /* @var $chain \AnimeDb\Bundle\CatalogBundle\Plugin\Search\Chain */
+        /* @var $chain \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Search\Chain */
         $chain = $this->get('anime_db.plugin.filler');
         if (!($filler = $chain->getPlugin($plugin))) {
             throw $this->createNotFoundException('Plugin \''.$plugin.'\' is not found');
@@ -176,7 +174,7 @@ class ItemController extends Controller
      */
     public function searchAction($plugin, Request $request)
     {
-        /* @var $search \AnimeDb\Bundle\CatalogBundle\Plugin\Search\Search */
+        /* @var $search \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Search\Search */
         if (!($search = $this->get('anime_db.plugin.search')->getPlugin($plugin))) {
             throw $this->createNotFoundException('Plugin \''.$plugin.'\' is not found');
         }
@@ -207,7 +205,7 @@ class ItemController extends Controller
      */
     public function importAction($plugin, Request $request)
     {
-        /* @var $chain \AnimeDb\Bundle\CatalogBundle\Plugin\Search\Chain */
+        /* @var $chain \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Search\Chain */
         $chain = $this->get('anime_db.plugin.import');
         if (!($import = $chain->getPlugin($plugin))) {
             throw $this->createNotFoundException('Plugin \''.$plugin.'\' is not found');

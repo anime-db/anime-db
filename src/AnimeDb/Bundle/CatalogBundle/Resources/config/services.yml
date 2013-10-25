@@ -4,9 +4,9 @@ services:
 
     # Plugins chain
     anime_db.plugin.filler:
-        class: AnimeDb\Bundle\CatalogBundle\Plugin\Filler\Chain
+        class: AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Filler\Chain
     anime_db.plugin.search:
-        class: AnimeDb\Bundle\CatalogBundle\Plugin\Search\Chain
+        class: AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Search\Chain
         arguments: [ %default_search% ]
     anime_db.plugin.import:
         class: AnimeDb\Bundle\CatalogBundle\Plugin\Import\Chain

@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\CatalogBundle\Plugin\Filler;
+namespace AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Filler;
 
 use AnimeDb\Bundle\CatalogBundle\Plugin\Plugin;
 use Knp\Menu\ItemInterface;
@@ -19,7 +19,7 @@ use AnimeDb\Bundle\CatalogBundle\Entity\Item;
 /**
  * Plugin filler
  *
- * @package AnimeDb\Bundle\CatalogBundle\Plugin\Filler
+ * @package AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Filler
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 abstract class Filler extends Plugin
@@ -67,16 +67,6 @@ abstract class Filler extends Plugin
      * @return \AnimeDb\Bundle\CatalogBundle\Entity\Item|null
      */
     abstract public function fill(array $data);
-
-    /**
-     * Refill item field
-     *
-     * @param \AnimeDb\Bundle\CatalogBundle\Entity\Item $item
-     * @param string $field
-     *
-     * @return \AnimeDb\Bundle\CatalogBundle\Entity\Item
-     */
-    abstract public function refill(Item $item, $field);
 
     /**
      * Build menu for plugin
