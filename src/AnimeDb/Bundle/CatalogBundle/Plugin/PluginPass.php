@@ -31,6 +31,7 @@ class PluginPass implements CompilerPassInterface
     {
         $this->compilerChain($container, 'anime_db.plugin.filler', 'anime_db.filler');
         $this->compilerChain($container, 'anime_db.plugin.search_fill', 'anime_db.search');
+        $this->compilerChain($container, 'anime_db.plugin.refiller', 'anime_db.refiller');
         $this->compilerChain($container, 'anime_db.plugin.import', 'anime_db.import');
         $this->compilerChain($container, 'anime_db.plugin.item', 'anime_db.item');
         $this->compilerChain($container, 'anime_db.plugin.setting', 'anime_db.setting');
