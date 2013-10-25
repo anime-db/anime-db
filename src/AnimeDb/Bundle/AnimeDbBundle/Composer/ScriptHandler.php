@@ -27,13 +27,13 @@ use Symfony\Component\Finder\Finder;
 class ScriptHandler
 {
     /**
-     * Add plugin to AppKernel
+     * Add package to AppKernel
      *
      * @param \Composer\Script\PackageEvent $event
      */
-    public static function addPluginToAppKernel(PackageEvent $event)
+    public static function addPackageToAppKernel(PackageEvent $event)
     {
-        // TODO write PluginBundle class into app/AppKernel
+        // TODO write PackageBundle class into app/AppKernel
         // @see \Sensio\Bundle\GeneratorBundle\Manipulator\KernelManipulator
     }
 
@@ -42,9 +42,9 @@ class ScriptHandler
      *
      * @param \Composer\Script\PackageEvent $event
      */
-    public static function removePluginFromAppKernel(PackageEvent $event)
+    public static function removePackageFromAppKernel(PackageEvent $event)
     {
-        // TODO remove PluginBundle class from app/AppKernel
+        // TODO remove PackageBundle class from app/AppKernel
         // @see \Sensio\Bundle\GeneratorBundle\Manipulator\KernelManipulator
     }
 
@@ -53,7 +53,7 @@ class ScriptHandler
      *
      * @param \Composer\Script\PackageEvent $event
      */
-    public static function migratePlugin(PackageEvent $event)
+    public static function migratePackage(PackageEvent $event)
     {
         $command = 'doctrine:migrations:migrate --no-interaction';
 
@@ -83,9 +83,9 @@ class ScriptHandler
      *
      * @param \Composer\Script\PackageEvent $event
      */
-    public static function addPluginToRouting(PackageEvent $event)
+    public static function addPackageToRouting(PackageEvent $event)
     {
-        // TODO add @PluginBundle/Resources/config/routing.yml into app/config/routing.yml
+        // TODO add @PackageBundle/Resources/config/routing.yml into app/config/routing.yml
         // @see \Sensio\Bundle\GeneratorBundle\Manipulator\RoutingManipulator
     }
 
@@ -94,9 +94,9 @@ class ScriptHandler
      *
      * @param \Composer\Script\PackageEvent $event
      */
-    public static function removePluginFromRouting(PackageEvent $event)
+    public static function removePackageFromRouting(PackageEvent $event)
     {
-        // TODO remove @PluginBundle/Resources/config/routing.yml from app/config/routing.yml
+        // TODO remove @PackageBundle/Resources/config/routing.yml from app/config/routing.yml
         // @see \Sensio\Bundle\GeneratorBundle\Manipulator\RoutingManipulator
     }
 
@@ -129,7 +129,7 @@ class ScriptHandler
      */
     protected static function getMigrationsConfig(PackageInterface $package)
     {
-        $options = self::getPluginOptions($package);
+        $options = self::getPackageOptions($package);
         // specific location
         if ($options['anime-db-migrations']) {
             return $options['anime-db-migrations'];
@@ -180,7 +180,7 @@ class ScriptHandler
      *
      * @return array
      */
-    protected static function getPluginOptions(PackageInterface $package)
+    protected static function getPackageOptions(PackageInterface $package)
     {
         return array_merge(array(
             'anime-db-routing' => '',

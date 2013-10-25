@@ -63,18 +63,18 @@
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migrate"
         ],
         "post-package-install": [
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPluginToAppKernel",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPluginToRouting",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migratePlugin",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPackageToAppKernel",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPackageToRouting",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migratePackage",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::savePlugin"
         ],
         "post-package-update": [
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migratePlugin"
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migratePackage"
         ],
         "pre-package-uninstall": [
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::removePluginFromAppKernel",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::removePluginFromRouting",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migratePlugin",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::removePackageFromAppKernel",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::removePackageFromRouting",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migratePackage",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::deletePlugin"
         ]
     },
