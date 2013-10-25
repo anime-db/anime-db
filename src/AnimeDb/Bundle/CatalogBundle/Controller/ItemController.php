@@ -175,7 +175,7 @@ class ItemController extends Controller
     public function searchAction($plugin, Request $request)
     {
         /* @var $search \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Search\Search */
-        if (!($search = $this->get('anime_db.plugin.search')->getPlugin($plugin))) {
+        if (!($search = $this->get('anime_db.plugin.search_fill')->getPlugin($plugin))) {
             throw $this->createNotFoundException('Plugin \''.$plugin.'\' is not found');
         }
 

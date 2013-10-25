@@ -5,7 +5,7 @@ services:
     # Plugins chain
     anime_db.plugin.filler:
         class: AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Filler\Chain
-    anime_db.plugin.search:
+    anime_db.plugin.search_fill:
         class: AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Search\Chain
         arguments: [ %default_search% ]
     anime_db.plugin.import:
@@ -33,7 +33,7 @@ services:
 
     anime_db.subscriber.scan_storage:
         class: AnimeDb\Bundle\CatalogBundle\Event\Subscriber\ScanStorage
-        arguments: [ @doctrine.orm.entity_manager, @templating, @anime_db.plugin.search, @router ]
+        arguments: [ @doctrine.orm.entity_manager, @templating, @anime_db.plugin.search_fill, @router ]
         tags: [{ name:kernel.event_subscriber }]
 
     gedmo.listener.translatable:
