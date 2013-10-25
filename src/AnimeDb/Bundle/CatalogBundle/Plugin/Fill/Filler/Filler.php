@@ -14,7 +14,6 @@ use AnimeDb\Bundle\CatalogBundle\Plugin\Plugin;
 use Knp\Menu\ItemInterface;
 use AnimeDb\Bundle\CatalogBundle\Form\Plugin\Filler as FillerForm;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use AnimeDb\Bundle\CatalogBundle\Entity\Item;
 
 /**
  * Plugin filler
@@ -24,34 +23,6 @@ use AnimeDb\Bundle\CatalogBundle\Entity\Item;
  */
 abstract class Filler extends Plugin
 {
-    /**
-     * Item names for refill
-     *
-     * @var string
-     */
-    const FIELD_NAMES = 'names';
-
-    /**
-     * Item genres for refill
-     *
-     * @var string
-     */
-    const FIELD_GENRES = 'genres';
-
-    /**
-     * Item list of episodes for refill
-     *
-     * @var string
-     */
-    const FIELD_EPISODES = 'episodes';
-
-    /**
-     * Item description for refill
-     *
-     * @var string
-     */
-    const FIELD_DESCRIPTION = 'description';
-
     /**
      * Router
      *
@@ -82,6 +53,7 @@ abstract class Filler extends Plugin
             'routeParameters' => ['plugin' => $this->getName()]
         ]);
     }
+
     /**
      * Get form
      *
