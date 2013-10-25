@@ -1,0 +1,16 @@
+# Avalanche Configuration
+avalanche_imagine:
+    source_root:  %kernel.root_dir%/../web/media
+    web_root:     %kernel.root_dir%/../web
+    cache_prefix: media/suit
+    driver:       gd
+    filters:
+        card:
+            type:    thumbnail
+            options: { size: [240, 300], mode: outbound }
+        catalog:
+            type:    thumbnail
+            options: { size: [200, 250], mode: outbound }
+        frame:
+            type:    thumbnail
+            options: { size: [190, 142], mode: outbound } # 12:9
