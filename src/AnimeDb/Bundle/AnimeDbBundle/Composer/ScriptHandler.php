@@ -17,6 +17,9 @@ use Symfony\Component\Process\Process;
 use Composer\Script\Event;
 use Composer\Package\PackageInterface;
 use Symfony\Component\Finder\Finder;
+use AnimeDb\Bundle\AnimeDbBundle\Event\Package\StoreEvents;
+use AnimeDb\Bundle\AnimeDbBundle\Event\Package\Installed;
+use AnimeDb\Bundle\AnimeDbBundle\Event\Package\Removed;
 
 /**
  * Composer script handler
@@ -26,6 +29,13 @@ use Symfony\Component\Finder\Finder;
  */
 class ScriptHandler
 {
+    /**
+     * List events
+     *
+     * @var array
+     */
+    protected static $events = [];
+
     /**
      * Add package to AppKernel
      *
@@ -38,7 +48,7 @@ class ScriptHandler
     }
 
     /**
-     * Remove plugin from AppKernel
+     * Remove packages from AppKernel
      *
      * @param \Composer\Script\PackageEvent $event
      */
@@ -49,7 +59,7 @@ class ScriptHandler
     }
 
     /**
-     * Migrate plugin
+     * Migrate packages
      *
      * @param \Composer\Script\PackageEvent $event
      */
@@ -68,7 +78,7 @@ class ScriptHandler
                 $package = $event->getOperation()->getTargetPackage();
         }
 
-        // migrate only plugin
+        // migrate only packages
         if ($package->getType() != 'anime-db-plugin') {
            return;
         }
@@ -79,7 +89,7 @@ class ScriptHandler
     }
 
     /**
-     * Add plugin to routing
+     * Add packages to routing
      *
      * @param \Composer\Script\PackageEvent $event
      */
@@ -90,7 +100,7 @@ class ScriptHandler
     }
 
     /**
-     * Remove plugin from routing
+     * Remove packages from routing
      *
      * @param \Composer\Script\PackageEvent $event
      */
@@ -101,23 +111,30 @@ class ScriptHandler
     }
 
     /**
-     * Save plugin into DB
+     * Notify listeners that the package has been installed
      *
      * @param \Composer\Script\PackageEvent $event
      */
-    public static function savePlugin()
+    public static function installPackageNotify(PackageEvent $event)
     {
-        // TODO save plugin into db
+        switch ($event->getOperation()->getJobType()) {
+            case 'install':
+                $package = $event->getOperation()->getPackage();
+                break;
+            case 'update':
+                $package = $event->getOperation()->getTargetPackage();
+        }
+        self::$events[] = [StoreEvents::INSTALLED, $package];
     }
 
     /**
-     * Delete plugin from DB
+     * Notify listeners that the package has been removed
      *
      * @param \Composer\Script\PackageEvent $event
      */
-    public static function deletePlugin()
+    public static function removePackageNotify(PackageInterface $package)
     {
-        // TODO delete plugin from db
+        self::$events[] = [StoreEvents::REMOVED, $event->getOperation()->getPackage()];
     }
 
     /**
@@ -174,7 +191,7 @@ class ScriptHandler
     }
 
     /**
-     * Get plugin options
+     * Get packages options
      *
      * @param \Composer\Package\PackageInterface $package
      *
@@ -212,5 +229,35 @@ class ScriptHandler
     public static function migrate(CommandEvent $event)
     {
         self::executeCommand($event, 'doctrine:migrations:migrate --no-interaction');
+    }
+
+    /**
+     * Notify listeners and subscribers that the package has been installed or removed
+     *
+     * @param \Composer\Script\CommandEvent $event
+     */
+    public static function notify(CommandEvent $event)
+    {
+        if (self::$events) {
+            // load kernel
+            require_once __DIR__.'/../../../../../app/bootstrap.php.cache';
+            require_once __DIR__.'/../../../../../app/AppKernel.php';
+            $kernel = new \AppKernel('dev', true);
+            $kernel->boot();
+
+            // notify listeners
+            $dispatcher = $kernel->getContainer()->get('event_dispatcher');
+            foreach (self::$events as $event) {
+                switch ($event[0]) {
+                    case StoreEvents::INSTALLED:
+                        $event[1] = new Installed($event[1]);
+                        break;
+                    case StoreEvents::REMOVED:
+                        $event[1] = new Removed($event[1]);
+                        break;
+                }
+                $dispatcher->dispatch($event[0], $event[1]);
+            }
+        }
     }
 }

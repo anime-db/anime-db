@@ -52,7 +52,8 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migrate"
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migrate",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::notify"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
@@ -60,13 +61,14 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migrate"
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migrate",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::notify"
         ],
         "post-package-install": [
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPackageToAppKernel",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPackageToRouting",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migratePackage",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::savePlugin"
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::installPackageNotify"
         ],
         "post-package-update": [
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migratePackage"
@@ -75,7 +77,7 @@
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::removePackageFromAppKernel",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::removePackageFromRouting",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migratePackage",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::deletePlugin"
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::removePackageNotify"
         ]
     },
     "config": {
