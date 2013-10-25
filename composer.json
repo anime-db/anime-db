@@ -60,22 +60,22 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migrate"
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migrate"
         ],
         "post-package-install": [
-            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::addPluginToAppKernel",
-            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::addPluginToRouting",
-            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migratePlugin",
-            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::savePlugin"
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPluginToAppKernel",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPluginToRouting",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migratePlugin",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::savePlugin"
         ],
         "post-package-update": [
-            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migratePlugin"
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migratePlugin"
         ],
         "pre-package-uninstall": [
-            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::removePluginFromAppKernel",
-            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::removePluginFromRouting",
-            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migratePlugin",
-            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::deletePlugin"
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::removePluginFromAppKernel",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::removePluginFromRouting",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migratePlugin",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::deletePlugin"
         ]
     },
     "config": {

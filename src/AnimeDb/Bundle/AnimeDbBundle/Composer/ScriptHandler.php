@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\CatalogBundle\Composer;
+namespace AnimeDb\Bundle\AnimeDbBundle\Composer;
 
 use Composer\Script\PackageEvent;
 use Composer\Script\CommandEvent;
@@ -21,7 +21,7 @@ use Symfony\Component\Finder\Finder;
 /**
  * Composer script handler
  *
- * @package AnimeDb\Bundle\CatalogBundle\Composer
+ * @package AnimeDb\Bundle\AnimeDbBundle\Composer
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class ScriptHandler
@@ -34,6 +34,7 @@ class ScriptHandler
     public static function addPluginToAppKernel(PackageEvent $event)
     {
         // TODO write PluginBundle class into app/AppKernel
+        // @see \Sensio\Bundle\GeneratorBundle\Manipulator\KernelManipulator
     }
 
     /**
@@ -44,6 +45,7 @@ class ScriptHandler
     public static function removePluginFromAppKernel(PackageEvent $event)
     {
         // TODO remove PluginBundle class from app/AppKernel
+        // @see \Sensio\Bundle\GeneratorBundle\Manipulator\KernelManipulator
     }
 
     /**
@@ -84,6 +86,7 @@ class ScriptHandler
     public static function addPluginToRouting(PackageEvent $event)
     {
         // TODO add @PluginBundle/Resources/config/routing.yml into app/config/routing.yml
+        // @see \Sensio\Bundle\GeneratorBundle\Manipulator\RoutingManipulator
     }
 
     /**
@@ -94,6 +97,7 @@ class ScriptHandler
     public static function removePluginFromRouting(PackageEvent $event)
     {
         // TODO remove @PluginBundle/Resources/config/routing.yml from app/config/routing.yml
+        // @see \Sensio\Bundle\GeneratorBundle\Manipulator\RoutingManipulator
     }
 
     /**
