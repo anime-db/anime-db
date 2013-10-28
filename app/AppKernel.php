@@ -24,7 +24,7 @@ class AppKernel extends Kernel
      */
     public function registerBundles()
     {
-        $bundles = array(
+        $bundles = [
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
@@ -33,12 +33,15 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-            new AnimeDb\Bundle\CatalogBundle\AnimeDbCatalogBundle(),
-            new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
-            new AnimeDb\Bundle\WorldArtFillerBundle\AnimeDbWorldArtFillerBundle(),
-            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
-        );
+            new AnimeDb\Bundle\AnimeDbBundle\AnimeDbAnimeDbBundle(),
+
+            new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+
+            new AnimeDb\Bundle\CatalogBundle\AnimeDbCatalogBundle(),
+            new AnimeDb\Bundle\WorldArtFillerBundle\AnimeDbWorldArtFillerBundle(),
+        ];
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
