@@ -18,7 +18,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
  *
- * @package AnimeDb\Bundle\CatalogBundle
+ * @package AnimeDb\Bundle\CatalogBundle\DependencyInjection
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Configuration implements ConfigurationInterface
