@@ -86,6 +86,7 @@ class SelfUpdateCommand extends ContainerAwareCommand
 
         // notify about updated
         $dispatcher->dispatch(StoreEvents::UPDATED, new Updated($new_package));
+        $output->writeln('Updating the application has been completed');
     }
 
     /**
