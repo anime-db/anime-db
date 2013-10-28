@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\CatalogBundle\DependencyInjection;
+namespace AnimeDb\Bundle\AnimeDbBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -18,7 +18,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
  *
- * @package AnimeDb\Bundle\CatalogBundle
+ * @package AnimeDb\Bundle\AnimeDbBundle\DependencyInjection
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Configuration implements ConfigurationInterface
