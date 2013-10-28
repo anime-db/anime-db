@@ -146,12 +146,38 @@ class SelfUpdateCommand extends ContainerAwareCommand
      */
     protected function rewriting($from)
     {
-        $this->copy($from, realpath(__DIR__.'/../../../../../'));
-        // remove downloaded files
         $fs = new Filesystem();
+        $target = __DIR__.'/../../../../../';
+        // remove old source
+        $fs->remove($target.'src');
+        $finder = Finder::create()
+            ->ignoreUnreadableDirs()
+            ->in($target.'/app')
+            ->notPath('config/parameters.yml')
+            ->notPath('Resources/anime.db');
+        $fs->remove($finder);
+        // remove files in root dir
+        $files = scandir($target);
+        foreach ($files as $file) {
+            if ($file[0] == '.' || !is_file($target.$file)) {
+                continue;
+            }
+            $fs->remove($target.$file);
+        }
+
+        // copy new version
+        $this->copy($from, realpath(__DIR__.'/../../../../../'));
+
+        // remove downloaded files
         $fs->remove($from);
     }
 
+    /**
+     * Copy files recursive
+     *
+     * @param string $src
+     * @param string $dst
+     */
     protected function copy($src, $dst) { 
         if (!is_array($src) && is_dir($src)) {
             $src = new \FilesystemIterator($src);
