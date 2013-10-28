@@ -24,7 +24,7 @@ class AppKernel extends Kernel
      */
     public function registerBundles()
     {
-        $bundles = [
+        $bundles = array(
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
@@ -41,7 +41,7 @@ class AppKernel extends Kernel
 
             new AnimeDb\Bundle\CatalogBundle\AnimeDbCatalogBundle(),
             new AnimeDb\Bundle\WorldArtFillerBundle\AnimeDbWorldArtFillerBundle(),
-        ];
+        );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
