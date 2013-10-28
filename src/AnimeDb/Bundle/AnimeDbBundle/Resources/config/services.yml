@@ -1,1 +1,5 @@
 services:
+    anime_db.listener.update_itself:
+        class: AnimeDb\Bundle\AnimeDbBundle\Event\Listener\UpdateItself
+        tags:
+            - { name: kernel.event_listener, event: anime_db.update_itself.downloaded, method: onAppDownloaded }
