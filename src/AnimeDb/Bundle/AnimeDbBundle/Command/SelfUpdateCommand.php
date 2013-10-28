@@ -29,7 +29,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * @package AnimeDb\Bundle\AnimeDbBundle\Command
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class UpdateCommand extends ContainerAwareCommand
+class SelfUpdateCommand extends ContainerAwareCommand
 {
     /**
      * (non-PHPdoc)
