@@ -82,7 +82,7 @@ class SelfUpdateCommand extends ContainerAwareCommand
         $dispatcher->dispatch(StoreEvents::DOWNLOADED, new Downloaded($target, $new_package, $composer->getPackage()));
 
         // rewriting the application files
-        // TODO do rewriting
+        $this->rewriting($target);
 
         // notify about updated
         $dispatcher->dispatch(StoreEvents::UPDATED, new Updated($new_package));
@@ -137,5 +137,52 @@ class SelfUpdateCommand extends ContainerAwareCommand
         $config = json_decode($config, true);
         $loader = new ArrayLoader();
         return $loader->load($config);
+    }
+
+    /**
+     * Rewrite the application files
+     *
+     * @param string $from
+     */
+    protected function rewriting($from)
+    {
+        $this->copy($from, realpath(__DIR__.'/../../../../../'));
+        // remove downloaded files
+        $fs = new Filesystem();
+        $fs->remove($from);
+    }
+
+    protected function copy($src, $dst) { 
+        if (!is_array($src) && is_dir($src)) {
+            $src = new \FilesystemIterator($src);
+        }
+        $files = iterator_to_array($this->toIterator($src));
+        $files = array_reverse($files);
+        $fs = new Filesystem();
+        /* @var $file \SplFileInfo */
+        foreach ($files as $file) {
+            if (!file_exists($file) && !is_link($file)) {
+                continue;
+            }
+            if (is_dir($file) && !is_link($file)) {
+                $this->copy(new \FilesystemIterator($file), $dst.'/'.pathinfo($file, PATHINFO_BASENAME));
+            } else {
+                $fs->copy($file, $dst.'/'.pathinfo($file, PATHINFO_BASENAME), true);
+            }
+        }
+    }
+
+    /**
+     * @param mixed $files
+     *
+     * @return \Traversable
+     */
+    protected function toIterator($files)
+    {
+        if (!$files instanceof \Traversable) {
+            $files = new \ArrayObject(is_array($files) ? $files : array($files));
+        }
+
+        return $files;
     }
 }
