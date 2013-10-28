@@ -10,8 +10,6 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Command;
 
-use Composer\Package\Loader\ArrayLoader;
-
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -24,6 +22,8 @@ use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\StoreEvents;
 use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded;
 use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Updated;
 use Symfony\Component\Filesystem\Filesystem;
+use Composer\Package\Loader\ArrayLoader;
+use Symfony\Component\Finder\Finder;
 
 /**
  * Update Application
@@ -69,6 +69,8 @@ class SelfUpdateCommand extends ContainerAwareCommand
 
         // download new version
         $target = sys_get_temp_dir().'/anime-db';
+        $fs = new Filesystem();
+        $fs->remove($target);
         $composer->getDownloadManager()
             ->getDownloaderForInstalledPackage($package)
             ->download($package, $target);
