@@ -147,10 +147,11 @@ class SelfUpdateCommand extends ContainerAwareCommand
     protected function rewriting($from)
     {
         $fs = new Filesystem();
-        $target = __DIR__.'/../../../../../';
+        $target = realpath(__DIR__.'/../../../../../');
         // remove old source
         $fs->remove($target.'src');
         $finder = Finder::create()
+            ->files()
             ->ignoreUnreadableDirs()
             ->in($target.'/app')
             ->notPath('config/parameters.yml')
@@ -166,7 +167,7 @@ class SelfUpdateCommand extends ContainerAwareCommand
         }
 
         // copy new version
-        $this->copy($from, realpath(__DIR__.'/../../../../../'));
+        $this->copy($from, $target);
 
         // remove downloaded files
         $fs->remove($from);
