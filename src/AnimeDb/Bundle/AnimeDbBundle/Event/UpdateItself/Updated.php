@@ -8,17 +8,17 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\CatalogBundle\Event\Update;
+namespace AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself;
 
 use Symfony\Component\EventDispatcher\Event;
 
 /**
  * Event thrown when the application updated
  *
- * @package AnimeDb\Bundle\CatalogBundle\Event\Update
+ * @package AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class ApplicationUpdated extends Event
+class Updated extends Event
 {
     /**
      * New version

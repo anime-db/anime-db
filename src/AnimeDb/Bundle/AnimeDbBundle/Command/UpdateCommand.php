@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\CatalogBundle\Command;
+namespace AnimeDb\Bundle\AnimeDbBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,15 +18,15 @@ use Guzzle\Http\Client;
 use Composer\Factory;
 use Composer\IO\ConsoleIO;
 use Composer\Package\Package;
-use AnimeDb\Bundle\CatalogBundle\Event\Update\StoreEvents;
-use AnimeDb\Bundle\CatalogBundle\Event\Update\ApplicationDownloaded;
-use AnimeDb\Bundle\CatalogBundle\Event\Update\ApplicationUpdated;
+use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\StoreEvents;
+use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded;
+use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Updated;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Update Application
  *
- * @package AnimeDb\Bundle\CatalogBundle\Command
+ * @package AnimeDb\Bundle\AnimeDbBundle\Command
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class UpdateCommand extends ContainerAwareCommand
@@ -37,8 +37,8 @@ class UpdateCommand extends ContainerAwareCommand
      */
     protected function configure()
     {
-        $this->setName('animedb:update')
-            ->setDescription('Update application');
+        $this->setName('animedb:self-update')
+            ->setDescription('Update itself');
     }
 
     /**
@@ -66,20 +66,20 @@ class UpdateCommand extends ContainerAwareCommand
         $package->setInstallationSource('dist');
 
         // download new version
-        $dm = $composer->getDownloadManager();
-        $downloader = $dm->getDownloaderForInstalledPackage($package);
         $target = sys_get_temp_dir().'/anime-db';
-        $downloader->download($package, $target);
+        $composer->getDownloadManager()
+            ->getDownloaderForInstalledPackage($package)
+            ->download($package, $target);
 
         $dispatcher = $this->getContainer()->get('event_dispatcher');
         // notify about downloaded
-        $dispatcher->dispatch(StoreEvents::APPLICATION_DOWNLOADED, new ApplicationDownloaded($target, $tag['version']));
+        $dispatcher->dispatch(StoreEvents::DOWNLOADED, new Downloaded($target, $tag['version']));
 
         // rewriting the application files
         // TODO do rewriting
 
         // notify about updated
-        $dispatcher->dispatch(StoreEvents::APPLICATION_UPDATED, new ApplicationUpdated($target, $tag['version']));
+        $dispatcher->dispatch(StoreEvents::UPDATED, new Updated($target, $tag['version']));
     }
 
     /**
