@@ -10,6 +10,8 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Command;
 
+use Composer\Package\Loader\ArrayLoader;
+
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -71,15 +73,17 @@ class SelfUpdateCommand extends ContainerAwareCommand
             ->getDownloaderForInstalledPackage($package)
             ->download($package, $target);
 
+        $new_package = $this->getPackage($target.'/composer.json');
         $dispatcher = $this->getContainer()->get('event_dispatcher');
+
         // notify about downloaded
-        $dispatcher->dispatch(StoreEvents::DOWNLOADED, new Downloaded($target, $tag['version']));
+        $dispatcher->dispatch(StoreEvents::DOWNLOADED, new Downloaded($target, $new_package, $composer->getPackage()));
 
         // rewriting the application files
         // TODO do rewriting
 
         // notify about updated
-        $dispatcher->dispatch(StoreEvents::UPDATED, new Updated($target, $tag['version']));
+        $dispatcher->dispatch(StoreEvents::UPDATED, new Updated($new_package));
     }
 
     /**
@@ -115,5 +119,20 @@ class SelfUpdateCommand extends ContainerAwareCommand
             }
         }
         return false;
+    }
+
+    /**
+     * Get package from config
+     *
+     * @param string $config
+     *
+     * @return array
+     */
+    protected function getPackage($config)
+    {
+        $config = file_get_contents($config);
+        $config = json_decode($config, true);
+        $loader = new ArrayLoader();
+        return $loader->load($config);
     }
 }
