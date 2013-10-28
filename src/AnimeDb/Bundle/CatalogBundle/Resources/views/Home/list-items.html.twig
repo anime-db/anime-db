@@ -42,12 +42,12 @@
 			<img src="{{ item.cover|apply_filter('catalog')|dummy('catalog') }}" alt="{{ item.name }}" />
 			<a href="{{ path('item_show', {'id': item.id, 'name': item.name}) }}" class="name"><strong>{{ item.name }}</strong></a>
 			<div class="type">
-				<a href="{{ path('home_search', {'search_items[type]': item.type.id}) }}" title="{% trans %}Type{% endtrans %}">{{ item.type.name }}</a>
+				<a href="{{ path('home_search', {'anime_db_catalog_search_items[type]': item.type.id}) }}" title="{% trans %}Type{% endtrans %}">{{ item.type.name }}</a>
 			</div>
 			<ul class="genres">
 				{% for genre in item.genres %}
 					<li class="genre-item">
-						<a href="{{ path('home_search', {'search_items[genres][]': genre.id}) }}" title="{% trans %}Genre{% endtrans %}">{{ genre.name }}</a>
+						<a href="{{ path('home_search', {'anime_db_catalog_search_items[genres][]': genre.id}) }}" title="{% trans %}Genre{% endtrans %}">{{ genre.name }}</a>
 					</li>
 				{% endfor %}
 			</ul>
