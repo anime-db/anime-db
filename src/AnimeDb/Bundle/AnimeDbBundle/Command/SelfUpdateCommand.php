@@ -149,7 +149,7 @@ class SelfUpdateCommand extends ContainerAwareCommand
         $fs = new Filesystem();
         $target = realpath(__DIR__.'/../../../../../');
         // remove old source
-        $fs->remove($target.'src');
+        $fs->remove($target.'/src');
         $finder = Finder::create()
             ->files()
             ->ignoreUnreadableDirs()
