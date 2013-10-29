@@ -240,8 +240,8 @@ class ScriptHandler
     {
         if (self::$events) {
             // load kernel
-            require_once __DIR__.'/../../../../../app/bootstrap.php.cache';
-            require_once __DIR__.'/../../../../../app/AppKernel.php';
+            require __DIR__.'/../../../../../app/bootstrap.php.cache';
+            require __DIR__.'/../../../../../app/AppKernel.php';
             $kernel = new \AppKernel('dev', true);
             $kernel->boot();
 

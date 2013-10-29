@@ -152,6 +152,8 @@ class UpdateCommand extends ContainerAwareCommand
         if (file_exists(__DIR__.'/../../../../../composer.lock')) {
             @unlink(__DIR__.'/../../../../../composer.lock');
         }
+        // Compositor update is performed in a separate thread because after the update,
+        // you must re-connect AppKernal and its inclusion would lead to an error
         $this->executeCommand(escapeshellarg($this->getPhp()).' bin/composer update', $output);
         $output->writeln('<info>Update requirements has been completed</info>');
     }
