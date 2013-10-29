@@ -25,6 +25,8 @@ use Symfony\Component\Filesystem\Filesystem;
 use Composer\Package\Loader\ArrayLoader;
 use Symfony\Component\Finder\Finder;
 use Composer\Composer;
+use Symfony\Component\Process\PhpExecutableFinder;
+use Symfony\Component\Process\Process;
 
 /**
  * Update Application
@@ -60,6 +62,9 @@ class UpdateCommand extends ContainerAwareCommand
         } else {
             $output->writeln('Application has already been updated to the latest version');
         }
+
+        $this->doUpdateComposer($output);
+        $this->doRestartService($output);
     }
 
     /**
@@ -134,6 +139,26 @@ class UpdateCommand extends ContainerAwareCommand
         // notify about updated
         $dispatcher->dispatch(StoreEvents::UPDATED, new Updated($new_package));
         $output->writeln('Updating the application has been completed');
+    }
+
+    /**
+     * Do update composer
+     *
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     */
+    protected function doUpdateComposer(OutputInterface $output)
+    {
+        $this->executeCommand('bin/composer update', $output);
+    }
+
+    /**
+     * Do restart service
+     *
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     */
+    protected function doRestartService(OutputInterface $output)
+    {
+        // TODO do restart service
     }
 
     /**
@@ -218,5 +243,46 @@ class UpdateCommand extends ContainerAwareCommand
         }
 
         return $files;
+    }
+
+    /**
+     * Execute command
+     *
+     * @throws \RuntimeException
+     *
+     * @param string $cmd
+     * @param \Symfony\Component\Console\Output\OutputInterface|null $output
+     */
+    protected function executeCommand($cmd, OutputInterface $output = null)
+    {
+        $php = escapeshellarg($this->getPhp());
+
+        $process = new Process($php.' '.$cmd, __DIR__.'/../../../../../', null, null, null);
+        $process->run(function ($type, $buffer) use ($output) {
+            if ($output instanceof OutputInterface) {
+                $output->write($buffer);
+            } else {
+                echo $buffer;
+            }
+        });
+        if (!$process->isSuccessful()) {
+            throw new \RuntimeException(sprintf('An error occurred when executing the "%s" command.', $cmd));
+        }
+    }
+
+    /**
+     * Get path to php executable
+     *
+     * @throws \RuntimeException
+     *
+     * @return string
+     */
+    protected function getPhp()
+    {
+        $phpFinder = new PhpExecutableFinder;
+        if (!$phpPath = $phpFinder->find()) {
+            throw new \RuntimeException('The php executable could not be found, add it to your PATH environment variable and try again');
+        }
+        return $phpPath;
     }
 }
