@@ -115,6 +115,26 @@ class Update
     }
 
     /**
+     * Merge bin service commands
+     *
+     * @param \AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded $event
+     */
+    public function onAppDownloadedMergeBinService(Downloaded $event)
+    {
+        $old_body = file_get_contents(__DIR__.'/../../../../../../bin/service');
+        $new_body = $tmp_body = file_get_contents($event->getPath().'/bin/service');
+
+        $new_body = $this->copyParam($old_body, $new_body, "addr='%s'", self::DEFAULT_ADDRESS);
+        $new_body = $this->copyParam($old_body, $new_body, "port=%s\n", self::DEFAULT_PORT);
+        $new_body = $this->copyParam($old_body, $new_body, "path=%s\n", self::DEFAULT_PATH);
+
+        // rewrite Run.vbs
+        if ($new_body != $tmp_body) {
+            file_put_contents($event->getPath().'/bin/service', $new_body);
+        }
+    }
+
+    /**
      * Copy param value if need
      *
      * @param string $from
