@@ -252,12 +252,14 @@ class UpdateCommand extends ContainerAwareCommand
      *
      * @param string $cmd
      * @param \Symfony\Component\Console\Output\OutputInterface|null $output
+     * @param string|null $cwd
      */
-    protected function executeCommand($cmd, OutputInterface $output = null)
+    protected function executeCommand($cmd, OutputInterface $output = null, $cwd = '')
     {
         $php = escapeshellarg($this->getPhp());
+        $cwd = $cwd ?: __DIR__.'/../../../../../';
 
-        $process = new Process($php.' '.$cmd, __DIR__.'/../../../../../', null, null, null);
+        $process = new Process($php.' '.$cmd, $cwd, null, null, null);
         $process->run(function ($type, $buffer) use ($output) {
             if ($output instanceof OutputInterface) {
                 $output->write($buffer);
