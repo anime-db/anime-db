@@ -148,15 +148,18 @@ class SelfUpdateCommand extends ContainerAwareCommand
     {
         $fs = new Filesystem();
         $target = realpath(__DIR__.'/../../../../../');
-        // remove old source
-        $fs->remove($target.'/src');
-        $finder = Finder::create()
-            ->files()
-            ->ignoreUnreadableDirs()
-            ->in($target.'/app')
-            ->notPath('config/parameters.yml')
-            ->notPath('Resources/anime.db');
-        $fs->remove($finder);
+        // ignore errors during the removal of the old application
+        try {
+            // remove old source
+            $fs->remove($target.'/src');
+            $finder = Finder::create()
+                ->files()
+                ->ignoreUnreadableDirs()
+                ->in($target.'/app')
+                ->notPath('config/parameters.yml')
+                ->notPath('Resources/anime.db');
+            $fs->remove($finder);
+        } catch (\Exception $e) {}
 
         // copy new version
         $this->copy($from, $target);
