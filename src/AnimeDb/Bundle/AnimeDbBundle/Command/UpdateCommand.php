@@ -24,6 +24,7 @@ use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Updated;
 use Symfony\Component\Filesystem\Filesystem;
 use Composer\Package\Loader\ArrayLoader;
 use Symfony\Component\Finder\Finder;
+use Composer\Composer;
 
 /**
  * Update Application
@@ -49,44 +50,16 @@ class UpdateCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output) {
         // load composer
-        $io = new ConsoleIO($input, $output, $this->getHelperSet());
         $factory = new Factory();
-        $composer = $factory->createComposer($io);
+        $composer = $factory->createComposer(new ConsoleIO($input, $output, $this->getHelperSet()));
 
         // search tag with new version of application
         $tag = $this->findNewVersion($composer->getPackage()->getPrettyVersion());
-        if (!$tag) {
+        if ($tag) {
+            $this->doUpdateItself($tag, $composer, $output);
+        } else {
             $output->writeln('Application has already been updated to the latest version');
-            return;
         }
-        $output->writeln('Discovered a new version of the application: <info>'.$tag['version'].'</info>');
-
-        // create install package
-        $package = new Package('anime-db/anime-db', $tag['version'].'.0', $tag['version']);
-        $package->setDistType('zip');
-        $package->setDistUrl($tag['zipball_url']);
-        $package->setInstallationSource('dist');
-
-        // download new version
-        $target = sys_get_temp_dir().'/anime-db';
-        $fs = new Filesystem();
-        $fs->remove($target);
-        $composer->getDownloadManager()
-            ->getDownloaderForInstalledPackage($package)
-            ->download($package, $target);
-
-        $new_package = $this->getPackage($target.'/composer.json');
-        $dispatcher = $this->getContainer()->get('event_dispatcher');
-
-        // notify about downloaded
-        $dispatcher->dispatch(StoreEvents::DOWNLOADED, new Downloaded($target, $new_package, $composer->getPackage()));
-
-        // rewriting the application files
-        $this->rewriting($target);
-
-        // notify about updated
-        $dispatcher->dispatch(StoreEvents::UPDATED, new Updated($new_package));
-        $output->writeln('Updating the application has been completed');
     }
 
     /**
@@ -122,6 +95,45 @@ class UpdateCommand extends ContainerAwareCommand
             }
         }
         return false;
+    }
+
+    /**
+     * Do update itself
+     *
+     * @param array $tag
+     * @param \Composer\Composer $composer
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     */
+    protected function doUpdateItself(array $tag, Composer $composer, OutputInterface $output)
+    {
+        $output->writeln('Discovered a new version of the application: <info>'.$tag['version'].'</info>');
+
+        // create install package
+        $package = new Package('anime-db/anime-db', $tag['version'].'.0', $tag['version']);
+        $package->setDistType('zip');
+        $package->setDistUrl($tag['zipball_url']);
+        $package->setInstallationSource('dist');
+
+        // download new version
+        $target = sys_get_temp_dir().'/anime-db';
+        $fs = new Filesystem();
+        $fs->remove($target);
+        $composer->getDownloadManager()
+            ->getDownloaderForInstalledPackage($package)
+            ->download($package, $target);
+
+        $new_package = $this->getPackage($target.'/composer.json');
+        $dispatcher = $this->getContainer()->get('event_dispatcher');
+
+        // notify about downloaded
+        $dispatcher->dispatch(StoreEvents::DOWNLOADED, new Downloaded($target, $new_package, $composer->getPackage()));
+
+        // rewriting the application files
+        $this->rewriting($target);
+
+        // notify about updated
+        $dispatcher->dispatch(StoreEvents::UPDATED, new Updated($new_package));
+        $output->writeln('Updating the application has been completed');
     }
 
     /**
