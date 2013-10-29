@@ -26,6 +26,13 @@ final class StoreEvents
     const INSTALLED = 'anime_db.package.installed';
 
     /**
+     * Event thrown when the package is updated
+     *
+     * @var string
+     */
+    const UPDATED = 'anime_db.package.updated';
+
+    /**
      * Event thrown when the package is removed
      *
      * @var string
