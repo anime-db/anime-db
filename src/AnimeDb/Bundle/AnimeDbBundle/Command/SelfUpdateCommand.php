@@ -157,14 +157,6 @@ class SelfUpdateCommand extends ContainerAwareCommand
             ->notPath('config/parameters.yml')
             ->notPath('Resources/anime.db');
         $fs->remove($finder);
-        // remove files in root dir
-        $files = scandir($target);
-        foreach ($files as $file) {
-            if ($file[0] == '.' || !is_file($target.$file)) {
-                continue;
-            }
-            $fs->remove($target.$file);
-        }
 
         // copy new version
         $this->copy($from, $target);
