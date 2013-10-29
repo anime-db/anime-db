@@ -10,9 +10,9 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package;
 
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Package;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Package as BasePackage;
 use AnimeDb\Bundle\AnimeDbBundle\Event\Package\StoreEvents;
-use AnimeDb\Bundle\AnimeDbBundle\Event\Package\Installed;
+use AnimeDb\Bundle\AnimeDbBundle\Event\Package\Installed as Event;
 
 /**
  * Job: Notice that the package has been installed
@@ -20,7 +20,7 @@ use AnimeDb\Bundle\AnimeDbBundle\Event\Package\Installed;
  * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Installed extends Package
+class Installed extends BasePackage
 {
     /**
      * (non-PHPdoc)
@@ -29,6 +29,6 @@ class Installed extends Package
     public function execute()
     {
         $dispatcher = $this->container->getKernel()->getContainer()->get('event_dispatcher');
-        $dispatcher->dispatch(StoreEvents::INSTALLED, new Installed($this->package));
+        $dispatcher->dispatch(StoreEvents::INSTALLED, new Event($this->package));
     }
 }

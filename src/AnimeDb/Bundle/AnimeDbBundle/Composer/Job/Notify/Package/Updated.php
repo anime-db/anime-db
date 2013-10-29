@@ -10,9 +10,9 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package;
 
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Package;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Package as BasePackage;
 use AnimeDb\Bundle\AnimeDbBundle\Event\Package\StoreEvents;
-use AnimeDb\Bundle\AnimeDbBundle\Event\Package\Updated;
+use AnimeDb\Bundle\AnimeDbBundle\Event\Package\Updated as Event;
 
 /**
  * Job: Notice that the package has been updated
@@ -20,7 +20,7 @@ use AnimeDb\Bundle\AnimeDbBundle\Event\Package\Updated;
  * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Updated extends Package
+class Updated extends BasePackage
 {
     /**
      * (non-PHPdoc)
@@ -29,6 +29,6 @@ class Updated extends Package
     public function execute()
     {
         $dispatcher = $this->container->getKernel()->getContainer()->get('event_dispatcher');
-        $dispatcher->dispatch(StoreEvents::UPDATED, new Updated($this->package));
+        $dispatcher->dispatch(StoreEvents::UPDATED, new Event($this->package));
     }
 }

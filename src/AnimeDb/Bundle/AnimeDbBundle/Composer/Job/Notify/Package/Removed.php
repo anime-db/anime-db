@@ -10,9 +10,9 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package;
 
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Package;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Package as BasePackage;
 use AnimeDb\Bundle\AnimeDbBundle\Event\Package\StoreEvents;
-use AnimeDb\Bundle\AnimeDbBundle\Event\Package\Removed;
+use AnimeDb\Bundle\AnimeDbBundle\Event\Package\Removed as Event;
 
 /**
  * Job: Notice that the package has been removed
@@ -20,7 +20,7 @@ use AnimeDb\Bundle\AnimeDbBundle\Event\Package\Removed;
  * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Removed extends Package
+class Removed extends BasePackage
 {
     /**
      * (non-PHPdoc)
@@ -29,6 +29,6 @@ class Removed extends Package
     public function execute()
     {
         $dispatcher = $this->container->getKernel()->getContainer()->get('event_dispatcher');
-        $dispatcher->dispatch(StoreEvents::REMOVED, new Removed($this->package));
+        $dispatcher->dispatch(StoreEvents::REMOVED, new Event($this->package));
     }
 }
