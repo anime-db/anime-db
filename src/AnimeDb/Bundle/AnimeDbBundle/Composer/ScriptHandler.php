@@ -125,33 +125,26 @@ class ScriptHandler
     }
 
     /**
-     * Notify listeners that the package has been installed
+     * Notify listeners that the package has been installed/updated/removed
      *
      * @param \Composer\Script\PackageEvent $event
      */
-    public static function notifyPackageInstalled(PackageEvent $event)
+    public static function notifyPackage(PackageEvent $event)
     {
-        self::getContainer()->addJob(new InstalledPackage($event->getOperation()->getPackage()));
-    }
-
-    /**
-     * Notify listeners that the package has been installed
-     *
-     * @param \Composer\Script\PackageEvent $event
-     */
-    public static function notifyPackageUpdated(PackageEvent $event)
-    {
-        self::getContainer()->addJob(new UpdatedPackage($event->getOperation()->getTargetPackage()));
-    }
-
-    /**
-     * Notify listeners that the package has been removed
-     *
-     * @param \Composer\Script\PackageEvent $event
-     */
-    public static function notifyPackageRemoved(PackageEvent $event)
-    {
-        self::getContainer()->addJob(new RemovedPackage($event->getOperation()->getPackage()));
+        switch ($event->getOperation()->getJobType()) {
+            case 'install':
+                $job = new InstalledPackage($event->getOperation()->getPackage());
+                break;
+            case 'update':
+                $job = new UpdatedPackage($event->getOperation()->getTargetPackage());
+                break;
+            case 'uninstall':
+                $job = new RemovedPackage($event->getOperation()->getPackage());
+                break;
+            default:
+                return;
+        }
+        self::getContainer()->addJob($job);
     }
 
     /**
