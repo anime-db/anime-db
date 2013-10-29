@@ -22,6 +22,34 @@ use Sensio\Bundle\GeneratorBundle\Manipulator\KernelManipulator;
 class Update
 {
     /**
+     * Default address
+     *
+     * @var string
+     */
+    const DEFAULT_ADDRESS = '0.0.0.0';
+
+    /**
+     * Default port
+     *
+     * @var string
+     */
+    const DEFAULT_PORT = '56780';
+
+    /**
+     * Default path to php executer
+     *
+     * @var string
+     */
+    const DEFAULT_PHP = 'php';
+
+    /**
+     * Default path to the directory with the application
+     *
+     * @var string
+     */
+    const DEFAULT_PATH = '.';
+
+    /**
      * Add requirements in composer.json from old version
      *
      * @param \AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded $event
@@ -64,6 +92,49 @@ class Update
                 file_put_contents($new_kernel, substr($body, 0, $start).$new_bundles.substr($body, $end));
             }
         }
+    }
+
+    /**
+     * Merge bin Run.vbs commands
+     *
+     * @param \AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded $event
+     */
+    public function onAppDownloadedMergeBinRun(Downloaded $event)
+    {
+        $old_body = file_get_contents(__DIR__.'/../../../../../../bin/Run.vbs');
+        $new_body = $tmp_body = file_get_contents($event->getPath().'/bin/Run.vbs');
+
+        $new_body = $this->copyParam($old_body, $new_body, 'sAddr = "%s"', self::DEFAULT_ADDRESS);
+        $new_body = $this->copyParam($old_body, $new_body, 'sPort = "%s"', self::DEFAULT_PORT);
+        $new_body = $this->copyParam($old_body, $new_body, 'sPhp = "%s"', self::DEFAULT_PHP);
+
+        // rewrite Run.vbs
+        if ($new_body != $tmp_body) {
+            file_put_contents($event->getPath().'/bin/Run.vbs', $new_body);
+        }
+    }
+
+    /**
+     * Copy param value if need
+     *
+     * @param string $from
+     * @param string $target
+     * @param string $param
+     * @param string $default
+     *
+     * @return string
+     */
+    protected function copyParam($from, $target, $param, $default)
+    {
+        // param has been changed
+        if (strpos($from, sprintf($param, $default)) === false) {
+            list($left, $right) = explode('%s', $param);
+            $start = strpos($from, $left)+strlen($left); 
+            $end = strpos($from, $right, $start);
+            $value = substr($from, $start, $end-$start);
+            $target = str_replace(sprintf($param, $default), sprintf($param, $value), $target);
+        }
+        return $target;
     }
 
     /**
