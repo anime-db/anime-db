@@ -109,9 +109,8 @@ class Update
 
             $new_body = $this->copyParam($old_body, $new_body, 'sAddr = "%s"', self::DEFAULT_ADDRESS);
             $new_body = $this->copyParam($old_body, $new_body, 'sPort = "%s"', self::DEFAULT_PORT);
-            $new_body = $this->copyParam($old_body, $new_body, 'sPhp = "%s"', self::DEFAULT_PHP);
+            $new_body = $this->copyParam($old_body, $new_body, "sPhp = %s\n", self::DEFAULT_PHP);
 
-            // rewrite Run.vbs
             if ($new_body != $tmp_body) {
                 file_put_contents($new_file, $new_body);
             }
@@ -135,7 +134,6 @@ class Update
             $new_body = $this->copyParam($old_body, $new_body, "port=%s\n", self::DEFAULT_PORT);
             $new_body = $this->copyParam($old_body, $new_body, "path=%s\n", self::DEFAULT_PATH);
 
-            // rewrite Run.vbs
             if ($new_body != $tmp_body) {
                 file_put_contents($new_file, $new_body);
             }
