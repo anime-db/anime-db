@@ -149,7 +149,7 @@ class UpdateCommand extends ContainerAwareCommand
      */
     protected function doUpdateComposer(OutputInterface $output)
     {
-        $this->executeCommand('bin/composer update', $output);
+        $this->executeCommand(escapeshellarg($this->getPhp()).' bin/composer update', $output);
         $output->writeln('<info>Update requirements has been completed</info>');
     }
 
@@ -263,10 +263,7 @@ class UpdateCommand extends ContainerAwareCommand
      */
     protected function executeCommand($cmd, OutputInterface $output = null, $cwd = '')
     {
-        $php = escapeshellarg($this->getPhp());
-        $cwd = $cwd ?: __DIR__.'/../../../../../';
-
-        $process = new Process($php.' '.$cmd, $cwd, null, null, null);
+        $process = new Process($cmd, ($cwd ?: __DIR__.'/../../../../../'), null, null, null);
         $process->run(function ($type, $buffer) use ($output) {
             if ($output instanceof OutputInterface) {
                 $output->write($buffer);
