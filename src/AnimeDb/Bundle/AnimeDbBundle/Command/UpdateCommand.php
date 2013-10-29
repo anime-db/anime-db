@@ -149,6 +149,9 @@ class UpdateCommand extends ContainerAwareCommand
      */
     protected function doUpdateComposer(OutputInterface $output)
     {
+        if (file_exists(__DIR__.'/../../../../../composer.lock')) {
+            @unlink(__DIR__.'/../../../../../composer.lock');
+        }
         $this->executeCommand(escapeshellarg($this->getPhp()).' bin/composer update', $output);
         $output->writeln('<info>Update requirements has been completed</info>');
     }
