@@ -40,7 +40,7 @@ class Update
      *
      * @var string
      */
-    const DEFAULT_PHP = 'php';
+    const DEFAULT_PHP = '"php"';
 
     /**
      * Default path to the directory with the application
