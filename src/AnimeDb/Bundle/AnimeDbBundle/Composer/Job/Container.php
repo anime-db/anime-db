@@ -57,7 +57,8 @@ class Container
      */
     public function addJob(Job $job)
     {
-        $this->jobs[] = $job->setContainer($this);
+        $job->setContainer($this);
+        $this->jobs[] = $job;
     }
 
     /**
