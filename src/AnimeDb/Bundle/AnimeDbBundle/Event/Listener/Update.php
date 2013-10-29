@@ -101,16 +101,20 @@ class Update
      */
     public function onAppDownloadedMergeBinRun(Downloaded $event)
     {
-        $old_body = file_get_contents(__DIR__.'/../../../../../../bin/Run.vbs');
-        $new_body = $tmp_body = file_get_contents($event->getPath().'/bin/Run.vbs');
+        $old_file = __DIR__.'/../../../../../../bin/Run.vbs';
+        $new_file = $event->getPath().'/bin/Run.vbs';
+        if (md5_file($old_file) != md5_file($new_file)) {
+            $old_body = file_get_contents($old_file);
+            $new_body = $tmp_body = file_get_contents($new_file);
 
-        $new_body = $this->copyParam($old_body, $new_body, 'sAddr = "%s"', self::DEFAULT_ADDRESS);
-        $new_body = $this->copyParam($old_body, $new_body, 'sPort = "%s"', self::DEFAULT_PORT);
-        $new_body = $this->copyParam($old_body, $new_body, 'sPhp = "%s"', self::DEFAULT_PHP);
+            $new_body = $this->copyParam($old_body, $new_body, 'sAddr = "%s"', self::DEFAULT_ADDRESS);
+            $new_body = $this->copyParam($old_body, $new_body, 'sPort = "%s"', self::DEFAULT_PORT);
+            $new_body = $this->copyParam($old_body, $new_body, 'sPhp = "%s"', self::DEFAULT_PHP);
 
-        // rewrite Run.vbs
-        if ($new_body != $tmp_body) {
-            file_put_contents($event->getPath().'/bin/Run.vbs', $new_body);
+            // rewrite Run.vbs
+            if ($new_body != $tmp_body) {
+                file_put_contents($new_file, $new_body);
+            }
         }
     }
 
@@ -121,16 +125,20 @@ class Update
      */
     public function onAppDownloadedMergeBinService(Downloaded $event)
     {
-        $old_body = file_get_contents(__DIR__.'/../../../../../../bin/service');
-        $new_body = $tmp_body = file_get_contents($event->getPath().'/bin/service');
+        $old_file = __DIR__.'/../../../../../../bin/service';
+        $new_file = $event->getPath().'/bin/service';
+        if (md5_file($old_file) != md5_file($new_file)) {
+            $old_body = file_get_contents($old_file);
+            $new_body = $tmp_body = file_get_contents($new_file);
 
-        $new_body = $this->copyParam($old_body, $new_body, "addr='%s'", self::DEFAULT_ADDRESS);
-        $new_body = $this->copyParam($old_body, $new_body, "port=%s\n", self::DEFAULT_PORT);
-        $new_body = $this->copyParam($old_body, $new_body, "path=%s\n", self::DEFAULT_PATH);
+            $new_body = $this->copyParam($old_body, $new_body, "addr='%s'", self::DEFAULT_ADDRESS);
+            $new_body = $this->copyParam($old_body, $new_body, "port=%s\n", self::DEFAULT_PORT);
+            $new_body = $this->copyParam($old_body, $new_body, "path=%s\n", self::DEFAULT_PATH);
 
-        // rewrite Run.vbs
-        if ($new_body != $tmp_body) {
-            file_put_contents($event->getPath().'/bin/service', $new_body);
+            // rewrite Run.vbs
+            if ($new_body != $tmp_body) {
+                file_put_contents($new_file, $new_body);
+            }
         }
     }
 
