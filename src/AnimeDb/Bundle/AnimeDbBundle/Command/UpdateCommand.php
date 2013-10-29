@@ -65,6 +65,7 @@ class UpdateCommand extends ContainerAwareCommand
 
         $this->doUpdateComposer($output);
         $this->doRestartService($output);
+        $output->writeln('<info>Updating the application has been completed<info>');
     }
 
     /**
@@ -138,7 +139,7 @@ class UpdateCommand extends ContainerAwareCommand
 
         // notify about updated
         $dispatcher->dispatch(StoreEvents::UPDATED, new Updated($new_package));
-        $output->writeln('Updating the application has been completed');
+        $output->writeln('<info>Update itself has been completed</info>');
     }
 
     /**
@@ -149,6 +150,7 @@ class UpdateCommand extends ContainerAwareCommand
     protected function doUpdateComposer(OutputInterface $output)
     {
         $this->executeCommand('bin/composer update', $output);
+        $output->writeln('<info>Update requirements has been completed</info>');
     }
 
     /**
@@ -158,7 +160,12 @@ class UpdateCommand extends ContainerAwareCommand
      */
     protected function doRestartService(OutputInterface $output)
     {
-        // TODO do restart service
+        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
+            $output->writeln('<info>You must restart the application</info>');
+        } else {
+            $this->executeCommand('bin/service restart', $output);
+            $output->writeln('<info>Restart the application</info>');
+        }
     }
 
     /**
