@@ -31,7 +31,7 @@ use Symfony\Component\Finder\Finder;
  * @package AnimeDb\Bundle\AnimeDbBundle\Command
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class SelfUpdateCommand extends ContainerAwareCommand
+class UpdateCommand extends ContainerAwareCommand
 {
     /**
      * (non-PHPdoc)
@@ -39,8 +39,8 @@ class SelfUpdateCommand extends ContainerAwareCommand
      */
     protected function configure()
     {
-        $this->setName('animedb:self-update')
-            ->setDescription('Update itself');
+        $this->setName('animedb:update')
+            ->setDescription('Update the application');
     }
 
     /**
