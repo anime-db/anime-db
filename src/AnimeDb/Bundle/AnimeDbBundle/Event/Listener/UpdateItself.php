@@ -34,7 +34,7 @@ class UpdateItself
         $new_config = file_get_contents($event->getPath().'/composer.json');
         $new_config = json_decode($new_config, true);
 
-        if (array_intersect($old_config['require'], $new_config['require']) != $new_config['require']) {
+        if ($old_config['require'] != $new_config['require']) {
             $new_config['require'] = array_merge($old_config['require'], $new_config['require']);
             $new_config = json_encode($new_config, JSON_NUMERIC_CHECK|JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
             file_put_contents($event->getPath().'/composer.json', $new_config);
