@@ -17,9 +17,10 @@ use Symfony\Component\Process\Process;
 use Composer\Script\Event;
 use Composer\Package\PackageInterface;
 use Symfony\Component\Finder\Finder;
-use AnimeDb\Bundle\AnimeDbBundle\Event\Package\StoreEvents;
-use AnimeDb\Bundle\AnimeDbBundle\Event\Package\Installed;
-use AnimeDb\Bundle\AnimeDbBundle\Event\Package\Removed;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Installed as InstalledPackage;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Removed as RemovedPackage;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Updated as UpdatedPackage;
 
 /**
  * Composer script handler
@@ -30,11 +31,24 @@ use AnimeDb\Bundle\AnimeDbBundle\Event\Package\Removed;
 class ScriptHandler
 {
     /**
-     * List events
+     * Container of jobs
      *
-     * @var array
+     * @var \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container|null
      */
-    protected static $events = [];
+    private static $container;
+
+    /**
+     * Get container of jobs
+     *
+     * @return\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container
+     */
+    protected static function getContainer()
+    {
+        if (!(self::$container instanceof Container)) {
+            self::$container = new Container();
+        }
+        return self::$container;
+    }
 
     /**
      * Add package to AppKernel
@@ -115,16 +129,19 @@ class ScriptHandler
      *
      * @param \Composer\Script\PackageEvent $event
      */
-    public static function installPackageNotify(PackageEvent $event)
+    public static function notifyPackageInstalled(PackageEvent $event)
     {
-        switch ($event->getOperation()->getJobType()) {
-            case 'install':
-                $package = $event->getOperation()->getPackage();
-                break;
-            case 'update':
-                $package = $event->getOperation()->getTargetPackage();
-        }
-        self::$events[] = [StoreEvents::INSTALLED, $package];
+        self::getContainer()->addJob(new InstalledPackage($event->getOperation()->getPackage()));
+    }
+
+    /**
+     * Notify listeners that the package has been installed
+     *
+     * @param \Composer\Script\PackageEvent $event
+     */
+    public static function notifyPackageUpdated(PackageEvent $event)
+    {
+        self::getContainer()->addJob(new UpdatedPackage($event->getOperation()->getTargetPackage()));
     }
 
     /**
@@ -132,9 +149,9 @@ class ScriptHandler
      *
      * @param \Composer\Script\PackageEvent $event
      */
-    public static function removePackageNotify(PackageInterface $package)
+    public static function notifyPackageRemoved(PackageEvent $event)
     {
-        self::$events[] = [StoreEvents::REMOVED, $event->getOperation()->getPackage()];
+        self::getContainer()->addJob(new RemovedPackage($event->getOperation()->getPackage()));
     }
 
     /**
@@ -232,32 +249,12 @@ class ScriptHandler
     }
 
     /**
-     * Notify listeners and subscribers that the package has been installed or removed
+     * Execution pending jobs
      *
      * @param \Composer\Script\CommandEvent $event
      */
-    public static function notify(CommandEvent $event)
+    public static function execJobs(CommandEvent $event)
     {
-        if (self::$events) {
-            // load kernel
-            require __DIR__.'/../../../../../app/bootstrap.php.cache';
-            require __DIR__.'/../../../../../app/AppKernel.php';
-            $kernel = new \AppKernel('dev', true);
-            $kernel->boot();
-
-            // notify listeners
-            $dispatcher = $kernel->getContainer()->get('event_dispatcher');
-            foreach (self::$events as $event) {
-                switch ($event[0]) {
-                    case StoreEvents::INSTALLED:
-                        $event[1] = new Installed($event[1]);
-                        break;
-                    case StoreEvents::REMOVED:
-                        $event[1] = new Removed($event[1]);
-                        break;
-                }
-                $dispatcher->dispatch($event[0], $event[1]);
-            }
-        }
+        self::getContainer()->execute();
     }
 }
