@@ -69,6 +69,8 @@ class UpdateCommand extends ContainerAwareCommand
     }
 
     /**
+     * Get list of tags
+     *
      * @return array
      */
     protected function getListTags()
@@ -94,8 +96,6 @@ class UpdateCommand extends ContainerAwareCommand
                 if (version_compare($mat['version'], $current_version) == 1) {
                     return array_merge(['version' => $mat['version']], $tag);
                 } else {
-                    // TODO it is only for dev
-                    return array_merge(['version' => $mat['version']], $tag);
                     break;
                 }
             }
@@ -197,7 +197,6 @@ class UpdateCommand extends ContainerAwareCommand
         $target = realpath(__DIR__.'/../../../../../');
         // ignore errors during the removal of the old application
         try {
-            // remove old source
             $fs->remove($target.'/src');
             $finder = Finder::create()
                 ->files()
@@ -242,6 +241,8 @@ class UpdateCommand extends ContainerAwareCommand
     }
 
     /**
+     * Conver file or list of files to iterator
+     *
      * @param mixed $files
      *
      * @return \Traversable
