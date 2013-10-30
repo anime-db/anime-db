@@ -58,21 +58,21 @@ class ScriptHandler
     }
 
     /**
-     * Add package to AppKernel
+     * Add package to kernel
      *
      * @param \Composer\Script\PackageEvent $event
      */
-    public static function addPackageToAppKernel(PackageEvent $event)
+    public static function addPackageToKernel(PackageEvent $event)
     {
         self::getContainer()->addJob(new AddKernel($event->getOperation()->getPackage()));
     }
 
     /**
-     * Remove packages from AppKernel
+     * Remove packages from kernel
      *
      * @param \Composer\Script\PackageEvent $event
      */
-    public static function removePackageFromAppKernel(PackageEvent $event)
+    public static function removePackageFromKernel(PackageEvent $event)
     {
         self::getContainer()->addJob(new RemoveKernel($event->getOperation()->getPackage()));
     }
