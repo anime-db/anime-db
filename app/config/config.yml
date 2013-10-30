@@ -1,7 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
-    - { resource: "@AnimeDbCatalogBundle/Resources/config/config.yml" }
+    - { resource: bundle_config.yml }
 
 framework:
     #esi:             ~
