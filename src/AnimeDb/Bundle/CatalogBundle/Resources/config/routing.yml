@@ -1,3 +1,7 @@
+_imagine:
+    resource: .
+    type:     imagine
+
 home:
     pattern:  /
     defaults: { _controller: AnimeDbCatalogBundle:Home:index }

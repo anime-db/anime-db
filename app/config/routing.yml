@@ -1,8 +1,2 @@
-# AnimeDbCatalogBundle
 anime_db_catalog:
     resource: "@AnimeDbCatalogBundle/Resources/config/routing.yml"
-
-# Imagine
-_imagine:
-    resource: .
-    type:     imagine
