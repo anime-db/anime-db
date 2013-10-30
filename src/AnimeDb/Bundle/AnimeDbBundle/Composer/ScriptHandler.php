@@ -210,7 +210,7 @@ class ScriptHandler
      *
      * @return string
      */
-    protected static function getPhp()
+    public static function getPhp()
     {
         $phpFinder = new PhpExecutableFinder;
         if (!$phpPath = $phpFinder->find()) {

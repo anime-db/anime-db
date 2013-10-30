@@ -11,6 +11,8 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\ScriptHandler;
+use Symfony\Component\Process\Process;
 
 /**
  * Routing manipulator
@@ -76,6 +78,26 @@ class Container
         /* @var $job \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job */
         foreach ($jobs as $job) {
             $job->execute();
+        }
+    }
+
+    /**
+     * Execute command
+     *
+     * @throws \RuntimeException
+     *
+     * @param string $cmd
+     * @param integer $timeout
+     */
+    public function executeCommand($cmd, $timeout = 300)
+    {
+        $php = escapeshellarg(ScriptHandler::getPhp());
+        $process = new Process($php.' app/console '.$cmd, __DIR__.'/../../../../../../', null, null, $timeout);
+        $process->run(function ($type, $buffer) {
+            echo $buffer;
+        });
+        if (!$process->isSuccessful()) {
+            throw new \RuntimeException(sprintf('An error occurred when executing the "%s" command.', $cmd));
         }
     }
 }

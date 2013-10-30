@@ -12,7 +12,6 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 use Composer\Package\PackageInterface;
-use Symfony\Component\Finder\Finder;
 
 /**
  * Migrate

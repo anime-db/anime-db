@@ -27,7 +27,7 @@ class Up extends BaseMigrate
     public function execute()
     {
         if ($config = $this->getMigrationsConfig()) {
-           self::executeCommand('doctrine:migrations:migrate --no-interaction --configuration='.$config);
+           $this->container->executeCommand('doctrine:migrations:migrate --no-interaction --configuration='.$config);
         }
     }
 }
