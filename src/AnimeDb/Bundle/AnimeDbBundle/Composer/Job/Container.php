@@ -58,7 +58,7 @@ class Container
     public function addJob(Job $job)
     {
         $job->setContainer($this);
-        $this->jobs[] = $job;
+        $this->jobs[$job->getPriority()] = $job;
     }
 
     /**
@@ -66,8 +66,15 @@ class Container
      */
     public function execute()
     {
+        // sort jobs by priority
+        $jobs = [];
+        ksort($this->jobs);
+        foreach ($this->jobs as $priority_jobs) {
+            $jobs = array_merge($jobs, $priority_jobs);
+        }
+
         /* @var $job \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job */
-        foreach ($this->jobs as $job) {
+        foreach ($jobs as $job) {
             $job->execute();
         }
     }

@@ -19,6 +19,44 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job;
 abstract class Job
 {
     /**
+     * Preparation of \AppKernal to the initialization
+     *
+     * @var integer
+     */
+    const PRIORITY_INSTALL = 1;
+
+    /**
+     * Preparation of package to execute
+     *
+     * @var integer
+     */
+    const PRIORITY_INIT = 2;
+
+    /**
+     * Execute package
+     *
+     * @var integer
+     */
+    const PRIORITY_EXEC = 3;
+
+    /**
+     * Job priority
+     *
+     * @var integer
+     */
+    const PRIORITY = self::PRIORITY_EXEC;
+
+    /**
+     * Get job priority
+     *
+     * @return integer
+     */
+    public static function getPriority()
+    {
+        return static::PRIORITY;
+    }
+
+    /**
      * Container
      *
      * @var \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container
