@@ -130,8 +130,10 @@ class ScriptHandler
                 $job = new UpMigrate($event->getOperation()->getTargetPackage());
                 break;
             case 'uninstall':
+                // migrate down before uninstall
                 $job = new DownMigrate($event->getOperation()->getPackage());
-                break;
+                $job->setContainer(self::getContainer());
+                $job->execute();
             default:
                 return;
         }
