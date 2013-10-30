@@ -16,11 +16,12 @@ use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
 use Composer\Script\Event;
 use Composer\Package\PackageInterface;
-use Symfony\Component\Finder\Finder;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Installed as InstalledPackage;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Removed as RemovedPackage;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Updated as UpdatedPackage;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Package\Down as DownMigrate;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Package\Up as UpMigrate;
 
 /**
  * Composer script handler
@@ -79,27 +80,20 @@ class ScriptHandler
      */
     public static function migratePackage(PackageEvent $event)
     {
-        $command = 'doctrine:migrations:migrate --no-interaction';
-
-        /* @var $package \Composer\Package\PackageInterface */
         switch ($event->getOperation()->getJobType()) {
-            case 'uninstall':
-                $command .= ' 0'; // migration to first version
             case 'install':
-                $package = $event->getOperation()->getPackage();
+                $job = new UpMigrate($event->getOperation()->getPackage());
                 break;
             case 'update':
-                $package = $event->getOperation()->getTargetPackage();
+                $job = new UpMigrate($event->getOperation()->getTargetPackage());
+                break;
+            case 'uninstall':
+                $job = new DownMigrate($event->getOperation()->getPackage());
+                break;
+            default:
+                return;
         }
-
-        // migrate only packages
-        if ($package->getType() != 'anime-db-plugin') {
-           return;
-        }
-
-        if ($config = self::getMigrationsConfig($package)) {
-            self::executeCommand($event, $command.' --configuration='.$config, null);
-        }
+        self::getContainer()->addJob($job);
     }
 
     /**
@@ -145,33 +139,6 @@ class ScriptHandler
                 return;
         }
         self::getContainer()->addJob($job);
-    }
-
-    /**
-     * Get path to migrations config file from package
-     *
-     * @param \Composer\Package\PackageInterface $package
-     *
-     * @return string|boolean
-     */
-    protected static function getMigrationsConfig(PackageInterface $package)
-    {
-        $options = self::getPackageOptions($package);
-        // specific location
-        if ($options['anime-db-migrations']) {
-            return $options['anime-db-migrations'];
-        }
-
-        $finder = new Finder();
-        $finder->files()
-            ->in(__DIR__.'/../../../../../vendor/'.$package->getName())
-            ->name('/^migrations\.(yml|xml)$/');
-
-        /* @var $file \SplFileInfo */
-        foreach ($finder as $file) {
-            return $file->getRealPath();
-        }
-        return false;
     }
 
     /**
