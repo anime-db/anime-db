@@ -58,15 +58,13 @@ abstract class Migrate extends Job
             return $options['anime-db-migrations'];
         }
 
-        $finder = new Finder();
-        $finder->files()
-            ->in(__DIR__.'/../../../../../../../vendor/'.$this->package->getName())
-            ->name('/^migrations\.(yml|xml)$/');
-
-        /* @var $file \SplFileInfo */
-        foreach ($finder as $file) {
-            return $file->getRealPath();
+        $dir = __DIR__.'/../../../../../../../vendor/'.$this->package->getName().'/';
+        if (file_exists($dir.'migrations.yml')) {
+            return $dir.'migrations.yml';
+        } elseif (file_exists($dir.'migrations.xml')) {
+            return $dir.'migrations.xml';
         }
+
         return false;
     }
 }
