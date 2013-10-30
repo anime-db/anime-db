@@ -8,19 +8,19 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package;
+namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify;
 
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Package as BasePackage;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Notify as BaseNotify;
 use AnimeDb\Bundle\AnimeDbBundle\Event\Package\StoreEvents;
 use AnimeDb\Bundle\AnimeDbBundle\Event\Package\Updated as Event;
 
 /**
  * Job: Notice that the package has been updated
  *
- * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package
+ * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Updated extends BasePackage
+class Updated extends BaseNotify
 {
     /**
      * (non-PHPdoc)

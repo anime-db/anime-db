@@ -8,19 +8,19 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Package;
+namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 use Composer\Package\PackageInterface;
 use Symfony\Component\Finder\Finder;
 
 /**
- * Package
+ * Migrate
  *
- * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Package
+ * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-abstract class Package extends Job
+abstract class Migrate extends Job
 {
     /**
      * Job priority

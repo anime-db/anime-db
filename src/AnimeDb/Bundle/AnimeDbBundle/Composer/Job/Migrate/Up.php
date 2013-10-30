@@ -8,17 +8,17 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Package;
+namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate;
 
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Package\Package as BasePackage;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Migrate as BaseMigrate;
 
 /**
- * Job: Migrate package down
+ * Job: Migrate package up
  *
- * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Package
+ * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Down extends BasePackage
+class Up extends BaseMigrate
 {
     /**
      * (non-PHPdoc)
@@ -27,7 +27,7 @@ class Down extends BasePackage
     public function execute()
     {
         if ($config = $this->getMigrationsConfig()) {
-           self::executeCommand('doctrine:migrations:migrate 0 --no-interaction --configuration='.$config);
+           self::executeCommand('doctrine:migrations:migrate --no-interaction --configuration='.$config);
         }
     }
 }

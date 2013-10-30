@@ -17,11 +17,11 @@ use Symfony\Component\Process\Process;
 use Composer\Script\Event;
 use Composer\Package\PackageInterface;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Installed as InstalledPackage;
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Removed as RemovedPackage;
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Updated as UpdatedPackage;
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Package\Down as DownMigrate;
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Package\Up as UpMigrate;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Installed as InstalledNotify;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Removed as RemovedNotify;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Updated as UpdatedNotify;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Down as DownMigrate;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Up as UpMigrate;
 
 /**
  * Composer script handler
@@ -127,13 +127,13 @@ class ScriptHandler
     {
         switch ($event->getOperation()->getJobType()) {
             case 'install':
-                $job = new InstalledPackage($event->getOperation()->getPackage());
+                $job = new InstalledNotify($event->getOperation()->getPackage());
                 break;
             case 'update':
-                $job = new UpdatedPackage($event->getOperation()->getTargetPackage());
+                $job = new UpdatedNotify($event->getOperation()->getTargetPackage());
                 break;
             case 'uninstall':
-                $job = new RemovedPackage($event->getOperation()->getPackage());
+                $job = new RemovedNotify($event->getOperation()->getPackage());
                 break;
             default:
                 return;
