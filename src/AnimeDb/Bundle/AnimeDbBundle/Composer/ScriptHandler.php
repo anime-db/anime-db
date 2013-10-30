@@ -22,6 +22,12 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Removed as RemovedNotify;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Updated as UpdatedNotify;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Down as DownMigrate;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Up as UpMigrate;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config\Add as AddConfig;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config\Remove as RemoveConfig;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel\Add as AddKernel;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel\Remove as RemoveKernel;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Add as AddRouting;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Remove as RemoveRouting;
 
 /**
  * Composer script handler
@@ -58,8 +64,7 @@ class ScriptHandler
      */
     public static function addPackageToAppKernel(PackageEvent $event)
     {
-        // TODO write PackageBundle class into app/AppKernel
-        // @see \Sensio\Bundle\GeneratorBundle\Manipulator\KernelManipulator
+        self::getContainer()->addJob(new AddKernel($event->getOperation()->getPackage()));
     }
 
     /**
@@ -69,8 +74,7 @@ class ScriptHandler
      */
     public static function removePackageFromAppKernel(PackageEvent $event)
     {
-        // TODO remove PackageBundle class from app/AppKernel
-        // @see \Sensio\Bundle\GeneratorBundle\Manipulator\KernelManipulator
+        self::getContainer()->addJob(new RemoveKernel($event->getOperation()->getPackage()));
     }
 
     /**
@@ -80,8 +84,7 @@ class ScriptHandler
      */
     public static function addPackageToRouting(PackageEvent $event)
     {
-        // TODO add @PackageBundle/Resources/config/routing.yml into app/config/routing.yml
-        // @see \Sensio\Bundle\GeneratorBundle\Manipulator\RoutingManipulator
+        self::getContainer()->addJob(new AddRouting($event->getOperation()->getPackage()));
     }
 
     /**
@@ -91,8 +94,7 @@ class ScriptHandler
      */
     public static function removePackageFromRouting(PackageEvent $event)
     {
-        // TODO remove @PackageBundle/Resources/config/routing.yml from app/config/routing.yml
-        // @see \Sensio\Bundle\GeneratorBundle\Manipulator\RoutingManipulator
+        self::getContainer()->addJob(new RemoveRouting($event->getOperation()->getPackage()));
     }
 
     /**
@@ -102,7 +104,7 @@ class ScriptHandler
      */
     public static function addPackageToConfig(PackageEvent $event)
     {
-        // TODO add @PackageBundle/Resources/config/config.yml into app/config.yml
+        self::getContainer()->addJob(new AddConfig($event->getOperation()->getPackage()));
     }
 
     /**
@@ -112,7 +114,7 @@ class ScriptHandler
      */
     public static function removePackageFromConfig(PackageEvent $event)
     {
-        // TODO remove @PackageBundle/Resources/config/config.yml from app/config.yml
+        self::getContainer()->addJob(new RemoveConfig($event->getOperation()->getPackage()));
     }
 
     /**
