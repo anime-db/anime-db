@@ -67,6 +67,7 @@
         "post-package-install": [
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPackageToAppKernel",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPackageToRouting",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPackageToConfig",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migratePackage",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::notifyPackage"
         ],
@@ -77,6 +78,7 @@
         "pre-package-uninstall": [
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::removePackageFromAppKernel",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::removePackageFromRouting",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::removePackageFromConfig",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migratePackage",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::notifyPackage"
         ]

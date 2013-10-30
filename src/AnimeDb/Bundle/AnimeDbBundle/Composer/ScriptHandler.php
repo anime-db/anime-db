@@ -74,6 +74,48 @@ class ScriptHandler
     }
 
     /**
+     * Add packages to routing
+     *
+     * @param \Composer\Script\PackageEvent $event
+     */
+    public static function addPackageToRouting(PackageEvent $event)
+    {
+        // TODO add @PackageBundle/Resources/config/routing.yml into app/config/routing.yml
+        // @see \Sensio\Bundle\GeneratorBundle\Manipulator\RoutingManipulator
+    }
+
+    /**
+     * Remove packages from routing
+     *
+     * @param \Composer\Script\PackageEvent $event
+     */
+    public static function removePackageFromRouting(PackageEvent $event)
+    {
+        // TODO remove @PackageBundle/Resources/config/routing.yml from app/config/routing.yml
+        // @see \Sensio\Bundle\GeneratorBundle\Manipulator\RoutingManipulator
+    }
+
+    /**
+     * Add packages to config
+     *
+     * @param \Composer\Script\PackageEvent $event
+     */
+    public static function addPackageToConfig(PackageEvent $event)
+    {
+        // TODO add @PackageBundle/Resources/config/config.yml into app/config.yml
+    }
+
+    /**
+     * Remove packages from config
+     *
+     * @param \Composer\Script\PackageEvent $event
+     */
+    public static function removePackageFromConfig(PackageEvent $event)
+    {
+        // TODO remove @PackageBundle/Resources/config/config.yml from app/config.yml
+    }
+
+    /**
      * Migrate packages
      *
      * @param \Composer\Script\PackageEvent $event
@@ -94,28 +136,6 @@ class ScriptHandler
                 return;
         }
         self::getContainer()->addJob($job);
-    }
-
-    /**
-     * Add packages to routing
-     *
-     * @param \Composer\Script\PackageEvent $event
-     */
-    public static function addPackageToRouting(PackageEvent $event)
-    {
-        // TODO add @PackageBundle/Resources/config/routing.yml into app/config/routing.yml
-        // @see \Sensio\Bundle\GeneratorBundle\Manipulator\RoutingManipulator
-    }
-
-    /**
-     * Remove packages from routing
-     *
-     * @param \Composer\Script\PackageEvent $event
-     */
-    public static function removePackageFromRouting(PackageEvent $event)
-    {
-        // TODO remove @PackageBundle/Resources/config/routing.yml from app/config/routing.yml
-        // @see \Sensio\Bundle\GeneratorBundle\Manipulator\RoutingManipulator
     }
 
     /**
@@ -178,6 +198,7 @@ class ScriptHandler
     {
         return array_merge(array(
             'anime-db-routing' => '',
+            'anime-db-config' => '',
             'anime-db-migrations' => '',
         ), $package->getExtra());
     }
