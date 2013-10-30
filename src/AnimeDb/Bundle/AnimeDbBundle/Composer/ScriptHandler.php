@@ -254,5 +254,8 @@ class ScriptHandler
         if (!file_exists(__DIR__.'/../../../../../app/config/routing.yml')) {
             file_put_contents(__DIR__.'/../../../../../app/config/routing.yml', '');
         }
+        if (!file_exists(__DIR__.'/../../../../../app/bundles.php')) {
+            file_put_contents(__DIR__.'/../../../../../app/bundles.php', "<?php\nreturn [\n];");
+        }
     }
 }

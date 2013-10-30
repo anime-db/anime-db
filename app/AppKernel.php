@@ -35,13 +35,9 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new AnimeDb\Bundle\AnimeDbBundle\AnimeDbAnimeDbBundle(),
-
-            new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
-            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
-
-            new AnimeDb\Bundle\CatalogBundle\AnimeDbCatalogBundle(),
-            new AnimeDb\Bundle\WorldArtFillerBundle\AnimeDbWorldArtFillerBundle(),
         ];
+        // connection the bandles to be installed in the future
+        $bundles = array_merge($bundles, include __DIR__.'/bundles.php');
 
         if (in_array($this->getEnvironment(), ['dev', 'test'])) {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
