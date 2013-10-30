@@ -58,7 +58,7 @@ class Container
     public function addJob(Job $job)
     {
         $job->setContainer($this);
-        $this->jobs[$job->getPriority()] = $job;
+        $this->jobs[$job->getPriority()][] = $job;
     }
 
     /**
