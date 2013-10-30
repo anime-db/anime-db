@@ -37,11 +37,11 @@ abstract class Migrate extends Job
     protected $package;
 
     /**
-     * Set package
+     * Construct
      *
      * @param \Composer\Package\PackageInterface $package
      */
-    public function setPackage(PackageInterface $package)
+    public function __construct(PackageInterface $package)
     {
         $this->package = $package;
     }
@@ -61,7 +61,7 @@ abstract class Migrate extends Job
 
         $finder = new Finder();
         $finder->files()
-            ->in(__DIR__.'/../../../../../../../../vendor/'.$this->package->getName())
+            ->in(__DIR__.'/../../../../../../../vendor/'.$this->package->getName())
             ->name('/^migrations\.(yml|xml)$/');
 
         /* @var $file \SplFileInfo */

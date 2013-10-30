@@ -29,11 +29,11 @@ abstract class Notify extends Job
     protected $package;
 
     /**
-     * Set package
+     * Construct
      *
      * @param \Composer\Package\PackageInterface $package
      */
-    public function setPackage(PackageInterface $package)
+    public function __construct(PackageInterface $package)
     {
         $this->package = $package;
     }
