@@ -238,4 +238,19 @@ class ScriptHandler
     {
         self::getContainer()->execute();
     }
+
+    /**
+     * Install config files
+     *
+     * @param \Composer\Script\CommandEvent $event
+     */
+    public static function installConfig(CommandEvent $event)
+    {
+        if (!file_exists(__DIR__.'/../../../../../app/config/bundle_config.yml')) {
+            file_put_contents(__DIR__.'/../../../../../app/config/bundle_config.yml', '');
+        }
+        if (!file_exists(__DIR__.'/../../../../../app/config/routing.yml')) {
+            file_put_contents(__DIR__.'/../../../../../app/config/routing.yml', '');
+        }
+    }
 }

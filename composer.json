@@ -53,6 +53,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migrate",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::installConfig",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::execJobs"
         ],
         "post-update-cmd": [
