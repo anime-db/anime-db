@@ -26,7 +26,8 @@ class Remove extends BaseKernel
      */
     public function execute()
     {
-        // TODO get data
-//         $this->manipulator->removeBundle($bundle);
+        if ($bundle = $this->container->getPackageBundle($this->package)) {
+            $this->manipulator->removeBundle($bundle);
+        }
     }
 }

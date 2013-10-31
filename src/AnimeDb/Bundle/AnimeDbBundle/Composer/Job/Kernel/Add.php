@@ -26,7 +26,8 @@ class Add extends BaseKernel
      */
     public function execute()
     {
-        // TODO get data
-//         $this->manipulator->addBundle($bundle);
+        if ($bundle = $this->container->getPackageBundle($this->package)) {
+            $this->manipulator->addBundle($bundle);
+        }
     }
 }

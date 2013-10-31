@@ -165,6 +165,8 @@ class ScriptHandler
     /**
      * Global migrate
      *
+     * TODO remove this after the Catalog bundle moved out
+     *
      * @param \Composer\Script\CommandEvent $event
      */
     public static function migrate(CommandEvent $event)

@@ -46,7 +46,6 @@ class Container
     public function getKernel()
     {
         if (!($this->kernel instanceof \AppKernel)) {
-            require __DIR__.'/../../../../../../app/bootstrap.php.cache';
             require __DIR__.'/../../../../../../app/AppKernel.php';
             $this->kernel = new \AppKernel('dev', true);
             $this->kernel->boot();
@@ -134,5 +133,59 @@ class Container
             'anime-db-bundle' => '',
             'anime-db-migrations' => '',
         ), $package->getExtra());
+    }
+
+    /**
+     * Get the bundle from package
+     *
+     * For example package name 'demo-vendor/demo-bundle' converted to:
+     *   \DemoVendor\Bundle\DemoBundle\DemoVendorDemoBundle
+     *   \DemoVendor\Bundle\DemoBundle\DemoBundle
+     *
+     * @param \Composer\Package\Package $package
+     *
+     * @return string|null
+     */
+    public function getPackageBundle(Package $package)
+    {
+        $options = $this->getPackageOptions($package);
+        // specific name
+        if ($options['anime-db-bundle']) {
+            return $options['anime-db-bundle'];
+        }
+
+        // package with the bundle can contain the word a 'bundle' in the name
+        $name = preg_replace('/(\/.+)[^a-z]bundle$/i', '$1', $package->getName());
+        // convert package name to bundle name
+        $name = preg_replace('/[^a-zA-Z\/]+/', ' ', $name);
+        $name = ucwords(str_replace('/', ' / ', $name));
+        list($vendor, $bundle) = explode('/', str_replace(' ', '', $name), 2);
+
+        $classes = [
+            '\\'.$vendor.'\Bundle\\'.$bundle.'Bundle\\'.$vendor.$bundle.'Bundle',
+            '\\'.$vendor.'\Bundle\\'.$bundle.'Bundle\\'.$bundle.'Bundle'
+        ];
+
+        // vendor name can be contained in the bundle name
+        // knplabs/knp-menu-bundle -> \Knp\Bundle\MenuBundle\KnpMenuBundle
+        list(, $bundle) = explode('/', $name, 2);
+        $bundle = trim($bundle);
+        if (($pos = strpos($bundle, ' ')) !== false) {
+            $vendor = substr($bundle, 0, $pos);
+            $bundle = str_replace(' ', '', substr($bundle, $pos+1));
+            $classes[] = '\\'.$vendor.'\Bundle\\'.$bundle.'Bundle\\'.$vendor.$bundle.'Bundle';
+            $classes[] = '\\'.$vendor.'\Bundle\\'.$bundle.'Bundle\\'.$bundle.'Bundle';
+        }
+
+        foreach ($classes as $class) {
+            if (class_exists($class)) {
+                // cache the bundle class
+                $options['anime-db-bundle'] = $class;
+                $package->setExtra($options);
+                return $class;
+            }
+        }
+
+        return null;
     }
 }
