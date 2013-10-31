@@ -11,7 +11,6 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
-use Composer\Package\Package;
 
 /**
  * Migrate
@@ -29,36 +28,19 @@ abstract class Migrate extends Job
     const PRIORITY = self::PRIORITY_INIT;
 
     /**
-     * Package
-     *
-     * @var \Composer\Package\Package
-     */
-    protected $package;
-
-    /**
-     * Construct
-     *
-     * @param \Composer\Package\Package $package
-     */
-    public function __construct(Package $package)
-    {
-        $this->package = $package;
-    }
-
-    /**
      * Get path to migrations config file from package
      *
      * @return string|null
      */
     protected function getMigrationsConfig()
     {
-        $options = $this->getContainer()->getPackageOptions($this->package);
+        $options = $this->getContainer()->getPackageOptions($this->getPackage());
         // specific location
         if ($options['anime-db-migrations']) {
             return $options['anime-db-migrations'];
         }
 
-        $dir = __DIR__.'/../../../../../../../vendor/'.$this->package->getName().'/';
+        $dir = __DIR__.'/../../../../../../../vendor/'.$this->getPackage()->getName().'/';
         if (file_exists($dir.'migrations.yml')) {
             return $dir.'migrations.yml';
         } elseif (file_exists($dir.'migrations.xml')) {

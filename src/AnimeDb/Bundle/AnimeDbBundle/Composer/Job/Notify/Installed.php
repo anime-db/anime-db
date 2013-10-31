@@ -10,7 +10,7 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify;
 
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Notify as BaseNotify;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 use AnimeDb\Bundle\AnimeDbBundle\Event\Package\StoreEvents;
 use AnimeDb\Bundle\AnimeDbBundle\Event\Package\Installed as Event;
 
@@ -20,7 +20,7 @@ use AnimeDb\Bundle\AnimeDbBundle\Event\Package\Installed as Event;
  * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Installed extends BaseNotify
+class Installed extends Job
 {
     /**
      * (non-PHPdoc)
@@ -29,6 +29,6 @@ class Installed extends BaseNotify
     public function execute()
     {
         $dispatcher = $this->getContainer()->getKernel()->getContainer()->get('event_dispatcher');
-        $dispatcher->dispatch(StoreEvents::INSTALLED, new Event($this->package));
+        $dispatcher->dispatch(StoreEvents::INSTALLED, new Event($this->getPackage()));
     }
 }

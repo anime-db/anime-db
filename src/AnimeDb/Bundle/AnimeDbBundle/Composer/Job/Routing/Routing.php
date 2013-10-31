@@ -11,7 +11,6 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
-use Composer\Package\Package;
 use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing as RoutingManipulator;
 
 /**
@@ -30,13 +29,6 @@ abstract class Routing extends Job
     const PRIORITY = self::PRIORITY_INSTALL;
 
     /**
-     * Package
-     *
-     * @var \Composer\Package\Package
-     */
-    protected $package;
-
-    /**
      * Manipulator
      *
      * @var \AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing
@@ -50,7 +42,7 @@ abstract class Routing extends Job
      */
     public function __construct(Package $package)
     {
-        $this->package = $package;
+        parent::__construct($package);
         $this->manipulator = new RoutingManipulator();
     }
 }

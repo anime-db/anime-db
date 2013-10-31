@@ -54,6 +54,23 @@ abstract class Job
     private $container;
 
     /**
+     * Package
+     *
+     * @var \Composer\Package\Package
+     */
+    private $package;
+
+    /**
+     * Construct
+     *
+     * @param \Composer\Package\Package $package
+     */
+    public function __construct(Package $package)
+    {
+        $this->package = $package;
+    }
+
+    /**
      * Set container
      *
      * @param \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container $container
@@ -71,6 +88,16 @@ abstract class Job
     public function getContainer()
     {
         return $this->container;
+    }
+
+    /**
+     * Get package
+     *
+     * @return \Composer\Package\Package
+     */
+    public function getPackage()
+    {
+        return $this->package;
     }
 
     /**
