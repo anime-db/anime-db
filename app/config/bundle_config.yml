@@ -1,2 +1,2 @@
 imports:
-    - { resource: "@AnimeDbCatalogBundle/Resources/config/config.yml" }
+    - { resource: '@AnimeDbCatalogBundle/Resources/config/config.yml' }

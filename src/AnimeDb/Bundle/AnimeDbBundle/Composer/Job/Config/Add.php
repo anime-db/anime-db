@@ -26,7 +26,13 @@ class Add extends BaseConfig
      */
     public function execute()
     {
-        // TODO get data
-//         $this->manipulator->addResource($bundle, $format);
+        $config = $this->getPackageConfig();
+        $bundle = $this->getContainer()->getPackageBundle($this->getPackage());
+        if ($config && $bundle) {
+            $bundle = new $bundle();
+            $info = pathinfo($config);
+            $path = $info['dirname'] != '.' ? $info['dirname'].'/'.$info['filename'] : $info['filename'];
+            $this->manipulator->addResource($bundle->getName(), $info['extension'], $path);
+        }
     }
 }
