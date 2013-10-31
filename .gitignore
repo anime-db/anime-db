@@ -1,3 +1,5 @@
+composer.lock
+
 # Application #
 ###############
 web/media/[0-9]*
@@ -35,10 +37,6 @@ vendor/
 .buildpath
 .project
 .settings
-
-# SQL #
-#######
-*.sql
 
 # OS generated files #
 ######################
