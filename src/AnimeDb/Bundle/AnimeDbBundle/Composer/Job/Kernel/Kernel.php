@@ -12,7 +12,7 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 use Composer\Package\PackageInterface;
-use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Kernel;
+use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Kernel as KernelManipulator;
 
 /**
  * Kernel
@@ -51,6 +51,6 @@ abstract class Kernel extends Job
     public function __construct(PackageInterface $package)
     {
         $this->package = $package;
-        $this->manipulator = new Kernel();
+        $this->manipulator = new KernelManipulator();
     }
 }

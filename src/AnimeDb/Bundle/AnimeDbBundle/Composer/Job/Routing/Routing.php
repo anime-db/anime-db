@@ -12,7 +12,7 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 use Composer\Package\PackageInterface;
-use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing;
+use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing as RoutingManipulator;
 
 /**
  * Routing
@@ -51,6 +51,6 @@ abstract class Routing extends Job
     public function __construct(PackageInterface $package)
     {
         $this->package = $package;
-        $this->manipulator = new Routing();
+        $this->manipulator = new RoutingManipulator();
     }
 }
