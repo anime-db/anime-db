@@ -45,6 +45,9 @@
         "composer/composer": "1.0.0-alpha7",
         "guzzle/guzzle": "3.7.*"
     },
+    "suggest": {
+        "anime-db/world-art-filler-bundle": "Allows import data from a site World-Art.ru"
+    },
     "scripts": {
         "post-install-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
