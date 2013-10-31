@@ -12,8 +12,6 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Composer;
 
 use Composer\Script\PackageEvent;
 use Composer\Script\CommandEvent;
-use Symfony\Component\Process\PhpExecutableFinder;
-use Symfony\Component\Process\Process;
 use Composer\Script\Event;
 use Composer\Package\PackageInterface;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
@@ -166,71 +164,17 @@ class ScriptHandler
     }
 
     /**
-     * Execute command
-     *
-     * @throws \RuntimeException
-     *
-     * @param \Composer\Script\Event $event
-     * @param string $cmd
-     * @param integer $timeout
-     */
-    protected static function executeCommand(Event $event, $cmd, $timeout = 300)
-    {
-        $php = escapeshellarg(self::getPhp());
-        $console = 'app/console';
-        if ($event->getIO()->isDecorated()) {
-            $console .= ' --ansi';
-        }
-
-        $process = new Process($php.' '.$console.' '.$cmd, __DIR__.'/../../../../../', null, null, $timeout);
-        $process->run(function ($type, $buffer) {
-            echo $buffer;
-        });
-        if (!$process->isSuccessful()) {
-            throw new \RuntimeException(sprintf('An error occurred when executing the "%s" command.', $cmd));
-        }
-    }
-
-    /**
-     * Get packages options
-     *
-     * @param \Composer\Package\PackageInterface $package
-     *
-     * @return array
-     */
-    protected static function getPackageOptions(PackageInterface $package)
-    {
-        return array_merge(array(
-            'anime-db-routing' => '',
-            'anime-db-config' => '',
-            'anime-db-migrations' => '',
-        ), $package->getExtra());
-    }
-
-    /**
-     * Get path to php executable
-     *
-     * @throws \RuntimeException
-     *
-     * @return string
-     */
-    public static function getPhp()
-    {
-        $phpFinder = new PhpExecutableFinder;
-        if (!$phpPath = $phpFinder->find()) {
-            throw new \RuntimeException('The php executable could not be found, add it to your PATH environment variable and try again');
-        }
-        return $phpPath;
-    }
-
-    /**
      * Global migrate
      *
      * @param \Composer\Script\CommandEvent $event
      */
     public static function migrate(CommandEvent $event)
     {
-        self::executeCommand($event, 'doctrine:migrations:migrate --no-interaction');
+        $cmd = 'doctrine:migrations:migrate --no-interaction';
+        if ($event->getIO()->isDecorated()) {
+            $cmd .= ' --ansi';
+        }
+        self::getContainer()->executeCommand($cmd, null);
     }
 
     /**

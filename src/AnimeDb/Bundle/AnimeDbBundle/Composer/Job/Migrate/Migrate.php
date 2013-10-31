@@ -48,11 +48,11 @@ abstract class Migrate extends Job
     /**
      * Get path to migrations config file from package
      *
-     * @return string|boolean
+     * @return string|null
      */
     protected function getMigrationsConfig()
     {
-        $options = array_merge(['anime-db-migrations' => ''], $this->package->getExtra());
+        $options = $this->container->getPackageOptions($this->package);
         // specific location
         if ($options['anime-db-migrations']) {
             return $options['anime-db-migrations'];
@@ -65,6 +65,6 @@ abstract class Migrate extends Job
             return $dir.'migrations.xml';
         }
 
-        return false;
+        return null;
     }
 }

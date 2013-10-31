@@ -12,7 +12,9 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\ScriptHandler;
+use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
+use Composer\Package\PackageInterface;
 
 /**
  * Routing manipulator
@@ -91,7 +93,7 @@ class Container
      */
     public function executeCommand($cmd, $timeout = 300)
     {
-        $php = escapeshellarg(ScriptHandler::getPhp());
+        $php = escapeshellarg($this->getPhp());
         $process = new Process($php.' app/console '.$cmd, __DIR__.'/../../../../../../', null, null, $timeout);
         $process->run(function ($type, $buffer) {
             echo $buffer;
@@ -99,5 +101,38 @@ class Container
         if (!$process->isSuccessful()) {
             throw new \RuntimeException(sprintf('An error occurred when executing the "%s" command.', $cmd));
         }
+    }
+
+    /**
+     * Get path to php executable
+     *
+     * @throws \RuntimeException
+     *
+     * @return string
+     */
+    protected function getPhp()
+    {
+        $phpFinder = new PhpExecutableFinder;
+        if (!$phpPath = $phpFinder->find()) {
+            throw new \RuntimeException('The php executable could not be found, add it to your PATH environment variable and try again');
+        }
+        return $phpPath;
+    }
+
+    /**
+     * Get packages options
+     *
+     * @param \Composer\Package\PackageInterface $package
+     *
+     * @return array
+     */
+    public function getPackageOptions(PackageInterface $package)
+    {
+        return array_merge(array(
+            'anime-db-routing' => '',
+            'anime-db-config' => '',
+            'anime-db-bundle' => '',
+            'anime-db-migrations' => '',
+        ), $package->getExtra());
     }
 }
