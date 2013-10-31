@@ -13,6 +13,7 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config as ConfigManipulator;
 use Composer\Package\Package;
+use Symfony\Component\Finder\Finder;
 
 /**
  * Config
@@ -45,5 +46,28 @@ abstract class Config extends Job
     {
         parent::__construct($package);
         $this->manipulator = new ConfigManipulator();
+    }
+
+    /**
+     * Get the package config
+     *
+     * @return string|null
+     */
+    protected function getPackageConfig()
+    {
+        $finder = new Finder();
+        $finder
+            ->files()
+            ->in(realpath(__DIR__.'/../../../../../../../vendor/'.$this->getPackage()->getName()))
+            ->path('/\/Resources\/config\/([^\/]+\/)*config.(yml|xml)$/')
+            ->notPath('/test/i')
+            ->name('/^config.(yml|xml)$/');
+        /* @var $file \SplFileInfo */
+        foreach ($finder as $file) {
+            $start = strrpos($file->getPathname(), '/Resources/config/');
+            $path = substr($file->getPathname(), $start+strlen('/Resources/config/'));
+            return $path;
+        }
+        return null;
     }
 }
