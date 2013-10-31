@@ -10,7 +10,8 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel;
 
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel\Kernel as BaseKernel;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
+use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Kernel as KernelManipulator;
 
 /**
  * Job: Remove package from kernel
@@ -18,8 +19,15 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel\Kernel as BaseKernel;
  * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Remove extends BaseKernel
+class Remove extends Job
 {
+    /**
+     * Job priority
+     *
+     * @var integer
+     */
+    const PRIORITY = self::PRIORITY_INSTALL;
+
     /**
      * (non-PHPdoc)
      * @see AnimeDb\Bundle\AnimeDbBundle\Composer\Job.Job::execute()
@@ -27,7 +35,8 @@ class Remove extends BaseKernel
     public function execute()
     {
         if ($bundle = $this->getContainer()->getPackageBundle($this->getPackage())) {
-            $this->manipulator->removeBundle($bundle);
+            $manipulator = new KernelManipulator();
+            $manipulator->removeBundle($bundle);
         }
     }
 }
