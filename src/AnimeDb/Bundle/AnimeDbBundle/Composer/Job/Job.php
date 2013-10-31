@@ -10,6 +10,8 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job;
 
+use Composer\Package\Package;
+
 /**
  * Job
  *

@@ -12,6 +12,7 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config as ConfigManipulator;
+use Composer\Package\Package;
 
 /**
  * Config
