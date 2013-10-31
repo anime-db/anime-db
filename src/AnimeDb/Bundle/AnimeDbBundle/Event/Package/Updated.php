@@ -11,7 +11,7 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Event\Package;
 
 use Symfony\Component\EventDispatcher\Event;
-use Composer\Package\PackageInterface;
+use Composer\Package\Package;
 
 /**
  * Event thrown when the package is updated
@@ -24,14 +24,14 @@ class Updated extends Event
     /**
      * Package
      *
-     * @var \Composer\Package\PackageInterface
+     * @var \Composer\Package\Package
      */
     protected $package;
 
     /**
      * Construct
      *
-     * @param \Composer\Package\PackageInterface $package
+     * @param \Composer\Package\Package $package
      */
     public function __construct($package)
     {
@@ -41,7 +41,7 @@ class Updated extends Event
     /**
      * Get package
      *
-     * @return \Composer\Package\PackageInterface
+     * @return \Composer\Package\Package
      */
     public function getPackage()
     {

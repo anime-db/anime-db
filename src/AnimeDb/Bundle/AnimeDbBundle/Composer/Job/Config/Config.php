@@ -11,7 +11,7 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
-use Composer\Package\PackageInterface;
+use Composer\Package\Package;
 use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config as ConfigManipulator;
 
 /**
@@ -32,7 +32,7 @@ abstract class Config extends Job
     /**
      * Package
      *
-     * @var \Composer\Package\PackageInterface
+     * @var \Composer\Package\Package
      */
     protected $package;
 
@@ -46,9 +46,9 @@ abstract class Config extends Job
     /**
      * Construct
      *
-     * @param \Composer\Package\PackageInterface $package
+     * @param \Composer\Package\Package $package
      */
-    public function __construct(PackageInterface $package)
+    public function __construct(Package $package)
     {
         $this->package = $package;
         $this->manipulator = new ConfigManipulator();

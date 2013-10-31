@@ -14,7 +14,7 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\ScriptHandler;
 use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
-use Composer\Package\PackageInterface;
+use Composer\Package\Package;
 
 /**
  * Routing manipulator
@@ -122,11 +122,11 @@ class Container
     /**
      * Get packages options
      *
-     * @param \Composer\Package\PackageInterface $package
+     * @param \Composer\Package\Package $package
      *
      * @return array
      */
-    public function getPackageOptions(PackageInterface $package)
+    public function getPackageOptions(Package $package)
     {
         return array_merge(array(
             'anime-db-routing' => '',
