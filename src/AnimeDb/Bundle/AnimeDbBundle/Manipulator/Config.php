@@ -10,6 +10,8 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Manipulator;
 
+use Symfony\Component\Yaml\Yaml;
+
 /**
  * Config manipulator
  *
@@ -27,7 +29,18 @@ class Config
      */
     public function addResource($bundle, $format, $path = 'config')
     {
-        // TODO do add
+        $file = __DIR__.'/../../../../../app/config/bundle_config.yml';
+        $resource = '@'.$bundle.'/Resources/config/'.$path.'.'.$format;
+
+        $value = Yaml::parse(file_get_contents($file));
+        // check for duplicate
+        foreach ($value['imports'] as $import) {
+            if ($import['resource'] == $resource) {
+                return;
+            }
+        }
+        $value['imports'][] = ['resource' => $resource];
+        file_put_contents($file, Yaml::dump($value, 2));
     }
 
     /**
@@ -37,6 +50,13 @@ class Config
      */
     public function removeResource($bundle)
     {
-        // TODO do remove
+        $file = __DIR__.'/../../../../../app/config/bundle_config.yml';
+        $value = Yaml::parse(file_get_contents($file));
+        foreach ($value['imports'] as $key => $import) {
+            if (strpos($import['resource'], '@'.$bundle) === 0) {
+                unset($value['imports'][$key]);
+                file_put_contents($file, Yaml::dump($value, 2));
+            }
+        }
     }
 }
