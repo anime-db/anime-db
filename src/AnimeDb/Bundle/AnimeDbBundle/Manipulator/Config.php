@@ -10,15 +10,13 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Manipulator;
 
-use Sensio\Bundle\GeneratorBundle\Manipulator\Manipulator;
-
 /**
  * Config manipulator
  *
  * @package AnimeDb\Bundle\AnimeDbBundle\Manipulator
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Config extends Manipulator
+class Config
 {
     /**
      * Add a routing resource

@@ -10,15 +10,13 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Manipulator;
 
-use Sensio\Bundle\GeneratorBundle\Manipulator\Manipulator;
-
 /**
  * Composer manipulator
  *
  * @package AnimeDb\Bundle\AnimeDbBundle\Manipulator
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Composer extends Manipulator
+class Composer
 {
     /**
      * Add the package into composer requirements

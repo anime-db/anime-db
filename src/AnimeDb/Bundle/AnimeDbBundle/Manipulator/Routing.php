@@ -10,16 +10,29 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Manipulator;
 
-use Sensio\Bundle\GeneratorBundle\Manipulator\RoutingManipulator;
-
 /**
  * Routing manipulator
  *
  * @package AnimeDb\Bundle\AnimeDbBundle\Manipulator
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Routing extends RoutingManipulator
+class Routing
 {
+
+    /**
+     * Add a routing resource
+     *
+     * @param string $bundle
+     * @param string $format
+     * @param string $path
+     *
+     * @return Boolean true if it worked, false otherwise
+     */
+    public function addResource($bundle, $format, $path = 'routing')
+    {
+        // TODO do add
+    }
+
     /**
      * Remove a routing resource
      *

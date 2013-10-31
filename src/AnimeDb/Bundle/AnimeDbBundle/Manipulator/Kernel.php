@@ -10,15 +10,13 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Manipulator;
 
-use Sensio\Bundle\GeneratorBundle\Manipulator\Manipulator;
-
 /**
  * Kernel manipulator
  *
  * @package AnimeDb\Bundle\AnimeDbBundle\Manipulator
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Kernel extends Manipulator
+class Kernel
 {
     /**
      * Add bundle to kernal
