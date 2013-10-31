@@ -52,7 +52,7 @@ abstract class Migrate extends Job
      */
     protected function getMigrationsConfig()
     {
-        $options = $this->container->getPackageOptions($this->package);
+        $options = $this->getContainer()->getPackageOptions($this->package);
         // specific location
         if ($options['anime-db-migrations']) {
             return $options['anime-db-migrations'];

@@ -28,7 +28,7 @@ class Installed extends BaseNotify
      */
     public function execute()
     {
-        $dispatcher = $this->container->getKernel()->getContainer()->get('event_dispatcher');
+        $dispatcher = $this->getContainer()->getKernel()->getContainer()->get('event_dispatcher');
         $dispatcher->dispatch(StoreEvents::INSTALLED, new Event($this->package));
     }
 }

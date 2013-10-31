@@ -27,7 +27,7 @@ class Down extends BaseMigrate
     public function execute()
     {
         if ($config = $this->getMigrationsConfig()) {
-           $this->container->executeCommand('doctrine:migrations:migrate 0 --no-interaction --configuration='.$config);
+           $this->getContainer()->executeCommand('doctrine:migrations:migrate 0 --no-interaction --configuration='.$config);
         }
     }
 }

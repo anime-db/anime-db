@@ -47,21 +47,11 @@ abstract class Job
     const PRIORITY = self::PRIORITY_EXEC;
 
     /**
-     * Get job priority
-     *
-     * @return integer
-     */
-    public static function getPriority()
-    {
-        return static::PRIORITY;
-    }
-
-    /**
      * Container
      *
      * @var \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container
      */
-    protected $container;
+    private $container;
 
     /**
      * Set container
@@ -71,6 +61,26 @@ abstract class Job
     public function setContainer(Container $container)
     {
         $this->container = $container;
+    }
+
+    /**
+     * Get container
+     *
+     * @return \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container
+     */
+    public function getContainer()
+    {
+        return $this->container;
+    }
+
+    /**
+     * Get job priority
+     *
+     * @return integer
+     */
+    public static function getPriority()
+    {
+        return static::PRIORITY;
     }
 
     /**

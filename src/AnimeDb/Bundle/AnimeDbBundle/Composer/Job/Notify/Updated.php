@@ -28,7 +28,7 @@ class Updated extends BaseNotify
      */
     public function execute()
     {
-        $dispatcher = $this->container->getKernel()->getContainer()->get('event_dispatcher');
+        $dispatcher = $this->getContainer()->getKernel()->getContainer()->get('event_dispatcher');
         $dispatcher->dispatch(StoreEvents::UPDATED, new Event($this->package));
     }
 }
