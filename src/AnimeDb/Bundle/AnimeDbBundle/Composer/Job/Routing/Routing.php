@@ -13,6 +13,7 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing as RoutingManipulator;
 use Composer\Package\Package;
+use Symfony\Component\Finder\Finder;
 
 /**
  * Routing
@@ -45,5 +46,45 @@ abstract class Routing extends Job
     {
         parent::__construct($package);
         $this->manipulator = new RoutingManipulator();
+    }
+
+    /**
+     * Get the package routing
+     *
+     * @return string|null
+     */
+    protected function getPackageRouting()
+    {
+        $finder = new Finder();
+        $finder
+            ->files()
+            ->in(realpath(__DIR__.'/../../../../../../../vendor/'.$this->getPackage()->getName()))
+            ->path('/\/Resources\/config\/([^\/]+\/)*routing.(yml|xml)$/')
+            ->name('/^routing.(yml|xml)$/');
+
+        // ignor configs in test
+        if (stripos($this->getPackage()->getName(), 'test') === false) {
+            $finder->notPath('/test/i');
+        }
+
+        /* @var $file \SplFileInfo */
+        foreach ($finder as $file) {
+            $start = strrpos($file->getPathname(), '/Resources/config/');
+            return substr($file->getPathname(), $start+strlen('/Resources/config/'));
+        }
+        return null;
+    }
+
+    /**
+     * Get the node name from the package name
+     *
+     * @return string
+     */
+    protected function getNodeName()
+    {
+        $name = strtolower($this->getPackage()->getName());
+        // package with the bundle can contain the word a 'bundle' in the name
+        $name = preg_replace('/(\/.+)[^a-z]bundle$/', '$1', $name);
+        return preg_replace('/[^a-z_]+/', '_', $name);
     }
 }
