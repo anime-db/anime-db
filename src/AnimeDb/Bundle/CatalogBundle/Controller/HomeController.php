@@ -20,7 +20,7 @@ use AnimeDb\Bundle\CatalogBundle\Entity\Country as CountryEntity;
 use AnimeDb\Bundle\CatalogBundle\Entity\Genre as GenreEntity;
 use AnimeDb\Bundle\CatalogBundle\Entity\Storage as StorageEntity;
 use Doctrine\ORM\Query\Expr;
-use AnimeDb\Bundle\CatalogBundle\Service\Pagination;
+use AnimeDb\Bundle\AppBundle\Service\Pagination;
 use AnimeDb\Bundle\CatalogBundle\Form\Settings\General as GeneralForm;
 use AnimeDb\Bundle\CatalogBundle\Entity\Settings\General as GeneralEntity;
 use Symfony\Component\Yaml\Yaml;

@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AnimeDb\Bundle\CatalogBundle\Entity\Notice;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use AnimeDb\Bundle\CatalogBundle\Service\Pagination;
+use AnimeDb\Bundle\AppBundle\Service\Pagination;
 /**
  * Notice
  *

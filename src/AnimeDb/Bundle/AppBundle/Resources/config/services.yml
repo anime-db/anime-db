@@ -1,4 +1,6 @@
 services:
+    anime_db.pagination:
+        class: AnimeDb\Bundle\AppBundle\Service\Pagination
 
     # Kernel request listener
     anime_db.listener.request:

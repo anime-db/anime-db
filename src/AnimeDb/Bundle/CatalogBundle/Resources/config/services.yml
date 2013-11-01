@@ -1,7 +1,4 @@
 services:
-    anime_db.pagination:
-        class: AnimeDb\Bundle\CatalogBundle\Service\Pagination
-
     # Plugins chain
     anime_db.plugin.filler:
         class: AnimeDb\Bundle\CatalogBundle\Plugin\Filler\Chain
