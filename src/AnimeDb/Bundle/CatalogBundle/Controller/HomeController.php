@@ -406,26 +406,4 @@ class HomeController extends Controller
             'form'  => $form->createView()
         ]);
     }
-
-    /**
-     * Assets stylesheets
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function assetsStylesheetsAction()
-    {
-        $paths = $this->get('anime_db.assets')->getStylesheetPaths();
-        return $this->render('AnimeDbCatalogBundle:Home:assets/stylesheets.html.twig', ['paths'  => $paths]);
-    }
-
-    /**
-     * Assets javascripts
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function assetsJavaScriptsAction()
-    {
-        $paths = $this->get('anime_db.assets')->getJavaScriptsPaths();
-        return $this->render('AnimeDbCatalogBundle:Home:assets/javascripts.html.twig', ['paths'  => $paths]);
-    }
 }
