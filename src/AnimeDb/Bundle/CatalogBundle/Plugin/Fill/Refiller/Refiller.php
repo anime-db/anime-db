@@ -44,11 +44,11 @@ abstract class Refiller extends Plugin
     const FIELD_EPISODES = 'episodes';
 
     /**
-     * Item description for refill
+     * Item summary for refill
      *
      * @var string
      */
-    const FIELD_DESCRIPTION = 'description';
+    const FIELD_SUMMARY = 'summary';
 
     /**
      * Is can refill item from source
