@@ -8,12 +8,12 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\CatalogBundle\Service;
+namespace AnimeDb\Bundle\AppBundle\Service;
 
 /**
  * Collection assets
  *
- * @package AnimeDb\Bundle\CatalogBundle\Service
+ * @package AnimeDb\Bundle\AppBundle\Service
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Assets
@@ -47,7 +47,7 @@ class Assets
      *
      * @param string $path
      *
-     * @return \AnimeDb\Bundle\CatalogBundle\Service\Assets
+     * @return \AnimeDb\Bundle\AppBundle\Service\Assets
      */
     public function addJavaScriptsPath($path)
     {
@@ -70,7 +70,7 @@ class Assets
      *
      * @param string $path
      *
-     * @return \AnimeDb\Bundle\CatalogBundle\Service\Assets
+     * @return \AnimeDb\Bundle\AppBundle\Service\Assets
      */
     public function addStylesheetPath($path)
     {

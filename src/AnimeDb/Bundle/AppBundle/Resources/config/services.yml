@@ -2,6 +2,9 @@ services:
     anime_db.pagination:
         class: AnimeDb\Bundle\AppBundle\Service\Pagination
 
+    anime_db.assets:
+        class: AnimeDb\Bundle\AppBundle\Service\Assets
+
     # Kernel request listener
     anime_db.listener.request:
         class: AnimeDb\Bundle\AppBundle\Event\Listener\Request
