@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\CatalogBundle\Plugin;
+namespace AnimeDb\Bundle\CatalogBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -17,7 +17,7 @@ use Symfony\Component\DependencyInjection\Reference;
 /**
  * Plugin compiler pass
  *
- * @package AnimeDb\Bundle\CatalogBundle\Plugin
+ * @package AnimeDb\Bundle\CatalogBundle\DependencyInjection\Compiler
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class PluginPass implements CompilerPassInterface
