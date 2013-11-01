@@ -65,8 +65,7 @@ abstract class Config extends Job
         /* @var $file \SplFileInfo */
         foreach ($finder as $file) {
             $start = strrpos($file->getPathname(), '/Resources/config/');
-            $path = substr($file->getPathname(), $start+strlen('/Resources/config/'));
-            return $path;
+            return substr($file->getPathname(), $start+strlen('/Resources/config/'));
         }
         return null;
     }

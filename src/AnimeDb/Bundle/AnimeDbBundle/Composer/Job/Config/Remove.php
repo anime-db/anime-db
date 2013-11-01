@@ -26,7 +26,9 @@ class Remove extends BaseConfig
      */
     public function execute()
     {
-        // TODO get data
-//         $this->manipulator->removeResource($bundle);
+        if ($bundle = $this->getContainer()->getPackageBundle($this->getPackage())) {
+            $bundle = new $bundle();
+            $this->manipulator->removeResource($bundle->getName());
+        }
     }
 }
