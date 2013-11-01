@@ -390,7 +390,6 @@ class HomeController extends Controller
                 // update params
                 $file = $this->container->getParameter('kernel.root_dir').'/config/parameters.yml';
                 $parameters = Yaml::parse($file);
-                $parameters['parameters']['locale'] = $entity->getLocale();
                 $parameters['parameters']['serial_number'] = $entity->getSerialNumber();
                 $parameters['parameters']['task_scheduler']['enabled'] = $entity->getTaskScheduler();
                 $parameters['parameters']['default_search'] = $entity->getDefaultSearch();
