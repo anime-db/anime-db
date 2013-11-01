@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\CatalogBundle\Event\Listener;
+namespace AnimeDb\Bundle\AppBundle\Event\Listener;
 
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Constraints\Locale;
 /**
  * Request listener
  *
- * @package AnimeDb\Bundle\CatalogBundle\Event\Listener
+ * @package AnimeDb\Bundle\AppBundle\Event\Listener
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Request
@@ -61,7 +61,7 @@ class Request
     /**
      * Kernel request handler
      *
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $e
+     * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
      */
     public function onKernelRequest(GetResponseEvent $event)
     {

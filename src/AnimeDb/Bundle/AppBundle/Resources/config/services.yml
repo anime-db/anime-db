@@ -1,5 +1,11 @@
 services:
 
+    # Kernel request listener
+    anime_db.listener.request:
+        class: AnimeDb\Bundle\AppBundle\Event\Listener\Request
+        tags: [{ name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: -255 }]
+        arguments: [ @gedmo.listener.translatable, @validator ]
+
     gedmo.listener.translatable:
         class: Gedmo\Translatable\TranslatableListener
         tags:
