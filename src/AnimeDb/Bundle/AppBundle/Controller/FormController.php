@@ -8,20 +8,20 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\CatalogBundle\Controller;
+namespace AnimeDb\Bundle\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use AnimeDb\Bundle\CatalogBundle\Entity\Field\Image as ImageField;
-use AnimeDb\Bundle\CatalogBundle\Form\Field\Image\Upload as UploadImage;
-use AnimeDb\Bundle\CatalogBundle\Form\Field\LocalPath\Choice as ChoiceLocalPath;
+use AnimeDb\Bundle\AppBundle\Entity\Field\Image as ImageField;
+use AnimeDb\Bundle\AppBundle\Form\Field\Image\Upload as UploadImage;
+use AnimeDb\Bundle\AppBundle\Form\Field\LocalPath\Choice as ChoiceLocalPath;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Form
  *
- * @package AnimeDb\Bundle\CatalogBundle\Controller
+ * @package AnimeDb\Bundle\AppBundle\Controller
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class FormController extends Controller
@@ -40,7 +40,7 @@ class FormController extends Controller
             ['path' => $request->get('path') ?: '']
         );
 
-        return $this->render('AnimeDbCatalogBundle:Form:local_path.html.twig', [
+        return $this->render('AnimeDbAppBundle:Form:local_path.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -100,7 +100,7 @@ class FormController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function imageAction(Request $request) {
-        return $this->render('AnimeDbCatalogBundle:Form:image.html.twig', [
+        return $this->render('AnimeDbAppBundle:Form:image.html.twig', [
             'form' => $this->createForm(new UploadImage())->createView(),
             'change' => (bool)$request->get('change', false)
         ]);

@@ -12,3 +12,22 @@ notice_close:
     requirements:
         _method:  POST
         id:  \d+
+
+
+form_local_path:
+    pattern:  /form/local_path.html
+    defaults: { _controller: AnimeDbAppBundle:Form:localPath }
+
+form_local_path_folders:
+    pattern:  /form/local_path/folders.json
+    defaults: { _controller: AnimeDbAppBundle:Form:localPathFolders, _format: json }
+
+form_image:
+    pattern:  /form/image.html
+    defaults: { _controller: AnimeDbAppBundle:Form:image }
+
+form_image_upload:
+    pattern:  /form/imageUpload.json
+    defaults: { _controller: AnimeDbAppBundle:Form:imageUpload, _format: json }
+    requirements:
+        _method:  POST

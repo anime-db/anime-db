@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\CatalogBundle\Form\Field\Image;
+namespace AnimeDb\Bundle\AppBundle\Form\Field\Image;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,7 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 /**
  * Image upload form
  *
- * @package AnimeDb\Bundle\CatalogBundle\Form\Field\Image
+ * @package AnimeDb\Bundle\AppBundle\Form\Field\Image
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Upload extends AbstractType

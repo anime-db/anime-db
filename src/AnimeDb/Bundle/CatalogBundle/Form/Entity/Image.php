@@ -13,7 +13,7 @@ namespace AnimeDb\Bundle\CatalogBundle\Form\Entity;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use AnimeDb\Bundle\CatalogBundle\Form\Field\Image as ImageField;
+use AnimeDb\Bundle\AppBundle\Form\Field\Image as ImageField;
 
 /**
  * Image form

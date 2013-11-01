@@ -60,26 +60,6 @@ media_favicon:
         host: .+
     defaults: { _controller: AnimeDbCatalogBundle:Media:favicon }
 
-
-form_local_path:
-    pattern:  /form/local_path.html
-    defaults: { _controller: AnimeDbCatalogBundle:Form:localPath }
-
-form_local_path_folders:
-    pattern:  /form/local_path/folders.json
-    defaults: { _controller: AnimeDbCatalogBundle:Form:localPathFolders, _format: json }
-
-
-form_image:
-    pattern:  /form/image.html
-    defaults: { _controller: AnimeDbCatalogBundle:Form:image }
-
-form_image_upload:
-    pattern:  /form/imageUpload.json
-    defaults: { _controller: AnimeDbCatalogBundle:Form:imageUpload, _format: json }
-    requirements:
-        _method:  POST
-
 storage_list:
     pattern:  /settings/storage.html
     defaults: { _controller: AnimeDbCatalogBundle:Storage:list }

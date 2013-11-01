@@ -8,17 +8,17 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\CatalogBundle\Form\Field;
+namespace AnimeDb\Bundle\AppBundle\Form\Field;
 
 use Symfony\Component\Form\AbstractType;
 
 /**
- * Local path form field
+ * Image form field
  *
- * @package AnimeDb\Bundle\CatalogBundle\Form\Field
+ * @package AnimeDb\Bundle\AppBundle\Form\Field
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class LocalPath extends AbstractType
+class Image extends AbstractType
 {
     /**
      * (non-PHPdoc)
@@ -35,6 +35,6 @@ class LocalPath extends AbstractType
      */
     public function getName()
     {
-        return 'local_path';
+        return 'image';
     }
 }
