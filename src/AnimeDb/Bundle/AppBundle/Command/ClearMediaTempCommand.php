@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\CatalogBundle\Command;
+namespace AnimeDb\Bundle\AppBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,7 +18,7 @@ use Symfony\Component\Filesystem\Filesystem;
 /**
  * Clear the media temporary folder of images
  *
- * @package AnimeDb\Bundle\CatalogBundle\Command
+ * @package AnimeDb\Bundle\AppBundle\Command
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class ClearMediaTempCommand extends ContainerAwareCommand
