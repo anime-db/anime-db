@@ -11,40 +11,148 @@
                 <target>Изменить</target>
             </trans-unit>
             <trans-unit id="3">
+                <source>No</source>
+                <target>Нет</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>Cancel</source>
+                <target>Отмена</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>Language</source>
+                <target>Язык</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>Message</source>
+                <target>Сообщание</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>Created</source>
+                <target>Создано</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>Shown</source>
+                <target>Показано</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>Closed</source>
+                <target>Закрыто</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>Save</source>
+                <target>Сохранить</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>All</source>
+                <target>Все</target>
+            </trans-unit>
+            <trans-unit id="12">
+                <source>Find</source>
+                <target>Найти</target>
+            </trans-unit>
+            <trans-unit id="13">
+                <source>Fill</source>
+                <target>Заполнить</target>
+            </trans-unit>
+            <trans-unit id="14">
+                <source>Import</source>
+                <target>Импорт</target>
+            </trans-unit>
+            <trans-unit id="15">
+                <source>Update</source>
+                <target>Обновление</target>
+            </trans-unit>
+            <trans-unit id="16">
+                <source>Sorting</source>
+                <target>Сортировка</target>
+            </trans-unit>
+            <trans-unit id="17">
+                <source>Add</source>
+                <target>Добавить</target>
+            </trans-unit>
+            <trans-unit id="18">
+                <source>Remove</source>
+                <target>Удалить</target>
+            </trans-unit>
+            <trans-unit id="19">
+                <source>From</source>
+                <target>С</target>
+            </trans-unit>
+            <trans-unit id="20">
+                <source>from</source>
+                <target>с</target>
+            </trans-unit>
+            <trans-unit id="21">
+                <source>to</source>
+                <target>по</target>
+            </trans-unit>
+            <trans-unit id="22">
+                <source>To</source>
+                <target>по</target>
+            </trans-unit>
+            <trans-unit id="23">
+                <source>y.</source>
+                <target>г.</target>
+            </trans-unit>
+            <trans-unit id="24">
+                <source>Notice</source>
+                <target>Уведомление</target>
+            </trans-unit>
+            <trans-unit id="25">
+                <source>Serial number</source>
+                <target>Серийный номер</target>
+            </trans-unit>
+            <trans-unit id="26">
+                <source>Task scheduler</source>
+                <target>Планировщик задач</target>
+            </trans-unit>
+            <trans-unit id="27">
                 <source>Close pop-up window</source>
                 <target>Закрыть всплывающее окно</target>
             </trans-unit>
-            <trans-unit id="4">
+            <trans-unit id="28">
                 <source>Add row</source>
                 <target>Добавить строку</target>
             </trans-unit>
-            <trans-unit id="5">
+            <trans-unit id="29">
                 <source>Remove row</source>
                 <target>Удалить строку</target>
             </trans-unit>
-            <trans-unit id="6">
+            <trans-unit id="30">
                 <source>Change image</source>
                 <target>Изменить картинку</target>
             </trans-unit>
-            <trans-unit id="7">
+            <trans-unit id="31">
                 <source>Change path</source>
                 <target>Изменить путь</target>
             </trans-unit>
-            <trans-unit id="8">
+            <trans-unit id="32">
                 <source>Add image</source>
                 <target>Добавить картинку</target>
             </trans-unit>
-            <trans-unit id="9">
+            <trans-unit id="33">
                 <source>Image from URL</source>
                 <target>Кортинка из URL</target>
             </trans-unit>
-            <trans-unit id="10">
+            <trans-unit id="34">
                 <source>Local image</source>
                 <target>Локальная кортинка</target>
             </trans-unit>
-            <trans-unit id="11">
+            <trans-unit id="35">
                 <source>Path</source>
                 <target>Путь</target>
+            </trans-unit>
+            <trans-unit id="36">
+                <source>Files for item %name% is removed</source>
+                <target>Файлы для записи %name% удалены</target>
+            </trans-unit>
+            <trans-unit id="37">
+                <source>Detected files for new item %name% on storage %storage%</source>
+                <target>Обнаруженные файлы для новой записи %name% на хранилище %storage%</target>
+            </trans-unit>
+            <trans-unit id="38">
+                <source>Changes are detected in files of item %name%</source>
+                <target>Обнаружены изменения файлов записи %name%</target>
             </trans-unit>
         </body>
     </file>
