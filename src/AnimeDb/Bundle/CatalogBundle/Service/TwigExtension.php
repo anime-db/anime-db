@@ -79,6 +79,6 @@ class TwigExtension extends \Twig_Extension
      */
     public function getName()
     {
-        return 'animedb_extension';
+        return 'anime_db_catalog_extension';
     }
 }
