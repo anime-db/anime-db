@@ -44,7 +44,7 @@ class MediaController extends Controller
     {
         $response = new Response('', 200, ['Content-Type' => self::$mime['ico'][0]]);
 
-        $file = __DIR__.'/../../../../../web/media/favicon/'.$host.'.ico';
+        $file = $this->container->getParameter('kernel.root_dir').'/../web/media/favicon/'.$host.'.ico';
         if (file_exists($file)) {
             $response->setContent(file_get_contents($file));
         } else {

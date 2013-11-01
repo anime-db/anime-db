@@ -388,7 +388,7 @@ class HomeController extends Controller
             $form->handleRequest($request);
             if ($form->isValid()) {
                 // update params
-                $file = __DIR__.'/../../../../../app/config/parameters.yml';
+                $file = $this->container->getParameter('kernel.root_dir').'/config/parameters.yml';
                 $parameters = Yaml::parse($file);
                 $parameters['parameters']['locale'] = $entity->getLocale();
                 $parameters['parameters']['serial_number'] = $entity->getSerialNumber();

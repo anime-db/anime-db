@@ -47,7 +47,7 @@ class TaskSchedulerCommand extends ContainerAwareCommand
 
         // path to php executable
         $finder = new PhpExecutableFinder();
-        $console = $finder->find().' '.__DIR__.'/../../../../../app/console';
+        $console = $finder->find().' '.$this->getContainer()->getParameter('kernel.root_dir').'/console';
 
         $em = $this->getContainer()->get('doctrine')->getManager();
         /* @var $repository \AnimeDb\Bundle\AppBundle\Repository\Task */

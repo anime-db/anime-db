@@ -10,7 +10,7 @@
 
 namespace AnimeDb\Bundle\CatalogBundle\Command;
 
-use Symfony\Component\Console\Command\Command;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -21,7 +21,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * @package AnimeDb\Bundle\CatalogBundle\Command
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class ClearMediaTempCommand extends Command
+class ClearMediaTempCommand extends ContainerAwareCommand
 {
     /**
      * (non-PHPdoc)
@@ -41,7 +41,7 @@ class ClearMediaTempCommand extends Command
         $start = microtime(true);
 
         $fs = new Filesystem();
-        $fs->remove(__DIR__.'/../../../../../web/media/tmp/');
+        $fs->remove($this->getContainer()->getParameter('kernel.root_dir').'/../web/media/tmp/');
 
         $output->writeln('Time: <info>'.round((microtime(true)-$start)*1000, 2).'</info> s.');
     }

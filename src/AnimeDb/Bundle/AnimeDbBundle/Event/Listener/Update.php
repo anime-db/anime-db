@@ -50,13 +50,30 @@ class Update
     const DEFAULT_PATH = '.';
 
     /**
+     * Root dir
+     *
+     * @var string
+     */
+    protected $root_dir = '';
+
+    /**
+     * Construct
+     *
+     * @param string $kernel_root_dir
+     */
+    public function __construct($kernel_root_dir)
+    {
+        $this->root_dir = $kernel_root_dir.'/../';
+    }
+
+    /**
      * Add requirements in composer.json from old version
      *
      * @param \AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded $event
      */
     public function onAppDownloadedMergeComposerRequirements(Downloaded $event)
     {
-        $old_config = file_get_contents(__DIR__.'/../../../../../../composer.json');
+        $old_config = file_get_contents($this->root_dir.'composer.json');
         $old_config = json_decode($old_config, true);
 
         $new_config = file_get_contents($event->getPath().'/composer.json');
@@ -76,7 +93,7 @@ class Update
      */
     public function onAppDownloadedMergeAppKernalBundles(Downloaded $event)
     {
-        $old_kernel = __DIR__.'/../../../../../../app/AppKernel.php';
+        $old_kernel = $this->root_dir.'app/AppKernel.php';
         $new_kernel = $event->getPath().'/app/AppKernel.php';
         if (md5_file($new_kernel) != md5_file($old_kernel)) {
             // get list of bundles
@@ -101,7 +118,7 @@ class Update
      */
     public function onAppDownloadedMergeBinRun(Downloaded $event)
     {
-        $old_file = __DIR__.'/../../../../../../bin/Run.vbs';
+        $old_file = $this->root_dir.'bin/Run.vbs';
         $new_file = $event->getPath().'/bin/Run.vbs';
         if (md5_file($old_file) != md5_file($new_file)) {
             $old_body = file_get_contents($old_file);
@@ -124,7 +141,7 @@ class Update
      */
     public function onAppDownloadedMergeBinService(Downloaded $event)
     {
-        $old_file = __DIR__.'/../../../../../../bin/service';
+        $old_file = $this->root_dir.'bin/service';
         $new_file = $event->getPath().'/bin/service';
         if (md5_file($old_file) != md5_file($new_file)) {
             $old_body = file_get_contents($old_file);

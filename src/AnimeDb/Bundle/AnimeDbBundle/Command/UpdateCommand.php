@@ -149,8 +149,9 @@ class UpdateCommand extends ContainerAwareCommand
      */
     protected function doUpdateComposer(OutputInterface $output)
     {
-        if (file_exists(__DIR__.'/../../../../../composer.lock')) {
-            @unlink(__DIR__.'/../../../../../composer.lock');
+        $lock_file = $this->getContainer()->getParameter('kernel.root_dir').'/../composer.lock';
+        if (file_exists($lock_file)) {
+            @unlink($lock_file);
         }
         // Compositor update is performed in a separate thread because after the update,
         // you must re-connect AppKernal and its inclusion would lead to an error
@@ -196,7 +197,7 @@ class UpdateCommand extends ContainerAwareCommand
     protected function rewriting($from)
     {
         $fs = new Filesystem();
-        $target = realpath(__DIR__.'/../../../../../');
+        $target = realpath($this->getContainer()->getParameter('kernel.root_dir').'/../');
         // ignore errors during the removal of the old application
         try {
             $fs->remove($target.'/src');
@@ -269,7 +270,8 @@ class UpdateCommand extends ContainerAwareCommand
      */
     protected function executeCommand($cmd, OutputInterface $output = null, $cwd = '')
     {
-        $process = new Process($cmd, ($cwd ?: __DIR__.'/../../../../../'), null, null, null);
+        $cwd = $cwd ?: $this->getContainer()->getParameter('kernel.root_dir').'/../';
+        $process = new Process($cmd, $cwd, null, null, null);
         $process->run(function ($type, $buffer) use ($output) {
             if ($output instanceof OutputInterface) {
                 $output->write($buffer);
