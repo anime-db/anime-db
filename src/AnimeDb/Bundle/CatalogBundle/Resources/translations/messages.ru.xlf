@@ -406,6 +406,18 @@
                 <source>Default search plugin</source>
                 <target>Плагин поиска по умолчанию</target>
             </trans-unit>
+            <trans-unit id="102">
+                <source>Files for item %name% is removed</source>
+                <target>Файлы для записи %name% удалены</target>
+            </trans-unit>
+            <trans-unit id="103">
+                <source>Detected files for new item %name% on storage %storage%</source>
+                <target>Обнаруженные файлы для новой записи %name% на хранилище %storage%</target>
+            </trans-unit>
+            <trans-unit id="104">
+                <source>Changes are detected in files of item %name%</source>
+                <target>Обнаружены изменения файлов записи %name%</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -142,18 +142,6 @@
                 <source>Path</source>
                 <target>Путь</target>
             </trans-unit>
-            <trans-unit id="36">
-                <source>Files for item %name% is removed</source>
-                <target>Файлы для записи %name% удалены</target>
-            </trans-unit>
-            <trans-unit id="37">
-                <source>Detected files for new item %name% on storage %storage%</source>
-                <target>Обнаруженные файлы для новой записи %name% на хранилище %storage%</target>
-            </trans-unit>
-            <trans-unit id="38">
-                <source>Changes are detected in files of item %name%</source>
-                <target>Обнаружены изменения файлов записи %name%</target>
-            </trans-unit>
         </body>
     </file>
 </xliff>
