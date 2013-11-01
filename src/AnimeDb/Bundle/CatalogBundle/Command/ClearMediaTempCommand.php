@@ -48,10 +48,7 @@ class ClearMediaTempCommand extends Command
             $finder->in($dir)->date('< 1 hour ago')->ignoreUnreadableDirs();
             /* @var $file \SplFileInfo */
             foreach ($finder as $file) {
-                // FIXME date method not working properly
-                var_export($file->getMTime() < strtotime('1 hour ago'));
-                echo " - ".str_replace($dir, '', $file->getRealPath())."\n";
-                //$fs->remove($file->getRealPath());
+                $fs->remove($file->getRealPath());
             }
         }
 
