@@ -12,6 +12,7 @@ namespace AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller;
 
 use AnimeDb\Bundle\CatalogBundle\Plugin\Plugin;
 use AnimeDb\Bundle\CatalogBundle\Entity\Item;
+use Knp\Menu\ItemInterface;
 
 /**
  * Plugin refiller
