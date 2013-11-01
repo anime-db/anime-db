@@ -29,7 +29,7 @@ class Config
      */
     public function addResource($bundle, $format, $path = 'config')
     {
-        $file = __DIR__.'/../../../../../app/config/bundle_config.yml';
+        $file = __DIR__.'/../../../../../app/config/vendor_config.yml';
         $resource = '@'.$bundle.'/Resources/config/'.$path.'.'.$format;
 
         $value = Yaml::parse(file_get_contents($file));
@@ -50,7 +50,7 @@ class Config
      */
     public function removeResource($bundle)
     {
-        $file = __DIR__.'/../../../../../app/config/bundle_config.yml';
+        $file = __DIR__.'/../../../../../app/config/vendor_config.yml';
         $value = Yaml::parse(file_get_contents($file));
         foreach ($value['imports'] as $key => $import) {
             if (strpos($import['resource'], '@'.$bundle) === 0) {
