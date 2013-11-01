@@ -60,8 +60,13 @@ abstract class Config extends Job
             ->files()
             ->in(realpath(__DIR__.'/../../../../../../../vendor/'.$this->getPackage()->getName()))
             ->path('/\/Resources\/config\/([^\/]+\/)*config.(yml|xml)$/')
-            ->notPath('/test/i')
             ->name('/^config.(yml|xml)$/');
+
+        // ignor configs in test
+        if (stripos($this->getPackage()->getName(), 'test') === false) {
+            $finder->notPath('/test/i');
+        }
+
         /* @var $file \SplFileInfo */
         foreach ($finder as $file) {
             $start = strrpos($file->getPathname(), '/Resources/config/');
