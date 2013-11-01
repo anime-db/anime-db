@@ -26,7 +26,13 @@ class Add extends BaseRouting
      */
     public function execute()
     {
-        // TODO get data
-//         $this->manipulator->addResource($bundle, $format);
+        $routing = $this->getPackageRouting();
+        $bundle = $this->getContainer()->getPackageBundle($this->getPackage());
+        if ($routing && $bundle) {
+            $bundle = new $bundle();
+            $info = pathinfo($routing);
+            $path = $info['dirname'] != '.' ? $info['dirname'].'/'.$info['filename'] : $info['filename'];
+            $this->manipulator->addResource($this->getNodeName(), $bundle->getName(), $info['extension'], $path);
+        }
     }
 }

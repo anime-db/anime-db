@@ -26,7 +26,6 @@ class Remove extends BaseRouting
      */
     public function execute()
     {
-        // TODO get data
-//         $this->manipulator->removeResource($bundle);
+        $this->manipulator->removeResource($this->getNodeName());
     }
 }
