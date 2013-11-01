@@ -1,0 +1,3 @@
+parameters:
+    serial_number: ''
+    task_scheduler: { enabled: true }
