@@ -10,6 +10,8 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Manipulator;
 
+use Symfony\Component\Yaml\Yaml;
+
 /**
  * Routing manipulator
  *
@@ -22,24 +24,37 @@ class Routing
     /**
      * Add a routing resource
      *
+     * @param string $name
      * @param string $bundle
      * @param string $format
      * @param string $path
      *
      * @return Boolean true if it worked, false otherwise
      */
-    public function addResource($bundle, $format, $path = 'routing')
+    public function addResource($name, $bundle, $format, $path = 'routing')
     {
-        // TODO do add
+        $file = __DIR__.'/../../../../../app/config/routing.yml';
+        $resource = '@'.$bundle.'/Resources/config/'.$path.'.'.$format;
+
+        $value = Yaml::parse(file_get_contents($file));
+        if (!isset($value[$name]) || $value[$name]['resource'] != $resource) {
+            $value[$name] = ['resource' => $resource];
+            file_put_contents($file, Yaml::dump($value, 2));
+        }
     }
 
     /**
      * Remove a routing resource
      *
-     * @param string $bundle
+     * @param string $name
      */
-    public function removeResource($bundle)
+    public function removeResource($name)
     {
-        // TODO do remove
+        $file = __DIR__.'/../../../../../app/config/routing.yml';
+        $value = Yaml::parse(file_get_contents($file));
+        if (isset($value[$name])) {
+            unset($value[$name]);
+            file_put_contents($file, Yaml::dump($value, 2));
+        }
     }
 }

@@ -1,2 +1,2 @@
 anime_db_catalog:
-    resource: "@AnimeDbCatalogBundle/Resources/config/routing.yml"
+    resource: '@AnimeDbCatalogBundle/Resources/config/routing.yml'
