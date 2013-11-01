@@ -35,12 +35,3 @@ services:
         class: AnimeDb\Bundle\CatalogBundle\Event\Subscriber\ScanStorage
         arguments: [ @doctrine.orm.entity_manager, @templating, @anime_db.plugin.search, @router ]
         tags: [{ name:kernel.event_subscriber }]
-
-    gedmo.listener.translatable:
-        class: Gedmo\Translatable\TranslatableListener
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-        calls:
-            - [ setAnnotationReader, [ @annotation_reader ] ]
-            - [ setDefaultLocale, [ %locale% ] ]
-            - [ setTranslationFallback, [ true ] ]
