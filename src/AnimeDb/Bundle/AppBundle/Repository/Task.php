@@ -8,15 +8,15 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\CatalogBundle\Repository;
+namespace AnimeDb\Bundle\AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use AnimeDb\Bundle\CatalogBundle\Entity\Task as TaskEntity;
+use AnimeDb\Bundle\AppBundle\Entity\Task as TaskEntity;
 
 /**
  * Task repository
  *
- * @package AnimeDb\Bundle\CatalogBundle\Repository
+ * @package AnimeDb\Bundle\AppBundle\Repository
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Task extends EntityRepository
@@ -37,7 +37,7 @@ class Task extends EntityRepository
     /**
      * Get next task
      *
-     * @return \AnimeDb\Bundle\CatalogBundle\Entity\Task|null
+     * @return \AnimeDb\Bundle\AppBundle\Entity\Task|null
      */
     public function getNextTask()
     {
@@ -45,7 +45,7 @@ class Task extends EntityRepository
             SELECT
                 t
             FROM
-                AnimeDbCatalogBundle:Task t
+                AnimeDbAppBundle:Task t
             WHERE
                 t.status = :status AND t.next_run <= :time
             ORDER BY
@@ -69,7 +69,7 @@ class Task extends EntityRepository
             SELECT
                 t
             FROM
-                AnimeDbCatalogBundle:Task t
+                AnimeDbAppBundle:Task t
             WHERE
                 t.status = :status
             ORDER BY

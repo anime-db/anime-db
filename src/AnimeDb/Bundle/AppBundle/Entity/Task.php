@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\CatalogBundle\Entity;
+namespace AnimeDb\Bundle\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -22,10 +22,10 @@ use Symfony\Component\Validator\ExecutionContextInterface;
  *   @ORM\Index(name="idx_task_next_start", columns={"next_run", "status"})
  * })
  * @Assert\Callback(methods={"isModifyValid"})
- * @ORM\Entity(repositoryClass="AnimeDb\Bundle\CatalogBundle\Repository\Task")
+ * @ORM\Entity(repositoryClass="AnimeDb\Bundle\AppBundle\Repository\Task")
  * @IgnoreAnnotation("ORM")
  *
- * @package AnimeDb\Bundle\CatalogBundle\Entity
+ * @package AnimeDb\Bundle\AppBundle\Entity
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Task

@@ -8,19 +8,19 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\CatalogBundle\Command;
+namespace AnimeDb\Bundle\AppBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use AnimeDb\Bundle\CatalogBundle\Entity\Task;
+use AnimeDb\Bundle\AppBundle\Entity\Task;
 use Symfony\Component\Process\PhpExecutableFinder;
 use Doctrine\ORM\EntityRepository;
 
 /**
  * Task Scheduler
  *
- * @package AnimeDb\Bundle\CatalogBundle\Command
+ * @package AnimeDb\Bundle\AppBundle\Command
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class TaskSchedulerCommand extends ContainerAwareCommand
@@ -50,8 +50,8 @@ class TaskSchedulerCommand extends ContainerAwareCommand
         $console = $finder->find().' '.__DIR__.'/../../../../../app/console';
 
         $em = $this->getContainer()->get('doctrine')->getManager();
-        /* @var $repository \AnimeDb\Bundle\CatalogBundle\Repository\Task */
-        $repository = $em->getRepository('AnimeDbCatalogBundle:Task');
+        /* @var $repository \AnimeDb\Bundle\AppBundle\Repository\Task */
+        $repository = $em->getRepository('AnimeDbAppBundle:Task');
 
         // output streams
         if (defined('PHP_WINDOWS_VERSION_BUILD')) {
