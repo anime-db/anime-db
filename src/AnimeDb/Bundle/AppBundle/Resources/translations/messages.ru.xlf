@@ -2,6 +2,50 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
+            <trans-unit id="1">
+                <source>Close</source>
+                <target>Закрыть</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>Change</source>
+                <target>Изменить</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>Close pop-up window</source>
+                <target>Закрыть всплывающее окно</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>Add row</source>
+                <target>Добавить строку</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>Remove row</source>
+                <target>Удалить строку</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>Change image</source>
+                <target>Изменить картинку</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>Change path</source>
+                <target>Изменить путь</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>Add image</source>
+                <target>Добавить картинку</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>Image from URL</source>
+                <target>Кортинка из URL</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>Local image</source>
+                <target>Локальная кортинка</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>Path</source>
+                <target>Путь</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

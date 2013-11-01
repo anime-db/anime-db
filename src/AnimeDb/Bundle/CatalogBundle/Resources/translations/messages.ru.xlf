@@ -110,10 +110,6 @@
                 <source>Summary</source>
                 <target>Описание</target>
             </trans-unit>
-            <trans-unit id="31">
-                <source>Path</source>
-                <target>Путь</target>
-            </trans-unit>
             <trans-unit id="32">
                 <source>Episodes</source>
                 <target>Эпизоды</target>
@@ -181,10 +177,6 @@
             <trans-unit id="48">
                 <source>Can`t get content from the specified source</source>
                 <target>Не удается получить содержимое из указанного источника</target>
-            </trans-unit>
-            <trans-unit id="50">
-                <source>Change</source>
-                <target>Изменить</target>
             </trans-unit>
             <trans-unit id="51">
                 <source>Complement directory</source>
@@ -261,38 +253,6 @@
             <trans-unit id="73">
                 <source>Remove</source>
                 <target>Удалить</target>
-            </trans-unit>
-            <trans-unit id="74">
-                <source>Image from URL</source>
-                <target>Кортинка из URL</target>
-            </trans-unit>
-            <trans-unit id="75">
-                <source>Local image</source>
-                <target>Локальная кортинка</target>
-            </trans-unit>
-            <trans-unit id="76">
-                <source>Add image</source>
-                <target>Добавить картинку</target>
-            </trans-unit>
-            <trans-unit id="77">
-                <source>Change image</source>
-                <target>Изменить картинку</target>
-            </trans-unit>
-            <trans-unit id="78">
-                <source>Change path</source>
-                <target>Изменить путь</target>
-            </trans-unit>
-            <trans-unit id="79">
-                <source>Close pop-up window</source>
-                <target>Закрыть всплывающее окно</target>
-            </trans-unit>
-            <trans-unit id="80">
-                <source>Add row</source>
-                <target>Добавить строку</target>
-            </trans-unit>
-            <trans-unit id="81">
-                <source>Remove row</source>
-                <target>Удалить строку</target>
             </trans-unit>
             <trans-unit id="82">
                 <source>Number of episodes</source>
