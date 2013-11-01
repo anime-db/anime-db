@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\CatalogBundle\Entity;
+namespace AnimeDb\Bundle\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -21,10 +21,10 @@ use Symfony\Component\Validator\ExecutionContextInterface;
  * @ORM\Table(name="notice", indexes={
  *   @ORM\Index(name="notice_show_idx", columns={"date_closed", "date_created"})
  * })
- * @ORM\Entity(repositoryClass="AnimeDb\Bundle\CatalogBundle\Repository\Notice")
+ * @ORM\Entity(repositoryClass="AnimeDb\Bundle\AppBundle\Repository\Notice")
  * @IgnoreAnnotation("ORM")
  *
- * @package AnimeDb\Bundle\CatalogBundle\Entity
+ * @package AnimeDb\Bundle\AppBundle\Entity
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Notice
@@ -164,7 +164,7 @@ class Notice
      *
      * @param string $message
      *
-     * @return \AnimeDb\Bundle\CatalogBundle\Entity\Notice
+     * @return \AnimeDb\Bundle\AppBundle\Entity\Notice
      */
     public function setMessage($message)
     {
@@ -187,7 +187,7 @@ class Notice
      *
      * @param \DateTime $date_closed
      *
-     * @return \AnimeDb\Bundle\CatalogBundle\Entity\Notice
+     * @return \AnimeDb\Bundle\AppBundle\Entity\Notice
      */
     public function setDateClosed(\DateTime $date_closed)
     {
@@ -220,7 +220,7 @@ class Notice
      *
      * @param integer $lifetime
      *
-     * @return \AnimeDb\Bundle\CatalogBundle\Entity\Notice
+     * @return \AnimeDb\Bundle\AppBundle\Entity\Notice
      */
     public function setLifetime($lifetime)
     {
@@ -243,7 +243,7 @@ class Notice
      *
      * @param integer $status
      *
-     * @return \AnimeDb\Bundle\CatalogBundle\Entity\Notice
+     * @return \AnimeDb\Bundle\AppBundle\Entity\Notice
      */
     public function setStatus($status)
     {

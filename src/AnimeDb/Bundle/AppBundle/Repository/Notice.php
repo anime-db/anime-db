@@ -8,15 +8,15 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\CatalogBundle\Repository;
+namespace AnimeDb\Bundle\AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use AnimeDb\Bundle\CatalogBundle\Entity\Notice as NoticeEntity;
+use AnimeDb\Bundle\AppBundle\Entity\Notice as NoticeEntity;
 
 /**
  * Notice repository
  *
- * @package AnimeDb\Bundle\CatalogBundle\Repository
+ * @package AnimeDb\Bundle\AppBundle\Repository
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Notice extends EntityRepository
@@ -24,7 +24,7 @@ class Notice extends EntityRepository
     /**
      * Get first show notice
      *
-     * @return \AnimeDb\Bundle\CatalogBundle\Entity\Notice|null
+     * @return \AnimeDb\Bundle\AppBundle\Entity\Notice|null
      */
     public function getFirstShow()
     {
@@ -32,7 +32,7 @@ class Notice extends EntityRepository
             SELECT
                 n
             FROM
-                AnimeDbCatalogBundle:Notice n
+                AnimeDbAppBundle:Notice n
             WHERE
                 n.status != :closed AND
                 (n.date_closed IS NULL OR n.date_closed >= :time)
@@ -51,7 +51,7 @@ class Notice extends EntityRepository
      * @param integer $limit
      * @param integer|null $offset
      *
-     * @return array [\AnimeDb\Bundle\CatalogBundle\Entity\Notice]
+     * @return array [\AnimeDb\Bundle\AppBundle\Entity\Notice]
      */
     public function getList($limit, $offset = 0)
     {
@@ -59,7 +59,7 @@ class Notice extends EntityRepository
             SELECT
                 n
             FROM
-                AnimeDbCatalogBundle:Notice n
+                AnimeDbAppBundle:Notice n
             ORDER BY
                 n.date_created DESC
         ')
@@ -79,7 +79,7 @@ class Notice extends EntityRepository
             SELECT
                 COUNT(n)
             FROM
-                AnimeDbCatalogBundle:Notice n
+                AnimeDbAppBundle:Notice n
         ')->getSingleScalarResult();
     }
 }

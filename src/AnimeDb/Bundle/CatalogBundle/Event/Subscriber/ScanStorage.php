@@ -15,7 +15,7 @@ use AnimeDb\Bundle\CatalogBundle\Event\Storage\StoreEvents;
 use AnimeDb\Bundle\CatalogBundle\Event\Storage\DeleteItemFiles;
 use AnimeDb\Bundle\CatalogBundle\Event\Storage\DetectedNewFiles;
 use AnimeDb\Bundle\CatalogBundle\Event\Storage\UpdateItemFiles;
-use AnimeDb\Bundle\CatalogBundle\Entity\Notice;
+use AnimeDb\Bundle\AppBundle\Entity\Notice;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 use AnimeDb\Bundle\CatalogBundle\Plugin\Search\Chain as SearchChain;

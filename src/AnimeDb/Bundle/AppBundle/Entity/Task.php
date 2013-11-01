@@ -129,7 +129,7 @@ class Task
      *
      * @param string $command
      *
-     * @return \AnimeDb\Bundle\CatalogBundle\Entity\Task
+     * @return \AnimeDb\Bundle\AppBundle\Entity\Task
      */
     public function setCommand($command)
     {
@@ -162,7 +162,7 @@ class Task
      *
      * @param \DateTime $last_run
      *
-     * @return \AnimeDb\Bundle\CatalogBundle\Entity\Task
+     * @return \AnimeDb\Bundle\AppBundle\Entity\Task
      */
     public function setLastRun(\DateTime $last_run)
     {
@@ -185,7 +185,7 @@ class Task
      *
      * @param \DateTime $next_run
      *
-     * @return \AnimeDb\Bundle\CatalogBundle\Entity\Task
+     * @return \AnimeDb\Bundle\AppBundle\Entity\Task
      */
     public function setNextRun(\DateTime $next_run)
     {
@@ -208,7 +208,7 @@ class Task
      *
      * @param integer $interval
      *
-     * @return \AnimeDb\Bundle\CatalogBundle\Entity\Task
+     * @return \AnimeDb\Bundle\AppBundle\Entity\Task
      */
     public function setInterval($interval)
     {
@@ -223,7 +223,7 @@ class Task
      *
      * @param string|null $modify
      *
-     * @return \AnimeDb\Bundle\CatalogBundle\Entity\Task
+     * @return \AnimeDb\Bundle\AppBundle\Entity\Task
      */
     public function setModify($modify)
     {
@@ -246,7 +246,7 @@ class Task
      *
      * @param integer $status
      *
-     * @return \AnimeDb\Bundle\CatalogBundle\Entity\Task
+     * @return \AnimeDb\Bundle\AppBundle\Entity\Task
      */
     public function setStatus($status)
     {
