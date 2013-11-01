@@ -820,6 +820,16 @@ class Item
     }
 
     /**
+     * Get web path
+     *
+     * @return string
+     */
+    public function getCoverWebPath()
+    {
+        return $this->cover ? '/'.$this->getUploadDir().'/'.$this->cover : null;
+    }
+
+    /**
      * Set number of episodes
      *
      * @param string $episodes_number
