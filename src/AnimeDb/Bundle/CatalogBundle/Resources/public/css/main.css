@@ -179,14 +179,17 @@ h1.logo a span {
 	width: 5px;
 }
 #navigation ul,
-#navigation ul li {
+#navigation ul li,
+.f-refill ul,
+.f-refill ul li {
 	margin: 0;
 	padding: 0;
 	list-style: none;
 	font-size: 13px;
 	line-height: 38px;
 }
-#navigation ul {
+#navigation ul,
+.f-refill ul {
 	white-space: nowrap;
 	position: relative;
 }
@@ -194,7 +197,8 @@ h1.logo a span {
 	float: left;
 }
 #navigation a,
-#navigation span {
+#navigation span,
+.f-refill a {
 	color: #ccc;
 	display: block;
 	float: left;
@@ -225,7 +229,8 @@ h1.logo a span {
 #navigation li:hover span {
 	color: #fff;
 }
-#navigation ul ul {
+#navigation ul ul,
+.f-refill ul {
 	position: absolute;
 	top: 100%;
 	background: black;
@@ -238,7 +243,8 @@ h1.logo a span {
 	-webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5);
 	box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
-#navigation li:hover > ul {
+#navigation li:hover > ul,
+.f-refill:hover ul {
 	visibility: visible;
 	opacity: 1;
 	filter: alpha(Opacity=100);
@@ -1015,4 +1021,13 @@ h1.logo a span {
 .b-item-duplicate .b-form {
 	clear: both;
 	text-align: right;
+}
+
+.f-refill {
+	position: relative;
+	margin-left: 5px;
+}
+.f-refill > span {
+	color: #db3400;
+	font-weight: bold;
 }

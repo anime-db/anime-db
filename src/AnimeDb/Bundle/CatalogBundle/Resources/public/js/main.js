@@ -568,6 +568,33 @@ ConfirmDeleteModel.prototype = {
 };
 
 
+/**
+ * Form refill field
+ */
+FormRefill = function(button, item_id, controller) {
+	this.button = button;
+	this.item_id = item_id;
+	this.controller = controller;
+
+	var that = this;
+	this.button.click(function(e) {
+		that.refill(e);
+		return false;
+	});
+};
+FormRefill.prototype = {
+	refill: function(e) {
+		console.log(this.button.attr('href'));
+	}
+};
+FormRefillText = function(field) {
+	this.field = field;
+};
+FormRefillCollection = function(field) {
+	this.field = field;
+};
+
+
 // init after document load
 $(function(){
 
@@ -627,4 +654,28 @@ new TableCheckAllController($('.f-table-check-all'));
 $('.item-controls .delete, .storages-list .icon-storage-delete, .b-notice-list button[type=submit]').each(function(){
 	new ConfirmDeleteModel($(this));
 });
+
+// init form field refill 
+$('[data-type=refill]').each(function() {
+	var field = $(this);
+	if (field.data('prototype')) {
+		var controller = new FormRefillCollection(field);
+	} else {
+		var controller = new FormRefillText(field);
+	}
+
+	var label = $(field.closest('.f-row').find('label')[0]);
+	// add plugin links
+	var plugins = field.data('plugins');
+	var links = '';
+	for (var i in plugins) {
+		links += '<li><a href="'+plugins[i].link+'">'+plugins[i].title+'</a></li>';
+	}
+	label.append($('<span class="f-refill"><span>Refill</span><ul>'+links+'</ul></span>'));
+	// add plugin hendler
+	label.find('a').each(function() {
+		new FormRefill($(this), field.data('id'), controller);
+	});
+});
+
 });
