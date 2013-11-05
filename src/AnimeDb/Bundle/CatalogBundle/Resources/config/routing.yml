@@ -120,3 +120,15 @@ fill_filler:
 fill_search:
     pattern:  /search/{plugin}.html
     defaults: { _controller: AnimeDbCatalogBundle:Fill:search }
+
+fill_refiller:
+    pattern:  /refiller/{plugin}/{id}/{field}/fill.json
+    defaults: { _controller: AnimeDbCatalogBundle:Fill:refiller }
+    requirements:
+        id:  \d+
+
+fill_refiller_search:
+    pattern:  /refiller/{plugin}/{id}/{field}/search.json
+    defaults: { _controller: AnimeDbCatalogBundle:Fill:refillerSearch }
+    requirements:
+        id:  \d+

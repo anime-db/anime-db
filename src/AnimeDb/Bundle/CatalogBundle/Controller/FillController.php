@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AnimeDb\Bundle\CatalogBundle\Entity\Item;
 use AnimeDb\Bundle\CatalogBundle\Form\Entity\Item as ItemForm;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Fill
@@ -88,5 +89,54 @@ class FillController extends Controller
             'list'   => $list,
             'form'   => $form->createView()
         ]);
+    }
+
+    /**
+     * Refill item
+     *
+     * @param string $plugin
+     * @param string $field
+     * @param \AnimeDb\Bundle\CatalogBundle\Entity\Item $item
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function refillAction($plugin, $field, Item $item, Request $request)
+    {
+        /* @var $refiller \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Refiller */
+        if (!($refiller = $this->get('anime_db.plugin.refiller')->getPlugin($plugin))) {
+            throw $this->createNotFoundException('Plugin \''.$plugin.'\' is not found');
+        }
+        $search = $this->generateUrl(
+            'fill_refiller_search',
+            ['plugin' => $plugin, 'field' => $field, 'id' => $item->getId()]
+        );
+
+        if ($refiller->isCanRefillFromSource($item, $field)) {
+            return new JsonResponse(['item' => $refiller->refillFromSource($item, $field), 'search' => $search]);
+        }
+        return new JsonResponse(['item' => null, 'search' => $search]);
+    }
+
+    /**
+     * Refill search item
+     *
+     * @param string $plugin
+     * @param string $field
+     * @param \AnimeDb\Bundle\CatalogBundle\Entity\Item $item
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function refillSearchAction($plugin, $field, Item $item, Request $request)
+    {
+        /* @var $refiller \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Refiller */
+        if (!($refiller = $this->get('anime_db.plugin.refiller')->getPlugin($plugin))) {
+            throw $this->createNotFoundException('Plugin \''.$plugin.'\' is not found');
+        }
+        if ($refiller->isCanSearch($item, $field)) {
+            return new JsonResponse($refiller->search($item, $field));
+        }
+        return new JsonResponse([]);
     }
 }
