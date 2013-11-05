@@ -139,7 +139,22 @@ class FillController extends Controller
             throw $this->createNotFoundException('Plugin \''.$plugin.'\' is not found');
         }
         if ($refiller->isCanSearch($item, $field)) {
-            return new JsonResponse($refiller->search($item, $field));
+            $result = $refiller->search($item, $field);
+            /* @var $item \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Item */
+            foreach ($result as $key => $search_item) {
+                $result[$key] = [
+                    'name' => $search_item->getName(),
+                    'image' => $search_item->getImage(),
+                    'description' => $search_item->getDescription(),
+                    'link' => $this->generateUrl('fill_refiller', [
+                        'plugin' => $plugin,
+                        'field' => $field,
+                        'id' => $item->getId(),
+                        'data' => $search_item->getData()
+                    ])
+                ];
+            }
+            return new JsonResponse($result);
         }
         return new JsonResponse([]);
     }
