@@ -77,6 +77,17 @@ FormCollectionRow.prototype = {
 	}
 };
 
+var FormCollectionContainer = function() {
+	this.collections = [];
+};
+FormCollectionContainer.prototype = {
+	add: function(collection) {
+		this.collections[collection.collection.attr('id')] = collection;
+	},
+	get: function(name) {
+		return this.collections[name];
+	}
+};
 
 /**
  * Form image
@@ -590,8 +601,9 @@ FormRefill.prototype = {
 FormRefillText = function(field) {
 	this.field = field;
 };
-FormRefillCollection = function(field) {
+FormRefillCollection = function(field, collection) {
 	this.field = field;
+	this.collection = collection; // FormCollection
 };
 
 
@@ -600,6 +612,8 @@ $(function(){
 
 // init cap
 Cap.setElement($('#cap'));
+
+var coll_cont = new FormCollectionContainer();
 
 // init form collection
 $('.f-collection > div').each(function(){
@@ -623,12 +637,14 @@ $('.f-collection > div').each(function(){
 	});
 	// create collection
 	var collection = $(this);
-	new FormCollection(
-		collection,
-		collection.find('.bt-add-item'),
-		collection.find('.f-row'),
-		'.bt-remove-item',
-		handler
+	coll_cont.add(
+		new FormCollection(
+			collection,
+			collection.find('.bt-add-item'),
+			collection.find('.f-row'),
+			'.bt-remove-item',
+			handler
+		)
 	);
 });
 
@@ -659,7 +675,7 @@ $('.item-controls .delete, .storages-list .icon-storage-delete, .b-notice-list b
 $('[data-type=refill]').each(function() {
 	var field = $(this);
 	if (field.data('prototype')) {
-		var controller = new FormRefillCollection(field);
+		var controller = new FormRefillCollection(field, coll_cont.get(field.attr('id')));
 	} else {
 		var controller = new FormRefillText(field);
 	}
