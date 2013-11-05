@@ -18,6 +18,7 @@ use AnimeDb\Bundle\CatalogBundle\Form\Entity\Name;
 use AnimeDb\Bundle\CatalogBundle\Form\Entity\Source;
 use AnimeDb\Bundle\CatalogBundle\Form\Field\Image as ImageField;
 use AnimeDb\Bundle\CatalogBundle\Form\Field\LocalPath as LocalPathField;
+use AnimeDb\Bundle\CatalogBundle\Entity\Item as ItemEntity;
 
 /**
  * Item form
@@ -50,7 +51,13 @@ class Item extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $attr = $this->refillable ? ['data-type' => 'refill'] : [];
+        $attr = [];
+        if ($this->refillable && $options['data'] instanceof ItemEntity) {
+            $attr = [
+                'data-type' => 'refill',
+                'data-id' => $options['data']->getId(),
+            ];
+        }
         $builder
             ->add('name', null, [
                 'label' => 'Main name'
