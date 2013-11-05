@@ -65,7 +65,7 @@ abstract class Search extends Plugin
     public function buildMenu(ItemInterface $item)
     {
         $item->addChild($this->getTitle(), [
-            'route' => 'item_search',
+            'route' => 'fill_search',
             'routeParameters' => ['plugin' => $this->getName()]
         ]);
     }
@@ -113,7 +113,7 @@ abstract class Search extends Plugin
             return $this->filler->getLinkForFill($data);
         } else {
             return $this->router->generate(
-                'item_filler',
+                'fill_filler',
                 [
                     'plugin' => $this->getName(),
                     FillerForm::FORM_NAME => ['url' => $data]
@@ -131,7 +131,7 @@ abstract class Search extends Plugin
      */
     public function getLinkForSearch($name)
     {
-        return $this->router->generate('item_search', [
+        return $this->router->generate('fill_search', [
             'plugin' => $this->getName(),
             $this->getForm()->getName().'[name]' => $name
         ]);

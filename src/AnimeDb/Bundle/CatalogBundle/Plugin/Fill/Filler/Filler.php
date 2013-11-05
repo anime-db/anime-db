@@ -49,7 +49,7 @@ abstract class Filler extends Plugin
     public function buildMenu(ItemInterface $item)
     {
         $item->addChild($this->getTitle(), [
-            'route' => 'item_filler',
+            'route' => 'fill_filler',
             'routeParameters' => ['plugin' => $this->getName()]
         ]);
     }
@@ -90,7 +90,7 @@ abstract class Filler extends Plugin
         }
 
         return $this->router->generate(
-            'item_filler',
+            'fill_filler',
             [
                 'plugin' => $this->getName(),
                 $this->getForm()->getName() => ['url' => $data]
