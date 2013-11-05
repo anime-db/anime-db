@@ -28,11 +28,29 @@ use AnimeDb\Bundle\CatalogBundle\Form\Field\LocalPath as LocalPathField;
 class Item extends AbstractType
 {
     /**
+     * Can refill item
+     *
+     * @var boolean
+     */
+    private $refillable = false;
+
+    /**
+     * Construct
+     *
+     * @param boolean $refillable
+     */
+    public function __construct($refillable = false)
+    {
+        $this->refillable = $refillable;
+    }
+
+    /**
      * (non-PHPdoc)
      * @see Symfony\Component\Form.AbstractType::buildForm()
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $attr = $this->refillable ? ['data-type' => 'refill'] : [];
         $builder
             ->add('name', null, [
                 'label' => 'Main name'
@@ -46,6 +64,7 @@ class Item extends AbstractType
                 'options'      => [
                     'required' => false
                 ],
+                'attr' => $attr
             ])
             ->add('cover', new ImageField(), [
                 'required' => false
@@ -71,7 +90,8 @@ class Item extends AbstractType
             ->add('genres', 'entity', [
                 'class'    => 'AnimeDbCatalogBundle:Genre',
                 'property' => 'name',
-                'multiple' => true
+                'multiple' => true,
+                'attr' => $attr
             ])
             ->add('manufacturer', 'entity', [
                 'class'    => 'AnimeDbCatalogBundle:Country',
@@ -87,10 +107,12 @@ class Item extends AbstractType
                 'required' => false
             ])
             ->add('summary', null, [
-                'required' => false
+                'required' => false,
+                'attr' => $attr
             ])
             ->add('episodes', null, [
-                'required' => false
+                'required' => false,
+                'attr' => $attr
             ])
             ->add('file_info', null, [
                 'required' => false
