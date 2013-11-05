@@ -92,7 +92,7 @@ class ItemController extends Controller
     public function changeAction(Item $item, Request $request)
     {
         /* @var $form \Symfony\Component\Form\Form */
-        $form = $this->createForm(new ItemForm(true), $item);
+        $form = $this->createForm(new ItemForm($this->get('anime_db.plugin.refiller')), $item);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);

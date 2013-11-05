@@ -19,6 +19,8 @@ use AnimeDb\Bundle\CatalogBundle\Form\Entity\Source;
 use AnimeDb\Bundle\CatalogBundle\Form\Field\Image as ImageField;
 use AnimeDb\Bundle\CatalogBundle\Form\Field\LocalPath as LocalPathField;
 use AnimeDb\Bundle\CatalogBundle\Entity\Item as ItemEntity;
+use AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Chain;
+use AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Refiller;
 
 /**
  * Item form
@@ -29,20 +31,20 @@ use AnimeDb\Bundle\CatalogBundle\Entity\Item as ItemEntity;
 class Item extends AbstractType
 {
     /**
-     * Can refill item
+     * Refiller chain
      *
-     * @var boolean
+     * @var \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Chain
      */
-    private $refillable = false;
+    private $chain;
 
     /**
      * Construct
      *
-     * @param boolean $refillable
+     * @param \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Chain|null $chain
      */
-    public function __construct($refillable = false)
+    public function __construct(Chain $chain = null)
     {
-        $this->refillable = $refillable;
+        $this->chain = $chain;
     }
 
     /**
@@ -51,13 +53,6 @@ class Item extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $attr = [];
-        if ($this->refillable && $options['data'] instanceof ItemEntity) {
-            $attr = [
-                'data-type' => 'refill',
-                'data-id' => $options['data']->getId(),
-            ];
-        }
         $builder
             ->add('name', null, [
                 'label' => 'Main name'
@@ -71,7 +66,7 @@ class Item extends AbstractType
                 'options'      => [
                     'required' => false
                 ],
-                'attr' => $attr
+                'attr' => $this->getRefillAttr(Refiller::FIELD_NAMES, $options['data'])
             ])
             ->add('cover', new ImageField(), [
                 'required' => false
@@ -98,7 +93,7 @@ class Item extends AbstractType
                 'class'    => 'AnimeDbCatalogBundle:Genre',
                 'property' => 'name',
                 'multiple' => true,
-                'attr' => $attr
+                'attr' => $this->getRefillAttr(Refiller::FIELD_GENRES, $options['data'])
             ])
             ->add('manufacturer', 'entity', [
                 'class'    => 'AnimeDbCatalogBundle:Country',
@@ -115,11 +110,11 @@ class Item extends AbstractType
             ])
             ->add('summary', null, [
                 'required' => false,
-                'attr' => $attr
+                'attr' => $this->getRefillAttr(Refiller::FIELD_SUMMARY, $options['data'])
             ])
             ->add('episodes', null, [
                 'required' => false,
-                'attr' => $attr
+                'attr' => $this->getRefillAttr(Refiller::FIELD_EPISODES, $options['data'])
             ])
             ->add('file_info', null, [
                 'required' => false
@@ -191,5 +186,32 @@ class Item extends AbstractType
         } else {
             return 'C:\Documents and Settings\\'.get_current_user().'\\';
         }
+    }
+
+    /**
+     * Get the field refill attributes
+     *
+     * @param string $field
+     * @param \AnimeDb\Bundle\CatalogBundle\Entity\Item|null $item
+     *
+     * @return array
+     */
+    protected function getRefillAttr($field, ItemEntity $item = null)
+    {
+        if ($this->chain instanceof Chain && $item instanceof ItemEntity &&
+            ($plugins = $this->chain->getPluginsThatCanFillItem($item, $field))
+        ) {
+            $list = [];
+            /* @var $plugin \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Refiller */
+            foreach ($plugins as $plugin) {
+                $list[$plugin->getName()] = $plugin->getTitle();
+            }
+            return [
+                'data-type' => 'refill',
+                'data-id' => $item->getId(),
+                'data-plugins' => json_encode($list),
+            ];
+        }
+        return [];
     }
 }
