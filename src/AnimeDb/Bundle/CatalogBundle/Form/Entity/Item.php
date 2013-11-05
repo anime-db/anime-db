@@ -21,6 +21,7 @@ use AnimeDb\Bundle\CatalogBundle\Form\Field\LocalPath as LocalPathField;
 use AnimeDb\Bundle\CatalogBundle\Entity\Item as ItemEntity;
 use AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Chain;
 use AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Refiller;
+use Symfony\Component\Routing\Router;
 
 /**
  * Item form
@@ -38,13 +39,22 @@ class Item extends AbstractType
     private $chain;
 
     /**
+     * Router
+     *
+     * @var \Symfony\Component\Routing\Router
+     */
+    private $router;
+
+    /**
      * Construct
      *
      * @param \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Chain|null $chain
+     * @param \Symfony\Component\Routing\Router|null $router
      */
-    public function __construct(Chain $chain = null)
+    public function __construct(Chain $chain = null, Router $router = null)
     {
         $this->chain = $chain;
+        $this->router = $router;
     }
 
     /**
@@ -198,13 +208,20 @@ class Item extends AbstractType
      */
     protected function getRefillAttr($field, ItemEntity $item = null)
     {
-        if ($this->chain instanceof Chain && $item instanceof ItemEntity &&
+        if ($this->chain instanceof Chain &&
+            $this->router instanceof Router &&
+            $item instanceof ItemEntity &&
             ($plugins = $this->chain->getPluginsThatCanFillItem($item, $field))
         ) {
             $list = [];
             /* @var $plugin \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Refiller */
             foreach ($plugins as $plugin) {
-                $list[$plugin->getName()] = $plugin->getTitle();
+                $list[] = [
+                    'title' => $plugin->getTitle(),
+                    'link' => $this->router->generate(
+                        'fill_refiller',
+                        ['plugin' => $plugin->getName(), 'field' => $field, 'id' => $item->getId()])
+                ];
             }
             return [
                 'data-type' => 'refill',
