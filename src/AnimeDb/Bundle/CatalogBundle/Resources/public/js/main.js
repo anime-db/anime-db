@@ -30,13 +30,16 @@ var FormCollection = function(collection, button_add, rows, remove_selector, han
 	var that = this;
 	this.collection = collection;
 	this.index = rows.length;
-	this.rows = rows;
+	this.rows = [];
 	this.remove_selector = remove_selector;
 	this.button_add = button_add.click(function() {
 		that.add();
 	});
 	this.row_prototype = collection.data('prototype');
 	this.handler = handler;
+	for (var i = 0; i < rows.length; i++) {
+		this.rows.push(new FormCollectionRow($(rows[i]), this));
+	}
 };
 FormCollection.prototype = {
 	add: function() {
@@ -68,8 +71,8 @@ FormCollectionRow.prototype = {
 	remove: function() {
 		this.row.remove();
 		// remove row in collection
-		for (var i in this.collection.rows) {
-			if (this.collection.rows[i] === row) {
+		for (var i = 0; i < this.collection.rows.length; i++) {
+			if (this.collection.rows[i] === this) {
 				delete this.collection.rows[i];
 				break;
 			}
@@ -599,6 +602,9 @@ FormRefill.prototype = {
 	}
 };
 FormRefillText = function(field) {
+	this.field = field;
+};
+FormRefillSelect = function(field) {
 	this.field = field;
 };
 FormRefillCollection = function(field, collection) {
