@@ -22,6 +22,7 @@ use AnimeDb\Bundle\CatalogBundle\Entity\Item as ItemEntity;
 use AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Chain;
 use AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Refiller;
 use Symfony\Component\Routing\Router;
+use Symfony\Component\Templating\EngineInterface as TemplatingInterface;
 
 /**
  * Item form
@@ -46,15 +47,40 @@ class Item extends AbstractType
     private $router;
 
     /**
-     * Construct
+     * Templating
      *
-     * @param \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Chain|null $chain
-     * @param \Symfony\Component\Routing\Router|null $router
+     * @var \Symfony\Component\Templating\EngineInterface
      */
-    public function __construct(Chain $chain = null, Router $router = null)
+    private $templating;
+
+    /**
+     * Set refiller chain
+     *
+     * @param \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Chain $chain
+     */
+    public function setRefillerChain(Chain $chain)
     {
         $this->chain = $chain;
+    }
+
+    /**
+     * Set router
+     *
+     * @param \Symfony\Component\Routing\Router $router
+     */
+    public function setRouter(Router $router)
+    {
         $this->router = $router;
+    }
+
+    /**
+     * Set templating
+     *
+     * @param \Symfony\Component\Templating\EngineInterface $templating
+     */
+    public function setTemplating(TemplatingInterface $templating)
+    {
+        $this->templating = $templating;
     }
 
     /**
@@ -208,9 +234,8 @@ class Item extends AbstractType
      */
     protected function getRefillAttr($field, ItemEntity $item = null)
     {
-        if ($this->chain instanceof Chain &&
-            $this->router instanceof Router &&
-            $item instanceof ItemEntity &&
+        // item exists and can be refilled
+        if ($item instanceof ItemEntity && $item->getId() &&
             ($plugins = $this->chain->getPluginsThatCanFillItem($item, $field))
         ) {
             $list = [];

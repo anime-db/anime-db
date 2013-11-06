@@ -15,7 +15,6 @@ use AnimeDb\Bundle\CatalogBundle\Entity\Item;
 use AnimeDb\Bundle\CatalogBundle\Entity\Name;
 use AnimeDb\Bundle\CatalogBundle\Entity\Image;
 use AnimeDb\Bundle\CatalogBundle\Entity\Source;
-use AnimeDb\Bundle\CatalogBundle\Form\Entity\Item as ItemForm;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -57,7 +56,7 @@ class ItemController extends Controller
         $item = new Item();
 
         /* @var $form \Symfony\Component\Form\Form */
-        $form = $this->createForm(new ItemForm(), $item);
+        $form = $this->createForm('anime_db_catalog_entity_item', $item);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
@@ -92,10 +91,7 @@ class ItemController extends Controller
     public function changeAction(Item $item, Request $request)
     {
         /* @var $form \Symfony\Component\Form\Form */
-        $form = $this->createForm(new ItemForm(
-            $this->get('anime_db.plugin.refiller'),
-            $this->container->get('router')
-        ), $item);
+        $form = $this->createForm('anime_db_catalog_entity_item', $item);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
