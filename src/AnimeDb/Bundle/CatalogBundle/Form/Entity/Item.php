@@ -216,13 +216,24 @@ class Item extends AbstractType
             $list = [];
             /* @var $plugin \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Refiller */
             foreach ($plugins as $plugin) {
+                if ($can_refill = $plugin->isCanRefill($item, $field)) {
+                    $link = $this->router->generate(
+                        'refiller_source',
+                        ['plugin' => $plugin->getName(), 'field' => $field, 'id' => $item->getId()]
+                    );
+                } else { // need search
+                    $link = $this->router->generate(
+                        'refiller_search',
+                        ['plugin' => $plugin->getName(), 'field' => $field, 'id' => $item->getId()]
+                    );
+                }
                 $list[] = [
                     'title' => $plugin->getTitle(),
-                    'link' => $this->router->generate(
-                        'fill_refiller',
-                        ['plugin' => $plugin->getName(), 'field' => $field, 'id' => $item->getId()])
+                    'can_refill' => $can_refill,
+                    'link' => $link
                 ];
             }
+
             return [
                 'data-type' => 'refill',
                 'data-id' => $item->getId(),
