@@ -226,7 +226,7 @@ class Item extends AbstractType
                 $plugins[$key] = [
                     'name' => $plugin->getName(),
                     'title' => $plugin->getTitle(),
-                    'can_refill' => $plugin->isCanRefill($item, $field)
+                    'can_refill' => $plugin->isCanRefill($item, $field) // can refill or can search
                 ];
             }
 

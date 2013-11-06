@@ -689,7 +689,7 @@ $('[data-type=refill]').each(function() {
 	// add plugin links and hendler
 	$(field.closest('.f-row').find('label')[0])
 		.append($(field.data('plugins')))
-		.find('a').each(function() {
+		.find('a[data-can-refill=1]').each(function() {
 			new FormRefill($(this), field.data('id'), controller);
 		});
 });
