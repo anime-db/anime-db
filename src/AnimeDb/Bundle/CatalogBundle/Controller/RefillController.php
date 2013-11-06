@@ -14,6 +14,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AnimeDb\Bundle\CatalogBundle\Entity\Item;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Refiller;
+use AnimeDb\Bundle\CatalogBundle\Form\Plugin\Refiller\Episodes as EpisodesForm;
+use AnimeDb\Bundle\CatalogBundle\Form\Plugin\Refiller\Gengres as GengresForm;
+use AnimeDb\Bundle\CatalogBundle\Form\Plugin\Refiller\Names as NamesForm;
+use AnimeDb\Bundle\CatalogBundle\Form\Plugin\Refiller\Summary as SummaryForm;
 
 /**
  * Refill
@@ -39,17 +43,12 @@ class RefillController extends Controller
             throw $this->createNotFoundException('Plugin \''.$plugin.'\' is not found');
         }
 
-        $value = null;
-        if ($refiller->isCanRefill($item, $field)) {
-            $value = $this->getFieldValue($refiller, $item, $field);
-        }
+        /* @var $form \Symfony\Component\Form\Form */
+        $form = $this->createForm($this->getForm($field), $refiller->refill($item, $field));
 
-        return new JsonResponse([
-            'value' => $value,
-            'search' => $this->generateUrl(
-                'refiller_search',
-                ['plugin' => $plugin, 'field' => $field, 'id' => $item->getId()]
-            )
+        return $this->render('AnimeDbCatalogBundle:Refill:refill.html.twig', [
+            'field' => $field,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -108,38 +107,25 @@ class RefillController extends Controller
     }
 
     /**
-     * Get field value
+     * Get form for field
      *
-     * @param \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Refiller $plugin
-     * @param \AnimeDb\Bundle\CatalogBundle\Entity\Item $item
      * @param string $field
      *
-     * @return mixed
+     * @return \Symfony\Component\Form\AbstractType|null
      */
-    protected function getFieldValue(Refiller $plugin, Item $item, $field)
+    protected function getForm($field)
     {
-        $new_item = $plugin->refill($item, $field);
         switch ($field) {
             case Refiller::FIELD_EPISODES:
-                return $new_item->getEpisodes();
+                return new EpisodesForm();
             case Refiller::FIELD_GENRES:
-                $genres = [];
-                /* @var $genre \AnimeDb\Bundle\CatalogBundle\Entity\Genre */
-                foreach ($new_item->getGenres() as $genre) {
-                    $genres[$genre->getId()] = $genre->getName();
-                }
-                return $genres;
+                return new GengresForm();
             case Refiller::FIELD_NAMES:
-                $names = [];
-                /* @var $name \AnimeDb\Bundle\CatalogBundle\Entity\Name */
-                foreach ($new_item->getNames() as $name) {
-                    $names[$name->getId()] = $name->getName();
-                }
-                return $names;
+                return new NamesForm();
             case Refiller::FIELD_SUMMARY:
-                return $new_item->getSummary();
+                return new SummaryForm();
             default:
-                return null;
+                throw $this->createNotFoundException('Field \''.$field.'\' is not supported');
         }
     }
 }

@@ -598,7 +598,24 @@ FormRefill = function(button, item_id, controller) {
 };
 FormRefill.prototype = {
 	refill: function(e) {
+		var name = 'form-refill-' + this.controller.field.attr('id');
 		console.log(this.button.attr('href'));
+		console.log(name);
+		// create popup
+		var that = this;
+		if (popup = PopupList.get(name)) {
+			this.init_popup(popup);
+		} else {
+			PopupList.load(name, {
+				url: this.button.attr('href'),
+				success: function(popup) {
+					that.init_popup(popup);
+				}
+			});
+		}
+	},
+	init_popup: function (popup) {
+		console.log(popup)
 	}
 };
 FormRefillText = function(field) {
