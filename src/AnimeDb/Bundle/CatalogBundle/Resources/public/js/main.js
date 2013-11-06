@@ -686,18 +686,12 @@ $('[data-type=refill]').each(function() {
 		var controller = new FormRefillText(field);
 	}
 
-	var label = $(field.closest('.f-row').find('label')[0]);
-	// add plugin links
-	var plugins = field.data('plugins');
-	var links = '';
-	for (var i in plugins) {
-		links += '<li><a href="'+plugins[i].link+'">'+plugins[i].title+'</a></li>';
-	}
-	label.append($('<span class="f-refill"><span>Refill</span><ul>'+links+'</ul></span>'));
-	// add plugin hendler
-	label.find('a').each(function() {
-		new FormRefill($(this), field.data('id'), controller);
-	});
+	// add plugin links and hendler
+	$(field.closest('.f-row').find('label')[0])
+		.append($(field.data('plugins')))
+		.find('a').each(function() {
+			new FormRefill($(this), field.data('id'), controller);
+		});
 });
 
 });

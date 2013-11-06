@@ -558,6 +558,10 @@
                 <source>No</source>
                 <target>Нет</target>
             </trans-unit>
+            <trans-unit id="148">
+                <source>Refill</source>
+                <target>Перезаполнить</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

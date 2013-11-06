@@ -40,13 +40,6 @@ class Item extends AbstractType
     private $chain;
 
     /**
-     * Router
-     *
-     * @var \Symfony\Component\Routing\Router
-     */
-    private $router;
-
-    /**
      * Templating
      *
      * @var \Symfony\Component\Templating\EngineInterface
@@ -61,16 +54,6 @@ class Item extends AbstractType
     public function setRefillerChain(Chain $chain)
     {
         $this->chain = $chain;
-    }
-
-    /**
-     * Set router
-     *
-     * @param \Symfony\Component\Routing\Router $router
-     */
-    public function setRouter(Router $router)
-    {
-        $this->router = $router;
     }
 
     /**
@@ -238,31 +221,23 @@ class Item extends AbstractType
         if ($item instanceof ItemEntity && $item->getId() &&
             ($plugins = $this->chain->getPluginsThatCanFillItem($item, $field))
         ) {
-            $list = [];
             /* @var $plugin \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Refiller */
-            foreach ($plugins as $plugin) {
-                if ($can_refill = $plugin->isCanRefill($item, $field)) {
-                    $link = $this->router->generate(
-                        'refiller_refill',
-                        ['plugin' => $plugin->getName(), 'field' => $field, 'id' => $item->getId()]
-                    );
-                } else { // need search
-                    $link = $this->router->generate(
-                        'refiller_search',
-                        ['plugin' => $plugin->getName(), 'field' => $field, 'id' => $item->getId()]
-                    );
-                }
-                $list[] = [
+            foreach ($plugins as $key => $plugin) {
+                $plugins[$key] = [
+                    'name' => $plugin->getName(),
                     'title' => $plugin->getTitle(),
-                    'can_refill' => $can_refill,
-                    'link' => $link
+                    'can_refill' => $plugin->isCanRefill($item, $field)
                 ];
             }
 
             return [
                 'data-type' => 'refill',
                 'data-id' => $item->getId(),
-                'data-plugins' => json_encode($list),
+                'data-plugins' => $this->templating->render('AnimeDbCatalogBundle:Form:refillers.html.twig', [
+                    'item' => $item,
+                    'field' => $field,
+                    'plugins' => $plugins
+                ])
             ];
         }
         return [];

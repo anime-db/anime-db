@@ -122,7 +122,7 @@ fill_search:
     defaults: { _controller: AnimeDbCatalogBundle:Fill:search }
 
 refiller_refill:
-    pattern:  /refiller/{plugin}/{id}/{field}/source.json
+    pattern:  /refiller/{plugin}/{id}/{field}/refill.html
     defaults: { _controller: AnimeDbCatalogBundle:Refill:refill }
     requirements:
         id:  \d+
