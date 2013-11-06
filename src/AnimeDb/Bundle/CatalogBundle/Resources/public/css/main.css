@@ -1031,3 +1031,36 @@ h1.logo a span {
 	color: #db3400;
 	font-weight: bold;
 }
+
+#f-refill-popup-summary,
+#f-refill-popup-episodes {
+	width: 510px;
+	margin-top: -144px;
+	margin-left: -255px;
+	background-position: -620px -144px;
+}
+#f-refill-popup-names {
+	width: 333px;
+	max-height: 300px;
+	margin-top: -150px;
+	margin-left: -166px;
+	background-position: -784px -144px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+#f-refill-popup-names .b-refill-form {
+	width: 330px;
+}
+#f-refill-popup-names .f-collection {
+	margin: 0;
+}
+#f-refill-popup-names .f-fields {
+	width: 310px;
+}
+#f-refill-popup-genres {
+	width: 150px;
+	height: 116px;
+	margin-top: -59px;
+	margin-left: -75px;
+	text-align: center;
+}
