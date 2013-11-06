@@ -12,7 +12,6 @@ namespace AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller;
 
 use AnimeDb\Bundle\CatalogBundle\Plugin\Plugin;
 use AnimeDb\Bundle\CatalogBundle\Entity\Item;
-use Knp\Menu\ItemInterface;
 
 /**
  * Plugin refiller
@@ -51,24 +50,24 @@ abstract class Refiller extends Plugin
     const FIELD_SUMMARY = 'summary';
 
     /**
-     * Is can refill item from source
+     * Is can refill item
      *
      * @param \AnimeDb\Bundle\CatalogBundle\Entity\Item $item
      * @param string $field
      *
      * @return boolean
      */
-    abstract public function isCanRefillFromSource(Item $item, $field);
+    abstract public function isCanRefill(Item $item, $field);
 
     /**
-     * Refill item field from source
+     * Refill item field
      *
      * @param \AnimeDb\Bundle\CatalogBundle\Entity\Item $item
      * @param string $field
      *
      * @return \AnimeDb\Bundle\CatalogBundle\Entity\Item
      */
-    abstract public function refillFromSource(Item $item, $field);
+    abstract public function refill(Item $item, $field);
 
     /**
      * Is can search
@@ -100,19 +99,4 @@ abstract class Refiller extends Plugin
      * @return \AnimeDb\Bundle\CatalogBundle\Entity\Item
      */
     abstract public function refillFromSearchResult(Item $item, $field, array $data);
-
-    /**
-     * Build menu for plugin
-     *
-     * @param \Knp\Menu\ItemInterface $item
-     *
-     * @return \Knp\Menu\ItemInterface
-     */
-    public function buildMenu(ItemInterface $item)
-    {
-        $item->addChild($this->getTitle(), [
-            'route' => 'item_refiller',
-            'routeParameters' => ['plugin' => $this->getName()]
-        ]);
-    }
 }

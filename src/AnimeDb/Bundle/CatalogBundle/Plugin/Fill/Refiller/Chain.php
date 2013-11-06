@@ -33,7 +33,7 @@ class Chain extends ChainPlugin
         $plugins = [];
         /* @var $plugin \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Refiller */
         foreach ($this->plugins as $plugin) {
-            if ($plugin->isCanRefillFromSource($item, $field) || $plugin->isCanSearch($item, $field)) {
+            if ($plugin->isCanRefill($item, $field) || $plugin->isCanSearch($item, $field)) {
                 $plugins[] = $plugin;
             }
         }
