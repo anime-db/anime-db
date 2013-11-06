@@ -24,7 +24,7 @@ use AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Refiller;
 class RefillController extends Controller
 {
     /**
-     * Refill item from source
+     * Refill item
      *
      * @param string $plugin
      * @param string $field
@@ -32,7 +32,7 @@ class RefillController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function sourceAction($plugin, $field, Item $item)
+    public function refillAction($plugin, $field, Item $item)
     {
         /* @var $refiller \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Refiller */
         if (!($refiller = $this->get('anime_db.plugin.refiller')->getPlugin($plugin))) {

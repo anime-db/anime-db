@@ -218,7 +218,7 @@ class Item extends AbstractType
             foreach ($plugins as $plugin) {
                 if ($can_refill = $plugin->isCanRefill($item, $field)) {
                     $link = $this->router->generate(
-                        'refiller_source',
+                        'refiller_refill',
                         ['plugin' => $plugin->getName(), 'field' => $field, 'id' => $item->getId()]
                     );
                 } else { // need search
