@@ -118,7 +118,7 @@ class RefillController extends Controller
      */
     protected function getFieldValue(Refiller $plugin, Item $item, $field)
     {
-        $new_item = $plugin->refillFromSource($item, $field);
+        $new_item = $plugin->refill($item, $field);
         switch ($field) {
             case Refiller::FIELD_EPISODES:
                 return $new_item->getEpisodes();
