@@ -128,13 +128,13 @@ refiller_refill:
         id:  \d+
 
 refiller_search:
-    pattern:  /refiller/{plugin}/{id}/{field}/search.json
+    pattern:  /refiller/{plugin}/{id}/{field}/search.html
     defaults: { _controller: AnimeDbCatalogBundle:Refill:search }
     requirements:
         id:  \d+
 
 refiller_search_fill:
-    pattern:  /refiller/{plugin}/{id}/{field}/searchFill.json
-    defaults: { _controller: AnimeDbCatalogBundle:Refill:searchFill }
+    pattern:  /refiller/{plugin}/{id}/{field}/from_search.html
+    defaults: { _controller: AnimeDbCatalogBundle:Refill:fillFromSearch }
     requirements:
         id:  \d+

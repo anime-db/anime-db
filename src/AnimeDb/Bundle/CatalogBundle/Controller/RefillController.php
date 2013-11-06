@@ -90,7 +90,7 @@ class RefillController extends Controller
     }
 
     /**
-     * Refill from search result
+     * Refill item from search result
      *
      * @param string $plugin
      * @param string $field
@@ -98,7 +98,7 @@ class RefillController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function searchFillAction($plugin, $field, Item $item)
+    public function refillFromSearchAction($plugin, $field, Item $item)
     {
         /* @var $refiller \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Refiller */
         if (!($refiller = $this->get('anime_db.plugin.refiller')->getPlugin($plugin))) {
