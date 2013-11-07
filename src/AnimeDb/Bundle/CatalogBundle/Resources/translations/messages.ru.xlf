@@ -562,6 +562,10 @@
                 <source>Refill</source>
                 <target>Перезаполнить</target>
             </trans-unit>
+            <trans-unit id="149">
+                <source>Fill this field from the source</source>
+                <target>Заполнить это поле из источника</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
