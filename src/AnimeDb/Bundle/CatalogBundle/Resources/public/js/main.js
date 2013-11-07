@@ -635,10 +635,11 @@ ConfirmDeleteModel.prototype = {
 /**
  * Form refill field
  */
-FormRefill = function(button, item_id, controller) {
+var FormRefill = function(button, item_id, controller, handler) {
 	this.button = button;
 	this.item_id = item_id;
 	this.controller = controller;
+	this.handler = handler;
 
 	var that = this;
 	this.button.click(function(e) {
@@ -663,23 +664,20 @@ FormRefill.prototype = {
 		}
 	},
 	init_popup: function (popup) {
+		this.handler.notify(popup.body);
 	}
 };
-FormRefillText = function(field) {
+var FormRefillText = function(field) {
 	this.field = field;
 };
-FormRefillSelect = function(field) {
+var FormRefillSelect = function(field) {
 	this.field = field;
 };
-FormRefillCollection = function(field, collection) {
+var FormRefillCollection = function(field, collection) {
 	this.field = field;
 	this.collection = collection; // FormCollection
 };
 
-
-var FormContainer = {
-	
-};
 
 // init after document load
 $(function(){
@@ -754,7 +752,7 @@ $('[data-type=refill]').each(function() {
 	$(field.closest('.f-row').find('label')[0])
 		.append($(field.data('plugins')))
 		.find('a[data-can-refill=1]').each(function() {
-			new FormRefill($(this), field.data('id'), controller);
+			new FormRefill($(this), field.data('id'), controller, FormContainer);
 		});
 });
 

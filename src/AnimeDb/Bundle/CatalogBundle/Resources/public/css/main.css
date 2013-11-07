@@ -1060,6 +1060,9 @@ h1.logo a span {
 	overflow-x: hidden;
 	overflow-y: auto;
 }
+#form-refill-anime_db_catalog_entity_item_names .content {
+	width: 333px;
+}
 #form-refill-anime_db_catalog_entity_item_names .b-refill-form {
 	width: 330px;
 }
