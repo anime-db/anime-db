@@ -665,17 +665,41 @@ FormRefill.prototype = {
 	},
 	init_popup: function (popup) {
 		this.handler.notify(popup.body);
+		var that = this;
+		popup.body.find('form').submit(function() {
+			that.update(popup);
+			return false;
+		});
+	},
+	update: function(popup) {
+		this.controller.update(popup);
+		popup.hide();
 	}
 };
 var FormRefillText = function(field) {
 	this.field = field;
 };
+FormRefillText.prototype = {
+	update: function(popup) {
+		// TODO do update field data
+	}
+};
 var FormRefillSelect = function(field) {
 	this.field = field;
+};
+FormRefillSelect.prototype = {
+	update: function(popup) {
+		// TODO do update field data
+	}
 };
 var FormRefillCollection = function(field, collection) {
 	this.field = field;
 	this.collection = collection; // FormCollection
+};
+FormRefillSelect.prototype = {
+	update: function(popup) {
+		// TODO do update field data
+	}
 };
 
 
