@@ -599,8 +599,6 @@ FormRefill = function(button, item_id, controller) {
 FormRefill.prototype = {
 	refill: function(e) {
 		var name = 'form-refill-' + this.controller.field.attr('id');
-		console.log(this.button.attr('href'));
-		console.log(name);
 		// create popup
 		var that = this;
 		if (popup = PopupList.get(name)) {
@@ -615,7 +613,7 @@ FormRefill.prototype = {
 		}
 	},
 	init_popup: function (popup) {
-		console.log(popup)
+		popup.show();
 	}
 };
 FormRefillText = function(field) {
