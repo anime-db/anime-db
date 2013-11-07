@@ -3,8 +3,10 @@ var BlockLoadHandler = function() {
 };
 BlockLoadHandler.prototype = {
 	registr: function(observer) {
-		if (typeof(observer.update) != 'undefined') {
+		if (typeof(observer.update) == 'function') {
 			this.observers.push(observer);
+		} else if (typeof(observer) == 'function') {
+			this.observers.push({update:observer});
 		}
 	},
 	unregistr: function(observer) {
@@ -431,60 +433,58 @@ var PopupList = {
 			}
 		}, options||{});
 
-		if (typeof(this.list[name]) != 'undefined') {
-			options.success(this.list[name]);
+		if (typeof(PopupList.list[name]) != 'undefined') {
+			options.success(PopupList.list[name]);
 		} else {
 			// init popup on success load popup content
-			var that = this;
 			var success = options.success;
 			options.success = function(data) {
-				that.list[name] = new Popup($(data));
-				success(that.list[name]);
-				$('body').append(that.list[name].body);
+				PopupList.list[name] = new Popup($(data));
+				success(PopupList.list[name]);
+				$('body').append(PopupList.list[name].body);
 			}
 			// load
 			$.ajax(options);
 		}
 	},
 	get: function(name) {
-		if (typeof(this.list[name]) != 'undefined') {
-			return this.list[name];
+		if (typeof(PopupList.list[name]) != 'undefined') {
+			return PopupList.list[name];
 		} else {
 			return null;
 		}
 	},
 	lazyload: function(name, options) {
 		var timeout = 0;
-		if (this.popup_loader == null) {
-			this.popup_loader = new Popup($('#b-lazyload-popup'));
+		if (PopupList.popup_loader == null) {
+			PopupList.popup_loader = new Popup($('#b-lazyload-popup'));
 			timeout = 50;
 		}
 
-		var that = this;
 		options = $.extend({
 			success: function() {},
 			error: function(x) {
 				alert('Failed to get the data');
-				that.popup_loader.hide();
+				PopupList.popup_loader.hide();
 			}
 		}, options||{});
 
-		if (typeof(this.list[name]) != 'undefined') {
-			options.success(this.list[name]);
+		if (typeof(PopupList.list[name]) != 'undefined') {
+			options.success(PopupList.list[name]);
 		} else {
-			this.popup_loader.show();
+			PopupList.popup_loader.show();
 
 			// init popup on success load popup content
 			var success = options.success;
 			options.success = function(data) {
-				var popup = new Popup(that.popup_loader.body.clone().hide());
+				var popup = new Popup(PopupList.popup_loader.body.clone().hide());
 				popup.body.attr('id', name).find('.content').append(data);
 				$('body').append(popup.body);
 
-				that.list[name] = popup;
+				PopupList.list[name] = popup;
 				success(popup);
 				// show new popup
-				that.popup_loader.hide();
+				PopupList.popup_loader.hide();
 				popup.show();
 			}
 
@@ -677,64 +677,64 @@ FormRefillCollection = function(field, collection) {
 };
 
 
+var FormContainer = {
+	
+};
+
 // init after document load
 $(function(){
 
 // init cap
 Cap.setElement($('#cap'));
 
-var coll_cont = new FormCollectionContainer();
+var CollectionContainer = new FormCollectionContainer();
 
-// init form collection
-$('.f-collection > div').each(function(){
-	// init handler for new row
-	var handler = new BlockLoadHandler();
-	// form image
-	handler.registr({
-		update: function(block) {
-			block.find('.f-image').each(function(){
-				new FormImageController($(this));
-			});
-		}
+var FormContainer = new BlockLoadHandler();
+
+// registr form collection
+FormContainer.registr(function(block) {
+	block.find('.f-collection > div').each(function() {
+		var collection = $(this);
+		CollectionContainer.add(
+			new FormCollection(
+				collection,
+				collection.find('.bt-add-item'),
+				collection.find('.f-row'),
+				'.bt-remove-item',
+				FormContainer
+			)
+		);
 	});
-	// form local path
-	handler.registr({
-		update: function(block) {
-			block.find('.f-local-path').each(function(){
-				new FormLocalPathController($(this));
-			});
-		}
-	});
-	// create collection
-	var collection = $(this);
-	coll_cont.add(
-		new FormCollection(
-			collection,
-			collection.find('.bt-add-item'),
-			collection.find('.f-row'),
-			'.bt-remove-item',
-			handler
-		)
-	);
 });
 
-// init form image
-$('.f-image').each(function(){
-	new FormImageController($(this));
+// registr form image
+FormContainer.registr(function(block) {
+	block.find('.f-image').each(function() {
+		new FormImageController($(this));
+	});
 });
-// init form local path
-$('.f-local-path').each(function(){
-	new FormLocalPathController($(this));
+// registr form local path
+FormContainer.registr(function(block) {
+	block.find('.f-local-path').each(function() {
+		new FormLocalPathController($(this));
+	});
 });
+
+// registr form check all
+FormContainer.registr(function(block) {
+	new TableCheckAllController(block.find('.f-table-check-all'));
+});
+
+
+// apply form for document
+FormContainer.notify($(document));
+
 
 // init notice container
 var container = $('#notice-container');
 if (container.size() && (from = container.data('from'))) {
 	new NoticeContainerModel(container, from);
 }
-
-// check all
-new TableCheckAllController($('.f-table-check-all'));
 
 // confirm delete
 $('.item-controls .delete, .storages-list .icon-storage-delete, .b-notice-list button[type=submit]').each(function(){
@@ -745,7 +745,7 @@ $('.item-controls .delete, .storages-list .icon-storage-delete, .b-notice-list b
 $('[data-type=refill]').each(function() {
 	var field = $(this);
 	if (field.data('prototype')) {
-		var controller = new FormRefillCollection(field, coll_cont.get(field.attr('id')));
+		var controller = new FormRefillCollection(field, CollectionContainer.get(field.attr('id')));
 	} else {
 		var controller = new FormRefillText(field);
 	}
