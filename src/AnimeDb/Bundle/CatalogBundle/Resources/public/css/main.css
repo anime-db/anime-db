@@ -744,11 +744,12 @@ h1.logo a span {
 	margin-left: -280px;
 	width: 560px;
 	padding: 20px 25px 15px 25px;
-	background: #fff url(../images/bg-home-right.gif) no-repeat -570px -144px;
+	background: #fff url(../images/bg-popup.gif) no-repeat top right;
 	border: 3px #ff9f0b solid;
 	-moz-box-shadow: 0 0 20px rgba(0,0,0,0.5);
 	-webkit-box-shadow: 0 0 20px rgba(0,0,0,0.5);
 	box-shadow: 0 0 20px rgba(0,0,0,0.5);
+	overflow: auto;
 }
 .popup .bt-popup-close {
 	position: absolute;
@@ -767,6 +768,21 @@ h1.logo a span {
 .popup .bt-popup-close:hover {
 	background-position: 0 0;
 }
+.popup .content {
+	background: none;
+	min-height: 100%;
+	padding: 0;
+}
+#b-lazyload-popup {
+	display: none;
+	height: 70px;
+	width: 70px;
+	margin-top: -38px;
+	margin-left: -38px;
+}
+#b-lazyload-popup .content {
+	background: url(../images/loader-popup.gif) no-repeat center center;
+}
 
 /**
  * Form image popup
@@ -775,7 +791,6 @@ h1.logo a span {
 	width: 380px;
 	margin-top: -73px;
 	margin-left: -218px;
-	background-position: -750px -144px;
 }
 #f-image-popup label {
 	width: 120px;
@@ -833,7 +848,6 @@ h1.logo a span {
 #f-path-popup {
 	margin-top: -141px;
 	width: 400px;
-	background-position: -731px -144px;
 }
 #f-path-popup .folders {
 	height: 182px;
@@ -1032,32 +1046,30 @@ h1.logo a span {
 	font-weight: bold;
 }
 
-#f-refill-popup-summary,
-#f-refill-popup-episodes {
+#form-refill-anime_db_catalog_entity_item_summary,
+#form-refill-anime_db_catalog_entity_item_episodes {
 	width: 510px;
 	margin-top: -144px;
 	margin-left: -255px;
-	background-position: -620px -144px;
 }
-#f-refill-popup-names {
+#form-refill-anime_db_catalog_entity_item_names {
 	width: 333px;
 	max-height: 300px;
 	margin-top: -150px;
 	margin-left: -166px;
-	background-position: -784px -144px;
 	overflow-x: hidden;
 	overflow-y: auto;
 }
-#f-refill-popup-names .b-refill-form {
+#form-refill-anime_db_catalog_entity_item_names .b-refill-form {
 	width: 330px;
 }
-#f-refill-popup-names .f-collection {
+#form-refill-anime_db_catalog_entity_item_names .f-collection {
 	margin: 0;
 }
-#f-refill-popup-names .f-fields {
+#form-refill-anime_db_catalog_entity_item_names .f-fields {
 	width: 310px;
 }
-#f-refill-popup-genres {
+#form-refill-anime_db_catalog_entity_item_genres {
 	width: 150px;
 	height: 116px;
 	margin-top: -59px;

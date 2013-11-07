@@ -421,21 +421,26 @@ Popup.prototype = {
 }
 
 var PopupList = {
+	popup_loader: null,
 	list: [],
 	load: function(name, options) {
-		if (typeof(this.list[name]) == 'undefined') {
-			options = $.extend({
-				success: function() {}
-			}, options||{});
+		options = $.extend({
+			success: function() {},
+			error: function(x) {
+				alert('Failed to get the data');
+			}
+		}, options||{});
 
+		if (typeof(this.list[name]) != 'undefined') {
+			options.success(this.list[name]);
+		} else {
 			// init popup on success load popup content
-			var success = options.success;
 			var that = this;
+			var success = options.success;
 			options.success = function(data) {
-				var popup = new Popup($(data));
-				that.list[name] = popup;
-				success(popup);
-				$('body').append(popup.body);
+				that.list[name] = new Popup($(data));
+				success(that.list[name]);
+				$('body').append(that.list[name].body);
 			}
 			// load
 			$.ajax(options);
@@ -446,6 +451,51 @@ var PopupList = {
 			return this.list[name];
 		} else {
 			return null;
+		}
+	},
+	lazyload: function(name, options) {
+		var timeout = 0;
+		if (this.popup_loader == null) {
+			this.popup_loader = new Popup($('#b-lazyload-popup'));
+			timeout = 50;
+		}
+
+		var that = this;
+		options = $.extend({
+			success: function() {},
+			error: function(x) {
+				alert('Failed to get the data');
+				that.popup_loader.hide();
+			}
+		}, options||{});
+
+		if (typeof(this.list[name]) != 'undefined') {
+			options.success(this.list[name]);
+		} else {
+			this.popup_loader.show();
+
+			// init popup on success load popup content
+			var success = options.success;
+			options.success = function(data) {
+				var popup = new Popup(that.popup_loader.body.clone().hide());
+				popup.body.attr('id', name).find('.content').append(data);
+				$('body').append(popup.body);
+
+				that.list[name] = popup;
+				success(popup);
+				// show new popup
+				that.popup_loader.hide();
+				popup.show();
+			}
+
+			// postpone downloading of content to have time to load popap
+			if (timeout) {
+				setTimeout(function() {
+					$.ajax(options);
+				}, timeout);
+			} else {
+				$.ajax(options);
+			}
 		}
 	}
 }
@@ -602,9 +652,9 @@ FormRefill.prototype = {
 		// create popup
 		var that = this;
 		if (popup = PopupList.get(name)) {
-			this.init_popup(popup);
+			this.init_popup(popup.show());
 		} else {
-			PopupList.load(name, {
+			PopupList.lazyload(name, {
 				url: this.button.attr('href'),
 				success: function(popup) {
 					that.init_popup(popup);
@@ -613,7 +663,6 @@ FormRefill.prototype = {
 		}
 	},
 	init_popup: function (popup) {
-		popup.show();
 	}
 };
 FormRefillText = function(field) {
