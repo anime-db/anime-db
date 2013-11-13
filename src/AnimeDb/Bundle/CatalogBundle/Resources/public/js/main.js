@@ -653,7 +653,8 @@ FormRefill.prototype = {
 		// create popup
 		var that = this;
 		if (popup = PopupList.get(name)) {
-			this.init_popup(popup.show());
+			this.init_popup(popup);
+			popup.show();
 		} else {
 			PopupList.lazyload(name, {
 				url: this.button.attr('href'),
@@ -681,7 +682,7 @@ var FormRefillText = function(field) {
 };
 FormRefillText.prototype = {
 	update: function(popup) {
-		// TODO do update field data
+		this.field.val(popup.body.find('#'+this.field.attr('id')).val());
 	}
 };
 var FormRefillSelect = function(field) {
