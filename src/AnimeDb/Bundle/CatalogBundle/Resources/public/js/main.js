@@ -677,27 +677,19 @@ FormRefill.prototype = {
 		popup.hide();
 	}
 };
-var FormRefillText = function(field) {
+var FormRefillSimple = function(field) {
 	this.field = field;
 };
-FormRefillText.prototype = {
+FormRefillSimple.prototype = {
 	update: function(popup) {
 		this.field.val(popup.body.find('#'+this.field.attr('id')).val());
-	}
-};
-var FormRefillSelect = function(field) {
-	this.field = field;
-};
-FormRefillSelect.prototype = {
-	update: function(popup) {
-		// TODO do update field data
 	}
 };
 var FormRefillCollection = function(field, collection) {
 	this.field = field;
 	this.collection = collection; // FormCollection
 };
-FormRefillSelect.prototype = {
+FormRefillCollection.prototype = {
 	update: function(popup) {
 		// TODO do update field data
 	}
@@ -770,7 +762,7 @@ $('[data-type=refill]').each(function() {
 	if (field.data('prototype')) {
 		var controller = new FormRefillCollection(field, CollectionContainer.get(field.attr('id')));
 	} else {
-		var controller = new FormRefillText(field);
+		var controller = new FormRefillSimple(field);
 	}
 
 	// add plugin links and hendler
