@@ -365,6 +365,7 @@ var FormLocalPathController = function(path) {
 var Cap = {
 	element: null,
 	observers: [],
+	html: $('html'),
 	setElement: function(element) {
 		Cap.element = element.click(function() {
 			Cap.hide();
@@ -380,11 +381,13 @@ var Cap = {
 			}
 		}
 		Cap.element.hide();
+		Cap.html.removeClass('scroll-lock');
 	},
 	// show cup and observers
 	show: function(observer) {
 		Cap.element.show();
 		observer.show();
+		Cap.html.addClass('scroll-lock');
 	},
 	// need methods 'show' and 'hide'
 	registr: function(observer) {
@@ -399,7 +402,7 @@ var Cap = {
 				delete Cap.observers[i];
 			}
 		}
-	},
+	}
 };
 
 /**

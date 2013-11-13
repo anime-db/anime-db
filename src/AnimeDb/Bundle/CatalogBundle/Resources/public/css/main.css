@@ -124,6 +124,9 @@ button {
 }
 
 
+html.scroll-lock {
+	overflow: hidden;
+}
 
 /**
  * Logo
