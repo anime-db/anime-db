@@ -697,9 +697,10 @@ FormRefillSimple.prototype = {
 		this.field.val(popup.body.find('#'+this.field.attr('id')).val());
 	}
 };
-var FormRefillCollection = function(field, collection) {
+var FormRefillCollection = function(field, collection, container) {
 	this.field = field;
 	this.collection = collection; // FormCollection
+	this.container = container; // FormCollectionContainer
 };
 FormRefillCollection.prototype = {
 	update: function(popup) {
@@ -772,7 +773,11 @@ $('.item-controls .delete, .storages-list .icon-storage-delete, .b-notice-list b
 $('[data-type=refill]').each(function() {
 	var field = $(this);
 	if (field.data('prototype')) {
-		var controller = new FormRefillCollection(field, CollectionContainer.get(field.attr('id')));
+		var controller = new FormRefillCollection(
+			field,
+			CollectionContainer.get(field.attr('id')),
+			CollectionContainer
+		);
 	} else {
 		var controller = new FormRefillSimple(field);
 	}
