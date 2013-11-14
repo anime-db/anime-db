@@ -1075,6 +1075,9 @@ h1.logo a span {
 #form-refill-anime_db_catalog_entity_item_names .f-fields {
 	width: 310px;
 }
+#form-refill-anime_db_catalog_entity_item_names {
+	display: none;
+}
 #form-refill-anime_db_catalog_entity_item_genres {
 	width: 150px;
 	height: 116px;

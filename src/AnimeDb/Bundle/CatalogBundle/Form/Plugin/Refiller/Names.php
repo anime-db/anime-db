@@ -13,7 +13,7 @@ namespace AnimeDb\Bundle\CatalogBundle\Form\Plugin\Refiller;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use AnimeDb\Bundle\CatalogBundle\Form\Plugin\Refiller\Name;
+use AnimeDb\Bundle\CatalogBundle\Form\Entity\Name;
 
 /**
  * Refill item field names
