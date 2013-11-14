@@ -40,45 +40,51 @@ var FormCollection = function(collection, button_add, rows, remove_selector, han
 	this.row_prototype = collection.data('prototype');
 	this.handler = handler;
 	for (var i = 0; i < rows.length; i++) {
-		this.rows.push(new FormCollectionRow($(rows[i]), this));
+		var row = new FormCollectionRow($(rows[i]));
+		row.setCollection(this);
+		this.rows.push(row);
 	}
 };
 FormCollection.prototype = {
 	add: function() {
+		// prototype of new item
+		this.addRow(new FormCollectionRow($(this.row_prototype.replace(/__name__(label__)?/g, this.index + 1))));
+	},
+	addRow: function(row) {
+		row.setCollection(this);
+		// notify observers
+		this.handler.notify(row.row);
+		// add row
+		this.rows.push(row);
+		this.button_add.parent().before(row.row);
 		// increment index
 		this.index++;
-		// prototype of new item
-		var new_row = new FormCollectionRow(
-			$(this.row_prototype.replace(/__name__(label__)?/g, this.index)),
-			this
-		);
-		// notify observers
-		this.handler.notify(new_row.row);
-		// add row
-		this.rows.push(new_row);
-		this.button_add.parent().before(new_row.row);
 	}
 };
 // Model collection row
-var FormCollectionRow = function(row, collection) {
+var FormCollectionRow = function(row) {
 	this.row = row;
-	this.collection = collection;
-	// add handler for remove button
-	var that = this;
-	row.find(collection.remove_selector).click(function() {
-		that.remove();
-	});
+	this.collection = null;
 };
 FormCollectionRow.prototype = {
 	remove: function() {
 		this.row.remove();
+		var rows = [];
 		// remove row in collection
 		for (var i = 0; i < this.collection.rows.length; i++) {
-			if (this.collection.rows[i] === this) {
-				delete this.collection.rows[i];
-				break;
+			if (this.collection.rows[i] !== this) {
+				rows.push(this.collection.rows[i]);
 			}
 		}
+		this.collection.rows = rows;
+	},
+	setCollection: function(collection) {
+		this.collection = collection;
+		// add handler for remove button
+		var that = this;
+		this.row.find(collection.remove_selector).click(function() {
+			that.remove();
+		});
 	}
 };
 
@@ -717,7 +723,7 @@ FormContainer.registr(function(block) {
 			new FormCollection(
 				collection,
 				collection.find('.bt-add-item'),
-				collection.find('.f-row'),
+				collection.find('.f-row:not(.f-coll-button)'),
 				'.bt-remove-item',
 				FormContainer
 			)
