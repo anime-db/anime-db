@@ -715,7 +715,10 @@ FormRefill.prototype = {
 		});
 	},
 	init_search_popup: function (popup) {
-		// TODO do init
+		var that = this;
+		popup.body.find('a').each(function() {
+			new FormRefillSearchItem(that, popup, $(this));
+		});
 	},
 	update: function(popup) {
 		this.controller.update(popup);
@@ -746,6 +749,23 @@ FormRefillCollection.prototype = {
 		for (var i = 0; i < collection.rows.length; i++) {
 			this.collection.addRowObject(new FormCollectionRow(collection.rows[i].row.clone()));
 		}
+	}
+};
+var FormRefillSearchItem = function(refill, popup, link) {
+	var that = this;
+	this.refill = refill;
+	this.popup = popup;
+	this.link = link.click(function() {
+		that.refill();
+		return false;
+	});
+	
+};
+FormRefillSearchItem.prototype = {
+	refill: function() {
+		this.popup.hide();
+		console.log(this.link.attr('href'));
+		// TODO show search result popup
 	}
 };
 
