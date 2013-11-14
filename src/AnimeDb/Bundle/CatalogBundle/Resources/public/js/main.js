@@ -711,7 +711,7 @@ FormRefillCollection.prototype = {
 		// add new rows
 		var collection = this.container.get(this.field.attr('id'));
 		for (var i = 0; i < collection.rows.length; i++) {
-			this.collection.addRow(collection.rows[i]);
+			this.collection.addRow(new FormCollectionRow(collection.rows[i].row.clone()));
 		}
 	}
 };
