@@ -494,9 +494,21 @@ var PopupList = {
 
 				PopupList.list[name] = popup;
 				success(popup);
-				// show new popup
-				PopupList.popup_loader.hide();
-				popup.show();
+
+				// animate show popup
+				var width = popup.body.width();
+				var height = popup.body.height();
+				PopupList.popup_loader.body.find()
+				PopupList.popup_loader.body.addClass('resize').animate({
+					'width': width,
+					'height': height,
+					'margin-left': -(width/2),
+					'margin-top': -(height/2)
+				}, 400, function() {
+					popup.show();
+					// reset style
+					PopupList.popup_loader.body.removeClass('resize').removeAttr('style').hide();
+				});
 			}
 
 			// postpone downloading of content to have time to load popap

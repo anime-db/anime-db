@@ -786,6 +786,9 @@ h1.logo a span {
 #b-lazyload-popup .content {
 	background: url(../images/loader-popup.gif) no-repeat center center;
 }
+#b-lazyload-popup.resize .content{
+	background-image: none;
+}
 
 /**
  * Form image popup
@@ -1052,7 +1055,8 @@ h1.logo a span {
 #form-refill-anime_db_catalog_entity_item_summary,
 #form-refill-anime_db_catalog_entity_item_episodes {
 	width: 510px;
-	margin-top: -144px;
+	height: 248px;
+	margin-top: -124px;
 	margin-left: -255px;
 }
 #form-refill-anime_db_catalog_entity_item_names {
