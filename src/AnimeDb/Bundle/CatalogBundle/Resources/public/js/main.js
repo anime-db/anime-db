@@ -47,10 +47,9 @@ var FormCollection = function(collection, button_add, rows, remove_selector, han
 };
 FormCollection.prototype = {
 	add: function() {
-		// prototype of new item
-		this.addRow(new FormCollectionRow($(this.row_prototype.replace(/__name__(label__)?/g, this.index + 1))));
+		this.addRowObject(new FormCollectionRow($(this.row_prototype.replace(/__name__(label__)?/g, this.index + 1))));
 	},
-	addRow: function(row) {
+	addRowObject: function(row) {
 		row.setCollection(this);
 		// notify observers
 		this.handler.notify(row.row);
@@ -711,7 +710,7 @@ FormRefillCollection.prototype = {
 		// add new rows
 		var collection = this.container.get(this.field.attr('id'));
 		for (var i = 0; i < collection.rows.length; i++) {
-			this.collection.addRow(new FormCollectionRow(collection.rows[i].row.clone()));
+			this.collection.addRowObject(new FormCollectionRow(collection.rows[i].row.clone()));
 		}
 	}
 };
