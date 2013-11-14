@@ -39,6 +39,11 @@ class Names extends AbstractType
                 'options'      => [
                     'required' => false
                 ]
+            ])
+            ->add('source', 'hidden', [
+                'required' => false,
+                'label'    => false,
+                'mapped'   => false
             ]);
     }
 

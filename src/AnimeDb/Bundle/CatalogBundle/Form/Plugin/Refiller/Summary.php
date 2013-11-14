@@ -28,7 +28,16 @@ class Summary extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('summary', null, ['required' => false, 'label' => false]);
+        $builder
+            ->add('summary', null, [
+                'required' => false,
+                'label'    => false
+            ])
+            ->add('source', 'hidden', [
+                'required' => false,
+                'label'    => false,
+                'mapped'   => false
+            ]);
     }
 
     /**

@@ -33,7 +33,12 @@ class Gengres extends AbstractType
                 'class'    => 'AnimeDbCatalogBundle:Genre',
                 'property' => 'name',
                 'multiple' => true,
-                'label' => false
+                'label'    => false
+            ])
+            ->add('source', 'hidden', [
+                'required' => false,
+                'label'    => false,
+                'mapped'   => false
             ]);
     }
 
