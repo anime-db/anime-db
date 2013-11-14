@@ -666,7 +666,11 @@ var FormRefill = function(button, item_id, controller, handler) {
 
 	var that = this;
 	this.button.click(function(e) {
-		that.refill(e);
+		if (that.button.data('can-refill') == 1) {
+			that.refill(e);
+		} else {
+			that.search(e);
+		}
 		return false;
 	});
 };
@@ -687,6 +691,9 @@ FormRefill.prototype = {
 				}
 			});
 		}
+	},
+	search: function(e) {
+		// TODO do search
 	},
 	init_popup: function (popup) {
 		var that = this;
@@ -804,7 +811,7 @@ $('[data-type=refill]').each(function() {
 	// add plugin links and hendler
 	$(field.closest('.f-row').find('label')[0])
 		.append($(field.data('plugins')))
-		.find('a[data-can-refill=1]').each(function() {
+		.find('a').each(function() {
 			new FormRefill($(this), field.data('id'), controller, FormContainer);
 		});
 });
