@@ -97,6 +97,9 @@ FormCollectionContainer.prototype = {
 	},
 	get: function(name) {
 		return this.collections[name];
+	},
+	remove: function(name) {
+		delete this.collections[name];
 	}
 };
 
