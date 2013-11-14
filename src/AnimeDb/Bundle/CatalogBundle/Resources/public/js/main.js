@@ -670,13 +670,13 @@ FormRefill.prototype = {
 			PopupList.lazyload(name, {
 				url: this.button.attr('href'),
 				success: function(popup) {
+					that.handler.notify(popup.body);
 					that.init_popup(popup);
 				}
 			});
 		}
 	},
 	init_popup: function (popup) {
-		this.handler.notify(popup.body);
 		var that = this;
 		popup.body.find('form').submit(function() {
 			that.update(popup);
