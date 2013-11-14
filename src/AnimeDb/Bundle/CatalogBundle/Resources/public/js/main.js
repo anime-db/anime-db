@@ -676,31 +676,46 @@ var FormRefill = function(button, item_id, controller, handler) {
 };
 FormRefill.prototype = {
 	refill: function(e) {
-		var name = 'form-refill-' + this.controller.field.attr('id');
+		var name = 'refill-form-' + this.controller.field.attr('id');
 		// create popup
 		var that = this;
 		if (popup = PopupList.get(name)) {
-			this.init_popup(popup);
+			this.init_refill_popup(popup);
 			popup.show();
 		} else {
 			PopupList.lazyload(name, {
 				url: this.button.attr('href'),
 				success: function(popup) {
 					that.handler.notify(popup.body);
-					that.init_popup(popup);
+					that.init_refill_popup(popup);
 				}
 			});
 		}
 	},
 	search: function(e) {
-		// TODO do search
+		// create popup
+		var that = this;
+		if (popup = PopupList.get('refill-search')) {
+			this.init_search_popup(popup);
+			popup.show();
+		} else {
+			PopupList.lazyload('refill-search', {
+				url: this.button.attr('href'),
+				success: function(popup) {
+					that.init_search_popup(popup);
+				}
+			});
+		}
 	},
-	init_popup: function (popup) {
+	init_refill_popup: function (popup) {
 		var that = this;
 		popup.body.find('form').submit(function() {
 			that.update(popup);
 			return false;
 		});
+	},
+	init_search_popup: function (popup) {
+		// TODO do init
 	},
 	update: function(popup) {
 		this.controller.update(popup);
