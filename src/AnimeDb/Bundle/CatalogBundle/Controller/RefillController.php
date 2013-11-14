@@ -67,25 +67,27 @@ class RefillController extends Controller
         if (!($refiller = $this->get('anime_db.plugin.refiller')->getPlugin($plugin))) {
             throw $this->createNotFoundException('Plugin \''.$plugin.'\' is not found');
         }
+        $result = array();
         if ($refiller->isCanSearch($item, $field)) {
             $result = $refiller->search($item, $field);
-            /* @var $item \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Item */
+            /* @var $search_item \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Item */
             foreach ($result as $key => $search_item) {
                 $result[$key] = [
                     'name' => $search_item->getName(),
-                    'image' => $search_item->getImage(),
-                    'description' => $search_item->getDescription(),
                     'link' => $this->generateUrl('refiller_search_fill', [
                         'plugin' => $plugin,
                         'field' => $field,
                         'id' => $item->getId(),
-                        'data' => $search_item->getData()
+                        'data' => $search_item->getData(),
+                        'source' => $search_item->getSource(),
                     ])
                 ];
             }
-            return new JsonResponse($result);
         }
-        return new JsonResponse([]);
+
+        return $this->render('AnimeDbCatalogBundle:Refill:search.html.twig', [
+            'result' => $result
+        ]);
     }
 
     /**

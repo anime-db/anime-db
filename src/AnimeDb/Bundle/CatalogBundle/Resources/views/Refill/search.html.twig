@@ -1,0 +1,13 @@
+<div class="b-refill-search">
+	<h2>{% trans %}List of results{% endtrans %}</h2>
+	{% if result is not empty %}
+		<span>{% trans %}Select the entry you want to use{% endtrans %}</span>
+		<ul>
+			{% for item in result %}
+				<li><a href="{{ item.link }}" title="{% trans %}Use to fill{% endtrans %}">{{ item.name }}</a></li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<span>{% trans %}Nothing found{% endtrans %}</span>
+	{% endif %}
+</div>

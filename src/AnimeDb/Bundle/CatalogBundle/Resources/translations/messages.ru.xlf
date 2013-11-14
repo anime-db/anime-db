@@ -566,6 +566,18 @@
                 <source>Fill this field from the source</source>
                 <target>Заполнить это поле из источника</target>
             </trans-unit>
+            <trans-unit id="150">
+                <source>Select the entry you want to use</source>
+                <target>Выберите запись, которую Вы хотите использовать</target>
+            </trans-unit>
+            <trans-unit id="151">
+                <source>Nothing found</source>
+                <target>Ничего не найдено</target>
+            </trans-unit>
+            <trans-unit id="152">
+                <source>Use to fill</source>
+                <target>Использовать для заполнения</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
