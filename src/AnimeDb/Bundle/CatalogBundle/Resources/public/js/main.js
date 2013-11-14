@@ -751,9 +751,9 @@ FormRefillCollection.prototype = {
 		}
 	}
 };
-var FormRefillSearchItem = function(refill, popup, link) {
+var FormRefillSearchItem = function(form, popup, link) {
 	var that = this;
-	this.refill = refill;
+	this.form = form;
 	this.popup = popup;
 	this.link = link.click(function() {
 		that.refill();
