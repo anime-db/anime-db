@@ -704,7 +704,15 @@ var FormRefillCollection = function(field, collection, container) {
 };
 FormRefillCollection.prototype = {
 	update: function(popup) {
-		// TODO do update field data
+		// remove old rows
+		while (this.collection.rows.length) {
+			this.collection.rows[0].remove();
+		}
+		// add new rows
+		var collection = this.container.get(this.field.attr('id'));
+		for (var i = 0; i < collection.rows.length; i++) {
+			this.collection.addRow(collection.rows[i]);
+		}
 	}
 };
 
