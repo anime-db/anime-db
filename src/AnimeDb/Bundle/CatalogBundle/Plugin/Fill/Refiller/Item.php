@@ -33,33 +33,26 @@ class Item
     protected $data = [];
 
     /**
-     * Image
+     * Source
+     *
+     * Can set the source to source item to avoid the next search for this item
      *
      * @var string
      */
-    protected $image = '';
-
-    /**
-     * Description
-     *
-     * @var string
-     */
-    protected $description = '';
+    protected $source = '';
 
     /**
      * Construct
      *
      * @param string $name
      * @param array $data
-     * @param string $image
-     * @param string $description
+     * @param string $source
      */
-    public function __construct($name, array $data, $image, $description)
+    public function __construct($name, array $data, $source)
     {
         $this->name = $name;
         $this->data = $data;
-        $this->image = $image;
-        $this->description = $description;
+        $this->source = $source;
     }
 
     /**
@@ -83,22 +76,12 @@ class Item
     }
 
     /**
-     * Get image
+     * Get source
      *
      * @return string
      */
-    public function getImage()
+    public function getSource()
     {
-        return $this->image;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
+        return $this->source;
     }
 }
