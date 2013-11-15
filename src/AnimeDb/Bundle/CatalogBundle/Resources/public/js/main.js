@@ -744,6 +744,12 @@ FormRefill.prototype = {
 	},
 	update: function(popup) {
 		this.controller.update(popup);
+		// add source link
+		var source = popup.body.find('input[type=hidden]');
+		if (source && (value = source.val())) {
+			this.button.attr('href', this.button.data('link-refill'));
+			this.sources.add().row.find('input').val(value);
+		}
 		popup.hide();
 	}
 };
@@ -790,8 +796,7 @@ FormRefillSearchItem.prototype = {
 		if (source) {
 			this.form.button.attr('href', this.form.button.data('link-refill'));
 			// add source link
-			var row = this.form.sources.add();
-			row.row.find('input').val(source);
+			this.form.sources.add().row.find('input').val(source);
 
 			this.form.refill();
 		} else {
