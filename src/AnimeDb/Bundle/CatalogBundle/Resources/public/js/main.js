@@ -687,51 +687,60 @@ var FormRefill = function(form, button, item_id, controller, handler, sources) {
 };
 FormRefill.prototype = {
 	refill: function() {
-		var name = 'refill-form-' + this.controller.field.attr('id');
-		// create popup
 		var that = this;
+		this.showPopup(
+			'refill-form-' + this.controller.field.attr('id'),
+			this.button.attr('href'),
+			function (popup) {
+				popup.body.find('form').submit(function() {
+					that.update(popup);
+					return false;
+				});
+			}
+		);
+	},
+	search: function() {
+		var that = this;
+		this.showPopup(
+			'refill-search',
+			this.button.attr('href'),
+			function (popup) {
+				popup.body.find('a').each(function() {
+					new FormRefillSearchItem(that, popup, $(this));
+				});
+			}
+		);
+	},
+	refillFromSearch: function(url) {
+		var that = this;
+		this.showPopup(
+			'refill-form-' + this.controller.field.attr('id'),
+			url,
+			function (popup) {
+				popup.body.find('form').submit(function() {
+					that.update(popup);
+					return false;
+				});
+			}
+		);
+	},
+	showPopup: function(name, url, handler) {
+		handler = handler || function() {};
+		var that = this;
+
 		if (popup = PopupList.get(name)) {
-			this.init_refill_popup(popup);
+			handler(popup);
 			popup.show();
 		} else {
 			PopupList.lazyload(name, {
-				url: this.button.attr('href'),
+				url: url,
 				data: this.form.serialize(),
 				success: function(popup) {
 					that.handler.notify(popup.body);
-					that.init_refill_popup(popup);
+					handler(popup);
 				}
 			});
 		}
-	},
-	search: function() {
-		// create popup
-		var that = this;
-		if (popup = PopupList.get('refill-search')) {
-			this.init_search_popup(popup);
-			popup.show();
-		} else {
-			PopupList.lazyload('refill-search', {
-				url: this.button.attr('href'),
-				data: this.form.serialize(),
-				success: function(popup) {
-					that.init_search_popup(popup);
-				}
-			});
-		}
-	},
-	init_refill_popup: function (popup) {
-		var that = this;
-		popup.body.find('form').submit(function() {
-			that.update(popup);
-			return false;
-		});
-	},
-	init_search_popup: function (popup) {
-		var that = this;
-		popup.body.find('a').each(function() {
-			new FormRefillSearchItem(that, popup, $(this));
-		});
 	},
 	update: function(popup) {
 		this.controller.update(popup);
@@ -786,7 +795,7 @@ FormRefillSearchItem.prototype = {
 
 			this.form.refill();
 		} else {
-			// TODO nead refill by search result
+			this.form.refillFromSearch(this.link.attr('href'));
 		}
 	}
 };
