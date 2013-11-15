@@ -747,10 +747,13 @@ FormRefill.prototype = {
 		// add source link
 		var source = popup.body.find('input[type=hidden]');
 		if (source && (value = source.val())) {
-			this.button.attr('href', this.button.data('link-refill'));
+			this.canRefill();
 			this.sources.add().row.find('input').val(value);
 		}
 		popup.hide();
+	},
+	canRefill: function() {
+		this.button.attr('href', this.button.data('link-refill')).data('can-refill', 1);
 	}
 };
 var FormRefillSimple = function(field) {
@@ -794,10 +797,8 @@ FormRefillSearchItem.prototype = {
 		this.popup.hide();
 		var source = decodeURIComponent(this.link.attr('href')).replace(/^.*(?:\?|&)source=([^&]+).*$/, '$1');
 		if (source) {
-			this.form.button.attr('href', this.form.button.data('link-refill'));
-			// add source link
+			this.form.canRefill();
 			this.form.sources.add().row.find('input').val(source);
-
 			this.form.refill();
 		} else {
 			this.form.refillFromSearch(this.link.attr('href'));
