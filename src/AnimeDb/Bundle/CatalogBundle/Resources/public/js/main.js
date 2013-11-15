@@ -667,11 +667,12 @@ ConfirmDeleteModel.prototype = {
 /**
  * Form refill field
  */
-var FormRefill = function(button, item_id, controller, handler) {
+var FormRefill = function(button, item_id, controller, handler, sources) {
 	this.button = button;
 	this.item_id = item_id;
 	this.controller = controller;
 	this.handler = handler;
+	this.sources = sources;
 
 	var that = this;
 	this.button.click(function() {
@@ -773,7 +774,17 @@ var FormRefillSearchItem = function(form, popup, link) {
 FormRefillSearchItem.prototype = {
 	refill: function() {
 		this.popup.hide();
-		// TODO show search result popup
+		var source = decodeURIComponent(this.link.attr('href')).replace(/^.*(?:\?|&)source=([^&]+).*$/, '$1');
+		if (source) {
+			this.form.button.attr('href', this.form.button.data('link-refill'));
+			// add source link
+			var row = this.form.sources.add();
+			row.row.find('input').val(source);
+
+			this.form.refill();
+		} else {
+			// TODO nead refill by search result
+		}
 	}
 };
 
@@ -855,7 +866,13 @@ $('[data-type=refill]').each(function() {
 	$(field.closest('.f-row').find('label')[0])
 		.append($(field.data('plugins')))
 		.find('a').each(function() {
-			new FormRefill($(this), field.data('id'), controller, FormContainer);
+			new FormRefill(
+				$(this),
+				field.data('id'),
+				controller,
+				FormContainer,
+				CollectionContainer.get('anime_db_catalog_entity_item_sources')
+			);
 		});
 });
 
