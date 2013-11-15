@@ -47,7 +47,9 @@ var FormCollection = function(collection, button_add, rows, remove_selector, han
 };
 FormCollection.prototype = {
 	add: function() {
-		this.addRowObject(new FormCollectionRow($(this.row_prototype.replace(/__name__(label__)?/g, this.index + 1))));
+		var row = new FormCollectionRow($(this.row_prototype.replace(/__name__(label__)?/g, this.index + 1)));
+		this.addRowObject(row);
+		return row;
 	},
 	addRowObject: function(row) {
 		row.setCollection(this);
@@ -439,8 +441,12 @@ var PopupList = {
 	load: function(name, options) {
 		options = $.extend({
 			success: function() {},
-			error: function(x) {
-				alert('Failed to get the data');
+			error: function() {
+				if (confirm('Failed to get the data. Want to try again?')) {
+					$.ajax(options);
+				} else {
+					PopupList.popup_loader.hide();
+				}
 			}
 		}, options||{});
 
@@ -474,9 +480,12 @@ var PopupList = {
 
 		options = $.extend({
 			success: function() {},
-			error: function(x) {
-				alert('Failed to get the data');
-				PopupList.popup_loader.hide();
+			error: function() {
+				if (confirm('Failed to get the data. Want to try again?')) {
+					$.ajax(options);
+				} else {
+					PopupList.popup_loader.hide();
+				}
 			}
 		}, options||{});
 
@@ -665,17 +674,17 @@ var FormRefill = function(button, item_id, controller, handler) {
 	this.handler = handler;
 
 	var that = this;
-	this.button.click(function(e) {
+	this.button.click(function() {
 		if (that.button.data('can-refill') == 1) {
-			that.refill(e);
+			that.refill();
 		} else {
-			that.search(e);
+			that.search();
 		}
 		return false;
 	});
 };
 FormRefill.prototype = {
-	refill: function(e) {
+	refill: function() {
 		var name = 'refill-form-' + this.controller.field.attr('id');
 		// create popup
 		var that = this;
@@ -692,7 +701,7 @@ FormRefill.prototype = {
 			});
 		}
 	},
-	search: function(e) {
+	search: function() {
 		// create popup
 		var that = this;
 		if (popup = PopupList.get('refill-search')) {
@@ -764,7 +773,6 @@ var FormRefillSearchItem = function(form, popup, link) {
 FormRefillSearchItem.prototype = {
 	refill: function() {
 		this.popup.hide();
-		console.log(this.link.attr('href'));
 		// TODO show search result popup
 	}
 };
