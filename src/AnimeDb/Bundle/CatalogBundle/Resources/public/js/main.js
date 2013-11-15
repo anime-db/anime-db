@@ -667,7 +667,8 @@ ConfirmDeleteModel.prototype = {
 /**
  * Form refill field
  */
-var FormRefill = function(button, item_id, controller, handler, sources) {
+var FormRefill = function(form, button, item_id, controller, handler, sources) {
+	this.form = form;
 	this.button = button;
 	this.item_id = item_id;
 	this.controller = controller;
@@ -695,6 +696,7 @@ FormRefill.prototype = {
 		} else {
 			PopupList.lazyload(name, {
 				url: this.button.attr('href'),
+				data: this.form.serialize(),
 				success: function(popup) {
 					that.handler.notify(popup.body);
 					that.init_refill_popup(popup);
@@ -711,6 +713,7 @@ FormRefill.prototype = {
 		} else {
 			PopupList.lazyload('refill-search', {
 				url: this.button.attr('href'),
+				data: this.form.serialize(),
 				success: function(popup) {
 					that.init_search_popup(popup);
 				}
@@ -850,7 +853,9 @@ $('.item-controls .delete, .storages-list .icon-storage-delete, .b-notice-list b
 });
 
 // init form field refill 
-$('[data-type=refill]').each(function() {
+var refills = $('[data-type=refill]');
+var form = refills.closest('form');
+refills.each(function() {
 	var field = $(this);
 	if (field.data('prototype')) {
 		var controller = new FormRefillCollection(
@@ -867,6 +872,7 @@ $('[data-type=refill]').each(function() {
 		.append($(field.data('plugins')))
 		.find('a').each(function() {
 			new FormRefill(
+				form,
 				$(this),
 				field.data('id'),
 				controller,
