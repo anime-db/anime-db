@@ -578,6 +578,14 @@
                 <source>Use to fill</source>
                 <target>Использовать для заполнения</target>
             </trans-unit>
+            <trans-unit id="153">
+                <source>Failed to get the data. Want to try again?</source>
+                <target>Не удалось получить данные. Хотите попробовать еще раз?</target>
+            </trans-unit>
+            <trans-unit id="154">
+                <source>Are you sure want to delete this item(s)?</source>
+                <target>Вы уверены, что хотите удалить этот элемент(ы)?</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

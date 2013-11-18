@@ -40,4 +40,10 @@
 <div id="cap"></div>
 {% set popup_id = 'b-lazyload-popup' %}
 {% include 'AnimeDbCatalogBundle::popup.html.twig' %}
+<script type="text/javascript">
+var translations = {
+	'Are you sure want to delete this item(s)?': '{{ "Are you sure want to delete this item(s)?" | trans }}',
+	'Failed to get the data. Want to try again?': '{{ "Failed to get the data. Want to try again?" | trans}}'
+};
+</script>
 {% endblock %}

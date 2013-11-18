@@ -1,3 +1,12 @@
+// translate message
+function trans(message) {
+	if (typeof(translations[message]) != 'undefined') {
+		return translations[message];
+	} else {
+		return message;
+	}
+}
+
 var BlockLoadHandler = function() {
 	this.observers = [];
 };
@@ -442,7 +451,7 @@ var PopupList = {
 		options = $.extend({
 			success: function() {},
 			error: function(xhr, status) {
-				if (status != 'abort' && confirm('Failed to get the data. Want to try again?')) {
+				if (status != 'abort' && confirm(trans('Failed to get the data. Want to try again?'))) {
 					$.ajax(options);
 				}
 			}
@@ -485,7 +494,7 @@ var PopupList = {
 		options = $.extend({
 			success: function() {},
 			error: function(xhr, status) {
-				if (status != 'abort' && confirm('Failed to get the data. Want to try again?')) {
+				if (status != 'abort' && confirm(trans('Failed to get the data. Want to try again?'))) {
 					$.ajax(options);
 				} else {
 					PopupList.popup_loader.hide();
@@ -647,7 +656,7 @@ var TableCheckAllController = function(checker) {
  * Confirm delete
  */
 var ConfirmDeleteModel = function(link) {
-	this.massage = link.data('massage') || 'Are you sure want to delete this item(s)?';
+	this.massage = link.data('massage') || trans('Are you sure want to delete this item(s)?');
 	this.link = link;
 	var that = this;
 	link.click(function() {
