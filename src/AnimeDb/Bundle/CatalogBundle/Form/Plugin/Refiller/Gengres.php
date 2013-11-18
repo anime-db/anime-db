@@ -37,20 +37,8 @@ class Gengres extends AbstractType
             ])
             ->add('source', 'hidden', [
                 'required' => false,
-                'label'    => false,
-                'mapped'   => false
+                'label'    => false
             ]);
-    }
-
-    /**
-     * (non-PHPdoc)
-     * @see Symfony\Component\Form.AbstractType::setDefaultOptions()
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults([
-            'data_class' => 'AnimeDb\Bundle\CatalogBundle\Entity\Item'
-        ]);
     }
 
     /**
