@@ -444,8 +444,6 @@ var PopupList = {
 			error: function() {
 				if (confirm('Failed to get the data. Want to try again?')) {
 					$.ajax(options);
-				} else {
-					PopupList.popup_loader.hide();
 				}
 			}
 		}, options||{});
@@ -460,7 +458,7 @@ var PopupList = {
 				success(PopupList.list[name]);
 				$('body').append(PopupList.list[name].body);
 			}
-			// load
+
 			$.ajax(options);
 		}
 	},
@@ -471,13 +469,10 @@ var PopupList = {
 			return null;
 		}
 	},
+	setPopupLoader: function(el) {
+		PopupList.popup_loader = new Popup(el.hide());
+	},
 	lazyload: function(name, options) {
-		var timeout = 0;
-		if (PopupList.popup_loader == null) {
-			PopupList.popup_loader = new Popup($('#b-lazyload-popup'));
-			timeout = 50;
-		}
-
 		options = $.extend({
 			success: function() {},
 			error: function() {
@@ -520,14 +515,7 @@ var PopupList = {
 				});
 			}
 
-			// postpone downloading of content to have time to load popap
-			if (timeout) {
-				setTimeout(function() {
-					$.ajax(options);
-				}, timeout);
-			} else {
-				$.ajax(options);
-			}
+			$.ajax(options);
 		}
 	}
 }
@@ -812,6 +800,8 @@ $(function(){
 
 // init cap
 Cap.setElement($('#cap'));
+// set lazyload popup loader
+PopupList.setPopupLoader($('#b-lazyload-popup'));
 
 var CollectionContainer = new FormCollectionContainer();
 
