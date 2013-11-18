@@ -441,8 +441,8 @@ var PopupList = {
 	load: function(name, options) {
 		options = $.extend({
 			success: function() {},
-			error: function() {
-				if (confirm('Failed to get the data. Want to try again?')) {
+			error: function(xhr, status) {
+				if (status != 'abort' && confirm('Failed to get the data. Want to try again?')) {
 					$.ajax(options);
 				}
 			}
@@ -459,7 +459,7 @@ var PopupList = {
 				$('body').append(PopupList.list[name].body);
 			}
 
-			$.ajax(options);
+			PopupList.sendRequest(options);
 		}
 	},
 	get: function(name) {
@@ -472,11 +472,20 @@ var PopupList = {
 	setPopupLoader: function(el) {
 		PopupList.popup_loader = new Popup(el.hide());
 	},
+	sendRequest: function(options) {
+		var xhr = $.ajax(options);
+		Cap.registr({
+			show:function(){},
+			hide:function(){
+				xhr.abort();
+			},
+		});
+	},
 	lazyload: function(name, options) {
 		options = $.extend({
 			success: function() {},
-			error: function() {
-				if (confirm('Failed to get the data. Want to try again?')) {
+			error: function(xhr, status) {
+				if (status != 'abort' && confirm('Failed to get the data. Want to try again?')) {
 					$.ajax(options);
 				} else {
 					PopupList.popup_loader.hide();
@@ -515,7 +524,7 @@ var PopupList = {
 				});
 			}
 
-			$.ajax(options);
+			PopupList.sendRequest(options);
 		}
 	}
 }
