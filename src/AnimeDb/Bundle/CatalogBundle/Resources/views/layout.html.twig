@@ -37,13 +37,15 @@
 	<div id="bg-left"></div>
 	<div id="bg-right"></div>
 </div>
+{% endblock %}
+
+{% block outbody %}
 <div id="cap"></div>
-{% set popup_id = 'b-lazyload-popup' %}
-{% include 'AnimeDbCatalogBundle::popup.html.twig' %}
 <script type="text/javascript">
 var translations = {
-	'Are you sure want to delete this item(s)?': '{{ "Are you sure want to delete this item(s)?" | trans }}',
-	'Failed to get the data. Want to try again?': '{{ "Failed to get the data. Want to try again?" | trans}}'
+	'Are you sure want to delete this item(s)?': '{% trans %}Are you sure want to delete this item(s)?{% endtrans %}',
+	'Failed to get the data. Want to try again?': '{% trans %}Failed to get the data. Want to try again?{% endtrans %}'
 };
 </script>
+{% include 'AnimeDbCatalogBundle:popup:lazyload.html.twig' %}
 {% endblock %}

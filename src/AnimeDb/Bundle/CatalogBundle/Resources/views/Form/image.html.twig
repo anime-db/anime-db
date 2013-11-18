@@ -2,7 +2,7 @@
 
 {% set popup_id = 'f-image-popup' %}
 
-{% block content %}
+{% set content %}
 <form action="{{ path('form_image_upload') }}" method="post" {{ form_enctype(form) }}>
 	<div class="f-row">
 		{{ form_row(form.remote, {'attr': {'placeholder': 'http://'}}) }}
@@ -15,4 +15,4 @@
 		<button type="submit">{% if change is defined %}{% trans %}Change image{% endtrans %}{% else %}{% trans %}Add image{% endtrans %}{% endif %}</button>
 	</div>
 </form>
-{% endblock %}
+{% endset %}

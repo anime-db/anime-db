@@ -586,6 +586,10 @@
                 <source>Are you sure want to delete this item(s)?</source>
                 <target>Вы уверены, что хотите удалить этот элемент(ы)?</target>
             </trans-unit>
+            <trans-unit id="155">
+                <source>Yes</source>
+                <target>Да</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
