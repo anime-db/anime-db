@@ -762,6 +762,8 @@ h1.logo a span {
 	width: 24px;
 	margin: 0;
 	padding: 0 0 0 24px;
+	text-indent: 24px;
+	line-height: 24px;
 	overflow: hidden;
 	background: url(../images/close.png) no-repeat 24px 0;
 	border: 0;
@@ -777,6 +779,7 @@ h1.logo a span {
 	padding: 0;
 }
 #b-lazyload-popup {
+	display: none;
 	height: 70px;
 	width: 70px;
 	margin-top: -38px;

@@ -8,6 +8,7 @@
 				{% else %}
 					href="{{ path('refiller_search', {plugin: plugin.name, field: field, id: item.id}) }}"
 				{% endif %}
+				data-plugin="{{ plugin.name }}"
 				data-can-refill="{{ plugin.can_refill }}"
 				data-link-refill="{{ path('refiller_refill', {plugin: plugin.name, field: field, id: item.id}) }}"
 			>{{ plugin.title }}</a></li>

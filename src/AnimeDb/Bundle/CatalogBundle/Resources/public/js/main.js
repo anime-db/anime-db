@@ -479,7 +479,7 @@ var PopupList = {
 		}
 	},
 	setPopupLoader: function(el) {
-		PopupList.popup_loader = new Popup(el.hide());
+		PopupList.popup_loader = new Popup(el);
 	},
 	sendRequest: function(options) {
 		var xhr = $.ajax(options);
@@ -759,7 +759,10 @@ FormRefill.prototype = {
 		popup.hide();
 	},
 	canRefill: function() {
-		this.button.attr('href', this.button.data('link-refill')).data('can-refill', 1);
+		this.form.find('a[data-plugin='+this.button.data('plugin')+']').each(function() {
+			var button = $(this);
+			button.attr('href', button.data('link-refill')).data('can-refill', 1);
+		});
 	}
 };
 var FormRefillSimple = function(field) {
