@@ -117,13 +117,20 @@ FormCollectionContainer.prototype = {
  * Form image
  */
 // Model Field
-var FormImageModelField = function(field, image, button) {
+var FormImageModelField = function(field, image, button, controller) {
 	this.field = field;
 	this.image = image;
 	this.popup = null;
 	var that = this;
 	this.button = button.click(function() {
-		that.change();
+		if (that.popup) {
+			that.change();
+		} else {
+			controller.getPopup(that, function(popup) {
+				that.popup = popup;
+				that.change();
+			});
+		}
 	});
 };
 FormImageModelField.prototype = {
@@ -134,9 +141,6 @@ FormImageModelField.prototype = {
 	update: function(data) {
 		this.field.val(data.path);
 		this.image.attr('src', data.image);
-	},
-	setPopup: function(popup) {
-		this.popup = popup;
 	}
 }
 // Model Popup
@@ -145,7 +149,6 @@ var FormImageModelPopup = function(popup, remote, local, field) {
 	this.local = local;
 	this.popup = popup;
 	this.field = field;
-	this.field.setPopup(this);
 	this.form = popup.body.find('form')
 	this.popup.hide();
 };
@@ -188,27 +191,34 @@ var FormImageController = function(image) {
 	var field = new FormImageModelField(
 		image.find('input'),
 		image.find('img'),
-		image.find('.change-button')
+		image.find('.change-button'),
+		this
 	);
-	// on load popup
-	var init = function (popup) {
-		// create model
-		new FormImageModelPopup(
-			popup,
-			$('#image-popup-remote'),
-			$('#image-popup-local'),
-			field
-		);
-	};
+};
+FormImageController.prototype = {
+	getPopup: function(field, init) {
+		init = init || function() {};
+		// on load popup
+		var init_popup = function (popup) {
+			// create model
+			popup = new FormImageModelPopup(
+				popup,
+				$('#image-popup-remote'),
+				$('#image-popup-local'),
+				field
+			);
+			init(popup);
+		};
 
-	// create popup
-	if (popup = PopupContainer.get('image')) {
-		init(popup);
-	} else {
-		PopupContainer.load('image', {
-			url: image.data('popup'),
-			success: init
-		});
+		// create popup
+		if (popup = PopupContainer.get('image')) {
+			init_popup(popup);
+		} else {
+			PopupContainer.load('image', {
+				url: field.field.closest('.f-image').data('popup'),
+				success: init_popup
+			});
+		}
 	}
 };
 
