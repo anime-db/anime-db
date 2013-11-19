@@ -228,23 +228,27 @@ FormImageController.prototype = {
  * Form local path
  */
 // model field
-var FormLocalPathModelField = function(path, button) {
+var FormLocalPathModelField = function(path, button, controller) {
 	this.path = path;
 	this.button = button;
 	this.popup = null;
 
 	var that = this;
 	this.button.click(function() {
-		that.change();
+		if (that.popup) {
+			that.change();
+		} else {
+			controller.getPopup(that, function(popup) {
+				that.popup = popup;
+				that.change();
+			})
+		}
 	});
 };
 FormLocalPathModelField.prototype = {
 	change: function() {
 		this.popup.change(this.path.val());
 		this.popup.show();
-	},
-	setPopup: function(popup) {
-		this.popup = popup;
 	}
 };
 
@@ -274,7 +278,6 @@ var FormLocalPathModelPopup = function(popup, path, button, folders, prototype, 
 	this.path = path;
 	this.button = button;
 	this.field = field;
-	this.field.setPopup(this);
 	this.form = popup.body.find('form');
 	this.folders = folders;
 	this.folder_prototype = prototype;
@@ -360,30 +363,37 @@ var FormLocalPathController = function(path) {
 	// create field model
 	var field = new FormLocalPathModelField(
 		path.find('input'),
-		path.find('.change-path')
+		path.find('.change-path'),
+		this
 	);
-	// on load popup
-	var init_obj = function (popup) {
-		var folders = popup.body.find('.folders');
-		// create model
-		new FormLocalPathModelPopup(
-			popup,
-			popup.body.find('#local_path_popup_path'),
-			popup.body.find('.change-path'),
-			folders,
-			folders.data('prototype'),
-			field
-		);
-	};
+};
+FormLocalPathController.prototype = {
+	getPopup: function(field, init) {
+		init = init || function() {};
+		// on load popup
+		var init_popup = function (popup) {
+			var folders = popup.body.find('.folders');
+			// create model
+			popup = new FormLocalPathModelPopup(
+				popup,
+				popup.body.find('#local_path_popup_path'),
+				popup.body.find('.change-path'),
+				folders,
+				folders.data('prototype'),
+				field
+			);
+			init(popup);
+		};
 
-	// create popup
-	if (popup = PopupContainer.get('local-path')) {
-		init_obj(popup);
-	} else {
-		PopupContainer.load('local-path', {
-			url: path.data('popup'),
-			success: init_obj
-		});
+		// create popup
+		if (popup = PopupContainer.get('local-path')) {
+			init_popup(popup);
+		} else {
+			PopupContainer.load('local-path', {
+				url: field.path.closest('.f-local-path').data('popup'),
+				success: init_popup
+			});
+		}
 	}
 };
 
