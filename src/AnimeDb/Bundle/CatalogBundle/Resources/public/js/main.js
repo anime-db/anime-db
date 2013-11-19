@@ -191,7 +191,7 @@ var FormImageController = function(image) {
 		image.find('.change-button')
 	);
 	// on load popup
-	var init_obj = function (popup) {
+	var init = function (popup) {
 		// create model
 		new FormImageModelPopup(
 			popup,
@@ -203,11 +203,11 @@ var FormImageController = function(image) {
 
 	// create popup
 	if (popup = PopupContainer.get('image')) {
-		init_obj(popup);
+		init(popup);
 	} else {
 		PopupContainer.load('image', {
 			url: image.data('popup'),
-			success: init_obj
+			success: init
 		});
 	}
 };
