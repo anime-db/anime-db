@@ -115,6 +115,7 @@ class FormController extends Controller
      */
     public function imageUploadAction(Request $request) {
         $image = new ImageField();
+        /* @var $form \Symfony\Component\Form\Form */
         $form = $this->createForm(new UploadImage(), $image);
         $form->handleRequest($request);
 
