@@ -32,18 +32,18 @@ class RefillController extends Controller
      *
      * @param string $plugin
      * @param string $field
-     * @param \AnimeDb\Bundle\CatalogBundle\Entity\Item $item
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function refillAction($plugin, $field, Item $item, Request $request)
+    public function refillAction($plugin, $field, Request $request)
     {
         /* @var $refiller \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Refiller */
         if (!($refiller = $this->get('anime_db.plugin.refiller')->getPlugin($plugin))) {
             throw $this->createNotFoundException('Plugin \''.$plugin.'\' is not found');
         }
-        $item = $this->fillItemFromRequest($item, $request);
+        $item = $this->createForm('anime_db_catalog_entity_item', new Item())
+            ->handleRequest($request);
 
         $form = $this->getForm($field, $refiller->refill($item, $field));
 
@@ -58,18 +58,18 @@ class RefillController extends Controller
      *
      * @param string $plugin
      * @param string $field
-     * @param \AnimeDb\Bundle\CatalogBundle\Entity\Item $item
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function searchAction($plugin, $field, Item $item, Request $request)
+    public function searchAction($plugin, $field, Request $request)
     {
         /* @var $refiller \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Refiller */
         if (!($refiller = $this->get('anime_db.plugin.refiller')->getPlugin($plugin))) {
             throw $this->createNotFoundException('Plugin \''.$plugin.'\' is not found');
         }
-        $item = $this->fillItemFromRequest($item, $request);
+        $item = $this->createForm('anime_db_catalog_entity_item', new Item())
+            ->handleRequest($request);
 
         $result = array();
         if ($refiller->isCanSearch($item, $field)) {
@@ -99,18 +99,18 @@ class RefillController extends Controller
      *
      * @param string $plugin
      * @param string $field
-     * @param \AnimeDb\Bundle\CatalogBundle\Entity\Item $item
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function fillFromSearchAction($plugin, $field, Item $item, Request $request)
+    public function fillFromSearchAction($plugin, $field, Request $request)
     {
         /* @var $refiller \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Refiller */
         if (!($refiller = $this->get('anime_db.plugin.refiller')->getPlugin($plugin))) {
             throw $this->createNotFoundException('Plugin \''.$plugin.'\' is not found');
         }
-        $item = $this->fillItemFromRequest($item, $request);
+        $item = $this->createForm('anime_db_catalog_entity_item', new Item())
+            ->handleRequest($request);
 
         $form = $this->getForm($field, $refiller->refillFromSearchResult($item, $field, $request->get('data')));
 
@@ -159,23 +159,5 @@ class RefillController extends Controller
         }
 
         return $this->createForm($form, $data);
-    }
-
-    /**
-     * Fill the item from the request
-     *
-     * @param \AnimeDb\Bundle\CatalogBundle\Entity\Item $item
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \AnimeDb\Bundle\CatalogBundle\Entity\Item
-     */
-    protected function fillItemFromRequest(Item $item, Request $request)
-    {
-        $request = clone $request;
-        $request->request->replace($request->query->all());
-        $request->setMethod('POST');
-        $this->createForm('anime_db_catalog_entity_item', $item)
-            ->handleRequest($request);
-        return $item;
     }
 }

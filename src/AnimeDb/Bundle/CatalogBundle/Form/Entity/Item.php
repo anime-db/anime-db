@@ -218,7 +218,7 @@ class Item extends AbstractType
     protected function getRefillAttr($field, ItemEntity $item = null)
     {
         // item exists and can be refilled
-        if ($item instanceof ItemEntity && $item->getId() &&
+        if ($item instanceof ItemEntity && $item->getName() &&
             ($plugins = $this->chain->getPluginsThatCanFillItem($item, $field))
         ) {
             /* @var $plugin \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Refiller */
@@ -232,7 +232,6 @@ class Item extends AbstractType
 
             return [
                 'data-type' => 'refill',
-                'data-id' => $item->getId(),
                 'data-plugins' => $this->templating->render('AnimeDbCatalogBundle:Form:refillers.html.twig', [
                     'item' => $item,
                     'field' => $field,

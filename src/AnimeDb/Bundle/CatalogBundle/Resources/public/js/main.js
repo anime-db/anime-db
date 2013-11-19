@@ -698,10 +698,9 @@ ConfirmDeleteModel.prototype = {
 /**
  * Form refill field
  */
-var FormRefill = function(form, button, item_id, controller, handler, sources) {
+var FormRefill = function(form, button, controller, handler, sources) {
 	this.form = form;
 	this.button = button;
-	this.item_id = item_id;
 	this.controller = controller;
 	this.handler = handler;
 	this.sources = sources;
@@ -765,6 +764,7 @@ FormRefill.prototype = {
 		} else {
 			PopupContainer.lazyload(name, {
 				url: url,
+				method: 'POST', // request is too large for GET
 				data: this.form.serialize(),
 				success: function(popup) {
 					that.handler.notify(popup.body);
@@ -925,7 +925,6 @@ refills.each(function() {
 			new FormRefill(
 				form,
 				$(this),
-				field.data('id'),
 				controller,
 				FormContainer,
 				CollectionContainer.get('anime_db_catalog_entity_item_sources')
