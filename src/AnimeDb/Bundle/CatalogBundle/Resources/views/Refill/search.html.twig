@@ -1,7 +1,6 @@
 <div class="b-refill-search">
-	<h2>{% trans %}List of results{% endtrans %}</h2>
 	{% if result is not empty %}
-		<span>{% trans %}Select the entry you want to use{% endtrans %}</span>
+		<span>{% trans %}Plugin found a few items like yours. Select the item you want to use. The plugin can add the link to source to the item, which will identify the item and not to perform a search in the future.{% endtrans %}</span>
 		<ul>
 			{% for item in result %}
 				<li><a href="{{ item.link }}" title="{% trans %}Use to fill{% endtrans %}">{{ item.name }}</a></li>

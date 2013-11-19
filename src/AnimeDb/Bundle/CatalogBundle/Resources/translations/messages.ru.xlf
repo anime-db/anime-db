@@ -567,8 +567,8 @@
                 <target>Заполнить это поле из источника</target>
             </trans-unit>
             <trans-unit id="150">
-                <source>Select the entry you want to use</source>
-                <target>Выберите запись, которую Вы хотите использовать</target>
+                <source>Plugin found a few items like yours. Select the item you want to use. The plugin can add the link to source to the item, which will identify the item and not to perform a search in the future.</source>
+                <target>Плагин нашел несколько записей похожи на вашу. Выберите запись, которую Вы хотите использовать. Плагин может добавить в источники записи, ссылку по которой сможет идентифицировать запись и не выполнять поиск в дальнейшем.</target>
             </trans-unit>
             <trans-unit id="151">
                 <source>Nothing found</source>
