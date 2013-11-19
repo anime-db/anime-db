@@ -446,6 +446,7 @@ Popup.prototype = {
 
 var PopupList = {
 	popup_loader: null,
+	xhr: null,
 	list: [],
 	load: function(name, options) {
 		options = $.extend({
@@ -482,13 +483,17 @@ var PopupList = {
 		PopupList.popup_loader = new Popup(el);
 	},
 	sendRequest: function(options) {
-		var xhr = $.ajax(options);
-		Cap.registr({
-			show:function(){},
-			hide:function(){
-				xhr.abort();
-			},
-		});
+		if (PopupList.xhr === null) {
+			Cap.registr({
+				show:function(){},
+				hide:function(){
+					PopupList.xhr.abort();
+				},
+			});
+		} else {
+			PopupList.xhr.abort();
+		}
+		PopupList.xhr = $.ajax(options);
 	},
 	lazyload: function(name, options) {
 		options = $.extend({
