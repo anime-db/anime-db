@@ -202,10 +202,10 @@ var FormImageController = function(image) {
 	};
 
 	// create popup
-	if (popup = PopupList.get('image')) {
+	if (popup = PopupContainer.get('image')) {
 		init_obj(popup);
 	} else {
-		PopupList.load('image', {
+		PopupContainer.load('image', {
 			url: image.data('popup'),
 			success: init_obj
 		});
@@ -367,10 +367,10 @@ var FormLocalPathController = function(path) {
 	};
 
 	// create popup
-	if (popup = PopupList.get('local-path')) {
+	if (popup = PopupContainer.get('local-path')) {
 		init_obj(popup);
 	} else {
-		PopupList.load('local-path', {
+		PopupContainer.load('local-path', {
 			url: path.data('popup'),
 			success: init_obj
 		});
@@ -444,7 +444,7 @@ Popup.prototype = {
 	}
 }
 
-var PopupList = {
+var PopupContainer = {
 	popup_loader: null,
 	xhr: null,
 	list: [],
@@ -458,42 +458,42 @@ var PopupList = {
 			}
 		}, options||{});
 
-		if (typeof(PopupList.list[name]) != 'undefined') {
-			options.success(PopupList.list[name]);
+		if (typeof(PopupContainer.list[name]) != 'undefined') {
+			options.success(PopupContainer.list[name]);
 		} else {
 			// init popup on success load popup content
 			var success = options.success;
 			options.success = function(data) {
-				PopupList.list[name] = new Popup($(data));
-				success(PopupList.list[name]);
-				$('body').append(PopupList.list[name].body);
+				PopupContainer.list[name] = new Popup($(data));
+				success(PopupContainer.list[name]);
+				$('body').append(PopupContainer.list[name].body);
 			}
 
-			PopupList.sendRequest(options);
+			PopupContainer.sendRequest(options);
 		}
 	},
 	get: function(name) {
-		if (typeof(PopupList.list[name]) != 'undefined') {
-			return PopupList.list[name];
+		if (typeof(PopupContainer.list[name]) != 'undefined') {
+			return PopupContainer.list[name];
 		} else {
 			return null;
 		}
 	},
 	setPopupLoader: function(el) {
-		PopupList.popup_loader = new Popup(el);
+		PopupContainer.popup_loader = new Popup(el);
 	},
 	sendRequest: function(options) {
-		if (PopupList.xhr === null) {
+		if (PopupContainer.xhr === null) {
 			Cap.registr({
 				show:function(){},
 				hide:function(){
-					PopupList.xhr.abort();
+					PopupContainer.xhr.abort();
 				},
 			});
 		} else {
-			PopupList.xhr.abort();
+			PopupContainer.xhr.abort();
 		}
-		PopupList.xhr = $.ajax(options);
+		PopupContainer.xhr = $.ajax(options);
 	},
 	lazyload: function(name, options) {
 		options = $.extend({
@@ -502,31 +502,31 @@ var PopupList = {
 				if (status != 'abort' && confirm(trans('Failed to get the data. Want to try again?'))) {
 					$.ajax(options);
 				} else {
-					PopupList.popup_loader.hide();
+					PopupContainer.popup_loader.hide();
 				}
 			}
 		}, options||{});
 
-		if (typeof(PopupList.list[name]) != 'undefined') {
-			options.success(PopupList.list[name]);
+		if (typeof(PopupContainer.list[name]) != 'undefined') {
+			options.success(PopupContainer.list[name]);
 		} else {
-			PopupList.popup_loader.show();
+			PopupContainer.popup_loader.show();
 
 			// init popup on success load popup content
 			var success = options.success;
 			options.success = function(data) {
-				var popup = new Popup(PopupList.popup_loader.body.clone().hide());
+				var popup = new Popup(PopupContainer.popup_loader.body.clone().hide());
 				popup.body.attr('id', name).find('.content').append(data);
 				$('body').append(popup.body);
 
-				PopupList.list[name] = popup;
+				PopupContainer.list[name] = popup;
 				success(popup);
 
 				// animate show popup
 				var width = popup.body.width();
 				var height = popup.body.height();
-				PopupList.popup_loader.body.find()
-				PopupList.popup_loader.body.addClass('resize').animate({
+				PopupContainer.popup_loader.body.find()
+				PopupContainer.popup_loader.body.addClass('resize').animate({
 					'width': width,
 					'height': height,
 					'margin-left': -(width/2),
@@ -534,11 +534,11 @@ var PopupList = {
 				}, 400, function() {
 					popup.show();
 					// reset style
-					PopupList.popup_loader.body.removeClass('resize').removeAttr('style').hide();
+					PopupContainer.popup_loader.body.removeClass('resize').removeAttr('style').hide();
 				});
 			}
 
-			PopupList.sendRequest(options);
+			PopupContainer.sendRequest(options);
 		}
 	}
 }
@@ -739,11 +739,11 @@ FormRefill.prototype = {
 		handler = handler || function() {};
 		var that = this;
 
-		if (popup = PopupList.get(name)) {
+		if (popup = PopupContainer.get(name)) {
 			handler(popup);
 			popup.show();
 		} else {
-			PopupList.lazyload(name, {
+			PopupContainer.lazyload(name, {
 				url: url,
 				data: this.form.serialize(),
 				success: function(popup) {
@@ -827,7 +827,7 @@ $(function(){
 // init cap
 Cap.setElement($('#cap'));
 // set lazyload popup loader
-PopupList.setPopupLoader($('#b-lazyload-popup'));
+PopupContainer.setPopupLoader($('#b-lazyload-popup'));
 
 var CollectionContainer = new FormCollectionContainer();
 
