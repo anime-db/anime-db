@@ -247,7 +247,16 @@ var FormLocalPathModelField = function(path, button, controller) {
 };
 FormLocalPathModelField.prototype = {
 	change: function() {
-		this.popup.change(this.path.val());
+		// correct the end symbol of path
+		value = this.path.val();
+		if (value.length && !(/[\\\/]$/.test(value))) {
+			if (value[0] == '/') {
+				this.path.val(value += '/');
+			} else {
+				this.path.val(value += '\\');
+			}
+		}
+		this.popup.change(value);
 		this.popup.show();
 	}
 };
