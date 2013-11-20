@@ -43,9 +43,10 @@ class RefillController extends Controller
             throw $this->createNotFoundException('Plugin \''.$plugin.'\' is not found');
         }
         $item = $this->createForm('anime_db_catalog_entity_item', new Item())
-            ->handleRequest($request);
+            ->handleRequest($request)
+            ->getData();
 
-        $form = $this->getForm($field, $refiller->refill($item, $field));
+        $form = $this->getForm($field, clone $item, $refiller->refill($item, $field));
 
         return $this->render('AnimeDbCatalogBundle:Refill:refill.html.twig', [
             'field' => $field,
@@ -69,7 +70,8 @@ class RefillController extends Controller
             throw $this->createNotFoundException('Plugin \''.$plugin.'\' is not found');
         }
         $item = $this->createForm('anime_db_catalog_entity_item', new Item())
-            ->handleRequest($request);
+            ->handleRequest($request)
+            ->getData();
 
         $result = array();
         if ($refiller->isCanSearch($item, $field)) {
@@ -110,9 +112,10 @@ class RefillController extends Controller
             throw $this->createNotFoundException('Plugin \''.$plugin.'\' is not found');
         }
         $item = $this->createForm('anime_db_catalog_entity_item', new Item())
-            ->handleRequest($request);
+            ->handleRequest($request)
+            ->getData();
 
-        $form = $this->getForm($field, $refiller->refillFromSearchResult($item, $field, $request->get('data')));
+        $form = $this->getForm($field, clone $item, $refiller->refillFromSearchResult($item, $field, $request->get('data')));
 
         return $this->render('AnimeDbCatalogBundle:Refill:refill.html.twig', [
             'field' => $field,
@@ -124,38 +127,45 @@ class RefillController extends Controller
      * Get form for field
      *
      * @param string $field
-     * @param \AnimeDb\Bundle\CatalogBundle\Entity\Item $item
+     * @param \AnimeDb\Bundle\CatalogBundle\Entity\Item $item_origin
+     * @param \AnimeDb\Bundle\CatalogBundle\Entity\Item $item_fill
      *
      * @return \Symfony\Component\Form\Form
      */
-    protected function getForm($field, Item $item)
+    protected function getForm($field, Item $item_origin, Item $item_fill)
     {
         switch ($field) {
             case Refiller::FIELD_EPISODES:
                 $form = new EpisodesForm();
-                $data = ['episodes' => $item->getEpisodes()];
+                $data = ['episodes' => $item_fill->getEpisodes()];
                 break;
             case Refiller::FIELD_GENRES:
                 $form = new GengresForm();
-                $data = ['genres' => $item->getGenres()];
+                $data = ['genres' => $item_fill->getGenres()];
                 break;
             case Refiller::FIELD_NAMES:
                 $form = new NamesForm();
-                $data = ['names' => $item->getNames()];
+                $data = ['names' => $item_fill->getNames()];
                 break;
             case Refiller::FIELD_SUMMARY:
                 $form = new SummaryForm();
-                $data = ['summary' => $item->getSummary()];
+                $data = ['summary' => $item_fill->getSummary()];
                 break;
             default:
                 throw $this->createNotFoundException('Field \''.$field.'\' is not supported');
         }
         // search new source link
-        foreach ($item->getSources() as $source) {
-            if ($source->getId()) {
-                $data['source'] = $source->getUrl();
-                break;
+        $sources_origin = array_reverse($item_origin->getSources()->toArray());
+        $sources_fill = array_reverse($item_fill->getSources()->toArray());
+        foreach ($sources_fill as $source_fill) {
+            // sources is already added
+            foreach ($sources_origin as $source_origin) {
+                if ($source_fill->getUrl() == $source_origin->getUrl()) {
+                    continue 2;
+                }
             }
+            $data['source'] = $source->getUrl();
+            break;
         }
 
         return $this->createForm($form, $data);
