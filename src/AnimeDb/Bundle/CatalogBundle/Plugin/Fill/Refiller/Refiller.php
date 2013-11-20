@@ -50,6 +50,69 @@ abstract class Refiller extends Plugin
     const FIELD_SUMMARY = 'summary';
 
     /**
+     * Item cover for refill
+     *
+     * @var string
+     */
+    const FIELD_COVER = 'cover';
+
+    /**
+     * Item date start for refill
+     *
+     * @var string
+     */
+    const FIELD_DATE_START = 'date_start';
+
+    /**
+     * Item date end for refill
+     *
+     * @var string
+     */
+    const FIELD_DATE_END = 'date_end';
+
+    /**
+     * Item manufacturer for refill
+     *
+     * @var string
+     */
+    const FIELD_MANUFACTURER = 'manufacturer';
+
+    /**
+     * Item duration for refill
+     *
+     * @var string
+     */
+    const FIELD_DURATION = 'duration';
+
+    /**
+     * Item file info for refill
+     *
+     * @var string
+     */
+    const FIELD_FILE_INFO = 'file_info';
+
+    /**
+     * Item sources for refill
+     *
+     * @var string
+     */
+    const FIELD_SOURCES = 'sources';
+
+    /**
+     * Item episodes number for refill
+     *
+     * @var string
+     */
+    const FIELD_EPISODES_NUMBER = 'episodes_number';
+
+    /**
+     * Item images for refill
+     *
+     * @var string
+     */
+    const FIELD_IMAGES = 'images';
+
+    /**
      * Is can refill item
      *
      * @param \AnimeDb\Bundle\CatalogBundle\Entity\Item $item
