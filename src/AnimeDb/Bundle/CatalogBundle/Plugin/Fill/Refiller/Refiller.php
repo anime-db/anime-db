@@ -106,6 +106,13 @@ abstract class Refiller extends Plugin
     const FIELD_IMAGES = 'images';
 
     /**
+     * Item translate for refill
+     *
+     * @var string
+     */
+    const FIELD_TRANSLATE = 'translate';
+
+    /**
      * Is can refill item
      *
      * @param \AnimeDb\Bundle\CatalogBundle\Entity\Item $item
