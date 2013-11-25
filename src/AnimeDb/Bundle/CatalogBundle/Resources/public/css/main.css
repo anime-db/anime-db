@@ -1066,36 +1066,48 @@ h1.logo a span {
 	background: url(../images/fill.png) no-repeat 0 0;
 }
 
-#refill-form-anime_db_catalog_entity_item_summary,
-#refill-form-anime_db_catalog_entity_item_episodes {
-	width: 510px;
-	height: 248px;
-}
-#refill-form-anime_db_catalog_entity_item_names {
-	width: 333px;
-	max-height: 300px;
-	overflow-x: hidden;
-	overflow-y: auto;
-}
-#refill-form-anime_db_catalog_entity_item_names .content {
-	width: 333px;
-}
-#refill-form-anime_db_catalog_entity_item_names .b-refill-form {
-	width: 330px;
-}
-#refill-form-anime_db_catalog_entity_item_names .f-collection {
-	margin: 0;
-}
-#refill-form-anime_db_catalog_entity_item_names .f-fields {
+#refill-form-anime_db_catalog_entity_item_date_start,
+#refill-form-anime_db_catalog_entity_item_date_end,
+#refill-form-anime_db_catalog_entity_item_episodes_number,
+#refill-form-anime_db_catalog_entity_item_duration,
+#refill-form-anime_db_catalog_entity_item_manufacturer,
+#refill-form-anime_db_catalog_entity_item_manufacturer #anime_db_catalog_entity_item_manufacturer {
 	width: 310px;
-}
-#refill-form-anime_db_catalog_entity_item_names label {
-	display: none;
 }
 #refill-form-anime_db_catalog_entity_item_genres {
 	width: 150px;
 	height: 116px;
 	text-align: center;
+}
+/* hav textarea in form */
+#refill-form-anime_db_catalog_entity_item_summary,
+#refill-form-anime_db_catalog_entity_item_episodes {
+	width: 510px;
+	height: 248px;
+}
+/* hav a form collection */
+#refill-form-anime_db_catalog_entity_item_names,
+#refill-form-anime_db_catalog_entity_item_sources {
+	width: 333px;
+	max-height: 300px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+#refill-form-anime_db_catalog_entity_item_names .content,
+#refill-form-anime_db_catalog_entity_item_sources .content {
+	width: 333px;
+}
+#refill-form-anime_db_catalog_entity_item_names .f-collection,
+#refill-form-anime_db_catalog_entity_item_sources .f-collection {
+	margin: 0;
+}
+#refill-form-anime_db_catalog_entity_item_names .f-collection .f-fields,
+#refill-form-anime_db_catalog_entity_item_sources .f-collection .f-fields {
+	width: 310px;
+}
+#refill-form-anime_db_catalog_entity_item_names .f-collection label,
+#refill-form-anime_db_catalog_entity_item_sources .f-collection label {
+	display: none;
 }
 
 #refill-search {
@@ -1116,7 +1128,4 @@ h1.logo a span {
 #refill-search li {
 	list-style: none;
 	margin-bottom: 5px;
-}
-#refill-form-anime_db_catalog_entity_item_date_start {
-	width: 310px;
 }
