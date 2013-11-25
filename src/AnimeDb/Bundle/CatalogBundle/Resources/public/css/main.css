@@ -307,16 +307,18 @@ h1.logo a span {
 	height: 10px;
 }
 #cap {
-	z-index: 10;
-	background: #222;
 	position: fixed;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
+	width: 100%;
+	height: 100%;
+	display: none;
+	z-index: 10;
+}
+#cap-content {
+	background: #222;
+	width: 100%;
+	height: 100%;
 	opacity: 0.7;
 	filter: alpha(Opacity=70);
-	display: none;
 }
 
 /*
@@ -739,14 +741,23 @@ h1.logo a span {
 /**
  * Popup
  */
-.popup {
+#popup-container {
 	position: fixed;
-	top: 50%;
-	left: 50%;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: table;
 	z-index: 11;
-	margin-top: -67px;
-	margin-left: -280px;
+}
+#popup-wrapper {
+	display: table-cell;
+	vertical-align: middle;
+}
+.popup {
+	position: relative;
 	width: 560px;
+	margin: auto;
 	padding: 20px 25px 15px 25px;
 	background: #fff url(../images/bg-popup.gif) no-repeat top right;
 	border: 3px #ff9f0b solid;
@@ -783,8 +794,6 @@ h1.logo a span {
 	display: none;
 	height: 70px;
 	width: 70px;
-	margin-top: -38px;
-	margin-left: -38px;
 }
 #b-lazyload-popup .content {
 	background: url(../images/loader-popup.gif) no-repeat center center;
@@ -798,8 +807,6 @@ h1.logo a span {
  */
 #f-image-popup {
 	width: 380px;
-	margin-top: -73px;
-	margin-left: -218px;
 }
 #f-image-popup label {
 	width: 120px;
@@ -855,7 +862,6 @@ h1.logo a span {
 	margin-left: 5px;
 }
 #f-path-popup {
-	margin-top: -141px;
 	width: 400px;
 }
 #f-path-popup .folders {
@@ -1064,14 +1070,10 @@ h1.logo a span {
 #refill-form-anime_db_catalog_entity_item_episodes {
 	width: 510px;
 	height: 248px;
-	margin-top: -124px;
-	margin-left: -255px;
 }
 #refill-form-anime_db_catalog_entity_item_names {
 	width: 333px;
 	max-height: 300px;
-	margin-top: -150px;
-	margin-left: -166px;
 	overflow-x: hidden;
 	overflow-y: auto;
 }
@@ -1093,16 +1095,12 @@ h1.logo a span {
 #refill-form-anime_db_catalog_entity_item_genres {
 	width: 150px;
 	height: 116px;
-	margin-top: -59px;
-	margin-left: -75px;
 	text-align: center;
 }
 
 #refill-search {
 	width: 470px;
 	height: 200px;
-	margin-left: -235px;
-	margin-top: -100px;
 }
 #refill-search h2 {
 	margin-top: 0;
@@ -1118,4 +1116,7 @@ h1.logo a span {
 #refill-search li {
 	list-style: none;
 	margin-bottom: 5px;
+}
+#refill-form-anime_db_catalog_entity_item_date_start {
+	width: 310px;
 }

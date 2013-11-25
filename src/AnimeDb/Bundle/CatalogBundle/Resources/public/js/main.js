@@ -21,7 +21,7 @@ BlockLoadHandler.prototype = {
 	unregistr: function(observer) {
 		for (var i in this.observers) {
 			if (this.observers[i] === observer) {
-				delete this.observers[i];
+				this.observers.splice(i, 1);
 			}
 		}
 	},
@@ -447,7 +447,7 @@ var Cap = {
 	unregistr: function(observer) {
 		for (var i in Cap.observers) {
 			if (Cap.observers[i] === observer) {
-				delete Cap.observers[i];
+				Cap.observers.splice(i, 1);
 			}
 		}
 	}
@@ -477,6 +477,7 @@ var PopupContainer = {
 	popup_loader: null,
 	xhr: null,
 	list: [],
+	container: $('body'),
 	load: function(name, options) {
 		options = $.extend({
 			success: function() {},
@@ -495,7 +496,7 @@ var PopupContainer = {
 			options.success = function(data) {
 				PopupContainer.list[name] = new Popup($(data));
 				success(PopupContainer.list[name]);
-				$('body').append(PopupContainer.list[name].body);
+				PopupContainer.container.append(PopupContainer.list[name].body);
 			}
 
 			PopupContainer.sendRequest(options);
@@ -546,7 +547,7 @@ var PopupContainer = {
 			options.success = function(data) {
 				var popup = new Popup(PopupContainer.popup_loader.body.clone().hide());
 				popup.body.attr('id', name).find('.content').append(data);
-				$('body').append(popup.body);
+				PopupContainer.container.append(popup.body);
 
 				PopupContainer.list[name] = popup;
 				success(popup);
@@ -557,9 +558,7 @@ var PopupContainer = {
 				PopupContainer.popup_loader.body.find()
 				PopupContainer.popup_loader.body.addClass('resize').animate({
 					'width': width,
-					'height': height,
-					'margin-left': -(width/2),
-					'margin-top': -(height/2)
+					'height': height
 				}, 400, function() {
 					popup.show();
 					// reset style
@@ -857,6 +856,7 @@ $(function(){
 Cap.setElement($('#cap'));
 // set lazyload popup loader
 PopupContainer.setPopupLoader($('#b-lazyload-popup'));
+PopupContainer.container = $('#popup-wrapper');
 
 var CollectionContainer = new FormCollectionContainer();
 
