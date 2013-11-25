@@ -15,12 +15,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Refill item field date end
+ * Refill item field date start
  *
  * @package AnimeDb\Bundle\CatalogBundle\Form\Plugin\Refiller
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class DataEnd extends AbstractType
+class DateStart extends AbstractType
 {
     /**
      * (non-PHPdoc)
@@ -29,10 +29,9 @@ class DataEnd extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('date_end', 'date', [
+            ->add('date_start', 'date', [
                 'format' => 'yyyy-MM-dd',
                 'widget' => 'single_text',
-                'required' => false,
                 'label'    => false
             ])
             ->add('source', 'hidden', [
