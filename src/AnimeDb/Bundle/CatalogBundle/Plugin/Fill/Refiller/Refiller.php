@@ -50,13 +50,6 @@ abstract class Refiller extends Plugin
     const FIELD_SUMMARY = 'summary';
 
     /**
-     * Item cover for refill
-     *
-     * @var string
-     */
-    const FIELD_COVER = 'cover';
-
-    /**
      * Item date start for refill
      *
      * @var string
