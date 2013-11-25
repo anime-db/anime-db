@@ -93,17 +93,22 @@ class Item extends AbstractType
             ->add('date_start', 'date', [
                 'format' => 'yyyy-MM-dd',
                 'widget' => 'single_text',
+                'attr' => $this->getRefillAttr(Refiller::FIELD_DATE_START, $options['data'])
             ])
             ->add('date_end', 'date', [
                 'format' => 'yyyy-MM-dd',
                 'widget' => 'single_text',
-                'required' => false
+                'required' => false,
+                'attr' => $this->getRefillAttr(Refiller::FIELD_DATE_END, $options['data'])
             ])
             ->add('episodes_number', null, [
                 'required' => false,
                 'label'    => 'Number of episodes',
+                'attr' => $this->getRefillAttr(Refiller::FIELD_EPISODES_NUMBER, $options['data'])
             ])
-            ->add('duration')
+            ->add('duration', null, [
+                'attr' => $this->getRefillAttr(Refiller::FIELD_DURATION, $options['data'])
+            ])
             ->add('type', 'entity', [
                 'class'    => 'AnimeDbCatalogBundle:Type',
                 'property' => 'name'
@@ -116,7 +121,8 @@ class Item extends AbstractType
             ])
             ->add('manufacturer', 'entity', [
                 'class'    => 'AnimeDbCatalogBundle:Country',
-                'property' => 'name'
+                'property' => 'name',
+                'attr' => $this->getRefillAttr(Refiller::FIELD_MANUFACTURER, $options['data'])
             ])
             ->add('path', new LocalPathField(), [
                 'required' => false,
@@ -125,7 +131,8 @@ class Item extends AbstractType
                 ]
             ])
             ->add('translate', null, [
-                'required' => false
+                'required' => false,
+                'attr' => $this->getRefillAttr(Refiller::FIELD_TRANSLATE, $options['data'])
             ])
             ->add('summary', null, [
                 'required' => false,
@@ -136,7 +143,8 @@ class Item extends AbstractType
                 'attr' => $this->getRefillAttr(Refiller::FIELD_EPISODES, $options['data'])
             ])
             ->add('file_info', null, [
-                'required' => false
+                'required' => false,
+                'attr' => $this->getRefillAttr(Refiller::FIELD_FILE_INFO, $options['data'])
             ])
             ->add('storage', 'entity', [
                 'class'    => 'AnimeDbCatalogBundle:Storage',
@@ -151,6 +159,7 @@ class Item extends AbstractType
                 'options'      => [
                     'required' => false
                 ],
+                'attr' => $this->getRefillAttr(Refiller::FIELD_SOURCES, $options['data'])
             ])
             ->add('images', 'collection', [
                 'type'         => new Image(),
@@ -161,6 +170,7 @@ class Item extends AbstractType
                 'options'      => [
                     'required' => false
                 ],
+                'attr' => $this->getRefillAttr(Refiller::FIELD_IMAGES, $options['data'])
             ])
         ;
     }
