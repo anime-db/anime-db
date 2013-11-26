@@ -32,7 +32,7 @@ class Images extends AbstractType
         $builder
             ->add('images', 'collection', [
                 'type'         => new Image(),
-                'allow_add'    => true,
+                'allow_add'    => false,
                 'by_reference' => false,
                 'allow_delete' => true,
                 'label'        => false,
