@@ -412,10 +412,20 @@ FormLocalPathController.prototype = {
  */
 var Cap = {
 	element: null,
+	button: null,
 	observers: [],
 	html: $('html'),
 	setElement: function(element) {
-		Cap.element = element.click(function() {
+		Cap.element = element;
+		if (!Cap.button) {
+			Cap.setButton(element);
+		}
+	},
+	setButton: function(button) {
+		if (Cap.button) {
+			Cap.button.off('click.cap');
+		}
+		Cap.button = button.on('click.cap', function() {
 			Cap.hide();
 		});
 	},
@@ -853,6 +863,7 @@ FormRefillSearchItem.prototype = {
 $(function(){
 
 // init cap
+Cap.setButton($('#cap-content'));
 Cap.setElement($('#cap'));
 // set lazyload popup loader
 PopupContainer.setPopupLoader($('#b-lazyload-popup'));
