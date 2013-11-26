@@ -863,7 +863,7 @@ FormRefillSearchItem.prototype = {
 $(function(){
 
 // init cap
-Cap.setButton($('#cap-content'));
+Cap.setButton($('#popup-container'));
 Cap.setElement($('#cap'));
 // set lazyload popup loader
 PopupContainer.setPopupLoader($('#b-lazyload-popup'));
