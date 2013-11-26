@@ -571,8 +571,8 @@
                 <target>Найдено несколько записей похожих на вашу, выберите правильную.</target>
             </trans-unit>
             <trans-unit id="151">
-                <source>Reference to identify the record can be added to the sources in this case the search for this recording will not be performed again.</source>
-                <target>Ссылка для идентификации записи может быть добавлена в источники, в этом случае поиск по этой записи повторно проводится не будет.</target>
+                <source>Reference to identify the record can be added plugin to the sources in this case the search for this recording will not be performed again.</source>
+                <target>Ссылка для идентификации записи может быть добавлена плагином в источники, в этом случае поиск по этой записи повторно проводится не будет.</target>
             </trans-unit>
             <trans-unit id="152">
                 <source>Nothing found</source>
