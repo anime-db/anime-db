@@ -1132,12 +1132,8 @@ h1.logo a span {
 #refill-search h2 {
 	margin-top: 0;
 }
-#refill-search span {
-	margin-bottom: 5px;
-	display: block;
-}
 #refill-search ul {
-	margin: 0;
+	margin: 5px 0 0 0;
 	padding: 0;
 }
 #refill-search li {
