@@ -1087,18 +1087,16 @@ h1.logo a span {
 }
 /* hav a form collection */
 #refill-form-anime_db_catalog_entity_item_names,
-#refill-form-anime_db_catalog_entity_item_sources {
+#refill-form-anime_db_catalog_entity_item_sources,
+#refill-form-anime_db_catalog_entity_item_images {
 	width: 333px;
 	max-height: 300px;
 	overflow-x: hidden;
 	overflow-y: auto;
 }
-#refill-form-anime_db_catalog_entity_item_names .content,
-#refill-form-anime_db_catalog_entity_item_sources .content {
-	width: 333px;
-}
 #refill-form-anime_db_catalog_entity_item_names .f-collection,
-#refill-form-anime_db_catalog_entity_item_sources .f-collection {
+#refill-form-anime_db_catalog_entity_item_sources .f-collection,
+#refill-form-anime_db_catalog_entity_item_images .f-collection {
 	margin: 0;
 }
 #refill-form-anime_db_catalog_entity_item_names .f-collection .f-fields,
@@ -1106,8 +1104,16 @@ h1.logo a span {
 	width: 310px;
 }
 #refill-form-anime_db_catalog_entity_item_names .f-collection label,
-#refill-form-anime_db_catalog_entity_item_sources .f-collection label {
+#refill-form-anime_db_catalog_entity_item_sources .f-collection label,
+#refill-form-anime_db_catalog_entity_item_images .f-collection label {
 	display: none;
+}
+#refill-form-anime_db_catalog_entity_item_images {
+	width: 183px;
+	max-height: 400px;
+}
+#refill-form-anime_db_catalog_entity_item_images .f-collection .f-fields {
+	width: 164px;
 }
 
 #refill-search {
