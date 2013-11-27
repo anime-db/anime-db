@@ -554,7 +554,7 @@ var TableCheckAllController = function(checker) {
  * Confirm delete
  */
 var ConfirmDeleteModel = function(link) {
-	this.massage = link.data('massage') || 'Are you sure want to delete this item(s)?';
+	this.message = link.data('message') || 'Are you sure want to delete this item(s)?';
 	this.link = link;
 	var that = this;
 	link.click(function() {
@@ -563,7 +563,7 @@ var ConfirmDeleteModel = function(link) {
 };
 ConfirmDeleteModel.prototype = {
 	remove: function() {
-		return confirm(this.massage);
+		return confirm(this.message);
 	}
 };
 

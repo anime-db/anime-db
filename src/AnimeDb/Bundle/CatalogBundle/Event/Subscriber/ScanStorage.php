@@ -96,7 +96,7 @@ class ScanStorage implements EventSubscriberInterface
     {
         $notice = new Notice();
         $notice->setMessage($this->templating->render(
-            'AnimeDbCatalogBundle:Notice:massages/delete_item_files.html.twig',
+            'AnimeDbCatalogBundle:Notice:messages/delete_item_files.html.twig',
             ['item' => $event->getItem()]
         ));
         $this->em->persist($notice);
@@ -123,7 +123,7 @@ class ScanStorage implements EventSubscriberInterface
 
         $notice = new Notice();
         $notice->setMessage($this->templating->render(
-            'AnimeDbCatalogBundle:Notice:massages/detected_new_files.html.twig',
+            'AnimeDbCatalogBundle:Notice:messages/detected_new_files.html.twig',
             ['storage' => $event->getStorage(), 'name' => $name, 'link' => $link]
         ));
         $this->em->persist($notice);
@@ -138,7 +138,7 @@ class ScanStorage implements EventSubscriberInterface
     {
         $notice = new Notice();
         $notice->setMessage($this->templating->render(
-            'AnimeDbCatalogBundle:Notice:massages/update_item_files.html.twig',
+            'AnimeDbCatalogBundle:Notice:messages/update_item_files.html.twig',
             ['item' => $event->getItem()]
         ));
         $this->em->persist($notice);

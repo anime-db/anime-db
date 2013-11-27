@@ -123,7 +123,7 @@ class Builder extends ContainerAware
             ->setLinkAttribute('class', 'change');
         $menu->addChild('Delete record', ['route' => 'item_delete', 'routeParameters' => $params])
             ->setLinkAttribute('class', 'delete')
-            ->setLinkAttribute('data-massage', $this->container->get('translator')->trans(
+            ->setLinkAttribute('data-message', $this->container->get('translator')->trans(
                 'Are you sure want to delete %name%?',
                 ['%name%' => $options['name']]
             ));
