@@ -64,7 +64,6 @@ class UpdateCommand extends ContainerAwareCommand
         }
 
         $this->doUpdateComposer($output);
-        $this->doRestartService($output);
         $output->writeln('<info>Updating the application has been completed<info>');
     }
 
@@ -157,21 +156,6 @@ class UpdateCommand extends ContainerAwareCommand
         // you must re-connect AppKernal and its inclusion would lead to an error
         $this->executeCommand(escapeshellarg($this->getPhp()).' bin/composer update', $output);
         $output->writeln('<info>Update requirements has been completed</info>');
-    }
-
-    /**
-     * Do restart service
-     *
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
-    protected function doRestartService(OutputInterface $output)
-    {
-        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
-            $output->writeln('<info>You must restart the application</info>');
-        } else {
-            $this->executeCommand('bin/service restart', $output);
-            $output->writeln('<info>Restart the application</info>');
-        }
     }
 
     /**
