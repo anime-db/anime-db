@@ -409,20 +409,27 @@ class HomeController extends Controller
     /**
      * System update
      *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function updateAction()
-    {
-        return $this->render('AnimeDbCatalogBundle:Home:update.html.twig');
-    }
-
-    /**
-     * Execute system update
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function execUpdateAction()
+    public function updateAction(Request $request)
     {
-        return $this->render('AnimeDbCatalogBundle:Home:exec_update.html.twig');
+        if ($request->getMethod() == 'POST') {
+            // TODO exec update command
+        }
+        return $this->render('AnimeDbCatalogBundle:Home:update.html.twig', [
+            'confirmed' => $request->getMethod() == 'POST'
+        ]);
+    }
+
+    /**
+     * Show update log
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function updateLogAction()
+    {
+        return $this->render('AnimeDbCatalogBundle:Home:update_log.html.twig');
     }
 }

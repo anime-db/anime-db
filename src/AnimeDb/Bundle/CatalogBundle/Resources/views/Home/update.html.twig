@@ -5,15 +5,24 @@
 {% block content %}
 <div class="b-update">
 	<h2>{% trans %}Upgrading the system{% endtrans %}</h2>
-	<div class="b-update-ask">
-		<div>{% trans %}Upgrading the system and its components may take a few minutes. You are ready to run it?{% endtrans %}</div>
-		<form action="{{ path('home_exec_update') }}" method="post" target="update-iframe">
-			<a href="{{ path('home') }}" class="button">{% trans %}Cancel{% endtrans %}</a>
-			<button type="submit">{% trans %}Yes{% endtrans %}</button>
-		</form>
-	</div>
-	<div class="b-update-container">
-		<iframe name="update-iframe"></iframe>
-	</div>
+	{% if confirmed == false %}
+		<div class="b-update-ask">
+			<div class="b-message">{% trans %}Upgrading the system and its components may take a few minutes. You are ready to run it?{% endtrans %}</div>
+			<form action="" method="post">
+				<a href="{{ path('home') }}" class="button">{% trans %}Cancel{% endtrans %}</a>
+				<button type="submit">{% trans %}Yes{% endtrans %}</button>
+			</form>
+		</div>
+	{% else %}
+		<div class="b-update-container">
+			<div class="b-message">
+				{% trans with {
+					'%link_start%': '<a href="' ~ path('home_update_log') ~ '" data-target=".b-update-log">',
+					'%link_end%': '</a>'
+				} %}Performed update system. Do not turn off the system until the update is complete. %link_start%Show execution log.%link_end%{% endtrans %}
+			</div>
+			<div class="b-update-log"></div>
+		</div>
+	{% endif %}
 </div>
 {% endblock %}

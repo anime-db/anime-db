@@ -1020,16 +1020,19 @@ h1.logo a span {
 
 .b-update-ask,
 .b-update-container {
+	margin-top: 70px;
 	text-align: center;
 }
 .b-update-ask form {
 	margin-top: 10px;
 }
-.b-update-container {
-	display: none;
+.b-update-container .b-message {
+	padding-top: 34px;
+	background: url(../images/loader.gif) no-repeat center 0;
 }
-.b-update-container iframe {
+.b-update-container .b-update-log {
 	display: none;
+	margin: 5px auto 0 auto;
 	width: 500px;
 	height: 200px;
 	border: 1px gray solid;
