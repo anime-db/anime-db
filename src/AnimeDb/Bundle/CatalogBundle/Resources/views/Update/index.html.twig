@@ -16,10 +16,8 @@
 	{% else %}
 		<div class="b-update-container">
 			<div class="b-message">
-				{% trans with {
-					'%link_start%': '<a href="#" class="bt-toggle-block" data-target=".b-update-log">',
-					'%link_end%': '</a>'
-				} %}Performed update system. Do not turn off the system until the update is complete. %link_start%Show execution log.%link_end%{% endtrans %}
+				{% trans %}Performed update system. Do not turn off the system until the update is complete.{% endtrans %}<br />
+				<a href="#" class="bt-toggle-block" data-target=".b-update-log">{% trans %}Show execution log.{% endtrans %}</a>
 			</div>
 			<pre
 				class="b-update-log"

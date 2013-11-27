@@ -431,8 +431,12 @@
                 <target>Обновление успешно завершено. Перезапустите приложение для завершения обновления.</target>
             </trans-unit>
             <trans-unit id="108">
-                <source>Performed update system. Do not turn off the system until the update is complete. %link_start%Show execution log.%link_end%</source>
-                <target>Выполняется обновление системы. Не выключайте систему до завершения обновления. %link_start%Показать журнал выполнения.%link_end%</target>
+                <source>Performed update system. Do not turn off the system until the update is complete.</source>
+                <target>Выполняется обновление системы. Не выключайте систему до завершения обновления.</target>
+            </trans-unit>
+            <trans-unit id="109">
+                <source>Show execution log.</source>
+                <target>Показать журнал выполнения.</target>
             </trans-unit>
         </body>
     </file>
