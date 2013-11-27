@@ -25,6 +25,7 @@ use AnimeDb\Bundle\CatalogBundle\Form\Settings\General as GeneralForm;
 use AnimeDb\Bundle\CatalogBundle\Entity\Settings\General as GeneralEntity;
 use Symfony\Component\Yaml\Yaml;
 use AnimeDb\Bundle\CatalogBundle\Service\Listener\Request as RequestListener;
+use Symfony\Component\Process\PhpExecutableFinder;
 
 /**
  * Main page of the catalog
@@ -416,8 +417,18 @@ class HomeController extends Controller
     public function updateAction(Request $request)
     {
         if ($request->getMethod() == 'POST') {
-            // TODO exec update command
+            // exec update command
+            $root = $this->container->getParameter('kernel.root_dir');
+            $finder = new PhpExecutableFinder();
+
+            $console = $finder->find().' '.$root.'/console';
+            $log = $root.'/logs/update.log';
+            file_put_contents($root.'/logs/update.log', '');
+
+            chdir($root.'/../');
+            exec($console.' animedb:update >'.$log.' &');
         }
+
         return $this->render('AnimeDbCatalogBundle:Home:update.html.twig', [
             'confirmed' => $request->getMethod() == 'POST'
         ]);
