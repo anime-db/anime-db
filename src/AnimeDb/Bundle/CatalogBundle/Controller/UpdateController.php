@@ -47,7 +47,6 @@ class UpdateController extends Controller
             $out .= "Host: ".$host."\r\n";
             $out .= "Connection: Close\r\n\r\n";
             fwrite($fp, $out);
-            sleep(1);
             fclose($fp);
         }
 
