@@ -142,6 +142,10 @@
                 <source>Path</source>
                 <target>Путь</target>
             </trans-unit>
+            <trans-unit id="36">
+                <source>Yes</source>
+                <target>Да</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -14,6 +14,15 @@ home_settings:
     pattern:  /settings.html
     defaults: { _controller: AnimeDbCatalogBundle:Home:settings }
 
+home_update:
+    pattern:  /update.html
+    defaults: { _controller: AnimeDbCatalogBundle:Home:update }
+
+home_exec_update:
+    pattern:  /exec_update.html
+    defaults: { _controller: AnimeDbCatalogBundle:Home:execUpdate }
+    methods:   [POST]
+
 
 item_add_manually:
     pattern:  /add-manually.html

@@ -405,4 +405,24 @@ class HomeController extends Controller
             'form'  => $form->createView()
         ]);
     }
+
+    /**
+     * System update
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function updateAction()
+    {
+        return $this->render('AnimeDbCatalogBundle:Home:update.html.twig');
+    }
+
+    /**
+     * Execute system update
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function execUpdateAction()
+    {
+        return $this->render('AnimeDbCatalogBundle:Home:exec_update.html.twig');
+    }
 }

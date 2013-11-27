@@ -418,6 +418,18 @@
                 <source>Changes are detected in files of item %name%</source>
                 <target>Обнаружены изменения файлов записи %name%</target>
             </trans-unit>
+            <trans-unit id="105">
+                <source>Upgrading the system</source>
+                <target>Обновление системы</target>
+            </trans-unit>
+            <trans-unit id="106">
+                <source>Upgrading the system and its components may take a few minutes. You are ready to run it?</source>
+                <target>Обновление системы и ее компонентов может занять несколько минут. Вы готовы запустить его?</target>
+            </trans-unit>
+            <trans-unit id="107">
+                <source>Update successful. Restart the application to complete the update.</source>
+                <target>Обновление успешно завершено. Перезапустите приложение для того чтобы завершить обновление.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
