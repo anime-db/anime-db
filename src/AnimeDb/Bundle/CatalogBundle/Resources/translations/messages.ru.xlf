@@ -428,7 +428,7 @@
             </trans-unit>
             <trans-unit id="107">
                 <source>Update successful. Restart the application to complete the update.</source>
-                <target>Обновление успешно завершено. Перезапустите приложение для того чтобы завершить обновление.</target>
+                <target>Обновление успешно завершено. Перезапустите приложение для завершения обновления.</target>
             </trans-unit>
             <trans-unit id="108">
                 <source>Performed update system. Do not turn off the system until the update is complete. %link_start%Show execution log.%link_end%</source>

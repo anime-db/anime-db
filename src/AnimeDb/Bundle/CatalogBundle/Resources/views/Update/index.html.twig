@@ -17,11 +17,17 @@
 		<div class="b-update-container">
 			<div class="b-message">
 				{% trans with {
-					'%link_start%': '<a href="' ~ path('home_update_log') ~ '" data-target=".b-update-log">',
+					'%link_start%': '<a href="#" class="bt-toggle-block" data-target=".b-update-log">',
 					'%link_end%': '</a>'
 				} %}Performed update system. Do not turn off the system until the update is complete. %link_start%Show execution log.%link_end%{% endtrans %}
 			</div>
-			<div class="b-update-log"></div>
+			<pre
+				class="b-update-log"
+				data-from="{{ log_file }}"
+				data-end-message="{{ end_message }}"
+				data-message="{% trans %}Update successful. Restart the application to complete the update.{% endtrans %}"
+				data-redirect="{{ path('home') }}"
+			></pre>
 		</div>
 	{% endif %}
 </div>

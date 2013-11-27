@@ -566,3 +566,47 @@ ConfirmDeleteModel.prototype = {
 		return confirm(this.massage);
 	}
 };
+
+/**
+ * Toggle block visible
+ */
+var ToggleBlock = function(button) {
+	var block = $(button.data('target'));
+	button.click(function() {
+		block.toggle();
+		return false;
+	});
+};
+
+var UpdateLogBlock = function(block) {
+	this.block = block;
+	this.from = block.data('from');
+	this.message = block.data('message');
+	this.redirect = block.data('redirect') || '/';
+	this.end_message = new RegExp(block.data('end-message')+'$');
+	this.update();
+};
+UpdateLogBlock.prototype = {
+	update: function() {
+		var that = this;
+		$.ajax({
+			url: that.from,
+			success: function(data) {
+				if (that.block.text() != data) {
+					that.block.text(data).animate({scrollTop: that.block[0].scrollHeight}, 'slow');
+					if (that.end_message.test(data)) {
+						that.complete();
+						return;
+					}
+				}
+				setTimeout(function() {
+					that.update();
+				}, 400);
+			}
+		});
+	},
+	complete: function() {
+		alert(this.message);
+		top.location = this.redirect;
+	}
+};

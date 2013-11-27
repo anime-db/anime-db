@@ -1032,8 +1032,10 @@ h1.logo a span {
 }
 .b-update-container .b-update-log {
 	display: none;
+	text-align: left;
 	margin: 5px auto 0 auto;
 	width: 500px;
 	height: 200px;
 	border: 1px gray solid;
+	overflow: auto;
 }

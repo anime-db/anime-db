@@ -57,4 +57,13 @@ new TableCheckAllController($('.f-table-check-all'));
 $('.item-controls .delete, .storages-list .icon-storage-delete, .b-notice-list button[type=submit]').each(function(){
 	new ConfirmDeleteModel($(this));
 });
+
+$('.bt-toggle-block').each(function() {
+	new ToggleBlock($(this));
+});
+
+$('.b-update-log').each(function() {
+	new UpdateLogBlock($(this));
+});
+
 });
