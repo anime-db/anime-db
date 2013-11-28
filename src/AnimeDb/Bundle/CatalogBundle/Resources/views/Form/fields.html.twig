@@ -22,14 +22,16 @@
                 {% endfor %}
             {% endfor %}
             {{ form_rest(form) }}
-            <div class="f-row f-coll-button">
-                <div class="f-fields"></div>
-                <button
-                    type="button"
-                    class="icon icon-plus bt-add-item"
-                    title="{% trans %}Add row{% endtrans %}"
-                >{% trans %}Add row{% endtrans %}</button>
-            </div>
+            {% if allow_add %}
+                <div class="f-row f-coll-button">
+                    <div class="f-fields"></div>
+                    <button
+                        type="button"
+                        class="icon icon-plus bt-add-item"
+                        title="{% trans %}Add row{% endtrans %}"
+                    >{% trans %}Add row{% endtrans %}</button>
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endspaceless %}
@@ -117,7 +119,9 @@
     >
         {% set type = 'hidden' %}
         {{ block('form_widget') }}
-        <button type="button" class="change-button" title="{% trans %}Change image{% endtrans %}">{% trans %}Change image{% endtrans %}</button>
+        {% if read_only == false %}
+            <button type="button" class="change-button" title="{% trans %}Change image{% endtrans %}">{% trans %}Change image{% endtrans %}</button>
+        {% endif %}
         <img src="{% if value is not empty %}/media/{{ value }}{% endif %}" />
     </div>
     {% endspaceless %}

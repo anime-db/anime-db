@@ -124,6 +124,9 @@ button {
 }
 
 
+html.scroll-lock {
+	overflow: hidden;
+}
 
 /**
  * Logo
@@ -179,14 +182,17 @@ h1.logo a span {
 	width: 5px;
 }
 #navigation ul,
-#navigation ul li {
+#navigation ul li,
+.f-refill ul,
+.f-refill ul li {
 	margin: 0;
 	padding: 0;
 	list-style: none;
 	font-size: 13px;
 	line-height: 38px;
 }
-#navigation ul {
+#navigation ul,
+.f-refill ul {
 	white-space: nowrap;
 	position: relative;
 }
@@ -194,7 +200,8 @@ h1.logo a span {
 	float: left;
 }
 #navigation a,
-#navigation span {
+#navigation span,
+.f-refill a {
 	color: #ccc;
 	display: block;
 	float: left;
@@ -225,7 +232,8 @@ h1.logo a span {
 #navigation li:hover span {
 	color: #fff;
 }
-#navigation ul ul {
+#navigation ul ul,
+.f-refill ul {
 	position: absolute;
 	top: 100%;
 	background: black;
@@ -237,8 +245,10 @@ h1.logo a span {
 	-moz-box-shadow: 0 0 10px rgba(0,0,0,0.5);
 	-webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5);
 	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+	z-index: 1;
 }
-#navigation li:hover > ul {
+#navigation li:hover > ul,
+.f-refill:hover ul {
 	visibility: visible;
 	opacity: 1;
 	filter: alpha(Opacity=100);
@@ -297,16 +307,18 @@ h1.logo a span {
 	height: 10px;
 }
 #cap {
-	z-index: 10;
-	background: #222;
 	position: fixed;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
+	width: 100%;
+	height: 100%;
+	display: none;
+	z-index: 10;
+}
+#cap-content {
+	background: #222;
+	width: 100%;
+	height: 100%;
 	opacity: 0.7;
 	filter: alpha(Opacity=70);
-	display: none;
 }
 
 /*
@@ -729,20 +741,30 @@ h1.logo a span {
 /**
  * Popup
  */
-.popup {
+#popup-container {
 	position: fixed;
-	top: 50%;
-	left: 50%;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: table;
 	z-index: 11;
-	margin-top: -67px;
-	margin-left: -280px;
+}
+#popup-wrapper {
+	display: table-cell;
+	vertical-align: middle;
+}
+.popup {
+	position: relative;
 	width: 560px;
+	margin: auto;
 	padding: 20px 25px 15px 25px;
-	background: #fff url(../images/bg-home-right.gif) no-repeat -570px -144px;
+	background: #fff url(../images/bg-popup.gif) no-repeat top right;
 	border: 3px #ff9f0b solid;
 	-moz-box-shadow: 0 0 20px rgba(0,0,0,0.5);
 	-webkit-box-shadow: 0 0 20px rgba(0,0,0,0.5);
 	box-shadow: 0 0 20px rgba(0,0,0,0.5);
+	overflow: auto;
 }
 .popup .bt-popup-close {
 	position: absolute;
@@ -752,6 +774,8 @@ h1.logo a span {
 	width: 24px;
 	margin: 0;
 	padding: 0 0 0 24px;
+	text-indent: 24px;
+	line-height: 24px;
 	overflow: hidden;
 	background: url(../images/close.png) no-repeat 24px 0;
 	border: 0;
@@ -761,15 +785,28 @@ h1.logo a span {
 .popup .bt-popup-close:hover {
 	background-position: 0 0;
 }
+.popup .content {
+	background: none;
+	min-height: 100%;
+	padding: 0;
+}
+#b-lazyload-popup {
+	display: none;
+	height: 70px;
+	width: 70px;
+}
+#b-lazyload-popup .content {
+	background: url(../images/loader-popup.gif) no-repeat center center;
+}
+#b-lazyload-popup.resize .content{
+	background-image: none;
+}
 
 /**
  * Form image popup
  */
 #f-image-popup {
 	width: 380px;
-	margin-top: -73px;
-	margin-left: -218px;
-	background-position: -750px -144px;
 }
 #f-image-popup label {
 	width: 120px;
@@ -825,9 +862,7 @@ h1.logo a span {
 	margin-left: 5px;
 }
 #f-path-popup {
-	margin-top: -141px;
 	width: 400px;
-	background-position: -731px -144px;
 }
 #f-path-popup .folders {
 	height: 182px;
@@ -1015,4 +1050,93 @@ h1.logo a span {
 .b-item-duplicate .b-form {
 	clear: both;
 	text-align: right;
+}
+
+.f-refill {
+	position: relative;
+	margin-left: 5px;
+}
+.f-refill > span {
+	display: inline-block;
+	height: 16px;
+	width: 0;
+	padding-left: 16px;
+	text-indent: 16px;
+	overflow: hidden;
+	background: url(../images/fill.png) no-repeat 0 0;
+}
+
+#refill-form-anime_db_catalog_entity_item_date_start,
+#refill-form-anime_db_catalog_entity_item_date_end,
+#refill-form-anime_db_catalog_entity_item_episodes_number,
+#refill-form-anime_db_catalog_entity_item_duration,
+#refill-form-anime_db_catalog_entity_item_manufacturer,
+#refill-form-anime_db_catalog_entity_item_manufacturer #anime_db_catalog_entity_item_manufacturer {
+	width: 310px;
+}
+#refill-form-anime_db_catalog_entity_item_genres {
+	width: 150px;
+	height: 116px;
+	text-align: center;
+}
+/* hav textarea in form */
+#refill-form-anime_db_catalog_entity_item_summary,
+#refill-form-anime_db_catalog_entity_item_episodes {
+	width: 510px;
+	height: 248px;
+}
+/* hav a form collection */
+#refill-form-anime_db_catalog_entity_item_names,
+#refill-form-anime_db_catalog_entity_item_sources,
+#refill-form-anime_db_catalog_entity_item_images {
+	max-height: 300px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+#refill-form-anime_db_catalog_entity_item_names,
+#refill-form-anime_db_catalog_entity_item_names .content,
+#refill-form-anime_db_catalog_entity_item_sources,
+#refill-form-anime_db_catalog_entity_item_sources .content {
+	width: 333px;
+}
+#refill-form-anime_db_catalog_entity_item_names .f-collection,
+#refill-form-anime_db_catalog_entity_item_sources .f-collection,
+#refill-form-anime_db_catalog_entity_item_images .f-collection {
+	margin: 0;
+}
+#refill-form-anime_db_catalog_entity_item_names .f-collection .f-fields,
+#refill-form-anime_db_catalog_entity_item_sources .f-collection .f-fields {
+	width: 310px;
+}
+#refill-form-anime_db_catalog_entity_item_names .f-collection label,
+#refill-form-anime_db_catalog_entity_item_sources .f-collection label,
+#refill-form-anime_db_catalog_entity_item_images .f-collection label,
+#refill-form-anime_db_catalog_entity_item_images .f-image .change-button {
+	display: none;
+}
+#refill-form-anime_db_catalog_entity_item_images {
+	max-height: 400px;
+}
+#refill-form-anime_db_catalog_entity_item_images,
+#refill-form-anime_db_catalog_entity_item_images .content {
+	width: 183px;
+}
+#refill-form-anime_db_catalog_entity_item_images .f-collection .f-fields {
+	width: 164px;
+}
+
+#refill-search {
+	width: 470px;
+	height: 200px;
+}
+#refill-search h2 {
+	margin-top: 0;
+}
+#refill-search ul {
+	margin: 5px 0 0 0;
+	padding: 0;
+}
+#refill-search li {
+	list-style: none;
+	margin-bottom: 5px;
 }

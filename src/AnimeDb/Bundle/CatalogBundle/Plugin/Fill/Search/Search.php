@@ -8,19 +8,19 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\CatalogBundle\Plugin\Search;
+namespace AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Search;
 
 use AnimeDb\Bundle\CatalogBundle\Plugin\Plugin;
 use Knp\Menu\ItemInterface;
 use AnimeDb\Bundle\CatalogBundle\Form\Plugin\Search as SearchForm;
 use AnimeDb\Bundle\CatalogBundle\Form\Plugin\Filler as FillerForm;
-use AnimeDb\Bundle\CatalogBundle\Plugin\Filler\Filler;
+use AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Filler\Filler;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 /**
  * Plugin search
  *
- * @package AnimeDb\Bundle\CatalogBundle\Plugin\Search
+ * @package AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Search
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 abstract class Search extends Plugin
@@ -35,7 +35,7 @@ abstract class Search extends Plugin
     /**
      * Filler
      *
-     * @var \AnimeDb\Bundle\CatalogBundle\Plugin\Filler\Filler
+     * @var \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Filler\Filler
      */
     protected $filler;
 
@@ -45,7 +45,7 @@ abstract class Search extends Plugin
      * Return structure
      * <code>
      * [
-     *     \AnimeDb\Bundle\CatalogBundle\Plugin\Search\Item
+     *     \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Search\Item
      * ]
      * </code>
      *
@@ -65,7 +65,7 @@ abstract class Search extends Plugin
     public function buildMenu(ItemInterface $item)
     {
         $item->addChild($this->getTitle(), [
-            'route' => 'item_search',
+            'route' => 'fill_search',
             'routeParameters' => ['plugin' => $this->getName()]
         ]);
     }
@@ -93,7 +93,7 @@ abstract class Search extends Plugin
     /**
      * Set filler
      *
-     * @param \AnimeDb\Bundle\CatalogBundle\Plugin\Filler\Filler $filler
+     * @param \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Filler\Filler $filler
      */
     public function setFiller(Filler $filler)
     {
@@ -113,7 +113,7 @@ abstract class Search extends Plugin
             return $this->filler->getLinkForFill($data);
         } else {
             return $this->router->generate(
-                'item_filler',
+                'fill_filler',
                 [
                     'plugin' => $this->getName(),
                     FillerForm::FORM_NAME => ['url' => $data]
@@ -131,7 +131,7 @@ abstract class Search extends Plugin
      */
     public function getLinkForSearch($name)
     {
-        return $this->router->generate('item_search', [
+        return $this->router->generate('fill_search', [
             'plugin' => $this->getName(),
             $this->getForm()->getName().'[name]' => $name
         ]);

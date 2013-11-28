@@ -382,7 +382,7 @@ class HomeController extends Controller
         $entity->setLocale($request->getLocale());
 
         /* @var $form \Symfony\Component\Form\Form */
-        $form = $this->createForm(new GeneralForm($this->get('anime_db.plugin.search')), $entity);
+        $form = $this->createForm(new GeneralForm($this->get('anime_db.plugin.search_fill')), $entity);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);

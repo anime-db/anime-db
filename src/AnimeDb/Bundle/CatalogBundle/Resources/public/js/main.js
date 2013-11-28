@@ -1,16 +1,27 @@
+// translate message
+function trans(message) {
+	if (typeof(translations[message]) != 'undefined') {
+		return translations[message];
+	} else {
+		return message;
+	}
+}
+
 var BlockLoadHandler = function() {
 	this.observers = [];
 };
 BlockLoadHandler.prototype = {
 	registr: function(observer) {
-		if (typeof(observer.update) != 'undefined') {
+		if (typeof(observer.update) == 'function') {
 			this.observers.push(observer);
+		} else if (typeof(observer) == 'function') {
+			this.observers.push({update:observer});
 		}
 	},
 	unregistr: function(observer) {
 		for (var i in this.observers) {
 			if (this.observers[i] === observer) {
-				delete this.observers[i];
+				this.observers.splice(i, 1);
 			}
 		}
 	},
@@ -30,65 +41,96 @@ var FormCollection = function(collection, button_add, rows, remove_selector, han
 	var that = this;
 	this.collection = collection;
 	this.index = rows.length;
-	this.rows = rows;
+	this.rows = [];
 	this.remove_selector = remove_selector;
 	this.button_add = button_add.click(function() {
 		that.add();
 	});
 	this.row_prototype = collection.data('prototype');
 	this.handler = handler;
+	for (var i = 0; i < rows.length; i++) {
+		var row = new FormCollectionRow($(rows[i]));
+		row.setCollection(this);
+		this.rows.push(row);
+	}
 };
 FormCollection.prototype = {
 	add: function() {
+		var row = new FormCollectionRow($(this.row_prototype.replace(/__name__(label__)?/g, this.index + 1)));
+		this.addRowObject(row);
+		return row;
+	},
+	addRowObject: function(row) {
+		row.setCollection(this);
+		// notify observers
+		this.handler.notify(row.row);
+		// add row
+		this.rows.push(row);
+		this.button_add.parent().before(row.row);
 		// increment index
 		this.index++;
-		// prototype of new item
-		var new_row = new FormCollectionRow(
-			$(this.row_prototype.replace(/__name__(label__)?/g, this.index)),
-			this
-		);
-		// notify observers
-		this.handler.notify(new_row.row);
-		// add row
-		this.rows.push(new_row);
-		this.button_add.parent().before(new_row.row);
 	}
 };
 // Model collection row
-var FormCollectionRow = function(row, collection) {
+var FormCollectionRow = function(row) {
 	this.row = row;
-	this.collection = collection;
-	// add handler for remove button
-	var that = this;
-	row.find(collection.remove_selector).click(function() {
-		that.remove();
-	});
+	this.collection = null;
 };
 FormCollectionRow.prototype = {
 	remove: function() {
 		this.row.remove();
+		var rows = [];
 		// remove row in collection
-		for (var i in this.collection.rows) {
-			if (this.collection.rows[i] === row) {
-				delete this.collection.rows[i];
-				break;
+		for (var i = 0; i < this.collection.rows.length; i++) {
+			if (this.collection.rows[i] !== this) {
+				rows.push(this.collection.rows[i]);
 			}
 		}
+		this.collection.rows = rows;
+	},
+	setCollection: function(collection) {
+		this.collection = collection;
+		// add handler for remove button
+		var that = this;
+		this.row.find(collection.remove_selector).click(function() {
+			that.remove();
+		});
 	}
 };
 
+var FormCollectionContainer = function() {
+	this.collections = [];
+};
+FormCollectionContainer.prototype = {
+	add: function(collection) {
+		this.collections[collection.collection.attr('id')] = collection;
+	},
+	get: function(name) {
+		return this.collections[name];
+	},
+	remove: function(name) {
+		delete this.collections[name];
+	}
+};
 
 /**
  * Form image
  */
 // Model Field
-var FormImageModelField = function(field, image, button) {
+var FormImageModelField = function(field, image, button, controller) {
 	this.field = field;
 	this.image = image;
 	this.popup = null;
 	var that = this;
 	this.button = button.click(function() {
-		that.change();
+		if (that.popup) {
+			that.change();
+		} else {
+			controller.getPopup(that, function(popup) {
+				that.popup = popup;
+				that.change();
+			});
+		}
 	});
 };
 FormImageModelField.prototype = {
@@ -99,9 +141,6 @@ FormImageModelField.prototype = {
 	update: function(data) {
 		this.field.val(data.path);
 		this.image.attr('src', data.image);
-	},
-	setPopup: function(popup) {
-		this.popup = popup;
 	}
 }
 // Model Popup
@@ -110,7 +149,6 @@ var FormImageModelPopup = function(popup, remote, local, field) {
 	this.local = local;
 	this.popup = popup;
 	this.field = field;
-	this.field.setPopup(this);
 	this.form = popup.body.find('form')
 	this.popup.hide();
 };
@@ -153,27 +191,34 @@ var FormImageController = function(image) {
 	var field = new FormImageModelField(
 		image.find('input'),
 		image.find('img'),
-		image.find('.change-button')
+		image.find('.change-button'),
+		this
 	);
-	// on load popup
-	var init_obj = function (popup) {
-		// create model
-		new FormImageModelPopup(
-			popup,
-			$('#image-popup-remote'),
-			$('#image-popup-local'),
-			field
-		);
-	};
+};
+FormImageController.prototype = {
+	getPopup: function(field, init) {
+		init = init || function() {};
+		// on load popup
+		var init_popup = function (popup) {
+			// create model
+			popup = new FormImageModelPopup(
+				popup,
+				$('#image-popup-remote'),
+				$('#image-popup-local'),
+				field
+			);
+			init(popup);
+		};
 
-	// create popup
-	if (popup = PopupList.get('image')) {
-		init_obj(popup);
-	} else {
-		PopupList.load('image', {
-			url: image.data('popup'),
-			success: init_obj
-		});
+		// create popup
+		if (popup = PopupContainer.get('image')) {
+			init_popup(popup);
+		} else {
+			PopupContainer.load('image', {
+				url: field.field.closest('.f-image').data('popup'),
+				success: init_popup
+			});
+		}
 	}
 };
 
@@ -183,23 +228,36 @@ var FormImageController = function(image) {
  * Form local path
  */
 // model field
-var FormLocalPathModelField = function(path, button) {
+var FormLocalPathModelField = function(path, button, controller) {
 	this.path = path;
 	this.button = button;
 	this.popup = null;
 
 	var that = this;
 	this.button.click(function() {
-		that.change();
+		if (that.popup) {
+			that.change();
+		} else {
+			controller.getPopup(that, function(popup) {
+				that.popup = popup;
+				that.change();
+			})
+		}
 	});
 };
 FormLocalPathModelField.prototype = {
 	change: function() {
-		this.popup.change(this.path.val());
+		// correct the end symbol of path
+		value = this.path.val();
+		if (value.length && !(/[\\\/]$/.test(value))) {
+			if (value[0] == '/') {
+				this.path.val(value += '/');
+			} else {
+				this.path.val(value += '\\');
+			}
+		}
+		this.popup.change(value);
 		this.popup.show();
-	},
-	setPopup: function(popup) {
-		this.popup = popup;
 	}
 };
 
@@ -229,7 +287,6 @@ var FormLocalPathModelPopup = function(popup, path, button, folders, prototype, 
 	this.path = path;
 	this.button = button;
 	this.field = field;
-	this.field.setPopup(this);
 	this.form = popup.body.find('form');
 	this.folders = folders;
 	this.folder_prototype = prototype;
@@ -315,30 +372,37 @@ var FormLocalPathController = function(path) {
 	// create field model
 	var field = new FormLocalPathModelField(
 		path.find('input'),
-		path.find('.change-path')
+		path.find('.change-path'),
+		this
 	);
-	// on load popup
-	var init_obj = function (popup) {
-		var folders = popup.body.find('.folders');
-		// create model
-		new FormLocalPathModelPopup(
-			popup,
-			popup.body.find('#local_path_popup_path'),
-			popup.body.find('.change-path'),
-			folders,
-			folders.data('prototype'),
-			field
-		);
-	};
+};
+FormLocalPathController.prototype = {
+	getPopup: function(field, init) {
+		init = init || function() {};
+		// on load popup
+		var init_popup = function (popup) {
+			var folders = popup.body.find('.folders');
+			// create model
+			popup = new FormLocalPathModelPopup(
+				popup,
+				popup.body.find('#local_path_popup_path'),
+				popup.body.find('.change-path'),
+				folders,
+				folders.data('prototype'),
+				field
+			);
+			init(popup);
+		};
 
-	// create popup
-	if (popup = PopupList.get('local-path')) {
-		init_obj(popup);
-	} else {
-		PopupList.load('local-path', {
-			url: path.data('popup'),
-			success: init_obj
-		});
+		// create popup
+		if (popup = PopupContainer.get('local-path')) {
+			init_popup(popup);
+		} else {
+			PopupContainer.load('local-path', {
+				url: field.path.closest('.f-local-path').data('popup'),
+				success: init_popup
+			});
+		}
 	}
 };
 
@@ -348,9 +412,20 @@ var FormLocalPathController = function(path) {
  */
 var Cap = {
 	element: null,
+	button: null,
 	observers: [],
+	html: $('html'),
 	setElement: function(element) {
-		Cap.element = element.click(function() {
+		Cap.element = element;
+		if (!Cap.button) {
+			Cap.setButton(element);
+		}
+	},
+	setButton: function(button) {
+		if (Cap.button) {
+			Cap.button.off('click.cap');
+		}
+		Cap.button = button.on('click.cap', function() {
 			Cap.hide();
 		});
 	},
@@ -364,11 +439,13 @@ var Cap = {
 			}
 		}
 		Cap.element.hide();
+		Cap.html.removeClass('scroll-lock');
 	},
 	// show cup and observers
 	show: function(observer) {
 		Cap.element.show();
 		observer.show();
+		Cap.html.addClass('scroll-lock');
 	},
 	// need methods 'show' and 'hide'
 	registr: function(observer) {
@@ -380,10 +457,10 @@ var Cap = {
 	unregistr: function(observer) {
 		for (var i in Cap.observers) {
 			if (Cap.observers[i] === observer) {
-				delete Cap.observers[i];
+				Cap.observers.splice(i, 1);
 			}
 		}
-	},
+	}
 };
 
 /**
@@ -406,32 +483,100 @@ Popup.prototype = {
 	}
 }
 
-var PopupList = {
+var PopupContainer = {
+	popup_loader: null,
+	xhr: null,
 	list: [],
+	container: $('body'),
 	load: function(name, options) {
-		if (typeof(this.list[name]) == 'undefined') {
-			options = $.extend({
-				success: function() {}
-			}, options||{});
+		options = $.extend({
+			success: function() {},
+			error: function(xhr, status) {
+				if (status != 'abort' && confirm(trans('Failed to get the data. Want to try again?'))) {
+					$.ajax(options);
+				}
+			}
+		}, options||{});
 
+		if (typeof(PopupContainer.list[name]) != 'undefined') {
+			options.success(PopupContainer.list[name]);
+		} else {
 			// init popup on success load popup content
 			var success = options.success;
-			var that = this;
 			options.success = function(data) {
-				var popup = new Popup($(data));
-				that.list[name] = popup;
-				success(popup);
-				$('body').append(popup.body);
+				PopupContainer.list[name] = new Popup($(data));
+				success(PopupContainer.list[name]);
+				PopupContainer.container.append(PopupContainer.list[name].body);
 			}
-			// load
-			$.ajax(options);
+
+			PopupContainer.sendRequest(options);
 		}
 	},
 	get: function(name) {
-		if (typeof(this.list[name]) != 'undefined') {
-			return this.list[name];
+		if (typeof(PopupContainer.list[name]) != 'undefined') {
+			return PopupContainer.list[name];
 		} else {
 			return null;
+		}
+	},
+	setPopupLoader: function(el) {
+		PopupContainer.popup_loader = new Popup(el);
+	},
+	sendRequest: function(options) {
+		if (PopupContainer.xhr === null) {
+			Cap.registr({
+				show:function(){},
+				hide:function(){
+					PopupContainer.xhr.abort();
+				},
+			});
+		} else {
+			PopupContainer.xhr.abort();
+		}
+		PopupContainer.xhr = $.ajax(options);
+	},
+	lazyload: function(name, options) {
+		options = $.extend({
+			success: function() {},
+			error: function(xhr, status) {
+				if (status != 'abort' && confirm(trans('Failed to get the data. Want to try again?'))) {
+					$.ajax(options);
+				} else {
+					PopupContainer.popup_loader.hide();
+				}
+			}
+		}, options||{});
+
+		if (typeof(PopupContainer.list[name]) != 'undefined') {
+			options.success(PopupContainer.list[name]);
+		} else {
+			PopupContainer.popup_loader.show();
+
+			// init popup on success load popup content
+			var success = options.success;
+			options.success = function(data) {
+				var popup = new Popup(PopupContainer.popup_loader.body.clone().hide());
+				popup.body.attr('id', name).find('.content').append(data);
+				PopupContainer.container.append(popup.body);
+
+				PopupContainer.list[name] = popup;
+				success(popup);
+
+				// animate show popup
+				var width = popup.body.width();
+				var height = popup.body.height();
+				PopupContainer.popup_loader.body.find()
+				PopupContainer.popup_loader.body.addClass('resize').animate({
+					'width': width,
+					'height': height
+				}, 400, function() {
+					popup.show();
+					// reset style
+					PopupContainer.popup_loader.body.removeClass('resize').removeAttr('style').hide();
+				});
+			}
+
+			PopupContainer.sendRequest(options);
 		}
 	}
 }
@@ -554,7 +699,7 @@ var TableCheckAllController = function(checker) {
  * Confirm delete
  */
 var ConfirmDeleteModel = function(link) {
-	this.massage = link.data('massage') || 'Are you sure want to delete this item(s)?';
+	this.massage = link.data('massage') || trans('Are you sure want to delete this item(s)?');
 	this.link = link;
 	var that = this;
 	link.click(function() {
@@ -568,51 +713,204 @@ ConfirmDeleteModel.prototype = {
 };
 
 
+/**
+ * Form refill field
+ */
+var FormRefill = function(form, button, controller, handler, sources) {
+	this.form = form;
+	this.button = button;
+	this.controller = controller;
+	this.handler = handler;
+	this.sources = sources;
+
+	var that = this;
+	this.button.click(function() {
+		if (that.button.data('can-refill') == 1) {
+			that.refill();
+		} else {
+			that.search();
+		}
+		return false;
+	});
+};
+FormRefill.prototype = {
+	refill: function() {
+		var that = this;
+		this.showPopup(
+			'refill-form-' + this.controller.field.attr('id'),
+			this.button.attr('href'),
+			function (popup) {
+				popup.body.find('form').submit(function() {
+					that.update(popup);
+					return false;
+				});
+			}
+		);
+	},
+	search: function() {
+		var that = this;
+		this.showPopup(
+			'refill-search',
+			this.button.attr('href'),
+			function (popup) {
+				popup.body.find('a').each(function() {
+					new FormRefillSearchItem(that, popup, $(this));
+				});
+			}
+		);
+	},
+	refillFromSearch: function(url) {
+		var that = this;
+		this.showPopup(
+			'refill-form-' + this.controller.field.attr('id'),
+			url,
+			function (popup) {
+				popup.body.find('form').submit(function() {
+					that.update(popup);
+					return false;
+				});
+			}
+		);
+	},
+	showPopup: function(name, url, handler) {
+		handler = handler || function() {};
+		var that = this;
+
+		if (popup = PopupContainer.get(name)) {
+			handler(popup);
+			popup.show();
+		} else {
+			PopupContainer.lazyload(name, {
+				url: url,
+				method: 'POST', // request is too large for GET
+				data: this.form.serialize(),
+				success: function(popup) {
+					that.handler.notify(popup.body);
+					handler(popup);
+				}
+			});
+		}
+	},
+	update: function(popup) {
+		this.controller.update(popup);
+		// add source link
+		var source = popup.body.find('input[type=hidden]');
+		if (source && (value = source.val())) {
+			this.canRefill();
+			this.sources.add().row.find('input').val(value);
+		}
+		popup.hide();
+	},
+	canRefill: function() {
+		this.form.find('a[data-plugin='+this.button.data('plugin')+']').each(function() {
+			var button = $(this);
+			button.attr('href', button.data('link-refill')).data('can-refill', 1);
+		});
+	}
+};
+var FormRefillSimple = function(field) {
+	this.field = field;
+};
+FormRefillSimple.prototype = {
+	update: function(popup) {
+		this.field.val(popup.body.find('#'+this.field.attr('id')).val());
+	}
+};
+var FormRefillCollection = function(field, collection, container) {
+	this.field = field;
+	this.collection = collection; // FormCollection
+	this.container = container; // FormCollectionContainer
+};
+FormRefillCollection.prototype = {
+	update: function(popup) {
+		// remove old rows
+		while (this.collection.rows.length) {
+			this.collection.rows[0].remove();
+		}
+		// add new rows
+		var collection = this.container.get(this.field.attr('id'));
+		for (var i = 0; i < collection.rows.length; i++) {
+			this.collection.addRowObject(new FormCollectionRow(collection.rows[i].row.clone()));
+		}
+	}
+};
+var FormRefillSearchItem = function(form, popup, link) {
+	var that = this;
+	this.form = form;
+	this.popup = popup;
+	this.link = link.click(function() {
+		that.refill();
+		return false;
+	});
+	
+};
+FormRefillSearchItem.prototype = {
+	refill: function() {
+		this.popup.hide();
+		var source = decodeURIComponent(this.link.attr('href')).replace(/^.*(?:\?|&)source=([^&]+).*$/, '$1');
+		if (source) {
+			this.form.canRefill();
+			this.form.sources.add().row.find('input').val(source);
+			this.form.refill();
+		} else {
+			this.form.refillFromSearch(this.link.attr('href'));
+		}
+	}
+};
+
+
 // init after document load
 $(function(){
 
 // init cap
+Cap.setButton($('#popup-container'));
 Cap.setElement($('#cap'));
+// set lazyload popup loader
+PopupContainer.setPopupLoader($('#b-lazyload-popup'));
+PopupContainer.container = $('#popup-wrapper');
 
-// init form collection
-$('.f-collection > div').each(function(){
-	// init handler for new row
-	var handler = new BlockLoadHandler();
-	// form image
-	handler.registr({
-		update: function(block) {
-			block.find('.f-image').each(function(){
-				new FormImageController($(this));
-			});
-		}
+var CollectionContainer = new FormCollectionContainer();
+
+var FormContainer = new BlockLoadHandler();
+
+// registr form collection
+FormContainer.registr(function(block) {
+	block.find('.f-collection > div').each(function() {
+		var collection = $(this);
+		CollectionContainer.add(
+			new FormCollection(
+				collection,
+				collection.find('.bt-add-item'),
+				collection.find('.f-row:not(.f-coll-button)'),
+				'.bt-remove-item',
+				FormContainer
+			)
+		);
 	});
-	// form local path
-	handler.registr({
-		update: function(block) {
-			block.find('.f-local-path').each(function(){
-				new FormLocalPathController($(this));
-			});
-		}
-	});
-	// create collection
-	var collection = $(this);
-	new FormCollection(
-		collection,
-		collection.find('.bt-add-item'),
-		collection.find('.f-row'),
-		'.bt-remove-item',
-		handler
-	);
 });
 
-// init form image
-$('.f-image').each(function(){
-	new FormImageController($(this));
+// registr form image
+FormContainer.registr(function(block) {
+	block.find('.f-image').each(function() {
+		new FormImageController($(this));
+	});
 });
-// init form local path
-$('.f-local-path').each(function(){
-	new FormLocalPathController($(this));
+// registr form local path
+FormContainer.registr(function(block) {
+	block.find('.f-local-path').each(function() {
+		new FormLocalPathController($(this));
+	});
 });
+
+// registr form check all
+FormContainer.registr(function(block) {
+	new TableCheckAllController(block.find('.f-table-check-all'));
+});
+
+
+// apply form for document
+FormContainer.notify($(document));
+
 
 // init notice container
 var container = $('#notice-container');
@@ -620,11 +918,38 @@ if (container.size() && (from = container.data('from'))) {
 	new NoticeContainerModel(container, from);
 }
 
-// check all
-new TableCheckAllController($('.f-table-check-all'));
-
 // confirm delete
 $('.item-controls .delete, .storages-list .icon-storage-delete, .b-notice-list button[type=submit]').each(function(){
 	new ConfirmDeleteModel($(this));
 });
+
+// init form field refill 
+var refills = $('[data-type=refill]');
+var form = refills.closest('form');
+refills.each(function() {
+	var field = $(this);
+	if (field.data('prototype')) {
+		var controller = new FormRefillCollection(
+			field,
+			CollectionContainer.get(field.attr('id')),
+			CollectionContainer
+		);
+	} else {
+		var controller = new FormRefillSimple(field);
+	}
+
+	// add plugin links and hendler
+	$(field.closest('.f-row').find('label')[0])
+		.append($(field.data('plugins')))
+		.find('a').each(function() {
+			new FormRefill(
+				form,
+				$(this),
+				controller,
+				FormContainer,
+				CollectionContainer.get('anime_db_catalog_entity_item_sources')
+			);
+		});
+});
+
 });

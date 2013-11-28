@@ -13,7 +13,7 @@ namespace AnimeDb\Bundle\CatalogBundle\Form\Settings;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use AnimeDb\Bundle\CatalogBundle\Plugin\Search\Chain;
+use AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Search\Chain;
 
 /**
  * General settings form
@@ -26,14 +26,14 @@ class General extends AbstractType
     /**
      * Plugin search chain
      *
-     * @var \AnimeDb\Bundle\CatalogBundle\Plugin\Search\Chain
+     * @var \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Search\Chain
      */
     protected $chain;
 
     /**
      * Construct
      *
-     * @param \AnimeDb\Bundle\CatalogBundle\Plugin\Search\Chain $chain
+     * @param \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Search\Chain $chain
      */
     public function __construct(Chain $chain)
     {
@@ -47,7 +47,7 @@ class General extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $search_choices = ['' => 'No'];
-        /* @var $plugin \AnimeDb\Bundle\CatalogBundle\Plugin\Search\Search */
+        /* @var $plugin \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Search\Search */
         foreach ($this->chain->getPlugins() as $plugin) {
             $search_choices[$plugin->getName()] = $plugin->getTitle();
         }

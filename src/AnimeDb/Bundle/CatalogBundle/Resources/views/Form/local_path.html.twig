@@ -2,7 +2,7 @@
 
 {% set popup_id = 'f-path-popup' %}
 
-{% block content %}
+{% set content %}
 <form action="{{ path('form_local_path_folders') }}" method="post" {{ form_enctype(form) }}>
 	<div class="f-row">
 		{{ form_widget(form.path) }}
@@ -10,7 +10,7 @@
 	</div>
 	<nav class="folders" data-prototype="{{ block('folder')|e }}"></nav>
 </form>
-{% endblock %}
+{% endset %}
 
 {% block folder %}
 <a href="__link__" class="folder">__name__</a>

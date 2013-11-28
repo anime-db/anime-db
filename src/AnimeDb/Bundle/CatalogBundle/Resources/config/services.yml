@@ -4,10 +4,12 @@ services:
 
     # Plugins chain
     anime_db.plugin.filler:
-        class: AnimeDb\Bundle\CatalogBundle\Plugin\Filler\Chain
-    anime_db.plugin.search:
-        class: AnimeDb\Bundle\CatalogBundle\Plugin\Search\Chain
+        class: AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Filler\Chain
+    anime_db.plugin.search_fill:
+        class: AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Search\Chain
         arguments: [ %default_search% ]
+    anime_db.plugin.refiller:
+        class: AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Refiller\Chain
     anime_db.plugin.import:
         class: AnimeDb\Bundle\CatalogBundle\Plugin\Import\Chain
     anime_db.plugin.item:
@@ -17,6 +19,15 @@ services:
 
     anime_db.assets:
         class: AnimeDb\Bundle\CatalogBundle\Service\Assets
+
+    # Form
+    anime_db.form.type.item:
+        class: AnimeDb\Bundle\CatalogBundle\Form\Entity\Item
+        tags:
+            - { name: form.type, alias: anime_db_catalog_entity_item }
+        calls:
+            - [ setRefillerChain, [ @anime_db.plugin.refiller ] ]
+            - [ setTemplating, [ @templating ] ]
 
     # Twig extension
     anime_db.twig_extension:
@@ -33,7 +44,7 @@ services:
 
     anime_db.subscriber.scan_storage:
         class: AnimeDb\Bundle\CatalogBundle\Event\Subscriber\ScanStorage
-        arguments: [ @doctrine.orm.entity_manager, @templating, @anime_db.plugin.search, @router ]
+        arguments: [ @doctrine.orm.entity_manager, @templating, @anime_db.plugin.search_fill, @router ]
         tags: [{ name:kernel.event_subscriber }]
 
     gedmo.listener.translatable:

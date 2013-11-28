@@ -1,0 +1,13 @@
+<div class="b-refill-search">
+	{% if result is not empty %}
+		<div>{% trans %}Found several entries are similar to yours, select the correct one.{% endtrans %}</div>
+		<em>{% trans %}Reference to identify the record can be added plugin to the sources in this case the search for this recording will not be performed again.{% endtrans %}</em>
+		<ul>
+			{% for item in result %}
+				<li><a href="{{ item.link }}" title="{% trans %}Use to fill{% endtrans %}">{{ item.name }}</a></li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<div>{% trans %}Nothing found{% endtrans %}</div>
+	{% endif %}
+</div>

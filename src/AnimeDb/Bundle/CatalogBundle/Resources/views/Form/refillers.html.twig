@@ -1,0 +1,17 @@
+<span class="f-refill">
+	<span title="{% trans %}Fill this field from the source{% endtrans %}">{% trans %}Refill{% endtrans %}</span>
+	<ul>
+		{% for plugin in plugins %}
+			<li><a
+				{% if plugin.can_refill %}
+					href="{{ path('refiller_refill', {plugin: plugin.name, field: field, id: item.id}) }}"
+				{% else %}
+					href="{{ path('refiller_search', {plugin: plugin.name, field: field, id: item.id}) }}"
+				{% endif %}
+				data-plugin="{{ plugin.name }}"
+				data-can-refill="{{ plugin.can_refill }}"
+				data-link-refill="{{ path('refiller_refill', {plugin: plugin.name, field: field, id: item.id}) }}"
+			>{{ plugin.title }}</a></li>
+		{% endfor %}
+	</ul>
+</span>

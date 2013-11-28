@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\CatalogBundle\Plugin\Filler;
+namespace AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Filler;
 
 use AnimeDb\Bundle\CatalogBundle\Plugin\Plugin;
 use Knp\Menu\ItemInterface;
@@ -18,7 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 /**
  * Plugin filler
  *
- * @package AnimeDb\Bundle\CatalogBundle\Plugin\Filler
+ * @package AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Filler
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 abstract class Filler extends Plugin
@@ -49,10 +49,11 @@ abstract class Filler extends Plugin
     public function buildMenu(ItemInterface $item)
     {
         $item->addChild($this->getTitle(), [
-            'route' => 'item_filler',
+            'route' => 'fill_filler',
             'routeParameters' => ['plugin' => $this->getName()]
         ]);
     }
+
     /**
      * Get form
      *
@@ -89,7 +90,7 @@ abstract class Filler extends Plugin
         }
 
         return $this->router->generate(
-            'item_filler',
+            'fill_filler',
             [
                 'plugin' => $this->getName(),
                 $this->getForm()->getName() => ['url' => $data]
