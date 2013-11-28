@@ -146,6 +146,10 @@
                 <source>Yes</source>
                 <target>Да</target>
             </trans-unit>
+            <trans-unit id="37">
+                <source>Application must be updated</source>
+                <target>Необходимо обновить приложение</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
