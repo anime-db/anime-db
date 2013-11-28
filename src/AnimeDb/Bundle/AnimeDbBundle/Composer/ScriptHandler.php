@@ -17,6 +17,8 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Installed as InstalledPackageNotify;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Removed as RemovedPackageNotify;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Updated as UpdatedPackageNotify;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Project\Installed as InstalledProjectNotify;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Project\Updated as UpdatedProjectNotify;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Down as DownMigrate;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Up as UpMigrate;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config\Add as AddConfig;
@@ -204,5 +206,25 @@ class ScriptHandler
         if (!file_exists(__DIR__.'/../../../../../app/bundles.php')) {
             file_put_contents(__DIR__.'/../../../../../app/bundles.php', "<?php\nreturn [\n];");
         }
+    }
+
+    /**
+     * Notify listeners that the project has been installed
+     *
+     * @param \Composer\Script\CommandEvent $event
+     */
+    public static function notifyProjectInstall(CommandEvent $event)
+    {
+        self::getContainer()->addJob(new InstalledProjectNotify($event->getComposer()->getPackage()));
+    }
+
+    /**
+     * Notify listeners that the project has been updated
+     *
+     * @param \Composer\Script\CommandEvent $event
+     */
+    public static function notifyProjectUpdate(CommandEvent $event)
+    {
+        self::getContainer()->addJob(new UpdatedProjectNotify($event->getComposer()->getPackage()));
     }
 }
