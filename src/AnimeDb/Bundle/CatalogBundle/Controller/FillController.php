@@ -53,6 +53,7 @@ class FillController extends Controller
 
         return $this->render('AnimeDbCatalogBundle:Fill:filler.html.twig', [
             'plugin' => $plugin,
+            'plugin_name' => $filler->getTitle(),
             'form' => $form->createView(),
             'fill_form' => $fill_form,
         ]);
@@ -84,6 +85,7 @@ class FillController extends Controller
 
         return $this->render('AnimeDbCatalogBundle:Fill:search.html.twig', [
             'plugin' => $plugin,
+            'plugin_name' => $search->getTitle(),
             'list'   => $list,
             'form'   => $form->createView()
         ]);
