@@ -19,3 +19,8 @@ services:
             - [ setAnnotationReader, [ @annotation_reader ] ]
             - [ setDefaultLocale, [ %locale% ] ]
             - [ setTranslationFallback, [ true ] ]
+
+    anime_db.listener.project:
+        class: AnimeDb\Bundle\AppBundle\Event\Listener\Project
+        arguments: [ @doctrine.orm.entity_manager ]
+        tags: [{ name: kernel.event_listener, event: anime_db.project.updated, method: onProjectUpdated }]
