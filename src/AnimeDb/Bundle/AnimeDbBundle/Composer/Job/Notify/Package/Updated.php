@@ -8,19 +8,19 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify;
+namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 use AnimeDb\Bundle\AnimeDbBundle\Event\Package\StoreEvents;
-use AnimeDb\Bundle\AnimeDbBundle\Event\Package\Removed as Event;
+use AnimeDb\Bundle\AnimeDbBundle\Event\Package\Updated as Event;
 
 /**
- * Job: Notice that the package has been removed
+ * Job: Notice that the package has been updated
  *
- * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify
+ * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Removed extends Job
+class Updated extends Job
 {
     /**
      * (non-PHPdoc)
@@ -29,6 +29,6 @@ class Removed extends Job
     public function execute()
     {
         $dispatcher = $this->getContainer()->getKernel()->getContainer()->get('event_dispatcher');
-        $dispatcher->dispatch(StoreEvents::REMOVED, new Event($this->getPackage()));
+        $dispatcher->dispatch(StoreEvents::UPDATED, new Event($this->getPackage()));
     }
 }

@@ -14,9 +14,9 @@ use Composer\Script\PackageEvent;
 use Composer\Script\CommandEvent;
 use Composer\Script\Event;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Installed as InstalledNotify;
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Removed as RemovedNotify;
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Updated as UpdatedNotify;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Installed as InstalledPackageNotify;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Removed as RemovedPackageNotify;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Updated as UpdatedPackageNotify;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Down as DownMigrate;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Up as UpMigrate;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config\Add as AddConfig;
@@ -148,13 +148,13 @@ class ScriptHandler
     {
         switch ($event->getOperation()->getJobType()) {
             case 'install':
-                $job = new InstalledNotify($event->getOperation()->getPackage());
+                $job = new InstalledPackageNotify($event->getOperation()->getPackage());
                 break;
             case 'update':
-                $job = new UpdatedNotify($event->getOperation()->getTargetPackage());
+                $job = new UpdatedPackageNotify($event->getOperation()->getTargetPackage());
                 break;
             case 'uninstall':
-                $job = new RemovedNotify($event->getOperation()->getPackage());
+                $job = new RemovedPackageNotify($event->getOperation()->getPackage());
                 break;
             default:
                 return;
