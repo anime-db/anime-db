@@ -14,12 +14,12 @@ use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded;
 use Sensio\Bundle\GeneratorBundle\Manipulator\KernelManipulator;
 
 /**
- * Update listener
+ * Update itself listener
  *
  * @package AnimeDb\Bundle\AnimeDbBundle\Event\Listener
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Update
+class UpdateItself
 {
     /**
      * Default address

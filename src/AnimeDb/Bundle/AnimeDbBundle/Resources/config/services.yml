@@ -1,6 +1,6 @@
 services:
     anime_db.listener.update:
-        class: AnimeDb\Bundle\AnimeDbBundle\Event\Listener\Update
+        class: AnimeDb\Bundle\AnimeDbBundle\Event\Listener\UpdateItself
         arguments: [ %kernel.root_dir% ]
         tags:
             - { name: kernel.event_listener, event: anime_db.update_itself.downloaded, method: onAppDownloadedMergeComposerRequirements }
