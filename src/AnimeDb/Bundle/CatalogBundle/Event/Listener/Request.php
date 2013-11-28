@@ -61,7 +61,7 @@ class Request
     /**
      * Kernel request handler
      *
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $e
+     * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
