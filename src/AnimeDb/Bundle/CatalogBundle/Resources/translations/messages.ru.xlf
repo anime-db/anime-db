@@ -399,12 +399,12 @@
                 <target>Общие</target>
             </trans-unit>
             <trans-unit id="108">
-                <source>Search source of filling for plugin %plugin%</source>
-                <target>Поиск источника заполнения для плагина %plugin%</target>
+                <source>Search source of filling</source>
+                <target>Поиск источника заполнения</target>
             </trans-unit>
             <trans-unit id="109">
-                <source>Fill item from source plugin %plugin%</source>
-                <target>Заполнение записи из источника плагином %plugin%</target>
+                <source>Fill from source</source>
+                <target>Заполнение из источника</target>
             </trans-unit>
             <trans-unit id="110">
                 <source>Import items</source>
@@ -593,6 +593,14 @@
             <trans-unit id="156">
                 <source>Yes</source>
                 <target>Да</target>
+            </trans-unit>
+            <trans-unit id="157">
+                <source>Search source of filling for plugin %plugin%</source>
+                <target>Поиск источника заполнения для плагина %plugin%</target>
+            </trans-unit>
+            <trans-unit id="158">
+                <source>Fill item from source plugin %plugin%</source>
+                <target>Заполнение записи из источника плагином %plugin%</target>
             </trans-unit>
         </body>
     </file>
