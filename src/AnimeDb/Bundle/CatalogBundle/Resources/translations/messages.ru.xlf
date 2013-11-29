@@ -544,7 +544,7 @@
             </trans-unit>
             <trans-unit id="144">
                 <source>Detected files for new item %name% on storage %storage%</source>
-                <target>Обнаруженны файлы для новой записи %name% на хранилище %storage%</target>
+                <target>Обнаружены файлы для новой записи %name% на хранилище %storage%</target>
             </trans-unit>
             <trans-unit id="145">
                 <source>Changes are detected in files of item %name%</source>
