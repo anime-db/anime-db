@@ -2,6 +2,7 @@
 
 {% block stylesheets %}
 	<link href="{{ asset('/bundles/animedbcatalog/css/jquery-ui/jquery-ui-1.8.16.custom.css') }}" type="text/css" rel="stylesheet" />
+	<link href="{{ asset('/bundles/animedbcatalog/css/main.css') }}" type="text/css" rel="stylesheet" />
 {% endblock %}
 
 {% block javascripts %}
@@ -11,7 +12,6 @@
 
 {% block headers %}
 	{% render controller('AnimeDbAppBundle:Assets:show') %}
-	<link href="{{ asset('/bundles/animedbcatalog/css/main.css') }}" type="text/css" rel="stylesheet" />
 	<script type="text/javascript" src="{{ asset('/bundles/animedbcatalog/js/main.js') }}"></script>
 {% endblock %}
 
@@ -54,6 +54,7 @@ var translations = {
 <div id="cap">
 	<div id="cap-content"></div>
 	<div id="popup-container">
+		<div id="cap-breaker"></div>
 		<div id="popup-wrapper">
 			{% set popup_id = 'b-lazyload-popup' %}
 			{% include 'AnimeDbAppBundle::popup.html.twig' %}

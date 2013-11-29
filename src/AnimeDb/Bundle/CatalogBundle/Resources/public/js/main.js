@@ -2,8 +2,9 @@
 $(function(){
 
 // init cap
-Cap.setButton($('#popup-container'));
+Cap.setButton($('#cap-breaker'));
 Cap.setElement($('#cap'));
+
 // set lazyload popup loader
 PopupContainer.setPopupLoader($('#b-lazyload-popup'));
 PopupContainer.container = $('#popup-wrapper');
