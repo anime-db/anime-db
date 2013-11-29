@@ -13,7 +13,7 @@ namespace AnimeDb\Bundle\CatalogBundle\Service;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
 use Symfony\Component\HttpKernel\Controller\ControllerReference;
-use AnimeDb\Bundle\CatalogBundle\Service\WidgetContainer;
+use AnimeDb\Bundle\CatalogBundle\Service\WidgetsContainer;
 
 /**
  * Twig extension
@@ -40,21 +40,35 @@ class TwigExtension extends \Twig_Extension
     /**
      * Widget container
      *
-     * @var \AnimeDb\Bundle\CatalogBundle\Service\WidgetContainer
+     * @var \AnimeDb\Bundle\CatalogBundle\Service\WidgetsContainer
      */
     private $widgets;
+
+    /**
+     * Hinclude loader template
+     *
+     * @var string
+     */
+    private $hinclude;
 
     /**
      * Construct
      *
      * @param \Symfony\Bundle\FrameworkBundle\Routing\Router $router
      * @param \Symfony\Component\HttpKernel\Fragment\FragmentHandler $handler
-     * @param \AnimeDb\Bundle\CatalogBundle\Service\WidgetContainer $widgets
+     * @param \AnimeDb\Bundle\CatalogBundle\Service\WidgetsContainer $widgets
+     * @param string $hinclude
      */
-    public function __construct(Router $router, FragmentHandler $handler, $widgets) {
+    public function __construct(
+        Router $router,
+        FragmentHandler $handler,
+        WidgetsContainer $widgets,
+        $hinclude
+    ) {
         $this->router = $router;
         $this->handler = $handler;
         $this->widgets = $widgets;
+        $this->hinclude = $hinclude;
     }
 
     /**
@@ -76,7 +90,7 @@ class TwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            'widgets' => new \Twig_Function_Method($this, 'widgets')
+            'widgets' => new \Twig_Function_Method($this, 'widgets', ['is_safe' => ['html']])
         ];
     }
 
@@ -110,14 +124,23 @@ class TwigExtension extends \Twig_Extension
      *
      * @param string $place
      * @param array|null $attributes
+     * @param array|null $options
      *
      * @return string
      */
-    public function widgets($place, $attributes = [])
+    public function widgets($place, $attributes = [], $options = [])
     {
+        $options = array_merge([
+            'default' => $this->hinclude
+        ], $options);
+
         $result = '';
         foreach ($this->widgets->getWidgetsForPlace($place) as $controller) {
-            $result .= $this->handler->render(new ControllerReference($controller, $attributes, []), 'inline', []);
+            $result .= $this->handler->render(
+                new ControllerReference($controller, $attributes, []),
+                'hinclude',
+                $options
+            );
         }
         return $result;
     }

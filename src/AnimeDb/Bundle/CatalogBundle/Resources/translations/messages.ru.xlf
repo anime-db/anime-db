@@ -602,6 +602,10 @@
                 <source>Fill item from source plugin %plugin%</source>
                 <target>Заполнение записи из источника плагином %plugin%</target>
             </trans-unit>
+            <trans-unit id="159">
+                <source>Loading...</source>
+                <target>Загрузка...</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
