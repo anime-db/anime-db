@@ -19,6 +19,9 @@ services:
 
     anime_db.assets:
         class: AnimeDb\Bundle\CatalogBundle\Service\Assets
+    anime_db.widgets:
+        class: AnimeDb\Bundle\CatalogBundle\Service\WidgetsContainer
+        arguments: [@event_dispatcher]
 
     # Form
     anime_db.form.type.item:
@@ -32,7 +35,7 @@ services:
     # Twig extension
     anime_db.twig_extension:
         class: AnimeDb\Bundle\CatalogBundle\Service\TwigExtension
-        arguments: [@router]
+        arguments: [@router, @fragment.handler, @anime_db.widgets]
         tags:
             - { name: twig.extension }
 

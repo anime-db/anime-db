@@ -11,6 +11,9 @@
 namespace AnimeDb\Bundle\CatalogBundle\Service;
 
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
+use Symfony\Component\HttpKernel\Controller\ControllerReference;
+use AnimeDb\Bundle\CatalogBundle\Service\WidgetContainer;
 
 /**
  * Twig extension
@@ -28,12 +31,30 @@ class TwigExtension extends \Twig_Extension
     private $router;
 
     /**
+     * Handler
+     *
+     * @var \Symfony\Component\HttpKernel\Fragment\FragmentHandler
+     */
+    private $handler;
+
+    /**
+     * Widget container
+     *
+     * @var \AnimeDb\Bundle\CatalogBundle\Service\WidgetContainer
+     */
+    private $widgets;
+
+    /**
      * Construct
      *
      * @param \Symfony\Bundle\FrameworkBundle\Routing\Router $router
+     * @param \Symfony\Component\HttpKernel\Fragment\FragmentHandler $handler
+     * @param \AnimeDb\Bundle\CatalogBundle\Service\WidgetContainer $widgets
      */
-    public function __construct(Router $router) {
+    public function __construct(Router $router, FragmentHandler $handler, $widgets) {
         $this->router = $router;
+        $this->handler = $handler;
+        $this->widgets = $widgets;
     }
 
     /**
@@ -45,6 +66,17 @@ class TwigExtension extends \Twig_Extension
         return [
             'favicon' => new \Twig_Filter_Method($this, 'favicon'),
             'dummy' => new \Twig_Filter_Method($this, 'dummy')
+        ];
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Twig_Extension::getFunctions()
+     */
+    public function getFunctions()
+    {
+        return [
+            'widgets' => new \Twig_Function_Method($this, 'widgets')
         ];
     }
 
@@ -71,6 +103,23 @@ class TwigExtension extends \Twig_Extension
     public function dummy($path, $filter)
     {
         return $path ?: '/media/dummy/'.$filter.'.jpg';
+    }
+
+    /**
+     * Render widgets
+     *
+     * @param string $place
+     * @param array|null $attributes
+     *
+     * @return string
+     */
+    public function widgets($place, $attributes = [])
+    {
+        $result = '';
+        foreach ($this->widgets->getWidgetsForPlace($place) as $controller) {
+            $result .= $this->handler->render(new ControllerReference($controller, $attributes, []), 'inline', []);
+        }
+        return $result;
     }
 
     /**

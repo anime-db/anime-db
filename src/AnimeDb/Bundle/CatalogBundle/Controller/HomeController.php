@@ -56,6 +56,20 @@ class HomeController extends Controller
     const SHOW_LIMIT_ALL = -1;
 
     /**
+     * Widget place top
+     *
+     * @var string
+     */
+    const WIDGET_PALCE_TOP = 'home.top';
+
+    /**
+     * Widget place bottom
+     *
+     * @var string
+     */
+    const WIDGET_PALCE_BOTTOM = 'home.bottom';
+
+    /**
      * Limits on the number of items per page for home page
      *
      * @var array
@@ -159,7 +173,9 @@ class HomeController extends Controller
         return $this->render('AnimeDbCatalogBundle:Home:index.html.twig', [
             'items' => $items,
             'show_limit' => $show_limit,
-            'pagination' => $pagination
+            'pagination' => $pagination,
+            'widget_top' => self::WIDGET_PALCE_TOP,
+            'widget_bottom' => self::WIDGET_PALCE_BOTTOM
         ]);
     }
 
