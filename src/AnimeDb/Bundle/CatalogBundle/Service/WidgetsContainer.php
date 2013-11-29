@@ -75,7 +75,9 @@ class WidgetsContainer
     public function registr($place, $controller)
     {
         if (preg_match('/^[a-z0-9]+:[a-z0-9]+:[_a-z0-9]+$/i', $controller)) {
-            if (!in_array($controller, $this->widgets[$place])) {
+            if (!isset($this->widgets[$place])) {
+                $this->widgets[$place][] = $controller;
+            } elseif (!in_array($controller, $this->widgets[$place])) {
                 $this->widgets[$place][] = $controller;
             }
             return true;
