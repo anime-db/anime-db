@@ -21,6 +21,7 @@ services:
         class: AnimeDb\Bundle\CatalogBundle\Service\Assets
     anime_db.widgets:
         class: AnimeDb\Bundle\CatalogBundle\Service\WidgetsContainer
+        arguments: [@event_dispatcher]
 
     # Form
     anime_db.form.type.item:
