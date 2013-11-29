@@ -22,6 +22,10 @@ use AnimeDb\Bundle\CatalogBundle\DependencyInjection\Compiler\PluginPass;
  */
 class AnimeDbCatalogBundle extends Bundle
 {
+    /**
+     * (non-PHPdoc)
+     * @see Symfony\Component\HttpKernel\Bundle.Bundle::build()
+     */
     public function build(ContainerBuilder $container)
     {
         parent::build($container);

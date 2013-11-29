@@ -91,15 +91,15 @@ Set real path to application
 
 Create a symbolic link on service
 
-    ln -s /path/to/anime-db/bin/service /etc/init.d/animedb
+    ln -s /path/to/anime-db/bin/service /etc/init.d/anime-db
 
 Run service
 
-    service animedb start
+    service anime-db start
 
 For the application is launched after the computer start, run the command
 
-    update-rc.d animedb defaults
+    update-rc.d anime-db defaults
 
 ## Depending ##
 

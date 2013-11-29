@@ -1,12 +1,12 @@
 {% extends 'AnimeDbCatalogBundle::layout.html.twig' %}
 
-{% block title %}{% trans %}Search source of filling{% endtrans %}{% endblock %}
+{% block title %}{% trans with {'%plugin%': plugin_name} %}Search source of filling for plugin %plugin%{% endtrans %}{% endblock %}
 
 {% form_theme form 'AnimeDbAppBundle:Form:fields.html.twig' %}
 
 {% block content %}
 <div class="b-search-source b-search-source-{{ plugin }}">
-	<h2>{% trans %}Search source of filling{% endtrans %}</h2>
+	<h2>{% trans with {'%plugin%': plugin_name} %}Search source of filling for plugin %plugin%{% endtrans %}</h2>
 	<form action="" method="get" {{ form_enctype(form) }}>
 		{{ form_widget(form) }}
 		<button type="submit">{% trans %}Find{% endtrans %}</button>
@@ -18,11 +18,11 @@
 		<ul>
 			{% for item in list %}
 				<li>
-					<a href="{{ item.link }}" class="image">
+					<a href="{{ item.link }}" class="image" title="{% trans %}Use to fill{% endtrans %}">
 						<img src="{{ item.image|dummy('card') }}" alt="{{ item.name }}" />
 					</a>
 					<div class="info">
-						<a href="{{ item.link }}">{{ item.name }}</a>
+						<a href="{{ item.link }}" title="{% trans %}Use to fill{% endtrans %}">{{ item.name }}</a>
 						<div>{{ item.description|nl2br }}</div>
 					</div>
 					<br clear="both">

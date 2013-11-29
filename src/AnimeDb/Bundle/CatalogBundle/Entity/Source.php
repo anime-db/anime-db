@@ -101,7 +101,7 @@ class Source
      */
     public function setItem(Item $item = null)
     {
-        if ($this->item != $item) {
+        if ($this->item !== $item) {
             $this->item = $item;
             if ($item instanceof Item) {
                 $this->item->addSource($this);

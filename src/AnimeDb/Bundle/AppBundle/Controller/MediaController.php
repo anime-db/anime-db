@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\CatalogBundle\Controller;
+namespace AnimeDb\Bundle\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +18,7 @@ use Symfony\Component\Filesystem\Exception\IOException;
 /**
  * Media
  *
- * @package AnimeDb\Bundle\CatalogBundle\Controller
+ * @package AnimeDb\Bundle\AppBundle\Controller
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class MediaController extends Controller

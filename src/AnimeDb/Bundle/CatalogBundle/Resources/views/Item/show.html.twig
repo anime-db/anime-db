@@ -17,6 +17,7 @@
 	<h2>{{ item.name }}</h2>
 	<img src="{{ item.cover|apply_filter('card')|dummy('card') }}" alt="{{ item.name }}" class="cover" />
 	<section class="item-summary">{{ item.summary }}</section>
+	{{ widgets(widget_in_content, {item: item}) }}
 	{% if item.episodes %}
 		<section class="item-episodes">
 			<header>{% trans %}Episodes{% endtrans %}</header>
@@ -33,6 +34,7 @@
 			</article>
 		</section>
 	{% endif %}
+	{{ widgets(widget_bottom, {item: item}) }}
 </section>
 <section class="item-show-right">
 	<section class="item-controls">
@@ -48,7 +50,7 @@
 		<header>{% trans %}Information{% endtrans %}</header>
 		<article>
 			<div>
-				<strong>{% trans %}Type{% endtrans %}</strong> <a href="{{ path('home_search', {'search_items[type]': item.type.id}) }}">{{ item.type.name }}</a>
+				<strong>{% trans %}Type{% endtrans %}</strong> <a href="{{ path('home_search', {'anime_db_catalog_search_items[type]': item.type.id}) }}">{{ item.type.name }}</a>
 			</div>
 			<div>
 				<strong>{% trans %}Number of episodes{% endtrans %}</strong> {{ item.episodesnumber }} {% trans %}ep.{% endtrans %} 
@@ -59,7 +61,7 @@
 			<div>
 				<strong>{% trans %}Status{% endtrans %}</strong>
 				{% if item.dateend %} {% trans %}came out in{% endtrans %} {% else %} {% trans %}goes from{% endtrans %} {% endif %}
-				<a href="{{ path('home_search', {'search_items[date_start]': item.datestart|date('Y-01-01')}) }}">{{ item.datestart|date('Y') }}</a>{% if item.dateend and (item.datestart|date('Y') != item.dateend|date('Y')) %}-<a href="{{ path('home_search', {'search_items[date_end]': item.dateend|date('Y-01-01')}) }}">{{ item.dateend|date('Y') }}</a>{% endif %}
+				<a href="{{ path('home_search', {'anime_db_catalog_search_items[date_start]': item.datestart|date('Y-01-01')}) }}">{{ item.datestart|date('Y') }}</a>{% if item.dateend and (item.datestart|date('Y') != item.dateend|date('Y')) %}-<a href="{{ path('home_search', {'search_items[date_end]': item.dateend|date('Y-01-01')}) }}">{{ item.dateend|date('Y') }}</a>{% endif %}
 				{% trans %}y.{% endtrans %}
 				{# start date of issue  #}
 				{% set startdey = item.datestart|date('d') %}
@@ -75,10 +77,10 @@
 				(<abbr title="{% trans %}From{% endtrans %} {{ startdey }} {{ startmonth|transchoice(startdey, {}, 'datechoice')|lower }} {{ item.datestart|date('Y') }} {% trans %}y.{% endtrans %}{{ dateend }}">?</abbr>)
 			</div>
 			<div>
-				<strong>{% trans %}Production{% endtrans %}</strong> <a href="{{ path('home_search', {'search_items[manufacturer]': item.manufacturer.id}) }}">{{ item.manufacturer.name }}</a>
+				<strong>{% trans %}Production{% endtrans %}</strong> <a href="{{ path('home_search', {'anime_db_catalog_search_items[manufacturer]': item.manufacturer.id}) }}">{{ item.manufacturer.name }}</a>
 			</div>
 			<div>
-				<strong>{% trans %}Storage{% endtrans %}</strong> <a href="{{ path('home_search', {'search_items[storage]': item.storage.id}) }}">{{ item.storage.name }}</a>
+				<strong>{% trans %}Storage{% endtrans %}</strong> <a href="{{ path('home_search', {'anime_db_catalog_search_items[storage]': item.storage.id}) }}">{{ item.storage.name }}</a>
 			</div>
 			{% if item.names is not empty %}
 				<div>
@@ -103,7 +105,7 @@
 			<header>{% trans %}Genres{% endtrans %}</header>
 			<article>
 					{% for genre in item.genres %}
-						<a href="{{ path('home_search', {'search_items[genres][]': genre.id}) }}">{{ genre.name }}</a>{% if not loop.last %}, {% endif %}
+						<a href="{{ path('home_search', {'anime_db_catalog_search_items[genres][]': genre.id}) }}">{{ genre.name }}</a>{% if not loop.last %}, {% endif %}
 					{% endfor %}
 			</article>
 		</section>
@@ -136,5 +138,6 @@
 			<article>{{ item.fileinfo|nl2br }}</article>
 		</section>
 	{% endif %}
+	{{ widgets(widget_right, {item: item}) }}
 </section>
 {% endblock %}

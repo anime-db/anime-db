@@ -31,3 +31,10 @@ form_image_upload:
     defaults: { _controller: AnimeDbAppBundle:Form:imageUpload, _format: json }
     requirements:
         _method:  POST
+
+
+media_favicon:
+    pattern:  /media/favicon/{host}.ico
+    requirements:
+        host: .+
+    defaults: { _controller: AnimeDbAppBundle:Media:favicon }

@@ -34,10 +34,8 @@ class Image
     /**
      * Local image
      *
-     * @Assert\File(
-     *     maxSize = "2048k"
-     * )
      * @Assert\Image(
+     *     maxSize = "2048k",
      *     minWidth = 200,
      *     minHeight = 200,
      *     mimeTypes = {"image/bmp","image/gif","image/jpeg","image/png"},

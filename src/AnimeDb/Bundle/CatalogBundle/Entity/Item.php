@@ -293,13 +293,13 @@ class Item
     /**
      * Set date_start
      *
-     * @param \DateTime|null $dateStart
+     * @param \DateTime|null $date_start
      *
      * @return \AnimeDb\Bundle\CatalogBundle\Entity\Item
      */
-    public function setDateStart(\DateTime $dateStart = null)
+    public function setDateStart(\DateTime $date_start = null)
     {
-        $this->date_start = clone $dateStart;
+        $this->date_start = $date_start ? clone $date_start : $date_start;
         return $this;
     }
 
@@ -817,6 +817,16 @@ class Item
     protected function getUploadDir()
     {
         return 'media';
+    }
+
+    /**
+     * Get web path
+     *
+     * @return string
+     */
+    public function getCoverWebPath()
+    {
+        return $this->cover ? '/'.$this->getUploadDir().'/'.$this->cover : null;
     }
 
     /**

@@ -37,14 +37,6 @@ item_delete:
     requirements:
         id:  \d+
 
-item_filler:
-    pattern:  /filler/{plugin}.html
-    defaults: { _controller: AnimeDbCatalogBundle:Item:filler }
-
-item_search:
-    pattern:  /search/{plugin}.html
-    defaults: { _controller: AnimeDbCatalogBundle:Item:search }
-
 item_import:
     pattern:  /import/{plugin}.html
     defaults: { _controller: AnimeDbCatalogBundle:Item:import }
@@ -53,12 +45,6 @@ item_duplicate:
     pattern:  /duplicate.html
     defaults: { _controller: AnimeDbCatalogBundle:Item:duplicate }
 
-
-media_favicon:
-    pattern:  /media/favicon/{host}.ico
-    requirements:
-        host: .+
-    defaults: { _controller: AnimeDbCatalogBundle:Media:favicon }
 
 storage_list:
     pattern:  /settings/storage.html
@@ -80,6 +66,7 @@ storage_delete:
     requirements:
         id:  \d+
 
+
 notice_get:
     pattern:  /notice/{id}/
     defaults: { _controller: AnimeDbCatalogBundle:Notice:get }
@@ -99,3 +86,25 @@ update_exec:
     pattern:  /update/exec.html
     defaults: { _controller: AnimeDbCatalogBundle:Update:exec }
     methods:   [POST]
+
+
+fill_filler:
+    pattern:  /filler/{plugin}.html
+    defaults: { _controller: AnimeDbCatalogBundle:Fill:filler }
+
+fill_search:
+    pattern:  /search/{plugin}.html
+    defaults: { _controller: AnimeDbCatalogBundle:Fill:search }
+
+
+refiller_refill:
+    pattern:  /refiller/{plugin}/{field}/refill.html
+    defaults: { _controller: AnimeDbCatalogBundle:Refill:refill }
+
+refiller_search:
+    pattern:  /refiller/{plugin}/{field}/search.html
+    defaults: { _controller: AnimeDbCatalogBundle:Refill:search }
+
+refiller_search_fill:
+    pattern:  /refiller/{plugin}/{field}/from_search.html
+    defaults: { _controller: AnimeDbCatalogBundle:Refill:fillFromSearch }

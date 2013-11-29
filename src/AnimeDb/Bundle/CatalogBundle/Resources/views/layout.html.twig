@@ -2,18 +2,17 @@
 
 {% block stylesheets %}
 	<link href="{{ asset('/bundles/animedbcatalog/css/jquery-ui/jquery-ui-1.8.16.custom.css') }}" type="text/css" rel="stylesheet" />
-	<link href="{{ asset('/bundles/animedbcatalog/css/main.css') }}" type="text/css" rel="stylesheet" />
 {% endblock %}
 
 {% block javascripts %}
 	<script type="text/javascript" src="{{ asset('/bundles/animedbcatalog/js/jquery-1.10.2.min.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('/bundles/animedbcatalog/js/jquery-ui-1.8.16.custom.min.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('/bundles/animedbapp/js/form.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('/bundles/animedbcatalog/js/main.js') }}"></script>
 {% endblock %}
 
 {% block headers %}
 	{% render controller('AnimeDbAppBundle:Assets:show') %}
+	<link href="{{ asset('/bundles/animedbcatalog/css/main.css') }}" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="{{ asset('/bundles/animedbcatalog/js/main.js') }}"></script>
 {% endblock %}
 
 {% block body %}
@@ -45,7 +44,20 @@
 	<div id="bg-left"></div>
 	<div id="bg-right"></div>
 </div>
-<div id="cap"></div>
-</body>
-</html>
+
+<script type="text/javascript">
+var translations = {
+	'Are you sure want to delete this item(s)?': '{% trans %}Are you sure want to delete this item(s)?{% endtrans %}',
+	'Failed to get the data. Want to try again?': '{% trans %}Failed to get the data. Want to try again?{% endtrans %}'
+};
+</script>
+<div id="cap">
+	<div id="cap-content"></div>
+	<div id="popup-container">
+		<div id="popup-wrapper">
+			{% set popup_id = 'b-lazyload-popup' %}
+			{% include 'AnimeDbAppBundle::popup.html.twig' %}
+		</div>
+	</div>
+</div>
 {% endblock %}

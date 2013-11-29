@@ -8,12 +8,12 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\CatalogBundle\Plugin\Search;
+namespace AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Search;
 
 /**
  * Element search results
  * 
- * @package AnimeDb\Bundle\CatalogBundle\Plugin\Search
+ * @package AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Search
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Item

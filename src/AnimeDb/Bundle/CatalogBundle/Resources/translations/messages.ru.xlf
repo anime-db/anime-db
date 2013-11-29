@@ -412,7 +412,7 @@
             </trans-unit>
             <trans-unit id="103">
                 <source>Detected files for new item %name% on storage %storage%</source>
-                <target>Обнаруженные файлы для новой записи %name% на хранилище %storage%</target>
+                <target>Обнаружены файлы для новой записи %name% на хранилище %storage%</target>
             </trans-unit>
             <trans-unit id="104">
                 <source>Changes are detected in files of item %name%</source>
@@ -437,6 +437,54 @@
             <trans-unit id="109">
                 <source>Show execution log.</source>
                 <target>Показать журнал выполнения.</target>
+            </trans-unit>
+            <trans-unit id="148">
+                <source>Refill</source>
+                <target>Перезаполнить</target>
+            </trans-unit>
+            <trans-unit id="149">
+                <source>Fill this field from the source</source>
+                <target>Заполнить это поле из источника</target>
+            </trans-unit>
+            <trans-unit id="150">
+                <source>Found several entries are similar to yours, select the correct one.</source>
+                <target>Найдено несколько записей похожих на вашу, выберите правильную.</target>
+            </trans-unit>
+            <trans-unit id="151">
+                <source>Reference to identify the record can be added plugin to the sources in this case the search for this recording will not be performed again.</source>
+                <target>Ссылка для идентификации записи может быть добавлена плагином в источники, в этом случае поиск по этой записи повторно проводится не будет.</target>
+            </trans-unit>
+            <trans-unit id="152">
+                <source>Nothing found</source>
+                <target>Ничего не найдено</target>
+            </trans-unit>
+            <trans-unit id="153">
+                <source>Use to fill</source>
+                <target>Использовать для заполнения</target>
+            </trans-unit>
+            <trans-unit id="154">
+                <source>Failed to get the data. Want to try again?</source>
+                <target>Не удалось получить данные. Хотите попробовать еще раз?</target>
+            </trans-unit>
+            <trans-unit id="155">
+                <source>Are you sure want to delete this item(s)?</source>
+                <target>Вы уверены, что хотите удалить этот элемент(ы)?</target>
+            </trans-unit>
+            <trans-unit id="156">
+                <source>Yes</source>
+                <target>Да</target>
+            </trans-unit>
+            <trans-unit id="157">
+                <source>Search source of filling for plugin %plugin%</source>
+                <target>Поиск источника заполнения для плагина %plugin%</target>
+            </trans-unit>
+            <trans-unit id="158">
+                <source>Fill item from source plugin %plugin%</source>
+                <target>Заполнение записи из источника плагином %plugin%</target>
+            </trans-unit>
+            <trans-unit id="159">
+                <source>Loading...</source>
+                <target>Загрузка...</target>
             </trans-unit>
         </body>
     </file>

@@ -18,7 +18,7 @@ use AnimeDb\Bundle\CatalogBundle\Event\Storage\UpdateItemFiles;
 use AnimeDb\Bundle\AppBundle\Entity\Notice;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\TwigBundle\TwigEngine;
-use AnimeDb\Bundle\CatalogBundle\Plugin\Search\Chain as SearchChain;
+use AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Search\Chain as SearchChain;
 use AnimeDb\Bundle\CatalogBundle\Form\Plugin\Search as SearchPluginForm;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
@@ -47,7 +47,7 @@ class ScanStorage implements EventSubscriberInterface
     /**
      * Search chain
      *
-     * @var \AnimeDb\Bundle\CatalogBundle\Plugin\Search\Chain
+     * @var \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Search\Chain
      */
     protected $search;
 
@@ -63,7 +63,7 @@ class ScanStorage implements EventSubscriberInterface
      *
      * @param \Doctrine\ORM\EntityManager $em
      * @param \Symfony\Bundle\TwigBundle\TwigEngine $templating
-     * @param \AnimeDb\Bundle\CatalogBundle\Plugin\Search\Chain $search
+     * @param \AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Search\Chain $search
      * @param \Symfony\Bundle\FrameworkBundle\Routing\Router $router
      */
     public function __construct(EntityManager $em, TwigEngine $templating, SearchChain $search, Router $router)

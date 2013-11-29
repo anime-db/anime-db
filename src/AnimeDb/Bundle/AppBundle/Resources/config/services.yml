@@ -4,6 +4,16 @@ services:
 
     anime_db.assets:
         class: AnimeDb\Bundle\AppBundle\Service\Assets
+    anime_db.widgets:
+        class: AnimeDb\Bundle\AppBundle\Service\WidgetsContainer
+        arguments: [@event_dispatcher]
+
+    # Twig extension
+    anime_db.twig_extension:
+        class: AnimeDb\Bundle\AppBundle\Service\TwigExtension
+        arguments: [@router, @fragment.handler, @anime_db.widgets, %hinclude%]
+        tags:
+            - { name: twig.extension }
 
     # Kernel request listener
     anime_db.listener.request:
@@ -11,13 +21,19 @@ services:
         tags: [{ name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: -255 }]
         arguments: [ @gedmo.listener.translatable, @validator ]
 
+    # Console listener
+    anime_db.listener.console:
+        class: AnimeDb\Bundle\AppBundle\Event\Listener\Console
+        tags: [{ name: kernel.event_listener, event: console.command, method: onConsoleCommand }]
+        arguments: [ @gedmo.listener.translatable, @translator, %locale% ]
+
     gedmo.listener.translatable:
         class: Gedmo\Translatable\TranslatableListener
         tags:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
             - [ setAnnotationReader, [ @annotation_reader ] ]
-            - [ setDefaultLocale, [ %locale% ] ]
+            - [ setDefaultLocale, [ "en" ] ]
             - [ setTranslationFallback, [ true ] ]
 
     anime_db.listener.project:

@@ -1,3 +1,4 @@
 parameters:
     serial_number: ''
     task_scheduler: { enabled: true }
+    hinclude: "AnimeDbAppBundle::hinclude.html.twig"

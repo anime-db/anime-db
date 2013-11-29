@@ -42,6 +42,6 @@ class SearchSimple extends AbstractType
      */
     public function getName()
     {
-        return 'animedb_catalogbundle_search_items';
+        return 'anime_db_catalog_search_items';
     }
 }

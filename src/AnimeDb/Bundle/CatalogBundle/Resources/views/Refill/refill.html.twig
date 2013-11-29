@@ -1,0 +1,7 @@
+{% form_theme form 'AnimeDbAppBundle:Form:fields.html.twig' %}
+<div class="b-refill-form">
+	<form action="" method="post" {{ form_enctype(form) }} data-field="{{ field }}">
+		{{ form_widget(form) }}
+		<button type="submit">{% trans %}Refill{% endtrans %}</button>
+	</form>
+</div>
