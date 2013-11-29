@@ -65,7 +65,17 @@ class TwigExtension extends \Twig_Extension
     {
         return [
             'favicon' => new \Twig_Filter_Method($this, 'favicon'),
-            'dummy' => new \Twig_Filter_Method($this, 'dummy'),
+            'dummy' => new \Twig_Filter_Method($this, 'dummy')
+        ];
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Twig_Extension::getFunctions()
+     */
+    public function getFunctions()
+    {
+        return [
             'widgets' => new \Twig_Function_Method($this, 'widgets')
         ];
     }
