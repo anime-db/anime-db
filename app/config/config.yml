@@ -16,6 +16,7 @@ framework:
     default_locale:  "en"
     trusted_proxies: ~
     session:         ~
+    fragments: { path: /_fragment }
 
 # Twig Configuration
 twig:
