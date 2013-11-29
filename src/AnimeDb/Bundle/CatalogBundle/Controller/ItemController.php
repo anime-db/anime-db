@@ -33,6 +33,27 @@ class ItemController extends Controller
     const NAME_ITEM_ADDED = '_item_added';
 
     /**
+     * Widget place in content
+     *
+     * @var string
+     */
+    const WIDGET_PALCE_IN_CONTENT = 'item.in_content';
+
+    /**
+     * Widget place right
+     *
+     * @var string
+     */
+    const WIDGET_PALCE_RIGHT = 'item.right';
+
+    /**
+     * Widget place bottom
+     *
+     * @var string
+     */
+    const WIDGET_PALCE_BOTTOM = 'item.bottom';
+
+    /**
      * Show item
      *
      * @param \AnimeDb\Bundle\CatalogBundle\Entity\Item $item
@@ -41,7 +62,12 @@ class ItemController extends Controller
      */
     public function showAction(Item $item)
     {
-        return $this->render('AnimeDbCatalogBundle:Item:show.html.twig', ['item' => $item]);
+        return $this->render('AnimeDbCatalogBundle:Item:show.html.twig', [
+            'item' => $item,
+            'widget_bottom' => self::WIDGET_PALCE_BOTTOM,
+            'widget_in_content' => self::WIDGET_PALCE_IN_CONTENT,
+            'widget_right' => self::WIDGET_PALCE_RIGHT
+        ]);
     }
 
     /**

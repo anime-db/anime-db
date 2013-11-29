@@ -17,6 +17,7 @@
 	<h2>{{ item.name }}</h2>
 	<img src="{{ item.cover|apply_filter('card')|dummy('card') }}" alt="{{ item.name }}" class="cover" />
 	<section class="item-summary">{{ item.summary }}</section>
+	{{ widgets(widget_in_content, {item: item}) }}
 	{% if item.episodes %}
 		<section class="item-episodes">
 			<header>{% trans %}Episodes{% endtrans %}</header>
@@ -33,6 +34,7 @@
 			</article>
 		</section>
 	{% endif %}
+	{{ widgets(widget_bottom, {item: item}) }}
 </section>
 <section class="item-show-right">
 	<section class="item-controls">
@@ -136,5 +138,6 @@
 			<article>{{ item.fileinfo|nl2br }}</article>
 		</section>
 	{% endif %}
+	{{ widgets(widget_right, {item: item}) }}
 </section>
 {% endblock %}
