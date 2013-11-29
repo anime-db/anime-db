@@ -516,6 +516,8 @@ h1.logo a span {
 	float: right;
 }
 .item-show-left .cover {
+	width: 240px;
+	height: 300px;
 	margin: 0 15px 10px 0;
 	float: left;
 }
@@ -545,6 +547,7 @@ h1.logo a span {
 }
 .item-summary {
 	min-height: 300px;
+	text-indent: 20px;
 }
 .item-episodes article {
 	max-height: 500px;
