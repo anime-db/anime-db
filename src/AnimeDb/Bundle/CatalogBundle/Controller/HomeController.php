@@ -20,7 +20,7 @@ use AnimeDb\Bundle\CatalogBundle\Entity\Country as CountryEntity;
 use AnimeDb\Bundle\CatalogBundle\Entity\Genre as GenreEntity;
 use AnimeDb\Bundle\CatalogBundle\Entity\Storage as StorageEntity;
 use Doctrine\ORM\Query\Expr;
-use AnimeDb\Bundle\CatalogBundle\Service\Pagination;
+use AnimeDb\Bundle\AppBundle\Service\Pagination;
 use AnimeDb\Bundle\CatalogBundle\Form\Settings\General as GeneralForm;
 use AnimeDb\Bundle\CatalogBundle\Entity\Settings\General as GeneralEntity;
 use Symfony\Component\Yaml\Yaml;
@@ -404,9 +404,8 @@ class HomeController extends Controller
             $form->handleRequest($request);
             if ($form->isValid()) {
                 // update params
-                $file = __DIR__.'/../../../../../app/config/parameters.yml';
+                $file = $this->container->getParameter('kernel.root_dir').'/config/parameters.yml';
                 $parameters = Yaml::parse($file);
-                $parameters['parameters']['locale'] = $entity->getLocale();
                 $parameters['parameters']['serial_number'] = $entity->getSerialNumber();
                 $parameters['parameters']['task_scheduler']['enabled'] = $entity->getTaskScheduler();
                 $parameters['parameters']['default_search'] = $entity->getDefaultSearch();
@@ -421,27 +420,5 @@ class HomeController extends Controller
         return $this->render('AnimeDbCatalogBundle:Home:settings.html.twig', [
             'form'  => $form->createView()
         ]);
-    }
-
-    /**
-     * Assets stylesheets
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function assetsStylesheetsAction()
-    {
-        $paths = $this->get('anime_db.assets')->getStylesheetPaths();
-        return $this->render('AnimeDbCatalogBundle:Home:assets/stylesheets.html.twig', ['paths'  => $paths]);
-    }
-
-    /**
-     * Assets javascripts
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function assetsJavaScriptsAction()
-    {
-        $paths = $this->get('anime_db.assets')->getJavaScriptsPaths();
-        return $this->render('AnimeDbCatalogBundle:Home:assets/javascripts.html.twig', ['paths'  => $paths]);
     }
 }

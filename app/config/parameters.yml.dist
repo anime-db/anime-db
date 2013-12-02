@@ -14,15 +14,3 @@ parameters:
 
     locale: en
     secret: a996943667c670ed1dcd4fb3822fd659
-
-    # Serial number for application
-    serial_number: ''
-
-    task_scheduler:
-        enabled: true
-    default_search: null
-
-    # Avalanche
-    avalanche_card: [240, 300]
-    avalanche_catalog: [200, 250]
-    avalanche_frame: [190, 142] # 12:9

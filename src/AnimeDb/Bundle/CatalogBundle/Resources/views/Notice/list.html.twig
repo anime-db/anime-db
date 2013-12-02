@@ -22,7 +22,7 @@
 			{% for notice in list %}
 				<tr>
 					<th><input type="checkbox" name="id[]" value="{{ notice.id }}" class="f-notice-id" /></th>
-					<td class="t-massage">
+					<td class="t-message">
 						<a href="{{ path('notice_get', {id: notice.id}) }}" title="{% trans %}Show full info of notice{% endtrans %}">
 							{{ notice.message|striptags }}
 						</a>
@@ -48,9 +48,9 @@
 			{% endfor %}
 		</table>
 		<br />
-		<button type="submit" data-massage="{% trans %}Are you sure want to delete item(s)?{% endtrans %}">{% trans %}Remove{% endtrans %}</button>
+		<button type="submit" data-message="{% trans %}Are you sure want to delete item(s)?{% endtrans %}">{% trans %}Remove{% endtrans %}</button>
 		</form>
-		{% include 'AnimeDbCatalogBundle::pagination.html.twig' %}
+		{% include 'AnimeDbAppBundle::pagination.html.twig' %}
 	{% endif %}
 </section>
 {% endblock %}

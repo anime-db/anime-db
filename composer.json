@@ -42,7 +42,11 @@
         "doctrine/migrations": "dev-master",
         "doctrine/doctrine-migrations-bundle": "dev-master",
         "anime-db/world-art-filler-bundle": "0.1.*",
-        "composer/composer": "1.0.0-alpha7"
+        "composer/composer": "1.0.0-alpha7",
+        "guzzle/guzzle": "3.7.*"
+    },
+    "suggest": {
+        "anime-db/world-art-filler-bundle": "Allows import data from a site World-Art.ru"
     },
     "scripts": {
         "post-install-cmd": [
@@ -51,7 +55,10 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migrate"
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migrate",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::installConfig",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::notifyProjectInstall",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::execJobs"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
@@ -59,22 +66,27 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migrate"
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migrate",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::notifyProjectUpdate",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::execJobs"
         ],
         "post-package-install": [
-            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::addPluginToAppKernel",
-            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::addPluginToRouting",
-            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migratePlugin",
-            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::savePlugin"
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPackageToKernel",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPackageToRouting",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPackageToConfig",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migratePackage",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::notifyPackage"
         ],
         "post-package-update": [
-            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migratePlugin"
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migratePackage",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::notifyPackage"
         ],
         "pre-package-uninstall": [
-            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::removePluginFromAppKernel",
-            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::removePluginFromRouting",
-            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::migratePlugin",
-            "AnimeDb\\Bundle\\CatalogBundle\\Composer\\ScriptHandler::deletePlugin"
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::removePackageFromKernel",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::removePackageFromRouting",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::removePackageFromConfig",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migratePackage",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::notifyPackage"
         ]
     },
     "config": {

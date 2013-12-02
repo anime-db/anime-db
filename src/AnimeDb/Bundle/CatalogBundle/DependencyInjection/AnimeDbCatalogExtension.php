@@ -20,7 +20,7 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  *
- * @package AnimeDb\Bundle\CatalogBundle
+ * @package AnimeDb\Bundle\CatalogBundle\DependencyInjection
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class AnimeDbCatalogExtension extends Extension

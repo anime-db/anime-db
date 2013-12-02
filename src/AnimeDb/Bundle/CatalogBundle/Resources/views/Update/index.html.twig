@@ -1,0 +1,32 @@
+{% extends 'AnimeDbCatalogBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Upgrading the system{% endtrans %}{% endblock %}
+
+{% block content %}
+<div class="b-update">
+	<h2>{% trans %}Upgrading the system{% endtrans %}</h2>
+	{% if confirmed == false %}
+		<div class="b-update-ask">
+			<div class="b-message">{% trans %}Upgrading the system and its components may take a few minutes. You are ready to run it?{% endtrans %}</div>
+			<form action="" method="post">
+				<a href="{{ path('home') }}" class="button">{% trans %}Cancel{% endtrans %}</a>
+				<button type="submit">{% trans %}Yes{% endtrans %}</button>
+			</form>
+		</div>
+	{% else %}
+		<div class="b-update-container">
+			<div class="b-message">
+				{% trans %}Performed update system. Do not turn off the system until the update is complete.{% endtrans %}<br />
+				<a href="#" class="bt-toggle-block" data-target=".b-update-log">{% trans %}Show execution log.{% endtrans %}</a>
+			</div>
+			<pre
+				class="b-update-log"
+				data-from="{{ log_file }}"
+				data-end-message="{{ end_message }}"
+				data-message="{% trans %}Update successful. Restart the application to complete the update.{% endtrans %}"
+				data-redirect="{{ path('home') }}"
+			></pre>
+		</div>
+	{% endif %}
+</div>
+{% endblock %}

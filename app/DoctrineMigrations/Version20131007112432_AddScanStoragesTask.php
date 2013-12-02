@@ -4,7 +4,7 @@ namespace Application\Migrations;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
-use AnimeDb\Bundle\CatalogBundle\Entity\Task;
+use AnimeDb\Bundle\AppBundle\Entity\Task;
 
 /**
  * Auto-generated Migration: Please modify to your needs!

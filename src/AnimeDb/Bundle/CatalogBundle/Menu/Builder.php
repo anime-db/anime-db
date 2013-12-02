@@ -65,6 +65,7 @@ class Builder extends ContainerAware
         $add->addChild('Add manually', ['route' => 'item_add_manually']);
         $settings->addChild('File storages', ['route' => 'storage_list']);
         $settings->addChild('List of notice', ['route' => 'notice_list']);
+        $settings->addChild('Update', ['route' => 'update']);
         $settings->addChild('General', ['route' => 'home_settings']);
 
         return $menu;
@@ -122,7 +123,7 @@ class Builder extends ContainerAware
             ->setLinkAttribute('class', 'change');
         $menu->addChild('Delete record', ['route' => 'item_delete', 'routeParameters' => $params])
             ->setLinkAttribute('class', 'delete')
-            ->setLinkAttribute('data-massage', $this->container->get('translator')->trans(
+            ->setLinkAttribute('data-message', $this->container->get('translator')->trans(
                 'Are you sure want to delete %name%?',
                 ['%name%' => $options['name']]
             ));

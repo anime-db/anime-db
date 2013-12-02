@@ -1,6 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: vendor_config.yml }
 
 framework:
     #esi:             ~
@@ -66,20 +67,3 @@ doctrine:
 #    username:  "%mailer_user%"
 #    password:  "%mailer_password%"
 #    spool:     { type: memory }
-
-# Avalanche Configuration
-avalanche_imagine:
-    source_root:  %kernel.root_dir%/../web/media
-    web_root:     %kernel.root_dir%/../web
-    cache_prefix: media/suit
-    driver:       gd
-    filters:
-        card:
-            type:    thumbnail
-            options: { size: %avalanche_card%, mode: outbound }
-        catalog:
-            type:    thumbnail
-            options: { size: %avalanche_catalog%, mode: outbound }
-        frame:
-            type:    thumbnail
-            options: { size: %avalanche_frame%, mode: outbound }

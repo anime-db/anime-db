@@ -1,0 +1,8 @@
+<script type="text/javascript" src="{{ asset('/bundles/animedbapp/js/form.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/bundles/animedbapp/js/hinclude.js') }}"></script>
+{% for path in js %}
+	<script type="text/javascript" src="{{ asset(path) }}"></script>
+{% endfor %}
+{% for path in css %}
+	<link href="{{ asset(path) }}" type="text/css" rel="stylesheet">
+{% endfor %}

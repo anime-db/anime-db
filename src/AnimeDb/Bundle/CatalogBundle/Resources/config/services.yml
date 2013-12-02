@@ -1,7 +1,4 @@
 services:
-    anime_db.pagination:
-        class: AnimeDb\Bundle\CatalogBundle\Service\Pagination
-
     # Plugins chain
     anime_db.plugin.filler:
         class: AnimeDb\Bundle\CatalogBundle\Plugin\Fill\Filler\Chain
@@ -17,12 +14,6 @@ services:
     anime_db.plugin.setting:
         class: AnimeDb\Bundle\CatalogBundle\Plugin\Setting\Chain
 
-    anime_db.assets:
-        class: AnimeDb\Bundle\CatalogBundle\Service\Assets
-    anime_db.widgets:
-        class: AnimeDb\Bundle\CatalogBundle\Service\WidgetsContainer
-        arguments: [@event_dispatcher]
-
     # Form
     anime_db.form.type.item:
         class: AnimeDb\Bundle\CatalogBundle\Form\Entity\Item
@@ -32,35 +23,7 @@ services:
             - [ setRefillerChain, [ @anime_db.plugin.refiller ] ]
             - [ setTemplating, [ @templating ] ]
 
-    # Twig extension
-    anime_db.twig_extension:
-        class: AnimeDb\Bundle\CatalogBundle\Service\TwigExtension
-        arguments: [@router, @fragment.handler, @anime_db.widgets, %hinclude%]
-        tags:
-            - { name: twig.extension }
-
-    # Kernel request listener
-    anime_db.listener.request:
-        class: AnimeDb\Bundle\CatalogBundle\Event\Listener\Request
-        tags: [{ name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: -255 }]
-        arguments: [ @gedmo.listener.translatable, @validator ]
-
-    # Console listener
-    anime_db.listener.console:
-        class: AnimeDb\Bundle\CatalogBundle\Event\Listener\Console
-        tags: [{ name: kernel.event_listener, event: console.command, method: onConsoleCommand }]
-        arguments: [ @gedmo.listener.translatable, @translator, %locale% ]
-
     anime_db.subscriber.scan_storage:
         class: AnimeDb\Bundle\CatalogBundle\Event\Subscriber\ScanStorage
         arguments: [ @doctrine.orm.entity_manager, @templating, @anime_db.plugin.search_fill, @router ]
         tags: [{ name:kernel.event_subscriber }]
-
-    gedmo.listener.translatable:
-        class: Gedmo\Translatable\TranslatableListener
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-        calls:
-            - [ setAnnotationReader, [ @annotation_reader ] ]
-            - [ setDefaultLocale, [ "en" ] ]
-            - [ setTranslationFallback, [ true ] ]

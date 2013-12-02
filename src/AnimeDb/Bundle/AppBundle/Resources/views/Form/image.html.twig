@@ -1,0 +1,18 @@
+{% extends 'AnimeDbAppBundle::popup.html.twig' %}
+
+{% set popup_id = 'f-image-popup' %}
+
+{% set content %}
+<form action="{{ path('form_image_upload') }}" method="post" {{ form_enctype(form) }}>
+	<div class="f-row">
+		{{ form_row(form.remote, {'attr': {'placeholder': 'http://'}}) }}
+	</div>
+	<div class="f-row">
+		{{ form_row(form.local, {'attr': {'accept': 'image/bmp,image/gif,image/jpeg,image/png'}}) }}
+	</div>
+	<div class="f-row">
+		<label></label>
+		<button type="submit">{% if change is defined %}{% trans %}Change image{% endtrans %}{% else %}{% trans %}Add image{% endtrans %}{% endif %}</button>
+	</div>
+</form>
+{% endset %}

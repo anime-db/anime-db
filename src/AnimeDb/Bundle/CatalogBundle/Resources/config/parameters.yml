@@ -1,2 +1,2 @@
 parameters:
-    hinclude: "AnimeDbCatalogBundle::hinclude.html.twig"
+    default_search: null
