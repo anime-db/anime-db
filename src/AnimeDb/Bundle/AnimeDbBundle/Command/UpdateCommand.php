@@ -56,7 +56,7 @@ class UpdateCommand extends ContainerAwareCommand
         $composer = $factory->createComposer(new ConsoleIO($input, $output, $this->getHelperSet()));
 
         // search tag with new version of application
-        $tag = $this->findNewVersion($composer->getPackage()->getPrettyVersion());
+        $tag = $this->findNewVersion($composer->getPackage()->getVersion());
         if ($tag) {
             $this->doUpdateItself($tag, $composer, $output);
         } else {
@@ -90,10 +90,12 @@ class UpdateCommand extends ContainerAwareCommand
     protected function findNewVersion($current_version)
     {
         // search tag with new version of application
+        $reg = '/^v?(?<version>\d+\.\d+\.\d+)(?:-(?:dev|patch|alpha|beta|rc)(?<suffix>\d+))?$/i';
         foreach ($this->getListTags() as $tag) {
-            if (preg_match('/^v?(?<version>\d+\.\d+\.\d+)$/', $tag['name'], $mat)) {
-                if (version_compare($mat['version'], $current_version) == 1) {
-                    return array_merge(['version' => $mat['version']], $tag);
+            if (preg_match($reg, $tag['name'], $mat)) {
+                $version = $mat['version'].'.'.(isset($mat['suffix']) ? $mat['suffix'] : '0');
+                if (version_compare($version, $current_version) == 1) {
+                    return array_merge(['version' => $version], $tag);
                 } else {
                     break;
                 }
