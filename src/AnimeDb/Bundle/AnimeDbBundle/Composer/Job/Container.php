@@ -46,7 +46,7 @@ class Container
     public function getKernel()
     {
         if (!($this->kernel instanceof \AppKernel)) {
-            require __DIR__.'/../../../../../../app/bootstrap.php.cache';
+            require __DIR__.'/../../../../../../app/autoload.php';
             require __DIR__.'/../../../../../../app/AppKernel.php';
             $this->kernel = new \AppKernel('dev', true);
             $this->kernel->boot();
