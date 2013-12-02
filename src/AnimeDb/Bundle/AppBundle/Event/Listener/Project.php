@@ -11,7 +11,6 @@
 namespace AnimeDb\Bundle\AppBundle\Event\Listener;
 
 use Doctrine\ORM\EntityManager;
-use Symfony\Bundle\TwigBundle\TwigEngine;
 use AnimeDb\Bundle\AnimeDbBundle\Event\Project\Updated as UpdatedEvent;
 use AnimeDb\Bundle\AppBundle\Command\ProposeUpdateCommand;
 
