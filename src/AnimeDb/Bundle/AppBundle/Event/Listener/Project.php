@@ -50,11 +50,11 @@ class Project
         /* @var $task \AnimeDb\Bundle\AppBundle\Entity\Task */
         $task = $this->em
             ->getRepository('AnimeDbAppBundle:Task')
-            ->findByCommand('animedb:propose-update');
+            ->findOneByCommand('animedb:propose-update');
 
         $next_run = time()+ProposeUpdateCommand::INERVAL_UPDATE;
         $next_run = mktime(1, 0, 0, date('m', $next_run), date('d', $next_run), date('y', $next_run));
-        $task->setNextRun(new \DateTime($next_run));
+        $task->setNextRun(new \DateTime(date('Y-m-d H:i:s', $next_run)));
 
         $this->em->persist($task);
         $this->em->flush();
