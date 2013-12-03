@@ -15,6 +15,8 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\ScriptHandler;
 use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
 use Composer\Package\Package;
+use Composer\Autoload\ClassLoader;
+use Doctrine\Common\Annotations\AnnotationRegistry;
 
 /**
  * Routing manipulator
@@ -46,12 +48,55 @@ class Container
     public function getKernel()
     {
         if (!($this->kernel instanceof \AppKernel)) {
-            require __DIR__.'/../../../../../../app/autoload.php';
-            require __DIR__.'/../../../../../../app/AppKernel.php';
+            if (isset($GLOBALS['loader']) && $GLOBALS['loader'] instanceof ClassLoader) {
+                $GLOBALS['loader']->unregister();
+            }
+            $GLOBALS['loader'] = $this->getClassLoader();
+
+            require_once __DIR__.'/../../../../../../app/AppKernel.php';
             $this->kernel = new \AppKernel('dev', true);
             $this->kernel->boot();
         }
         return $this->kernel;
+    }
+
+    /**
+     * Get composer class loader
+     *
+     * @return \Composer\Autoload\ClassLoader
+     */
+    protected function getClassLoader()
+    {
+        $loader = new ClassLoader();
+        $vendorDir = __DIR__.'/../../../../../../vendor';
+        $baseDir = dirname($vendorDir);
+
+        $map = require $vendorDir . '/composer/autoload_namespaces.php';
+        foreach ($map as $namespace => $path) {
+            $loader->set($namespace, $path);
+        }
+
+        $classMap = require $vendorDir . '/composer/autoload_classmap.php';
+        if ($classMap) {
+            $loader->addClassMap($classMap);
+        }
+
+        $loader->register(true);
+
+        $includeFiles = require $vendorDir . '/composer/autoload_files.php';
+        foreach ($includeFiles as $file) {
+            require_once $file;
+        }
+
+        // intl
+        if (!function_exists('intl_get_error_code')) {
+            require_once $vendorDir.'/symfony/symfony/src/Symfony/Component/Locale/Resources/stubs/functions.php';
+            $loader->add('', $vendorDir.'/symfony/symfony/src/Symfony/Component/Locale/Resources/stubs');
+        }
+
+        AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
+
+        return $loader;
     }
 
     /**
