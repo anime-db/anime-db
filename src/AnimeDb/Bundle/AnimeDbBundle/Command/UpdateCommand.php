@@ -25,8 +25,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Composer\Package\Loader\ArrayLoader;
 use Symfony\Component\Finder\Finder;
 use Composer\Composer;
-use Symfony\Component\Process\PhpExecutableFinder;
-use Symfony\Component\Process\Process;
+use Composer\Installer;
 
 /**
  * Update Application
@@ -53,17 +52,18 @@ class UpdateCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output) {
         // load composer
         $factory = new Factory();
-        $composer = $factory->createComposer(new ConsoleIO($input, $output, $this->getHelperSet()));
+        $io = new ConsoleIO($input, $output, $this->getHelperSet());
+        $composer = $factory->createComposer($io);
 
         // search tag with new version of application
         $tag = $this->findNewVersion($composer->getPackage()->getVersion());
         if ($tag) {
             $this->doUpdateItself($tag, $composer, $output);
         } else {
-            $output->writeln('Application has already been updated to the latest version');
+            $output->writeln('<info>Application has already been updated to the latest version</info>');
         }
 
-        $this->doUpdateComposer($output);
+        $this->doUpdateComposer($composer, $io);
         $output->writeln('<info>Updating the application has been completed<info>');
     }
 
@@ -146,18 +146,21 @@ class UpdateCommand extends ContainerAwareCommand
     /**
      * Do update composer
      *
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param \Composer\Composer $composer
+     * @param \Composer\IO\ConsoleIO $io
      */
-    protected function doUpdateComposer(OutputInterface $output)
+    protected function doUpdateComposer(Composer $composer, ConsoleIO $io)
     {
         $lock_file = $this->getContainer()->getParameter('kernel.root_dir').'/../composer.lock';
         if (file_exists($lock_file)) {
             @unlink($lock_file);
         }
-        // Compositor update is performed in a separate thread because after the update,
-        // you must re-connect AppKernal and its inclusion would lead to an error
-        $this->executeCommand(escapeshellarg($this->getPhp()).' bin/composer update', $output);
-        $output->writeln('<info>Update requirements has been completed</info>');
+        $install = Installer::create($io, $composer)->setUpdate(true);
+        if ($install->run()) {
+            $io->write('<info>Update requirements has been completed</info>');
+        } else {
+            $io->write('<error>During updating dependencies error occurred</error>');
+        }
     }
 
     /**
@@ -243,46 +246,5 @@ class UpdateCommand extends ContainerAwareCommand
         }
 
         return $files;
-    }
-
-    /**
-     * Execute command
-     *
-     * @throws \RuntimeException
-     *
-     * @param string $cmd
-     * @param \Symfony\Component\Console\Output\OutputInterface|null $output
-     * @param string|null $cwd
-     */
-    protected function executeCommand($cmd, OutputInterface $output = null, $cwd = '')
-    {
-        $cwd = $cwd ?: $this->getContainer()->getParameter('kernel.root_dir').'/../';
-        $process = new Process($cmd, $cwd, null, null, null);
-        $process->run(function ($type, $buffer) use ($output) {
-            if ($output instanceof OutputInterface) {
-                $output->write($buffer);
-            } else {
-                echo $buffer;
-            }
-        });
-        if (!$process->isSuccessful()) {
-            throw new \RuntimeException(sprintf('An error occurred when executing the "%s" command.', $cmd));
-        }
-    }
-
-    /**
-     * Get path to php executable
-     *
-     * @throws \RuntimeException
-     *
-     * @return string
-     */
-    protected function getPhp()
-    {
-        $phpFinder = new PhpExecutableFinder;
-        if (!$phpPath = $phpFinder->find()) {
-            throw new \RuntimeException('The php executable could not be found, add it to your PATH environment variable and try again');
-        }
-        return $phpPath;
     }
 }
