@@ -26,6 +26,7 @@ use AnimeDb\Bundle\CatalogBundle\Entity\Settings\General as GeneralEntity;
 use Symfony\Component\Yaml\Yaml;
 use AnimeDb\Bundle\CatalogBundle\Service\Listener\Request as RequestListener;
 use AnimeDb\Bundle\CatalogBundle\Entity\Search as SearchEntity;
+use AnimeDb\Bundle\CatalogBundle\Service\Search\Manager as ManagerSearch;
 
 /**
  * Main page of the catalog
@@ -231,63 +232,8 @@ class HomeController extends Controller
         if ($request->query->count()) {
             $form->handleRequest($request);
             if ($form->isValid()) {
-
-                // build query
-                /* @var $selector \Doctrine\ORM\QueryBuilder */
-                $selector = $this->getDoctrine()
-                    ->getRepository('AnimeDbCatalogBundle:Item')
-                    ->createQueryBuilder('i');
-
-                // main name
-                if ($data->getName()) {
-                    // TODO create index name for rapid and accurate search
-                    $selector
-                        ->innerJoin('i.names', 'n')
-                        ->andWhere('i.name LIKE :name OR n.name LIKE :name')
-                        ->setParameter('name', str_replace('%', '%%', $data->getName()).'%');
-                }
-                // date start
-                if ($data->getDateStart() instanceof \DateTime) {
-                    $selector->andWhere('i.date_start >= :date_start')
-                        ->setParameter('date_start', $data->getDateStart()->format('Y-m-d'));
-                }
-                // date end
-                if ($data->getDateEnd() instanceof \DateTime) {
-                    $selector->andWhere('i.date_end <= :date_end')
-                        ->setParameter('date_end', $data->getDateEnd()->format('Y-m-d'));
-                }
-                // manufacturer
-                if ($data->getManufacturer() instanceof CountryEntity) {
-                    $selector->andWhere('i.manufacturer = :manufacturer')
-                        ->setParameter('manufacturer', $data->getManufacturer()->getId());
-                }
-                // storage
-                if ($data->getStorage() instanceof StorageEntity) {
-                    $selector->andWhere('i.storage = :storage')
-                        ->setParameter('storage', $data->getStorage()->getId());
-                }
-                // type
-                if ($data->getType() instanceof TypeEntity) {
-                    $selector->andWhere('i.type = :type')
-                        ->setParameter('type', $data->getType()->getId());
-                }
-                // genres
-                if ($data->getGenres()->count()) {
-                    $keys = [];
-                    foreach ($data->getGenres() as $key => $genre) {
-                        $keys[] = ':genre'.$key;
-                        $selector->setParameter('genre'.$key, $genre->getId());
-                    }
-                    $selector->innerJoin('i.genres', 'g')
-                        ->andWhere('g.id IN ('.implode(',', $keys).')');
-                }
-
-                // get count all items
-                $count = clone $selector;
-                $count = $count
-                    ->select('COUNT(DISTINCT i)')
-                    ->getQuery()
-                    ->getSingleScalarResult();
+                /* @var $service \AnimeDb\Bundle\CatalogBundle\Service\Search\Manager */
+                $service = $this->get('anime_db.search');
 
                 // current page for paging
                 $current_page = $request->get('page', 1);
@@ -297,20 +243,19 @@ class HomeController extends Controller
                 $limit = (int)$request->get('limit', self::SEARCH_ITEMS_PER_PAGE);
                 $limit = in_array($limit, self::$search_show_limit) ? $limit : self::SEARCH_ITEMS_PER_PAGE;
 
-                // add order
-                $current_sort_by = $request->get('sort_by', 'date_update');
-                if (!isset(self::$sort_by_field[$current_sort_by])) {
-                    $current_sort_by = 'date_update';
-                }
-                $current_sort_direction = $request->get('sort_direction', 'DESC');
-                if (!isset(self::$sort_direction[$current_sort_direction])) {
-                    $current_sort_direction = 'DESC';
-                }
+                // get order
+                $current_sort_by = ManagerSearch::getValidSortColumn($request->get('sort_by'));
+                $current_sort_direction = ManagerSearch::getValidSortDirection($request->get('sort_direction'));
 
-                // apply order
-                $selector
-                    ->orderBy('i.'.$current_sort_by, $current_sort_direction)
-                    ->addOrderBy('i.id', $current_sort_direction);
+                // do search
+                $result = $service->search(
+                    $data,
+                    ($limit != self::SHOW_LIMIT_ALL ? $limit : 0),
+                    ($limit != self::SHOW_LIMIT_ALL ? ($current_page - 1) * $limit : 0),
+                    $current_sort_by,
+                    $current_sort_direction
+                );
+                $items = $result['list'];
 
                 // build sort params for tamplate
                 $sort_by = [];
@@ -332,14 +277,10 @@ class HomeController extends Controller
                 );
 
                 if ($limit != self::SHOW_LIMIT_ALL) {
-                    $selector
-                        ->setFirstResult(($current_page - 1) * $limit)
-                        ->setMaxResults($limit);
-
                     // build pagination
                     $that = $this;
                     $pagination = $this->get('anime_db.pagination')->createNavigation(
-                        ceil($count/$limit),
+                        ceil($result['total']/$limit),
                         $current_page,
                         Pagination::DEFAULT_LIST_LENGTH,
                         function ($page) use ($that, $request) {
@@ -351,12 +292,6 @@ class HomeController extends Controller
                         $this->generateUrl('home_search', $request->query->all())
                     );
                 }
-
-                // get items
-                $items = $selector
-                    ->groupBy('i')
-                    ->getQuery()
-                    ->getResult();
 
                 // assembly parameters limit output
                 foreach (self::$search_show_limit as $value) {
