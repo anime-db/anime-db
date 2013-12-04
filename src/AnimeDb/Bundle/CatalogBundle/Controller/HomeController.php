@@ -223,7 +223,7 @@ class HomeController extends Controller
     {
         $data = new SearchEntity();
         /* @var $form \Symfony\Component\Form\Form */
-        $form = $this->createForm(new SearchForm(), $data);
+        $form = $this->createForm(new SearchForm($this->generateUrl('home_autocomplete_name')), $data);
         $items = [];
         $pagination = null;
         // list items controls
