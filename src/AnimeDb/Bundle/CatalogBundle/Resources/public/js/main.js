@@ -100,4 +100,13 @@ refills.each(function() {
 		});
 });
 
+// text autocomplete
+$('input[type=search]:not([data-source=""])').each(function() {
+	var input = $(this);
+	input.autocomplete({
+		source: input.data('source'),
+		minLength: 2
+	});
+});
+
 });

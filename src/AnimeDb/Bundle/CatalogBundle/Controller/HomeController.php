@@ -72,6 +72,13 @@ class HomeController extends Controller
     const WIDGET_PALCE_BOTTOM = 'home.bottom';
 
     /**
+     * Autocomplete list limit
+     *
+     * @var integer
+     */
+    const AUTOCOMPLETE_LIMIT = 10;
+
+    /**
      * Limits on the number of items per page for home page
      *
      * @var array
@@ -188,8 +195,9 @@ class HomeController extends Controller
      */
     public function searchSimpleFormAction()
     {
+        $form = new SearchSimple($this->generateUrl('home_autocomplete_name'));
         return $this->render('AnimeDbCatalogBundle:Home:searchSimpleForm.html.twig', [
-            'form' => $this->createForm(new SearchSimple())->createView(),
+            'form' => $this->createForm($form)->createView(),
         ]);
     }
 
@@ -202,13 +210,27 @@ class HomeController extends Controller
      */
     public function autocompleteNameAction(Request $request)
     {
-        $term = $request->get('term');
+        $term = strtolower($request->get('term'));
+        /* @var $service \AnimeDb\Bundle\CatalogBundle\Service\Search\Manager */
+        $service = $this->get('anime_db.search');
+        $result = $service->searchByName($term, self::AUTOCOMPLETE_LIMIT);
 
-        // TODO do search
-        // @see \AnimeDb\Bundle\CatalogBundle\Service\Search\Manager::searchByName()
-        $value = ['Foo', 'Bar'];
-
-        return new JsonResponse($value);
+        $list = [];
+        /* @var $item \AnimeDb\Bundle\CatalogBundle\Entity\Item */
+        foreach ($result as $item) {
+            if (strpos(strtolower($item->getName()), $term) === 0) {
+                $list[] = $item->getName();
+            } else {
+                /* @var $name \AnimeDb\Bundle\CatalogBundle\Entity\Name */
+                foreach ($item->getNames() as $name) {
+                    if (strpos(strtolower($name->getName()), $term) === 0) {
+                        $list[] = $name->getName();
+                        break;
+                    }
+                }
+            }
+        }
+        return new JsonResponse($list);
     }
 
     /**
@@ -222,7 +244,7 @@ class HomeController extends Controller
     {
         $data = new SearchEntity();
         /* @var $form \Symfony\Component\Form\Form */
-        $form = $this->createForm(new SearchForm(), $data);
+        $form = $this->createForm(new SearchForm($this->generateUrl('home_autocomplete_name')), $data);
         $items = [];
         $pagination = null;
         // list items controls
