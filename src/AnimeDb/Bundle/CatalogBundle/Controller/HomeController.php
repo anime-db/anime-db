@@ -13,7 +13,7 @@ namespace AnimeDb\Bundle\CatalogBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AnimeDb\Bundle\CatalogBundle\Form\SearchSimple;
-use AnimeDb\Bundle\CatalogBundle\Form\Search;
+use AnimeDb\Bundle\CatalogBundle\Form\Search as SearchForm;
 use Symfony\Component\HttpFoundation\Request;
 use AnimeDb\Bundle\CatalogBundle\Entity\Type as TypeEntity;
 use AnimeDb\Bundle\CatalogBundle\Entity\Country as CountryEntity;
@@ -25,6 +25,7 @@ use AnimeDb\Bundle\CatalogBundle\Form\Settings\General as GeneralForm;
 use AnimeDb\Bundle\CatalogBundle\Entity\Settings\General as GeneralEntity;
 use Symfony\Component\Yaml\Yaml;
 use AnimeDb\Bundle\CatalogBundle\Service\Listener\Request as RequestListener;
+use AnimeDb\Bundle\CatalogBundle\Entity\Search as SearchEntity;
 
 /**
  * Main page of the catalog
@@ -217,8 +218,9 @@ class HomeController extends Controller
      */
     public function searchAction(Request $request)
     {
+        $data = new SearchEntity();
         /* @var $form \Symfony\Component\Form\Form */
-        $form = $this->createForm(new Search());
+        $form = $this->createForm(new SearchForm(), $data);
         $items = [];
         $pagination = null;
         // list items controls
@@ -229,7 +231,6 @@ class HomeController extends Controller
         if ($request->query->count()) {
             $form->handleRequest($request);
             if ($form->isValid()) {
-                $data = $form->getData();
 
                 // build query
                 /* @var $selector \Doctrine\ORM\QueryBuilder */
@@ -238,42 +239,42 @@ class HomeController extends Controller
                     ->createQueryBuilder('i');
 
                 // main name
-                if ($data['name']) {
+                if ($data->getName()) {
                     // TODO create index name for rapid and accurate search
                     $selector
                         ->innerJoin('i.names', 'n')
                         ->andWhere('i.name LIKE :name OR n.name LIKE :name')
-                        ->setParameter('name', str_replace('%', '%%', $data['name']).'%');
+                        ->setParameter('name', str_replace('%', '%%', $data->getName()).'%');
                 }
                 // date start
-                if ($data['date_start'] instanceof \DateTime) {
+                if ($data->getDateStart() instanceof \DateTime) {
                     $selector->andWhere('i.date_start >= :date_start')
-                        ->setParameter('date_start', $data['date_start']->format('Y-m-d'));
+                        ->setParameter('date_start', $data->getDateStart()->format('Y-m-d'));
                 }
                 // date end
-                if ($data['date_end'] instanceof \DateTime) {
+                if ($data->getDateEnd() instanceof \DateTime) {
                     $selector->andWhere('i.date_end <= :date_end')
-                        ->setParameter('date_end', $data['date_end']->format('Y-m-d'));
+                        ->setParameter('date_end', $data->getDateEnd()->format('Y-m-d'));
                 }
                 // manufacturer
-                if ($data['manufacturer'] instanceof CountryEntity) {
+                if ($data->getManufacturer() instanceof CountryEntity) {
                     $selector->andWhere('i.manufacturer = :manufacturer')
-                        ->setParameter('manufacturer', $data['manufacturer']->getId());
+                        ->setParameter('manufacturer', $data->getManufacturer()->getId());
                 }
                 // storage
-                if ($data['storage'] instanceof StorageEntity) {
+                if ($data->getStorage() instanceof StorageEntity) {
                     $selector->andWhere('i.storage = :storage')
-                        ->setParameter('storage', $data['storage']->getId());
+                        ->setParameter('storage', $data->getStorage()->getId());
                 }
                 // type
-                if ($data['type'] instanceof TypeEntity) {
+                if ($data->getType() instanceof TypeEntity) {
                     $selector->andWhere('i.type = :type')
-                        ->setParameter('type', $data['type']->getId());
+                        ->setParameter('type', $data->getType()->getId());
                 }
                 // genres
-                if ($data['genres']->count()) {
+                if ($data->getGenres()->count()) {
                     $keys = [];
-                    foreach ($data['genres'] as $key => $genre) {
+                    foreach ($data->getGenres() as $key => $genre) {
                         $keys[] = ':genre'.$key;
                         $selector->setParameter('genre'.$key, $genre->getId());
                     }

@@ -69,6 +69,17 @@ class Search extends AbstractType
 
     /**
      * (non-PHPdoc)
+     * @see Symfony\Component\Form.AbstractType::setDefaultOptions()
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => 'AnimeDb\Bundle\CatalogBundle\Entity\Search'
+        ]);
+    }
+
+    /**
+     * (non-PHPdoc)
      * @see \Symfony\Component\Form\FormTypeInterface::getName()
      */
     public function getName()
