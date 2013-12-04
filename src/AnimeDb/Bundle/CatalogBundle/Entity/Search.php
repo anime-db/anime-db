@@ -60,8 +60,6 @@ class Search
     /**
      * Main name
      *
-     * @Assert\NotBlank()
-     *
      * @var string
      */
     protected $name;
