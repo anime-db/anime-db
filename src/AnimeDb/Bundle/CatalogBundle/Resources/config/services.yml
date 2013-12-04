@@ -27,3 +27,12 @@ services:
         class: AnimeDb\Bundle\CatalogBundle\Event\Subscriber\ScanStorage
         arguments: [ @doctrine.orm.entity_manager, @templating, @anime_db.plugin.search_fill, @router ]
         tags: [{ name:kernel.event_subscriber }]
+
+    anime_db.search.driver.sql_like:
+        class: AnimeDb\Bundle\CatalogBundle\Service\Search\Driver\SqlLike
+        arguments: [ @doctrine ]
+        public: false
+
+    anime_db.search:
+        class: AnimeDb\Bundle\CatalogBundle\Service\Search\Manager
+        arguments: [ @anime_db.search.driver ]

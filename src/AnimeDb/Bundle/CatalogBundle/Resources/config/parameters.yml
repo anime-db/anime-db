@@ -1,2 +1,3 @@
 parameters:
     default_search: null
+    search_driver: anime_db.search.driver.sql_like

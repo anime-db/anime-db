@@ -36,5 +36,8 @@ class AnimeDbCatalogExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('parameters.yml');
         $loader->load('services.yml');
+
+        $search_driver = $container->getParameter('search_driver');
+        $container->setAlias('anime_db.search.driver', $search_driver);
     }
 }
