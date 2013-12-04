@@ -12,11 +12,10 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\ScriptHandler;
+use AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher;
 use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
 use Composer\Package\Package;
-use Composer\Autoload\ClassLoader;
-use Doctrine\Common\Annotations\AnnotationRegistry;
 
 /**
  * Routing manipulator
@@ -27,11 +26,11 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
 class Container
 {
     /**
-     * Kernel
+     * Event dispatcher
      *
-     * @var \AppKernel|null
+     * @var \AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher|null
      */
-    private $kernel;
+    private $dispatcher;
 
     /**
      * List of jobs
@@ -41,62 +40,16 @@ class Container
     protected $jobs = [];
 
     /**
-     * Get kernel
+     * Get event dispatcher
      *
-     * @return \AppKernel
+     * @return \AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher
      */
-    public function getKernel()
+    public function getEventDispatcher()
     {
-        if (!($this->kernel instanceof \AppKernel)) {
-            if (isset($GLOBALS['loader']) && $GLOBALS['loader'] instanceof ClassLoader) {
-                $GLOBALS['loader']->unregister();
-            }
-            $GLOBALS['loader'] = $this->getClassLoader();
-
-            require_once __DIR__.'/../../../../../../app/AppKernel.php';
-            $this->kernel = new \AppKernel('dev', true);
-            $this->kernel->boot();
+        if (!($this->dispatcher instanceof Dispatcher)) {
+            $this->dispatcher = new Dispatcher();
         }
-        return $this->kernel;
-    }
-
-    /**
-     * Get composer class loader
-     *
-     * @return \Composer\Autoload\ClassLoader
-     */
-    protected function getClassLoader()
-    {
-        $loader = new ClassLoader();
-        $vendorDir = __DIR__.'/../../../../../../vendor';
-        $baseDir = dirname($vendorDir);
-
-        $map = require $vendorDir . '/composer/autoload_namespaces.php';
-        foreach ($map as $namespace => $path) {
-            $loader->set($namespace, $path);
-        }
-
-        $classMap = require $vendorDir . '/composer/autoload_classmap.php';
-        if ($classMap) {
-            $loader->addClassMap($classMap);
-        }
-
-        $loader->register(true);
-
-        $includeFiles = require $vendorDir . '/composer/autoload_files.php';
-        foreach ($includeFiles as $file) {
-            require_once $file;
-        }
-
-        // intl
-        if (!function_exists('intl_get_error_code')) {
-            require_once $vendorDir.'/symfony/symfony/src/Symfony/Component/Locale/Resources/stubs/functions.php';
-            $loader->add('', $vendorDir.'/symfony/symfony/src/Symfony/Component/Locale/Resources/stubs');
-        }
-
-        AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
-
-        return $loader;
+        return $this->dispatcher;
     }
 
     /**
