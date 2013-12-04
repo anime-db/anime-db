@@ -188,8 +188,9 @@ class HomeController extends Controller
      */
     public function searchSimpleFormAction()
     {
+        $form = new SearchSimple($this->generateUrl('home_autocomplete_name'));
         return $this->render('AnimeDbCatalogBundle:Home:searchSimpleForm.html.twig', [
-            'form' => $this->createForm(new SearchSimple())->createView(),
+            'form' => $this->createForm($form)->createView(),
         ]);
     }
 

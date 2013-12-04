@@ -7,7 +7,7 @@ home_search:
     defaults: { _controller: AnimeDbCatalogBundle:Home:search }
 
 home_autocomplete_name:
-    pattern:  /autocomplete-name.json
+    pattern:  /autocomplete/name.json
     defaults: { _controller: AnimeDbCatalogBundle:Home:autocompleteName, _format: json }
 
 home_settings:
