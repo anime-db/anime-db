@@ -205,6 +205,7 @@ class HomeController extends Controller
         $term = $request->get('term');
 
         // TODO do search
+        // @see \AnimeDb\Bundle\CatalogBundle\Service\Search\Manager::searchByName()
         $value = ['Foo', 'Bar'];
 
         return new JsonResponse($value);
