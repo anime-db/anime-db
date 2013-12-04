@@ -139,6 +139,25 @@ class SqlLike implements DriverSearch
      */
     public function searchByName($name, $limit = 0)
     {
-        return [];
+        if (!$name) {
+            return [];
+        }
+
+        /* @var $selector \Doctrine\ORM\QueryBuilder */
+        $selector = $this->repository->createQueryBuilder('i');
+        $selector
+            ->innerJoin('i.names', 'n')
+            ->andWhere('i.name LIKE :name OR n.name LIKE :name')
+            ->setParameter('name', str_replace('%', '%%', $name).'%');
+
+        if ($limit > 0) {
+            $selector->setMaxResults($limit);
+        }
+
+        // get items
+        return $selector
+            ->groupBy('i')
+            ->getQuery()
+            ->getResult();
     }
 }

@@ -210,9 +210,27 @@ class HomeController extends Controller
      */
     public function autocompleteNameAction(Request $request)
     {
+        $term = strtolower($request->get('term'));
         /* @var $service \AnimeDb\Bundle\CatalogBundle\Service\Search\Manager */
         $service = $this->get('anime_db.search');
-        return new JsonResponse($service->searchByName($request->get('term'), self::AUTOCOMPLETE_LIMIT));
+        $result = $service->searchByName($term, self::AUTOCOMPLETE_LIMIT);
+
+        $list = [];
+        /* @var $item \AnimeDb\Bundle\CatalogBundle\Entity\Item */
+        foreach ($result as $item) {
+            if (strpos(strtolower($item->getName()), $term) === 0) {
+                $list[] = $item->getName();
+            } else {
+                /* @var $name \AnimeDb\Bundle\CatalogBundle\Entity\Name */
+                foreach ($item->getNames() as $name) {
+                    if (strpos(strtolower($name->getName()), $term) === 0) {
+                        $list[] = $name->getName();
+                        break;
+                    }
+                }
+            }
+        }
+        return new JsonResponse($list);
     }
 
     /**
