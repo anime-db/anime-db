@@ -53,9 +53,81 @@ class SqlLike implements DriverSearch
      */
     public function search(Search $data, $limit, $offset, $sort_column, $sort_direction)
     {
+        /* @var $selector \Doctrine\ORM\QueryBuilder */
+        $selector = $this->repository->createQueryBuilder('i');
+
+        // main name
+        if ($data->getName()) {
+            // TODO create index name for rapid and accurate search
+            $selector
+                ->innerJoin('i.names', 'n')
+                ->andWhere('i.name LIKE :name OR n.name LIKE :name')
+                ->setParameter('name', str_replace('%', '%%', $data->getName()).'%');
+        }
+        // date start
+        if ($data->getDateStart() instanceof \DateTime) {
+            $selector->andWhere('i.date_start >= :date_start')
+                ->setParameter('date_start', $data->getDateStart()->format('Y-m-d'));
+        }
+        // date end
+        if ($data->getDateEnd() instanceof \DateTime) {
+            $selector->andWhere('i.date_end <= :date_end')
+                ->setParameter('date_end', $data->getDateEnd()->format('Y-m-d'));
+        }
+        // manufacturer
+        if ($data->getManufacturer() instanceof CountryEntity) {
+            $selector->andWhere('i.manufacturer = :manufacturer')
+                ->setParameter('manufacturer', $data->getManufacturer()->getId());
+        }
+        // storage
+        if ($data->getStorage() instanceof StorageEntity) {
+            $selector->andWhere('i.storage = :storage')
+                ->setParameter('storage', $data->getStorage()->getId());
+        }
+        // type
+        if ($data->getType() instanceof TypeEntity) {
+            $selector->andWhere('i.type = :type')
+                ->setParameter('type', $data->getType()->getId());
+        }
+        // genres
+        if ($data->getGenres()->count()) {
+            $keys = [];
+            foreach ($data->getGenres() as $key => $genre) {
+                $keys[] = ':genre'.$key;
+                $selector->setParameter('genre'.$key, $genre->getId());
+            }
+            $selector->innerJoin('i.genres', 'g')
+                ->andWhere('g.id IN ('.implode(',', $keys).')');
+        }
+
+        // get count all items
+        $total = clone $selector;
+        $total = $total
+            ->select('COUNT(DISTINCT i)')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        // apply order
+        $selector
+            ->orderBy('i.'.$sort_column, $sort_direction)
+            ->addOrderBy('i.id', $sort_direction);
+
+        if ($offset) {
+            $selector->setFirstResult($offset);
+        }
+        if ($limit) {
+            $selector->setMaxResults($limit);
+        }
+
+        // get items
+        $list = $selector
+            ->groupBy('i')
+            ->getQuery()
+            ->getResult();
+
         return [
-            'list'  => [],
-            'total' => 0
+            'list' => $list,
+            'total' => $total
         ];
     }
 
