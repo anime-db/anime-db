@@ -26,10 +26,12 @@ interface Driver
      * @param \AnimeDb\Bundle\CatalogBundle\Entity\Search $data
      * @param integer $limit
      * @param integer $offset
+     * @param string $sort_column
+     * @param string $sort_direction
      *
      * @return array {list:[],total:0}
      */
-    public function search(Search $data, $limit = 0, $offset = 0);
+    public function search(Search $data, $limit, $offset, $sort_column, $sort_direction);
 
     /**
      * Search items by name

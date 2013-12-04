@@ -13,6 +13,7 @@ namespace AnimeDb\Bundle\CatalogBundle\Service\Search\Driver;
 use AnimeDb\Bundle\CatalogBundle\Entity\Search;
 use AnimeDb\Bundle\CatalogBundle\Service\Search\Driver as DriverSearch;
 use Doctrine\Bundle\DoctrineBundle\Registry;
+use AnimeDb\Bundle\CatalogBundle\Service\Search\Manager;
 
 /**
  * Search driver use a SQL LIKE for select name
@@ -45,13 +46,16 @@ class SqlLike implements DriverSearch
      * @param \AnimeDb\Bundle\CatalogBundle\Entity\Search $data
      * @param integer $limit
      * @param integer $offset
+     * @param string $sort_column
+     * @param string $sort_direction
      *
      * @return array {list:[],total:0}
      */
-    public function search(Search $data, $limit = 0, $offset = 0) {
+    public function search(Search $data, $limit, $offset, $sort_column, $sort_direction)
+    {
         return [
             'list'  => [],
-            'total' => []
+            'total' => 0
         ];
     }
 
@@ -61,7 +65,8 @@ class SqlLike implements DriverSearch
      * @param string $name
      * @param integer $limit
      */
-    public function searchByName($name, $limit = 0) {
+    public function searchByName($name, $limit = 0)
+    {
         return [];
     }
 }
