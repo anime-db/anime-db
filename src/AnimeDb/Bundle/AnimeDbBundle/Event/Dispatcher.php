@@ -11,6 +11,7 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Event;
 
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Finder\Finder;
 
@@ -28,6 +29,13 @@ class Dispatcher
      * @var \Symfony\Component\Filesystem\Filesystem
      */
     protected $fs;
+
+    /**
+     * Dispatcher driver
+     *
+     * @var \Symfony\Component\EventDispatcher\EventDispatcher
+     */
+    protected $driver;
 
     /**
      * Construct
@@ -55,15 +63,30 @@ class Dispatcher
      */
     public function shippingDeferredEvents()
     {
-        $finder = new Finder();
-        $finder->files()
-            ->in(__DIR__.'/../../../../../app/cache/dev/events/')
-            ->name('*.meta');
+        if ($this->driver) {
+            $finder = new Finder();
+            $finder->files()
+                ->in(__DIR__.'/../../../../../app/cache/dev/events/')
+                ->name('*.meta');
 
-        /* @var $file \Symfony\Component\Finder\SplFileInfo */
-        foreach ($finder as $file) {
-            p($file->getBasename());
-            // TODO send event
+            /* @var $file \Symfony\Component\Finder\SplFileInfo */
+            foreach ($finder as $file) {
+                $this->driver->dispatch(
+                    pathinfo($file->getPath(), PATHINFO_BASENAME),
+                    unserialize(file_get_contents($file->getPathname()))
+                );
+                unlink($file->getPathname());
+            }
         }
+    }
+
+    /**
+     * Set dispatcher driver
+     *
+     * @param \Symfony\Component\EventDispatcher\EventDispatcher $driver
+     */
+    public function setDispatcherDriver(EventDispatcher $driver)
+    {
+        $this->driver = $driver;
     }
 }
