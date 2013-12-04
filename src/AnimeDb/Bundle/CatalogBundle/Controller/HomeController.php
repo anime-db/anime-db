@@ -72,6 +72,13 @@ class HomeController extends Controller
     const WIDGET_PALCE_BOTTOM = 'home.bottom';
 
     /**
+     * Autocomplete list limit
+     *
+     * @var integer
+     */
+    const AUTOCOMPLETE_LIMIT = 10;
+
+    /**
      * Limits on the number of items per page for home page
      *
      * @var array
@@ -203,13 +210,9 @@ class HomeController extends Controller
      */
     public function autocompleteNameAction(Request $request)
     {
-        $term = $request->get('term');
-
-        // TODO do search
-        // @see \AnimeDb\Bundle\CatalogBundle\Service\Search\Manager::searchByName()
-        $value = ['Foo', 'Bar'];
-
-        return new JsonResponse($value);
+        /* @var $service \AnimeDb\Bundle\CatalogBundle\Service\Search\Manager */
+        $service = $this->get('anime_db.search');
+        return new JsonResponse($service->searchByName($request->get('term'), self::AUTOCOMPLETE_LIMIT));
     }
 
     /**
