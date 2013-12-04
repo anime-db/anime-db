@@ -278,18 +278,22 @@ class HomeController extends Controller
 
                 if ($limit != self::SHOW_LIMIT_ALL) {
                     // build pagination
+                    $query = $request->query->all();
+                    if (isset($query['page'])) {
+                        unset($query['page']);
+                    }
                     $that = $this;
                     $pagination = $this->get('anime_db.pagination')->createNavigation(
                         ceil($result['total']/$limit),
                         $current_page,
                         Pagination::DEFAULT_LIST_LENGTH,
-                        function ($page) use ($that, $request) {
+                        function ($page) use ($that, $query) {
                             return $that->generateUrl(
                                 'home_search',
-                                array_merge($request->query->all(), ['page' => $page])
+                                array_merge($query, ['page' => $page])
                             );
                         },
-                        $this->generateUrl('home_search', $request->query->all())
+                        $this->generateUrl('home_search', $query)
                     );
                 }
 
