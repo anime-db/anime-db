@@ -44,7 +44,7 @@ class Project
      *
      * @param \AnimeDb\Bundle\AnimeDbBundle\Event\Project\Updated $event
      */
-    public function onProjectUpdated(UpdatedEvent $event)
+    public function onUpdated(UpdatedEvent $event)
     {
         /* @var $task \AnimeDb\Bundle\AppBundle\Entity\Task */
         $task = $this->em
