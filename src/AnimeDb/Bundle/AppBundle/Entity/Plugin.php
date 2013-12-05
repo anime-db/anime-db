@@ -19,6 +19,7 @@ use Symfony\Component\Validator\ExecutionContextInterface;
  *
  * @ORM\Entity
  * @ORM\Table(name="plugin")
+ * @ORM\HasLifecycleCallbacks
  * @IgnoreAnnotation("ORM")
  *
  * @package AnimeDb\Bundle\AppBundle\Entity
@@ -213,7 +214,7 @@ class Plugin
      *
      * @return string
      */
-    protected function getUploadRootDir()
+    public function getUploadRootDir()
     {
         return __DIR__.'/../../../../../web/'.$this->getUploadDir();
     }
@@ -225,7 +226,7 @@ class Plugin
      */
     protected function getUploadDir()
     {
-        return 'media/'.$this->getName();
+        return 'media/plugin/'.$this->getName();
     }
 
     /**
@@ -236,5 +237,17 @@ class Plugin
     public function getLogoWebPath()
     {
         return $this->logo ? '/'.$this->getUploadDir().'/'.$this->logo : null;
+    }
+
+    /**
+     * Remove logo file
+     *
+     * @ORM\PostRemove
+     */
+    public function doRemoveLogo()
+    {
+        if ($this->logo && file_exists($this->getAbsolutePath())) {
+            unlink($this->getAbsolutePath());
+        }
     }
 }
