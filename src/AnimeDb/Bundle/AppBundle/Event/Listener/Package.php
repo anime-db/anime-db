@@ -14,6 +14,8 @@ use Doctrine\ORM\EntityManager;
 use AnimeDb\Bundle\AnimeDbBundle\Event\Package\Installed as InstalledEvent;
 use AnimeDb\Bundle\AnimeDbBundle\Event\Package\Removed as RemovedEvent;
 use AnimeDb\Bundle\AnimeDbBundle\Event\Package\Updated as UpdatedEvent;
+use AnimeDb\Bundle\AppBundle\Entity\Plugin;
+use Guzzle\Http\Client;
 
 /**
  * Package listener
@@ -23,6 +25,20 @@ use AnimeDb\Bundle\AnimeDbBundle\Event\Package\Updated as UpdatedEvent;
  */
 class Package
 {
+    /**
+     * Type of plugin package
+     *
+     * @var string
+     */
+    const PLUGIN_TYPE = 'anime-db-plugin';
+
+    /**
+     * API server host
+     *
+     * @var string
+     */
+    const API_HOST = 'http://anime-db.org/';
+
     /**
      * Entity manager
      *
@@ -47,7 +63,13 @@ class Package
      */
     public function onUpdated(UpdatedEvent $event)
     {
-        // TODO update plugin data
+        if ($event->getPackage()->getType() == self::PLUGIN_TYPE) {
+            $plugin = $this->em->getRepository('AnimeDbAppBundle:Plugin')
+                ->find($event->getPackage()->getName());
+
+            $this->em->persist($this->fillPluginData($plugin));
+            $this->em->flush();
+        }
     }
 
     /**
@@ -57,7 +79,14 @@ class Package
      */
     public function onInstalled(InstalledEvent $event)
     {
-        // TODO registr plugin in db
+        if ($event->getPackage()->getType() == self::PLUGIN_TYPE) {
+            $plugin = new Plugin();
+            $plugin->setName($event->getPackage()->getName());
+            $this->fillPluginData($plugin);
+
+            $this->em->persist($plugin);
+            $this->em->flush();
+        }
     }
 
     /**
@@ -67,6 +96,40 @@ class Package
      */
     public function onRemoved(RemovedEvent $event)
     {
-        // TODO delete plugin from db
+        if ($event->getPackage()->getType() == self::PLUGIN_TYPE) {
+            $plugin = $this->em->getRepository('AnimeDbAppBundle:Plugin')
+                ->find($event->getPackage()->getName());
+
+            if ($plugin) {
+                $this->em->remove($plugin);
+                $this->em->flush();
+            }
+        }
+    }
+
+    /**
+     * Fill plugin data from server API
+     *
+     * @param \AnimeDb\Bundle\AppBundle\Entity\Plugin $plugin
+     *
+     * @return \AnimeDb\Bundle\AppBundle\Entity\Plugin
+     */
+    protected function fillPluginData(Plugin $plugin)
+    {
+        $client = new Client(self::API_HOST);
+        /* @var $response \Guzzle\Http\Message\Response */
+        $response = $client->get('api/plugin/'.$plugin->getName().'/')->send();
+
+        if ($response->isSuccessful()) {
+            $data = json_decode($response->getBody(true), true);
+            $plugin->setTilte($data['title'])->setDescription($data['description']);
+
+            if ($data['logo']) {
+                $plugin->setLogo($data['logo']);
+                copy($data['logo'], $plugin->getAbsolutePath().pathinfo($data['logo'], PATHINFO_FILENAME));
+            }
+        }
+
+        return $plugin;
     }
 }
