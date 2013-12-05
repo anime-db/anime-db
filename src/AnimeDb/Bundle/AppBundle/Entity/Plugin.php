@@ -197,4 +197,44 @@ class Plugin
     {
         return $this->date_install;
     }
+
+    /**
+     * Get absolute path
+     *
+     * @return string
+     */
+    public function getAbsolutePath()
+    {
+        return $this->logo !== null ? $this->getUploadRootDir().'/'.$this->logo : null;
+    }
+
+    /**
+     * Get upload root dir
+     *
+     * @return string
+     */
+    protected function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../../web/'.$this->getUploadDir();
+    }
+
+    /**
+     * Get upload dir
+     *
+     * @return string
+     */
+    protected function getUploadDir()
+    {
+        return 'media/'.$this->getName();
+    }
+
+    /**
+     * Get logo web path
+     *
+     * @return string
+     */
+    public function getLogoWebPath()
+    {
+        return $this->logo ? '/'.$this->getUploadDir().'/'.$this->logo : null;
+    }
 }
