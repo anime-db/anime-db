@@ -67,6 +67,7 @@ class Dispatcher
             $finder = new Finder();
             $finder->files()
                 ->in(__DIR__.'/../../../../../app/cache/dev/events/')
+                ->ignoreUnreadableDirs()
                 ->name('*.meta');
 
             /* @var $file \Symfony\Component\Finder\SplFileInfo */
