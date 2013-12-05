@@ -11,6 +11,7 @@
 namespace AnimeDb\Bundle\AppBundle\Event\Listener;
 
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Filesystem\Filesystem;
 use AnimeDb\Bundle\AnimeDbBundle\Event\Package\Installed as InstalledEvent;
 use AnimeDb\Bundle\AnimeDbBundle\Event\Package\Removed as RemovedEvent;
 use AnimeDb\Bundle\AnimeDbBundle\Event\Package\Updated as UpdatedEvent;
@@ -47,6 +48,13 @@ class Package
     protected $em;
 
     /**
+     * Filesystem
+     *
+     * @var \Symfony\Component\Filesystem\Filesystem
+     */
+    protected $fs;
+
+    /**
      * Construct
      *
      * @param \Doctrine\ORM\EntityManager $em
@@ -54,6 +62,7 @@ class Package
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
+        $this->fs = new Filesystem();
     }
 
     /**
@@ -66,6 +75,12 @@ class Package
         if ($event->getPackage()->getType() == self::PLUGIN_TYPE) {
             $plugin = $this->em->getRepository('AnimeDbAppBundle:Plugin')
                 ->find($event->getPackage()->getName());
+
+            // create new plugin if not exists
+            if (!$plugin) {
+                $plugin = new Plugin();
+                $plugin->setName($event->getPackage()->getName());
+            }
 
             $this->em->persist($this->fillPluginData($plugin));
             $this->em->flush();
@@ -125,8 +140,11 @@ class Package
             $plugin->setTilte($data['title'])->setDescription($data['description']);
 
             if ($data['logo']) {
-                $plugin->setLogo($data['logo']);
-                copy($data['logo'], $plugin->getAbsolutePath().pathinfo($data['logo'], PATHINFO_FILENAME));
+                if (!file_exists($plugin->getUploadRootDir())) {
+                    $this->fs->mkdir($plugin->getUploadRootDir());
+                }
+                $plugin->setLogo(pathinfo($data['logo'], PATHINFO_BASENAME));
+                copy($data['logo'], $plugin->getAbsolutePath());
             }
         }
 
