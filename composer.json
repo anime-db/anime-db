@@ -58,7 +58,8 @@
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migrate",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::installConfig",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::notifyProjectInstall",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::execJobs"
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::execJobs",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::deliverEvents"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
@@ -68,7 +69,8 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migrate",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::notifyProjectUpdate",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::execJobs"
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::execJobs",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::deliverEvents"
         ],
         "post-package-install": [
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPackageToKernel",

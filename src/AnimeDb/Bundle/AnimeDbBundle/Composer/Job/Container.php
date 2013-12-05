@@ -12,6 +12,7 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\ScriptHandler;
+use AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher;
 use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
 use Composer\Package\Package;
@@ -25,11 +26,11 @@ use Composer\Package\Package;
 class Container
 {
     /**
-     * Kernel
+     * Event dispatcher
      *
-     * @var \AppKernel|null
+     * @var \AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher|null
      */
-    private $kernel;
+    private $dispatcher;
 
     /**
      * List of jobs
@@ -39,19 +40,16 @@ class Container
     protected $jobs = [];
 
     /**
-     * Get kernel
+     * Get event dispatcher
      *
-     * @return \AppKernel
+     * @return \AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher
      */
-    public function getKernel()
+    public function getEventDispatcher()
     {
-        if (!($this->kernel instanceof \AppKernel)) {
-            require __DIR__.'/../../../../../../app/autoload.php';
-            require __DIR__.'/../../../../../../app/AppKernel.php';
-            $this->kernel = new \AppKernel('dev', true);
-            $this->kernel->boot();
+        if (!($this->dispatcher instanceof Dispatcher)) {
+            $this->dispatcher = new Dispatcher();
         }
-        return $this->kernel;
+        return $this->dispatcher;
     }
 
     /**

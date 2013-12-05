@@ -227,4 +227,18 @@ class ScriptHandler
     {
         self::getContainer()->addJob(new UpdatedProjectNotify($event->getComposer()->getPackage()));
     }
+
+    /**
+     * Deliver deferred events
+     *
+     * @param \Composer\Script\CommandEvent $event
+     */
+    public static function deliverEvents(CommandEvent $event)
+    {
+        $cmd = 'animedb:deliver-events';
+        if ($event->getIO()->isDecorated()) {
+            $cmd .= ' --ansi';
+        }
+        self::getContainer()->executeCommand($cmd, null);
+    }
 }
