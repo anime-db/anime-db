@@ -63,7 +63,7 @@ class Dispatcher
      */
     public function shippingDeferredEvents()
     {
-        if ($this->driver) {
+        if ($this->driver && file_exists(__DIR__.'/../../../../../app/cache/dev/events/')) {
             $finder = new Finder();
             $finder->files()
                 ->in(__DIR__.'/../../../../../app/cache/dev/events/')

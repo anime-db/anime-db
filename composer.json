@@ -52,25 +52,25 @@
         "post-install-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migrate",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::installConfig",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::notifyProjectInstall",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::execJobs",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::deliverEvents"
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migrate",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::deliverEvents",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migrate",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::notifyProjectUpdate",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::execJobs",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::deliverEvents"
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migrate",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::deliverEvents",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
         ],
         "post-package-install": [
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPackageToKernel",
