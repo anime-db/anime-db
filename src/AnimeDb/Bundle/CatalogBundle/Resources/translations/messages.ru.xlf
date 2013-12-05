@@ -19,8 +19,8 @@
                 <target>Результаты поиска</target>
             </trans-unit>
             <trans-unit id="5">
-                <source>Search this site</source>
-                <target>Поиск по сайту</target>
+                <source>Catalog search</source>
+                <target>Поиск по каталогу</target>
             </trans-unit>
             <trans-unit id="6">
                 <source>Add record</source>

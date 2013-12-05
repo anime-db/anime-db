@@ -1,4 +1,4 @@
-<h2>{% trans %}Search this site{% endtrans %}</h2>
+<h2>{% trans %}Catalog search{% endtrans %}</h2>
 <form action="{{ path('home_search') }}" method="get" {{ form_enctype(form) }}>
 	{{ form_widget(form) }}
 	<button type="submit">{% trans %}Find{% endtrans %}</button>
