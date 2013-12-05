@@ -486,6 +486,18 @@
                 <source>Loading...</source>
                 <target>Загрузка...</target>
             </trans-unit>
+            <trans-unit id="160">
+                <source>Plugins</source>
+                <target>Плагины</target>
+            </trans-unit>
+            <trans-unit id="161">
+                <source>Installed</source>
+                <target>Установленные</target>
+            </trans-unit>
+            <trans-unit id="162">
+                <source>Installed plugins</source>
+                <target>Установленные плагины</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
