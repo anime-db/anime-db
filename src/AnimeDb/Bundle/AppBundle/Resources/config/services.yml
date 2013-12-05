@@ -44,6 +44,7 @@ services:
     anime_db.listener.package:
         class: AnimeDb\Bundle\AppBundle\Event\Listener\Package
         arguments: [ @doctrine.orm.entity_manager ]
-        tags: [{ name: kernel.event_listener, event: anime_db.package.updated, method: onUpdated }]
-        tags: [{ name: kernel.event_listener, event: anime_db.package.installed, method: onInstalled }]
-        tags: [{ name: kernel.event_listener, event: anime_db.package.removed, method: onRemoved }]
+        tags:
+            - { name: kernel.event_listener, event: anime_db.package.updated, method: onUpdated }
+            - { name: kernel.event_listener, event: anime_db.package.installed, method: onInstalled }
+            - { name: kernel.event_listener, event: anime_db.package.removed, method: onRemoved }
