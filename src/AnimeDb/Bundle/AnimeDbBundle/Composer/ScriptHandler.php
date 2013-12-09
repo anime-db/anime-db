@@ -73,10 +73,7 @@ class ScriptHandler
      */
     public static function removePackageFromKernel(PackageEvent $event)
     {
-        // get the bundle name before remove package, because then it would impossible to do
-        $package = $event->getOperation()->getPackage();
-        self::getContainer()->getPackageBundle($package);
-        self::getContainer()->addJob(new RemoveKernel($package));
+        self::getContainer()->addJob(new RemoveKernel($event->getOperation()->getPackage()));
     }
 
     /**
@@ -96,10 +93,7 @@ class ScriptHandler
      */
     public static function removePackageFromRouting(PackageEvent $event)
     {
-        // get the bundle name before remove package, because then it would impossible to do
-        $package = $event->getOperation()->getPackage();
-        self::getContainer()->getPackageBundle($package);
-        self::getContainer()->addJob(new RemoveRouting($package));
+        self::getContainer()->addJob(new RemoveRouting($event->getOperation()->getPackage()));
     }
 
     /**
@@ -119,10 +113,7 @@ class ScriptHandler
      */
     public static function removePackageFromConfig(PackageEvent $event)
     {
-        // get the bundle name before remove package, because then it would impossible to do
-        $package = $event->getOperation()->getPackage();
-        self::getContainer()->getPackageBundle($package);
-        self::getContainer()->addJob(new RemoveConfig($package));
+        self::getContainer()->addJob(new RemoveConfig($event->getOperation()->getPackage()));
     }
 
     /**
