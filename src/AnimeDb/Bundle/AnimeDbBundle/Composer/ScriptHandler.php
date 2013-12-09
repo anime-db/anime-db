@@ -162,19 +162,23 @@ class ScriptHandler
     }
 
     /**
-     * Global migrate
-     *
-     * TODO remove this after the Catalog bundle moved out
+     * Notify listeners that the project has been installed
      *
      * @param \Composer\Script\CommandEvent $event
      */
-    public static function migrate(CommandEvent $event)
+    public static function notifyProjectInstall(CommandEvent $event)
     {
-        $cmd = 'doctrine:migrations:migrate --no-interaction';
-        if ($event->getIO()->isDecorated()) {
-            $cmd .= ' --ansi';
-        }
-        self::getContainer()->executeCommand($cmd, null);
+        self::getContainer()->addJob(new InstalledProjectNotify($event->getComposer()->getPackage()));
+    }
+
+    /**
+     * Notify listeners that the project has been updated
+     *
+     * @param \Composer\Script\CommandEvent $event
+     */
+    public static function notifyProjectUpdate(CommandEvent $event)
+    {
+        self::getContainer()->addJob(new UpdatedProjectNotify($event->getComposer()->getPackage()));
     }
 
     /**
@@ -206,26 +210,6 @@ class ScriptHandler
     }
 
     /**
-     * Notify listeners that the project has been installed
-     *
-     * @param \Composer\Script\CommandEvent $event
-     */
-    public static function notifyProjectInstall(CommandEvent $event)
-    {
-        self::getContainer()->addJob(new InstalledProjectNotify($event->getComposer()->getPackage()));
-    }
-
-    /**
-     * Notify listeners that the project has been updated
-     *
-     * @param \Composer\Script\CommandEvent $event
-     */
-    public static function notifyProjectUpdate(CommandEvent $event)
-    {
-        self::getContainer()->addJob(new UpdatedProjectNotify($event->getComposer()->getPackage()));
-    }
-
-    /**
      * Deliver deferred events
      *
      * @param \Composer\Script\CommandEvent $event
@@ -233,6 +217,22 @@ class ScriptHandler
     public static function deliverEvents(CommandEvent $event)
     {
         $cmd = 'animedb:deliver-events';
+        if ($event->getIO()->isDecorated()) {
+            $cmd .= ' --ansi';
+        }
+        self::getContainer()->executeCommand($cmd, null);
+    }
+
+    /**
+     * Global migrate
+     *
+     * TODO remove this after the Catalog and App bundle moved out
+     *
+     * @param \Composer\Script\CommandEvent $event
+     */
+    public static function migrate(CommandEvent $event)
+    {
+        $cmd = 'doctrine:migrations:migrate --no-interaction';
         if ($event->getIO()->isDecorated()) {
             $cmd .= ' --ansi';
         }
