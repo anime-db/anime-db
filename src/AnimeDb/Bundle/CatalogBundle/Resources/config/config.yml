@@ -14,3 +14,6 @@ avalanche_imagine:
         frame:
             type:    thumbnail
             options: { size: [190, 142], mode: outbound } # 12:9
+        plugin:
+            type:    thumbnail
+            options: { size: [120, 120], mode: outbound }
