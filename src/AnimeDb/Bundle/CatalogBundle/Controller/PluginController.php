@@ -33,4 +33,16 @@ class PluginController extends Controller
             'plugins' => $repository->findAll()
         ]);
     }
+
+    /**
+     * Store of plugins
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function storeAction()
+    {
+        return $this->render('AnimeDbCatalogBundle:Plugin:store.html.twig', [
+            'plugins' => []
+        ]);
+    }
 }

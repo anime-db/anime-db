@@ -1,0 +1,34 @@
+{% extends 'AnimeDbCatalogBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Store of plugins{% endtrans %}{% endblock %}
+
+{% block content %}
+<div class="b-list-plugins">
+	<h2>{% trans %}Store of plugins{% endtrans %}</h2>
+	<section>
+		{% for plugin in plugins %}
+			<article>
+				<img
+					src="{{ plugin.logo|apply_filter('plugin')|dummy('plugin') }}"
+					alt="{{ plugin.tilte }}"
+					class="logo"
+				/>
+				<div class="info">
+					<h3 class="title">{{ plugin.tilte }}</h3>
+					<em class="name">{{ plugin.name }}</em>
+					<p class="description">{{ plugin.description }}</p>
+				</div>
+				<div class="control">
+					<form action="{{ path('update') }}" method="post">
+						<input type="hidden" name="plugin[install]" value="{{ plugin.name }}" />
+						<button type="submit"
+							title="{% trans with {'%name%': plugin.tilte} %}Install plugin %name%{% endtrans %}"
+							class="icon-label icon-plugin-install"
+						>{% trans %}Install{% endtrans %}</button>
+					</form>
+				</div>
+			</article>
+		{% endfor %}
+	</section>
+</div>
+{% endblock %}
