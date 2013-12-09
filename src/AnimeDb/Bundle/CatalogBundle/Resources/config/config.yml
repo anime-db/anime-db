@@ -1,6 +1,6 @@
 # Avalanche Configuration
 avalanche_imagine:
-    source_root:  %kernel.root_dir%/../web/media
+    source_root:  %kernel.root_dir%/../web
     web_root:     %kernel.root_dir%/../web
     cache_prefix: media/suit
     driver:       gd

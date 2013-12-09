@@ -189,7 +189,17 @@ class Image
     }
 
     /**
-     * Rename cover if in temp folder
+     * Get source web path
+     *
+     * @return string
+     */
+    public function getSourceWebPath()
+    {
+        return $this->source ? '/'.$this->getUploadDir().'/'.$this->source : null;
+    }
+
+    /**
+     * Rename image if in temp folder
      *
      * @ORM\PrePersist
      */
