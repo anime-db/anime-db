@@ -502,6 +502,22 @@
                 <source>Delete plugin %name%</source>
                 <target>Удалить плагин %name%</target>
             </trans-unit>
+            <trans-unit id="164">
+                <source>Store</source>
+                <target>Магазин</target>
+            </trans-unit>
+            <trans-unit id="165">
+                <source>Install</source>
+                <target>Установить</target>
+            </trans-unit>
+            <trans-unit id="166">
+                <source>Install plugin %name%</source>
+                <target>Установить плагин %name%</target>
+            </trans-unit>
+            <trans-unit id="167">
+                <source>Store of plugins</source>
+                <target>Магазин плагинов</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

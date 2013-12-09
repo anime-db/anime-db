@@ -137,7 +137,7 @@ class Package
 
         if ($response->isSuccessful()) {
             $data = json_decode($response->getBody(true), true);
-            $plugin->setTilte($data['title'])->setDescription($data['description']);
+            $plugin->setTitle($data['title'])->setDescription($data['description']);
 
             if ($data['logo']) {
                 if (!file_exists($plugin->getUploadRootDir())) {

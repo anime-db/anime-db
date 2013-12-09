@@ -71,6 +71,7 @@ class Builder extends ContainerAware
 
         // plugins
         $plugins->addChild('Installed', ['route' => 'plugin_installed']);
+        $plugins->addChild('Store', ['route' => 'plugin_store']);
 
         return $menu;
     }

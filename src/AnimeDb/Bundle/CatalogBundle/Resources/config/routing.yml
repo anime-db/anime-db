@@ -113,3 +113,7 @@ refiller_search_fill:
 plugin_installed:
     pattern:  /plugin/installed.html
     defaults: { _controller: AnimeDbCatalogBundle:Plugin:installed }
+
+plugin_store:
+    pattern:  /plugin/store.html
+    defaults: { _controller: AnimeDbCatalogBundle:Plugin:store }

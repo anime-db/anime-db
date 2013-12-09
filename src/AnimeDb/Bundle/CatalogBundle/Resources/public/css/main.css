@@ -1185,6 +1185,8 @@ h1.logo a span {
 	float: left;
 }
 .b-list-plugins .logo {
+	width: 120px;
+	height: 120px;
 	margin-right: 10px;
 }
 .b-list-plugins .control {

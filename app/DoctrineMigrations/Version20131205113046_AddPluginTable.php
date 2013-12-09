@@ -15,7 +15,7 @@ class Version20131205113046_AddPluginTable extends AbstractMigration
         $this->addSql('
             CREATE TABLE plugin (
                 name VARCHAR(255) NOT NULL,
-                tilte TEXT NOT NULL,
+                title TEXT NOT NULL,
                 description TEXT NOT NULL,
                 logo VARCHAR(256) DEFAULT NULL,
                 date_install DATETIME NOT NULL,
