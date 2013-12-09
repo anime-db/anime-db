@@ -150,6 +150,10 @@
                 <source>Application must be updated</source>
                 <target>Необходимо обновить приложение</target>
             </trans-unit>
+            <trans-unit id="38">
+                <source>Delete</source>
+                <target>Удалить</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

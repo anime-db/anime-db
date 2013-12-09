@@ -15,7 +15,7 @@
 {% block content %}
 <section class="item-show-left">
 	<h2>{{ item.name }}</h2>
-	<img src="{{ item.cover|apply_filter('card')|dummy('card') }}" alt="{{ item.name }}" class="cover" />
+	<img src="{{ item.coverWebPath|apply_filter('card')|dummy('card') }}" alt="{{ item.name }}" class="cover" />
 	<section class="item-summary">{{ item.summary }}</section>
 	{{ widgets(widget_in_content, {item: item}) }}
 	{% if item.episodes %}
@@ -29,7 +29,7 @@
 			<header>{% trans %}Image{% endtrans %}</header>
 			<article>
 				{% for image in item.images %}
-					<a href="{{ '/media/'~image.source }}" data-lightbox="frame" title="{{ item.name }}"><img src="{{ image.source|apply_filter('frame')|dummy('frame') }}" alt="{{ item.name }}" /></a>
+					<a href="{{ image.sourceWebPath }}" data-lightbox="frame" title="{{ item.name }}"><img src="{{ image.sourceWebPath|apply_filter('frame')|dummy('frame') }}" alt="{{ item.name }}" /></a>
 				{% endfor %}
 			</article>
 		</section>
