@@ -11,6 +11,7 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config\Config as BaseConfig;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
 
 /**
  * Job: Remove package from config
@@ -21,12 +22,30 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config\Config as BaseConfig;
 class Remove extends BaseConfig
 {
     /**
+     * Package bundle name
+     *
+     * @var string|null
+     */
+    protected $bundle;
+
+    /**
+     * (non-PHPdoc)
+     * @see AnimeDb\Bundle\AnimeDbBundle\Composer\Job.Job::setContainer()
+     */
+    public function setContainer(Container $container)
+    {
+        // get the bundle name before remove package, because then it would impossible to do
+        $this->bundle = $container->getPackageBundle($this->getPackage());
+        parent::setContainer($container);
+    }
+
+    /**
      * (non-PHPdoc)
      * @see AnimeDb\Bundle\AnimeDbBundle\Composer\Job.Job::execute()
      */
     public function execute()
     {
-        if ($bundle = $this->getContainer()->getPackageBundle($this->getPackage())) {
+        if ($this->bundle) {
             $bundle = new $bundle();
             $this->manipulator->removeResource($bundle->getName());
         }

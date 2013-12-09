@@ -73,10 +73,7 @@ class ScriptHandler
      */
     public static function removePackageFromKernel(PackageEvent $event)
     {
-        // get the bundle name before remove package, because then it would impossible to do
-        $package = $event->getOperation()->getPackage();
-        self::getContainer()->getPackageBundle($package);
-        self::getContainer()->addJob(new RemoveKernel($package));
+        self::getContainer()->addJob(new RemoveKernel($event->getOperation()->getPackage()));
     }
 
     /**
@@ -96,10 +93,7 @@ class ScriptHandler
      */
     public static function removePackageFromRouting(PackageEvent $event)
     {
-        // get the bundle name before remove package, because then it would impossible to do
-        $package = $event->getOperation()->getPackage();
-        self::getContainer()->getPackageBundle($package);
-        self::getContainer()->addJob(new RemoveRouting($package));
+        self::getContainer()->addJob(new RemoveRouting($event->getOperation()->getPackage()));
     }
 
     /**
@@ -119,10 +113,7 @@ class ScriptHandler
      */
     public static function removePackageFromConfig(PackageEvent $event)
     {
-        // get the bundle name before remove package, because then it would impossible to do
-        $package = $event->getOperation()->getPackage();
-        self::getContainer()->getPackageBundle($package);
-        self::getContainer()->addJob(new RemoveConfig($package));
+        self::getContainer()->addJob(new RemoveConfig($event->getOperation()->getPackage()));
     }
 
     /**
@@ -140,10 +131,7 @@ class ScriptHandler
                 $job = new UpMigrate($event->getOperation()->getTargetPackage());
                 break;
             case 'uninstall':
-                // migrate down before uninstall
                 $job = new DownMigrate($event->getOperation()->getPackage());
-                $job->setContainer(self::getContainer());
-                $job->execute();
             default:
                 return;
         }
@@ -174,19 +162,23 @@ class ScriptHandler
     }
 
     /**
-     * Global migrate
-     *
-     * TODO remove this after the Catalog bundle moved out
+     * Notify listeners that the project has been installed
      *
      * @param \Composer\Script\CommandEvent $event
      */
-    public static function migrate(CommandEvent $event)
+    public static function notifyProjectInstall(CommandEvent $event)
     {
-        $cmd = 'doctrine:migrations:migrate --no-interaction';
-        if ($event->getIO()->isDecorated()) {
-            $cmd .= ' --ansi';
-        }
-        self::getContainer()->executeCommand($cmd, null);
+        self::getContainer()->addJob(new InstalledProjectNotify($event->getComposer()->getPackage()));
+    }
+
+    /**
+     * Notify listeners that the project has been updated
+     *
+     * @param \Composer\Script\CommandEvent $event
+     */
+    public static function notifyProjectUpdate(CommandEvent $event)
+    {
+        self::getContainer()->addJob(new UpdatedProjectNotify($event->getComposer()->getPackage()));
     }
 
     /**
@@ -218,26 +210,6 @@ class ScriptHandler
     }
 
     /**
-     * Notify listeners that the project has been installed
-     *
-     * @param \Composer\Script\CommandEvent $event
-     */
-    public static function notifyProjectInstall(CommandEvent $event)
-    {
-        self::getContainer()->addJob(new InstalledProjectNotify($event->getComposer()->getPackage()));
-    }
-
-    /**
-     * Notify listeners that the project has been updated
-     *
-     * @param \Composer\Script\CommandEvent $event
-     */
-    public static function notifyProjectUpdate(CommandEvent $event)
-    {
-        self::getContainer()->addJob(new UpdatedProjectNotify($event->getComposer()->getPackage()));
-    }
-
-    /**
      * Deliver deferred events
      *
      * @param \Composer\Script\CommandEvent $event
@@ -245,6 +217,22 @@ class ScriptHandler
     public static function deliverEvents(CommandEvent $event)
     {
         $cmd = 'animedb:deliver-events';
+        if ($event->getIO()->isDecorated()) {
+            $cmd .= ' --ansi';
+        }
+        self::getContainer()->executeCommand($cmd, null);
+    }
+
+    /**
+     * Global migrate
+     *
+     * TODO remove this after the Catalog and App bundle moved out
+     *
+     * @param \Composer\Script\CommandEvent $event
+     */
+    public static function migrate(CommandEvent $event)
+    {
+        $cmd = 'doctrine:migrations:migrate --no-interaction';
         if ($event->getIO()->isDecorated()) {
             $cmd .= ' --ansi';
         }

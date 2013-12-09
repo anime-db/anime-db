@@ -11,6 +11,7 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Migrate as BaseMigrate;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
 
 /**
  * Job: Migrate package down
@@ -22,12 +23,24 @@ class Down extends BaseMigrate
 {
     /**
      * (non-PHPdoc)
+     * @see AnimeDb\Bundle\AnimeDbBundle\Composer\Job.Job::setContainer()
+     */
+    public function setContainer(Container $container)
+    {
+        parent::setContainer($container);
+
+        // migrate down before uninstall package
+        if ($config = $this->getMigrationsConfig()) {
+           $container->executeCommand('doctrine:migrations:migrate 0 --no-interaction --configuration='.$config);
+        }
+    }
+
+    /**
+     * (non-PHPdoc)
      * @see AnimeDb\Bundle\AnimeDbBundle\Composer\Job.Job::execute()
      */
     public function execute()
     {
-        if ($config = $this->getMigrationsConfig()) {
-           $this->getContainer()->executeCommand('doctrine:migrations:migrate 0 --no-interaction --configuration='.$config);
-        }
+        // job already executed
     }
 }
