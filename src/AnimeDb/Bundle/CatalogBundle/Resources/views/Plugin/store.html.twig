@@ -9,7 +9,7 @@
 		{% for plugin in plugins %}
 			<article>
 				<img
-					src="{{ plugin.logo|apply_filter('plugin')|dummy('plugin') }}"
+					src="{{ plugin.logo|dummy('plugin') }}"
 					alt="{{ plugin.title }}"
 					class="logo"
 				/>
@@ -20,11 +20,20 @@
 				</div>
 				<div class="control">
 					<form action="{{ path('update') }}" method="post">
-						<input type="hidden" name="plugin[install]" value="{{ plugin.name }}" />
-						<button type="submit"
-							title="{% trans with {'%name%': plugin.title} %}Install plugin %name%{% endtrans %}"
-							class="icon-label icon-plugin-install"
-						>{% trans %}Install{% endtrans %}</button>
+						{% if plugin.installed != true %}
+							<input type="hidden" name="plugin[install][package]" value="{{ plugin.name }}" />
+							<input type="hidden" name="plugin[install][version]" value="{{ plugin.version }}" />
+							<button type="submit"
+								title="{% trans with {'%name%': plugin.title} %}Install plugin %name%{% endtrans %}"
+								class="icon-label icon-plugin-install"
+							>{% trans %}Install{% endtrans %}</button>
+						{% else %}
+							<input type="hidden" name="plugin[delete]" value="{{ plugin.name }}" />
+							<button type="submit"
+								title="{% trans with {'%name%': plugin.title} %}Delete plugin %name%{% endtrans %}"
+								class="icon-label icon-plugin-delete"
+							>{% trans %}Delete{% endtrans %}</button>
+						{% endif %}
 					</form>
 				</div>
 			</article>
