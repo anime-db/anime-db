@@ -14,15 +14,18 @@
 					class="logo"
 				/>
 				<div class="info">
-					<h3>{{ plugin.tilte }}</h3>
-					<p>{{ plugin.description }}</p>
+					<h3 class="title">{{ plugin.tilte }}</h3>
+					<em class="name">{{ plugin.name }}</em>
+					<p class="description">{{ plugin.description }}</p>
 				</div>
 				<div class="control">
-					<a
-						href="{{ path('update', {delete: plugin.name}) }}"
-						title="{% trans with {'%name%': plugin.tilte} %}Delete plugin %name%{% endtrans %}"
-						class="icon-label icon-plugin-delete"
-					>{% trans %}Delete{% endtrans %}</a>
+					<form action="{{ path('update') }}" method="post">
+						<input type="hidden" name="plugin[delete]" value="{{ plugin.name }}" />
+						<button type="submit"
+							title="{% trans with {'%name%': plugin.tilte} %}Delete plugin %name%{% endtrans %}"
+							class="icon-label icon-plugin-delete"
+						>{% trans %}Delete{% endtrans %}</button>
+					</form>
 				</div>
 			</article>
 		{% endfor %}

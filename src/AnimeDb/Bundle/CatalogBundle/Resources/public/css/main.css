@@ -930,6 +930,7 @@ h1.logo a span {
 	overflow: visible;
 	width: auto;
 	text-indent: 18px;
+	font-weight: normal;
 }
 .icon-plus {
 	background-image: url(../images/incut-plus.png);
@@ -1189,15 +1190,20 @@ h1.logo a span {
 .b-list-plugins .control {
 	float: right;
 }
-.b-list-plugins h3 {
+.b-list-plugins .title {
+	padding: 0;
 	font-weight: bold;
+}
+.b-list-plugins .name {
+	display: block;
+	margin-bottom: 5px;
 }
 .b-list-plugins article {
 	margin: 10px 0 0 0 !important;
 	overflow: hidden;
 	width: 100%;
 }
-.b-list-plugins p,
+.b-list-plugins .description,
 .b-list-plugins article:first-child {
 	margin: 0;
 }
