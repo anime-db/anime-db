@@ -92,7 +92,7 @@ a.button {
 	overflow: visible;
 	border-radius: 4px;
 	border: 1px solid #d8dcdf;
-	background: #eeeeee url(jquery-ui/images/ui-bg_highlight-hard_100_eeeeee_1x100.png) 50% 50% repeat-x;
+	background: #eeeeee 50% 50%;
 	font-weight: bold;
 	padding: .4em 1em;
 	font-size: 1.1em;
