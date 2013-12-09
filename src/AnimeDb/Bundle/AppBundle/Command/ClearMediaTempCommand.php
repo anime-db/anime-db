@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 
 /**
  * Clear the media temporary folder of images
@@ -40,8 +41,16 @@ class ClearMediaTempCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output) {
         $start = microtime(true);
 
-        $fs = new Filesystem();
-        $fs->remove($this->getContainer()->getParameter('kernel.root_dir').'/../web/media/tmp/');
+        if (file_exists($dir = $this->getContainer()->getParameter('kernel.root_dir').'/../web/media/tmp/')) {
+            $fs = new Filesystem();
+
+            $finder = new Finder();
+            $finder->in($dir)->date('< 1 hour ago')->ignoreUnreadableDirs();
+            /* @var $file \SplFileInfo */
+            foreach ($finder as $file) {
+                $fs->remove($file->getRealPath());
+            }
+        }
 
         $output->writeln('Time: <info>'.round((microtime(true)-$start)*1000, 2).'</info> s.');
     }
