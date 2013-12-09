@@ -45,7 +45,7 @@ class Plugin
      *
      * @var string
      */
-    protected $tilte;
+    protected $title;
 
     /**
      * Description
@@ -108,26 +108,26 @@ class Plugin
     }
 
     /**
-     * Set tilte
+     * Set title
      *
-     * @param string $tilte
+     * @param string $title
      *
      * @return \AnimeDb\Bundle\AppBundle\Entity\Plugin
      */
-    public function setTilte($tilte)
+    public function setTitle($title)
     {
-        $this->tilte = $tilte;
+        $this->title = $title;
         return $this;
     }
 
     /**
-     * Get tilte
+     * Get title
      *
      * @return string
      */
-    public function getTilte()
+    public function getTitle()
     {
-        return $this->tilte;
+        return $this->title;
     }
 
     /**

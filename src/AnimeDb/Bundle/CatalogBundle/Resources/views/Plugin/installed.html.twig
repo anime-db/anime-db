@@ -10,11 +10,11 @@
 			<article>
 				<img
 					src="{{ plugin.logoWebPath|apply_filter('plugin')|dummy('plugin') }}"
-					alt="{{ plugin.tilte }}"
+					alt="{{ plugin.title }}"
 					class="logo"
 				/>
 				<div class="info">
-					<h3 class="title">{{ plugin.tilte }}</h3>
+					<h3 class="title">{{ plugin.title }}</h3>
 					<em class="name">{{ plugin.name }}</em>
 					<p class="description">{{ plugin.description }}</p>
 				</div>
@@ -22,7 +22,7 @@
 					<form action="{{ path('update') }}" method="post">
 						<input type="hidden" name="plugin[delete]" value="{{ plugin.name }}" />
 						<button type="submit"
-							title="{% trans with {'%name%': plugin.tilte} %}Delete plugin %name%{% endtrans %}"
+							title="{% trans with {'%name%': plugin.title} %}Delete plugin %name%{% endtrans %}"
 							class="icon-label icon-plugin-delete"
 						>{% trans %}Delete{% endtrans %}</button>
 					</form>
