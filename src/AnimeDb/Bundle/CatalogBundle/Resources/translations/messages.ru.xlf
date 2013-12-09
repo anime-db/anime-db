@@ -498,6 +498,10 @@
                 <source>Installed plugins</source>
                 <target>Установленные плагины</target>
             </trans-unit>
+            <trans-unit id="163">
+                <source>Delete plugin %name%</source>
+                <target>Удалить плагин %name%</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

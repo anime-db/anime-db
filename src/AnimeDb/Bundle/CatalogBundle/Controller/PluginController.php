@@ -27,6 +27,10 @@ class PluginController extends Controller
      */
     public function installedAction()
     {
-        return $this->render('AnimeDbCatalogBundle:Plugin:installed.html.twig');
+        /* @var $repository \Doctrine\ORM\EntityRepository */
+        $repository = $this->getDoctrine()->getRepository('AnimeDbAppBundle:Plugin');
+        return $this->render('AnimeDbCatalogBundle:Plugin:installed.html.twig', [
+            'plugins' => $repository->findAll()
+        ]);
     }
 }
