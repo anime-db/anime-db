@@ -15,7 +15,7 @@
 {% block content %}
 <section class="item-show-left">
 	<h2>{{ item.name }}</h2>
-	<img src="{{ item.coverWebPath|apply_filter('card')|dummy('card') }}" alt="{{ item.name }}" class="cover" />
+	<img src="{{ item.coverWebPath|dummy('card')|apply_filter('card') }}" alt="{{ item.name }}" class="cover" />
 	<section class="item-summary">{{ item.summary }}</section>
 	{{ widgets(widget_in_content, {item: item}) }}
 	{% if item.episodes %}
@@ -35,7 +35,7 @@
 						rel="frame"
 						title="{{ item.name }}"
 					><img
-						src="{{ image.sourceWebPath|apply_filter('frame')|dummy('frame') }}"
+						src="{{ image.sourceWebPath|dummy('frame')|apply_filter('frame') }}"
 						alt="{{ item.name }}"
 					/></a>
 				{% endfor %}
