@@ -1,0 +1,34 @@
+{% extends 'AnimeDbCatalogBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Installed plugins{% endtrans %}{% endblock %}
+
+{% block content %}
+<div class="b-list-plugins">
+	<h2>{% trans %}Installed plugins{% endtrans %}</h2>
+	<section>
+		{% for plugin in plugins %}
+			<article>
+				<img
+					src="{{ plugin.logoWebPath|dummy('plugin')|apply_filter('plugin') }}"
+					alt="{{ plugin.title }}"
+					class="logo"
+				/>
+				<div class="info">
+					<h3 class="title">{{ plugin.title }}</h3>
+					<em class="name">{{ plugin.name }}</em>
+					<p class="description">{{ plugin.description }}</p>
+				</div>
+				<div class="control">
+					<form action="{{ path('update') }}" method="post">
+						<input type="hidden" name="plugin[delete]" value="{{ plugin.name }}" />
+						<button type="submit"
+							title="{% trans with {'%name%': plugin.title} %}Delete plugin %name%{% endtrans %}"
+							class="icon-label icon-plugin-delete"
+						>{% trans %}Delete{% endtrans %}</button>
+					</form>
+				</div>
+			</article>
+		{% endfor %}
+	</section>
+</div>
+{% endblock %}

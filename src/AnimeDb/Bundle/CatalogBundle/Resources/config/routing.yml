@@ -7,7 +7,7 @@ home_search:
     defaults: { _controller: AnimeDbCatalogBundle:Home:search }
 
 home_autocomplete_name:
-    pattern:  /autocomplete-name.json
+    pattern:  /autocomplete/name.json
     defaults: { _controller: AnimeDbCatalogBundle:Home:autocompleteName, _format: json }
 
 home_settings:
@@ -108,3 +108,12 @@ refiller_search:
 refiller_search_fill:
     pattern:  /refiller/{plugin}/{field}/from_search.html
     defaults: { _controller: AnimeDbCatalogBundle:Refill:fillFromSearch }
+
+
+plugin_installed:
+    pattern:  /plugin/installed.html
+    defaults: { _controller: AnimeDbCatalogBundle:Plugin:installed }
+
+plugin_store:
+    pattern:  /plugin/store.html
+    defaults: { _controller: AnimeDbCatalogBundle:Plugin:store }

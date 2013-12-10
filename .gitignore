@@ -7,6 +7,7 @@ web/media/[0-9]*
 web/media/suit
 web/media/favicon
 web/media/tmp
+web/media/plugin
 app/Resources/anime.db
 bin/doctrine
 bin/doctrine.php

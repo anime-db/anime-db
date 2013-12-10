@@ -39,7 +39,7 @@
 	{% endif %}
 	{% for item in items %}
 		<div class="item">
-			<img src="{{ item.cover|apply_filter('catalog')|dummy('catalog') }}" alt="{{ item.name }}" />
+			<img src="{{ item.coverWebPath|dummy('catalog')|apply_filter('catalog') }}" alt="{{ item.name }}" />
 			<a href="{{ path('item_show', {'id': item.id, 'name': item.name}) }}" class="name"><strong>{{ item.name }}</strong></a>
 			<div class="type">
 				<a href="{{ path('home_search', {'anime_db_catalog_search_items[type]': item.type.id}) }}" title="{% trans %}Type{% endtrans %}">{{ item.type.name }}</a>

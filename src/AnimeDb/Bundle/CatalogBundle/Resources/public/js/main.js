@@ -100,4 +100,24 @@ refills.each(function() {
 		});
 });
 
+// text autocomplete
+$('input[type=search]:not([data-source=""])').each(function() {
+	var input = $(this);
+	input.autocomplete({
+		source: input.data('source'),
+		minLength: 2
+	});
+});
+
+if(jQuery().fancybox) {
+	$('[data-control="gallery"]').fancybox({
+		titlePosition: 'over',
+		openEffect: 'fade',
+		closeEffect: 'fade',
+		helpers: {
+			title: null
+		}
+	});
+}
+
 });

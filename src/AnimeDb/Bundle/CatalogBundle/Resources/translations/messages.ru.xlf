@@ -19,8 +19,8 @@
                 <target>Результаты поиска</target>
             </trans-unit>
             <trans-unit id="5">
-                <source>Search this site</source>
-                <target>Поиск по сайту</target>
+                <source>Catalog search</source>
+                <target>Поиск по каталогу</target>
             </trans-unit>
             <trans-unit id="6">
                 <source>Add record</source>
@@ -485,6 +485,38 @@
             <trans-unit id="159">
                 <source>Loading...</source>
                 <target>Загрузка...</target>
+            </trans-unit>
+            <trans-unit id="160">
+                <source>Plugins</source>
+                <target>Плагины</target>
+            </trans-unit>
+            <trans-unit id="161">
+                <source>Installed</source>
+                <target>Установленные</target>
+            </trans-unit>
+            <trans-unit id="162">
+                <source>Installed plugins</source>
+                <target>Установленные плагины</target>
+            </trans-unit>
+            <trans-unit id="163">
+                <source>Delete plugin %name%</source>
+                <target>Удалить плагин %name%</target>
+            </trans-unit>
+            <trans-unit id="164">
+                <source>Store</source>
+                <target>Магазин</target>
+            </trans-unit>
+            <trans-unit id="165">
+                <source>Install</source>
+                <target>Установить</target>
+            </trans-unit>
+            <trans-unit id="166">
+                <source>Install plugin %name%</source>
+                <target>Установить плагин %name%</target>
+            </trans-unit>
+            <trans-unit id="167">
+                <source>Store of plugins</source>
+                <target>Магазин плагинов</target>
             </trans-unit>
         </body>
     </file>

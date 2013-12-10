@@ -13,6 +13,7 @@ namespace AnimeDb\Bundle\CatalogBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use AnimeDb\Bundle\CatalogBundle\Entity\Genre;
 use AnimeDb\Bundle\CatalogBundle\Entity\Country;
 use AnimeDb\Bundle\CatalogBundle\Entity\Storage;
 use AnimeDb\Bundle\CatalogBundle\Entity\Type;
@@ -149,7 +150,7 @@ class Item
      * @ORM\ManyToOne(targetEntity="Storage", inversedBy="items", cascade={"persist"})
      * @ORM\JoinColumn(name="storage", referencedColumnName="id")
      *
-     * @var integer
+     * @var \AnimeDb\Bundle\CatalogBundle\Entity\Storage
      */
     protected $storage;
 
@@ -555,7 +556,7 @@ class Item
      *
      * @return \AnimeDb\Bundle\CatalogBundle\Entity\Item
      */
-    public function addGenre(\AnimeDb\Bundle\CatalogBundle\Entity\Genre $genre)
+    public function addGenre(Genre $genre)
     {
         if (!$this->genres->contains($genre)) {
             $this->genres->add($genre);
@@ -569,7 +570,7 @@ class Item
      *
      * @param \AnimeDb\Bundle\CatalogBundle\Entity\Genre $genre
      */
-    public function removeGenre(\AnimeDb\Bundle\CatalogBundle\Entity\Genre $genre)
+    public function removeGenre(Genre $genre)
     {
         if ($this->genres->contains($genre)) {
             $this->genres->removeElement($genre);

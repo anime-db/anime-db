@@ -9,7 +9,7 @@ services:
         arguments: [@event_dispatcher]
 
     # Twig extension
-    anime_db.twig_extension:
+    anime_db.app_twig_extension:
         class: AnimeDb\Bundle\AppBundle\Service\TwigExtension
         arguments: [@router, @fragment.handler, @anime_db.widgets, %hinclude%]
         tags:
@@ -39,4 +39,12 @@ services:
     anime_db.listener.project:
         class: AnimeDb\Bundle\AppBundle\Event\Listener\Project
         arguments: [ @doctrine.orm.entity_manager ]
-        tags: [{ name: kernel.event_listener, event: anime_db.project.updated, method: onProjectUpdated }]
+        tags: [{ name: kernel.event_listener, event: anime_db.project.updated, method: onUpdated }]
+
+    anime_db.listener.package:
+        class: AnimeDb\Bundle\AppBundle\Event\Listener\Package
+        arguments: [ @doctrine.orm.entity_manager ]
+        tags:
+            - { name: kernel.event_listener, event: anime_db.package.updated, method: onUpdated }
+            - { name: kernel.event_listener, event: anime_db.package.installed, method: onInstalled }
+            - { name: kernel.event_listener, event: anime_db.package.removed, method: onRemoved }

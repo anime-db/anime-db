@@ -23,6 +23,23 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class Search extends AbstractType
 {
     /**
+     * Autocomplete source
+     *
+     * @var string|null
+     */
+    private $source;
+
+    /**
+     * Construct
+     *
+     * @param string|null $source
+     */
+    public function __construct($source = null)
+    {
+        $this->source = $source;
+    }
+
+    /**
      * (non-PHPdoc)
      * @see \Symfony\Component\Form\AbstractType::buildForm()
      */
@@ -32,7 +49,8 @@ class Search extends AbstractType
             ->setMethod('GET')
             ->add('name', 'search', [
                 'label' => 'Name',
-                'required' => false
+                'required' => false,
+                'attr' => $this->source ? ['data-source' => $this->source] : []
             ])
             ->add('date_start', 'date', [
                 'format' => 'yyyy-MM-dd',
@@ -65,6 +83,17 @@ class Search extends AbstractType
                 'property' => 'name',
                 'required' => false
             ]);
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see Symfony\Component\Form.AbstractType::setDefaultOptions()
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => 'AnimeDb\Bundle\CatalogBundle\Entity\Search'
+        ]);
     }
 
     /**

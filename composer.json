@@ -7,20 +7,22 @@
     "version": "0.2.1",
     "authors": [
         {
-            "name":     "Anime DB",
+            "name": "Anime DB",
             "homepage": "http://anime-db.org"
         },
         {
-            "name":     "Peter Gribanov",
-            "email":    "info@peter-gribanov.ru"
+            "name": "Peter Gribanov",
+            "email": "info@peter-gribanov.ru"
         },
         {
-            "name":     "Anime DB Community",
+            "name": "Anime DB Community",
             "homepage": "https://github.com/anime-db/anime-db/graphs/contributors"
         }
     ],
     "autoload": {
-        "psr-0": { "AnimeDb\\": "src/" }
+        "psr-0": {
+            "AnimeDb\\": "src/"
+        }
     },
     "require": {
         "php": ">=5.4.0",

@@ -10,9 +10,7 @@
 
 namespace AnimeDb\Bundle\CatalogBundle\Entity\Settings;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\ExecutionContextInterface;
 
 /**
  * General Settings

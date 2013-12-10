@@ -13,7 +13,7 @@ namespace AnimeDb\Bundle\CatalogBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AnimeDb\Bundle\CatalogBundle\Form\SearchSimple;
-use AnimeDb\Bundle\CatalogBundle\Form\Search;
+use AnimeDb\Bundle\CatalogBundle\Form\Search as SearchForm;
 use Symfony\Component\HttpFoundation\Request;
 use AnimeDb\Bundle\CatalogBundle\Entity\Type as TypeEntity;
 use AnimeDb\Bundle\CatalogBundle\Entity\Country as CountryEntity;
@@ -25,6 +25,8 @@ use AnimeDb\Bundle\CatalogBundle\Form\Settings\General as GeneralForm;
 use AnimeDb\Bundle\CatalogBundle\Entity\Settings\General as GeneralEntity;
 use Symfony\Component\Yaml\Yaml;
 use AnimeDb\Bundle\CatalogBundle\Service\Listener\Request as RequestListener;
+use AnimeDb\Bundle\CatalogBundle\Entity\Search as SearchEntity;
+use AnimeDb\Bundle\CatalogBundle\Service\Search\Manager as ManagerSearch;
 
 /**
  * Main page of the catalog
@@ -68,6 +70,13 @@ class HomeController extends Controller
      * @var string
      */
     const WIDGET_PALCE_BOTTOM = 'home.bottom';
+
+    /**
+     * Autocomplete list limit
+     *
+     * @var integer
+     */
+    const AUTOCOMPLETE_LIMIT = 10;
 
     /**
      * Limits on the number of items per page for home page
@@ -186,8 +195,9 @@ class HomeController extends Controller
      */
     public function searchSimpleFormAction()
     {
+        $form = new SearchSimple($this->generateUrl('home_autocomplete_name'));
         return $this->render('AnimeDbCatalogBundle:Home:searchSimpleForm.html.twig', [
-            'form' => $this->createForm(new SearchSimple())->createView(),
+            'form' => $this->createForm($form)->createView(),
         ]);
     }
 
@@ -200,12 +210,27 @@ class HomeController extends Controller
      */
     public function autocompleteNameAction(Request $request)
     {
-        $term = $request->get('term');
+        $term = strtolower($request->get('term'));
+        /* @var $service \AnimeDb\Bundle\CatalogBundle\Service\Search\Manager */
+        $service = $this->get('anime_db.search');
+        $result = $service->searchByName($term, self::AUTOCOMPLETE_LIMIT);
 
-        // TODO do search
-        $value = ['Foo', 'Bar'];
-
-        return new JsonResponse($value);
+        $list = [];
+        /* @var $item \AnimeDb\Bundle\CatalogBundle\Entity\Item */
+        foreach ($result as $item) {
+            if (strpos(strtolower($item->getName()), $term) === 0) {
+                $list[] = $item->getName();
+            } else {
+                /* @var $name \AnimeDb\Bundle\CatalogBundle\Entity\Name */
+                foreach ($item->getNames() as $name) {
+                    if (strpos(strtolower($name->getName()), $term) === 0) {
+                        $list[] = $name->getName();
+                        break;
+                    }
+                }
+            }
+        }
+        return new JsonResponse($list);
     }
 
     /**
@@ -217,8 +242,9 @@ class HomeController extends Controller
      */
     public function searchAction(Request $request)
     {
+        $data = new SearchEntity();
         /* @var $form \Symfony\Component\Form\Form */
-        $form = $this->createForm(new Search());
+        $form = $this->createForm(new SearchForm($this->generateUrl('home_autocomplete_name')), $data);
         $items = [];
         $pagination = null;
         // list items controls
@@ -229,64 +255,8 @@ class HomeController extends Controller
         if ($request->query->count()) {
             $form->handleRequest($request);
             if ($form->isValid()) {
-                $data = $form->getData();
-
-                // build query
-                /* @var $selector \Doctrine\ORM\QueryBuilder */
-                $selector = $this->getDoctrine()
-                    ->getRepository('AnimeDbCatalogBundle:Item')
-                    ->createQueryBuilder('i');
-
-                // main name
-                if ($data['name']) {
-                    // TODO create index name for rapid and accurate search
-                    $selector
-                        ->innerJoin('i.names', 'n')
-                        ->andWhere('i.name LIKE :name OR n.name LIKE :name')
-                        ->setParameter('name', str_replace('%', '%%', $data['name']).'%');
-                }
-                // date start
-                if ($data['date_start'] instanceof \DateTime) {
-                    $selector->andWhere('i.date_start >= :date_start')
-                        ->setParameter('date_start', $data['date_start']->format('Y-m-d'));
-                }
-                // date end
-                if ($data['date_end'] instanceof \DateTime) {
-                    $selector->andWhere('i.date_end <= :date_end')
-                        ->setParameter('date_end', $data['date_end']->format('Y-m-d'));
-                }
-                // manufacturer
-                if ($data['manufacturer'] instanceof CountryEntity) {
-                    $selector->andWhere('i.manufacturer = :manufacturer')
-                        ->setParameter('manufacturer', $data['manufacturer']->getId());
-                }
-                // storage
-                if ($data['storage'] instanceof StorageEntity) {
-                    $selector->andWhere('i.storage = :storage')
-                        ->setParameter('storage', $data['storage']->getId());
-                }
-                // type
-                if ($data['type'] instanceof TypeEntity) {
-                    $selector->andWhere('i.type = :type')
-                        ->setParameter('type', $data['type']->getId());
-                }
-                // genres
-                if ($data['genres']->count()) {
-                    $keys = [];
-                    foreach ($data['genres'] as $key => $genre) {
-                        $keys[] = ':genre'.$key;
-                        $selector->setParameter('genre'.$key, $genre->getId());
-                    }
-                    $selector->innerJoin('i.genres', 'g')
-                        ->andWhere('g.id IN ('.implode(',', $keys).')');
-                }
-
-                // get count all items
-                $count = clone $selector;
-                $count = $count
-                    ->select('COUNT(DISTINCT i)')
-                    ->getQuery()
-                    ->getSingleScalarResult();
+                /* @var $service \AnimeDb\Bundle\CatalogBundle\Service\Search\Manager */
+                $service = $this->get('anime_db.search');
 
                 // current page for paging
                 $current_page = $request->get('page', 1);
@@ -296,20 +266,19 @@ class HomeController extends Controller
                 $limit = (int)$request->get('limit', self::SEARCH_ITEMS_PER_PAGE);
                 $limit = in_array($limit, self::$search_show_limit) ? $limit : self::SEARCH_ITEMS_PER_PAGE;
 
-                // add order
-                $current_sort_by = $request->get('sort_by', 'date_update');
-                if (!isset(self::$sort_by_field[$current_sort_by])) {
-                    $current_sort_by = 'date_update';
-                }
-                $current_sort_direction = $request->get('sort_direction', 'DESC');
-                if (!isset(self::$sort_direction[$current_sort_direction])) {
-                    $current_sort_direction = 'DESC';
-                }
+                // get order
+                $current_sort_by = ManagerSearch::getValidSortColumn($request->get('sort_by'));
+                $current_sort_direction = ManagerSearch::getValidSortDirection($request->get('sort_direction'));
 
-                // apply order
-                $selector
-                    ->orderBy('i.'.$current_sort_by, $current_sort_direction)
-                    ->addOrderBy('i.id', $current_sort_direction);
+                // do search
+                $result = $service->search(
+                    $data,
+                    ($limit != self::SHOW_LIMIT_ALL ? $limit : 0),
+                    ($limit != self::SHOW_LIMIT_ALL ? ($current_page - 1) * $limit : 0),
+                    $current_sort_by,
+                    $current_sort_direction
+                );
+                $items = $result['list'];
 
                 // build sort params for tamplate
                 $sort_by = [];
@@ -331,31 +300,25 @@ class HomeController extends Controller
                 );
 
                 if ($limit != self::SHOW_LIMIT_ALL) {
-                    $selector
-                        ->setFirstResult(($current_page - 1) * $limit)
-                        ->setMaxResults($limit);
-
                     // build pagination
+                    $query = $request->query->all();
+                    if (isset($query['page'])) {
+                        unset($query['page']);
+                    }
                     $that = $this;
                     $pagination = $this->get('anime_db.pagination')->createNavigation(
-                        ceil($count/$limit),
+                        ceil($result['total']/$limit),
                         $current_page,
                         Pagination::DEFAULT_LIST_LENGTH,
-                        function ($page) use ($that, $request) {
+                        function ($page) use ($that, $query) {
                             return $that->generateUrl(
                                 'home_search',
-                                array_merge($request->query->all(), ['page' => $page])
+                                array_merge($query, ['page' => $page])
                             );
                         },
-                        $this->generateUrl('home_search', $request->query->all())
+                        $this->generateUrl('home_search', $query)
                     );
                 }
-
-                // get items
-                $items = $selector
-                    ->groupBy('i')
-                    ->getQuery()
-                    ->getResult();
 
                 // assembly parameters limit output
                 foreach (self::$search_show_limit as $value) {
