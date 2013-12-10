@@ -9,7 +9,7 @@ services:
         arguments: [@event_dispatcher]
 
     # Twig extension
-    anime_db.twig_extension:
+    anime_db.app_twig_extension:
         class: AnimeDb\Bundle\AppBundle\Service\TwigExtension
         arguments: [@router, @fragment.handler, @anime_db.widgets, %hinclude%]
         tags:
