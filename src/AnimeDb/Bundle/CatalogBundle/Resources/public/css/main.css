@@ -170,7 +170,7 @@ h1.logo a span {
 #navigation nav > ul,
 #navigation .left,
 #navigation .right {
-	background: url(../images/navigation.png) repeat-x scroll 0 -41px transparent;
+	background: url(../images/navigation.png) repeat-x scroll 0 0 transparent;
 	float: left;
 	height: 41px;
 }
@@ -535,21 +535,7 @@ h1.logo a span {
 }
 .item-controls a {
 	display: block;
-	height: 16px;
-	padding-left: 20px;
-	margin-bottom: 2px;
-}
-.item-controls .refill {
-	background: url(../images/polygon.png) no-repeat 0 -32px;
-}
-.item-controls .complement {
-	background: url(../images/polygon.png) no-repeat 0 -48px;
-}
-.item-controls .change {
-	background: url(../images/polygon.png) no-repeat 0 -16px;
-}
-.item-controls .delete {
-	background: url(../images/polygon.png) no-repeat 0 0;
+	margin-bottom: 4px;
 }
 .item-summary {
 	min-height: 300px;
@@ -951,6 +937,12 @@ h1.logo a span {
 .icon-minus[disabled~=disabled] {
 	background-color: #dddddd;
 	cursor: default;
+}
+.icon-edit {
+	background-image: url(../images/edit.png);
+}
+.icon-delete {
+	background-image: url(../images/delete.png);
 }
 .icon-storage {
 	background-image: url(../images/storage.png);

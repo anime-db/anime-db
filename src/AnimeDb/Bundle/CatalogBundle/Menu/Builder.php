@@ -122,12 +122,10 @@ class Builder extends ContainerAware
             $plugin->buildMenu($menu);
         }
 
-        //$menu->addChild('Refill from source'); // TODO issue #38
-        //$menu->addChild('Complement directory'); // TODO issue #34
         $menu->addChild('Change record', ['route' => 'item_change', 'routeParameters' => $params])
-            ->setLinkAttribute('class', 'change');
+            ->setLinkAttribute('class', 'icon-label icon-edit');
         $menu->addChild('Delete record', ['route' => 'item_delete', 'routeParameters' => $params])
-            ->setLinkAttribute('class', 'delete')
+            ->setLinkAttribute('class', 'icon-label icon-delete')
             ->setLinkAttribute('data-message', $this->container->get('translator')->trans(
                 'Are you sure want to delete %name%?',
                 ['%name%' => $options['name']]
