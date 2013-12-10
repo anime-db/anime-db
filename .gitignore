@@ -13,10 +13,9 @@ bin/doctrine
 bin/doctrine.php
 bin/composer
 bin/jsonlint
-# TODO #20 uncomment this after the Catalog bundle moved out
-#app/config/vendor_config.yml
-#app/config/routing.yml
-#app/bundles.php
+app/config/vendor_config.yml
+app/config/routing.yml
+app/bundles.php
 
 # Services pid files #
 ######################
