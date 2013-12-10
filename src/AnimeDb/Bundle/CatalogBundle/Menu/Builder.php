@@ -14,6 +14,7 @@ use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use AnimeDb\Bundle\CatalogBundle\Plugin\Chain;
+use AnimeDb\Bundle\CatalogBundle\Entity\Item;
 
 /**
  * Menu builder
@@ -103,32 +104,34 @@ class Builder extends ContainerAware
      * Builder main menu
      * 
      * @param \Knp\Menu\FactoryInterface $factory
-     * @param array $options
+     * @param array $item
      *
      * @return 
      */
     public function itemMenu(FactoryInterface $factory, array $options)
     {
-        if (empty($options['id']) || empty($options['name'])) {
-            throw new \InvalidArgumentException('Unknown element id or name');
+        if (empty($options['item']) || !($options['item'] instanceof Item)) {
+            throw new \InvalidArgumentException('Item is not found');
         }
         /* @var $menu \Knp\Menu\ItemInterface */
         $menu = $factory->createItem('root');
-        $params = ['id' => $options['id'], 'name' => $options['name']];
-
-        // add settings plugin items
-        $chain = $this->container->get('anime_db.plugin.item');
-        foreach ($chain->getPlugins() as $plugin) {
-            $plugin->buildMenu($menu);
-        }
+        $params = ['id' => $options['item']->getId(), 'name' => $options['item']->getName()];
 
         $menu->addChild('Change record', ['route' => 'item_change', 'routeParameters' => $params])
             ->setLinkAttribute('class', 'icon-label icon-edit');
+
+        // add settings plugin items
+        $chain = $this->container->get('anime_db.plugin.item');
+        /* @var $plugin \AnimeDb\Bundle\CatalogBundle\Plugin\Item\Item */
+        foreach ($chain->getPlugins() as $plugin) {
+            $plugin->buildMenu($menu, $options['item']);
+        }
+
         $menu->addChild('Delete record', ['route' => 'item_delete', 'routeParameters' => $params])
             ->setLinkAttribute('class', 'icon-label icon-delete')
             ->setLinkAttribute('data-message', $this->container->get('translator')->trans(
                 'Are you sure want to delete %name%?',
-                ['%name%' => $options['name']]
+                ['%name%' => $options['item']->getName()]
             ));
 
         return $menu;
