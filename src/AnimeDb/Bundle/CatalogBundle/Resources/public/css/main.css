@@ -410,8 +410,7 @@ h1.logo a span {
 	color: #000;
 }
 .home-search input {
-	background: url(../images/magglass.png) no-repeat scroll 5px 7px #FFFFFF;
-	/*border: 1px #C0CAD5 solid;*/
+	background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAIAAAAmzuBxAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAADHSURBVHjaXJDJCoQwEEQnIQo6OIh68v+/zJsiuOGC+xs7hGHq0HQq1V2VqOu6Xg+O4xiGoe97pRRHahAEcRwrUZzn2XVd0zT0YRhS53mGTNPUKrZtK4pCa51lWRRFMOM4VlXFJi0W6PZ9Z61cg/cDJq1CRC6TY6hWwX7sodq2FYbU0zR5nmdzYIHruq5Q8pBlWWiSJPkq6romF43v+6IWi88DxSgLeRjTeZ7LZzhrYJjgmo7kYvEXVvGVZVkaY/iJ3wUOtwADAHNYg2R6jv2ZAAAAAElFTkSuQmCC') no-repeat scroll 5px 7px #FFFFFF;
 	border: 2px #fff100 solid;
 	margin: 2px 15px 0 0;
 	padding: 5px 5px 5px 20px;
