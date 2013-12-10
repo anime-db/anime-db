@@ -221,6 +221,10 @@ h1.logo a span {
 #navigation nav > ul > li.last > span {
 	background: none;
 }
+#navigation li li a,
+#navigation li li span {
+	width: 100%;
+}
 #navigation .selected a,
 #navigation .selected span {
 	color: #fff;
