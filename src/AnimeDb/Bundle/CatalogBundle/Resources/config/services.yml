@@ -14,6 +14,12 @@ services:
     anime_db.plugin.setting:
         class: AnimeDb\Bundle\CatalogBundle\Plugin\Setting\Chain
 
+    # Twig extension
+    anime_db.catalog_twig_extension:
+        class: AnimeDb\Bundle\CatalogBundle\Service\TwigExtension
+        tags:
+            - { name: twig.extension }
+
     # Form
     anime_db.form.type.item:
         class: AnimeDb\Bundle\CatalogBundle\Form\Entity\Item

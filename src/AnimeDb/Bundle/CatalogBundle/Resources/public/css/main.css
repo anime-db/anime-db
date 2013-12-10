@@ -92,7 +92,7 @@ a.button {
 	overflow: visible;
 	border-radius: 4px;
 	border: 1px solid #d8dcdf;
-	background: #eeeeee url(jquery-ui/images/ui-bg_highlight-hard_100_eeeeee_1x100.png) 50% 50% repeat-x;
+	background: #eeeeee 50% 50%;
 	font-weight: bold;
 	padding: .4em 1em;
 	font-size: 1.1em;
@@ -170,16 +170,16 @@ h1.logo a span {
 #navigation nav > ul,
 #navigation .left,
 #navigation .right {
-	background: url(../images/navigation.png) repeat-x scroll 0 -41px transparent;
+	background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAApCAIAAAB7iNSFAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABISURBVHjaXIzBCQBBCAM1L19iJfbflgWod/tQlg0Ik5AId4eqIiJAROjuveOravPD44ene3Nmgpk3u7svv9v5LSIwM/z6BBgAkgJapF6ukSAAAAAASUVORK5CYII=') repeat-x scroll 0 0 transparent;
 	float: left;
 	height: 41px;
 }
 #navigation .left {
-	background: url(../images/navigation-l.png) no-repeat scroll left top transparent;
+	background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAArCAYAAACwyUKjAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAADdSURBVHjajFPbDcIwDGzapoBaBIrEAnx1A75hOHZhEuZB4jcNvhALh5gWS+7j7LPPTmuqtxlyO47j2Vp7bRO4cs4du6670fOupgu8H4bhAiCEEIGGfOO97wHA2lQPwUqCFQPstQSjDGM+IGyaphicp0vLajK9yESglS/wTCdTMzr0MVjQM5AD6uwZSKsra6IR09UxVZ3qRAV9uZE6kdro5xGr3dWaRebswWWN5E7rxeP4X7ysGdKWHgCwrSZpXRPgCTjR86FJmfE/osCd7k8j9G7J92CZr2/VIuElwAAuhd2+m7GQXAAAAABJRU5ErkJggg==') no-repeat scroll left top transparent;
 	width: 5px;
 }
 #navigation .right {
-	background: url(../images/navigation-r.png) no-repeat scroll right top transparent;
+	background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAArCAYAAACwyUKjAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAADtSURBVHjajFNBCsIwEEzS0iIWhF78gBcPufgEf+gzfIxHvYsnoYLiRdAmzpZsiE1CDWy3nZ1tZidtobU+tG177rruIoQwCKGklJuqqvYorPBcD6C1lvKiaZot8pwwRQgV+r4nYIYoSsfkRSSpjDEDMyzSRoJfwascswaQ2sdMJRLLt/8wuT3JDIteZwj6iVivl0RAxIzEMxBJctbF7eFGyTHzOqOJxnKyGyXbvfNJQybPKG0Iz5wUP33Ef59mnpn1M/o+nUsPh1n284SOI/KbwAKXJQo75CvihniRs2u6QdwRT8RHuH+nDqf7CjAA7YTqjBSccpgAAAAASUVORK5CYII=') no-repeat scroll right top transparent;
 	width: 5px;
 }
 #navigation ul,
@@ -215,11 +215,15 @@ h1.logo a span {
 }
 #navigation nav > ul > li > a,
 #navigation nav > ul > li > span {
-	background: url(../images/navigation-s.png) no-repeat scroll right top transparent;
+	background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAApCAIAAACQv2+GAAAAa0lEQVR42m2OuQ0DMQwEhw8EKVMn6r85rhMeToYdLbC/nXOAHGOstSIi5pwOAF5VkhyoqosEHJDkkgA3M0mP9p1rsi0daIukC95cA/Bf605J/ex33cyq6tl7714tksysf1pEZGbuvYGccwIfCFCB66/lvLwAAAAASUVORK5CYII=') no-repeat scroll right top transparent;
 }
 #navigation nav > ul > li.last > a,
 #navigation nav > ul > li.last > span {
 	background: none;
+}
+#navigation li li a,
+#navigation li li span {
+	width: 100%;
 }
 #navigation .selected a,
 #navigation .selected span {
@@ -410,8 +414,7 @@ h1.logo a span {
 	color: #000;
 }
 .home-search input {
-	background: url(../images/magglass.png) no-repeat scroll 5px 7px #FFFFFF;
-	/*border: 1px #C0CAD5 solid;*/
+	background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAIAAAAmzuBxAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAADHSURBVHjaXJDJCoQwEEQnIQo6OIh68v+/zJsiuOGC+xs7hGHq0HQq1V2VqOu6Xg+O4xiGoe97pRRHahAEcRwrUZzn2XVd0zT0YRhS53mGTNPUKrZtK4pCa51lWRRFMOM4VlXFJi0W6PZ9Z61cg/cDJq1CRC6TY6hWwX7sodq2FYbU0zR5nmdzYIHruq5Q8pBlWWiSJPkq6romF43v+6IWi88DxSgLeRjTeZ7LZzhrYJjgmo7kYvEXVvGVZVkaY/iJ3wUOtwADAHNYg2R6jv2ZAAAAAElFTkSuQmCC') no-repeat scroll 5px 7px #FFFFFF;
 	border: 2px #fff100 solid;
 	margin: 2px 15px 0 0;
 	padding: 5px 5px 5px 20px;
@@ -535,21 +538,7 @@ h1.logo a span {
 }
 .item-controls a {
 	display: block;
-	height: 16px;
-	padding-left: 20px;
-	margin-bottom: 2px;
-}
-.item-controls .refill {
-	background: url(../images/polygon.png) no-repeat 0 -32px;
-}
-.item-controls .complement {
-	background: url(../images/polygon.png) no-repeat 0 -48px;
-}
-.item-controls .change {
-	background: url(../images/polygon.png) no-repeat 0 -16px;
-}
-.item-controls .delete {
-	background: url(../images/polygon.png) no-repeat 0 0;
+	margin-bottom: 4px;
 }
 .item-summary {
 	min-height: 300px;
@@ -726,9 +715,9 @@ h1.logo a span {
 	min-height: 20px;
 	min-width: 14px;
 	text-align: center;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 21px;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
 }
 .pagination nav a:hover {
 	border: 1px solid #db3400;
@@ -738,9 +727,6 @@ h1.logo a span {
 	border: 1px solid #cccccd;
 	background: white;
 	color: inherit;
-	-webkit-border-radius: 20px;
-	-moz-border-radius: 20px;
-	border-radius: 20px;
 	line-height: 30px;
 	min-height: 30px;
 	min-width: 24px;
@@ -933,11 +919,11 @@ h1.logo a span {
 	font-weight: normal;
 }
 .icon-plus {
-	background-image: url(../images/incut-plus.png);
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABXSURBVHjaYvz//z8DsYAJi9hrIP4IxM/RJViwKOYHYlYoJmjyLzQaDhihbgZZy0fAyYxMDCQAshSDPMUIxd+gYp+QxBgJmfwflwdxKWIkFM6MuKwCCDAA8cYS25GxIRkAAAAASUVORK5CYII=');
 	background-color: #33bb33;
 }
 .icon-minus {
-	background-image: url(../images/incut-minus.png);
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAAkSURBVHjaYvz//z8DsYCJgQRAe8Ufgfg/AUxDZzAOwaADCDAADKwO+JOzCXsAAAAASUVORK5CYII=');
 	background-color: #bbbbbb;
 }
 .icon-plus,
@@ -954,6 +940,12 @@ h1.logo a span {
 .icon-minus[disabled~=disabled] {
 	background-color: #dddddd;
 	cursor: default;
+}
+.icon-edit {
+	background-image: url(../images/edit.png);
+}
+.icon-delete {
+	background-image: url(../images/delete.png);
 }
 .icon-storage {
 	background-image: url(../images/storage.png);
@@ -1188,6 +1180,9 @@ h1.logo a span {
 	width: 120px;
 	height: 120px;
 	margin-right: 10px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 }
 .b-list-plugins .control {
 	float: right;

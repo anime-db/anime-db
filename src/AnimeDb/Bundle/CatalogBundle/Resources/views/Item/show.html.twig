@@ -4,18 +4,18 @@
 
 {% block stylesheets %}
 	{{ parent() }}
-	<link href="{{ asset('/bundles/animedbcatalog/css/lightbox.css') }}" type="text/css" rel="stylesheet">
+	<link href="{{ asset('/bundles/animedbcatalog/css/jquery.fancybox.css') }}" type="text/css" rel="stylesheet">
 {% endblock %}
 
 {% block javascripts %}
 	{{ parent() }}
-	<script type="text/javascript" src="{{ asset('/bundles/animedbcatalog/js/lightbox-2.6.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('/bundles/animedbcatalog/js/jquery.fancybox.pack.js') }}"></script>
 {% endblock %}
 
 {% block content %}
 <section class="item-show-left">
 	<h2>{{ item.name }}</h2>
-	<img src="{{ item.coverWebPath|apply_filter('card')|dummy('card') }}" alt="{{ item.name }}" class="cover" />
+	<img src="{{ item.coverWebPath|dummy('card')|apply_filter('card') }}" alt="{{ item.name }}" class="cover" />
 	<section class="item-summary">{{ item.summary }}</section>
 	{{ widgets(widget_in_content, {item: item}) }}
 	{% if item.episodes %}
@@ -29,7 +29,15 @@
 			<header>{% trans %}Image{% endtrans %}</header>
 			<article>
 				{% for image in item.images %}
-					<a href="{{ image.sourceWebPath }}" data-lightbox="frame" title="{{ item.name }}"><img src="{{ image.sourceWebPath|apply_filter('frame')|dummy('frame') }}" alt="{{ item.name }}" /></a>
+					<a
+						href="{{ image.sourceWebPath }}"
+						data-control="gallery"
+						rel="frame"
+						title="{{ item.name }}"
+					><img
+						src="{{ image.sourceWebPath|dummy('frame')|apply_filter('frame') }}"
+						alt="{{ item.name }}"
+					/></a>
 				{% endfor %}
 			</article>
 		</section>
@@ -41,7 +49,7 @@
 		<header>{% trans %}Record{% endtrans %}</header>
 		<article>
 			<nav>
-				{% set itemMenu = knp_menu_get('AnimeDbCatalogBundle:Builder:itemMenu', [], {'id': item.id, 'name': item.name}) %}
+				{% set itemMenu = knp_menu_get('AnimeDbCatalogBundle:Builder:itemMenu', [], {'item': item}) %}
 				{{ knp_menu_render(itemMenu) }}
 			</nav>
 		</article>
