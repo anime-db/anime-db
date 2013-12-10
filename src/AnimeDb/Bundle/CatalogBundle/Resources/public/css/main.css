@@ -915,11 +915,11 @@ h1.logo a span {
 	font-weight: normal;
 }
 .icon-plus {
-	background-image: url(../images/incut-plus.png);
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABXSURBVHjaYvz//z8DsYAJi9hrIP4IxM/RJViwKOYHYlYoJmjyLzQaDhihbgZZy0fAyYxMDCQAshSDPMUIxd+gYp+QxBgJmfwflwdxKWIkFM6MuKwCCDAA8cYS25GxIRkAAAAASUVORK5CYII=');
 	background-color: #33bb33;
 }
 .icon-minus {
-	background-image: url(../images/incut-minus.png);
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAAkSURBVHjaYvz//z8DsYCJgQRAe8Ufgfg/AUxDZzAOwaADCDAADKwO+JOzCXsAAAAASUVORK5CYII=');
 	background-color: #bbbbbb;
 }
 .icon-plus,
