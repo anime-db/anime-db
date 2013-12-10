@@ -170,16 +170,16 @@ h1.logo a span {
 #navigation nav > ul,
 #navigation .left,
 #navigation .right {
-	background: url(../images/navigation.png) repeat-x scroll 0 0 transparent;
+	background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAApCAIAAAB7iNSFAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABISURBVHjaXIzBCQBBCAM1L19iJfbflgWod/tQlg0Ik5AId4eqIiJAROjuveOravPD44ene3Nmgpk3u7svv9v5LSIwM/z6BBgAkgJapF6ukSAAAAAASUVORK5CYII=') repeat-x scroll 0 0 transparent;
 	float: left;
 	height: 41px;
 }
 #navigation .left {
-	background: url(../images/navigation-l.png) no-repeat scroll left top transparent;
+	background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAArCAYAAACwyUKjAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAADdSURBVHjajFPbDcIwDGzapoBaBIrEAnx1A75hOHZhEuZB4jcNvhALh5gWS+7j7LPPTmuqtxlyO47j2Vp7bRO4cs4du6670fOupgu8H4bhAiCEEIGGfOO97wHA2lQPwUqCFQPstQSjDGM+IGyaphicp0vLajK9yESglS/wTCdTMzr0MVjQM5AD6uwZSKsra6IR09UxVZ3qRAV9uZE6kdro5xGr3dWaRebswWWN5E7rxeP4X7ysGdKWHgCwrSZpXRPgCTjR86FJmfE/osCd7k8j9G7J92CZr2/VIuElwAAuhd2+m7GQXAAAAABJRU5ErkJggg==') no-repeat scroll left top transparent;
 	width: 5px;
 }
 #navigation .right {
-	background: url(../images/navigation-r.png) no-repeat scroll right top transparent;
+	background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAArCAYAAACwyUKjAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAADtSURBVHjajFNBCsIwEEzS0iIWhF78gBcPufgEf+gzfIxHvYsnoYLiRdAmzpZsiE1CDWy3nZ1tZidtobU+tG177rruIoQwCKGklJuqqvYorPBcD6C1lvKiaZot8pwwRQgV+r4nYIYoSsfkRSSpjDEDMyzSRoJfwascswaQ2sdMJRLLt/8wuT3JDIteZwj6iVivl0RAxIzEMxBJctbF7eFGyTHzOqOJxnKyGyXbvfNJQybPKG0Iz5wUP33Ef59mnpn1M/o+nUsPh1n284SOI/KbwAKXJQo75CvihniRs2u6QdwRT8RHuH+nDqf7CjAA7YTqjBSccpgAAAAASUVORK5CYII=') no-repeat scroll right top transparent;
 	width: 5px;
 }
 #navigation ul,
@@ -215,7 +215,7 @@ h1.logo a span {
 }
 #navigation nav > ul > li > a,
 #navigation nav > ul > li > span {
-	background: url(../images/navigation-s.png) no-repeat scroll right top transparent;
+	background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAApCAIAAACQv2+GAAAAa0lEQVR42m2OuQ0DMQwEhw8EKVMn6r85rhMeToYdLbC/nXOAHGOstSIi5pwOAF5VkhyoqosEHJDkkgA3M0mP9p1rsi0daIukC95cA/Bf605J/ex33cyq6tl7714tksysf1pEZGbuvYGccwIfCFCB66/lvLwAAAAASUVORK5CYII=') no-repeat scroll right top transparent;
 }
 #navigation nav > ul > li.last > a,
 #navigation nav > ul > li.last > span {
