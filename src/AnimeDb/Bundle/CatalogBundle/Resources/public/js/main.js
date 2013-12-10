@@ -109,4 +109,15 @@ $('input[type=search]:not([data-source=""])').each(function() {
 	});
 });
 
+if(jQuery().fancybox) {
+	$('[data-control="gallery"]').fancybox({
+		titlePosition: 'over',
+		openEffect: 'fade',
+		closeEffect: 'fade',
+		helpers: {
+			title: null
+		}
+	});
+}
+
 });

@@ -4,12 +4,12 @@
 
 {% block stylesheets %}
 	{{ parent() }}
-	<link href="{{ asset('/bundles/animedbcatalog/css/lightbox.css') }}" type="text/css" rel="stylesheet">
+	<link href="{{ asset('/bundles/animedbcatalog/css/jquery.fancybox.css') }}" type="text/css" rel="stylesheet">
 {% endblock %}
 
 {% block javascripts %}
 	{{ parent() }}
-	<script type="text/javascript" src="{{ asset('/bundles/animedbcatalog/js/lightbox-2.6.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('/bundles/animedbcatalog/js/jquery.fancybox.pack.js') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -29,7 +29,15 @@
 			<header>{% trans %}Image{% endtrans %}</header>
 			<article>
 				{% for image in item.images %}
-					<a href="{{ image.sourceWebPath }}" data-lightbox="frame" title="{{ item.name }}"><img src="{{ image.sourceWebPath|apply_filter('frame')|dummy('frame') }}" alt="{{ item.name }}" /></a>
+					<a
+						href="{{ image.sourceWebPath }}"
+						data-control="gallery"
+						rel="frame"
+						title="{{ item.name }}"
+					><img
+						src="{{ image.sourceWebPath|apply_filter('frame')|dummy('frame') }}"
+						alt="{{ item.name }}"
+					/></a>
 				{% endfor %}
 			</article>
 		</section>
