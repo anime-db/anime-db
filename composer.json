@@ -4,7 +4,6 @@
     "type": "project",
     "description": "The application for making home collection anime",
     "homepage": "http://anime-db.org",
-    "version": "0.2.1",
     "authors": [
         {
             "name": "Anime DB",
@@ -43,7 +42,7 @@
         "doctrine/doctrine-migrations-bundle": "dev-master",
         "composer/composer": "1.0.0-alpha7",
         "guzzle/guzzle": "3.7.*",
-        "anime-db/catalog-bundle": "dev-develop as 0.0.1"
+        "anime-db/catalog-bundle": "dev-develop"
     },
     "scripts": {
         "post-install-cmd": [
