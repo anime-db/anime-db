@@ -61,6 +61,7 @@
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::installConfig",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::notifyProjectUpdate",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::execJobs",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migrate",
