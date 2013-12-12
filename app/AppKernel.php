@@ -34,7 +34,8 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
-            new AnimeDb\Bundle\AnimeDbBundle\AnimeDbAnimeDbBundle(),
+            new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
+            new AnimeDb\Bundle\AnimeDbBundle\AnimeDbAnimeDbBundle()
         ];
         // connection the bandles to be installed in the future
         $bundles = array_merge($bundles, include __DIR__.'/bundles.php');
