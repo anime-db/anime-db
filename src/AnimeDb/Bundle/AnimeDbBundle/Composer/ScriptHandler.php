@@ -132,6 +132,7 @@ class ScriptHandler
                 break;
             case 'uninstall':
                 $job = new DownMigrate($event->getOperation()->getPackage());
+                break;
             default:
                 return;
         }
