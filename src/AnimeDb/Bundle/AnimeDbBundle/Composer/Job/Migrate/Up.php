@@ -37,16 +37,11 @@ class Up extends BaseMigrate
                 ->files()
                 ->name('/Version\d{14}.*\.php/');
 
-            $migdir = __DIR__.'/../../../../../../../app/DoctrineMigrations/';
-            if ($finder->count() && !file_exists($migdir)) {
-                mkdir($migdir);
-            }
-
             /* @var $file \SplFileInfo */
             foreach ($finder as $file) {
                 // create migration wrapper
                 $version = $file->getBasename('.php');
-                file_put_contents($migdir.$file->getBasename(), '<?php
+                file_put_contents(__DIR__.'/../../../../../../../app/DoctrineMigrations/'.$file->getBasename(), '<?php
 namespace Application\Migrations;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;
