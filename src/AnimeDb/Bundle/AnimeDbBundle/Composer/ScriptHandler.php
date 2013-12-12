@@ -222,4 +222,18 @@ class ScriptHandler
         }
         self::getContainer()->executeCommand($cmd, null);
     }
+
+    /**
+     * Migrate all plugins
+     *
+     * @param \Composer\Script\CommandEvent $event
+     */
+    public static function migrate(CommandEvent $event)
+    {
+        $cmd = 'doctrine:migrations:migrate --no-interaction';
+        if ($event->getIO()->isDecorated()) {
+            $cmd .= ' --ansi';
+        }
+        self::getContainer()->executeCommand($cmd, null);
+    }
 }

@@ -33,6 +33,7 @@ class Config
         $resource = '@'.$bundle.'/Resources/config/'.$path.'.'.$format;
 
         $value = Yaml::parse(file_get_contents($file));
+        $value['imports'] = isset($value['imports']) ? $value['imports'] : [];
         // check for duplicate
         foreach ($value['imports'] as $import) {
             if ($import['resource'] == $resource) {

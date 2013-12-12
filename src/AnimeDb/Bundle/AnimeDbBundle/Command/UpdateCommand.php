@@ -195,7 +195,8 @@ class UpdateCommand extends ContainerAwareCommand
                 ->ignoreUnreadableDirs()
                 ->in($target.'/app')
                 ->notPath('config/parameters.yml')
-                ->notPath('Resources/anime.db');
+                ->notPath('Resources/anime.db')
+                ->notPath('DoctrineMigrations');
             $fs->remove($finder);
         } catch (\Exception $e) {}
 

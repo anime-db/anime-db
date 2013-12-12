@@ -31,7 +31,7 @@ class Down extends BaseMigrate
 
         // migrate down before uninstall package
         if ($config = $this->getMigrationsConfig()) {
-           $container->executeCommand('doctrine:migrations:migrate 0 --no-interaction --configuration='.$config);
+            $container->executeCommand('doctrine:migrations:migrate 0 --no-interaction --configuration='.$config);
         }
     }
 
