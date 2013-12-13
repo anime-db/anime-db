@@ -1,10 +1,11 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: vendor_config.yml }
 
 framework:
     #esi:             ~
-    translator:      { fallback: "%locale%" }
+    translator:      { fallback: "en" }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -13,9 +14,10 @@ framework:
     csrf_protection: false
     validation:      { enable_annotations: true }
     templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
-    default_locale:  "%locale%"
+    default_locale:  "en"
     trusted_proxies: ~
     session:         ~
+    fragments: { path: /_fragment }
 
 # Twig Configuration
 twig:
@@ -68,17 +70,7 @@ doctrine:
 
 # Avalanche Configuration
 avalanche_imagine:
-    source_root:  %kernel.root_dir%/../web/media
+    source_root:  %kernel.root_dir%/../web
     web_root:     %kernel.root_dir%/../web
     cache_prefix: media/suit
     driver:       gd
-    filters:
-        card:
-            type:    thumbnail
-            options: { size: %avalanche_card%, mode: outbound }
-        catalog:
-            type:    thumbnail
-            options: { size: %avalanche_catalog%, mode: outbound }
-        frame:
-            type:    thumbnail
-            options: { size: %avalanche_frame%, mode: outbound }

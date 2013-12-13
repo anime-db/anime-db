@@ -23,9 +23,9 @@ $kernel = new AppKernel('dev', true);
 $request = Request::createFromGlobals();
 
 // give static or run for dev
-if (is_file(__DIR__.$request->getPathInfo())) {
-    $response = new Response(file_get_contents(__DIR__.$request->getPathInfo()));
-    $response->headers->set('Content-Type', mime_content_type(__DIR__.$request->getPathInfo()));
+if (is_file($file = __DIR__.$request->getPathInfo())) {
+    $response = new Response(file_get_contents($file));
+    $response->headers->set('Content-Type', mime_content_type($file));
 } else {
     $response = $kernel->handle($request);
 }

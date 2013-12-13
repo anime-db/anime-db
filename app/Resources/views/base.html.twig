@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:hx="http://purl.org/NET/hinclude">
 	<head>
 		<meta charset="UTF-8" />
 		{% if block('title') is not empty %}
@@ -10,6 +10,7 @@
 		<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 		{% block stylesheets %}{% endblock %}
 		{% block javascripts %}{% endblock %}
+		{% block headers %}{% endblock %}
 	</head>
 	<body{% if body_class is defined %} class="{{ body_class }}"{% endif %}>
 		{% block body %}{% endblock %}

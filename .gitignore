@@ -1,11 +1,18 @@
+composer.lock
+*.log
+
 # Application #
 ###############
-web/media/[0-9]*
-web/media/suit
-web/media/favicon
+web/media
 app/Resources/anime.db
 bin/doctrine
 bin/doctrine.php
+bin/composer
+bin/jsonlint
+app/config/vendor_config.yml
+app/config/routing.yml
+app/bundles.php
+app/DoctrineMigrations
 
 # Services pid files #
 ######################
@@ -19,6 +26,8 @@ app/cache/
 app/logs/
 app/bootstrap.php.cache
 app/config/parameters.yml
+app/SymfonyRequirements.php
+app/check.php
 vendor/
 
 # Eclipse files #
@@ -26,10 +35,6 @@ vendor/
 .buildpath
 .project
 .settings
-
-# SQL #
-#######
-*.sql
 
 # OS generated files #
 ######################
