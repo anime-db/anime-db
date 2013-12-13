@@ -11,7 +11,6 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Migrate as BaseMigrate;
-use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -29,6 +28,9 @@ class Up extends BaseMigrate
     public function execute()
     {
         if ($config_file = $this->getMigrationsConfig()) {
+            // can not consistently perform the migration of one packet,
+            // and then another because they may be dependent
+            // to solve this problem create set of wrappers for sort migrations
             $config = $this->getNamespaceAndDirectory($config_file);
 
             // find migrations
@@ -69,49 +71,5 @@ class '.$version.' extends AbstractMigration
 }');
             }
         }
-    }
-
-    /**
-     * Get migrations namespace and directory
-     *
-     * @param string $file
-     *
-     * @return array {namespace:string, directory:string}
-     */
-    protected function getNamespaceAndDirectory($file)
-    {
-        $namespace = '';
-        $directory = '';
-
-        $config = file_get_contents($file);
-        switch (pathinfo($file, PATHINFO_EXTENSION)) {
-            case 'yml':
-                $config = Yaml::parse($config);
-                if (isset($config['migrations_namespace'])) {
-                    $namespace = $config['migrations_namespace'];
-                }
-                if (isset($config['migrations_directory'])) {
-                    $directory = $config['migrations_directory'];
-                }
-                break;
-            case 'xml':
-                $doc = new \DOMDocument();
-                $doc->loadXML($config);
-                $xpath = new \DOMXPath($doc);
-                $list = $xpath->query('/doctrine-migrations/migrations-namespace');
-                if ($list->length) {
-                    $namespace = $list->item(0)->nodeValue;
-                }
-                $list = $xpath->query('/doctrine-migrations/migrations-directory');
-                if ($list->length) {
-                    $directory = $list->item(0)->nodeValue;
-                }
-                break;
-        }
-
-        return [
-            'namespace' => $namespace && $namespace[0] == '\\' ? substr($namespace, 1) : $namespace,
-            'directory' => $directory
-        ];
     }
 }
