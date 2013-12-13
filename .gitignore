@@ -3,20 +3,16 @@ composer.lock
 
 # Application #
 ###############
-web/media/[0-9]*
-web/media/suit
-web/media/favicon
-web/media/tmp
-web/media/plugin
+web/media
 app/Resources/anime.db
 bin/doctrine
 bin/doctrine.php
 bin/composer
 bin/jsonlint
-# TODO #20 uncomment this after the Catalog bundle moved out
-#app/config/vendor_config.yml
-#app/config/routing.yml
-#app/bundles.php
+app/config/vendor_config.yml
+app/config/routing.yml
+app/bundles.php
+app/DoctrineMigrations
 
 # Services pid files #
 ######################

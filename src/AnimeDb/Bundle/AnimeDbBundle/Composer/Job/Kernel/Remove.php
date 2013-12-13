@@ -55,7 +55,7 @@ class Remove extends Job
     {
         if ($this->bundle) {
             $manipulator = new KernelManipulator();
-            $manipulator->removeBundle($bundle);
+            $manipulator->removeBundle($this->bundle);
         }
     }
 }

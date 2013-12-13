@@ -46,6 +46,7 @@ class Remove extends BaseConfig
     public function execute()
     {
         if ($this->bundle) {
+            $bundle = $this->bundle;
             $bundle = new $bundle();
             $this->manipulator->removeResource($bundle->getName());
         }

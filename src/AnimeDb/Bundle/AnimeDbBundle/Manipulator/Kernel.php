@@ -89,10 +89,12 @@ class Kernel
             $this->bundles = [];
             $content = file_get_contents(__DIR__.'/../../../../../app/bundles.php');
             $start = strpos($content, '[');
-            $this->bundles = substr($content, $start+1, strpos($content, ']')-$start-1);
-            $this->bundles = explode("\n", trim($this->bundles));
-            foreach ($this->bundles as $key => $bundle) {
-                $this->bundles[$key] = trim($bundle, ' ,');
+            $bundles = trim(substr($content, $start+1, strpos($content, ']')-$start-1));
+            if ($bundles) {
+                $this->bundles = explode("\n", $bundles);
+                foreach ($this->bundles as $key => $bundle) {
+                    $this->bundles[$key] = trim($bundle, ' ,');
+                }
             }
         }
         return $this->bundles;

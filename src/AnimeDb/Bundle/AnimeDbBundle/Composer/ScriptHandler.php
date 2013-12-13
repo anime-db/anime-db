@@ -27,6 +27,7 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel\Add as AddKernel;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel\Remove as RemoveKernel;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Add as AddRouting;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Remove as RemoveRouting;
+use Symfony\Component\Finder\Finder;
 
 /**
  * Composer script handler
@@ -132,6 +133,7 @@ class ScriptHandler
                 break;
             case 'uninstall':
                 $job = new DownMigrate($event->getOperation()->getPackage());
+                break;
             default:
                 return;
         }
@@ -224,18 +226,60 @@ class ScriptHandler
     }
 
     /**
-     * Global migrate
-     *
-     * TODO remove this after the Catalog and App bundle moved out
+     * Migrate all plugins to up
      *
      * @param \Composer\Script\CommandEvent $event
      */
-    public static function migrate(CommandEvent $event)
+    public static function migrateUp(CommandEvent $event)
     {
-        $cmd = 'doctrine:migrations:migrate --no-interaction';
-        if ($event->getIO()->isDecorated()) {
-            $cmd .= ' --ansi';
+        $have_migrations = false;
+        // find migrations
+        if (file_exists($dir = __DIR__.'/../../../../../app/DoctrineMigrations')) {
+            $have_migrations = (bool)Finder::create()
+                ->in($dir)
+                ->files()
+                ->name('/Version\d{14}.*\.php/')
+                ->count();
         }
-        self::getContainer()->executeCommand($cmd, null);
+
+        // migration up
+        if ($have_migrations) {
+            $cmd = 'doctrine:migrations:migrate --no-interaction';
+            if ($event->getIO()->isDecorated()) {
+                $cmd .= ' --ansi';
+            }
+            self::getContainer()->executeCommand($cmd, null);
+        }
+    }
+
+    /**
+     * Migrate all plugins to down
+     *
+     * @param \Composer\Script\CommandEvent $event
+     */
+    public static function migrateDown(CommandEvent $event)
+    {
+        $have_migrations = false;
+
+        // find migrations
+        if (file_exists($dir = __DIR__.'/../../../../../app/cache/dev/DoctrineMigrations/')) {
+            $have_migrations = (bool)Finder::create()
+                ->in($dir)
+                ->files()
+                ->name('/Version\d{14}.*\.php/')
+                ->count();
+        }
+
+        // migration down
+        if ($have_migrations) {
+            file_put_contents(
+                $dir.'migrations.yml',
+                "migrations_namespace: 'Application\Migrations'\nmigrations_directory: '".$dir."'"
+            );
+
+            self::getContainer()->executeCommand(
+                'doctrine:migrations:migrate --no-interaction --configuration='.$dir.'migrations.yml 0'
+            );
+        }
     }
 }
