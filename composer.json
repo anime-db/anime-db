@@ -44,7 +44,8 @@
         "composer/composer": "1.0.0-alpha7",
         "guzzle/guzzle": "3.7.*",
         "avalanche123/imagine-bundle": "v2.1",
-        "anime-db/catalog-bundle": "0.3.*"
+        "anime-db/catalog-bundle": "0.3.*",
+        "anime-db/world-art-filler-bundle": "0.1.*"
     },
     "scripts": {
         "post-install-cmd": [
