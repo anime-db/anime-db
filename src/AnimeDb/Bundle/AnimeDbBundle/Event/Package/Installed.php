@@ -33,7 +33,7 @@ class Installed extends Event
      *
      * @param \Composer\Package\Package $package
      */
-    public function __construct($package)
+    public function __construct(Package $package)
     {
         $this->package = $package;
     }

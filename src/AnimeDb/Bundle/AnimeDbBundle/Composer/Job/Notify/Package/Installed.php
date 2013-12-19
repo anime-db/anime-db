@@ -28,7 +28,9 @@ class Installed extends Job
      */
     public function execute()
     {
-        $this->getContainer()->getEventDispatcher()
-            ->dispatch(StoreEvents::INSTALLED, new Event($this->getPackage()));
+        $this->getContainer()->getEventDispatcher()->dispatch(
+            StoreEvents::INSTALLED,
+            new Event($this->getContainer()->getSimpleCopyOfPacket($this->getPackage()))
+        );
     }
 }

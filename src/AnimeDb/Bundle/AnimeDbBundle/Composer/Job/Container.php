@@ -187,4 +187,19 @@ class Container
 
         return null;
     }
+
+    /**
+     * Get a simple copy of the packet
+     *
+     * @param \Composer\Package\Package $package
+     *
+     * @return \Composer\Package\Package
+     */
+    public function getSimpleCopyOfPacket(Package $package)
+    {
+        $copy = new Package($package->getName(), $package->getVersion(), $package->getVersion());
+        $copy->setType($package->getType());
+        $copy->setExtra($package->getExtra());
+        return $copy;
+    }
 }
