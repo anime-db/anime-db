@@ -197,17 +197,9 @@ class Container
      */
     public function getSimpleCopyOfPacket(Package $package)
     {
-        $fields = [
-            'type',
-            'extra',
-            'releaseDate'
-        ];
         $copy = new Package($package->getName(), $package->getVersion(), $package->getVersion());
-        foreach ($fields as $field) {
-            $get = 'get'.ucfirst($field);
-            $set = 'set'.ucfirst($field);
-            $copy->$set($package->$get());
-        }
+        $copy->setType($package->getType());
+        $copy->setExtra($package->getExtra());
         return $copy;
     }
 }
