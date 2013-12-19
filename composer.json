@@ -47,7 +47,7 @@
         "anime-db/catalog-bundle": "0.3.*",
         "anime-db/world-art-filler-bundle": "0.1.*"
     },
-    "require": {
+    "require-dev": {
         "ext-fileinfo": "*"
     },
     "scripts": {
