@@ -187,4 +187,27 @@ class Container
 
         return null;
     }
+
+    /**
+     * Copy package
+     *
+     * @param \Composer\Package\Package $package
+     *
+     * @return \Composer\Package\Package
+     */
+    public function copyPackage(Package $package)
+    {
+        $fields = [
+            'type',
+            'extra',
+            'releaseDate'
+        ];
+        $copy = new Package($package->getName(), $package->getVersion(), $package->getVersion());
+        foreach ($fields as $field) {
+            $get = 'get'.ucfirst($field);
+            $set = 'set'.ucfirst($field);
+            $copy->$set($package->$get());
+        }
+        return $copy;
+    }
 }
