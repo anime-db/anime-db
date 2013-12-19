@@ -26,7 +26,7 @@
     },
     "require": {
         "php": ">=5.4.0",
-        "ext-pdo_sqlite": ">=1.0.1",
+        "ext-pdo_sqlite": "*",
         "symfony/symfony": "2.3.*",
         "doctrine/orm": ">=2.2.3,<2.4-dev",
         "doctrine/doctrine-bundle": "1.2.*",
@@ -46,6 +46,9 @@
         "avalanche123/imagine-bundle": "v2.1",
         "anime-db/catalog-bundle": "0.3.*",
         "anime-db/world-art-filler-bundle": "0.1.*"
+    },
+    "require": {
+        "ext-fileinfo": "*"
     },
     "scripts": {
         "post-install-cmd": [
