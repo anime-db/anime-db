@@ -28,7 +28,9 @@ class Removed extends Job
      */
     public function execute()
     {
-        $this->getContainer()->getEventDispatcher()
-            ->dispatch(StoreEvents::REMOVED, new Event($this->getPackage()));
+        $this->getContainer()->getEventDispatcher()->dispatch(
+            StoreEvents::REMOVED,
+            new Event($this->getContainer()->getSimpleCopyOfPacket($this->getPackage()))
+        );
     }
 }
