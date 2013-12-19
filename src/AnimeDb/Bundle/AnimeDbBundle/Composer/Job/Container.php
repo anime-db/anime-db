@@ -189,13 +189,13 @@ class Container
     }
 
     /**
-     * Copy package
+     * Get a simple copy of the packet
      *
      * @param \Composer\Package\Package $package
      *
      * @return \Composer\Package\Package
      */
-    public function copyPackage(Package $package)
+    public function getSimpleCopyOfPacket(Package $package)
     {
         $fields = [
             'type',
