@@ -28,7 +28,9 @@ class Updated extends Job
      */
     public function execute()
     {
-        $this->getContainer()->getEventDispatcher()
-            ->dispatch(StoreEvents::UPDATED, new Event($this->getPackage()));
+        $this->getContainer()->getEventDispatcher()->dispatch(
+            StoreEvents::UPDATED,
+            new Event($this->getContainer()->getSimpleCopyOfPacket($this->getPackage()))
+        );
     }
 }

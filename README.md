@@ -27,12 +27,11 @@ Installation of dependencies using Composer
 
     php composer.phar install
 
-After install the application you can uninstall Composer and use this command for update the application if you need:
+**Note:** After install the application you can uninstall Composer and use this command for update the application if you need:
 
     php bin/composer update
 
-**Note:** For Windows you can download PHP sourse from [php.net](http://windows.php.net/downloads/releases/php-5.4.21-Win32-VC9-x86.zip)
-and extract to folder bin/php for a quick start. Then you can install from the Composer, the following command:
+**Note:** For Windows you can download PHP archive from [php.net](http://windows.php.net/download/). You need extract the archive to folder `bin/php` for a quick start. Then you can install from the Composer, the following command:
 
     bin/php/php.exe composer.phar install
 
@@ -43,8 +42,8 @@ and extract to folder bin/php for a quick start. Then you can install from the C
 ### From Windows ###
 
 **Note:** The default is expected that PHP is installed on your computer.
-If you put the PHP in directory bin/php, you need edit startup-file of the application to specify the path to PHP.
-Open file bin/Run.vbs and set real path to PHP.
+If you put the PHP in directory `bin/php`, you need edit startup-file of the application to specify the path to PHP.
+Open file `bin/Run.vbs` and set real path to PHP.
 
     sPhp = sPath & "/bin/php/php.exe"
 

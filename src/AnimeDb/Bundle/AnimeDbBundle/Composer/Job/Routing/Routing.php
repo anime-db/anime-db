@@ -74,9 +74,10 @@ abstract class Routing extends Job
         }
 
         /* @var $file \SplFileInfo */
+        $prefix = DIRECTORY_SEPARATOR.'Resources'.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR;
         foreach ($finder as $file) {
-            $start = strrpos($file->getPathname(), '/Resources/config/');
-            return substr($file->getPathname(), $start+strlen('/Resources/config/'));
+            $start = strrpos($file->getPathname(), $prefix);
+            return substr($file->getPathname(), $start+strlen($prefix));
         }
         return null;
     }
