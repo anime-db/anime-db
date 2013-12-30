@@ -43,31 +43,31 @@ Installation of dependencies using Composer
 
 **Note:** The default is expected that PHP is installed on your computer.
 If you put the PHP in directory `bin/php`, you need edit startup-file of the application to specify the path to PHP.
-Open file `bin/Run.vbs` and set real path to PHP.
+Open file `AnimeDB_Run.vbs` and set real path to PHP.
 
     sPhp = sPath & "/bin/php/php.exe"
 
 To run the application, call the script
 
-    bin/Run.vbs
+    AnimeDB_Run.vbs
 
 To stop the application, call the script
 
-    bin/Stop.vbs
+    AnimeDB_Stop.vbs
 
 ### From Linux ###
 
 To run the application, call the script
 
-    bin/service start
+    AnimeDB start
 
 To stop the application, call the script
 
-    bin/service stop
+    AnimeDB stop
 
 To restart the application, call the script
 
-    bin/service restart
+    AnimeDB restart
 
 ### Open application ###
 
@@ -82,7 +82,7 @@ where **IP_ADDRES** is the IP address of the computer on which the application i
 
 To start the application as a service, you need edit startup-file of the application to specify the path to it
 
-    vim bin/service
+    vim AnimeDB
 
 Set real path to application
 
@@ -90,7 +90,7 @@ Set real path to application
 
 Create a symbolic link on service
 
-    ln -s /path/to/anime-db/bin/service /etc/init.d/anime-db
+    ln -s /path/to/anime-db/AnimeDB /etc/init.d/anime-db
 
 Run service
 
