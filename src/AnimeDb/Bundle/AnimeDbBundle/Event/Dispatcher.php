@@ -11,7 +11,7 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Event;
 
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Finder\Finder;
 
@@ -33,7 +33,7 @@ class Dispatcher
     /**
      * Dispatcher driver
      *
-     * @var \Symfony\Component\EventDispatcher\EventDispatcher
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
      */
     protected $driver;
 
@@ -83,9 +83,9 @@ class Dispatcher
     /**
      * Set dispatcher driver
      *
-     * @param \Symfony\Component\EventDispatcher\EventDispatcher $driver
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $driver
      */
-    public function setDispatcherDriver(EventDispatcher $driver)
+    public function setDispatcherDriver(EventDispatcherInterface $driver)
     {
         $this->driver = $driver;
     }
