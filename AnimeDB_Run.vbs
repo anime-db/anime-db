@@ -7,7 +7,7 @@ sAddr = "0.0.0.0"
 ' Port on the application server
 sPort = "56780"
 ' Path to the directory with the application
-sPath = oFileSystem.GetAbsolutePathName("..")
+sPath = oFileSystem.GetAbsolutePathName(".")
 ' Path to php.exe
 sPhp = "php"
 

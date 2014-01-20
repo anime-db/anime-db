@@ -3,7 +3,7 @@ dim sPath, sSpid, sElpid, sTspid
 set oFileSystem = WScript.CreateObject("Scripting.FileSystemObject")
 
 ' Path to the directory with the application
-sPath = oFileSystem.GetAbsolutePathName("..")
+sPath = oFileSystem.GetAbsolutePathName(".")
 
 ' Pid files
 sSpid  = sPath & "/bin/.spid"

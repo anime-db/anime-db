@@ -155,7 +155,11 @@ class UpdateCommand extends ContainerAwareCommand
         if (file_exists($lock_file)) {
             @unlink($lock_file);
         }
-        $install = Installer::create($io, $composer)->setUpdate(true);
+        $install = Installer::create($io, $composer)
+            ->setDevMode(false)
+            ->setPreferDist(true)
+            ->setUpdate(true);
+
         if ($install->run()) {
             $io->write('<info>Update requirements has been completed</info>');
         } else {
