@@ -17,6 +17,11 @@ if (PHP_SAPI != 'cli-server') {
     exit('This script can be run from the CLI-server only.');
 }
 
+// immediately return the update log #88
+if ($_SERVER['SCRIPT_NAME'] == '/update.log') {
+    return false;
+}
+
 
 // get request
 $loader = require_once __DIR__.'/bootstrap.php.cache';
