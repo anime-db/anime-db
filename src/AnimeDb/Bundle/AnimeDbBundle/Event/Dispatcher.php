@@ -10,7 +10,6 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Event;
 
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Finder\Finder;
@@ -24,26 +23,11 @@ use Symfony\Component\Finder\Finder;
 class Dispatcher
 {
     /**
-     * Filesystem
-     *
-     * @var \Symfony\Component\Filesystem\Filesystem
-     */
-    protected $fs;
-
-    /**
      * Dispatcher driver
      *
      * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
      */
     protected $driver;
-
-    /**
-     * Construct
-     */
-    public function __construct()
-    {
-        $this->fs = new Filesystem();
-    }
 
     /**
      * Store the event and dispatch it later
@@ -54,8 +38,11 @@ class Dispatcher
     public function dispatch($event_name, Event $event)
     {
         $dir = __DIR__.'/../../../../../app/cache/dev/events/'.$event_name.'/';
-        $this->fs->mkdir($dir);
-        file_put_contents($dir.microtime(true).'.meta', serialize($event));
+        if (!file_exists($dir)) {
+            mkdir($dir, 0777, true);
+        }
+        $event = serialize($event);
+        file_put_contents($dir.md5($event).'.meta', $event);
     }
 
     /**
