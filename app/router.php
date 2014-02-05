@@ -9,6 +9,7 @@
  */
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\ClassLoader\ApcClassLoader;
 
 
@@ -53,18 +54,17 @@ if ($request->server->get('HTTP_CLIENT_IP') ||
     exit('You are not allowed to access this application.');
 }
 
-// give static or run for dev
-if (is_file(__DIR__.'/../web'.$request->getScriptName())) {
+// skip dev
+if ($request->getBaseUrl() == '/app_dev.php') {
     return false;
 }
 
 
 // Use APC for autoloading to improve performance
-// Change 'sf2' by the prefix you want in order to prevent key conflict with another application
-/*
-$loader = new ApcClassLoader('sf2', $loader);
-$loader->register(true);
-*/
+if (extension_loaded('apc')) {
+    $loader = new ApcClassLoader('sf2', $loader);
+    $loader->register(true);
+}
 
 require_once __DIR__.'/AppKernel.php';
 require_once __DIR__.'/AppCache.php';
@@ -72,6 +72,33 @@ require_once __DIR__.'/AppCache.php';
 $kernel = new AppKernel('prod', false);
 $kernel->loadClassCache();
 $kernel = new AppCache($kernel);
-$response = $kernel->handle($request);
+
+// give static or handle request
+if (is_file($file = __DIR__.'/../web'.$request->getScriptName())) {
+    $response = new Response();
+    $response
+        ->setPublic()
+        ->setEtag(md5_file($file))
+        ->setLastModified(new \DateTime(date('r', filemtime($file))));
+
+    // response was not modified for this request
+    if (!$response->isNotModified($request)) {
+        $response->setContent(file_get_contents($file));
+    }
+
+    // set content type
+    $mimes = [
+        'css' => 'text/css',
+        'js' => 'text/javascript'
+    ];
+    if (isset($mimes[($ext = pathinfo($request->getScriptName(), PATHINFO_EXTENSION))])) {
+        $response->headers->set('Content-Type', $mimes[$ext]);
+    } else {
+        $response->headers->set('Content-Type', mime_content_type($file));
+    }
+} else {
+    $response = $kernel->handle($request);
+}
+
 $response->send();
 $kernel->terminate($request, $response);
