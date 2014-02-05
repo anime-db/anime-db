@@ -50,6 +50,9 @@
     "require-dev": {
         "ext-fileinfo": "*"
     },
+    "suggest": {
+        "ext-apc": "Allows use APC for autoloading to improve performance"
+    },
     "scripts": {
         "post-install-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
