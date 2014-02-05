@@ -19,24 +19,34 @@ $loader = require_once __DIR__.'/../app/bootstrap.php.cache';
 require_once __DIR__.'/../app/AppKernel.php';
 
 $kernel = new AppKernel('dev', true);
-//$kernel->loadClassCache();
 $request = Request::createFromGlobals();
 
-// give static or run for dev
+// give static or handle request
 if (is_file($file = __DIR__.$request->getPathInfo())) {
     $response = new Response();
     $response
         ->setPublic()
         ->setEtag(md5_file($file))
-        ->setLastModified(new \DateTime(date('r', filemtime($file))))
-        ->headers->set('Content-Type', mime_content_type($file));
+        ->setLastModified(new \DateTime(date('r', filemtime($file))));
 
     // response was not modified for this request
     if (!$response->isNotModified($request)) {
         $response->setContent(file_get_contents($file));
     }
+
+    // set content type
+    $mimes = [
+        'css' => 'text/css',
+        'js' => 'text/javascript'
+    ];
+    if (isset($mimes[($ext = pathinfo($request->getPathInfo(), PATHINFO_EXTENSION))])) {
+        $response->headers->set('Content-Type', $mimes[$ext]);
+    } else {
+        $response->headers->set('Content-Type', mime_content_type($file));
+    }
 } else {
     $response = $kernel->handle($request);
 }
+
 $response->send();
 $kernel->terminate($request, $response);
