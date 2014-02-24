@@ -43,11 +43,19 @@ case "$1" in
         stop_server
         stop_task_scheduler
 
+        # clear cache if app is moved
+        if [ -f ${path}/bin/.pwd  ] && [ `pwd` != `cat ${path}/bin/.pwd` ]
+        then
+            ${path}/app/console cache:clear --env=prod --no-debug
+        fi
+        pwd > ${path}/bin/.pwd
+
         # run server
-        php -S ${addr}:${port} -t ${path}/web ${path}/app/router.php > /dev/null 2> /dev/null &
+        php -S ${addr}:${port} -t ${path}/web ${path}/app/router.php >/dev/null 2>$1 &
         echo $! > ${path}/bin/.spid
+
         # run task scheduler
-        ${path}/app/console animedb:task-scheduler > /dev/null 2> /dev/null &
+        ${path}/app/console animedb:task-scheduler >/dev/null 2>$1 &
         echo $! > ${path}/bin/.tspid
         ;;
     *)
