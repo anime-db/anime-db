@@ -9,15 +9,35 @@ sPort = "56780"
 ' Path to the directory with the application
 sPath = oFileSystem.GetAbsolutePathName(".")
 ' Path to php.exe
-sPhp = "php"
+sPhp = sPath & "/bin/php/php.exe"
 
 ' Pid files
 sSpid  = sPath & "/bin/.spid"
 sTspid = sPath & "/bin/.tspid"
+sPwd = sPath & "/bin/.pwd"
 
 ' Commands to run server and Task Scheduler
 sServer        = chr(34) & sPhp & chr(34) & " -S " & sAddr & ":" & sPort & " -t " & chr(34) & sPath & "/web" & chr(34) & " " & chr(34) & sPath & "/app/router.php" & chr(34) & " >nul 2>&1"
 sTaskScheduler = chr(34) & sPhp & chr(34) & " -f " & chr(34) & sPath & "/app/console" & chr(34) & " animedb:task-scheduler"
+sClearCache    = chr(34) & sPhp & chr(34) & " -f " & chr(34) & sPath & "/app/console" & chr(34) & " cache:clear --env=prod --no-debug"
+
+' Clear cache if app is moved
+if oFileSystem.FileExists(sPwd) then
+    ' get old pwd
+    set oTextStream = oFileSystem.OpenTextFile(sPwd, 1, false)
+    sOldPwd = oTextStream.ReadAll()
+    oTextStream.Close
+	' clear cache
+    if sOldPwd <> sPath then
+		Set WshShell = WScript.CreateObject("WScript.Shell")
+		Return = WshShell.Run(sClearCache, 0, true)
+    end if
+end if
+
+' put pwd into file
+set oTextStream = WScript.CreateObject("Scripting.FileSystemObject").CreateTextFile(sPwd)
+oTextStream.Write(sPath)
+oTextStream.Close
 
 ' Stop Server if running
 if oFileSystem.FileExists(sSpid) then
@@ -59,7 +79,7 @@ function StartProc(sProgramToRun, sPidFile)
     Set oConfig = GetObject("WinMgmts:").get("Win32_ProcessStartup").SpawnInstance_
     oConfig.ShowWindow = 0
     StartProc = GetObject("WinMgmts:Win32_Process").Create(sProgramToRun, null, oConfig, iProcessID)
-    ' put in to file pid
+    ' put pid into file
     set oTextStream = WScript.CreateObject("Scripting.FileSystemObject").CreateTextFile(sPidFile)
     oTextStream.Write(iProcessID)
     oTextStream.Close
