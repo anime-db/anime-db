@@ -51,11 +51,11 @@ case "$1" in
         pwd > ${path}/bin/.pwd
 
         # run server
-        php -S ${addr}:${port} -t ${path}/web ${path}/app/router.php >/dev/null 2>$1 &
+        php -S ${addr}:${port} -t ${path}/web ${path}/app/router.php >/dev/null 2>&1 &
         echo $! > ${path}/bin/.spid
 
         # run task scheduler
-        ${path}/app/console animedb:task-scheduler >/dev/null 2>$1 &
+        ${path}/app/console animedb:task-scheduler >/dev/null 2>&1 &
         echo $! > ${path}/bin/.tspid
         ;;
     *)
