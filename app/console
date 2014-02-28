@@ -12,11 +12,18 @@ require_once __DIR__.'/AppKernel.php';
 
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use AnimeDb\Bundle\AnimeDbBundle\Console\Output\Windows;
 
 $input = new ArgvInput();
 $env = $input->getParameterOption(array('--env', '-e'), getenv('SYMFONY_ENV') ?: 'dev');
 $debug = getenv('SYMFONY_DEBUG') !== '0' && !$input->hasParameterOption(array('--no-debug', '')) && $env !== 'prod';
 
+$output = new ConsoleOutput();
+if (defined('PHP_WINDOWS_VERSION_BUILD')) {
+	$output = new Windows($output);
+}
+
 $kernel = new AppKernel($env, $debug);
 $application = new Application($kernel);
-$application->run($input);
+$application->run($input, $output);

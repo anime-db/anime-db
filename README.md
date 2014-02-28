@@ -1,6 +1,10 @@
-<img src="http://anime-db.org/images/logo.jpg" /><br />
-[![Build Status](https://travis-ci.org/anime-db/anime-db.png)](https://travis-ci.org/anime-db/anime-db)<br />
-<img src="http://www.php.net/images/logos/php5-power-micro.png" />
+<img src="http://anime-db.org/bundles/animedboffsite/images/logo.jpg" /><br />
+
+[![Latest Stable Version](https://poser.pugx.org/anime-db/anime-db/v/stable.png)](https://packagist.org/packages/anime-db/anime-db)
+[![Latest Unstable Version](https://poser.pugx.org/anime-db/anime-db/v/unstable.png)](https://packagist.org/packages/anime-db/anime-db)
+[![Build Status](https://travis-ci.org/anime-db/anime-db.png)](https://travis-ci.org/anime-db/anime-db)
+[![Total Downloads](https://poser.pugx.org/anime-db/anime-db/downloads.png)](https://packagist.org/packages/anime-db/anime-db)
+[![License](https://poser.pugx.org/anime-db/anime-db/license.png)](https://packagist.org/packages/anime-db/anime-db)
 
 # Anime DB #
 
@@ -33,7 +37,7 @@ Installation of dependencies using Composer
 
 **Note:** For Windows you can download PHP archive from [php.net](http://windows.php.net/download/). You need extract the archive to folder `bin/php` for a quick start. Then you can install from the Composer, the following command:
 
-    bin/php/php.exe composer.phar install
+    bin/php/php.exe composer.phar install --no-dev --prefer-dist
 
 **Note:** Do not forget list of extensions specified in the depending section of this document
 
