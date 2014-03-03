@@ -5,7 +5,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: anime_db.update_itself.downloaded, method: onAppDownloadedMergeComposerRequirements }
             - { name: kernel.event_listener, event: anime_db.update_itself.downloaded, method: onAppDownloadedMergeConfigs }
-            - { name: kernel.event_listener, event: anime_db.update_itself.downloaded, method: onAppDownloadedMergeAppKernalBundles }
             - { name: kernel.event_listener, event: anime_db.update_itself.downloaded, method: onAppDownloadedMergeBinRun }
             - { name: kernel.event_listener, event: anime_db.update_itself.downloaded, method: onAppDownloadedMergeBinService }
 

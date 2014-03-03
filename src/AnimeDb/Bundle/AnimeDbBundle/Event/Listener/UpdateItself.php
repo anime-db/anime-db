@@ -40,7 +40,7 @@ class UpdateItself
      *
      * @var string
      */
-    const DEFAULT_PHP = '"php"';
+    const DEFAULT_PHP = 'sPath & "/bin/php/php.exe"';
 
     /**
      * Default path to the directory with the application
@@ -107,32 +107,7 @@ class UpdateItself
     }
 
     /**
-     * Add requirements in AppKernal from old version
-     *
-     * @param \AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded $event
-     */
-    public function onAppDownloadedMergeAppKernalBundles(Downloaded $event)
-    {
-        $old_kernel = $this->root_dir.'app/AppKernel.php';
-        $new_kernel = $event->getPath().'/app/AppKernel.php';
-        if (md5_file($new_kernel) != md5_file($old_kernel)) {
-            // get list of bundles
-            $new_bundles = $this->getBundles($body = file_get_contents($new_kernel));
-            $old_bundles = $this->getBundles(file_get_contents($old_kernel));
-
-            if (array_intersect($new_bundles, $old_bundles) != $new_bundles) {
-                $new_bundles = array_unique(array_merge($old_bundles, $new_bundles));
-                // write all bundles into new AppKernel
-                $start = strpos($body, '$bundles = [')+strlen('$bundles = [');
-                $end = strpos($body, '];', $start);
-                $new_bundles = "\n            ".implode(",\n            ", $new_bundles)."\n        ";
-                file_put_contents($new_kernel, substr($body, 0, $start).$new_bundles.substr($body, $end));
-            }
-        }
-    }
-
-    /**
-     * Merge bin Run.vbs commands
+     * Merge bin AnimeDB_Run.vbs commands
      *
      * @param \AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded $event
      */
@@ -158,7 +133,7 @@ class UpdateItself
     }
 
     /**
-     * Merge bin service commands
+     * Merge bin AnimeDB commands
      *
      * @param \AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded $event
      */
@@ -204,24 +179,5 @@ class UpdateItself
             $target = str_replace(sprintf($param, $default), sprintf($param, $value), $target);
         }
         return $target;
-    }
-
-    /**
-     * Get list of bundles from app kernel source
-     *
-     * @param string $kernel
-     *
-     * @return array
-     */
-    protected function getBundles($kernel)
-    {
-        $start = strpos($kernel, '$bundles = array(')+strlen('$bundles = array(');
-        $end = strpos($kernel, ');', $start);
-        $bundles = substr($kernel, $start, $end-$start);
-        $bundles = explode("\n", $bundles);
-        foreach ($bundles as $key => $bundle) {
-            $bundles[$key] = trim($bundle, " ,");
-        }
-        return array_filter($bundles, 'trim');
     }
 }
