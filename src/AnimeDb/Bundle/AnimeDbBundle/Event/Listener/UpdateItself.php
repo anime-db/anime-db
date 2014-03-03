@@ -118,8 +118,11 @@ class UpdateItself
      */
     public function onAppDownloadedMergeBinRun(Downloaded $event)
     {
-        $old_file = $this->root_dir.'bin/Run.vbs';
-        $new_file = $event->getPath().'/bin/Run.vbs';
+        $old_file = $this->root_dir.'AnimeDB_Run.vbs';
+        if (!file_exists($old_file)) { // old name
+            $old_file = $this->root_dir.'bin/Run.vbs';
+        }
+        $new_file = $event->getPath().'/AnimeDB_Run.vbs';
         if (md5_file($old_file) != md5_file($new_file)) {
             $old_body = file_get_contents($old_file);
             $new_body = $tmp_body = file_get_contents($new_file);
@@ -141,8 +144,11 @@ class UpdateItself
      */
     public function onAppDownloadedMergeBinService(Downloaded $event)
     {
-        $old_file = $this->root_dir.'bin/service';
-        $new_file = $event->getPath().'/bin/service';
+        $old_file = $this->root_dir.'AnimeDB';
+        if (!file_exists($old_file)) { // old name
+            $old_file = $this->root_dir.'bin/service';
+        }
+        $new_file = $event->getPath().'/AnimeDB';
         if (md5_file($old_file) != md5_file($new_file)) {
             $old_body = file_get_contents($old_file);
             $new_body = $tmp_body = file_get_contents($new_file);
