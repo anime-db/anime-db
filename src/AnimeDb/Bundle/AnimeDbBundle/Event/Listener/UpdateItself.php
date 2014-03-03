@@ -87,6 +87,26 @@ class UpdateItself
     }
 
     /**
+     * Copy configs from old version
+     *
+     * @param \AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded $event
+     */
+    public function onAppDownloadedMergeConfigs(Downloaded $event)
+    {
+        $files = [
+            '/app/config/vendor_config.yml',
+            '/app/config/routing.yml',
+            '/app/bundles.php'
+        ];
+
+        foreach ($files as $file) {
+            if (file_exists($this->root_dir.$file)) {
+                copy($this->root_dir.$file, $event->getPath().$file);
+            }
+        }
+    }
+
+    /**
      * Add requirements in AppKernal from old version
      *
      * @param \AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded $event
