@@ -190,22 +190,20 @@ class UpdateCommand extends ContainerAwareCommand
     protected function rewriting($from)
     {
         $fs = new Filesystem();
-        $target = realpath($this->getContainer()->getParameter('kernel.root_dir').'/../');
         // ignore errors during the removal of the old application
         try {
-            $fs->remove($target.'/src');
             $finder = Finder::create()
                 ->files()
                 ->ignoreUnreadableDirs()
-                ->in($target.'/app')
-                ->notPath('config/parameters.yml')
-                ->notPath('Resources/anime.db')
+                ->in($target.'/src')
+                ->in($this->getContainer()->getParameter('kernel.root_dir'))
+                ->notPath('Resources/'.$this->getContainer()->getParameter('database_path'))
                 ->notPath('DoctrineMigrations');
             $fs->remove($finder);
         } catch (\Exception $e) {}
 
         // copy new version
-        $this->copy($from, $target);
+        $this->copy($from, $this->getContainer()->getParameter('kernel.root_dir').'/../');
 
         // remove downloaded files
         $fs->remove($from);
