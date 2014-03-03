@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\ClassLoader\ApcClassLoader;
 
-
 // run not in cli-server
 if (PHP_SAPI != 'cli-server') {
     exit('This script can be run from the CLI-server only.');
@@ -79,7 +78,8 @@ if (is_file($file = __DIR__.'/../web'.$request->getScriptName())) {
     $response
         ->setPublic()
         ->setEtag(md5_file($file))
-        ->setLastModified(new \DateTime(date('r', filemtime($file))));
+        ->setLastModified(new \DateTime('@'.filemtime($file)))
+        ->headers->addCacheControlDirective('must-revalidate', true);
 
     // response was not modified for this request
     if (!$response->isNotModified($request)) {

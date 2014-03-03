@@ -27,7 +27,8 @@ if (is_file($file = __DIR__.$request->getPathInfo())) {
     $response
         ->setPublic()
         ->setEtag(md5_file($file))
-        ->setLastModified(new \DateTime(date('r', filemtime($file))));
+        ->setLastModified(new \DateTime('@'.filemtime($file)))
+        ->headers->addCacheControlDirective('must-revalidate', true);
 
     // response was not modified for this request
     if (!$response->isNotModified($request)) {
