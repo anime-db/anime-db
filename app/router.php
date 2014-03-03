@@ -78,6 +78,7 @@ if (is_file($file = __DIR__.'/../web'.$request->getScriptName())) {
     $response
         ->setPublic()
         ->setEtag(md5_file($file))
+        ->setExpires(new \DateTime('@'.(time()+2592000))) // updates interval of 30 days
         ->setLastModified(new \DateTime('@'.filemtime($file)))
         ->headers->addCacheControlDirective('must-revalidate', true);
 
