@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\ClassLoader\ApcClassLoader;
 
-
 // run not in cli-server
 if (PHP_SAPI != 'cli-server') {
     exit('This script can be run from the CLI-server only.');
@@ -76,10 +75,13 @@ $kernel = new AppCache($kernel);
 // give static or handle request
 if (is_file($file = __DIR__.'/../web'.$request->getScriptName())) {
     $response = new Response();
+    // caching
     $response
         ->setPublic()
         ->setEtag(md5_file($file))
-        ->setLastModified(new \DateTime(date('r', filemtime($file))));
+        ->setExpires(new \DateTime('@'.(time()+2592000))) // updates interval of 30 days
+        ->setLastModified(new \DateTime('@'.filemtime($file)))
+        ->headers->addCacheControlDirective('must-revalidate', true);
 
     // response was not modified for this request
     if (!$response->isNotModified($request)) {
@@ -95,6 +97,18 @@ if (is_file($file = __DIR__.'/../web'.$request->getScriptName())) {
         $response->headers->set('Content-Type', $mimes[$ext]);
     } else {
         $response->headers->set('Content-Type', mime_content_type($file));
+    }
+
+    // compress response
+    if (($encoding = $request->headers->get('Accept-Encoding')) && $response->getContent()) {
+        if (stripos($encoding, 'gzip') !== false) {
+            $response->setContent(gzencode($response->getContent(), 9, FORCE_GZIP));
+            $response->headers->set('Content-Encoding', 'gzip');
+
+        } elseif (stripos($encoding, 'deflate') !== false) {
+            $response->setContent(gzencode($response->getContent(), 9, FORCE_DEFLATE));
+            $response->headers->set('Content-Encoding', 'deflate');
+        }
     }
 } else {
     $response = $kernel->handle($request);

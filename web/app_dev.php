@@ -23,16 +23,7 @@ $request = Request::createFromGlobals();
 
 // give static or handle request
 if (is_file($file = __DIR__.$request->getPathInfo())) {
-    $response = new Response();
-    $response
-        ->setPublic()
-        ->setEtag(md5_file($file))
-        ->setLastModified(new \DateTime(date('r', filemtime($file))));
-
-    // response was not modified for this request
-    if (!$response->isNotModified($request)) {
-        $response->setContent(file_get_contents($file));
-    }
+    $response = new Response(file_get_contents($file));
 
     // set content type
     $mimes = [

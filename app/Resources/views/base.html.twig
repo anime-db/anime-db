@@ -9,10 +9,10 @@
 		{% endif %}
 		<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 		{% block stylesheets %}{% endblock %}
-		{% block javascripts %}{% endblock %}
 		{% block headers %}{% endblock %}
 	</head>
 	<body{% if body_class is defined %} class="{{ body_class }}"{% endif %}>
 		{% block body %}{% endblock %}
+		{% block javascripts %}{% endblock %}
 	</body>
 </html>
