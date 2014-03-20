@@ -63,15 +63,15 @@ To stop the application, call the script
 
 To run the application, call the script
 
-    AnimeDB start
+    ./AnimeDB start
 
 To stop the application, call the script
 
-    AnimeDB stop
+    ./AnimeDB stop
 
 To restart the application, call the script
 
-    AnimeDB restart
+    ./AnimeDB restart
 
 ### Open application ###
 
@@ -94,15 +94,15 @@ Set real path to application
 
 Create a symbolic link on service
 
-    ln -s /path/to/anime-db/AnimeDB /etc/init.d/anime-db
+    ln -s /path/to/anime-db/AnimeDB /etc/init.d/AnimeDB
 
 Run service
 
-    service anime-db start
+    service AnimeDB start
 
 For the application is launched after the computer start, run the command
 
-    update-rc.d anime-db defaults
+    update-rc.d AnimeDB defaults
 
 ## Depending ##
 
