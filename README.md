@@ -17,6 +17,10 @@ As of PHP 5.4.0
 The official source code for this application can be retrieved from<br />
 <http://github.com/anime-db/anime-db>
 
+## Documentation ##
+
+Recommend that you read the [user guide](http://anime-db.org/en/guide/).
+
 ## Installation ##
 
 Clone this repository to fetch the latest version of this application
