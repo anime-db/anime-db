@@ -49,19 +49,15 @@ Installation of dependencies using Composer
 
 ### From Windows ###
 
-**Note:** The default is expected that PHP is installed on your computer.
-If you put the PHP in directory `bin/php`, you need edit startup-file of the application to specify the path to PHP.
-Open file `AnimeDB_Run.vbs` and set real path to PHP.
+**Note:** The default is expected that PHP is installed on directory `bin/php`.
+If you put the PHP is installed on your computer, you need edit config file to specify the path to PHP.
+Open file `config.ini` and set real path to PHP.
 
-    sPhp = sPath & "/bin/php/php.exe"
+    php=php
 
-To run the application, call the script
+To run the application, call programm
 
-    AnimeDB_Run.vbs
-
-To stop the application, call the script
-
-    AnimeDB_Stop.vbs
+    AnimeDB.exe
 
 ### From Linux ###
 
