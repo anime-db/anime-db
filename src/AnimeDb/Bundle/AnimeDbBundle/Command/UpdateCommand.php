@@ -195,7 +195,7 @@ class UpdateCommand extends ContainerAwareCommand
             $finder = Finder::create()
                 ->files()
                 ->ignoreUnreadableDirs()
-                ->in($target.'/src')
+                ->in($this->getContainer()->getParameter('kernel.root_dir').'/../src')
                 ->in($this->getContainer()->getParameter('kernel.root_dir'))
                 ->notPath('Resources/'.$this->getContainer()->getParameter('database_path'))
                 ->notPath('DoctrineMigrations');

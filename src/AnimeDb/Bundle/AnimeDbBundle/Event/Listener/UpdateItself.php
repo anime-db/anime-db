@@ -40,7 +40,7 @@ class UpdateItself
      *
      * @var string
      */
-    const DEFAULT_PHP = 'sPath & "/bin/php/php.exe"';
+    const DEFAULT_PHP = './bin\\php\\php.exe';
 
     /**
      * Default path to the directory with the application
@@ -48,6 +48,13 @@ class UpdateItself
      * @var string
      */
     const DEFAULT_PATH = '.';
+
+    /**
+     * Link to monitor archive
+     *
+     * @var string
+     */
+    const MONITOR = 'http://anime-db.org/download/monitor_1.0.zip';
 
     /**
      * Root dir
@@ -94,6 +101,7 @@ class UpdateItself
     public function onAppDownloadedMergeConfigs(Downloaded $event)
     {
         $files = [
+            '/app/config/parameters.yml',
             '/app/config/vendor_config.yml',
             '/app/config/routing.yml',
             '/app/bundles.php'
@@ -113,21 +121,40 @@ class UpdateItself
      */
     public function onAppDownloadedMergeBinRun(Downloaded $event)
     {
-        $old_file = $this->root_dir.'AnimeDB_Run.vbs';
-        if (!file_exists($old_file)) { // old name
-            $old_file = $this->root_dir.'bin/Run.vbs';
-        }
-        $new_file = $event->getPath().'/AnimeDB_Run.vbs';
-        if (md5_file($old_file) != md5_file($new_file)) {
-            $old_body = file_get_contents($old_file);
-            $new_body = $tmp_body = file_get_contents($new_file);
+        // remove startup files
+        @unlink($this->root_dir.'bin/AnimeDB_Run.vbs');
+        @unlink($this->root_dir.'bin/AnimeDB_Stop.vbs');
+        @unlink($this->root_dir.'AnimeDB_Run.vbs');
+        @unlink($this->root_dir.'AnimeDB_Stop.vbs');
 
-            $new_body = $this->copyParam($old_body, $new_body, 'sAddr = "%s"', self::DEFAULT_ADDRESS);
-            $new_body = $this->copyParam($old_body, $new_body, 'sPort = "%s"', self::DEFAULT_PORT);
-            $new_body = $this->copyParam($old_body, $new_body, "sPhp = %s\n", self::DEFAULT_PHP);
+        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
+            // download monitor if need
+            if (!file_exists($this->root_dir.'/config.ini')) {
+                $monitor = tempnam(sys_get_temp_dir(), 'monitor');
+                file_put_contents($monitor, fopen(self::MONITOR, 'r'));
+                // unzip
+                $zip = new \ZipArchive();
+                if ($zip->open($monitor) !== true) {
+                    throw new \RuntimeException('Failed unzip monitor');
+                }
+                $zip->extractTo($event->getPath());
+                $zip->close();
+            }
 
-            if ($new_body != $tmp_body) {
-                file_put_contents($new_file, $new_body);
+            // copy params if need
+            $old_file = $this->root_dir.'/config.ini';
+            $new_file = $event->getPath().'/config.ini';
+            if (file_exists($old_file) && md5_file($old_file) != md5_file($new_file)) {
+                $old_body = file_get_contents($old_file);
+                $new_body = $tmp_body = file_get_contents($new_file);
+
+                $new_body = $this->copyParam($old_body, $new_body, "addr=%s\n", self::DEFAULT_ADDRESS);
+                $new_body = $this->copyParam($old_body, $new_body, "port=%s\n", self::DEFAULT_PORT);
+                $new_body = $this->copyParam($old_body, $new_body, "php=%s\n", self::DEFAULT_PHP);
+
+                if ($new_body != $tmp_body) {
+                    file_put_contents($new_file, $new_body);
+                }
             }
         }
     }
