@@ -282,4 +282,16 @@ class ScriptHandler
             );
         }
     }
+
+    /**
+     * Сreate a backup of the database
+     *
+     * @param \Composer\Script\CommandEvent $event
+     */
+    public static function backupDB(CommandEvent $event) {
+        $db = __DIR__.'/../../../../../app/Resources/anime.db';
+        if (file_exists($db)) {
+            copy($db, $db.'.bk');
+        }
+    }
 }

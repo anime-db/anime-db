@@ -6,6 +6,7 @@ composer.lock
 bin
 web/media
 app/Resources/anime.db
+app/Resources/anime.db.bk
 app/config/vendor_config.yml
 app/config/routing.yml
 app/bundles.php
