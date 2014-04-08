@@ -101,6 +101,7 @@ class UpdateItself
     public function onAppDownloadedMergeConfigs(Downloaded $event)
     {
         $files = [
+            '/app/config/parameters.yml',
             '/app/config/vendor_config.yml',
             '/app/config/routing.yml',
             '/app/bundles.php'
