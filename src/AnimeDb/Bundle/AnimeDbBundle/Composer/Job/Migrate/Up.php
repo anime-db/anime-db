@@ -52,16 +52,28 @@ class Up extends BaseMigrate
 namespace Application\Migrations;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\DBAL\Schema\Schema;
 use '.$config['namespace'].'\\'.$version.' as Migration;
 
 require_once __DIR__."/../../vendor/'.$this->getPackage()->getName().'/'.$config['directory'].'/'.$file->getBasename().'";
 
-class '.$version.' extends AbstractMigration
+class '.$version.' extends AbstractMigration implements ContainerAwareInterface
 {
+    protected $container;
+
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
+
     public function up(Schema $schema)
     {
         $migration = new Migration($this->version);
+        if ($migration instanceof ContainerAwareInterface) {
+            $migration->setContainer($this->container);
+        }
         $migration->up($schema);
     }
 

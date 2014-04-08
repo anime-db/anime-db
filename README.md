@@ -17,6 +17,10 @@ As of PHP 5.4.0
 The official source code for this application can be retrieved from<br />
 <http://github.com/anime-db/anime-db>
 
+## Documentation ##
+
+Recommend that you read the [user guide](http://anime-db.org/en/guide/).
+
 ## Installation ##
 
 Clone this repository to fetch the latest version of this application
@@ -45,33 +49,29 @@ Installation of dependencies using Composer
 
 ### From Windows ###
 
-**Note:** The default is expected that PHP is installed on your computer.
-If you put the PHP in directory `bin/php`, you need edit startup-file of the application to specify the path to PHP.
-Open file `AnimeDB_Run.vbs` and set real path to PHP.
+**Note:** The default is expected that PHP is installed on directory `bin/php`.
+If you put the PHP is installed on your computer, you need edit config file to specify the path to PHP.
+Open file `config.ini` and set real path to PHP.
 
-    sPhp = sPath & "/bin/php/php.exe"
+    php=php
 
-To run the application, call the script
+To run the application, call programm
 
-    AnimeDB_Run.vbs
-
-To stop the application, call the script
-
-    AnimeDB_Stop.vbs
+    AnimeDB.exe
 
 ### From Linux ###
 
 To run the application, call the script
 
-    AnimeDB start
+    ./AnimeDB start
 
 To stop the application, call the script
 
-    AnimeDB stop
+    ./AnimeDB stop
 
 To restart the application, call the script
 
-    AnimeDB restart
+    ./AnimeDB restart
 
 ### Open application ###
 
@@ -94,15 +94,15 @@ Set real path to application
 
 Create a symbolic link on service
 
-    ln -s /path/to/anime-db/AnimeDB /etc/init.d/anime-db
+    ln -s /path/to/anime-db/AnimeDB /etc/init.d/AnimeDB
 
 Run service
 
-    service anime-db start
+    service AnimeDB start
 
 For the application is launched after the computer start, run the command
 
-    update-rc.d anime-db defaults
+    update-rc.d AnimeDB defaults
 
 ## Depending ##
 
