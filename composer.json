@@ -54,6 +54,9 @@
         "ext-apc": "Allows use APC for autoloading to improve performance"
     },
     "scripts": {
+        "pre-update-cmd": [
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::backupDB"
+        ],
         "post-install-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
