@@ -122,7 +122,9 @@ class UpdateItself
     {
         // remove startup files
         @unlink($this->root_dir.'bin/AnimeDB_Run.vbs');
+        @unlink($this->root_dir.'bin/AnimeDB_Stop.vbs');
         @unlink($this->root_dir.'AnimeDB_Run.vbs');
+        @unlink($this->root_dir.'AnimeDB_Stop.vbs');
 
         if (defined('PHP_WINDOWS_VERSION_BUILD')) {
             // download monitor if need
