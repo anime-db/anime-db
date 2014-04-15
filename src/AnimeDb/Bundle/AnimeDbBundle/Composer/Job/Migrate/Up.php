@@ -62,19 +62,37 @@ require_once __DIR__."/../../vendor/'.$this->getPackage()->getName().'/'.$config
 class '.$version.' extends AbstractMigration implements ContainerAwareInterface
 {
     protected $container;
+    protected $migration;
 
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
     }
 
+    protected function getMigration()
+    {
+        if (!($this->migration instanceof AbstractMigration)) {
+            $this->migration = new Migration($this->version);
+            if ($this->migration instanceof ContainerAwareInterface) {
+                $this->migration->setContainer($this->container);
+            }
+        }
+        return $this->migration;
+    }
+
     public function up(Schema $schema)
     {
-        $migration = new Migration($this->version);
-        if ($migration instanceof ContainerAwareInterface) {
-            $migration->setContainer($this->container);
-        }
-        $migration->up($schema);
+        $this->getMigration()->up($schema);
+    }
+
+    public function preUp(Schema $schema)
+    {
+        $this->getMigration()->preUp($schema);
+    }
+
+    public function postUp(Schema $schema)
+    {
+        $this->getMigration()->postUp($schema);
     }
 
     public function down(Schema $schema)
