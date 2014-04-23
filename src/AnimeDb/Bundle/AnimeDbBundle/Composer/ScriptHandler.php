@@ -274,7 +274,8 @@ class ScriptHandler
         if ($have_migrations) {
             file_put_contents(
                 $dir.'migrations.yml',
-                "migrations_namespace: 'Application\Migrations'\nmigrations_directory: '".$dir."'"
+                "migrations_namespace: 'Application\Migrations'\n".
+                "migrations_directory: 'app/cache/dev/DoctrineMigrations/'"
             );
 
             self::getContainer()->executeCommand(
