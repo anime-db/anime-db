@@ -10,18 +10,18 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\DoctrineMigrations;
 
-use Doctrine\DBAL\Migrations\AbstractMigration as BaseMigration;
+use Doctrine\DBAL\Migrations\AbstractMigration;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\DBAL\Schema\Schema;
 
 /**
- * Bundle
+ * Proxy migration
  *
  * @package AnimeDb\Bundle\AnimeDbBundle\DoctrineMigrations
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-abstract class AbstractMigration extends BaseMigration implements ContainerAwareInterface
+abstract class ProxyMigration extends AbstractMigration implements ContainerAwareInterface
 {
     /**
      * Container
@@ -61,7 +61,7 @@ abstract class AbstractMigration extends BaseMigration implements ContainerAware
      */
     protected function getMigration()
     {
-        if (!($this->migration instanceof BaseMigration)) {
+        if (!($this->migration instanceof AbstractMigration)) {
             $class_name = $this->getMigrationClass();
             $this->migration = new $class_name($this->version);
             if ($this->migration instanceof ContainerAwareInterface) {

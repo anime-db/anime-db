@@ -51,11 +51,11 @@ class Up extends BaseMigrate
                 file_put_contents($migdir.$file->getBasename(), '<?php
 namespace Application\Migrations;
 
-use AnimeDb\Bundle\AnimeDbBundle\DoctrineMigrations\AbstractMigration;
+use AnimeDb\Bundle\AnimeDbBundle\DoctrineMigrations\ProxyMigration;
 
 require_once __DIR__."/../../vendor/'.$this->getPackage()->getName().'/'.$config['directory'].'/'.$file->getBasename().'";
 
-class '.$version.' extends AbstractMigration
+class '.$version.' extends ProxyMigration
 {
     protected function getMigrationClass()
     {
