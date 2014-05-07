@@ -295,4 +295,18 @@ class ScriptHandler
             copy($db, $db.'.bk');
         }
     }
+
+    /**
+     * Dumps all assets to the filesystem
+     *
+     * @param \Composer\Script\CommandEvent $event
+     */
+    public static function dumpAssets(CommandEvent $event)
+    {
+        $cmd = 'assetic:dump --env=prod --no-debug';
+        if ($event->getIO()->isDecorated()) {
+            $cmd .= ' --ansi';
+        }
+        self::getContainer()->executeCommand($cmd, null);
+    }
 }
