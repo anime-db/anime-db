@@ -98,18 +98,6 @@ if (is_file($file = __DIR__.'/../web'.$request->getScriptName())) {
     } else {
         $response->headers->set('Content-Type', mime_content_type($file));
     }
-
-    // compress response
-    if (($encoding = $request->headers->get('Accept-Encoding')) && $response->getContent()) {
-        if (stripos($encoding, 'gzip') !== false) {
-            $response->setContent(gzencode($response->getContent(), 9, FORCE_GZIP));
-            $response->headers->set('Content-Encoding', 'gzip');
-
-        } elseif (stripos($encoding, 'deflate') !== false) {
-            $response->setContent(gzencode($response->getContent(), 9, FORCE_DEFLATE));
-            $response->headers->set('Content-Encoding', 'deflate');
-        }
-    }
 } else {
     $response = $kernel->handle($request);
 }
