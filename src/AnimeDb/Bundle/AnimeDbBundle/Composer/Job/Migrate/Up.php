@@ -51,52 +51,15 @@ class Up extends BaseMigrate
                 file_put_contents($migdir.$file->getBasename(), '<?php
 namespace Application\Migrations;
 
-use Doctrine\DBAL\Migrations\AbstractMigration;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Doctrine\DBAL\Schema\Schema;
-use '.$config['namespace'].'\\'.$version.' as Migration;
+use AnimeDb\Bundle\AnimeDbBundle\DoctrineMigrations\ProxyMigration;
 
 require_once __DIR__."/../../vendor/'.$this->getPackage()->getName().'/'.$config['directory'].'/'.$file->getBasename().'";
 
-class '.$version.' extends AbstractMigration implements ContainerAwareInterface
+class '.$version.' extends ProxyMigration
 {
-    protected $container;
-    protected $migration;
-
-    public function setContainer(ContainerInterface $container = null)
+    protected function getMigrationClass()
     {
-        $this->container = $container;
-    }
-
-    protected function getMigration()
-    {
-        if (!($this->migration instanceof AbstractMigration)) {
-            $this->migration = new Migration($this->version);
-            if ($this->migration instanceof ContainerAwareInterface) {
-                $this->migration->setContainer($this->container);
-            }
-        }
-        return $this->migration;
-    }
-
-    public function up(Schema $schema)
-    {
-        $this->getMigration()->up($schema);
-    }
-
-    public function preUp(Schema $schema)
-    {
-        $this->getMigration()->preUp($schema);
-    }
-
-    public function postUp(Schema $schema)
-    {
-        $this->getMigration()->postUp($schema);
-    }
-
-    public function down(Schema $schema)
-    {
+        return "'.$config['namespace'].'\\'.$version.'";
     }
 }');
             }

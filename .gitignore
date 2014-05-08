@@ -15,6 +15,7 @@ app/DoctrineMigrations
 # Symfony directories #
 #######################
 web/bundles/
+web/assetic/
 app/cache/
 app/logs/
 app/bootstrap.php.cache
