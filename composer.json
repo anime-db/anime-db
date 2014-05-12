@@ -43,7 +43,7 @@
         "doctrine/doctrine-migrations-bundle": "1.0.*",
         "composer/composer": "1.0.*",
         "guzzle/guzzle": "3.7.*",
-        "avalanche123/imagine-bundle": "v2.1",
+        "avalanche123/imagine-bundle": "2.*",
         "anime-db/catalog-bundle": "0.4.*"
     },
     "require-dev": {
