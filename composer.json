@@ -24,6 +24,12 @@
             "AnimeDb\\Bundle\\AnimeDbBundle": "src/"
         }
     },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/anime-db/DoctrineMigrationsBundle.git"
+        }
+    ],
     "require": {
         "php": ">=5.4.0",
         "ext-pdo_sqlite": "*",
@@ -40,7 +46,7 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "gedmo/doctrine-extensions": "2.3.*",
         "doctrine/migrations": "dev-master",
-        "doctrine/doctrine-migrations-bundle": "1.0.*",
+        "doctrine/doctrine-migrations-bundle": "dev-master",
         "composer/composer": "1.0.*",
         "guzzle/guzzle": "3.7.*",
         "avalanche123/imagine-bundle": "2.*",
