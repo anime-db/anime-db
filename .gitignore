@@ -11,6 +11,8 @@ app/config/vendor_config.yml
 app/config/routing.yml
 app/bundles.php
 app/DoctrineMigrations
+app/Resources/views/
+!app/Resources/views/base.html.twig
 
 # Symfony directories #
 #######################

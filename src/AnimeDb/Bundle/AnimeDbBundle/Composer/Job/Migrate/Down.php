@@ -53,7 +53,7 @@ class Down extends BaseMigrate
                 if (file_exists($migdir)) {
                     /* @var $file \SplFileInfo */
                     foreach ($package_migrations as $file) {
-                        unlink($migdir.$file->getBasename());
+                        @unlink($migdir.$file->getBasename());
                     }
                 }
 
