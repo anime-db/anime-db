@@ -275,7 +275,8 @@ class ScriptHandler
             file_put_contents(
                 $dir.'migrations.yml',
                 "migrations_namespace: 'Application\Migrations'\n".
-                "migrations_directory: 'app/cache/dev/DoctrineMigrations/'"
+                "migrations_directory: 'app/cache/dev/DoctrineMigrations/'\n".
+                "table_name: 'migration_versions'"
             );
 
             self::getContainer()->executeCommand(
