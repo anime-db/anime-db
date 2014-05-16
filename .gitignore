@@ -11,6 +11,7 @@ app/config/vendor_config.yml
 app/config/routing.yml
 app/bundles.php
 app/DoctrineMigrations
+app/Resources/views/knp_menu.html.twig
 
 # Symfony directories #
 #######################
