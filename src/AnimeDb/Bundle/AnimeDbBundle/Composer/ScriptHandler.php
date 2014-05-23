@@ -304,7 +304,7 @@ class ScriptHandler
      */
     public static function dumpAssets(CommandEvent $event)
     {
-        $cmd = 'assetic:dump --env=prod --no-debug --force';
+        $cmd = 'assetic:dump --env=dev --no-debug --force';
         if ($event->getIO()->isDecorated()) {
             $cmd .= ' --ansi';
         }
