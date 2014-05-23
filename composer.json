@@ -4,7 +4,7 @@
     "type": "project",
     "description": "The application for making home collection anime",
     "homepage": "http://anime-db.org",
-    "version": "0.3.10",
+    "version": "0.3.11",
     "authors": [
         {
             "name": "Anime DB",
@@ -47,7 +47,9 @@
                     "doctrine/migrations": "~1.0@dev"
                 },
                 "autoload": {
-                    "psr-0": { "Doctrine\\Bundle\\MigrationsBundle": "" }
+                    "psr-0": {
+                        "Doctrine\\Bundle\\MigrationsBundle": ""
+                    }
                 },
                 "target-dir": "Doctrine/Bundle/MigrationsBundle"
             }
@@ -92,11 +94,11 @@
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::notifyProjectInstall",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::execJobs",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migrateUp",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::dumpAssets",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::deliverEvents",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::dumpAssets"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
@@ -106,11 +108,11 @@
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::execJobs",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migrateDown",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migrateUp",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::dumpAssets",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::deliverEvents",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::dumpAssets"
         ],
         "post-package-install": [
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPackageToKernel",
