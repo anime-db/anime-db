@@ -40,6 +40,13 @@ class Container
     protected $jobs = [];
 
     /**
+     * PHP path
+     *
+     * @var string|null|false
+     */
+    protected $php_path = null;
+
+    /**
      * Get event dispatcher
      *
      * @return \AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher
@@ -110,11 +117,13 @@ class Container
      */
     protected function getPhp()
     {
-        $phpFinder = new PhpExecutableFinder;
-        if (!$phpPath = $phpFinder->find()) {
-            throw new \RuntimeException('The php executable could not be found, add it to your PATH environment variable and try again');
+        if (is_null($this->php_path)) {
+            $finder = new PhpExecutableFinder();
+            if (!($this->php_path = $finder->find())) {
+                throw new \RuntimeException('The php executable could not be found, add it to your PATH environment variable and try again');
+            }
         }
-        return $phpPath;
+        return $this->php_path;
     }
 
     /**
