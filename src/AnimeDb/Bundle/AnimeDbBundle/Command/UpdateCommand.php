@@ -160,7 +160,7 @@ class UpdateCommand extends ContainerAwareCommand
             ->setPreferDist(true)
             ->setUpdate(true);
 
-        if ($install->run()) {
+        if ($install->run() === 0) {
             $io->write('<info>Update requirements has been completed</info>');
         } else {
             $io->write('<error>During updating dependencies error occurred</error>');
