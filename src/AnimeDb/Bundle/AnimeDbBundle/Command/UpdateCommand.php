@@ -199,7 +199,7 @@ class UpdateCommand extends ContainerAwareCommand
                 ->ignoreUnreadableDirs()
                 ->in($this->getContainer()->getParameter('kernel.root_dir').'/../src')
                 ->in($this->getContainer()->getParameter('kernel.root_dir'))
-                ->notPath('Resources/'.$this->getContainer()->getParameter('database_path'))
+                ->notPath('app/Resources')
                 ->notPath('DoctrineMigrations');
             $fs->remove($finder);
         } catch (\Exception $e) {}
