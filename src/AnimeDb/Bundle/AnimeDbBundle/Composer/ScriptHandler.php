@@ -64,7 +64,16 @@ class ScriptHandler
      */
     public static function addPackageToKernel(PackageEvent $event)
     {
-        self::getContainer()->addJob(new AddKernel($event->getOperation()->getPackage()));
+        switch ($event->getOperation()->getJobType()) {
+            case 'install':
+                self::getContainer()->addJob(new AddKernel($event->getOperation()->getPackage()));
+                break;
+            case 'update':
+                self::getContainer()->addJob(new AddKernel($event->getOperation()->getTargetPackage()));
+                break;
+            default:
+                return;
+        }
     }
 
     /**
@@ -84,7 +93,16 @@ class ScriptHandler
      */
     public static function addPackageToRouting(PackageEvent $event)
     {
-        self::getContainer()->addJob(new AddRouting($event->getOperation()->getPackage()));
+        switch ($event->getOperation()->getJobType()) {
+            case 'install':
+                self::getContainer()->addJob(new AddRouting($event->getOperation()->getPackage()));
+                break;
+            case 'update':
+                self::getContainer()->addJob(new AddRouting($event->getOperation()->getTargetPackage()));
+                break;
+            default:
+                return;
+        }
     }
 
     /**
@@ -104,7 +122,16 @@ class ScriptHandler
      */
     public static function addPackageToConfig(PackageEvent $event)
     {
-        self::getContainer()->addJob(new AddConfig($event->getOperation()->getPackage()));
+        switch ($event->getOperation()->getJobType()) {
+            case 'install':
+                self::getContainer()->addJob(new AddConfig($event->getOperation()->getPackage()));
+                break;
+            case 'update':
+                self::getContainer()->addJob(new AddConfig($event->getOperation()->getTargetPackage()));
+                break;
+            default:
+                return;
+        }
     }
 
     /**
