@@ -59,6 +59,8 @@ class UpdateCommand extends ContainerAwareCommand
         $tag = $this->findNewVersion($composer->getPackage()->getVersion());
         if ($tag) {
             $this->doUpdateItself($tag, $composer, $output);
+            // reload composer
+            $composer = $factory->createComposer($io);
         } else {
             $output->writeln('<info>Application has already been updated to the latest version</info>');
         }
