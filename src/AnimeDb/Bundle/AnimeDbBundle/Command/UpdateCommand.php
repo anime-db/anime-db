@@ -218,7 +218,7 @@ class UpdateCommand extends ContainerAwareCommand
      * @param string $src
      * @param string $dst
      */
-    protected function copy($src, $dst) { 
+    protected function copy($src, $dst) {
         if (!is_array($src) && is_dir($src)) {
             $src = new \FilesystemIterator($src);
         }
