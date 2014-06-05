@@ -199,8 +199,9 @@ class UpdateCommand extends ContainerAwareCommand
                 ->ignoreUnreadableDirs()
                 ->in($this->getContainer()->getParameter('kernel.root_dir').'/../src')
                 ->in($this->getContainer()->getParameter('kernel.root_dir'))
+                ->notPath('app/DoctrineMigrations')
                 ->notPath('app/Resources')
-                ->notPath('DoctrineMigrations');
+                ->notPath('app/bootstrap.php.cache');
             $fs->remove($finder);
         } catch (\Exception $e) {}
 
