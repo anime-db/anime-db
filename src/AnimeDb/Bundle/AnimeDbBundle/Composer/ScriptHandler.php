@@ -28,6 +28,7 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel\Remove as RemoveKernel;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Add as AddRouting;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Remove as RemoveRouting;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Composer script handler
@@ -336,5 +337,16 @@ class ScriptHandler
             $cmd .= ' --ansi';
         }
         self::getContainer()->executeCommand($cmd.' web', null);
+    }
+
+    /**
+     * Clears the Symfony cache
+     *
+     * @param $event CommandEvent
+     */
+    public static function clearCache(CommandEvent $event)
+    {
+        $fs = new Filesystem();
+        $fs->remove(__DIR__.'/../../../../../app/cache/');
     }
 }
