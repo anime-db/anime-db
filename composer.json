@@ -4,7 +4,7 @@
     "type": "project",
     "description": "The application for making home collection anime",
     "homepage": "http://anime-db.org",
-    "version": "0.3.11",
+    "version": "0.3.12",
     "authors": [
         {
             "name": "Anime DB",
@@ -95,7 +95,7 @@
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::execJobs",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migrateUp",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::deliverEvents",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::dumpAssets"
@@ -109,7 +109,7 @@
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migrateDown",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migrateUp",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::deliverEvents",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::dumpAssets"
@@ -122,6 +122,9 @@
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::notifyPackage"
         ],
         "post-package-update": [
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPackageToKernel",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPackageToRouting",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPackageToConfig",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migratePackage",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::notifyPackage"
         ],

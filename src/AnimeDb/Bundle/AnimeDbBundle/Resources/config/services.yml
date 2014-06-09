@@ -7,6 +7,7 @@ services:
             - { name: kernel.event_listener, event: anime_db.update_itself.downloaded, method: onAppDownloadedMergeConfigs }
             - { name: kernel.event_listener, event: anime_db.update_itself.downloaded, method: onAppDownloadedMergeBinRun }
             - { name: kernel.event_listener, event: anime_db.update_itself.downloaded, method: onAppDownloadedMergeBinService }
+            - { name: kernel.event_listener, event: anime_db.update_itself.downloaded, method: onAppDownloadedChangeAccessToFiles }
 
     anime_db.event_dispatcher:
         class: AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher

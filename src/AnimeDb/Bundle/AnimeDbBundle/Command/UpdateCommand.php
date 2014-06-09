@@ -59,6 +59,8 @@ class UpdateCommand extends ContainerAwareCommand
         $tag = $this->findNewVersion($composer->getPackage()->getVersion());
         if ($tag) {
             $this->doUpdateItself($tag, $composer, $output);
+            // reload composer
+            $composer = $factory->createComposer($io);
         } else {
             $output->writeln('<info>Application has already been updated to the latest version</info>');
         }
@@ -160,7 +162,7 @@ class UpdateCommand extends ContainerAwareCommand
             ->setPreferDist(true)
             ->setUpdate(true);
 
-        if ($install->run()) {
+        if ($install->run() === 0) {
             $io->write('<info>Update requirements has been completed</info>');
         } else {
             $io->write('<error>During updating dependencies error occurred</error>');
@@ -197,8 +199,9 @@ class UpdateCommand extends ContainerAwareCommand
                 ->ignoreUnreadableDirs()
                 ->in($this->getContainer()->getParameter('kernel.root_dir').'/../src')
                 ->in($this->getContainer()->getParameter('kernel.root_dir'))
-                ->notPath('Resources/'.$this->getContainer()->getParameter('database_path'))
-                ->notPath('DoctrineMigrations');
+                ->notPath('app/DoctrineMigrations')
+                ->notPath('app/Resources')
+                ->notPath('app/bootstrap.php.cache');
             $fs->remove($finder);
         } catch (\Exception $e) {}
 
@@ -215,7 +218,7 @@ class UpdateCommand extends ContainerAwareCommand
      * @param string $src
      * @param string $dst
      */
-    protected function copy($src, $dst) { 
+    protected function copy($src, $dst) {
         if (!is_array($src) && is_dir($src)) {
             $src = new \FilesystemIterator($src);
         }

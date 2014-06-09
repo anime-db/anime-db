@@ -5,14 +5,12 @@ composer.lock
 ###############
 bin
 web/media
-app/Resources/anime.db
-app/Resources/anime.db.bk
+app/Resources/
+!app/Resources/views/base.html.twig
 app/config/vendor_config.yml
 app/config/routing.yml
 app/bundles.php
 app/DoctrineMigrations
-app/Resources/views/
-!app/Resources/views/base.html.twig
 
 # Symfony directories #
 #######################
