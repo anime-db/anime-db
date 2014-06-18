@@ -156,6 +156,9 @@ class UpdateCommand extends ContainerAwareCommand
         if (file_exists($lock_file)) {
             @unlink($lock_file);
         }
+        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
+            $composer->getDownloadManager()->setOutputProgress(false);
+        }
         $install = Installer::create($io, $composer)
             ->setDevMode(false)
             ->setPreferDist(true)
