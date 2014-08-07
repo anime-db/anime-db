@@ -346,7 +346,8 @@ class ScriptHandler
      */
     public static function clearCache(CommandEvent $event)
     {
-        $fs = new Filesystem();
-        $fs->remove(__DIR__.'/../../app/cache/');
+        self::getContainer()->executeCommand('cache:clear --no-warmup --env=prod --no-debug', 0);
+        self::getContainer()->executeCommand('cache:clear --no-warmup --env=test --no-debug', 0);
+        self::getContainer()->executeCommand('cache:clear --no-warmup --env=dev --no-debug', 0);
     }
 }
