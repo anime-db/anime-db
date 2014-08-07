@@ -1,4 +1,4 @@
-<img src="http://anime-db.org/bundles/animedboffsite/images/logo.jpg" /><br />
+![Anime DB](http://anime-db.org/bundles/animedboffsite/images/logo.jpg)
 
 [![Latest Stable Version](https://poser.pugx.org/anime-db/anime-db/v/stable.png)](https://packagist.org/packages/anime-db/anime-db)
 [![Latest Unstable Version](https://poser.pugx.org/anime-db/anime-db/v/unstable.png)](https://packagist.org/packages/anime-db/anime-db)
