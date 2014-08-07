@@ -26,11 +26,11 @@ class Composer
      */
     public function addPackage($package, $version)
     {
-        $composer = file_get_contents(__DIR__.'/../../../../../composer.json');
+        $composer = file_get_contents(__DIR__.'/../../composer.json');
         $composer = json_decode($composer, true);
         $composer['require'][$package] = $version;
         $composer = json_encode($composer, JSON_NUMERIC_CHECK|JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
-        file_put_contents(__DIR__.'/../../../../../composer.json', $composer);
+        file_put_contents(__DIR__.'/../../composer.json', $composer);
     }
 
     /**
@@ -40,12 +40,12 @@ class Composer
      */
     public function removePackage($package)
     {
-        $composer = file_get_contents(__DIR__.'/../../../../../composer.json');
+        $composer = file_get_contents(__DIR__.'/../../composer.json');
         $composer = json_decode($composer, true);
         if (isset($composer['require'][$package])) {
             unset($composer['require'][$package]);
             $composer = json_encode($composer, JSON_NUMERIC_CHECK|JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
-            file_put_contents(__DIR__.'/../../../../../composer.json', $composer);
+            file_put_contents(__DIR__.'/../../composer.json', $composer);
         }
     }
 }

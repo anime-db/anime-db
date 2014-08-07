@@ -20,8 +20,8 @@
         }
     ],
     "autoload": {
-        "psr-0": {
-            "AnimeDb\\Bundle\\AnimeDbBundle": "src/"
+        "psr-4": {
+            "AnimeDb\\Bundle\\AnimeDbBundle\\": "src/"
         }
     },
     "repositories": [

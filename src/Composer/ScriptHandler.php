@@ -228,14 +228,14 @@ class ScriptHandler
      */
     public static function installConfig(CommandEvent $event)
     {
-        if (!file_exists(__DIR__.'/../../../../../app/config/vendor_config.yml')) {
-            file_put_contents(__DIR__.'/../../../../../app/config/vendor_config.yml', '');
+        if (!file_exists(__DIR__.'/../../app/config/vendor_config.yml')) {
+            file_put_contents(__DIR__.'/../../app/config/vendor_config.yml', '');
         }
-        if (!file_exists(__DIR__.'/../../../../../app/config/routing.yml')) {
-            file_put_contents(__DIR__.'/../../../../../app/config/routing.yml', '');
+        if (!file_exists(__DIR__.'/../../app/config/routing.yml')) {
+            file_put_contents(__DIR__.'/../../app/config/routing.yml', '');
         }
-        if (!file_exists(__DIR__.'/../../../../../app/bundles.php')) {
-            file_put_contents(__DIR__.'/../../../../../app/bundles.php', "<?php\nreturn [\n];");
+        if (!file_exists(__DIR__.'/../../app/bundles.php')) {
+            file_put_contents(__DIR__.'/../../app/bundles.php', "<?php\nreturn [\n];");
         }
     }
 
@@ -262,7 +262,7 @@ class ScriptHandler
     {
         $have_migrations = false;
         // find migrations
-        if (file_exists($dir = __DIR__.'/../../../../../app/DoctrineMigrations')) {
+        if (file_exists($dir = __DIR__.'/../../app/DoctrineMigrations')) {
             $have_migrations = (bool)Finder::create()
                 ->in($dir)
                 ->files()
@@ -290,7 +290,7 @@ class ScriptHandler
         $have_migrations = false;
 
         // find migrations
-        if (file_exists($dir = __DIR__.'/../../../../../app/cache/dev/DoctrineMigrations/')) {
+        if (file_exists($dir = __DIR__.'/../../app/cache/dev/DoctrineMigrations/')) {
             $have_migrations = (bool)Finder::create()
                 ->in($dir)
                 ->files()
@@ -319,7 +319,7 @@ class ScriptHandler
      * @param \Composer\Script\CommandEvent $event
      */
     public static function backupDB(CommandEvent $event) {
-        $db = __DIR__.'/../../../../../app/Resources/anime.db';
+        $db = __DIR__.'/../../app/Resources/anime.db';
         if (file_exists($db)) {
             copy($db, $db.'.bk');
         }
@@ -347,6 +347,6 @@ class ScriptHandler
     public static function clearCache(CommandEvent $event)
     {
         $fs = new Filesystem();
-        $fs->remove(__DIR__.'/../../../../../app/cache/');
+        $fs->remove(__DIR__.'/../../app/cache/');
     }
 }

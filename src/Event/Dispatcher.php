@@ -37,7 +37,7 @@ class Dispatcher
      */
     public function dispatch($event_name, Event $event)
     {
-        $dir = __DIR__.'/../../../../../app/cache/dev/events/'.$event_name.'/';
+        $dir = __DIR__.'/../../app/cache/dev/events/'.$event_name.'/';
         if (!file_exists($dir)) {
             mkdir($dir, 0777, true);
         }
@@ -50,10 +50,10 @@ class Dispatcher
      */
     public function shippingDeferredEvents()
     {
-        if ($this->driver && file_exists(__DIR__.'/../../../../../app/cache/dev/events/')) {
+        if ($this->driver && file_exists(__DIR__.'/../../app/cache/dev/events/')) {
             $finder = new Finder();
             $finder->files()
-                ->in(__DIR__.'/../../../../../app/cache/dev/events/')
+                ->in(__DIR__.'/../../app/cache/dev/events/')
                 ->name('*.meta');
 
             /* @var $file \Symfony\Component\Finder\SplFileInfo */

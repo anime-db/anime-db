@@ -99,7 +99,7 @@ class Container
     public function executeCommand($cmd, $timeout = 300)
     {
         $php = escapeshellarg($this->getPhp());
-        $process = new Process($php.' app/console '.$cmd, __DIR__.'/../../../../../../', null, null, $timeout);
+        $process = new Process($php.' app/console '.$cmd, __DIR__.'/../../../', null, null, $timeout);
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });

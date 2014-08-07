@@ -73,7 +73,7 @@ class Kernel
     protected function getKernal()
     {
         if (!$this->kernel) {
-            $this->kernel = file_get_contents(__DIR__.'/../../../../../app/AppKernel.php');
+            $this->kernel = file_get_contents(__DIR__.'/../../app/AppKernel.php');
         }
         return $this->kernel;
     }
@@ -87,7 +87,7 @@ class Kernel
     {
         if (is_null($this->bundles)) {
             $this->bundles = [];
-            $content = file_get_contents(__DIR__.'/../../../../../app/bundles.php');
+            $content = file_get_contents(__DIR__.'/../../app/bundles.php');
             $start = strpos($content, '[');
             $bundles = trim(substr($content, $start+1, strpos($content, ']')-$start-1));
             if ($bundles) {
@@ -112,6 +112,6 @@ class Kernel
         } else {
             $content = "<?php\nreturn [\n];";
         }
-        file_put_contents(__DIR__.'/../../../../../app/bundles.php', $content);
+        file_put_contents(__DIR__.'/../../app/bundles.php', $content);
     }
 }

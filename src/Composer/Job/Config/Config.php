@@ -8,20 +8,20 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing;
+namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
-use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing as RoutingManipulator;
+use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config as ConfigManipulator;
 use Composer\Package\Package;
 use Symfony\Component\Finder\Finder;
 
 /**
- * Routing
+ * Config
  *
- * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing
+ * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-abstract class Routing extends Job
+abstract class Config extends Job
 {
     /**
      * Job priority
@@ -33,7 +33,7 @@ abstract class Routing extends Job
     /**
      * Manipulator
      *
-     * @var \AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing
+     * @var \AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config
      */
     protected $manipulator;
 
@@ -45,28 +45,22 @@ abstract class Routing extends Job
     public function __construct(Package $package)
     {
         parent::__construct($package);
-        $this->manipulator = new RoutingManipulator();
+        $this->manipulator = new ConfigManipulator();
     }
 
     /**
-     * Get the package routing
+     * Get the package config
      *
      * @return string|null
      */
-    protected function getPackageRouting()
+    protected function getPackageConfig()
     {
-        // This package has a file routing.xml, which contains the list of services,
-        // rather than being contain the list of routers
-        if ($this->getPackage()->getName() == 'sensio/framework-extra-bundle') {
-            return null;
-        }
-
         $finder = new Finder();
         $finder
             ->files()
-            ->in(realpath(__DIR__.'/../../../../../../../vendor/'.$this->getPackage()->getName()))
-            ->path('/\/Resources\/config\/([^\/]+\/)*routing.(yml|xml)$/')
-            ->name('/^routing.(yml|xml)$/');
+            ->in(realpath(__DIR__.'/../../../../vendor/'.$this->getPackage()->getName()))
+            ->path('/\/Resources\/config\/([^\/]+\/)*config.(yml|xml)$/')
+            ->name('/^config.(yml|xml)$/');
 
         // ignor configs in test
         if (stripos($this->getPackage()->getName(), 'test') === false) {
@@ -80,18 +74,5 @@ abstract class Routing extends Job
             return substr($file->getPathname(), $start+strlen($prefix));
         }
         return null;
-    }
-
-    /**
-     * Get the node name from the package name
-     *
-     * @return string
-     */
-    protected function getNodeName()
-    {
-        $name = strtolower($this->getPackage()->getName());
-        // package with the bundle can contain the word a 'bundle' in the name
-        $name = preg_replace('/(\/.+)[^a-z]bundle$/', '$1', $name);
-        return preg_replace('/[^a-z_]+/', '_', $name);
     }
 }

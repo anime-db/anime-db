@@ -33,7 +33,7 @@ class Routing
      */
     public function addResource($name, $bundle, $format, $path = 'routing')
     {
-        $file = __DIR__.'/../../../../../app/config/routing.yml';
+        $file = __DIR__.'/../../app/config/routing.yml';
         $resource = '@'.$bundle.'/Resources/config/'.$path.'.'.$format;
 
         $value = Yaml::parse(file_get_contents($file));
@@ -50,7 +50,7 @@ class Routing
      */
     public function removeResource($name)
     {
-        $file = __DIR__.'/../../../../../app/config/routing.yml';
+        $file = __DIR__.'/../../app/config/routing.yml';
         $value = Yaml::parse(file_get_contents($file));
         if (isset($value[$name])) {
             unset($value[$name]);

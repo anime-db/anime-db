@@ -41,7 +41,7 @@ class Down extends BaseMigrate
             $config = $this->getNamespaceAndDirectory($config_file);
 
             // find migrations
-            $from = __DIR__.'/../../../../../../../vendor/'.$this->getPackage()->getName().'/'.$config['directory'];
+            $from = __DIR__.'/../../../../vendor/'.$this->getPackage()->getName().'/'.$config['directory'];
             $package_migrations = Finder::create()
                 ->in($from)
                 ->files()
@@ -49,7 +49,7 @@ class Down extends BaseMigrate
 
             if ($package_migrations->count()) {
                 // remove wrappers of migrations
-                $migdir = __DIR__.'/../../../../../../../app/DoctrineMigrations/';
+                $migdir = __DIR__.'/../../../../app/DoctrineMigrations/';
                 if (file_exists($migdir)) {
                     /* @var $file \SplFileInfo */
                     foreach ($package_migrations as $file) {
@@ -58,7 +58,7 @@ class Down extends BaseMigrate
                 }
 
                 // copy the migrations to perform later
-                $tmp_dir = __DIR__.'/../../../../../../../app/cache/dev/DoctrineMigrations/';
+                $tmp_dir = __DIR__.'/../../../../app/cache/dev/DoctrineMigrations/';
                 $fs = new Filesystem();
                 $fs->mirror($from, $tmp_dir);
 

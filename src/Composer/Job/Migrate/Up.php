@@ -35,11 +35,11 @@ class Up extends BaseMigrate
 
             // find migrations
             $finder = Finder::create()
-                ->in(__DIR__.'/../../../../../../../vendor/'.$this->getPackage()->getName().'/'.$config['directory'])
+                ->in(__DIR__.'/../../../../vendor/'.$this->getPackage()->getName().'/'.$config['directory'])
                 ->files()
                 ->name('/Version\d{14}.*\.php/');
 
-            $migdir = __DIR__.'/../../../../../../../app/DoctrineMigrations/';
+            $migdir = __DIR__.'/../../../../app/DoctrineMigrations/';
             if ($finder->count() && !file_exists($migdir)) {
                 mkdir($migdir);
             }
