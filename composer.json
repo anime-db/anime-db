@@ -58,7 +58,7 @@
     "require": {
         "php": ">=5.4.0",
         "ext-pdo_sqlite": "*",
-        "symfony/symfony": "2.3.*",
+        "symfony/symfony": ">=2.3.16",
         "doctrine/orm": ">=2.2.3,<2.4-dev",
         "doctrine/doctrine-bundle": "1.2.*",
         "twig/extensions": "1.0.*",
@@ -73,7 +73,7 @@
         "doctrine/migrations": "dev-master",
         "doctrine/doctrine-migrations-bundle": "1.0.*",
         "composer/composer": "1.0.*",
-        "guzzle/guzzle": "3.7.*",
+        "guzzle/guzzle": ">=3.7.0",
         "avalanche123/imagine-bundle": "2.*",
         "anime-db/catalog-bundle": "0.4.*"
     },
