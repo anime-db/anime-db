@@ -35,13 +35,12 @@ abstract class Migrate extends Job
      */
     protected function getMigrationsConfig()
     {
-        $options = $this->getContainer()->getPackageOptions($this->getPackage());
         // specific location
-        if ($options['anime-db-migrations']) {
-            return $options['anime-db-migrations'];
+        if ($migrations = $this->getPackageMigrationsFile()) {
+            return $migrations;
         }
 
-        $dir = __DIR__.'/../../../../vendor/'.$this->getPackage()->getName().'/';
+        $dir = $this->getPackageDir();
         if (file_exists($dir.'migrations.yml')) {
             return $dir.'migrations.yml';
         } elseif (file_exists($dir.'migrations.xml')) {

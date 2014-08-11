@@ -30,7 +30,7 @@ class Updated extends Job
     {
         $this->getContainer()->getEventDispatcher()->dispatch(
             StoreEvents::UPDATED,
-            new Event($this->getContainer()->getSimpleCopyOfPacket($this->getPackage()))
+            new Event($this->getPackageCopy())
         );
     }
 }

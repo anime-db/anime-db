@@ -70,6 +70,14 @@ abstract class Job
     public function __construct(Package $package)
     {
         $this->package = $package;
+        $this->package->setExtra(array_merge([
+                'anime-db-routing' => '',
+                'anime-db-config' => '',
+                'anime-db-bundle' => '',
+                'anime-db-migrations' => '',
+            ],
+            $this->package->getExtra()
+        ));
     }
 
     /**
@@ -116,4 +124,142 @@ abstract class Job
      * Execute job
      */
     abstract public function execute();
+
+    /**
+     * Get package option
+     *
+     * @return mixed
+     */
+    private function getPackageOption($option)
+    {
+        $options = $this->package->getExtra();
+        if (isset($options[$option])) {
+            return $options[$option];
+        }
+        return null;
+    }
+
+    /**
+     * Get package option file
+     *
+     * @return string
+     */
+    private function getPackageOptionFile($option)
+    {
+        $option = $this->getPackageOption($option);
+        if ($option && file_exists($this->getPackageDir().$option)) {
+            return $this->getPackageDir().$option;
+        }
+        return '';
+    }
+
+    /**
+     * Get package migrations config file
+     *
+     * @return string
+     */
+    public function getPackageMigrationsFile()
+    {
+        return $this->getPackageOptionFile('anime-db-migrations');
+    }
+
+    /**
+     * Get package config file
+     *
+     * @return string
+     */
+    public function getPackageConfigFile()
+    {
+        return $this->getPackageOptionFile('anime-db-config');
+    }
+
+    /**
+     * Get package routing config file
+     *
+     * @return string
+     */
+    public function getPackageRoutingFile()
+    {
+        return $this->getPackageOptionFile('anime-db-routing');
+    }
+
+    /**
+     * Get packages directory
+     *
+     * @return string
+     */
+    public function getPackageDir()
+    {
+        return __DIR__.'/../../../vendor/'.$this->package->getName().'/';
+    }
+
+    /**
+     * Get the bundle from package
+     *
+     * For example package name 'demo-vendor/demo-bundle' converted to:
+     *   \DemoVendor\Bundle\DemoBundle\DemoVendorDemoBundle
+     *   \DemoVendor\Bundle\DemoBundle\DemoBundle
+     *
+     * @return string|null
+     */
+    public function getPackageBundle()
+    {
+        // specific name
+        if (($class = $this->getPackageOption('anime-db-bundle')) && class_exists($class)) {
+            return $class;
+        }
+
+        // package with the bundle can contain the word a 'bundle' in the name
+        $name = preg_replace('/(\/.+)[^a-z]bundle$/i', '$1', $this->package->getName());
+        // convert package name to bundle name
+        $name = preg_replace('/[^a-zA-Z\/]+/', ' ', $name);
+        $name = ucwords(str_replace('/', ' / ', $name));
+        list($vendor, $bundle) = explode('/', str_replace(' ', '', $name), 2);
+
+        $classes = [
+            '\\'.$vendor.'\Bundle\\'.$bundle.'Bundle\\'.$vendor.$bundle.'Bundle',
+            '\\'.$vendor.'\Bundle\\'.$bundle.'Bundle\\'.$bundle.'Bundle'
+        ];
+
+        // vendor name can be contained in the bundle name
+        // knplabs/knp-menu-bundle -> \Knp\Bundle\MenuBundle\KnpMenuBundle
+        list(, $bundle) = explode('/', $name, 2);
+        $bundle = trim($bundle);
+        if (($pos = strpos($bundle, ' ')) !== false) {
+            $vendor = substr($bundle, 0, $pos);
+            $bundle = str_replace(' ', '', substr($bundle, $pos+1));
+            $classes[] = '\\'.$vendor.'\Bundle\\'.$bundle.'Bundle\\'.$vendor.$bundle.'Bundle';
+            $classes[] = '\\'.$vendor.'\Bundle\\'.$bundle.'Bundle\\'.$bundle.'Bundle';
+        }
+
+        foreach ($classes as $class) {
+            if (class_exists($class)) {
+                // cache the bundle class
+                $options = $this->package->getExtra();
+                $options['anime-db-bundle'] = $class;
+                $this->package->setExtra($options);
+
+                return $class;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Get a simple copy of the package
+     *
+     * @return \Composer\Package\Package
+     */
+    public function getPackageCopy()
+    {
+        $copy = new Package(
+            $this->package->getName(),
+            $this->package->getVersion(),
+            $this->package->getVersion()
+        );
+        $copy->setType($this->package->getType());
+        $copy->setExtra($this->package->getExtra());
+        return $copy;
+    }
 }

@@ -55,10 +55,15 @@ abstract class Config extends Job
      */
     protected function getPackageConfig()
     {
+        // specific location
+        if ($config = $this->getPackageConfigFile()) {
+            return $config;
+        }
+
         $finder = new Finder();
         $finder
             ->files()
-            ->in(realpath(__DIR__.'/../../../../vendor/'.$this->getPackage()->getName()))
+            ->in($this->getPackageDir())
             ->path('/\/Resources\/config\/([^\/]+\/)*config.(yml|xml)$/')
             ->name('/^config.(yml|xml)$/');
 

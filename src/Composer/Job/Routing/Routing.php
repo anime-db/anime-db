@@ -61,10 +61,15 @@ abstract class Routing extends Job
             return null;
         }
 
+        // specific location
+        if ($routing = $this->getPackageRoutingFile()) {
+            return $routing;
+        }
+
         $finder = new Finder();
         $finder
             ->files()
-            ->in(realpath(__DIR__.'/../../../../vendor/'.$this->getPackage()->getName()))
+            ->in($this->getPackageDir())
             ->path('/\/Resources\/config\/([^\/]+\/)*routing.(yml|xml)$/')
             ->name('/^routing.(yml|xml)$/');
 

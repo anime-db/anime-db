@@ -30,7 +30,7 @@ class Installed extends Job
     {
         $this->getContainer()->getEventDispatcher()->dispatch(
             StoreEvents::INSTALLED,
-            new Event($this->getContainer()->getSimpleCopyOfPacket($this->getPackage()))
+            new Event($this->getPackageCopy())
         );
     }
 }

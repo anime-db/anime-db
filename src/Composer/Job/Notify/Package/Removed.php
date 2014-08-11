@@ -30,7 +30,7 @@ class Removed extends Job
     {
         $this->getContainer()->getEventDispatcher()->dispatch(
             StoreEvents::REMOVED,
-            new Event($this->getContainer()->getSimpleCopyOfPacket($this->getPackage()))
+            new Event($this->getPackageCopy())
         );
     }
 }

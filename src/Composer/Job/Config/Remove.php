@@ -35,7 +35,7 @@ class Remove extends BaseConfig
     public function setContainer(Container $container)
     {
         // get the bundle name before remove package, because then it would impossible to do
-        $this->bundle = $container->getPackageBundle($this->getPackage());
+        $this->bundle = $this->getPackageBundle();
         parent::setContainer($container);
     }
 

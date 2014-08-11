@@ -27,7 +27,7 @@ class Add extends BaseConfig
     public function execute()
     {
         $config = $this->getPackageConfig();
-        $bundle = $this->getContainer()->getPackageBundle($this->getPackage());
+        $bundle = $this->getPackageBundle();
         if ($config && $bundle) {
             $bundle = new $bundle();
             $info = pathinfo($config);

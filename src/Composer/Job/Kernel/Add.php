@@ -34,7 +34,7 @@ class Add extends Job
      */
     public function execute()
     {
-        if ($bundle = $this->getContainer()->getPackageBundle($this->getPackage())) {
+        if ($bundle = $this->getPackageBundle()) {
             $manipulator = new KernelManipulator();
             $manipulator->addBundle($bundle);
         }

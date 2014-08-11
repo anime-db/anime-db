@@ -27,7 +27,7 @@ class Add extends BaseRouting
     public function execute()
     {
         $routing = $this->getPackageRouting();
-        $bundle = $this->getContainer()->getPackageBundle($this->getPackage());
+        $bundle = $this->getPackageBundle();
         if ($routing && $bundle) {
             $bundle = new $bundle();
             $info = pathinfo($routing);
