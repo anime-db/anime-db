@@ -170,6 +170,32 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test remove old files on merge bin run
+     */
+    public function testOnAppDownloadedMergeBinRunRemoveOld()
+    {
+        $files = [
+            'bin/AnimeDB_Run.vbs',
+            'bin/AnimeDB_Stop.vbs',
+            'AnimeDB_Run.vbs',
+            'AnimeDB_Stop.vbs'
+        ];
+        $this->initFiles($files, $this->root_dir.'../');
+
+        // no test merge config.ini in this test
+        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
+            touch($this->root_dir.'../config.ini');
+            touch($this->event_dir.'config.ini');
+        }
+
+        $this->listener->onAppDownloadedMergeBinRun($this->event); // test
+
+        foreach ($files as $file) {
+            $this->assertFileNotExists($this->root_dir.'../'.$file);
+        }
+    }
+
+    /**
      * Init files
      *
      * @param array $files
