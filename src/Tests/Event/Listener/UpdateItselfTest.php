@@ -72,7 +72,7 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         parent::setUp();
-        // real use path /../
+        // real path /foo/
         $this->root_dir = sys_get_temp_dir().'/foo/bar/';
         $this->event_dir = sys_get_temp_dir().'/baz/';
         $this->fs->mkdir([$this->root_dir, $this->event_dir]);
@@ -99,7 +99,7 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test onAppDownloadedMergeComposerRequirements
+     * Test merge composer requirements
      */
     public function testOnAppDownloadedMergeComposerRequirements()
     {
@@ -113,13 +113,13 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
         file_put_contents($this->root_dir.'/../composer.json', $composer);
         file_put_contents($this->event_dir.'/composer.json', $composer);
 
-        $this->listener->onAppDownloadedMergeComposerRequirements($this->event);
+        $this->listener->onAppDownloadedMergeComposerRequirements($this->event); // test
 
         $this->assertEquals($composer, file_get_contents($this->event_dir.'/composer.json'));
     }
 
     /**
-     * Test onAppDownloadedMergeComposerRequirements
+     * Test do merge composer requirements
      */
     public function testOnAppDownloadedMergeComposerRequirementsMerge()
     {
@@ -138,7 +138,7 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
         file_put_contents($this->root_dir.'/../composer.json', json_encode($old_composer));
         file_put_contents($this->event_dir.'/composer.json', json_encode($new_composer));
 
-        $this->listener->onAppDownloadedMergeComposerRequirements($this->event);
+        $this->listener->onAppDownloadedMergeComposerRequirements($this->event); // test
 
         $expected = $old_composer;
         $expected['require'] = array_merge($expected['require'], $new_composer['require']);
@@ -146,5 +146,33 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
             json_encode($expected, JSON_PRETTY_PRINT),
             file_get_contents($this->event_dir.'/composer.json')
         );
+    }
+
+    /**
+     * Test merge configs
+     */
+    public function testOnAppDownloadedMergeConfigs()
+    {
+        $files = [
+            '/app/config/parameters.yml',
+            '/app/config/vendor_config.yml',
+            '/app/config/routing.yml',
+            '/app/bundles.php'
+        ];
+        $this->fs->mkdir([
+            $this->root_dir.'/../app/config/',
+            $this->root_dir.'/../app/',
+            $this->event_dir.'/app/config/',
+            $this->event_dir.'/app/'
+        ]);
+        foreach ($files as $file) {
+            file_put_contents($this->root_dir.'/..'.$file, $file);
+        }
+
+        $this->listener->onAppDownloadedMergeConfigs($this->event); // test
+
+        foreach ($files as $file) {
+            $this->assertEquals($file, file_get_contents($this->event_dir.$file));
+        }
     }
 }
