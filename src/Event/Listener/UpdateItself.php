@@ -127,10 +127,13 @@ class UpdateItself
         @unlink($this->root_dir.'AnimeDB_Stop.vbs');
 
         if (defined('PHP_WINDOWS_VERSION_BUILD')) {
-            // download monitor if need
+            // application has not yet has the monitor
             if (!file_exists($this->root_dir.'/config.ini')) {
-                $monitor = tempnam(sys_get_temp_dir(), 'monitor');
-                file_put_contents($monitor, fopen(self::MONITOR, 'r'));
+                $monitor = sys_get_temp_dir().'/'.basename(self::MONITOR);
+                // download monitor if need
+                if (!file_exists($monitor)) {
+                    copy(self::MONITOR, $monitor);
+                }
                 // unzip
                 $zip = new \ZipArchive();
                 if ($zip->open($monitor) !== true) {
@@ -143,7 +146,7 @@ class UpdateItself
             // copy params if need
             $old_file = $this->root_dir.'/config.ini';
             $new_file = $event->getPath().'/config.ini';
-            if (file_exists($old_file) && md5_file($old_file) != md5_file($new_file)) {
+            if (file_exists($new_file) && file_exists($old_file) && md5_file($old_file) != md5_file($new_file)) {
                 $old_body = file_get_contents($old_file);
                 $new_body = $tmp_body = file_get_contents($new_file);
 
