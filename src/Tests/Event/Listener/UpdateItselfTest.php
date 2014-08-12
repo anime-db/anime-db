@@ -196,6 +196,20 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test install monitor
+     */
+    public function testOnAppDownloadedMergeBinRunInstallMonitor()
+    {
+        // emulate Windows env
+        if (!defined('PHP_WINDOWS_VERSION_BUILD')) {
+            define('PHP_WINDOWS_VERSION_BUILD', 2600);
+        }
+        $this->listener->onAppDownloadedMergeBinRun($this->event); // test
+
+        $this->assertFileExists($this->event_dir.'config.ini');
+    }
+
+    /**
      * Init files
      *
      * @param array $files
