@@ -211,7 +211,7 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test failed install monitor
+     * Test failed unzip monitor
      *
      * @expectedException \RuntimeException
      */
@@ -224,6 +224,30 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
         file_put_contents(sys_get_temp_dir().'/'.basename(UpdateItself::MONITOR), 'foo');
 
         $this->listener->onAppDownloadedMergeBinRun($this->event); // test
+    }
+
+    /**
+     * Test merge config.ini
+     */
+    public function testOnAppDownloadedMergeBinRun()
+    {
+        // emulate Windows env
+        if (!defined('PHP_WINDOWS_VERSION_BUILD')) {
+            define('PHP_WINDOWS_VERSION_BUILD', 2600);
+        }
+        file_put_contents($this->root_dir.'../config.ini', '[General]
+addr=localhost
+port=80
+php=php
+');
+        file_put_contents($this->event_dir.'config.ini', '[General]
+addr='.UpdateItself::DEFAULT_ADDRESS.'
+port='.UpdateItself::DEFAULT_PORT.'
+php='.UpdateItself::DEFAULT_PHP.'
+');
+        $this->listener->onAppDownloadedMergeBinRun($this->event); // test
+
+        $this->assertFileEquals($this->root_dir.'../config.ini', $this->event_dir.'config.ini');
     }
 
     /**
