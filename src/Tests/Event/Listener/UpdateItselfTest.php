@@ -95,7 +95,7 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
     protected function tearDown()
     {
         parent::tearDown();
-        $this->fs->remove([$this->root_dir, $this->event_dir]);
+        $this->fs->remove(sys_get_temp_dir().'/tests/');
         @unlink(sys_get_temp_dir().'/'.basename(UpdateItself::MONITOR));
     }
 
@@ -248,6 +248,49 @@ php='.UpdateItself::DEFAULT_PHP.'
         $this->listener->onAppDownloadedMergeBinRun($this->event); // test
 
         $this->assertFileEquals($this->root_dir.'../config.ini', $this->event_dir.'config.ini');
+    }
+
+    /**
+     * Test merge bin service
+     *
+     * @dataProvider dataProviderService
+     */
+    public function testOnAppDownloadedMergeBinService($root_file, $root_code, $event_code)
+    {
+        $this->fs->mkdir($this->root_dir.'../bin/');
+        file_put_contents($root_file, $root_code);
+        file_put_contents($this->event_dir.'AnimeDB', $event_code);
+
+        $this->listener->onAppDownloadedMergeBinService($this->event); // test
+
+        $this->assertFileEquals($root_file, $this->event_dir.'AnimeDB');
+    }
+
+    /**
+     * Data provider service
+     *
+     * @return array
+     */
+    public function dataProviderService()
+    {
+        $this->setUp();
+
+        $default_code = "#!/bin/sh
+addr='".UpdateItself::DEFAULT_ADDRESS."'
+port=".UpdateItself::DEFAULT_PORT."
+path=".UpdateItself::DEFAULT_PATH."
+";
+        $changed_code = "#!/bin/sh
+addr='localhost'
+port=80
+path=.
+";
+        return [
+            [$this->root_dir.'../bin/service', $changed_code, $default_code],
+            [$this->root_dir.'../bin/service', $default_code, $default_code],
+            [$this->root_dir.'../AnimeDB', $changed_code, $default_code],
+            [$this->root_dir.'../AnimeDB', $default_code, $default_code]
+        ];
     }
 
     /**
