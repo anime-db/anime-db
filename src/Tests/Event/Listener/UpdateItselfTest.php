@@ -73,8 +73,8 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
         // real path /foo/
-        $this->root_dir = sys_get_temp_dir().'/foo/bar/';
-        $this->event_dir = sys_get_temp_dir().'/baz/';
+        $this->root_dir = sys_get_temp_dir().'/tests/foo/bar/';
+        $this->event_dir = sys_get_temp_dir().'/tests/baz/';
         $this->fs->mkdir([$this->root_dir, $this->event_dir]);
 
         $this->listener = new UpdateItself($this->root_dir);
@@ -83,7 +83,7 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $this->event
-            ->expects($this->atLeastOnce())
+            ->expects($this->any())
             ->method('getPath')
             ->will($this->returnValue($this->event_dir));
     }
@@ -115,7 +115,7 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
 
         $this->listener->onAppDownloadedMergeComposerRequirements($this->event); // test
 
-        $this->assertEquals($composer, file_get_contents($this->event_dir.'/composer.json'));
+        $this->assertFileEquals($this->root_dir.'/../composer.json', $this->event_dir.'/composer.json');
     }
 
     /**
@@ -154,25 +154,34 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
     public function testOnAppDownloadedMergeConfigs()
     {
         $files = [
-            '/app/config/parameters.yml',
-            '/app/config/vendor_config.yml',
-            '/app/config/routing.yml',
-            '/app/bundles.php'
+            'app/config/parameters.yml',
+            'app/config/vendor_config.yml',
+            'app/config/routing.yml',
+            'app/bundles.php'
         ];
-        $this->fs->mkdir([
-            $this->root_dir.'/../app/config/',
-            $this->root_dir.'/../app/',
-            $this->event_dir.'/app/config/',
-            $this->event_dir.'/app/'
-        ]);
-        foreach ($files as $file) {
-            file_put_contents($this->root_dir.'/..'.$file, $file);
-        }
+        $this->fs->mkdir([$this->event_dir.'/app/config/', $this->event_dir.'/app/']);
+        $this->initFiles($files, $this->root_dir.'../');
 
         $this->listener->onAppDownloadedMergeConfigs($this->event); // test
 
         foreach ($files as $file) {
-            $this->assertEquals($file, file_get_contents($this->event_dir.$file));
+            $this->assertFileEquals($this->root_dir.'../'.$file, $this->event_dir.$file);
+        }
+    }
+
+    /**
+     * Init files
+     *
+     * @param array $files
+     * @param string $dir
+     */
+    protected function initFiles(array $files, $dir)
+    {
+        foreach ($files as $file) {
+            if (!is_dir($path = dirname($dir.$file))) {
+                $this->fs->mkdir($path);
+            }
+            file_put_contents($dir.$file, $file);
         }
     }
 }
