@@ -11,7 +11,6 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Event\Listener;
 
 use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded;
-use Sensio\Bundle\GeneratorBundle\Manipulator\KernelManipulator;
 
 /**
  * Update itself listener
