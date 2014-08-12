@@ -96,6 +96,7 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
     {
         parent::tearDown();
         $this->fs->remove([$this->root_dir, $this->event_dir]);
+        @unlink(sys_get_temp_dir().'/'.basename(UpdateItself::MONITOR));
     }
 
     /**
@@ -207,6 +208,22 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
         $this->listener->onAppDownloadedMergeBinRun($this->event); // test
 
         $this->assertFileExists($this->event_dir.'config.ini');
+    }
+
+    /**
+     * Test failed install monitor
+     *
+     * @expectedException \RuntimeException
+     */
+    public function testOnAppDownloadedMergeBinRunFailedInstallMonitor()
+    {
+        // emulate Windows env
+        if (!defined('PHP_WINDOWS_VERSION_BUILD')) {
+            define('PHP_WINDOWS_VERSION_BUILD', 2600);
+        }
+        file_put_contents(sys_get_temp_dir().'/'.basename(UpdateItself::MONITOR), 'foo');
+
+        $this->listener->onAppDownloadedMergeBinRun($this->event); // test
     }
 
     /**
