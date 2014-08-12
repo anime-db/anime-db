@@ -23,6 +23,13 @@ use Symfony\Component\Finder\Finder;
 class Dispatcher
 {
     /**
+     * Directory to store events
+     *
+     * @var string
+     */
+    const EVENTS_DIR = '/../../app/cache/dev/events/';
+
+    /**
      * Dispatcher driver
      *
      * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
@@ -37,9 +44,9 @@ class Dispatcher
      */
     public function dispatch($event_name, Event $event)
     {
-        $dir = __DIR__.'/../../app/cache/dev/events/'.$event_name.'/';
+        $dir = __DIR__.self::EVENTS_DIR.$event_name.'/';
         if (!file_exists($dir)) {
-            mkdir($dir, 0777, true);
+            mkdir($dir, 0755, true);
         }
         $event = serialize($event);
         file_put_contents($dir.md5($event).'.meta', $event);
@@ -50,11 +57,9 @@ class Dispatcher
      */
     public function shippingDeferredEvents()
     {
-        if ($this->driver && file_exists(__DIR__.'/../../app/cache/dev/events/')) {
+        if ($this->driver && file_exists(__DIR__.self::EVENTS_DIR)) {
             $finder = new Finder();
-            $finder->files()
-                ->in(__DIR__.'/../../app/cache/dev/events/')
-                ->name('*.meta');
+            $finder->files()->in(__DIR__.self::EVENTS_DIR)->name('*.meta');
 
             /* @var $file \Symfony\Component\Finder\SplFileInfo */
             foreach ($finder as $file) {
