@@ -281,7 +281,7 @@ php='.UpdateItself::DEFAULT_PHP.'
     /**
      * Test merge bin service
      *
-     * @dataProvider dataProviderService
+     * @dataProvider getService
      */
     public function testOnAppDownloadedMergeBinService($root_file, $root_code, $event_code)
     {
@@ -299,7 +299,7 @@ php='.UpdateItself::DEFAULT_PHP.'
      *
      * @return array
      */
-    public function dataProviderService()
+    public function getService()
     {
         $this->setUp();
 
