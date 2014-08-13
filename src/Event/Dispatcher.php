@@ -59,7 +59,7 @@ class Dispatcher
     {
         if ($this->driver && file_exists(__DIR__.self::EVENTS_DIR)) {
             $finder = new Finder();
-            $finder->files()->in(__DIR__.self::EVENTS_DIR)->name('*.meta');
+            $finder->files()->in(__DIR__.self::EVENTS_DIR)->name('*.meta')->sortByName();
 
             /* @var $file \Symfony\Component\Finder\SplFileInfo */
             foreach ($finder as $file) {

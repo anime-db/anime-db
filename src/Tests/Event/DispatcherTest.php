@@ -62,18 +62,18 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
     public function testDispatch()
     {
         $event1 = new Event();
-        $event1->setName('foo');
+        $event1->setName('bar');
         $event2 = new Event();
-        $event2->setName('bar');
+        $event2->setName('baz');
 
         $driver = $this->getMock('\Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $driver
-            ->expects($this->at(1))
+            ->expects($this->at(0))
             ->method('dispatch')
             ->with($event1->getName(), $event1)
             ->will($this->returnArgument(1));
         $driver
-            ->expects($this->at(0))
+            ->expects($this->at(1))
             ->method('dispatch')
             ->with($event2->getName(), $event2)
             ->will($this->returnArgument(1));
