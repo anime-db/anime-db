@@ -59,9 +59,14 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Construct
+     *
+     * @param string $name
+     * @param array $data
+     * @param string $dataName
      */
-    public function __construct()
+    public function __construct($name = null, array $data = array(), $dataName = '')
     {
+        parent::__construct($name, $data, $dataName);
         $this->fs = new Filesystem();
     }
 
@@ -69,7 +74,7 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
      * (non-PHPdoc)
      * @see PHPUnit_Framework_TestCase::setUp()
      */
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         // real path /foo/
@@ -167,6 +172,29 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
 
         foreach ($files as $file) {
             $this->assertFileEquals($this->root_dir.'../'.$file, $this->event_dir.$file);
+        }
+    }
+
+    /**
+     * Test change sccess to shell files
+     */
+    public function testOnAppDownloadedChangeAccessToFiles()
+    {
+        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
+            $this->markTestSkipped('Will not run on OS Windows');
+        } else {
+            $file1 = $this->event->getPath().'AnimeDB';
+            $file2 = $this->event->getPath().'app/console';
+            $this->fs->mkdir($this->event->getPath().'app');
+            touch($file1);
+            touch($file2);
+            chmod($file1, 0666);
+            chmod($file2, 0666);
+
+            $this->listener->onAppDownloadedChangeAccessToFiles($this->event); // test
+
+            $this->assertEquals(0755, fileperms($file1) & 0777);
+            $this->assertEquals(0755, fileperms($file2) & 0777);
         }
     }
 

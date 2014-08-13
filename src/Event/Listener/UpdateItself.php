@@ -218,8 +218,8 @@ class UpdateItself
     public function onAppDownloadedChangeAccessToFiles(Downloaded $event)
     {
         if (!defined('PHP_WINDOWS_VERSION_BUILD')) {
-            chmod($event->getPath().'/AnimeDB', 0755);
-            chmod($event->getPath().'/app/console', 0755);
+            @chmod($event->getPath().'/AnimeDB', 0755);
+            @chmod($event->getPath().'/app/console', 0755);
         }
     }
 }
