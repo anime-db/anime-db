@@ -194,7 +194,6 @@ class UpdateCommand extends ContainerAwareCommand
     protected function rewriting($from)
     {
         $fs = new Filesystem();
-        // ignore errors during the removal of the old application
         try {
             $finder = Finder::create()
                 ->files()
@@ -205,7 +204,7 @@ class UpdateCommand extends ContainerAwareCommand
                 ->notPath('app/Resources')
                 ->notPath('app/bootstrap.php.cache');
             $fs->remove($finder);
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {} // ignore errors during the removal of the old application
 
         // copy new version
         $this->copy($from, $this->getContainer()->getParameter('kernel.root_dir').'/../');
