@@ -57,9 +57,9 @@ require_once __DIR__."/../../vendor/'.$this->getPackage()->getName().'/'.$config
 
 class '.$version.' extends ProxyMigration
 {
-    protected function getMigrationClass()
+    protected function getMigration()
     {
-        return "'.$config['namespace'].'\\'.$version.'";
+        return new \\'.$config['namespace'].'\\'.$version.'($this->version);
     }
 }');
             }

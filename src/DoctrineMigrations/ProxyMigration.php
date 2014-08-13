@@ -28,14 +28,14 @@ abstract class ProxyMigration extends AbstractMigration implements ContainerAwar
      *
      * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
-    protected $container;
+    private $container;
 
     /**
      * Origin migration
      *
      * @var \Doctrine\DBAL\Migrations\AbstractMigration
      */
-    protected $migration;
+    private $migration;
 
     /**
      * Set container
@@ -48,22 +48,21 @@ abstract class ProxyMigration extends AbstractMigration implements ContainerAwar
     }
 
     /**
-     * Get origin migration class
-     *
-     * @return string
-     */
-    abstract protected function getMigrationClass();
-
-    /**
-     * Get class of origin migration
+     * Get origin migration
      *
      * @return \Doctrine\DBAL\Migrations\AbstractMigration
      */
-    protected function getMigration()
+    abstract protected function getMigration();
+
+    /**
+     * Get origin migration lazy load
+     *
+     * @return \Doctrine\DBAL\Migrations\AbstractMigration
+     */
+    private function getMigrationLazyLoad()
     {
         if (!($this->migration instanceof AbstractMigration)) {
-            $class_name = $this->getMigrationClass();
-            $this->migration = new $class_name($this->version);
+            $this->migration = $this->getMigration();
             if ($this->migration instanceof ContainerAwareInterface) {
                 $this->migration->setContainer($this->container);
             }
@@ -77,7 +76,7 @@ abstract class ProxyMigration extends AbstractMigration implements ContainerAwar
      */
     public function up(Schema $schema)
     {
-        $this->getMigration()->up($schema);
+        $this->getMigrationLazyLoad()->up($schema);
     }
 
     /**
@@ -86,7 +85,7 @@ abstract class ProxyMigration extends AbstractMigration implements ContainerAwar
      */
     public function preUp(Schema $schema)
     {
-        $this->getMigration()->preUp($schema);
+        $this->getMigrationLazyLoad()->preUp($schema);
     }
 
     /**
@@ -95,7 +94,7 @@ abstract class ProxyMigration extends AbstractMigration implements ContainerAwar
      */
     public function postUp(Schema $schema)
     {
-        $this->getMigration()->postUp($schema);
+        $this->getMigrationLazyLoad()->postUp($schema);
     }
 
     /**
@@ -104,7 +103,7 @@ abstract class ProxyMigration extends AbstractMigration implements ContainerAwar
      */
     public function down(Schema $schema)
     {
-        $this->getMigration()->down($schema);
+        $this->getMigrationLazyLoad()->down($schema);
     }
 
     /**
@@ -113,7 +112,7 @@ abstract class ProxyMigration extends AbstractMigration implements ContainerAwar
      */
     public function preDown(Schema $schema)
     {
-        $this->getMigration()->preDown($schema);
+        $this->getMigrationLazyLoad()->preDown($schema);
     }
 
     /**
@@ -122,6 +121,6 @@ abstract class ProxyMigration extends AbstractMigration implements ContainerAwar
      */
     public function postDown(Schema $schema)
     {
-        $this->getMigration()->postDown($schema);
+        $this->getMigrationLazyLoad()->postDown($schema);
     }
 }
