@@ -20,6 +20,7 @@ use Composer\Package\Package;
 use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\StoreEvents;
 use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded;
 use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Updated;
+use AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher;
 use Symfony\Component\Filesystem\Filesystem;
 use Composer\Package\Loader\ArrayLoader;
 use Symfony\Component\Finder\Finder;
@@ -140,7 +141,10 @@ class UpdateCommand extends ContainerAwareCommand
         $this->rewriting($target);
 
         // notify about updated
+        // event will be sent after the update application components
+        $dispatcher = new Dispatcher();
         $dispatcher->dispatch(StoreEvents::UPDATED, new Updated($new_package));
+
         $output->writeln('<info>Update itself has been completed</info>');
     }
 
