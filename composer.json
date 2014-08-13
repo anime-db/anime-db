@@ -12,12 +12,18 @@
         },
         {
             "name": "Peter Gribanov",
-            "email": "info@peter-gribanov.ru"
+            "email": "info@peter-gribanov.ru",
+            "homepage": "http://peter-gribanov.ru",
+            "role": "Developer"
         },
         {
             "name": "Anime DB Community",
             "homepage": "https://github.com/anime-db/anime-db/graphs/contributors"
         }
+    ],
+    "support": [
+        "email": "support@anime-db.org",
+        "issues": "https://github.com/anime-db/anime-db/issues"
     ],
     "autoload": {
         "psr-4": {
