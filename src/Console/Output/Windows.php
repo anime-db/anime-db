@@ -30,6 +30,13 @@ class Windows implements ConsoleOutputInterface
     private $output;
 
     /**
+     * Do encode messages
+     *
+     * @var boolean
+     */
+    private $encode = false;
+
+    /**
      * Target encoding
      *
      * @var string
@@ -44,7 +51,8 @@ class Windows implements ConsoleOutputInterface
     public function __construct(ConsoleOutputInterface $output)
     {
         $this->output = $output;
-        if (!in_array(self::TARGET_ENCODING, mb_detect_order())) {
+        $this->encode = extension_loaded('mbstring');
+        if ($this->encode && !in_array(self::TARGET_ENCODING, mb_detect_order())) {
             mb_detect_order(array_merge(mb_detect_order(), [self::TARGET_ENCODING]));
         }
     }
@@ -55,10 +63,12 @@ class Windows implements ConsoleOutputInterface
      */
     public function write($messages, $newline = false, $type = self::OUTPUT_NORMAL)
     {
-        $messages = (array)$messages;
-        foreach ($messages as $key => $message) {
-            if (($form = mb_detect_encoding($message)) != self::TARGET_ENCODING) {
-                $messages[$key] = mb_convert_encoding($message, self::TARGET_ENCODING, $form);
+        if ($this->encode) {
+            $messages = (array)$messages;
+            foreach ($messages as $key => $message) {
+                if (($form = mb_detect_encoding($message)) != self::TARGET_ENCODING) {
+                    $messages[$key] = mb_convert_encoding($message, self::TARGET_ENCODING, $form);
+                }
             }
         }
         $this->output->write($messages, $newline, $type);
@@ -70,10 +80,12 @@ class Windows implements ConsoleOutputInterface
      */
     public function writeln($messages, $type = self::OUTPUT_NORMAL)
     {
-        $messages = (array)$messages;
-        foreach ($messages as $key => $message) {
-            if (($form = mb_detect_encoding($message)) != self::TARGET_ENCODING) {
-                $messages[$key] = mb_convert_encoding($message, self::TARGET_ENCODING, $form);
+        if ($this->encode) {
+            $messages = (array)$messages;
+            foreach ($messages as $key => $message) {
+                if (($form = mb_detect_encoding($message)) != self::TARGET_ENCODING) {
+                    $messages[$key] = mb_convert_encoding($message, self::TARGET_ENCODING, $form);
+                }
             }
         }
         $this->output->writeln($messages, $type);
