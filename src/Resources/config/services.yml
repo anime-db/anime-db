@@ -1,7 +1,7 @@
 services:
     anime_db.listener.update:
         class: AnimeDb\Bundle\AnimeDbBundle\Event\Listener\UpdateItself
-        arguments: [ %kernel.root_dir% ]
+        arguments: [ @anime_db.zip, %kernel.root_dir% ]
         tags:
             - { name: kernel.event_listener, event: anime_db.update_itself.downloaded, method: onAppDownloadedMergeComposerRequirements }
             - { name: kernel.event_listener, event: anime_db.update_itself.downloaded, method: onAppDownloadedMergeConfigs }
@@ -13,3 +13,7 @@ services:
         class: AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher
         calls:
             - [ setDispatcherDriver, [ @event_dispatcher ] ]
+
+    anime_db.zip:
+        class: ZipArchive
+        public: false

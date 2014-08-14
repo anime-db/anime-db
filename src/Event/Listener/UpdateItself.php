@@ -63,12 +63,21 @@ class UpdateItself
     protected $root_dir = '';
 
     /**
+     * Zip
+     *
+     * @var \ZipArchive
+     */
+    protected $zip;
+
+    /**
      * Construct
      *
+     * @param \ZipArchive $zip
      * @param string $kernel_root_dir
      */
-    public function __construct($kernel_root_dir)
+    public function __construct(\ZipArchive $zip, $kernel_root_dir)
     {
+        $this->zip = $zip;
         $this->root_dir = $kernel_root_dir.'/../';
     }
 
@@ -135,12 +144,11 @@ class UpdateItself
                     copy(self::MONITOR, $monitor);
                 }
                 // unzip
-                $zip = new \ZipArchive();
-                if ($zip->open($monitor) !== true) {
+                if ($this->zip->open($monitor) !== true) {
                     throw new \RuntimeException('Failed unzip monitor');
                 }
-                $zip->extractTo($event->getPath());
-                $zip->close();
+                $this->zip->extractTo($event->getPath());
+                $this->zip->close();
             }
 
             // copy params if need
