@@ -42,7 +42,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->filename = tempnam(sys_get_temp_dir(), 'composer');
+        $this->filename = tempnam(sys_get_temp_dir(), 'config');
         $this->manipulator = new Config($this->filename);
     }
 

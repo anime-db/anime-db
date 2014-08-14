@@ -42,7 +42,7 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->filename = tempnam(sys_get_temp_dir(), 'composer');
+        $this->filename = tempnam(sys_get_temp_dir(), 'routing');
         $this->manipulator = new Routing($this->filename);
     }
 
