@@ -44,6 +44,20 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
     protected $event_dir;
 
     /**
+     * Link to monitor archive
+     *
+     * @var string
+     */
+    protected $monitor;
+
+    /**
+     * ZipArchive
+     *
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $zip;
+
+    /**
      * Event
      *
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -81,8 +95,10 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
         $this->root_dir = sys_get_temp_dir().'/tests/foo/bar/';
         $this->event_dir = sys_get_temp_dir().'/tests/baz/';
         $this->fs->mkdir([$this->root_dir, $this->event_dir]);
+        $this->monitor = tempnam(sys_get_temp_dir().'/tests/', 'monitor');
+        $this->zip = $this->getMock('\ZipArchive');
 
-        $this->listener = new UpdateItself($this->root_dir);
+        $this->listener = new UpdateItself($this->zip, $this->root_dir, $this->monitor);
 
         $this->event = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded')
             ->disableOriginalConstructor()
@@ -101,7 +117,7 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
     {
         parent::tearDown();
         $this->fs->remove(sys_get_temp_dir().'/tests/');
-        @unlink(sys_get_temp_dir().'/'.basename(UpdateItself::MONITOR));
+        @unlink(sys_get_temp_dir().'/'.basename($this->monitor));
     }
 
     /**
@@ -233,9 +249,21 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
         if (!defined('PHP_WINDOWS_VERSION_BUILD')) {
             define('PHP_WINDOWS_VERSION_BUILD', 2600);
         }
-        $this->listener->onAppDownloadedMergeBinRun($this->event); // test
+        $event_dir = $this->event_dir;
+        $this->zip
+            ->expects($this->once())
+            ->method('open')
+            ->with(sys_get_temp_dir().'/'.basename($this->monitor))
+            ->willReturn(true);
+        $this->zip
+            ->expects($this->once())
+            ->method('extractTo')
+            ->with($this->event_dir);
+        $this->zip
+            ->expects($this->once())
+            ->method('close');
 
-        $this->assertFileExists($this->event_dir.'config.ini');
+        $this->listener->onAppDownloadedMergeBinRun($this->event); // test
     }
 
     /**
@@ -249,7 +277,10 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
         if (!defined('PHP_WINDOWS_VERSION_BUILD')) {
             define('PHP_WINDOWS_VERSION_BUILD', 2600);
         }
-        file_put_contents(sys_get_temp_dir().'/'.basename(UpdateItself::MONITOR), 'foo');
+        $this->zip
+            ->expects($this->once())
+            ->method('open')
+            ->willReturn(false);
 
         $this->listener->onAppDownloadedMergeBinRun($this->event); // test
     }
