@@ -45,7 +45,7 @@ abstract class Routing extends Job
     public function __construct(Package $package)
     {
         parent::__construct($package);
-        $this->manipulator = new RoutingManipulator();
+        $this->manipulator = new RoutingManipulator(__DIR__.'/../../../../app/config/routing.yml');
     }
 
     /**

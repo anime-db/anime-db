@@ -10,15 +10,13 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Manipulator;
 
-use Symfony\Component\Yaml\Yaml;
-
 /**
  * Config manipulator
  *
  * @package AnimeDb\Bundle\AnimeDbBundle\Manipulator
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Config extends FileContent
+class Config extends Yaml
 {
     /**
      * Add a routing resource
@@ -31,16 +29,16 @@ class Config extends FileContent
     {
         $resource = '@'.$bundle.'/Resources/config/'.$path.'.'.$format;
 
-        $value = $this->getContent();
-        $value['imports'] = isset($value['imports']) ? $value['imports'] : [];
+        $yaml = $this->getContent();
+        $yaml['imports'] = isset($yaml['imports']) ? $yaml['imports'] : [];
         // check for duplicate
-        foreach ($value['imports'] as $import) {
+        foreach ($yaml['imports'] as $import) {
             if ($import['resource'] == $resource) {
                 return;
             }
         }
-        $value['imports'][] = ['resource' => $resource];
-        $this->setContent($value);
+        $yaml['imports'][] = ['resource' => $resource];
+        $this->setContent($yaml);
     }
 
     /**
@@ -50,33 +48,15 @@ class Config extends FileContent
      */
     public function removeResource($bundle)
     {
-        $value = $this->getContent();
-        if ($value['imports']) {
-            foreach ($value['imports'] as $key => $import) {
+        $yaml = $this->getContent();
+        if (!empty($yaml['imports'])) {
+            foreach ($yaml['imports'] as $key => $import) {
                 if (strpos($import['resource'], '@'.$bundle) === 0) {
-                    unset($value['imports'][$key]);
-                    $this->setContent($value);
+                    unset($yaml['imports'][$key]);
+                    $this->setContent($yaml);
                     break;
                 }
             }
         }
-    }
-
-    /**
-     * (non-PHPdoc)
-     * @see \AnimeDb\Bundle\AnimeDbBundle\Manipulator\FileContent::getContent()
-     */
-    protected function getContent()
-    {
-        return Yaml::parse(parent::getContent());
-    }
-
-    /**
-     * (non-PHPdoc)
-     * @see \AnimeDb\Bundle\AnimeDbBundle\Manipulator\FileContent::setContent()
-     */
-    protected function setContent($content)
-    {
-        parent::setContent(Yaml::dump($content, 2));
     }
 }
