@@ -56,26 +56,6 @@ class ComposerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test empty file
-     *
-     * @expectedException \RuntimeException
-     */
-    public function testEmptyFile()
-    {
-        new Composer('');
-    }
-
-    /**
-     * Test file not exists
-     *
-     * @expectedException \RuntimeException
-     */
-    public function testFileNotExists()
-    {
-        new Composer(sys_get_temp_dir().'/no-file');
-    }
-
-    /**
      * Get config for add package
      *
      * @return array
