@@ -32,6 +32,9 @@ class Composer
      */
     public function __construct($filename)
     {
+        if (!file_exists($filename)) {
+            throw new \RuntimeException("Composer file '{$filename}' does not exist");
+        }
         $this->filename = $filename;
     }
 
