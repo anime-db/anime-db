@@ -115,7 +115,7 @@ abstract class Job
      *
      * @return integer
      */
-    public static function getPriority()
+    public function getPriority()
     {
         return static::PRIORITY;
     }
