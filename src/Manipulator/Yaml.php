@@ -35,6 +35,6 @@ abstract class Yaml extends FileContent
      */
     protected function setContent($content)
     {
-        parent::setContent(Util::dump($content, 2));
+        parent::setContent(Util::dump($content));
     }
 }
