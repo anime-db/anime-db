@@ -16,28 +16,8 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Manipulator;
  * @package AnimeDb\Bundle\AnimeDbBundle\Manipulator
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Composer
+class Composer extends FileContent
 {
-    /**
-     * Composer filename
-     *
-     * @var string
-     */
-    protected $filename;
-
-    /**
-     * Construct
-     *
-     * @param string $filename
-     */
-    public function __construct($filename)
-    {
-        if (!file_exists($filename)) {
-            throw new \RuntimeException("Composer file '{$filename}' does not exist");
-        }
-        $this->filename = $filename;
-    }
-
     /**
      * Add the package into composer requirements
      *
@@ -46,9 +26,9 @@ class Composer
      */
     public function addPackage($package, $version)
     {
-        $config = $this->getConfig();
+        $config = $this->getContent();
         $config['require'][$package] = $version;
-        $this->setConfig($config);
+        $this->setContent($config);
     }
 
     /**
@@ -58,10 +38,10 @@ class Composer
      */
     public function removePackage($package)
     {
-        $config = $this->getConfig();
+        $config = $this->getContent();
         if (isset($config['require'][$package])) {
             unset($config['require'][$package]);
-            $this->setConfig($config);
+            $this->setContent($config);
         }
     }
 
@@ -70,9 +50,9 @@ class Composer
      *
      * @return array
      */
-    protected function getConfig()
+    protected function getContent()
     {
-        return (array)json_decode(file_get_contents($this->filename), true);
+        return (array)json_decode(parent::getContent(), true);
     }
 
     /**
@@ -80,9 +60,8 @@ class Composer
      *
      * @param array $config
      */
-    protected function setConfig(array $config)
+    protected function setContent($config)
     {
-        $config = json_encode($config, JSON_NUMERIC_CHECK|JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
-        file_put_contents($this->filename, $config);
+        parent::setContent(json_encode($config, JSON_NUMERIC_CHECK|JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
     }
 }
