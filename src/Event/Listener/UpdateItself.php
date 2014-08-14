@@ -49,18 +49,18 @@ class UpdateItself
     const DEFAULT_PATH = '.';
 
     /**
-     * Link to monitor archive
-     *
-     * @var string
-     */
-    const MONITOR = 'http://anime-db.org/download/monitor_1.0.zip';
-
-    /**
      * Root dir
      *
      * @var string
      */
     protected $root_dir = '';
+
+    /**
+     * Link to monitor archive
+     *
+     * @var string
+     */
+    protected $monitor = '';
 
     /**
      * Zip
@@ -73,12 +73,14 @@ class UpdateItself
      * Construct
      *
      * @param \ZipArchive $zip
-     * @param string $kernel_root_dir
+     * @param string $root_dir
+     * @param string $monitor
      */
-    public function __construct(\ZipArchive $zip, $kernel_root_dir)
+    public function __construct(\ZipArchive $zip, $root_dir, $monitor)
     {
         $this->zip = $zip;
-        $this->root_dir = $kernel_root_dir.'/../';
+        $this->root_dir = $root_dir.'/../';
+        $this->monitor = $monitor;
     }
 
     /**
@@ -138,10 +140,10 @@ class UpdateItself
         if (defined('PHP_WINDOWS_VERSION_BUILD')) {
             // application has not yet has the monitor
             if (!file_exists($this->root_dir.'/config.ini')) {
-                $monitor = sys_get_temp_dir().'/'.basename(self::MONITOR);
+                $monitor = sys_get_temp_dir().'/'.basename($this->monitor);
                 // download monitor if need
                 if (!file_exists($monitor)) {
-                    copy(self::MONITOR, $monitor);
+                    copy($this->monitor, $monitor);
                 }
                 // unzip
                 if ($this->zip->open($monitor) !== true) {
