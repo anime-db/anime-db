@@ -64,6 +64,9 @@
     "require": {
         "php": ">=5.4.0",
         "ext-pdo_sqlite": "*",
+        "ext-zlib": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
         "symfony/symfony": ">=2.3.16",
         "doctrine/orm": ">=2.2.3,<2.4-dev",
         "doctrine/doctrine-bundle": "1.2.*",
