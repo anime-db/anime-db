@@ -13,6 +13,7 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Composer;
 use Composer\Script\PackageEvent;
 use Composer\Script\CommandEvent;
 use Composer\Script\Event;
+use Composer\Package\RootPackageInterface;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Installed as InstalledPackageNotify;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Removed as RemovedPackageNotify;
@@ -260,18 +261,9 @@ class ScriptHandler
      */
     public static function migrateUp(CommandEvent $event)
     {
-        $have_migrations = false;
-        // find migrations
-        if (file_exists($dir = __DIR__.'/../../app/DoctrineMigrations')) {
-            $have_migrations = (bool)Finder::create()
-                ->in($dir)
-                ->files()
-                ->name('/Version\d{14}.*\.php/')
-                ->count();
-        }
+        if (self::isHaveMigrations(__DIR__.'/../../app/DoctrineMigrations')) {
+            self::repackMigrations($event->getComposer()->getPackage());
 
-        // migration up
-        if ($have_migrations) {
             $cmd = 'doctrine:migrations:migrate --no-interaction';
             if ($event->getIO()->isDecorated()) {
                 $cmd .= ' --ansi';
@@ -287,19 +279,7 @@ class ScriptHandler
      */
     public static function migrateDown(CommandEvent $event)
     {
-        $have_migrations = false;
-
-        // find migrations
-        if (file_exists($dir = __DIR__.'/../../app/cache/dev/DoctrineMigrations/')) {
-            $have_migrations = (bool)Finder::create()
-                ->in($dir)
-                ->files()
-                ->name('/Version\d{14}.*\.php/')
-                ->count();
-        }
-
-        // migration down
-        if ($have_migrations) {
+        if (self::isHaveMigrations(__DIR__.'/../../app/cache/dev/DoctrineMigrations/')) {
             file_put_contents(
                 $dir.'migrations.yml',
                 "migrations_namespace: 'Application\Migrations'\n".
@@ -310,6 +290,52 @@ class ScriptHandler
             self::getContainer()->executeCommand(
                 'doctrine:migrations:migrate --no-interaction --configuration='.$dir.'migrations.yml 0'
             );
+        }
+    }
+
+    /**
+     * Is have migrations
+     *
+     * @param string $dir
+     *
+     * @return boolean
+     */
+    protected static function isHaveMigrations($dir)
+    {
+        if (!is_dir($dir)) {
+            return false;
+        }
+
+        return (bool)Finder::create()
+            ->in($dir)
+            ->files()
+            ->name('/Version\d{14}.*\.php/')
+            ->count();
+    }
+
+    /**
+     * Repack migrations
+     *
+     * @param \Composer\Package\RootPackageInterface
+     */
+    protected static function repackMigrations(RootPackageInterface $package)
+    {
+        $dir = __DIR__.'/../../app/DoctrineMigrations';
+        if (is_dir($dir) && version_compare($package->getVersion(), '0.3.14') < 0) {
+            $finder = Finder::create()
+                ->in($dir)
+                ->files()
+                ->name('/Version\d{14}.*\.php/');
+
+            foreach ($finder as $file) {
+                /* @var $file \SplFileInfo */
+                $content = file_get_contents($file);
+                if (strpos($content, 'getMigrationClass()') !== false) {
+                    $content = str_replace('getMigrationClass()', 'getMigration()', $content);
+                    $content = preg_replace('/return "([^"]+)";/', 'return new \\\$1($this->version);', $content);
+                    file_put_contents($file, $content);
+                }
+            }
         }
     }
 
