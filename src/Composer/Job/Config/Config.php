@@ -45,7 +45,7 @@ abstract class Config extends Job
     public function __construct(Package $package)
     {
         parent::__construct($package);
-        $this->manipulator = new ConfigManipulator();
+        $this->manipulator = new ConfigManipulator(__DIR__.'/../../../../app/config/vendor_config.yml');
     }
 
     /**

@@ -46,9 +46,8 @@ class Composer extends FileContent
     }
 
     /**
-     * Get config
-     *
-     * @return array
+     * (non-PHPdoc)
+     * @see \AnimeDb\Bundle\AnimeDbBundle\Manipulator\FileContent::getContent()
      */
     protected function getContent()
     {
@@ -56,12 +55,11 @@ class Composer extends FileContent
     }
 
     /**
-     * Set config
-     *
-     * @param array $config
+     * (non-PHPdoc)
+     * @see \AnimeDb\Bundle\AnimeDbBundle\Manipulator\FileContent::setContent()
      */
-    protected function setContent($config)
+    protected function setContent($content)
     {
-        parent::setContent(json_encode($config, JSON_NUMERIC_CHECK|JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
+        parent::setContent(json_encode($content, JSON_NUMERIC_CHECK|JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
     }
 }
