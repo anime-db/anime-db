@@ -19,6 +19,23 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Manipulator;
 class Composer
 {
     /**
+     * Composer filename
+     *
+     * @var string
+     */
+    protected $filename;
+
+    /**
+     * Construct
+     *
+     * @param string $filename
+     */
+    public function __construct($filename)
+    {
+        $this->filename = $filename;
+    }
+
+    /**
      * Add the package into composer requirements
      *
      * @param string $package
@@ -26,11 +43,9 @@ class Composer
      */
     public function addPackage($package, $version)
     {
-        $composer = file_get_contents(__DIR__.'/../../composer.json');
-        $composer = json_decode($composer, true);
-        $composer['require'][$package] = $version;
-        $composer = json_encode($composer, JSON_NUMERIC_CHECK|JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
-        file_put_contents(__DIR__.'/../../composer.json', $composer);
+        $config = $this->getConfig();
+        $config['require'][$package] = $version;
+        $this->setConfig($config);
     }
 
     /**
@@ -40,12 +55,31 @@ class Composer
      */
     public function removePackage($package)
     {
-        $composer = file_get_contents(__DIR__.'/../../composer.json');
-        $composer = json_decode($composer, true);
-        if (isset($composer['require'][$package])) {
-            unset($composer['require'][$package]);
-            $composer = json_encode($composer, JSON_NUMERIC_CHECK|JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
-            file_put_contents(__DIR__.'/../../composer.json', $composer);
+        $config = $this->getConfig();
+        if (isset($config['require'][$package])) {
+            unset($config['require'][$package]);
+            $this->setConfig($config);
         }
+    }
+
+    /**
+     * Get config
+     *
+     * @return array
+     */
+    protected function getConfig()
+    {
+        return (array)json_decode(file_get_contents($this->filename), true);
+    }
+
+    /**
+     * Set config
+     *
+     * @param array $config
+     */
+    protected function setConfig(array $config)
+    {
+        $config = json_encode($config, JSON_NUMERIC_CHECK|JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
+        file_put_contents($this->filename, $config);
     }
 }
