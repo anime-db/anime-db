@@ -54,7 +54,10 @@ class Remove extends Job
     public function execute()
     {
         if ($this->bundle) {
-            $manipulator = new KernelManipulator();
+            $manipulator = new KernelManipulator(
+                __DIR__.'/../../../../app/bundles.php',
+                __DIR__.'/../../../../app/AppKernel.php'
+            );
             $manipulator->removeBundle($this->bundle);
         }
     }

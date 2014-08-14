@@ -35,7 +35,10 @@ class Add extends Job
     public function execute()
     {
         if ($bundle = $this->getPackageBundle()) {
-            $manipulator = new KernelManipulator();
+            $manipulator = new KernelManipulator(
+                __DIR__.'/../../../../app/bundles.php',
+                __DIR__.'/../../../../app/AppKernel.php'
+            );
             $manipulator->addBundle($bundle);
         }
     }
