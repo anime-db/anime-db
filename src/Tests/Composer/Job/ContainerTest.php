@@ -13,7 +13,7 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
 
 /**
- * Test deliver events command
+ * Test job container
  *
  * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job
  * @author  Peter Gribanov <info@peter-gribanov.ru>
