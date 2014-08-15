@@ -11,6 +11,7 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\ScriptHandler;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Test script handler
@@ -63,12 +64,49 @@ class ScriptHandlerTest extends \PHPUnit_Framework_TestCase
     protected $package;
 
     /**
+     * Default root dir
+     *
+     * @var string
+     */
+    protected $default_root_dir;
+
+    /**
+     * Root dir
+     *
+     * @var string
+     */
+    protected $root_dir;
+
+    /**
+     * Filesystem
+     *
+     * @var \Symfony\Component\Filesystem\Filesystem
+     */
+    protected $fs;
+
+    /**
+     * Construct
+     *
+     * @param string $name
+     * @param array $data
+     * @param string $dataName
+     */
+    public function __construct($name = null, array $data = array(), $dataName = '')
+    {
+        parent::__construct($name, $data, $dataName);
+        $this->fs = new Filesystem();
+    }
+
+    /**
      * (non-PHPdoc)
      * @see PHPUnit_Framework_TestCase::setUp()
      */
     protected function setUp()
     {
         parent::setUp();
+        $this->root_dir = sys_get_temp_dir().'/tests/';
+        $this->fs->mkdir($this->root_dir);
+
         $this->composer = $this->getMock('\Composer\Composer');
         $this->package = $this->getMockBuilder('\Composer\Package\Package')
             ->disableOriginalConstructor()
@@ -88,6 +126,8 @@ class ScriptHandlerTest extends \PHPUnit_Framework_TestCase
 
         $this->default_container = ScriptHandler::getContainer();
         ScriptHandler::setContainer($this->container);
+        $this->default_root_dir = ScriptHandler::getRootDir();
+        ScriptHandler::setRootDir($this->root_dir);
 
     }
 
@@ -99,6 +139,8 @@ class ScriptHandlerTest extends \PHPUnit_Framework_TestCase
     {
         parent::tearDown();
         ScriptHandler::setContainer($this->default_container);
+        ScriptHandler::setRootDir($this->default_root_dir);
+        $this->fs->remove($this->root_dir);
     }
 
     /**
@@ -378,13 +420,50 @@ class ScriptHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test install config not exists
+     */
+    public function testInstallConfigNotExists()
+    {
+        $this->fs->mkdir($this->root_dir.'config');
+
+        ScriptHandler::installConfig(); // test
+
+        $this->assertFileExists($this->root_dir.'config/vendor_config.yml');
+        $this->assertFileExists($this->root_dir.'config/routing.yml');
+        $this->assertFileExists($this->root_dir.'bundles.php');
+        $this->assertEmpty(file_get_contents($this->root_dir.'config/vendor_config.yml'));
+        $this->assertEmpty(file_get_contents($this->root_dir.'config/routing.yml'));
+        $this->assertEquals("<?php\nreturn [\n];", file_get_contents($this->root_dir.'bundles.php'));
+    }
+
+    /**
+     * Test install config
+     */
+    public function testInstallConfig()
+    {
+        $this->fs->mkdir($this->root_dir.'config');
+        touch($this->root_dir.'config/vendor_config.yml');
+        touch($this->root_dir.'config/routing.yml');
+        touch($this->root_dir.'bundles.php');
+
+        ScriptHandler::installConfig(); // test
+
+        $this->assertFileExists($this->root_dir.'config/vendor_config.yml');
+        $this->assertFileExists($this->root_dir.'config/routing.yml');
+        $this->assertFileExists($this->root_dir.'bundles.php');
+        $this->assertEmpty(file_get_contents($this->root_dir.'config/vendor_config.yml'));
+        $this->assertEmpty(file_get_contents($this->root_dir.'config/routing.yml'));
+        $this->assertEmpty(file_get_contents($this->root_dir.'bundles.php'));
+    }
+
+    /**
      * Test deliver events
      */
     public function testDeliverEvents()
     {
         $io = $this->getMock('\Composer\IO\IOInterface');
         $this->event_command
-            ->expects($this->any())
+            ->expects($this->exactly(2))
             ->method('getIO')
             ->willReturn($io);
         $io
@@ -406,6 +485,165 @@ class ScriptHandlerTest extends \PHPUnit_Framework_TestCase
 
         ScriptHandler::deliverEvents($this->event_command);
         ScriptHandler::deliverEvents($this->event_command);
+    }
+
+    /**
+     * Test migrate up no migrations
+     */
+    public function testMigrateUpNoMigrations()
+    {
+        $this->container
+            ->expects($this->never())
+            ->method('executeCommand');
+        // dir is not exists
+        ScriptHandler::migrateUp($this->event_command);
+
+        $this->fs->mkdir($this->root_dir.'DoctrineMigrations');
+        // dir is empty
+        ScriptHandler::migrateDown();
+    }
+
+    /**
+     * Test migrate up
+     */
+    public function testMigrateUp()
+    {
+        $dir = $this->root_dir.'DoctrineMigrations/';
+        $this->fs->mkdir($dir);
+        $io = $this->getMock('\Composer\IO\IOInterface');
+        $this->event_command
+            ->expects($this->exactly(2))
+            ->method('getIO')
+            ->willReturn($io);
+        $io
+            ->expects($this->at(0))
+            ->method('isDecorated')
+            ->willReturn(false);
+        $io
+            ->expects($this->at(1))
+            ->method('isDecorated')
+            ->willReturn(true);
+        $this->container
+            ->expects($this->at(0))
+            ->method('executeCommand')
+            ->with('doctrine:migrations:migrate --no-interaction', null);
+        $this->container
+            ->expects($this->at(1))
+            ->method('executeCommand')
+            ->with('doctrine:migrations:migrate --no-interaction --ansi', null);
+
+        $this->initMigrations($dir);
+        ScriptHandler::migrateUp($this->event_command); // test
+        $this->checkRepackMigrations($dir);
+
+        $this->initMigrations($dir);
+        ScriptHandler::migrateUp($this->event_command); // test
+        $this->checkRepackMigrations($dir);
+    }
+
+    /**
+     * Init migrations
+     *
+     * @param string $dir
+     */
+    protected function initMigrations($dir)
+    {
+        file_put_contents(
+            $dir.'Version55555555555555_DemoMigration.php',
+            'public function getMigrationClass() { return "DemoMigration"; }'
+        );
+        file_put_contents(
+            $dir.'Version66666666666666_AcmeMigration.php',
+            'public function getMigration() { return new \AcmeMigration($this->version); }'
+        );
+    }
+
+    /**
+     * Check repack migrations
+     *
+     * @param string $dir
+     */
+    protected function checkRepackMigrations($dir)
+    {
+        $this->assertFileExists($dir.'Version55555555555555_DemoMigration.php');
+        $this->assertFileExists($dir.'Version66666666666666_AcmeMigration.php');
+        $this->assertEquals(
+            'public function getMigration() { return new \DemoMigration($this->version); }',
+            file_get_contents($dir.'Version55555555555555_DemoMigration.php')
+        );
+        $this->assertEquals(
+            'public function getMigration() { return new \AcmeMigration($this->version); }',
+            file_get_contents($dir.'Version66666666666666_AcmeMigration.php')
+        );
+    }
+
+    /**
+     * Test migrate down no migrations
+     */
+    public function testMigrateDownNoMigrations()
+    {
+        $this->container
+            ->expects($this->never())
+            ->method('executeCommand');
+        // dir is not exists
+        ScriptHandler::migrateDown();
+
+        $this->fs->mkdir($this->root_dir.'cache/dev/DoctrineMigrations');
+        // dir is empty
+        ScriptHandler::migrateDown();
+    }
+
+    /**
+     * Test migrate down no migrations
+     */
+    public function testMigrateDown()
+    {
+        $dir = $this->root_dir.'cache/dev/DoctrineMigrations/';
+        $this->fs->mkdir($dir);
+        $this->initMigrations($dir);
+        $this->container
+            ->expects($this->once())
+            ->method('executeCommand')
+            ->with('doctrine:migrations:migrate --no-interaction --configuration='.$dir.'migrations.yml 0');
+
+        ScriptHandler::migrateDown(); // test
+
+        $this->assertFileExists($dir.'migrations.yml');
+        $this->assertEquals(
+            "migrations_namespace: 'Application\Migrations'\n".
+            "migrations_directory: 'app/cache/dev/DoctrineMigrations/'\n".
+            "table_name: 'migration_versions'",
+            file_get_contents($dir.'migrations.yml')
+        );
+    }
+
+    /**
+     * Test backup DB not exists
+     */
+    public function testBackupDBNotExists()
+    {
+        $this->fs->mkdir($this->root_dir.'Resources');
+
+        ScriptHandler::backupDB(); // test
+
+        $this->assertFileNotExists($this->root_dir.'Resources/anime.db');
+        $this->assertFileNotExists($this->root_dir.'Resources/anime.db.bk');
+    }
+
+    /**
+     * Test backup DB
+     */
+    public function testBackupDB()
+    {
+        $this->fs->mkdir($this->root_dir.'Resources');
+        file_put_contents($this->root_dir.'Resources/anime.db', 'foo');
+
+        ScriptHandler::backupDB(); // test
+
+        $this->assertFileExists($this->root_dir.'Resources/anime.db');
+        $this->assertFileExists($this->root_dir.'Resources/anime.db.bk');
+        $this->assertFileEquals($this->root_dir.'Resources/anime.db', $this->root_dir.'Resources/anime.db.bk');
+        $this->assertEquals('foo', file_get_contents($this->root_dir.'Resources/anime.db.bk'));
     }
 
     /**
