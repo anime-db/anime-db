@@ -126,23 +126,23 @@
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::dumpAssets"
         ],
         "post-package-install": [
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPackageToKernel",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPackageToRouting",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPackageToConfig",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::packageInKernel",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::packageInRouting",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::packageInConfig",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migratePackage",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::notifyPackage"
         ],
         "post-package-update": [
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPackageToKernel",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPackageToRouting",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPackageToConfig",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::packageInKernel",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::packageInRouting",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::packageInConfig",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migratePackage",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::notifyPackage"
         ],
         "pre-package-uninstall": [
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::removePackageFromKernel",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::removePackageFromRouting",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::removePackageFromConfig",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::packageInKernel",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::packageInRouting",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::packageInConfig",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migratePackage",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::notifyPackage"
         ]
