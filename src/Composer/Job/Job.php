@@ -63,12 +63,21 @@ abstract class Job
     private $package;
 
     /**
+     * Root dir
+     *
+     * @var string
+     */
+    private $root_dir;
+
+    /**
      * Construct
      *
      * @param \Composer\Package\Package $package
+     * @param string $root_dir
      */
-    public function __construct(Package $package)
+    public function __construct(Package $package, $root_dir = '')
     {
+        $this->root_dir = $root_dir ?: __DIR__.'/../../../';
         $this->package = $package;
         $this->package->setExtra(array_merge([
                 'anime-db-routing' => '',
@@ -190,15 +199,17 @@ abstract class Job
      */
     public function getPackageDir()
     {
-        return __DIR__.'/../../../vendor/'.$this->package->getName().'/';
+        return $this->root_dir.'vendor/'.$this->package->getName().'/';
     }
 
     /**
      * Get the bundle from package
      *
-     * For example package name 'demo-vendor/demo-bundle' converted to:
-     *   \DemoVendor\Bundle\DemoBundle\DemoVendorDemoBundle
-     *   \DemoVendor\Bundle\DemoBundle\DemoBundle
+     * For example package name 'demo-vendor/foo-bar-bundle' converted to:
+     *   \DemoVendor\Bundle\FooBarBundle\DemoVendorFooBarBundle
+     *   \DemoVendor\Bundle\FooBarBundle\FooBarBundle
+     *   \Foo\Bundle\BarBundle\FooBarBundle
+     *   \Foo\Bundle\BarBundle\BarBundle
      *
      * @return string|null
      */
@@ -256,7 +267,7 @@ abstract class Job
         $copy = new Package(
             $this->package->getName(),
             $this->package->getVersion(),
-            $this->package->getVersion()
+            $this->package->getPrettyVersion()
         );
         $copy->setType($this->package->getType());
         $copy->setExtra($this->package->getExtra());
