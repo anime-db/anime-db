@@ -51,12 +51,22 @@ class ScriptHandler
      *
      * @return \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container
      */
-    protected static function getContainer()
+    public static function getContainer()
     {
         if (!(self::$container instanceof Container)) {
-            self::$container = new Container();
+            self::setContainer(new Container());
         }
         return self::$container;
+    }
+
+    /**
+     * Set container of jobs
+     *
+     * @param \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container
+     */
+    public static function setContainer(Container $container)
+    {
+        self::$container = $container;
     }
 
     /**
@@ -73,7 +83,7 @@ class ScriptHandler
             case 'update':
                 self::getContainer()->addJob(new AddKernel($event->getOperation()->getTargetPackage()));
                 break;
-            case 'update':
+            case 'uninstall':
                 self::getContainer()->addJob(new RemoveKernel($event->getOperation()->getPackage()));
                 break;
         }
@@ -93,7 +103,7 @@ class ScriptHandler
             case 'update':
                 self::getContainer()->addJob(new AddRouting($event->getOperation()->getTargetPackage()));
                 break;
-            case 'update':
+            case 'uninstall':
                 self::getContainer()->addJob(new RemoveRouting($event->getOperation()->getPackage()));
                 break;
         }
