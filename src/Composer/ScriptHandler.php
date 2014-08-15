@@ -47,6 +47,13 @@ class ScriptHandler
     private static $container;
 
     /**
+     * Root dir
+     *
+     * @var string
+     */
+    private static $root_dir;
+
+    /**
      * Get container of jobs
      *
      * @return \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container
@@ -62,11 +69,34 @@ class ScriptHandler
     /**
      * Set container of jobs
      *
-     * @param \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container
+     * @param \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container $container
      */
     public static function setContainer(Container $container)
     {
         self::$container = $container;
+    }
+
+    /**
+     * Get root dir
+     *
+     * @return string
+     */
+    public static function getRootDir()
+    {
+        if (!self::$root_dir) {
+            self::setRootDir(__DIR__.'/../../app/');
+        }
+        return self::$root_dir;
+    }
+
+    /**
+     * Set root dir
+     *
+     * @param string $root_dir
+     */
+    public static function setRootDir($root_dir)
+    {
+        self::$root_dir = $root_dir;
     }
 
     /**
@@ -202,14 +232,14 @@ class ScriptHandler
      */
     public static function installConfig()
     {
-        if (!file_exists(__DIR__.'/../../app/config/vendor_config.yml')) {
-            file_put_contents(__DIR__.'/../../app/config/vendor_config.yml', '');
+        if (!file_exists(self::getRootDir().'config/vendor_config.yml')) {
+            file_put_contents(self::getRootDir().'config/vendor_config.yml', '');
         }
-        if (!file_exists(__DIR__.'/../../app/config/routing.yml')) {
-            file_put_contents(__DIR__.'/../../app/config/routing.yml', '');
+        if (!file_exists(self::getRootDir().'config/routing.yml')) {
+            file_put_contents(self::getRootDir().'config/routing.yml', '');
         }
-        if (!file_exists(__DIR__.'/../../app/bundles.php')) {
-            file_put_contents(__DIR__.'/../../app/bundles.php', "<?php\nreturn [\n];");
+        if (!file_exists(self::getRootDir().'bundles.php')) {
+            file_put_contents(self::getRootDir().'bundles.php', "<?php\nreturn [\n];");
         }
     }
 
@@ -234,8 +264,9 @@ class ScriptHandler
      */
     public static function migrateUp(CommandEvent $event)
     {
-        if (self::isHaveMigrations(__DIR__.'/../../app/DoctrineMigrations')) {
-            self::repackMigrations($event->getComposer()->getPackage());
+        $dir = self::getRootDir().'DoctrineMigrations';
+        if (self::isHaveMigrations($dir)) {
+            self::repackMigrations($dir);
 
             $cmd = 'doctrine:migrations:migrate --no-interaction';
             if ($event->getIO()->isDecorated()) {
@@ -247,12 +278,11 @@ class ScriptHandler
 
     /**
      * Migrate all plugins to down
-     *
-     * @param \Composer\Script\CommandEvent $event
      */
-    public static function migrateDown(CommandEvent $event)
+    public static function migrateDown()
     {
-        if (self::isHaveMigrations(__DIR__.'/../../app/cache/dev/DoctrineMigrations/')) {
+        $dir = self::getRootDir().'cache/dev/DoctrineMigrations/';
+        if (self::isHaveMigrations($dir)) {
             file_put_contents(
                 $dir.'migrations.yml',
                 "migrations_namespace: 'Application\Migrations'\n".
@@ -289,12 +319,11 @@ class ScriptHandler
     /**
      * Repack migrations
      *
-     * @param \Composer\Package\RootPackageInterface
+     * @param string $dir
      */
-    protected static function repackMigrations(RootPackageInterface $package)
+    protected static function repackMigrations($dir)
     {
-        $dir = __DIR__.'/../../app/DoctrineMigrations';
-        if (is_dir($dir) && version_compare($package->getVersion(), '0.3.14') < 0) {
+        if (is_dir($dir)) {
             $finder = Finder::create()
                 ->in($dir)
                 ->files()
@@ -316,7 +345,7 @@ class ScriptHandler
      * Сreate a backup of the database
      */
     public static function backupDB() {
-        $db = __DIR__.'/../../app/Resources/anime.db';
+        $db = self::getRootDir().'Resources/anime.db';
         if (file_exists($db)) {
             copy($db, $db.'.bk');
         }
