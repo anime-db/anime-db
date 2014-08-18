@@ -36,8 +36,8 @@ class Add extends Job
     {
         if ($bundle = $this->getPackageBundle()) {
             $manipulator = new KernelManipulator(
-                __DIR__.'/../../../../app/bundles.php',
-                __DIR__.'/../../../../app/AppKernel.php'
+                $this->root_dir.'app/bundles.php',
+                $this->root_dir.'app/AppKernel.php'
             );
             $manipulator->addBundle($bundle);
         }

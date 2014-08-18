@@ -41,11 +41,12 @@ abstract class Routing extends Job
      * Construct
      *
      * @param \Composer\Package\Package $package
+     * @param string $root_dir
      */
-    public function __construct(Package $package)
+    public function __construct(Package $package, $root_dir = '')
     {
-        parent::__construct($package);
-        $this->manipulator = new RoutingManipulator(__DIR__.'/../../../../app/config/routing.yml');
+        parent::__construct($package, $root_dir);
+        $this->manipulator = new RoutingManipulator($this->root_dir.'app/config/routing.yml');
     }
 
     /**

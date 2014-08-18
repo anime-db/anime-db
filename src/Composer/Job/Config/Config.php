@@ -41,11 +41,12 @@ abstract class Config extends Job
      * Construct
      *
      * @param \Composer\Package\Package $package
+     * @param string $root_dir
      */
-    public function __construct(Package $package)
+    public function __construct(Package $package, $root_dir = '')
     {
-        parent::__construct($package);
-        $this->manipulator = new ConfigManipulator(__DIR__.'/../../../../app/config/vendor_config.yml');
+        parent::__construct($package, $root_dir);
+        $this->manipulator = new ConfigManipulator($this->root_dir.'app/config/vendor_config.yml');
     }
 
     /**

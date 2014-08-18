@@ -67,7 +67,7 @@ abstract class Job
      *
      * @var string
      */
-    private $root_dir;
+    protected $root_dir;
 
     /**
      * Construct
