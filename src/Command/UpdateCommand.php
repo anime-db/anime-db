@@ -51,22 +51,37 @@ class UpdateCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output) {
         // load composer
-        $factory = new Factory();
         $io = new ConsoleIO($input, $output, $this->getHelperSet());
-        $composer = $factory->createComposer($io);
+        $composer = $this->createComposer($io);
 
         // search tag with new version of application
         $tag = $this->findNewVersion($composer->getPackage()->getVersion());
         if ($tag) {
             $this->doUpdateItself($tag, $composer, $output);
             // reload composer
-            $composer = $factory->createComposer($io);
+            $composer = $this->createComposer($io);
         } else {
             $output->writeln('<info>Application has already been updated to the latest version</info>');
         }
 
         $this->doUpdateComposer($composer, $io);
         $output->writeln('<info>Updating the application has been completed<info>');
+    }
+
+    /**
+     * Create new composer object
+     *
+     * @param \Composer\IO\ConsoleIO $io
+     *
+     * @return \Composer\Composer
+     */
+    protected function createComposer(ConsoleIO $io)
+    {
+        // update application components to the latest version
+        if (file_exists($root.'composer.lock')) {
+            unlink($root.'composer.lock');
+        }
+        return (new Factory())->createComposer($io);
     }
 
     /**
