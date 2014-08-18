@@ -59,7 +59,6 @@ class Kernel extends FileContent
     public function addBundle($bundle)
     {
         $bundle = 'new '.($bundle[0] == '\\' ? substr($bundle, 1) : $bundle).'()';
-        $bundle = $this->getBundleTemplate($bundle);
         // not root bundle
         if (strpos($this->getKernal(), $bundle) === false) {
             $bundles = $this->getBundles();
