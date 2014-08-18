@@ -358,27 +358,33 @@ class ScriptHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test notify project install
+     * Get job for notify project
+     *
+     * @return array
      */
-    public function testNotifyProjectInstall()
+    public function getJobForNotifyProject()
     {
-        $this->getRootPackage();
-        $that = $this;
-        $package = $this->package;
-        $this->container
-            ->expects($this->once())
-            ->method('addJob')
-            ->willReturnCallback(function ($job) use ($that, $package) {
-                $that->assertInstanceOf('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Project\Installed', $job);
-                $that->assertEquals($package, $job->getPackage());
-            });
-        ScriptHandler::notifyProjectInstall($this->event_command);
+        return [
+            [
+                'notifyProjectInstall',
+                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Project\Installed'
+            ],
+            [
+                'notifyProjectUpdate',
+                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Project\Updated'
+            ],
+        ];
     }
 
     /**
-     * Test notify project update
+     * Test notify project
+     *
+     * @dataProvider getJobForNotifyProject
+     *
+     * @param string $method
+     * @param string $job_class
      */
-    public function testNotifyProjectUpdate()
+    public function testNotifyProject($method, $job_class)
     {
         $this->getRootPackage();
         $that = $this;
@@ -386,11 +392,11 @@ class ScriptHandlerTest extends \PHPUnit_Framework_TestCase
         $this->container
             ->expects($this->once())
             ->method('addJob')
-            ->willReturnCallback(function ($job) use ($that, $package) {
-                $that->assertInstanceOf('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Project\Updated', $job);
+            ->willReturnCallback(function ($job) use ($that, $package, $job_class) {
+                $that->assertInstanceOf($job_class, $job);
                 $that->assertEquals($package, $job->getPackage());
             });
-        ScriptHandler::notifyProjectUpdate($this->event_command);
+        call_user_func(['\AnimeDb\Bundle\AnimeDbBundle\Composer\ScriptHandler', $method], $this->event_command);
     }
 
     /**
