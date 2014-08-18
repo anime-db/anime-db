@@ -666,14 +666,38 @@ class ScriptHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test add package to kernel
+     * Test add package to kernel no prod cache
      */
-    public function testAddPackageToKernel()
+    public function testAddPackageToKernelNoProd()
     {
         $this->clearCache(0, 'prod');
         $this->clearCache(1, 'test');
         $this->clearCache(2, 'dev');
         ScriptHandler::clearCache();
+    }
+
+    /**
+     * Test add package to kernel
+     */
+    public function testAddPackageToKernel()
+    {
+        // create fake prod cache
+        $dir = $this->root_dir.'cache/prod/';
+        $this->fs->mkdir([$dir, $dir.'test1', $dir.'test2']);
+        touch($dir.'test1/file1');
+        touch($dir.'test1/file2');
+        touch($dir.'test2/file1');
+        touch($dir.'test2/file2');
+        touch($dir.'file1');
+        touch($dir.'file2');
+
+        $this->clearCache(0, 'prod');
+        $this->clearCache(1, 'test');
+        $this->clearCache(2, 'dev');
+
+        ScriptHandler::clearCache();
+
+        $this->assertFalse(is_dir($dir));
     }
 
     /**

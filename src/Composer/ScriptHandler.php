@@ -27,6 +27,7 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel\Remove as RemoveKernel;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Add as AddRouting;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Remove as RemoveRouting;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Composer script handler
@@ -367,6 +368,12 @@ class ScriptHandler
      */
     public static function clearCache()
     {
+        // to avoid errors due to the encrypted container forcibly clean the cache directory
+        $dir = self::getRootDir().'cache/prod';
+        if (is_dir($dir)) {
+            (new Filesystem())->remove($dir);
+        }
+
         self::getContainer()->executeCommand('cache:clear --no-warmup --env=prod --no-debug', 0);
         self::getContainer()->executeCommand('cache:clear --no-warmup --env=test --no-debug', 0);
         self::getContainer()->executeCommand('cache:clear --no-warmup --env=dev --no-debug', 0);
