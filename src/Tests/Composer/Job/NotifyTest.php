@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job\Notify\Project;
+namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Installed as InstalledPackage;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Removed as RemovedPackage;
@@ -19,12 +19,12 @@ use AnimeDb\Bundle\AnimeDbBundle\Event\Package\StoreEvents as StoreEventsPackage
 use AnimeDb\Bundle\AnimeDbBundle\Event\Project\StoreEvents as StoreEventsProject;
 
 /**
- * Test notify project installed
+ * Test job notify
  *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job\Notify\Project
+ * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class InstalledTest extends \PHPUnit_Framework_TestCase
+class NotifyTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Get jobs
