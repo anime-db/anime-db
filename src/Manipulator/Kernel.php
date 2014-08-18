@@ -58,12 +58,9 @@ class Kernel extends FileContent
      */
     public function addBundle($bundle)
     {
-        if ($bundle[0] == '\\') {
-            $bundle = substr($bundle, 1);
-        }
+        $bundle = $this->getBundleTemplate($bundle);
         // not root bundle
         if (strpos($this->getKernal(), $bundle) === false) {
-            $bundle = 'new '.$bundle.'()';
             $bundles = $this->getBundles();
             if (!in_array($bundle, $bundles)) {
                 $bundles[] = $bundle;
@@ -79,15 +76,27 @@ class Kernel extends FileContent
      */
     public function removeBundle($bundle)
     {
-        if ($bundle[0] == '\\') {
-            $bundle = substr($bundle, 1);
-        }
-        $bundle = 'new '.$bundle.'()';
+        $bundle = $this->getBundleTemplate($bundle);
         $bundles = $this->getBundles();
         if (($key = array_search($bundle, $bundles)) !== false) {
             unset($bundles[$key]);
             $this->setBundles($bundles);
         }
+    }
+
+    /**
+     * Get bundle template
+     *
+     * @param string $bundle
+     *
+     * @return string
+     */
+    protected function getBundleTemplate($bundle)
+    {
+        if ($bundle[0] == '\\') {
+            $bundle =  substr($bundle, 1);
+        }
+        return 'new '.$bundle.'()';
     }
 
     /**
