@@ -77,8 +77,9 @@ class UpdateCommand extends ContainerAwareCommand
     protected function createComposer(ConsoleIO $io)
     {
         // update application components to the latest version
-        if (file_exists($root.'composer.lock')) {
-            unlink($root.'composer.lock');
+        $lock_file = $this->getContainer()->getParameter('kernel.root_dir').'/../composer.lock';
+        if (file_exists($lock_file)) {
+            @unlink($lock_file);
         }
         return (new Factory())->createComposer($io);
     }
@@ -170,10 +171,6 @@ class UpdateCommand extends ContainerAwareCommand
      */
     protected function doUpdateComposer(Composer $composer, ConsoleIO $io)
     {
-        $lock_file = $this->getContainer()->getParameter('kernel.root_dir').'/../composer.lock';
-        if (file_exists($lock_file)) {
-            @unlink($lock_file);
-        }
         if (defined('PHP_WINDOWS_VERSION_BUILD')) {
             $composer->getDownloadManager()->setOutputProgress(false);
         }
