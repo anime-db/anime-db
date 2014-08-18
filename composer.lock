@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "adeb51eb53155fe1a331a238cc72caa4",
+    "hash": "d60e34de989b061a5e481b0fec87e0fd",
     "packages": [
         {
             "name": "anime-db/app-bundle",
@@ -2384,7 +2384,9 @@
     "prefer-stable": false,
     "platform": {
         "php": ">=5.4.0",
-        "ext-pdo_sqlite": "*"
+        "ext-pdo_sqlite": "*",
+        "ext-zlib": "*",
+        "ext-json": "*"
     },
     "platform-dev": {
         "ext-fileinfo": "*"
