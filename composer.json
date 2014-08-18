@@ -35,6 +35,7 @@
         "ext-pdo_sqlite": "*",
         "ext-zlib": "*",
         "ext-json": "*",
+        "ext-fileinfo": "*",
         "symfony/symfony": ">=2.3.16",
         "doctrine/orm": ">=2.2.3,<2.4-dev",
         "doctrine/doctrine-bundle": "1.2.*",
@@ -53,9 +54,6 @@
         "guzzle/guzzle": ">=3.7.0",
         "avalanche123/imagine-bundle": "2.*",
         "anime-db/catalog-bundle": "0.4.*"
-    },
-    "require-dev": {
-        "ext-fileinfo": "*"
     },
     "suggest": {
         "ext-apc": "Allows use APC for autoloading to improve performance",

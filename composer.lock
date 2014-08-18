@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d60e34de989b061a5e481b0fec87e0fd",
+    "hash": "e446c7dfea13403076186d77eccb9f0e",
     "packages": [
         {
             "name": "anime-db/app-bundle",
@@ -2155,12 +2155,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "8725243a88b6d49d1d9a04131d09565d899c3a6c"
+                "reference": "73c7eae31757f6a6012aefc7091a6551665a66e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/8725243a88b6d49d1d9a04131d09565d899c3a6c",
-                "reference": "8725243a88b6d49d1d9a04131d09565d899c3a6c",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/73c7eae31757f6a6012aefc7091a6551665a66e1",
+                "reference": "73c7eae31757f6a6012aefc7091a6551665a66e1",
                 "shasum": ""
             },
             "require": {
@@ -2262,7 +2262,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-08-14 16:37:29"
+            "time": "2014-08-18 09:48:07"
         },
         {
             "name": "twig/extensions",
@@ -2386,9 +2386,10 @@
         "php": ">=5.4.0",
         "ext-pdo_sqlite": "*",
         "ext-zlib": "*",
-        "ext-json": "*"
-    },
-    "platform-dev": {
+        "ext-json": "*",
         "ext-fileinfo": "*"
-    }
+    },
+    "platform-dev": [
+
+    ]
 }
