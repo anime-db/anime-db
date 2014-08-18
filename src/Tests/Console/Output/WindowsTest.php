@@ -192,102 +192,45 @@ class WindowsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test set verbosity
+     * Get data for proxy methods
+     *
+     * @return array
      */
-    public function testSetVerbosity()
-    {
-        $this->output
-            ->expects($this->once())
-            ->method('setVerbosity')
-            ->with(1);
-        $this->windows->setVerbosity(1);
-    }
-
-    /**
-     * Test get verbosity
-     */
-    public function testGetVerbosity()
-    {
-        $this->output
-            ->expects($this->once())
-            ->method('getVerbosity')
-            ->willReturn(1);
-        $this->assertEquals(1, $this->windows->getVerbosity());
-    }
-
-    /**
-     * Test set decorated
-     */
-    public function testSetDecorated()
-    {
-        $this->output
-            ->expects($this->once())
-            ->method('setDecorated')
-            ->with(true);
-        $this->windows->setDecorated(true);
-    }
-
-    /**
-     * Test is decorated
-     */
-    public function testIsDecorated()
-    {
-        $this->output
-            ->expects($this->once())
-            ->method('isDecorated')
-            ->willReturn(true);
-        $this->assertTrue($this->windows->isDecorated());
-    }
-
-    /**
-     * Test set formatter
-     */
-    public function testSetFormatter()
+    public function getProxyMethods()
     {
         $formatter = $this->getMock('\Symfony\Component\Console\Formatter\OutputFormatterInterface');
-        $this->output
-            ->expects($this->once())
-            ->method('setFormatter')
-            ->with($formatter);
-        $this->windows->setFormatter($formatter);
-    }
-
-    /**
-     * Test get formatter
-     */
-    public function testGetFormatter()
-    {
-        $formatter = $this->getMock('\Symfony\Component\Console\Formatter\OutputFormatterInterface');
-        $this->output
-            ->expects($this->once())
-            ->method('getFormatter')
-            ->willReturn($formatter);
-        $this->assertEquals($formatter, $this->windows->getFormatter());
-    }
-
-    /**
-     * Test set error output
-     */
-    public function testSetErrorOutput()
-    {
         $output = $this->getMock('\Symfony\Component\Console\Output\OutputInterface');
-        $this->output
-            ->expects($this->once())
-            ->method('setErrorOutput')
-            ->with($output);
-        $this->windows->setErrorOutput($output);
+        return [
+            ['setVerbosity', 'getVerbosity', 1],
+            ['setDecorated', 'isDecorated', true],
+            ['setFormatter', 'getFormatter', $formatter],
+            ['setErrorOutput', 'getErrorOutput', $output]
+        ];
     }
 
     /**
-     * Test get error output
+     * Test proxy methods
+     *
+     * @dataProvider getProxyMethods
+     *
+     * @param string $set
+     * @param string $get
+     * @param mixed $expected
      */
-    public function testGetErrorOutput()
+    public function testProxyMethods($set, $get, $expected)
     {
-        $output = $this->getMock('\Symfony\Component\Console\Output\OutputInterface');
+        // set
         $this->output
             ->expects($this->once())
-            ->method('getErrorOutput')
-            ->willReturn($output);
-        $this->assertEquals($output, $this->windows->getErrorOutput());
+            ->method($set)
+            ->with($expected);
+        call_user_func([$this->windows, $set], $expected);
+
+        // get
+        $this->output
+            ->expects($this->once())
+            ->method($get)
+            ->willReturn($expected);
+        $this->assertEquals($expected, call_user_func([$this->windows, $get]));
     }
 }
