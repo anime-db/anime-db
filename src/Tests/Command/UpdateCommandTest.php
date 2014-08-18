@@ -42,6 +42,11 @@ class UpdateCommandTest extends \PHPUnit_Framework_TestCase
         $output = $this->getMock('\Symfony\Component\Console\Output\OutputInterface');
         $dispatcher = $this->getMock('\AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher');
         $container = $this->getMock('\Symfony\Component\DependencyInjection\ContainerInterface');
+        $container
+            ->expects($this->any())
+            ->method('get')
+            ->with('event_dispatcher')
+            ->willReturn($dispatcher);
 
         $command = new UpdateCommand();
         $command->setContainer($container);
