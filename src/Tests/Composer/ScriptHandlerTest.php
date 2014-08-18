@@ -467,27 +467,10 @@ class ScriptHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeliverEvents()
     {
-        $io = $this->getMock('\Composer\IO\IOInterface');
-        $this->event_command
-            ->expects($this->exactly(2))
-            ->method('getIO')
-            ->willReturn($io);
-        $io
-            ->expects($this->at(0))
-            ->method('isDecorated')
-            ->willReturn(false);
-        $io
-            ->expects($this->at(1))
-            ->method('isDecorated')
-            ->willReturn(true);
-        $this->container
-            ->expects($this->at(0))
-            ->method('executeCommand')
-            ->with('animedb:deliver-events', null);
-        $this->container
-            ->expects($this->at(1))
-            ->method('executeCommand')
-            ->with('animedb:deliver-events --ansi', null);
+        $this->executeDecoratedCommand(
+            'animedb:deliver-events',
+            'animedb:deliver-events --ansi'
+        );
 
         ScriptHandler::deliverEvents($this->event_command);
         ScriptHandler::deliverEvents($this->event_command);
@@ -516,27 +499,10 @@ class ScriptHandlerTest extends \PHPUnit_Framework_TestCase
     {
         $dir = $this->root_dir.'DoctrineMigrations/';
         $this->fs->mkdir($dir);
-        $io = $this->getMock('\Composer\IO\IOInterface');
-        $this->event_command
-            ->expects($this->exactly(2))
-            ->method('getIO')
-            ->willReturn($io);
-        $io
-            ->expects($this->at(0))
-            ->method('isDecorated')
-            ->willReturn(false);
-        $io
-            ->expects($this->at(1))
-            ->method('isDecorated')
-            ->willReturn(true);
-        $this->container
-            ->expects($this->at(0))
-            ->method('executeCommand')
-            ->with('doctrine:migrations:migrate --no-interaction', null);
-        $this->container
-            ->expects($this->at(1))
-            ->method('executeCommand')
-            ->with('doctrine:migrations:migrate --no-interaction --ansi', null);
+        $this->executeDecoratedCommand(
+            'doctrine:migrations:migrate --no-interaction',
+            'doctrine:migrations:migrate --no-interaction --ansi'
+        );
 
         $this->initMigrations($dir);
         ScriptHandler::migrateUp($this->event_command); // test
@@ -657,30 +623,46 @@ class ScriptHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDumpAssets()
     {
+        $this->executeDecoratedCommand(
+            'assetic:dump --env=prod --no-debug --force web',
+            'assetic:dump --env=prod --no-debug --force --ansi web'
+        );
+
+        ScriptHandler::dumpAssets($this->event_command);
+        ScriptHandler::dumpAssets($this->event_command);
+    }
+
+    /**
+     * Execute decorated command
+     *
+     * @param string $command1
+     * @param string $command2
+     */
+    protected function executeDecoratedCommand($command1, $command2 = '')
+    {
         $io = $this->getMock('\Composer\IO\IOInterface');
         $this->event_command
-            ->expects($this->any())
+            ->expects($this->exactly($command2 ? 2 : 1))
             ->method('getIO')
             ->willReturn($io);
         $io
             ->expects($this->at(0))
             ->method('isDecorated')
             ->willReturn(false);
-        $io
-            ->expects($this->at(1))
-            ->method('isDecorated')
-            ->willReturn(true);
         $this->container
             ->expects($this->at(0))
             ->method('executeCommand')
-            ->with('assetic:dump --env=prod --no-debug --force web', null);
-        $this->container
-            ->expects($this->at(1))
-            ->method('executeCommand')
-            ->with('assetic:dump --env=prod --no-debug --force --ansi web', null);
-
-        ScriptHandler::dumpAssets($this->event_command);
-        ScriptHandler::dumpAssets($this->event_command);
+            ->with($command1, null);
+        if ($command2) {
+            $io
+                ->expects($this->at(1))
+                ->method('isDecorated')
+                ->willReturn(true);
+            $this->container
+                ->expects($this->at(1))
+                ->method('executeCommand')
+                ->with($command2, null);
+        }
     }
 
     /**
