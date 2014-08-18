@@ -249,7 +249,6 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
         if (!defined('PHP_WINDOWS_VERSION_BUILD')) {
             define('PHP_WINDOWS_VERSION_BUILD', 2600);
         }
-        $event_dir = $this->event_dir;
         $this->zip
             ->expects($this->once())
             ->method('open')
