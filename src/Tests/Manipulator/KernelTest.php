@@ -48,7 +48,7 @@ class KernelTest extends \PHPUnit_Framework_TestCase
         file_put_contents($kernel_filename, '
 class AppKernel extends Kernel {
     public function registerBundles(){
-        return [new \AcmeBundle()];
+        return [new AcmeBundle()];
     }
 }');
     }
