@@ -11,7 +11,7 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself;
 
 use Symfony\Component\EventDispatcher\Event;
-use Composer\Package\RootPackage;
+use Composer\Package\RootPackageInterface;
 
 /**
  * Event thrown when the application downloaded
@@ -31,14 +31,14 @@ class Downloaded extends Event
     /**
      * New package
      *
-     * @var \Composer\Package\RootPackage
+     * @var \Composer\Package\RootPackageInterface
      */
     protected $new_package;
 
     /**
      * Old package
      *
-     * @var \Composer\Package\RootPackage
+     * @var \Composer\Package\RootPackageInterface
      */
     protected $old_package;
 
@@ -46,10 +46,10 @@ class Downloaded extends Event
      * Construct
      *
      * @param string $path
-     * @param \Composer\Package\RootPackage $new_package
-     * @param \Composer\Package\RootPackage $old_package
+     * @param \Composer\Package\RootPackageInterface $new_package
+     * @param \Composer\Package\RootPackageInterface $old_package
      */
-    public function __construct($path, $new_package, $old_package)
+    public function __construct($path, RootPackageInterface $new_package, RootPackageInterface $old_package)
     {
         $this->path = $path;
         $this->new_package = $new_package;
@@ -69,7 +69,7 @@ class Downloaded extends Event
     /**
      * Get new package
      *
-     * @return \Composer\Package\RootPackage
+     * @return \Composer\Package\RootPackageInterface
      */
     public function getNewPackage()
     {
@@ -79,7 +79,7 @@ class Downloaded extends Event
     /**
      * Get old package
      *
-     * @return \Composer\Package\RootPackage
+     * @return \Composer\Package\RootPackageInterface
      */
     public function getOldPackage()
     {

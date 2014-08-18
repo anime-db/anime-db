@@ -25,7 +25,7 @@ class UpdatedTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetPackage()
     {
-        $package = $this->getMockBuilder('\Composer\Package\Package')
+        $package = $this->getMockBuilder('\Composer\Package\RootPackageInterface')
             ->disableOriginalConstructor()
             ->getMock();
         $event = new Updated($package);

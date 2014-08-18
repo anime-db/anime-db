@@ -55,10 +55,10 @@ class DownloadedTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->new_package = $this->getMockBuilder('\Composer\Package\Package')
+        $this->new_package = $this->getMockBuilder('\Composer\Package\RootPackageInterface')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->old_package = $this->getMockBuilder('\Composer\Package\Package')
+        $this->old_package = $this->getMockBuilder('\Composer\Package\RootPackageInterface')
             ->disableOriginalConstructor()
             ->getMock();
         $this->event = new Downloaded($this->path, $this->new_package, $this->old_package);

@@ -11,7 +11,7 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself;
 
 use Symfony\Component\EventDispatcher\Event;
-use Composer\Package\RootPackage;
+use Composer\Package\RootPackageInterface;
 
 /**
  * Event thrown when the application updated
@@ -24,16 +24,16 @@ class Updated extends Event
     /**
      * Package
      *
-     * @var \Composer\Package\RootPackage
+     * @var \Composer\Package\RootPackageInterface
      */
     protected $package;
 
     /**
      * Construct
      *
-     * @param \Composer\Package\RootPackage $package
+     * @param \Composer\Package\RootPackageInterface $package
      */
-    public function __construct($package)
+    public function __construct(RootPackageInterface $package)
     {
         $this->package = $package;
     }
@@ -41,7 +41,7 @@ class Updated extends Event
     /**
      * Get package
      *
-     * @return \Composer\Package\RootPackage
+     * @return \Composer\Package\RootPackageInterface
      */
     public function getPackage()
     {

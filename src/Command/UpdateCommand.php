@@ -195,10 +195,9 @@ class UpdateCommand extends ContainerAwareCommand
      */
     protected function getPackage($config)
     {
-        $config = file_get_contents($config);
-        $config = json_decode($config, true);
+        $config = json_decode(file_get_contents($config), true);
         $loader = new ArrayLoader();
-        return $loader->load($config);
+        return $loader->load($config, 'Composer\Package\RootPackage');
     }
 
     /**
