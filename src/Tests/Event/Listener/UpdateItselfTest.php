@@ -106,7 +106,7 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
         $this->event
             ->expects($this->any())
             ->method('getPath')
-            ->will($this->returnValue($this->event_dir));
+            ->willReturn($this->event_dir);
     }
 
     /**
