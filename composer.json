@@ -30,37 +30,6 @@
             "AnimeDb\\Bundle\\AnimeDbBundle\\": "src/"
         }
     },
-    "repositories": [
-        {
-            "type": "package",
-            "package": {
-                "name": "doctrine/doctrine-migrations-bundle",
-                "type": "symfony-bundle",
-                "version": "1.0.1",
-                "dist": {
-                    "url": "https://github.com/anime-db/DoctrineMigrationsBundle/archive/master.zip",
-                    "type": "zip"
-                },
-                "source": {
-                    "url": "https://github.com/anime-db/DoctrineMigrationsBundle.git",
-                    "type": "git",
-                    "reference": "refs/heads/master"
-                },
-                "require": {
-                    "php": ">=5.3.2",
-                    "symfony/framework-bundle": "~2.1",
-                    "doctrine/doctrine-bundle": "~1.0",
-                    "doctrine/migrations": "~1.0@dev"
-                },
-                "autoload": {
-                    "psr-0": {
-                        "Doctrine\\Bundle\\MigrationsBundle": ""
-                    }
-                },
-                "target-dir": "Doctrine/Bundle/MigrationsBundle"
-            }
-        }
-    ],
     "require": {
         "php": ">=5.4.0",
         "ext-pdo_sqlite": "*",

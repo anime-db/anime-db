@@ -20,6 +20,7 @@ use Composer\Package\Package;
 use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\StoreEvents;
 use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded;
 use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Updated;
+use AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher;
 use Symfony\Component\Filesystem\Filesystem;
 use Composer\Package\Loader\ArrayLoader;
 use Symfony\Component\Finder\Finder;
@@ -50,22 +51,37 @@ class UpdateCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output) {
         // load composer
-        $factory = new Factory();
         $io = new ConsoleIO($input, $output, $this->getHelperSet());
-        $composer = $factory->createComposer($io);
+        $composer = $this->createComposer($io);
 
         // search tag with new version of application
         $tag = $this->findNewVersion($composer->getPackage()->getVersion());
         if ($tag) {
             $this->doUpdateItself($tag, $composer, $output);
             // reload composer
-            $composer = $factory->createComposer($io);
+            $composer = $this->createComposer($io);
         } else {
             $output->writeln('<info>Application has already been updated to the latest version</info>');
         }
 
         $this->doUpdateComposer($composer, $io);
         $output->writeln('<info>Updating the application has been completed<info>');
+    }
+
+    /**
+     * Create new composer object
+     *
+     * @param \Composer\IO\ConsoleIO $io
+     *
+     * @return \Composer\Composer
+     */
+    protected function createComposer(ConsoleIO $io)
+    {
+        // update application components to the latest version
+        if (file_exists($root.'composer.lock')) {
+            unlink($root.'composer.lock');
+        }
+        return (new Factory())->createComposer($io);
     }
 
     /**
@@ -140,7 +156,10 @@ class UpdateCommand extends ContainerAwareCommand
         $this->rewriting($target);
 
         // notify about updated
+        // event will be sent after the update application components
+        $dispatcher = new Dispatcher();
         $dispatcher->dispatch(StoreEvents::UPDATED, new Updated($new_package));
+
         $output->writeln('<info>Update itself has been completed</info>');
     }
 
