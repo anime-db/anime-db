@@ -12,8 +12,6 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Composer;
 
 use Composer\Script\PackageEvent;
 use Composer\Script\CommandEvent;
-use Composer\Script\Event;
-use Composer\Package\RootPackageInterface;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Installed as InstalledPackageNotify;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Removed as RemovedPackageNotify;
@@ -29,7 +27,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel\Remove as RemoveKernel;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Add as AddRouting;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Remove as RemoveRouting;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Composer script handler

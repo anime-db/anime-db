@@ -69,7 +69,7 @@ class Downloaded extends Event
     /**
      * Get new package
      *
-     * @return string
+     * @return \Composer\Package\RootPackage
      */
     public function getNewPackage()
     {
@@ -79,7 +79,7 @@ class Downloaded extends Event
     /**
      * Get old package
      *
-     * @return string
+     * @return \Composer\Package\RootPackage
      */
     public function getOldPackage()
     {

@@ -41,7 +41,7 @@ class Updated extends Event
     /**
      * Get package
      *
-     * @return string
+     * @return \Composer\Package\RootPackage
      */
     public function getPackage()
     {

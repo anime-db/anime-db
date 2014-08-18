@@ -25,8 +25,6 @@ class Routing extends Yaml
      * @param string $bundle
      * @param string $format
      * @param string $path
-     *
-     * @return Boolean true if it worked, false otherwise
      */
     public function addResource($name, $bundle, $format, $path = 'routing')
     {

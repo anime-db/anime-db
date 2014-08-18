@@ -355,7 +355,7 @@ path=.
     /**
      * Init files
      *
-     * @param array $files
+     * @param string[] $files
      * @param string $dir
      */
     protected function initFiles(array $files, $dir)

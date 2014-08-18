@@ -11,11 +11,9 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
-use AnimeDb\Bundle\AnimeDbBundle\Composer\ScriptHandler;
 use AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher;
 use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
-use Composer\Package\Package;
 
 /**
  * Routing manipulator

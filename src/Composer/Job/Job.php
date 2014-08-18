@@ -137,7 +137,9 @@ abstract class Job
     /**
      * Get package option
      *
-     * @return mixed
+     * @param string $option
+     *
+     * @return string
      */
     private function getPackageOption($option)
     {
@@ -150,6 +152,8 @@ abstract class Job
 
     /**
      * Get package option file
+     *
+     * @param string $option
      *
      * @return string
      */

@@ -34,7 +34,7 @@ class Composer extends FileContent
     /**
      * Remove the package from composer requirements
      *
-     * @param string $bundle
+     * @param string $package
      */
     public function removePackage($package)
     {
