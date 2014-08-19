@@ -23,71 +23,89 @@ use Symfony\Component\Yaml\Yaml;
 class RemoveTest extends TestCaseWritable
 {
     /**
-     * Get package config
+     * Container
      *
-     * @return array
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    public function getPackageConfig()
+    protected $container;
+
+    /**
+     * (non-PHPdoc)
+     * @see \AnimeDb\Bundle\AnimeDbBundle\Tests\TestCaseWritable::setUp()
+     */
+    public function setUp()
     {
-        return [
-            [
-                [
-                    ['resource' => '@AnimeDbAnimeDbBundle/Resources/config/config.yml']
-                ],
-                []
-            ],
-            [
-                [
-                    ['resource' => '@AnimeDbAnimeDbBundle/Resources/config/global/my_config.xml'],
-                    ['resource' => '@AnimeDbAppBundle/Resources/config/config.yml']
-                ],
-                [
-                    ['resource' => '@AnimeDbAppBundle/Resources/config/config.yml']
-                ]
-            ],
-            [
-                [
-                    ['resource' => '@AnimeDbAppBundle/Resources/config/config.yml']
-                ],
-                [
-                    ['resource' => '@AnimeDbAppBundle/Resources/config/config.yml']
-                ]
-            ]
-        ];
+        parent::setUp();
+        $this->container = $this->getMock('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container');
     }
 
     /**
-     * Test execute
-     *
-     * @dataProvider getPackageConfig
-     *
-     * @param array $default
-     * @param array $expected
+     * Test success add in execute
      */
-    public function testExecute(array $default, array $expected)
+    public function testSuccessAdd()
     {
-        $config = $this->root_dir.'app/config/vendor_config.yml';
-        $this->fs->mkdir(dirname($config));
-        file_put_contents($config, Yaml::dump(['imports' => $default]));
+        $manipulator = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $manipulator
+            ->expects($this->once())
+            ->method('removeResource')
+            ->with('AnimeDbAnimeDbBundle');
+        $this->container
+            ->expects($this->once())
+            ->method('getManipulator')
+            ->willReturn($manipulator)
+            ->with('config');
 
+        // test
+        $this->execute([
+            'anime-db-routing' => '',
+            'anime-db-config' => '',
+            'anime-db-bundle' => '\AnimeDb\Bundle\AnimeDbBundle\AnimeDbAnimeDbBundle',
+            'anime-db-migrations' => ''
+        ]);
+    }
+
+    /**
+     * Test no add in execute
+     */
+    public function testNoAdd()
+    {
+        $this->container
+            ->expects($this->never())
+            ->method('getManipulator');
+
+        // test
+        $this->execute([
+            'anime-db-routing' => '',
+            'anime-db-config' => '',
+            'anime-db-bundle' => '',
+            'anime-db-migrations' => ''
+        ]);
+    }
+
+    /**
+     * Execute job
+     *
+     * @param array $extra
+     */
+    protected function execute(array $extra)
+    {
         $package = $this->getMockBuilder('\Composer\Package\Package')
             ->disableOriginalConstructor()
             ->getMock();
         $package
+            ->expects($this->any())
+            ->method('getName')
+            ->willReturn('foo/bar');
+        $package
             ->expects($this->atLeastOnce())
             ->method('getExtra')
-            ->willReturn([
-                'anime-db-routing' => '',
-                'anime-db-config' => '',
-                'anime-db-bundle' => '\AnimeDb\Bundle\AnimeDbBundle\AnimeDbAnimeDbBundle',
-                'anime-db-migrations' => ''
-            ]);
+            ->willReturn($extra);
 
-        // test
         $job = new Remove($package, $this->root_dir);
+        $job->setContainer($this->container);
         $job->register();
         $job->execute();
-
-        $this->assertEquals(['imports' => $expected], Yaml::parse(file_get_contents($config)));
     }
 }
