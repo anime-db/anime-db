@@ -78,12 +78,11 @@ abstract class Migrate extends Job
             case 'xml':
                 $doc = new \DOMDocument();
                 $doc->loadXML($config);
-                $xpath = new \DOMXPath($doc);
-                $list = $xpath->query('/doctrine-migrations/migrations-namespace');
+                $list = $doc->getElementsByTagName('migrations-namespace');
                 if ($list->length) {
                     $namespace = $list->item(0)->nodeValue;
                 }
-                $list = $xpath->query('/doctrine-migrations/migrations-directory');
+                $list = $doc->getElementsByTagName('migrations-directory');
                 if ($list->length) {
                     $directory = $list->item(0)->nodeValue;
                 }
