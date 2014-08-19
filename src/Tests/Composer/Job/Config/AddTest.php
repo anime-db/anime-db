@@ -29,18 +29,6 @@ class AddTest extends TestCaseWritable
     protected $container;
 
     /**
-     * Extra
-     *
-     * @var array
-     */
-    protected $extra = [
-        'anime-db-routing' => '',
-        'anime-db-config' => '',
-        'anime-db-bundle' => '\AnimeDb\Bundle\AnimeDbBundle\AnimeDbAnimeDbBundle',
-        'anime-db-migrations' => ''
-    ];
-
-    /**
      * (non-PHPdoc)
      * @see \AnimeDb\Bundle\AnimeDbBundle\Tests\TestCaseWritable::setUp()
      */
@@ -59,17 +47,17 @@ class AddTest extends TestCaseWritable
     {
         return [
             [
-                $this->extra,
+                '',
                 '/Resources/config/config',
                 'yml'
             ],
             [
-                $this->extra,
+                '',
                 '/Resources/config/global/config',
                 'xml'
             ],
             [
-                array_merge($this->extra, ['anime-db-config' => '/Resources/config/my_config.yml']),
+                '/Resources/config/my_config.yml',
                 '/Resources/config/my_config',
                 'yml'
             ]
@@ -85,10 +73,10 @@ class AddTest extends TestCaseWritable
      * @param string $path
      * @param string $ext
      */
-    public function testExecute(array $extra, $path, $ext)
+    public function testExecute($config, $path, $ext)
     {
-        if (!empty($extra['anime-db-config'])) {
-            $this->touchConfig($extra['anime-db-config']);
+        if ($config) {
+            $this->touchConfig($config);
         } else {
             $this->touchConfig('/src'.$path.'.'.$ext);
         }
@@ -106,7 +94,7 @@ class AddTest extends TestCaseWritable
             ->with('config');
 
         // test
-        $this->execute($extra);
+        $this->execute($config);
     }
 
     /**
@@ -120,7 +108,7 @@ class AddTest extends TestCaseWritable
             ->method('getManipulator');
 
         // test
-        $this->execute($this->extra);
+        $this->execute();
     }
 
     /**
@@ -134,7 +122,7 @@ class AddTest extends TestCaseWritable
             ->method('getManipulator');
 
         // test
-        $this->execute(array_merge($this->extra, ['anime-db-bundle' => '']));
+        $this->execute('', '');
     }
 
     /**
@@ -152,10 +140,13 @@ class AddTest extends TestCaseWritable
     /**
      * Execute job
      *
-     * @param array $extra
+     * @param string $config
+     * @param string $bundle
      */
-    protected function execute(array $extra)
-    {
+    protected function execute(
+        $config = '',
+        $bundle = '\AnimeDb\Bundle\AnimeDbBundle\AnimeDbAnimeDbBundle'
+    ) {
         $package = $this->getMockBuilder('\Composer\Package\Package')
             ->disableOriginalConstructor()
             ->getMock();
@@ -166,7 +157,12 @@ class AddTest extends TestCaseWritable
         $package
             ->expects($this->atLeastOnce())
             ->method('getExtra')
-            ->willReturn($extra);
+            ->willReturn([
+                'anime-db-routing' => '',
+                'anime-db-config' => $config,
+                'anime-db-bundle' => $bundle,
+                'anime-db-migrations' => ''
+            ]);
 
         $job = new Add($package, $this->root_dir);
         $job->setContainer($this->container);
