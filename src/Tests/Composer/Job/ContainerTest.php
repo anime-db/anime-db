@@ -80,6 +80,9 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
             ->method('setContainer')
             ->with($this->container);
         $job
+            ->expects($this->once())
+            ->method('register');
+        $job
             ->expects($this->any())
             ->method('getPriority')
             ->willReturn($priority);

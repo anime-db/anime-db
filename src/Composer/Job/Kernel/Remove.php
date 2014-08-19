@@ -12,7 +12,6 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Kernel as KernelManipulator;
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
 
 /**
  * Job: Remove package from kernel
@@ -38,13 +37,12 @@ class Remove extends Job
 
     /**
      * (non-PHPdoc)
-     * @see AnimeDb\Bundle\AnimeDbBundle\Composer\Job.Job::setContainer()
+     * @see \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job::register()
      */
-    public function setContainer(Container $container)
+    public function register()
     {
         // get the bundle name before remove package, because then it would impossible to do
         $this->bundle = $this->getPackageBundle();
-        parent::setContainer($container);
     }
 
     /**

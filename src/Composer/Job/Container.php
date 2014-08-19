@@ -66,6 +66,7 @@ class Container
     {
         $job->setContainer($this);
         $this->jobs[$job->getPriority()][] = $job;
+        $job->register();
     }
 
     /**

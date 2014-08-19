@@ -11,7 +11,6 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config\Config as BaseConfig;
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
 
 /**
  * Job: Remove package from config
@@ -30,13 +29,12 @@ class Remove extends BaseConfig
 
     /**
      * (non-PHPdoc)
-     * @see AnimeDb\Bundle\AnimeDbBundle\Composer\Job.Job::setContainer()
+     * @see \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job::register()
      */
-    public function setContainer(Container $container)
+    public function register()
     {
         // get the bundle name before remove package, because then it would impossible to do
         $this->bundle = $this->getPackageBundle();
-        parent::setContainer($container);
     }
 
     /**

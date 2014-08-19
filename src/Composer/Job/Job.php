@@ -135,6 +135,13 @@ abstract class Job
     abstract public function execute();
 
     /**
+     * Handle on register job in container
+     */
+    public function register()
+    {
+    }
+
+    /**
      * Get package option
      *
      * @param string $option

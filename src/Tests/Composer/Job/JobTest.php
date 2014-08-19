@@ -68,10 +68,9 @@ class JobTest extends TestCaseWritable
             ->expects($matcher ?: $this->once())
             ->method('setExtra')
             ->with(array_merge($this->default_extra, $extra));
-        $this->job = $this->getMockForAbstractClass(
-            '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job',
-            [$this->package, $this->root_dir]
-        );
+        $this->job = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job')
+            ->setConstructorArgs([$this->package, $this->root_dir])
+            ->getMockForAbstractClass();
     }
 
     /**
@@ -303,5 +302,14 @@ class JobTest extends TestCaseWritable
         $this->assertEquals($this->package->getPrettyVersion(), $copy->getPrettyVersion());
         $this->assertEquals($this->package->getType(), $copy->getType());
         $this->assertEquals($this->package->getExtra(), $copy->getExtra());
+    }
+
+    /**
+     * Test register
+     */
+    public function testRegister()
+    {
+        $this->initJob();
+        $this->assertNull($this->job->register());
     }
 }

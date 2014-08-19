@@ -11,7 +11,6 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Migrate as BaseMigrate;
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
@@ -25,12 +24,10 @@ class Down extends BaseMigrate
 {
     /**
      * (non-PHPdoc)
-     * @see AnimeDb\Bundle\AnimeDbBundle\Composer\Job.Job::setContainer()
+     * @see \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job::register()
      */
-    public function setContainer(Container $container)
+    public function register()
     {
-        parent::setContainer($container);
-
         // migrate down before uninstall package
         if ($config_file = $this->getMigrationsConfig()) {
             // can not consistently perform the migration of one packet,
