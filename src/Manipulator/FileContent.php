@@ -16,7 +16,7 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Manipulator;
  * @package AnimeDb\Bundle\AnimeDbBundle\Manipulator
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-abstract class FileContent
+abstract class FileContent implements Manipulator
 {
     /**
      * Composer filename
