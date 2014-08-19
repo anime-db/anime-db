@@ -67,7 +67,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             [
                 'DemoBundle',
                 'yml',
-                'config',
+                '/Resources/config/config',
                 [],
                 [
                     'imports' => [
@@ -80,7 +80,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             [
                 'DemoBundle',
                 'xml',
-                'my_config',
+                '/Resources/config/my_config',
                 [
                     'imports' => [
                         [
@@ -102,7 +102,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             [
                 'DemoBundle',
                 'yml',
-                'config',
+                '/Resources/config/config',
                 [
                     'imports' => [
                         [

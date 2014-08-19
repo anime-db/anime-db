@@ -161,7 +161,7 @@ abstract class Job
     {
         $option = $this->getPackageOption($option);
         if ($option && file_exists($this->getPackageDir().$option)) {
-            return $this->getPackageDir().$option;
+            return $option;
         }
         return '';
     }

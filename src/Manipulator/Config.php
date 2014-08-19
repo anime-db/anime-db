@@ -27,7 +27,7 @@ class Config extends Yaml
      */
     public function addResource($bundle, $format, $path = 'config')
     {
-        $resource = '@'.$bundle.'/Resources/config/'.$path.'.'.$format;
+        $resource = '@'.$bundle.$path.'.'.$format;
 
         $yaml = $this->getContent();
         $yaml['imports'] = isset($yaml['imports']) ? $yaml['imports'] : [];

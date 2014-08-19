@@ -245,7 +245,7 @@ class JobTest extends \PHPUnit_Framework_TestCase
         $this->fs->mkdir($dir = $this->root_dir.'vendor/foo/bar/');
         touch($dir.$value);
 
-        $this->assertEquals($dir.$value, call_user_func([$this->job, $method]));
+        $this->assertEquals($value, call_user_func([$this->job, $method]));
     }
 
     /**
