@@ -10,7 +10,7 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config;
 
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config\Config as BaseConfig;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 
 /**
  * Job: Remove package from config
@@ -18,8 +18,15 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config\Config as BaseConfig;
  * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Remove extends BaseConfig
+class Remove extends Job
 {
+    /**
+     * Job priority
+     *
+     * @var integer
+     */
+    const PRIORITY = self::PRIORITY_INSTALL;
+
     /**
      * Package bundle name
      *
@@ -46,7 +53,7 @@ class Remove extends BaseConfig
         if ($this->bundle) {
             $bundle = $this->bundle;
             $bundle = new $bundle();
-            $this->manipulator->removeResource($bundle->getName());
+            $this->getContainer()->getManipulator('config')->removeResource($bundle->getName());
         }
     }
 }

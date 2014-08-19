@@ -26,6 +26,6 @@ class Remove extends BaseRouting
      */
     public function execute()
     {
-        $this->manipulator->removeResource($this->getNodeName());
+        $this->getContainer()->getManipulator('routing')->removeResource($this->getNodeName());
     }
 }

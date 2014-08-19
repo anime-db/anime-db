@@ -31,64 +31,6 @@ abstract class Routing extends Job
     const PRIORITY = self::PRIORITY_INSTALL;
 
     /**
-     * Manipulator
-     *
-     * @var \AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing
-     */
-    protected $manipulator;
-
-    /**
-     * Construct
-     *
-     * @param \Composer\Package\Package $package
-     * @param string $root_dir
-     */
-    public function __construct(Package $package, $root_dir = '')
-    {
-        parent::__construct($package, $root_dir);
-        $this->manipulator = new RoutingManipulator($this->root_dir.'app/config/routing.yml');
-    }
-
-    /**
-     * Get the package routing
-     *
-     * @return string|null
-     */
-    protected function getPackageRouting()
-    {
-        // This package has a file routing.xml, which contains the list of services,
-        // rather than being contain the list of routers
-        if ($this->getPackage()->getName() == 'sensio/framework-extra-bundle') {
-            return null;
-        }
-
-        // specific location
-        if ($routing = $this->getPackageOptionFile('anime-db-routing')) {
-            return $routing;
-        }
-
-        $finder = new Finder();
-        $finder
-            ->files()
-            ->in($this->getPackageDir())
-            ->path('/\/Resources\/config\/([^\/]+\/)*routing.(yml|xml)$/')
-            ->name('/^routing.(yml|xml)$/');
-
-        // ignor configs in test
-        if (stripos($this->getPackage()->getName(), 'test') === false) {
-            $finder->notPath('/test/i');
-        }
-
-        /* @var $file \SplFileInfo */
-        $prefix = DIRECTORY_SEPARATOR.'Resources'.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR;
-        foreach ($finder as $file) {
-            $start = strrpos($file->getPathname(), $prefix);
-            return substr($file->getPathname(), $start+strlen($prefix));
-        }
-        return null;
-    }
-
-    /**
      * Get the node name from the package name
      *
      * @return string
