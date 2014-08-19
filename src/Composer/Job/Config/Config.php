@@ -74,10 +74,9 @@ abstract class Config extends Job
         }
 
         /* @var $file \SplFileInfo */
-        $prefix = DIRECTORY_SEPARATOR.'Resources'.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR;
         foreach ($finder as $file) {
-            $start = strrpos($file->getPathname(), $prefix);
-            return substr($file->getPathname(), $start+strlen($prefix));
+            $path = str_replace(DIRECTORY_SEPARATOR, '/', $file->getPathname());
+            return substr($path, strrpos($path, '/Resources/config/'));
         }
         return null;
     }
