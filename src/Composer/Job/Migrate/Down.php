@@ -60,15 +60,10 @@ class Down extends BaseMigrate
                 $fs->mirror($from, $tmp_dir);
 
                 // change migrations namespace
-                $tmp_migrations = Finder::create()
-                    ->in($tmp_dir)
-                    ->files()
-                    ->name('/Version\d{14}.*\.php/');
-                /* @var $file \SplFileInfo */
-                foreach ($tmp_migrations as $file) {
-                    $migration = file_get_contents($file->getPathname());
+                foreach ($package_migrations as $file) {
+                    $migration = file_get_contents($tmp_dir.$file->getBasename());
                     $migration = preg_replace('/namespace [^;]+;/', 'namespace Application\Migrations;', $migration);
-                    file_put_contents($file->getPathname(), $migration);
+                    file_put_contents($tmp_dir.$file->getBasename(), $migration);
                 }
             }
         }
