@@ -1,12 +1,12 @@
 <?php
 /**
  * AnimeDb package
-*
-* @package   AnimeDb
-* @author    Peter Gribanov <info@peter-gribanov.ru>
-* @copyright Copyright (c) 2011, Peter Gribanov
-* @license   http://opensource.org/licenses/GPL-3.0 GPL v3
-*/
+ *
+ * @package   AnimeDb
+ * @author    Peter Gribanov <info@peter-gribanov.ru>
+ * @copyright Copyright (c) 2011, Peter Gribanov
+ * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
+ */
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job\Config;
 
@@ -31,19 +31,19 @@ class AddTest extends TestCaseWritable
         $extra = [
             'anime-db-routing' => '',
             'anime-db-config' => '',
-            'anime-db-bundle' => '\AnimeDb\Bundle\AppBundle\AnimeDbAppBundle',
+            'anime-db-bundle' => '\AnimeDb\Bundle\AnimeDbBundle\AnimeDbAnimeDbBundle',
             'anime-db-migrations' => ''
         ];
 
         return [
             [
                 '/src/Resources/config/config.yml',
-                "imports:\n    - { resource: '@AnimeDbAppBundle/Resources/config/config.yml' }\n",
+                "imports:\n    - { resource: '@AnimeDbAnimeDbBundle/Resources/config/config.yml' }\n",
                 $extra
             ],
             [
                 '/lib/Resources/config/global/config.xml',
-                "imports:\n    - { resource: '@AnimeDbAppBundle/Resources/config/global/config.xml' }\n",
+                "imports:\n    - { resource: '@AnimeDbAnimeDbBundle/Resources/config/global/config.xml' }\n",
                 $extra
             ],
             [
@@ -53,7 +53,7 @@ class AddTest extends TestCaseWritable
             ],
             [
                 '/undefined',
-                "imports:\n    - { resource: '@AnimeDbAppBundle/Resources/config/my_config.yml' }\n",
+                "imports:\n    - { resource: '@AnimeDbAnimeDbBundle/Resources/config/my_config.yml' }\n",
                 array_merge($extra, ['anime-db-config' => '/Resources/config/my_config.yml'])
             ]
         ];
@@ -74,7 +74,7 @@ class AddTest extends TestCaseWritable
             $package_config = $extra['anime-db-config'];
         }
         $config = $this->root_dir.'app/config/vendor_config.yml';
-        $package_config = $this->root_dir.'vendor/anime-db/app-bundle'.$package_config;
+        $package_config = $this->root_dir.'vendor/anime-db/anime-db'.$package_config;
         $this->fs->mkdir([dirname($config), dirname($package_config)]);
         touch($config);
         touch($package_config);
@@ -85,7 +85,7 @@ class AddTest extends TestCaseWritable
         $package
             ->expects($this->atLeastOnce())
             ->method('getName')
-            ->willReturn('anime-db/app-bundle');
+            ->willReturn('anime-db/anime-db');
         $package
             ->expects($this->atLeastOnce())
             ->method('getExtra')
