@@ -47,6 +47,58 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Get manipulators
+     *
+     * @return array
+     */
+    public function getManipulators()
+    {
+        return [
+            [
+                'composer',
+                '\AnimeDb\Bundle\AnimeDbBundle\Manipulator\Composer'
+            ],
+            [
+                'config',
+                '\AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config'
+            ],
+            [
+                'kernel',
+                '\AnimeDb\Bundle\AnimeDbBundle\Manipulator\Kernel'
+            ],
+            [
+                'routing',
+                '\AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing'
+            ]
+        ];
+    }
+
+    /**
+     * Test get manipulator
+     *
+     * @dataProvider getManipulators
+     *
+     * @param string $name
+     * @param string $class
+     */
+    public function testGetManipulator($name, $class)
+    {
+        $manipulator = $this->container->getManipulator($name);
+        $this->assertInstanceOf($class, $manipulator);
+        $this->assertEquals($manipulator, $this->container->getManipulator($name));
+    }
+
+    /**
+     * Test get manipulator failed
+     *
+     * @expectedException \InvalidArgumentException
+     */
+    public function testGetManipulatorFailed()
+    {
+        $this->container->getManipulator('undefined');
+    }
+
+    /**
      * Test jobs
      */
     public function testJobs()
