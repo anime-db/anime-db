@@ -22,38 +22,55 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config\Add;
 class AddTest extends TestCaseWritable
 {
     /**
+     * Container
+     *
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $container;
+
+    /**
+     * Extra
+     *
+     * @var array
+     */
+    protected $extra = [
+        'anime-db-routing' => '',
+        'anime-db-config' => '',
+        'anime-db-bundle' => '\AnimeDb\Bundle\AnimeDbBundle\AnimeDbAnimeDbBundle',
+        'anime-db-migrations' => ''
+    ];
+
+    /**
+     * (non-PHPdoc)
+     * @see \AnimeDb\Bundle\AnimeDbBundle\Tests\TestCaseWritable::setUp()
+     */
+    public function setUp()
+    {
+        parent::setUp();
+        $this->container = $this->getMock('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container');
+    }
+
+    /**
      * Get package config
      *
      * @return array
      */
     public function getPackageConfig()
     {
-        $extra = [
-            'anime-db-routing' => '',
-            'anime-db-config' => '',
-            'anime-db-bundle' => '\AnimeDb\Bundle\AnimeDbBundle\AnimeDbAnimeDbBundle',
-            'anime-db-migrations' => ''
-        ];
-
         return [
             [
-                $extra,
+                $this->extra,
                 '/Resources/config/config',
                 'yml'
             ],
             [
-                $extra,
+                $this->extra,
                 '/Resources/config/global/config',
                 'xml'
-            ],/* 
+            ],
             [
-                $extra,
-                '',
-                ''
-            ], */
-            [
-                array_merge($extra, ['anime-db-config' => '/Resources/config/my_config.yml']),
-                '/Resources/config/my_config',
+                array_merge($this->extra, ['anime-db-config' => '/my_dir/Resources/config/my_config.yml']),
+                '/my_dir/Resources/config/my_config',
                 'yml'
             ]
         ];
@@ -71,14 +88,85 @@ class AddTest extends TestCaseWritable
     public function testExecute(array $extra, $path, $ext)
     {
         if (!empty($extra['anime-db-config'])) {
-            $package_config = $extra['anime-db-config'];
+            $this->touchConfig($extra['anime-db-config']);
         } else {
-            $package_config = '/src'.$path.'.'.$ext;
+            $this->touchConfig('/src'.$path.'.'.$ext);
         }
-        $package_config = $this->root_dir.'vendor/anime-db/anime-db'.$package_config;
-        $this->fs->mkdir(dirname($package_config));
-        touch($package_config);
+        $manipulator = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $manipulator
+            ->expects($this->once())
+            ->method('addResource')
+            ->with('AnimeDbAnimeDbBundle', $ext, $path);
+        $this->container
+            ->expects($this->once())
+            ->method('getManipulator')
+            ->willReturn($manipulator)
+            ->with('config');
 
+        // test
+        $job = new Add($this->getPackage($extra), $this->root_dir);
+        $job->setContainer($this->container);
+        $job->register();
+        $job->execute();
+    }
+
+    /**
+     * Get package bad config
+     *
+     * @return array
+     */
+    public function getPackageBadConfig()
+    {
+        return [
+            [array_merge($this->extra, ['anime-db-bundle' => ''])],
+            [$this->extra]
+        ];
+    }
+
+    /**
+     * Test execute not add
+     *
+     * @dataProvider getPackageBadConfig
+     *
+     * @param array $extra
+     */
+    public function testExecuteNotAdd(array $extra)
+    {
+        $this->touchConfig('/undefined');
+        $this->container
+            ->expects($this->never())
+            ->method('getManipulator');
+
+        // test
+        $job = new Add($this->getPackage($extra), $this->root_dir);
+        $job->setContainer($this->container);
+        $job->register();
+        $job->execute();
+    }
+
+    /**
+     * Touch config
+     *
+     * @param string $filename
+     */
+    protected function touchConfig($filename)
+    {
+        $filename = $this->root_dir.'vendor/anime-db/anime-db'.$filename;
+        $this->fs->mkdir(dirname($filename));
+        touch($filename);
+    }
+
+    /**
+     * Get package
+     *
+     * @param array $extra
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function getPackage(array $extra)
+    {
         $package = $this->getMockBuilder('\Composer\Package\Package')
             ->disableOriginalConstructor()
             ->getMock();
@@ -90,24 +178,6 @@ class AddTest extends TestCaseWritable
             ->expects($this->atLeastOnce())
             ->method('getExtra')
             ->willReturn($extra);
-        $manipulator = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $manipulator
-            ->expects($this->once())
-            ->method('addResource')
-            ->with('AnimeDbAnimeDbBundle', $ext, $path);
-        $container = $this->getMock('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container');
-        $container
-            ->expects($this->once())
-            ->method('getManipulator')
-            ->willReturn($manipulator)
-            ->with('config');
-
-        // test
-        $job = new Add($package, $this->root_dir);
-        $job->setContainer($container);
-        $job->register();
-        $job->execute();
+        return $package;
     }
 }
