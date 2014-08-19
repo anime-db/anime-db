@@ -48,7 +48,7 @@ class Add extends BaseRouting
         // This package has a file routing.xml, which contains the list of services,
         // rather than being contain the list of routers
         if ($this->getPackage()->getName() == 'sensio/framework-extra-bundle') {
-            return null;
+            return '';
         }
 
         // specific location

@@ -126,6 +126,34 @@ class AddTest extends TestCaseWritable
     }
 
     /**
+     * Test execute failed. Ignore bundle
+     */
+    public function testExecuteIgnoreBundle()
+    {
+        $package = $this->getMockBuilder('\Composer\Package\Package')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $package
+            ->expects($this->atLeastOnce())
+            ->method('getName')
+            ->willReturn('sensio/framework-extra-bundle');
+        $package
+            ->expects($this->atLeastOnce())
+            ->method('getExtra')
+            ->willReturn([
+                'anime-db-routing' => '',
+                'anime-db-config' => '',
+                'anime-db-bundle' => '\AnimeDb\Bundle\AnimeDbBundle\AnimeDbAnimeDbBundle',
+                'anime-db-migrations' => ''
+            ]);
+
+        $job = new Add($package, $this->root_dir);
+        $job->setContainer($this->container);
+        $job->register();
+        $job->execute();
+    }
+
+    /**
      * Touch config
      *
      * @param string $filename
