@@ -8,15 +8,15 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job\Config;
+namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job\Routing;
 
 use AnimeDb\Bundle\AnimeDbBundle\Tests\TestCaseWritable;
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config\Add;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Add;
 
 /**
- * Test job config add
+ * Test job routing add
  *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job\Config
+ * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job\Routing
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class AddTest extends TestCaseWritable
@@ -48,17 +48,17 @@ class AddTest extends TestCaseWritable
         return [
             [
                 '',
-                '/Resources/config/config',
+                '/Resources/config/routing',
                 'yml'
             ],
             [
                 '',
-                '/Resources/config/global/config',
+                '/Resources/config/global/routing',
                 'xml'
             ],
             [
-                '/Resources/config/my_config.yml',
-                '/Resources/config/my_config',
+                '/Resources/config/my_routing.yml',
+                '/Resources/config/my_routing',
                 'yml'
             ]
         ];
@@ -69,32 +69,32 @@ class AddTest extends TestCaseWritable
      *
      * @dataProvider getPackageConfig
      *
-     * @param string $config
+     * @param string $routing
      * @param string $path
      * @param string $ext
      */
-    public function testExecute($config, $path, $ext)
+    public function testExecute($routing, $path, $ext)
     {
-        if ($config) {
-            $this->touchConfig($config);
+        if ($routing) {
+            $this->touchConfig($routing);
         } else {
             $this->touchConfig('/src'.$path.'.'.$ext);
         }
-        $manipulator = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config')
+        $manipulator = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing')
             ->disableOriginalConstructor()
             ->getMock();
         $manipulator
             ->expects($this->once())
             ->method('addResource')
-            ->with('AnimeDbAnimeDbBundle', $ext, $path);
+            ->with('foo_bar', 'AnimeDbAnimeDbBundle', $ext, $path);
         $this->container
             ->expects($this->once())
             ->method('getManipulator')
             ->willReturn($manipulator)
-            ->with('config');
+            ->with('routing');
 
         // test
-        $this->execute($config);
+        $this->execute($routing);
     }
 
     /**
@@ -116,7 +116,7 @@ class AddTest extends TestCaseWritable
      */
     public function testExecuteNoBundle()
     {
-        $this->touchConfig('/src/Resources/config/config.yml');
+        $this->touchConfig('/src/Resources/config/routing.yml');
         $this->container
             ->expects($this->never())
             ->method('getManipulator');
@@ -140,11 +140,11 @@ class AddTest extends TestCaseWritable
     /**
      * Execute job
      *
-     * @param string $config
+     * @param string $routing
      * @param string $bundle
      */
     protected function execute(
-        $config = '',
+        $routing = '',
         $bundle = '\AnimeDb\Bundle\AnimeDbBundle\AnimeDbAnimeDbBundle'
     ) {
         $package = $this->getMockBuilder('\Composer\Package\Package')
@@ -158,8 +158,8 @@ class AddTest extends TestCaseWritable
             ->expects($this->atLeastOnce())
             ->method('getExtra')
             ->willReturn([
-                'anime-db-routing' => '',
-                'anime-db-config' => $config,
+                'anime-db-routing' => $routing,
+                'anime-db-config' => '',
                 'anime-db-bundle' => $bundle,
                 'anime-db-migrations' => ''
             ]);
