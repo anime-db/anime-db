@@ -40,16 +40,16 @@ class Up extends BaseMigrate
                 ->files()
                 ->name('/Version\d{14}.*\.php/');
 
-            $migdir = $this->root_dir.'app/DoctrineMigrations/';
-            if ($finder->count() && !file_exists($migdir)) {
-                mkdir($migdir);
+            $mig_dir = $this->root_dir.'app/DoctrineMigrations/';
+            if ($finder->count() && !is_dir($mig_dir)) {
+                mkdir($mig_dir, 0755);
             }
 
             /* @var $file \SplFileInfo */
             foreach ($finder as $file) {
                 // create migration wrapper
                 $version = $file->getBasename('.php');
-                file_put_contents($migdir.$file->getBasename(), '<?php
+                file_put_contents($mig_dir.$file->getBasename(), '<?php
 namespace Application\Migrations;
 
 use AnimeDb\Bundle\AnimeDbBundle\DoctrineMigrations\ProxyMigration;
