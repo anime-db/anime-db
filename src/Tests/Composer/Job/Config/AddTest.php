@@ -69,8 +69,8 @@ class AddTest extends TestCaseWritable
                 'xml'
             ],
             [
-                array_merge($this->extra, ['anime-db-config' => '/my_dir/Resources/config/my_config.yml']),
-                '/my_dir/Resources/config/my_config',
+                array_merge($this->extra, ['anime-db-config' => '/Resources/config/my_config.yml']),
+                '/Resources/config/my_config',
                 'yml'
             ]
         ];
@@ -106,33 +106,13 @@ class AddTest extends TestCaseWritable
             ->with('config');
 
         // test
-        $job = new Add($this->getPackage($extra), $this->root_dir);
-        $job->setContainer($this->container);
-        $job->register();
-        $job->execute();
+        $this->execute($extra);
     }
 
     /**
-     * Get package bad config
-     *
-     * @return array
+     * Test execute no config
      */
-    public function getPackageBadConfig()
-    {
-        return [
-            [array_merge($this->extra, ['anime-db-bundle' => ''])],
-            [$this->extra]
-        ];
-    }
-
-    /**
-     * Test execute not add
-     *
-     * @dataProvider getPackageBadConfig
-     *
-     * @param array $extra
-     */
-    public function testExecuteNotAdd(array $extra)
+    public function testExecuteNoConfig()
     {
         $this->touchConfig('/undefined');
         $this->container
@@ -140,10 +120,21 @@ class AddTest extends TestCaseWritable
             ->method('getManipulator');
 
         // test
-        $job = new Add($this->getPackage($extra), $this->root_dir);
-        $job->setContainer($this->container);
-        $job->register();
-        $job->execute();
+        $this->execute($this->extra);
+    }
+
+    /**
+     * Test execute failed. Undefined bundle
+     */
+    public function testExecuteNoBundle()
+    {
+        $this->touchConfig('/src/Resources/config/config.yml');
+        $this->container
+            ->expects($this->never())
+            ->method('getManipulator');
+
+        // test
+        $this->execute(array_merge($this->extra, ['anime-db-bundle' => '']));
     }
 
     /**
@@ -153,19 +144,17 @@ class AddTest extends TestCaseWritable
      */
     protected function touchConfig($filename)
     {
-        $filename = $this->root_dir.'vendor/anime-db/anime-db'.$filename;
+        $filename = $this->root_dir.'vendor/foo/bar'.$filename;
         $this->fs->mkdir(dirname($filename));
         touch($filename);
     }
 
     /**
-     * Get package
+     * Execute job
      *
      * @param array $extra
-     *
-     * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    protected function getPackage(array $extra)
+    protected function execute(array $extra)
     {
         $package = $this->getMockBuilder('\Composer\Package\Package')
             ->disableOriginalConstructor()
@@ -173,11 +162,15 @@ class AddTest extends TestCaseWritable
         $package
             ->expects($this->atLeastOnce())
             ->method('getName')
-            ->willReturn('anime-db/anime-db');
+            ->willReturn('foo/bar');
         $package
             ->expects($this->atLeastOnce())
             ->method('getExtra')
             ->willReturn($extra);
-        return $package;
+
+        $job = new Add($package, $this->root_dir);
+        $job->setContainer($this->container);
+        $job->register();
+        $job->execute();
     }
 }
