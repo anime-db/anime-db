@@ -48,7 +48,7 @@ class Add extends Job
     /**
      * Get the package config
      *
-     * @return string|null
+     * @return string
      */
     protected function getPackageConfig()
     {
@@ -74,6 +74,6 @@ class Add extends Job
             $path = str_replace(DIRECTORY_SEPARATOR, '/', $file->getPathname());
             return substr($path, strrpos($path, '/Resources/config/'));
         }
-        return null;
+        return '';
     }
 }

@@ -37,24 +37,24 @@ class AddTest extends TestCaseWritable
 
         return [
             [
-                '/src/Resources/config/config.yml',
-                "imports:\n    - { resource: '@AnimeDbAnimeDbBundle/Resources/config/config.yml' }\n",
-                $extra
+                $extra,
+                '/Resources/config/config',
+                'yml'
             ],
             [
-                '/lib/Resources/config/global/config.xml',
-                "imports:\n    - { resource: '@AnimeDbAnimeDbBundle/Resources/config/global/config.xml' }\n",
-                $extra
-            ],
+                $extra,
+                '/Resources/config/global/config',
+                'xml'
+            ],/* 
             [
-                '/undefined',
+                $extra,
                 '',
-                $extra
-            ],
+                ''
+            ], */
             [
-                '/undefined',
-                "imports:\n    - { resource: '@AnimeDbAnimeDbBundle/Resources/config/my_config.yml' }\n",
-                array_merge($extra, ['anime-db-config' => '/Resources/config/my_config.yml'])
+                array_merge($extra, ['anime-db-config' => '/Resources/config/my_config.yml']),
+                '/Resources/config/my_config',
+                'yml'
             ]
         ];
     }
@@ -64,19 +64,19 @@ class AddTest extends TestCaseWritable
      *
      * @dataProvider getPackageConfig
      *
-     * @param string $package_config
-     * @param string $expected
      * @param array $extra
+     * @param string $path
+     * @param string $ext
      */
-    public function testExecute($package_config, $expected, array $extra)
+    public function testExecute(array $extra, $path, $ext)
     {
         if (!empty($extra['anime-db-config'])) {
             $package_config = $extra['anime-db-config'];
+        } else {
+            $package_config = '/src'.$path.'.'.$ext;
         }
-        $config = $this->root_dir.'app/config/vendor_config.yml';
         $package_config = $this->root_dir.'vendor/anime-db/anime-db'.$package_config;
-        $this->fs->mkdir([dirname($config), dirname($package_config)]);
-        touch($config);
+        $this->fs->mkdir(dirname($package_config));
         touch($package_config);
 
         $package = $this->getMockBuilder('\Composer\Package\Package')
@@ -90,11 +90,24 @@ class AddTest extends TestCaseWritable
             ->expects($this->atLeastOnce())
             ->method('getExtra')
             ->willReturn($extra);
+        $manipulator = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $manipulator
+            ->expects($this->once())
+            ->method('addResource')
+            ->with('AnimeDbAnimeDbBundle', $ext, $path);
+        $container = $this->getMock('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container');
+        $container
+            ->expects($this->once())
+            ->method('getManipulator')
+            ->willReturn($manipulator)
+            ->with('config');
 
         // test
         $job = new Add($package, $this->root_dir);
+        $job->setContainer($container);
+        $job->register();
         $job->execute();
-
-        $this->assertEquals($expected, file_get_contents($config));
     }
 }
