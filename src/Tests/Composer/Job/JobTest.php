@@ -10,8 +10,8 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job;
 
+use AnimeDb\Bundle\AnimeDbBundle\Tests\TestCaseWritable;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
-use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Test job
@@ -19,7 +19,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class JobTest extends \PHPUnit_Framework_TestCase
+class JobTest extends TestCaseWritable
 {
     /**
      * Package
@@ -36,20 +36,6 @@ class JobTest extends \PHPUnit_Framework_TestCase
     protected $job;
 
     /**
-     * Root dir
-     *
-     * @var string
-     */
-    protected $root_dir;
-
-    /**
-     * Filesystem
-     *
-     * @var \Symfony\Component\Filesystem\Filesystem
-     */
-    protected $fs;
-
-    /**
      * Default extra
      *
      * @var array
@@ -60,41 +46,6 @@ class JobTest extends \PHPUnit_Framework_TestCase
         'anime-db-bundle' => '',
         'anime-db-migrations' => ''
     ];
-
-    /**
-     * Construct
-     *
-     * @param string $name
-     * @param array $data
-     * @param string $dataName
-     */
-    public function __construct($name = null, array $data = array(), $dataName = '')
-    {
-        parent::__construct($name, $data, $dataName);
-        $this->fs = new Filesystem();
-    }
-
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::setUp()
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-        $this->root_dir = sys_get_temp_dir().'/tests/';
-        $this->fs->mkdir($this->root_dir);
-
-    }
-
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::tearDown()
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
-        $this->fs->remove($this->root_dir);
-    }
 
     /**
      * Init job
