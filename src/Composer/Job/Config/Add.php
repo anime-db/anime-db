@@ -35,4 +35,36 @@ class Add extends BaseConfig
             $this->manipulator->addResource($bundle->getName(), $info['extension'], $path);
         }
     }
+
+    /**
+     * Get the package config
+     *
+     * @return string|null
+     */
+    protected function getPackageConfig()
+    {
+        // specific location
+        if ($config = $this->getPackageConfigFile()) {
+            return $config;
+        }
+
+        $finder = new Finder();
+        $finder
+            ->files()
+            ->in($this->getPackageDir())
+            ->path('/\/Resources\/config\/([^\/]+\/)*config.(yml|xml)$/')
+            ->name('/^config.(yml|xml)$/');
+
+        // ignor configs in test
+        if (stripos($this->getPackage()->getName(), 'test') === false) {
+            $finder->notPath('/test/i');
+        }
+
+        /* @var $file \SplFileInfo */
+        foreach ($finder as $file) {
+            $path = str_replace(DIRECTORY_SEPARATOR, '/', $file->getPathname());
+            return substr($path, strrpos($path, '/Resources/config/'));
+        }
+        return null;
+    }
 }
