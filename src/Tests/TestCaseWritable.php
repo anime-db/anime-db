@@ -18,7 +18,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * @package AnimeDb\Bundle\AnimeDbBundle\Tests
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class TestCaseWritable extends \PHPUnit_Framework_TestCase
+abstract class TestCaseWritable extends \PHPUnit_Framework_TestCase
 {
     /**
      * Root dir

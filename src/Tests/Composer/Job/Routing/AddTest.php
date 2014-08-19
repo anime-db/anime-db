@@ -32,7 +32,7 @@ class AddTest extends TestCaseWritable
      * (non-PHPdoc)
      * @see \AnimeDb\Bundle\AnimeDbBundle\Tests\TestCaseWritable::setUp()
      */
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $this->container = $this->getMock('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container');

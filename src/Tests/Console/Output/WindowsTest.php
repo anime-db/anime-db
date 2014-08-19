@@ -46,7 +46,7 @@ class WindowsTest extends \PHPUnit_Framework_TestCase
      * (non-PHPdoc)
      * @see PHPUnit_Framework_TestCase::setUp()
      */
-    public function setUp()
+    protected function setUp()
     {
         if (!extension_loaded('mbstring')) {
             $this->markTestSkipped('Extension "mbstring" is not loaded');
