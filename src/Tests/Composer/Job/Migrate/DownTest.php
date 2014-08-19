@@ -10,15 +10,15 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job\Migrate;
 
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Up;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Down;
 
 /**
- * Test job migrate up
+ * Test job migrate down
  *
  * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job\Migrate
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class UpTest extends TestCase
+class DownTest extends TestCase
 {
     /**
      * Test create proxy migrations
@@ -31,46 +31,24 @@ class UpTest extends TestCase
     {
         $file = $this->root_dir.'vendor/foo/bar/'.($config ?: $file);
         $versions = $this->root_dir.'vendor/foo/bar/DoctrineMigrations/';
-        $this->fs->mkdir([dirname($file), $versions, $this->root_dir.'app']);
+        $meg_dir = $this->root_dir.'app/DoctrineMigrations/';
+        $this->fs->mkdir([dirname($file), $versions, $meg_dir]);
         $this->putConfig($file);
 
         $version1 = 'Version55555555555555_Demo';
         $version2 = 'Version66666666666666_Test';
         touch($versions.$version1.'.php');
         touch($versions.$version2.'.php');
+        touch($meg_dir.$version1.'.php');
+        touch($meg_dir.$version2.'.php');
 
         $this->execute($config); // test
 
-        $proxy_dir = $this->root_dir.'app/DoctrineMigrations/';
-        $this->assertFileExists($proxy_dir.$version1.'.php');
-        $this->assertFileExists($proxy_dir.$version2.'.php');
-        $this->assertEquals($this->getVersionBody($version1), file_get_contents($proxy_dir.$version1.'.php'));
-        $this->assertEquals($this->getVersionBody($version2), file_get_contents($proxy_dir.$version2.'.php'));
-    }
-
-    /**
-     * Get version body
-     *
-     * @param string $version
-     *
-     * @return string
-     */
-    protected function getVersionBody($version)
-    {
-        return '<?php
-namespace Application\Migrations;
-
-use AnimeDb\Bundle\AnimeDbBundle\DoctrineMigrations\ProxyMigration;
-
-require_once __DIR__."/../../vendor/foo/bar/DoctrineMigrations/'.$version.'.php";
-
-class '.$version.' extends ProxyMigration
-{
-    protected function getMigration()
-    {
-        return new \Foo\Bundle\BarBundle\FooBarBundle\DoctrineMigrations\\'.$version.'($this->version);
-    }
-}';
+        $cache_dir = $this->root_dir.'app/cache/dev/DoctrineMigrations/';
+        $this->assertFileExists($cache_dir.$version1.'.php');
+        $this->assertFileExists($cache_dir.$version2.'.php');
+        $this->assertFileNotExists($meg_dir.$version1.'.php');
+        $this->assertFileNotExists($meg_dir.$version2.'.php');
     }
 
     /**
@@ -82,6 +60,6 @@ class '.$version.' extends ProxyMigration
      */
     protected function getJob(\PHPUnit_Framework_MockObject_MockObject $package)
     {
-        return new Up($package, $this->root_dir);
+        return new Down($package, $this->root_dir);
     }
 }
