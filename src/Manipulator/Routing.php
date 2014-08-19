@@ -28,7 +28,7 @@ class Routing extends Yaml
      */
     public function addResource($name, $bundle, $format, $path = 'routing')
     {
-        $resource = '@'.$bundle.'/Resources/config/'.$path.'.'.$format;
+        $resource = '@'.$bundle.$path.'.'.$format;
         $yaml = $this->getContent();
         if (!isset($yaml[$name]) || $yaml[$name]['resource'] != $resource) {
             $yaml[$name] = ['resource' => $resource];

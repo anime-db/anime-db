@@ -68,7 +68,7 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
                 'demo-bundle',
                 'DemoBundle',
                 'yml',
-                'routing',
+                '/Resources/config/routing',
                 [],
                 [
                     'demo-bundle' => [
@@ -80,7 +80,7 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
                 'demo-bundle',
                 'DemoBundle',
                 'xml',
-                'my_routing',
+                '/Resources/config/global/my_routing',
                 [
                     'acme-bundle' => [
                         'resource' => '@AcmeBundle/Resources/config/routing.yml'
@@ -91,7 +91,7 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
                         'resource' => '@AcmeBundle/Resources/config/routing.yml'
                     ],
                     'demo-bundle' => [
-                        'resource' => '@DemoBundle/Resources/config/my_routing.xml'
+                        'resource' => '@DemoBundle/Resources/config/global/my_routing.xml'
                     ]
                 ]
             ],
@@ -99,7 +99,7 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
                 'demo-bundle',
                 'DemoBundle',
                 'yml',
-                'routing',
+                '/Resources/config/routing',
                 [
                     'demo-bundle' => [
                         'resource' => '@DemoBundle/Resources/config/routing.yml'
