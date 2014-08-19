@@ -85,7 +85,7 @@ class RemoveTest extends TestCaseWritable
 
         // test
         $job = new Remove($package, $this->root_dir);
-        $job->setContainer($this->getMock('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container'));
+        $job->register();
         $job->execute();
 
         $this->assertEquals(['imports' => $expected], Yaml::parse(file_get_contents($config)));
