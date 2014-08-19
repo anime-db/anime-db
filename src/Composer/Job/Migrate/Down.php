@@ -35,7 +35,7 @@ class Down extends BaseMigrate
             // also the migration files will be deleted after the package is removed
             // to solve this problem copy the migrations files to a temporary directory for later execution
 
-            $config = $this->getNamespaceAndDirectory($config_file);
+            $config = $this->parseConfig($config_file);
 
             // find migrations
             $from = $this->root_dir.'vendor/'.$this->getPackage()->getName().'/'.$config['directory'];

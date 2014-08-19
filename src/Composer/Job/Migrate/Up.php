@@ -31,7 +31,8 @@ class Up extends BaseMigrate
             // can not consistently perform the migration of one packet,
             // and then another because they may be dependent
             // to solve this problem create set of wrappers for sort migrations
-            $config = $this->getNamespaceAndDirectory($config_file);
+
+            $config = $this->parseConfig($config_file);
 
             // find migrations
             $finder = Finder::create()

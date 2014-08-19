@@ -51,13 +51,13 @@ abstract class Migrate extends Job
     }
 
     /**
-     * Get migrations namespace and directory
+     * Parse config file
      *
      * @param string $file
      *
      * @return array {namespace:string, directory:string}
      */
-    protected function getNamespaceAndDirectory($file)
+    protected function parseConfig($file)
     {
         $namespace = '';
         $directory = '';
