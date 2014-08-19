@@ -36,7 +36,7 @@ abstract class Migrate extends Job
     protected function getMigrationsConfig()
     {
         // specific location
-        if ($migrations = $this->getPackageMigrationsFile()) {
+        if ($migrations = $this->getPackageOptionFile('anime-db-migrations')) {
             return $migrations;
         }
 

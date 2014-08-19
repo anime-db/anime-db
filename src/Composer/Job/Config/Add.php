@@ -45,7 +45,7 @@ class Add extends BaseConfig
     protected function getPackageConfig()
     {
         // specific location
-        if ($config = $this->getPackageConfigFile()) {
+        if ($config = $this->getPackageOptionFile('anime-db-config')) {
             return $config;
         }
 

@@ -148,13 +148,13 @@ abstract class Job
      *
      * @return string
      */
-    private function getPackageOption($option)
+    protected function getPackageOption($option)
     {
         $options = $this->package->getExtra();
         if (isset($options[$option])) {
             return $options[$option];
         }
-        return null;
+        return '';
     }
 
     /**
@@ -164,43 +164,13 @@ abstract class Job
      *
      * @return string
      */
-    private function getPackageOptionFile($option)
+    protected function getPackageOptionFile($option)
     {
         $option = $this->getPackageOption($option);
         if ($option && file_exists($this->getPackageDir().$option)) {
             return $option;
         }
         return '';
-    }
-
-    /**
-     * Get package migrations config file
-     *
-     * @return string
-     */
-    public function getPackageMigrationsFile()
-    {
-        return $this->getPackageOptionFile('anime-db-migrations');
-    }
-
-    /**
-     * Get package config file
-     *
-     * @return string
-     */
-    public function getPackageConfigFile()
-    {
-        return $this->getPackageOptionFile('anime-db-config');
-    }
-
-    /**
-     * Get package routing config file
-     *
-     * @return string
-     */
-    public function getPackageRoutingFile()
-    {
-        return $this->getPackageOptionFile('anime-db-routing');
     }
 
     /**

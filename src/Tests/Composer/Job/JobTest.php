@@ -139,66 +139,6 @@ class JobTest extends TestCaseWritable
     }
 
     /**
-     * Get options
-     *
-     * @return array
-     */
-    public function getOptions()
-    {
-        return [
-            [
-                'anime-db-migrations',
-                'my_migrations.yml',
-                'getPackageMigrationsFile'
-            ],
-            [
-                'anime-db-config',
-                'my_config.yml',
-                'getPackageConfigFile'
-            ],
-            [
-                'anime-db-routing',
-                'my_routing.yml',
-                'getPackageRoutingFile'
-            ] 
-        ];
-    }
-    /**
-     * Test get package option file
-     *
-     * @dataProvider getOptions
-     *
-     * @param string $option
-     * @param string $value
-     * @param string $method
-     */
-    public function testGetPackageOptionFile($option, $value, $method)
-    {
-        // no option
-        $this->initJob([], $this->atLeastOnce());
-        $this->assertEmpty(call_user_func([$this->job, $method]));
-
-        // no file
-        $this->initJob([$option => $value], $this->atLeastOnce());
-        $this->package
-            ->expects($this->once())
-            ->method('getName')
-            ->willReturn('foo/bar');
-        $this->assertEmpty(call_user_func([$this->job, $method]));
-
-        // all good
-        $this->initJob([$option => $value], $this->atLeastOnce());
-        $this->package
-            ->expects($this->atLeastOnce())
-            ->method('getName')
-            ->willReturn('foo/bar');
-        $this->fs->mkdir($dir = $this->root_dir.'vendor/foo/bar/');
-        touch($dir.$value);
-
-        $this->assertEquals($value, call_user_func([$this->job, $method]));
-    }
-
-    /**
      * Test get package dir
      */
     public function testGetPackageDir()

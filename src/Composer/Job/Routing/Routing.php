@@ -63,7 +63,7 @@ abstract class Routing extends Job
         }
 
         // specific location
-        if ($routing = $this->getPackageRoutingFile()) {
+        if ($routing = $this->getPackageOptionFile('anime-db-routing')) {
             return $routing;
         }
 
