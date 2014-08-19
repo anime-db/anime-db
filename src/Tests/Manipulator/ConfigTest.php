@@ -157,38 +157,20 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             [
                 'DemoBundle',
                 [
-                    'imports' => [
-                        [
-                            'resource' => '@AcmeBundle/Resources/config/config.xml'
-                        ]
-                    ]
+                    ['resource' => '@AcmeBundle/Resources/config/config.xml']
                 ],
                 [
-                    'imports' => [
-                        [
-                            'resource' => '@AcmeBundle/Resources/config/config.xml'
-                        ]
-                    ]
+                    ['resource' => '@AcmeBundle/Resources/config/config.xml']
                 ]
             ],
             [
                 'DemoBundle',
                 [
-                    'imports' => [
-                        [
-                            'resource' => '@AcmeBundle/Resources/config/config.xml'
-                        ],
-                        [
-                            'resource' => '@DemoBundle/Resources/config/my_config.xml'
-                        ]
-                    ]
+                    ['resource' => '@DemoBundle/Resources/config/my_config.xml'],
+                    ['resource' => '@AcmeBundle/Resources/config/config.xml']
                 ],
                 [
-                    'imports' => [
-                        [
-                            'resource' => '@AcmeBundle/Resources/config/config.xml'
-                        ]
-                    ]
+                    ['resource' => '@AcmeBundle/Resources/config/config.xml']
                 ]
             ]
         ];
@@ -205,10 +187,10 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
      */
     public function testRemoveResource($bundle, array $before, array $after)
     {
-        file_put_contents($this->filename, Yaml::dump($before));
+        file_put_contents($this->filename, Yaml::dump(['imports' => $before]));
 
         $this->manipulator->removeResource($bundle); // test
 
-        $this->assertEquals(Yaml::dump($after), file_get_contents($this->filename));
+        $this->assertEquals(['imports' => $after], Yaml::parse(file_get_contents($this->filename)));
     }
 }

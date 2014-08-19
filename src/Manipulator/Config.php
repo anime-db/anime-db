@@ -53,6 +53,7 @@ class Config extends Yaml
             foreach ($yaml['imports'] as $key => $import) {
                 if (strpos($import['resource'], '@'.$bundle) === 0) {
                     unset($yaml['imports'][$key]);
+                    $yaml['imports'] = array_values($yaml['imports']);
                     $this->setContent($yaml);
                     break;
                 }
