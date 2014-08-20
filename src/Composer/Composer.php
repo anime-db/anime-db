@@ -1,0 +1,186 @@
+<?php
+/**
+ * AnimeDb package
+ *
+ * @package   AnimeDb
+ * @author    Peter Gribanov <info@peter-gribanov.ru>
+ * @copyright Copyright (c) 2011, Peter Gribanov
+ * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
+ */
+
+namespace AnimeDb\Bundle\AnimeDbBundle\Composer;
+
+use Composer\Factory;
+use Composer\IO\IOInterface;
+use Composer\IO\NullIO;
+use Composer\Package\PackageInterface;
+use Composer\Package\Loader\LoaderInterface;
+use Composer\Json\JsonFile;
+use Composer\Installer;
+
+/**
+ * Composer
+ *
+ * @package AnimeDb\Bundle\AnimeDbBundle\Composer
+ * @author  Peter Gribanov <info@peter-gribanov.ru>
+ */
+class Composer
+{
+    /**
+     * Factory
+     *
+     * @var \Composer\Factory
+     */
+    protected $factory;
+
+    /**
+     * Loader
+     *
+     * @var \Composer\Package\Loader\LoaderInterface
+     */
+    protected $loader;
+
+    /**
+     * Root dir
+     *
+     * @var string
+     */
+    protected $root_dir;
+
+    /**
+     * Composer
+     *
+     * @var \Composer\Composer
+     */
+    protected $composer;
+
+    /**
+     * IO
+     *
+     * @var \Composer\IO\IOInterface
+     */
+    protected $io;
+
+    /**
+     * Construct
+     *
+     * @param \Composer\Factory $factory
+     * @param \Composer\Package\Loader\LoaderInterface $loader
+     * @param string $root_dir
+     */
+    public function __construct(Factory $factory, LoaderInterface $loader, $root_dir)
+    {
+        $this->factory = $factory;
+        $this->loader = $loader;
+        $this->root_dir = $root_dir;
+    }
+
+    /**
+     * Get IO
+     *
+     * @return \Composer\IO\IOInterface
+     */
+    public function getIO()
+    {
+        if (!$this->io) {
+            $this->io = new NullIO();
+        }
+        return $this->io;
+    }
+
+    /**
+     * Set IO
+     *
+     * @param \Composer\IO\IOInterface $io
+     */
+    public function setIO(IOInterface $io)
+    {
+        $this->io = $io;
+        if ($this->composer) {
+            $this->reload();
+        }
+    }
+
+    /**
+     * Get composer
+     *
+     * @return \Composer\Composer
+     */
+    protected function getComposer()
+    {
+        if (!$this->composer) {
+            $this->reload();
+        }
+        return $this->composer;
+    }
+
+    /**
+     * Reload Composer
+     */
+    public function reload()
+    {
+        // update application components to the latest version
+        if (file_exists($this->root_dir.'/../composer.lock')) {
+            unlink($this->root_dir.'/../composer.lock');
+        }
+        $this->composer = $this->factory->createComposer($this->getIO());
+    }
+
+    /**
+     * Download
+     *
+     * @param \Composer\Package\PackageInterface $package
+     * @param string $target
+     */
+    public function download(PackageInterface $package, $target)
+    {
+        $manager = $this->getComposer()->getDownloadManager();
+
+        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
+            $manager->setOutputProgress(false);
+        }
+
+        $manager
+            ->getDownloaderForInstalledPackage($package)
+            ->download($package, $target);
+    }
+
+    /**
+     * Get root package
+     *
+     * @return \Composer\Package\RootPackageInterface
+     */
+    public function getRootPackage()
+    {
+        return $this->getComposer()->getPackage();
+    }
+
+    /**
+     * Get package
+     *
+     * @param string $config
+     *
+     * @return \Composer\Package\PackageInterface
+     */
+    public function getPackageFromConfigFile($config)
+    {
+        return $this->loader->load((new JsonFile($config))->read(), 'Composer\Package\RootPackage');
+    }
+
+    /**
+     * Get installer
+     *
+     * @return \Composer\Installer
+     */
+    public function getInstaller()
+    {
+        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
+            $this->getComposer()->getDownloadManager()->setOutputProgress(false);
+        }
+
+        return Installer::create($this->getIO(), $this->getComposer())
+            ->setDevMode(false)
+            ->setPreferDist(true)
+            ->setUpdate(true);
+    }
+}

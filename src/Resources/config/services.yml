@@ -26,6 +26,18 @@ services:
         class: Guzzle\Http\Client
         public: false
 
+    anime_db.composer.factory:
+        class: Composer\Factory
+        public: false
+
+    anime_db.composer.loader:
+        class: Composer\Package\Loader\ArrayLoader
+        public: false
+
     anime_db.client.github:
         class: AnimeDb\Bundle\AnimeDbBundle\Client\GitHub
         arguments: [ %anime_db.github.api%, @anime_db.client ]
+
+    anime_db.composer:
+        class: AnimeDb\Bundle\AnimeDbBundle\Composer\Composer
+        arguments: [ @anime_db.composer.factory, @anime_db.composer.loader, %kernel.root_dir% ]
