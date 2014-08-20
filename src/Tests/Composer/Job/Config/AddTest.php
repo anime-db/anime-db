@@ -166,7 +166,6 @@ class AddTest extends TestCaseWritable
 
         $job = new Add($package, $this->root_dir);
         $job->setContainer($this->container);
-        $job->register();
         $job->execute();
     }
 }
