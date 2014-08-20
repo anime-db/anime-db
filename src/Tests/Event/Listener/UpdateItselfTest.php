@@ -245,9 +245,8 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
      */
     public function testOnAppDownloadedMergeBinRunInstallMonitor()
     {
-        // emulate Windows env
         if (!defined('PHP_WINDOWS_VERSION_BUILD')) {
-            define('PHP_WINDOWS_VERSION_BUILD', 2600);
+            $this->markTestSkipped('This test is only for OS Windows');
         }
         $this->zip
             ->expects($this->once())
@@ -272,9 +271,8 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
      */
     public function testOnAppDownloadedMergeBinRunFailedInstallMonitor()
     {
-        // emulate Windows env
         if (!defined('PHP_WINDOWS_VERSION_BUILD')) {
-            define('PHP_WINDOWS_VERSION_BUILD', 2600);
+            $this->markTestSkipped('This test is only for OS Windows');
         }
         $this->zip
             ->expects($this->once())
@@ -289,9 +287,8 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
      */
     public function testOnAppDownloadedMergeBinRun()
     {
-        // emulate Windows env
         if (!defined('PHP_WINDOWS_VERSION_BUILD')) {
-            define('PHP_WINDOWS_VERSION_BUILD', 2600);
+            $this->markTestSkipped('This test is only for OS Windows');
         }
         file_put_contents($this->root_dir.'../config.ini', '[General]
 addr=localhost
