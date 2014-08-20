@@ -71,7 +71,7 @@ class Add extends BaseRouting
         /* @var $file \SplFileInfo */
         foreach ($finder as $file) {
             $path = str_replace(DIRECTORY_SEPARATOR, '/', $file->getPathname());
-            return substr($file->getPathname(), strrpos($file->getPathname(), '/Resources/config/'));
+            return substr($path, strrpos($path, '/Resources/config/'));
         }
         return '';
     }
