@@ -13,6 +13,7 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Command;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Guzzle\Http\Client;
 use Composer\Factory;
 use Composer\IO\ConsoleIO;
 use Composer\Package\Package;
