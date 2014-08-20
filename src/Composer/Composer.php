@@ -41,11 +41,11 @@ class Composer
     protected $loader;
 
     /**
-     * Root dir
+     * Lock file composer.lock
      *
      * @var string
      */
-    protected $root_dir;
+    protected $lock_file;
 
     /**
      * Composer
@@ -66,13 +66,13 @@ class Composer
      *
      * @param \Composer\Factory $factory
      * @param \Composer\Package\Loader\LoaderInterface $loader
-     * @param string $root_dir
+     * @param string $lock_file
      */
-    public function __construct(Factory $factory, LoaderInterface $loader, $root_dir)
+    public function __construct(Factory $factory, LoaderInterface $loader, $lock_file)
     {
         $this->factory = $factory;
         $this->loader = $loader;
-        $this->root_dir = $root_dir;
+        $this->lock_file = $lock_file;
     }
 
     /**
@@ -120,8 +120,8 @@ class Composer
     public function reload()
     {
         // update application components to the latest version
-        if (file_exists($this->root_dir.'/../composer.lock')) {
-            unlink($this->root_dir.'/../composer.lock');
+        if (file_exists($this->lock_file)) {
+            unlink($this->lock_file);
         }
         $this->composer = $this->factory->createComposer($this->getIO());
     }

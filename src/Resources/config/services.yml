@@ -40,4 +40,7 @@ services:
 
     anime_db.composer:
         class: AnimeDb\Bundle\AnimeDbBundle\Composer\Composer
-        arguments: [ @anime_db.composer.factory, @anime_db.composer.loader, %kernel.root_dir% ]
+        arguments:
+            - @anime_db.composer.factory
+            - @anime_db.composer.loader
+            - %kernel.root_dir%/../composer.lock
