@@ -21,3 +21,11 @@ services:
     anime_db.zip:
         class: ZipArchive
         public: false
+
+    anime_db.client:
+        class: Guzzle\Http\Client
+        public: false
+
+    anime_db.client.github:
+        class: AnimeDb\Bundle\AnimeDbBundle\Client\GitHub
+        arguments: [ %anime_db.github.api%, @anime_db.client ]
