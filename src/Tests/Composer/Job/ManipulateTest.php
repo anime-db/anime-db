@@ -17,12 +17,12 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel\Remove as RemoveKernel;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Remove as RemoveRouting;
 
 /**
- * Test job kernel add
+ * Test manipulate jobs
  *
  * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job\Kernel
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class AddTest extends TestCaseWritable
+class ManipulateTest extends TestCaseWritable
 {
     /**
      * Container
