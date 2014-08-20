@@ -12,7 +12,6 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer;
 
 use AnimeDb\Bundle\AnimeDbBundle\Tests\TestCaseWritable;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\ScriptHandler;
-use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Test script handler

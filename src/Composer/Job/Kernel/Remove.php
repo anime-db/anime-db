@@ -11,7 +11,6 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
-use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Kernel as KernelManipulator;
 
 /**
  * Job: Remove package from kernel

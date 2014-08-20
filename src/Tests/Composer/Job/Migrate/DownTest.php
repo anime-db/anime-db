@@ -56,7 +56,7 @@ class DownTest extends TestCase
      *
      * @param \PHPUnit_Framework_MockObject_MockObject $package
      *
-     * @return \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Up
+     * @return \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Down
      */
     protected function getJob(\PHPUnit_Framework_MockObject_MockObject $package)
     {

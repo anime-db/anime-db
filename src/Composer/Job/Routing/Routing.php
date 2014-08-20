@@ -11,9 +11,6 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
-use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing as RoutingManipulator;
-use Composer\Package\Package;
-use Symfony\Component\Finder\Finder;
 
 /**
  * Routing
