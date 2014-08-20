@@ -53,16 +53,23 @@ class UpdateCommand extends ContainerAwareCommand
         // load composer
         $io = new ConsoleIO($input, $output, $this->getHelperSet());
         $composer = $this->createComposer($io);
+        /* @var $github \AnimeDb\Bundle\AnimeDbBundle\Client\GitHub */
+        $github = $this->getContainer()->get('anime_db.client.github');
 
         // search tag with new version of application
-        $tag = $this->findNewVersion($composer->getPackage()->getVersion());
-        if ($tag) {
+        $output->writeln('Search for a new version of the application');
+        $tag = $github->getLastRelease('anime-db/anime-db');
+        $tag['version'] = $github->getVersionCompatible($tag['name']);
+        $current_version = $github->getVersionCompatible($composer->getPackage()->getPrettyVersion());
+
+        if ($tag && version_compare($tag['version'], $current_version) == 1) {
             $this->doUpdateItself($tag, $composer, $output);
             // reload composer
             $composer = $this->createComposer($io);
         } else {
             $output->writeln('<info>Application has already been updated to the latest version</info>');
         }
+        unset($github, $tag, $current_version);
 
         $this->doUpdateComposer($composer, $io);
         $output->writeln('<info>Updating the application has been completed<info>');
@@ -86,43 +93,6 @@ class UpdateCommand extends ContainerAwareCommand
     }
 
     /**
-     * Get list of tags
-     *
-     * @return array
-     */
-    protected function getListTags()
-    {
-        $client = new Client('https://api.github.com/');
-        /* @var $response \Guzzle\Http\Message\Response */
-        $response = $client->get('repos/anime-db/anime-db/tags')->send();
-        return json_decode($response->getBody(true), true);
-    }
-
-    /**
-     * Find new version
-     *
-     * @param string $current_version
-     *
-     * @return array|boolean
-     */
-    protected function findNewVersion($current_version)
-    {
-        // search tag with new version of application
-        $reg = '/^v?(?<version>\d+\.\d+\.\d+)(?:-(?:dev|patch|alpha|beta|rc)(?<suffix>\d+))?$/i';
-        foreach ($this->getListTags() as $tag) {
-            if (preg_match($reg, $tag['name'], $mat)) {
-                $version = $mat['version'].'.'.(isset($mat['suffix']) ? $mat['suffix'] : '0');
-                if (version_compare($version, $current_version) == 1) {
-                    return array_merge(['version' => $version], $tag);
-                } else {
-                    break;
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
      * Do update itself
      *
      * @param array $tag
@@ -131,10 +101,10 @@ class UpdateCommand extends ContainerAwareCommand
      */
     protected function doUpdateItself(array $tag, Composer $composer, OutputInterface $output)
     {
-        $output->writeln('Discovered a new version of the application: <info>'.$tag['version'].'</info>');
+        $output->writeln('Discovered a new version of the application: <info>'.$tag['name'].'</info>');
 
         // create install package
-        $package = new Package('anime-db/anime-db', $tag['version'].'.0', $tag['version']);
+        $package = new Package('anime-db/anime-db', $tag['version'], $tag['name']);
         $package->setDistType('zip');
         $package->setDistUrl($tag['zipball_url']);
         $package->setInstallationSource('dist');
@@ -192,7 +162,7 @@ class UpdateCommand extends ContainerAwareCommand
      *
      * @param string $config
      *
-     * @return array
+     * @return \Composer\Package\RootPackage
      */
     protected function getPackage($config)
     {
