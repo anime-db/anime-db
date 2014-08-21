@@ -164,7 +164,7 @@ class Composer
      *
      * @param string $config
      *
-     * @return \Composer\Package\PackageInterface
+     * @return \Composer\Package\RootPackage
      */
     public function getPackageFromConfigFile($config)
     {
