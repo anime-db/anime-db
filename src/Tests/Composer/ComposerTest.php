@@ -264,6 +264,45 @@ class ComposerTest extends TestCaseWritable
     }
 
     /**
+     * Get versions
+     *
+     * @return array
+     */
+    public function getVersions()
+    {
+        return [
+            ['1.0', false],
+            ['1.2.3.4', false],
+            ['1.2.3', '1.2.3.5.0'],
+            ['1.2.3-dev', '1.2.3.1.1'],
+            ['1.2.3-dev2', '1.2.3.1.2'],
+            ['1.2.3-patch', '1.2.3.2.1'],
+            ['1.2.3-patch2', '1.2.3.2.2'],
+            ['1.2.3-alpha', '1.2.3.3.1'],
+            ['1.2.3-alpha2', '1.2.3.3.2'],
+            ['1.2.3-beta', '1.2.3.4.1'],
+            ['1.2.3-beta2', '1.2.3.4.2'],
+            ['1.2.3-stable', false],
+            ['1.2.3-stable2', false],
+            ['1.2.3-rc', '1.2.3.6.1'],
+            ['1.2.3-rc2', '1.2.3.6.2']
+        ];
+    }
+
+    /**
+     * Test get version compatible
+     *
+     * @dataProvider getVersions
+     *
+     * @param string $actual
+     * @param string $expected
+     */
+    public function testGetVersionCompatible($actual, $expected)
+    {
+        $this->assertEquals($expected, Composer::getVersionCompatible($actual));
+    }
+
+    /**
      * Get composer
      *
      * @param \PHPUnit_Framework_MockObject_Matcher_Invocation|null $matcher

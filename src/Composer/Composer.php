@@ -190,4 +190,41 @@ class Composer
             ->setPreferDist(true)
             ->setUpdate(true);
     }
+
+    /**
+     * Get version compatible
+     *
+     * 3.2.1-RC2 => 3.2.1.6.2
+     *
+     * @param string $version
+     *
+     * @return string|false
+     */
+    public static function getVersionCompatible($version)
+    {
+        // {suffix:weight}
+        $suffixes = [
+            'dev' => 1, // composer suffix
+            'patch' => 2,
+            'alpha' => 3,
+            'beta' => 4,
+            'stable' => 5, // is not a real suffix. use it if suffix is not exists
+            'rc' => 6
+        ];
+
+        $reg = '/^v?(?<version>\d+\.\d+\.\d+)(?:-(?<suffix>dev|patch|alpha|beta|rc)(?<suffix_version>\d+)?)?$/i';
+        if (!preg_match($reg, $version, $match)) {
+            return false;
+        }
+
+        // suffix version
+        if (isset($match['suffix'])) {
+            $suffix = $suffixes[strtolower($match['suffix'])].'.';
+            $suffix .= isset($match['suffix_version']) ? (int)$match['suffix_version'] : 1;
+        } else {
+            $suffix = $suffixes['stable'].'.0';
+        }
+
+        return $match['version'].'.'.$suffix;
+    }
 }
