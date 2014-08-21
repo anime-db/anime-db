@@ -59,7 +59,7 @@ class UpdateCommand extends ContainerAwareCommand
 
         // update itself
         if ($tag && version_compare($tag['version'], $current_version) == 1) {
-            $this->doUpdateItself($tag, $composer);
+            $this->doUpdateItself($tag, $composer, $output);
         } else {
             $output->writeln('<info>Application has already been updated to the latest version</info>');
         }
@@ -79,10 +79,11 @@ class UpdateCommand extends ContainerAwareCommand
      *
      * @param array $tag
      * @param \AnimeDb\Bundle\AnimeDbBundle\Composer\Composer $composer
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    protected function doUpdateItself(array $tag, Composer $composer)
+    protected function doUpdateItself(array $tag, Composer $composer, OutputInterface $output)
     {
-        $composer->getIO()->write('Discovered a new version of the application: <info>'.$tag['name'].'</info>');
+        $output->writeln('Discovered a new version of the application: <info>'.$tag['name'].'</info>');
 
         // create install package
         $package = new Package('anime-db/anime-db', $tag['version'], $tag['name']);
@@ -113,7 +114,7 @@ class UpdateCommand extends ContainerAwareCommand
             ->dispatch(StoreEvents::UPDATED, new Updated($new_package));
 
         $composer->reload();
-        $composer->getIO()->write('<info>Update itself has been completed</info>');
+        $output->writeln('<info>Update itself has been completed</info>');
     }
 
     /**
