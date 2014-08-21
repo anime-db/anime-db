@@ -672,6 +672,7 @@ class ScriptHandlerTest extends TestCaseWritable
 
     /**
      * Clear cache
+     *
      * @param integer $index
      * @param string $env
      */
