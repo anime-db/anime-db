@@ -95,9 +95,11 @@ class Composer
      */
     public function setIO(IOInterface $io)
     {
-        $this->io = $io;
-        if ($this->composer) {
-            $this->reload();
+        if ($this->io !== $io) {
+            $this->io = $io;
+            if ($this->composer) {
+                $this->reload();
+            }
         }
     }
 
