@@ -54,8 +54,8 @@ class UpdateCommand extends ContainerAwareCommand
         // search tag with new version of application
         $output->writeln('Search for a new version of the application');
         $tag = $github->getLastRelease('anime-db/anime-db');
-        $tag['version'] = $github->getVersionCompatible($tag['name']);
-        $current_version = $github->getVersionCompatible($composer->getRootPackage()->getPrettyVersion());
+        $tag['version'] = Composer::getVersionCompatible($tag['name']);
+        $current_version = Composer::getVersionCompatible($composer->getRootPackage()->getPrettyVersion());
 
         // update itself
         if ($tag && version_compare($tag['version'], $current_version) == 1) {
