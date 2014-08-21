@@ -160,12 +160,17 @@ class Composer
     /**
      * Get package
      *
+     * @throws \RuntimeException
+     *
      * @param string $config
      *
      * @return \Composer\Package\PackageInterface
      */
     public function getPackageFromConfigFile($config)
     {
+        if (!file_exists($config)) {
+            throw new \RuntimeException('File "'.$config.'" not found');
+        }
         return $this->loader->load((new JsonFile($config))->read(), 'Composer\Package\RootPackage');
     }
 
