@@ -702,6 +702,7 @@ class ScriptHandlerTest extends TestCaseWritable
      *
      * @param integer $index
      * @param string $env
+     * @param boolean $decorated
      */
     protected function clearCache($index, $env, $decorated)
     {

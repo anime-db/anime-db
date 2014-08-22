@@ -198,7 +198,7 @@ class ScriptHandler
      * @param \Composer\DependencyResolver\Operation\OperationInterface $operation
      * @param \Closure $install
      * @param \Closure $update
-     * @param \Closure|null $uninstall
+     * @param \Closure $uninstall
      */
     protected static function addJobByOperationType(
         OperationInterface $operation,
