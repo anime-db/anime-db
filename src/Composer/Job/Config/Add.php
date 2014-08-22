@@ -11,7 +11,6 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\AddConfig;
-use Symfony\Component\Finder\Finder;
 
 /**
  * Job: Add package to config
