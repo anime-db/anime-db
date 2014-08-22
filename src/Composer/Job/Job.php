@@ -63,12 +63,21 @@ abstract class Job
     private $package;
 
     /**
+     * Root dir
+     *
+     * @var string
+     */
+    protected $root_dir;
+
+    /**
      * Construct
      *
      * @param \Composer\Package\Package $package
+     * @param string $root_dir
      */
-    public function __construct(Package $package)
+    public function __construct(Package $package, $root_dir = '')
     {
+        $this->root_dir = $root_dir ?: __DIR__.'/../../../';
         $this->package = $package;
         $this->package->setExtra(array_merge([
                 'anime-db-routing' => '',
@@ -115,7 +124,7 @@ abstract class Job
      *
      * @return integer
      */
-    public static function getPriority()
+    public function getPriority()
     {
         return static::PRIORITY;
     }
@@ -126,61 +135,42 @@ abstract class Job
     abstract public function execute();
 
     /**
+     * Handle on register job in container
+     */
+    public function register()
+    {
+    }
+
+    /**
      * Get package option
      *
-     * @return mixed
+     * @param string $option
+     *
+     * @return string
      */
-    private function getPackageOption($option)
+    protected function getPackageOption($option)
     {
         $options = $this->package->getExtra();
         if (isset($options[$option])) {
             return $options[$option];
         }
-        return null;
+        return '';
     }
 
     /**
      * Get package option file
      *
+     * @param string $option
+     *
      * @return string
      */
-    private function getPackageOptionFile($option)
+    protected function getPackageOptionFile($option)
     {
         $option = $this->getPackageOption($option);
         if ($option && file_exists($this->getPackageDir().$option)) {
-            return $this->getPackageDir().$option;
+            return $option;
         }
         return '';
-    }
-
-    /**
-     * Get package migrations config file
-     *
-     * @return string
-     */
-    public function getPackageMigrationsFile()
-    {
-        return $this->getPackageOptionFile('anime-db-migrations');
-    }
-
-    /**
-     * Get package config file
-     *
-     * @return string
-     */
-    public function getPackageConfigFile()
-    {
-        return $this->getPackageOptionFile('anime-db-config');
-    }
-
-    /**
-     * Get package routing config file
-     *
-     * @return string
-     */
-    public function getPackageRoutingFile()
-    {
-        return $this->getPackageOptionFile('anime-db-routing');
     }
 
     /**
@@ -190,15 +180,17 @@ abstract class Job
      */
     public function getPackageDir()
     {
-        return __DIR__.'/../../../vendor/'.$this->package->getName().'/';
+        return $this->root_dir.'vendor/'.$this->package->getName().'/';
     }
 
     /**
      * Get the bundle from package
      *
-     * For example package name 'demo-vendor/demo-bundle' converted to:
-     *   \DemoVendor\Bundle\DemoBundle\DemoVendorDemoBundle
-     *   \DemoVendor\Bundle\DemoBundle\DemoBundle
+     * For example package name 'demo-vendor/foo-bar-bundle' converted to:
+     *   \DemoVendor\Bundle\FooBarBundle\DemoVendorFooBarBundle
+     *   \DemoVendor\Bundle\FooBarBundle\FooBarBundle
+     *   \Foo\Bundle\BarBundle\FooBarBundle
+     *   \Foo\Bundle\BarBundle\BarBundle
      *
      * @return string|null
      */
@@ -256,7 +248,7 @@ abstract class Job
         $copy = new Package(
             $this->package->getName(),
             $this->package->getVersion(),
-            $this->package->getVersion()
+            $this->package->getPrettyVersion()
         );
         $copy->setType($this->package->getType());
         $copy->setExtra($this->package->getExtra());

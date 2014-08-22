@@ -35,12 +35,13 @@ abstract class Migrate extends Job
      */
     protected function getMigrationsConfig()
     {
+        $dir = $this->getPackageDir();
+
         // specific location
-        if ($migrations = $this->getPackageMigrationsFile()) {
-            return $migrations;
+        if ($migrations = $this->getPackageOptionFile('anime-db-migrations')) {
+            return $dir.$migrations;
         }
 
-        $dir = $this->getPackageDir();
         if (file_exists($dir.'migrations.yml')) {
             return $dir.'migrations.yml';
         } elseif (file_exists($dir.'migrations.xml')) {
@@ -51,13 +52,13 @@ abstract class Migrate extends Job
     }
 
     /**
-     * Get migrations namespace and directory
+     * Parse config file
      *
      * @param string $file
      *
      * @return array {namespace:string, directory:string}
      */
-    protected function getNamespaceAndDirectory($file)
+    protected function parseConfig($file)
     {
         $namespace = '';
         $directory = '';
@@ -65,6 +66,7 @@ abstract class Migrate extends Job
         $config = file_get_contents($file);
         switch (pathinfo($file, PATHINFO_EXTENSION)) {
             case 'yml':
+            case 'yaml':
                 $config = Yaml::parse($config);
                 if (isset($config['migrations_namespace'])) {
                     $namespace = $config['migrations_namespace'];
@@ -76,12 +78,11 @@ abstract class Migrate extends Job
             case 'xml':
                 $doc = new \DOMDocument();
                 $doc->loadXML($config);
-                $xpath = new \DOMXPath($doc);
-                $list = $xpath->query('/doctrine-migrations/migrations-namespace');
+                $list = $doc->getElementsByTagName('migrations-namespace');
                 if ($list->length) {
                     $namespace = $list->item(0)->nodeValue;
                 }
-                $list = $xpath->query('/doctrine-migrations/migrations-directory');
+                $list = $doc->getElementsByTagName('migrations-directory');
                 if ($list->length) {
                     $directory = $list->item(0)->nodeValue;
                 }

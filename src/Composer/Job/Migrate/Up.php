@@ -31,24 +31,25 @@ class Up extends BaseMigrate
             // can not consistently perform the migration of one packet,
             // and then another because they may be dependent
             // to solve this problem create set of wrappers for sort migrations
-            $config = $this->getNamespaceAndDirectory($config_file);
+
+            $config = $this->parseConfig($config_file);
 
             // find migrations
             $finder = Finder::create()
-                ->in(__DIR__.'/../../../../vendor/'.$this->getPackage()->getName().'/'.$config['directory'])
+                ->in($this->root_dir.'vendor/'.$this->getPackage()->getName().'/'.$config['directory'])
                 ->files()
                 ->name('/Version\d{14}.*\.php/');
 
-            $migdir = __DIR__.'/../../../../app/DoctrineMigrations/';
-            if ($finder->count() && !file_exists($migdir)) {
-                mkdir($migdir);
+            $mig_dir = $this->root_dir.'app/DoctrineMigrations/';
+            if ($finder->count() && !is_dir($mig_dir)) {
+                mkdir($mig_dir, 0755);
             }
 
             /* @var $file \SplFileInfo */
             foreach ($finder as $file) {
                 // create migration wrapper
                 $version = $file->getBasename('.php');
-                file_put_contents($migdir.$file->getBasename(), '<?php
+                file_put_contents($mig_dir.$file->getBasename(), '<?php
 namespace Application\Migrations;
 
 use AnimeDb\Bundle\AnimeDbBundle\DoctrineMigrations\ProxyMigration;
@@ -57,9 +58,9 @@ require_once __DIR__."/../../vendor/'.$this->getPackage()->getName().'/'.$config
 
 class '.$version.' extends ProxyMigration
 {
-    protected function getMigrationClass()
+    protected function getMigration()
     {
-        return "'.$config['namespace'].'\\'.$version.'";
+        return new \\'.$config['namespace'].'\\'.$version.'($this->version);
     }
 }');
             }

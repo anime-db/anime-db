@@ -11,11 +11,13 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
-use AnimeDb\Bundle\AnimeDbBundle\Composer\ScriptHandler;
 use AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher;
+use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Composer as ComposerManipulator;
+use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config as ConfigManipulator;
+use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Kernel as KernelManipulator;
+use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing as RoutingManipulator;
 use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
-use Composer\Package\Package;
 
 /**
  * Routing manipulator
@@ -31,6 +33,13 @@ class Container
      * @var \AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher|null
      */
     private $dispatcher;
+
+    /**
+     * List manipulators
+     *
+     * @var array
+     */
+    private $manipulators = [];
 
     /**
      * List of jobs
@@ -60,6 +69,40 @@ class Container
     }
 
     /**
+     * Get manipulator
+     *
+     * @param string $name
+     *
+     * @return \AnimeDb\Bundle\AnimeDbBundle\Manipulator\Manipulator
+     */
+    public function getManipulator($name)
+    {
+        if (!isset($this->manipulators[$name])) {
+            $root_dir = __DIR__.'/../../../';
+            switch ($name) {
+                case 'composer':
+                    $this->manipulators[$name] = new ComposerManipulator($root_dir.'composer.json');
+                    break;
+                case 'config':
+                    $this->manipulators[$name] = new ConfigManipulator($root_dir.'app/config/vendor_config.yml');
+                    break;
+                case 'kernel':
+                    $this->manipulators[$name] = new KernelManipulator(
+                        $root_dir.'app/bundles.php',
+                        $root_dir.'app/AppKernel.php'
+                    );
+                    break;
+                case 'routing':
+                    $this->manipulators[$name] = new RoutingManipulator($root_dir.'app/config/routing.yml');
+                    break;
+                default:
+                    throw new \InvalidArgumentException('Unknown manipulator: '.$name);
+            }
+        }
+        return $this->manipulators[$name];
+    }
+
+    /**
      * Add job
      *
      * @param \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job $job
@@ -68,6 +111,7 @@ class Container
     {
         $job->setContainer($this);
         $this->jobs[$job->getPriority()][] = $job;
+        $job->register();
     }
 
     /**

@@ -16,7 +16,7 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Manipulator;
  * @package AnimeDb\Bundle\AnimeDbBundle\Manipulator
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Kernel
+class Kernel extends FileContent
 {
     /**
      * AppKernal content
@@ -26,11 +26,30 @@ class Kernel
     private $kernel;
 
     /**
+     * AppKernal filename
+     *
+     * @var string
+     */
+    private $kernel_filename;
+
+    /**
      * List of bundles
      *
      * @var array
      */
     private $bundles = null;
+
+    /**
+     * Construct
+     *
+     * @param string $filename
+     * @param string $kernel_filename
+     */
+    public function __construct($filename, $kernel_filename)
+    {
+        parent::__construct($filename);
+        $this->kernel_filename = $kernel_filename;
+    }
 
     /**
      * Add bundle to kernal
@@ -39,9 +58,12 @@ class Kernel
      */
     public function addBundle($bundle)
     {
+        if ($bundle[0] == '\\') {
+            $bundle = substr($bundle, 1);
+        }
+        $bundle = 'new '.$bundle.'()';
         // not root bundle
-        if (strpos($this->getKernal(), substr($bundle, 1)) === false) {
-            $bundle = 'new '.substr($bundle, 1).'()';
+        if (strpos($this->getKernal(), $bundle) === false) {
             $bundles = $this->getBundles();
             if (!in_array($bundle, $bundles)) {
                 $bundles[] = $bundle;
@@ -57,8 +79,11 @@ class Kernel
      */
     public function removeBundle($bundle)
     {
+        if ($bundle[0] == '\\') {
+            $bundle = substr($bundle, 1);
+        }
+        $bundle = 'new '.$bundle.'()';
         $bundles = $this->getBundles();
-        $bundle = 'new '.substr($bundle, 1).'()';
         if (($key = array_search($bundle, $bundles)) !== false) {
             unset($bundles[$key]);
             $this->setBundles($bundles);
@@ -73,7 +98,7 @@ class Kernel
     protected function getKernal()
     {
         if (!$this->kernel) {
-            $this->kernel = file_get_contents(__DIR__.'/../../app/AppKernel.php');
+            $this->kernel = file_get_contents($this->kernel_filename);
         }
         return $this->kernel;
     }
@@ -87,7 +112,7 @@ class Kernel
     {
         if (is_null($this->bundles)) {
             $this->bundles = [];
-            $content = file_get_contents(__DIR__.'/../../app/bundles.php');
+            $content = $this->getContent();
             $start = strpos($content, '[');
             $bundles = trim(substr($content, $start+1, strpos($content, ']')-$start-1));
             if ($bundles) {
@@ -101,7 +126,8 @@ class Kernel
     }
 
     /**
-     * 
+     * Set list of bundles
+     *
      * @param array $bundles
      */
     protected function setBundles(array $bundles)
@@ -112,6 +138,6 @@ class Kernel
         } else {
             $content = "<?php\nreturn [\n];";
         }
-        file_put_contents(__DIR__.'/../../app/bundles.php', $content);
+        $this->setContent($content);
     }
 }

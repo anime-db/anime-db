@@ -11,7 +11,6 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Migrate as BaseMigrate;
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
@@ -25,12 +24,10 @@ class Down extends BaseMigrate
 {
     /**
      * (non-PHPdoc)
-     * @see AnimeDb\Bundle\AnimeDbBundle\Composer\Job.Job::setContainer()
+     * @see \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job::register()
      */
-    public function setContainer(Container $container)
+    public function register()
     {
-        parent::setContainer($container);
-
         // migrate down before uninstall package
         if ($config_file = $this->getMigrationsConfig()) {
             // can not consistently perform the migration of one packet,
@@ -38,10 +35,10 @@ class Down extends BaseMigrate
             // also the migration files will be deleted after the package is removed
             // to solve this problem copy the migrations files to a temporary directory for later execution
 
-            $config = $this->getNamespaceAndDirectory($config_file);
+            $config = $this->parseConfig($config_file);
 
             // find migrations
-            $from = __DIR__.'/../../../../vendor/'.$this->getPackage()->getName().'/'.$config['directory'];
+            $from = $this->root_dir.'vendor/'.$this->getPackage()->getName().'/'.$config['directory'];
             $package_migrations = Finder::create()
                 ->in($from)
                 ->files()
@@ -49,7 +46,7 @@ class Down extends BaseMigrate
 
             if ($package_migrations->count()) {
                 // remove wrappers of migrations
-                $migdir = __DIR__.'/../../../../app/DoctrineMigrations/';
+                $migdir = $this->root_dir.'app/DoctrineMigrations/';
                 if (file_exists($migdir)) {
                     /* @var $file \SplFileInfo */
                     foreach ($package_migrations as $file) {
@@ -58,20 +55,15 @@ class Down extends BaseMigrate
                 }
 
                 // copy the migrations to perform later
-                $tmp_dir = __DIR__.'/../../../../app/cache/dev/DoctrineMigrations/';
+                $tmp_dir = $this->root_dir.'app/cache/dev/DoctrineMigrations/';
                 $fs = new Filesystem();
                 $fs->mirror($from, $tmp_dir);
 
                 // change migrations namespace
-                $tmp_migrations = Finder::create()
-                    ->in($tmp_dir)
-                    ->files()
-                    ->name('/Version\d{14}.*\.php/');
-                /* @var $file \SplFileInfo */
-                foreach ($tmp_migrations as $file) {
-                    $migration = file_get_contents($file->getPathname());
+                foreach ($package_migrations as $file) {
+                    $migration = file_get_contents($tmp_dir.$file->getBasename());
                     $migration = preg_replace('/namespace [^;]+;/', 'namespace Application\Migrations;', $migration);
-                    file_put_contents($file->getPathname(), $migration);
+                    file_put_contents($tmp_dir.$file->getBasename(), $migration);
                 }
             }
         }

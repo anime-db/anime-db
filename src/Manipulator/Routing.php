@@ -10,17 +10,14 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Manipulator;
 
-use Symfony\Component\Yaml\Yaml;
-
 /**
  * Routing manipulator
  *
  * @package AnimeDb\Bundle\AnimeDbBundle\Manipulator
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Routing
+class Routing extends Yaml
 {
-
     /**
      * Add a routing resource
      *
@@ -28,18 +25,14 @@ class Routing
      * @param string $bundle
      * @param string $format
      * @param string $path
-     *
-     * @return Boolean true if it worked, false otherwise
      */
     public function addResource($name, $bundle, $format, $path = 'routing')
     {
-        $file = __DIR__.'/../../app/config/routing.yml';
-        $resource = '@'.$bundle.'/Resources/config/'.$path.'.'.$format;
-
-        $value = Yaml::parse(file_get_contents($file));
-        if (!isset($value[$name]) || $value[$name]['resource'] != $resource) {
-            $value[$name] = ['resource' => $resource];
-            file_put_contents($file, Yaml::dump($value, 2));
+        $resource = '@'.$bundle.$path.'.'.$format;
+        $yaml = $this->getContent();
+        if (!isset($yaml[$name]) || $yaml[$name]['resource'] != $resource) {
+            $yaml[$name] = ['resource' => $resource];
+            $this->setContent($yaml);
         }
     }
 
@@ -50,11 +43,10 @@ class Routing
      */
     public function removeResource($name)
     {
-        $file = __DIR__.'/../../app/config/routing.yml';
-        $value = Yaml::parse(file_get_contents($file));
-        if (isset($value[$name])) {
-            unset($value[$name]);
-            file_put_contents($file, Yaml::dump($value, 2));
+        $yaml = $this->getContent();
+        if (isset($yaml[$name])) {
+            unset($yaml[$name]);
+            $this->setContent($yaml);
         }
     }
 }

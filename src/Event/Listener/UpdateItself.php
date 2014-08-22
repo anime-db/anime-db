@@ -11,7 +11,6 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Event\Listener;
 
 use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded;
-use Sensio\Bundle\GeneratorBundle\Manipulator\KernelManipulator;
 
 /**
  * Update itself listener
@@ -50,13 +49,6 @@ class UpdateItself
     const DEFAULT_PATH = '.';
 
     /**
-     * Link to monitor archive
-     *
-     * @var string
-     */
-    const MONITOR = 'http://anime-db.org/download/monitor_1.0.zip';
-
-    /**
      * Root dir
      *
      * @var string
@@ -64,13 +56,31 @@ class UpdateItself
     protected $root_dir = '';
 
     /**
+     * Link to monitor archive
+     *
+     * @var string
+     */
+    protected $monitor = '';
+
+    /**
+     * Zip
+     *
+     * @var \ZipArchive
+     */
+    protected $zip;
+
+    /**
      * Construct
      *
-     * @param string $kernel_root_dir
+     * @param \ZipArchive $zip
+     * @param string $root_dir
+     * @param string $monitor
      */
-    public function __construct($kernel_root_dir)
+    public function __construct(\ZipArchive $zip, $root_dir, $monitor)
     {
-        $this->root_dir = $kernel_root_dir.'/../';
+        $this->zip = $zip;
+        $this->root_dir = $root_dir.'/../';
+        $this->monitor = $monitor;
     }
 
     /**
@@ -128,23 +138,25 @@ class UpdateItself
         @unlink($this->root_dir.'AnimeDB_Stop.vbs');
 
         if (defined('PHP_WINDOWS_VERSION_BUILD')) {
-            // download monitor if need
+            // application has not yet has the monitor
             if (!file_exists($this->root_dir.'/config.ini')) {
-                $monitor = tempnam(sys_get_temp_dir(), 'monitor');
-                file_put_contents($monitor, fopen(self::MONITOR, 'r'));
+                $monitor = sys_get_temp_dir().'/'.basename($this->monitor);
+                // download monitor if need
+                if (!file_exists($monitor)) {
+                    copy($this->monitor, $monitor);
+                }
                 // unzip
-                $zip = new \ZipArchive();
-                if ($zip->open($monitor) !== true) {
+                if ($this->zip->open($monitor) !== true) {
                     throw new \RuntimeException('Failed unzip monitor');
                 }
-                $zip->extractTo($event->getPath());
-                $zip->close();
+                $this->zip->extractTo($event->getPath());
+                $this->zip->close();
             }
 
             // copy params if need
             $old_file = $this->root_dir.'/config.ini';
             $new_file = $event->getPath().'/config.ini';
-            if (file_exists($old_file) && md5_file($old_file) != md5_file($new_file)) {
+            if (file_exists($new_file) && file_exists($old_file) && md5_file($old_file) != md5_file($new_file)) {
                 $old_body = file_get_contents($old_file);
                 $new_body = $tmp_body = file_get_contents($new_file);
 
@@ -216,8 +228,8 @@ class UpdateItself
     public function onAppDownloadedChangeAccessToFiles(Downloaded $event)
     {
         if (!defined('PHP_WINDOWS_VERSION_BUILD')) {
-            chmod($event->getPath().'/AnimeDB', 0755);
-            chmod($event->getPath().'/app/console', 0755);
+            @chmod($event->getPath().'/AnimeDB', 0755);
+            @chmod($event->getPath().'/app/console', 0755);
         }
     }
 }

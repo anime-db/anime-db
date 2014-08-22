@@ -16,7 +16,7 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Manipulator;
  * @package AnimeDb\Bundle\AnimeDbBundle\Manipulator
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Composer
+class Composer extends FileContent
 {
     /**
      * Add the package into composer requirements
@@ -26,26 +26,40 @@ class Composer
      */
     public function addPackage($package, $version)
     {
-        $composer = file_get_contents(__DIR__.'/../../composer.json');
-        $composer = json_decode($composer, true);
-        $composer['require'][$package] = $version;
-        $composer = json_encode($composer, JSON_NUMERIC_CHECK|JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
-        file_put_contents(__DIR__.'/../../composer.json', $composer);
+        $config = $this->getContent();
+        $config['require'][$package] = $version;
+        $this->setContent($config);
     }
 
     /**
      * Remove the package from composer requirements
      *
-     * @param string $bundle
+     * @param string $package
      */
     public function removePackage($package)
     {
-        $composer = file_get_contents(__DIR__.'/../../composer.json');
-        $composer = json_decode($composer, true);
-        if (isset($composer['require'][$package])) {
-            unset($composer['require'][$package]);
-            $composer = json_encode($composer, JSON_NUMERIC_CHECK|JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
-            file_put_contents(__DIR__.'/../../composer.json', $composer);
+        $config = $this->getContent();
+        if (isset($config['require'][$package])) {
+            unset($config['require'][$package]);
+            $this->setContent($config);
         }
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see \AnimeDb\Bundle\AnimeDbBundle\Manipulator\FileContent::getContent()
+     */
+    protected function getContent()
+    {
+        return (array)json_decode(parent::getContent(), true);
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see \AnimeDb\Bundle\AnimeDbBundle\Manipulator\FileContent::setContent()
+     */
+    protected function setContent($content)
+    {
+        parent::setContent(json_encode($content, JSON_NUMERIC_CHECK|JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
     }
 }

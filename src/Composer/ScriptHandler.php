@@ -12,7 +12,6 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Composer;
 
 use Composer\Script\PackageEvent;
 use Composer\Script\CommandEvent;
-use Composer\Script\Event;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Installed as InstalledPackageNotify;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Removed as RemovedPackageNotify;
@@ -46,24 +45,64 @@ class ScriptHandler
     private static $container;
 
     /**
+     * Root dir
+     *
+     * @var string
+     */
+    private static $root_dir;
+
+    /**
      * Get container of jobs
      *
-     * @return\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container
+     * @return \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container
      */
-    protected static function getContainer()
+    public static function getContainer()
     {
         if (!(self::$container instanceof Container)) {
-            self::$container = new Container();
+            self::setContainer(new Container());
         }
         return self::$container;
     }
 
     /**
-     * Add package to kernel
+     * Set container of jobs
+     *
+     * @param \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container $container
+     */
+    public static function setContainer(Container $container)
+    {
+        self::$container = $container;
+    }
+
+    /**
+     * Get root dir
+     *
+     * @return string
+     */
+    public static function getRootDir()
+    {
+        if (!self::$root_dir) {
+            self::setRootDir(__DIR__.'/../../app/');
+        }
+        return self::$root_dir;
+    }
+
+    /**
+     * Set root dir
+     *
+     * @param string $root_dir
+     */
+    public static function setRootDir($root_dir)
+    {
+        self::$root_dir = $root_dir;
+    }
+
+    /**
+     * Add or remove package in kernel
      *
      * @param \Composer\Script\PackageEvent $event
      */
-    public static function addPackageToKernel(PackageEvent $event)
+    public static function packageInKernel(PackageEvent $event)
     {
         switch ($event->getOperation()->getJobType()) {
             case 'install':
@@ -72,27 +111,18 @@ class ScriptHandler
             case 'update':
                 self::getContainer()->addJob(new AddKernel($event->getOperation()->getTargetPackage()));
                 break;
-            default:
-                return;
+            case 'uninstall':
+                self::getContainer()->addJob(new RemoveKernel($event->getOperation()->getPackage()));
+                break;
         }
     }
 
     /**
-     * Remove packages from kernel
+     * Add or remove packages in routing
      *
      * @param \Composer\Script\PackageEvent $event
      */
-    public static function removePackageFromKernel(PackageEvent $event)
-    {
-        self::getContainer()->addJob(new RemoveKernel($event->getOperation()->getPackage()));
-    }
-
-    /**
-     * Add packages to routing
-     *
-     * @param \Composer\Script\PackageEvent $event
-     */
-    public static function addPackageToRouting(PackageEvent $event)
+    public static function packageInRouting(PackageEvent $event)
     {
         switch ($event->getOperation()->getJobType()) {
             case 'install':
@@ -101,27 +131,18 @@ class ScriptHandler
             case 'update':
                 self::getContainer()->addJob(new AddRouting($event->getOperation()->getTargetPackage()));
                 break;
-            default:
-                return;
+            case 'uninstall':
+                self::getContainer()->addJob(new RemoveRouting($event->getOperation()->getPackage()));
+                break;
         }
     }
 
     /**
-     * Remove packages from routing
+     * Add or remove packages in config
      *
      * @param \Composer\Script\PackageEvent $event
      */
-    public static function removePackageFromRouting(PackageEvent $event)
-    {
-        self::getContainer()->addJob(new RemoveRouting($event->getOperation()->getPackage()));
-    }
-
-    /**
-     * Add packages to config
-     *
-     * @param \Composer\Script\PackageEvent $event
-     */
-    public static function addPackageToConfig(PackageEvent $event)
+    public static function packageInConfig(PackageEvent $event)
     {
         switch ($event->getOperation()->getJobType()) {
             case 'install':
@@ -130,19 +151,10 @@ class ScriptHandler
             case 'update':
                 self::getContainer()->addJob(new AddConfig($event->getOperation()->getTargetPackage()));
                 break;
-            default:
-                return;
+            case 'uninstall':
+                self::getContainer()->addJob(new RemoveConfig($event->getOperation()->getPackage()));
+                break;
         }
-    }
-
-    /**
-     * Remove packages from config
-     *
-     * @param \Composer\Script\PackageEvent $event
-     */
-    public static function removePackageFromConfig(PackageEvent $event)
-    {
-        self::getContainer()->addJob(new RemoveConfig($event->getOperation()->getPackage()));
     }
 
     /**
@@ -154,18 +166,15 @@ class ScriptHandler
     {
         switch ($event->getOperation()->getJobType()) {
             case 'install':
-                $job = new UpMigrate($event->getOperation()->getPackage());
+                self::getContainer()->addJob(new UpMigrate($event->getOperation()->getPackage()));
                 break;
             case 'update':
-                $job = new UpMigrate($event->getOperation()->getTargetPackage());
+                self::getContainer()->addJob(new UpMigrate($event->getOperation()->getTargetPackage()));
                 break;
             case 'uninstall':
-                $job = new DownMigrate($event->getOperation()->getPackage());
+                self::getContainer()->addJob(new DownMigrate($event->getOperation()->getPackage()));
                 break;
-            default:
-                return;
         }
-        self::getContainer()->addJob($job);
     }
 
     /**
@@ -177,18 +186,15 @@ class ScriptHandler
     {
         switch ($event->getOperation()->getJobType()) {
             case 'install':
-                $job = new InstalledPackageNotify($event->getOperation()->getPackage());
+                self::getContainer()->addJob(new InstalledPackageNotify($event->getOperation()->getPackage()));
                 break;
             case 'update':
-                $job = new UpdatedPackageNotify($event->getOperation()->getTargetPackage());
+                self::getContainer()->addJob(new UpdatedPackageNotify($event->getOperation()->getTargetPackage()));
                 break;
             case 'uninstall':
-                $job = new RemovedPackageNotify($event->getOperation()->getPackage());
+                self::getContainer()->addJob(new RemovedPackageNotify($event->getOperation()->getPackage()));
                 break;
-            default:
-                return;
         }
-        self::getContainer()->addJob($job);
     }
 
     /**
@@ -213,29 +219,25 @@ class ScriptHandler
 
     /**
      * Execution pending jobs
-     *
-     * @param \Composer\Script\CommandEvent $event
      */
-    public static function execJobs(CommandEvent $event)
+    public static function execJobs()
     {
         self::getContainer()->execute();
     }
 
     /**
      * Install config files
-     *
-     * @param \Composer\Script\CommandEvent $event
      */
-    public static function installConfig(CommandEvent $event)
+    public static function installConfig()
     {
-        if (!file_exists(__DIR__.'/../../app/config/vendor_config.yml')) {
-            file_put_contents(__DIR__.'/../../app/config/vendor_config.yml', '');
+        if (!file_exists(self::getRootDir().'config/vendor_config.yml')) {
+            file_put_contents(self::getRootDir().'config/vendor_config.yml', '');
         }
-        if (!file_exists(__DIR__.'/../../app/config/routing.yml')) {
-            file_put_contents(__DIR__.'/../../app/config/routing.yml', '');
+        if (!file_exists(self::getRootDir().'config/routing.yml')) {
+            file_put_contents(self::getRootDir().'config/routing.yml', '');
         }
-        if (!file_exists(__DIR__.'/../../app/bundles.php')) {
-            file_put_contents(__DIR__.'/../../app/bundles.php', "<?php\nreturn [\n];");
+        if (!file_exists(self::getRootDir().'bundles.php')) {
+            file_put_contents(self::getRootDir().'bundles.php', "<?php\nreturn [\n];");
         }
     }
 
@@ -260,18 +262,10 @@ class ScriptHandler
      */
     public static function migrateUp(CommandEvent $event)
     {
-        $have_migrations = false;
-        // find migrations
-        if (file_exists($dir = __DIR__.'/../../app/DoctrineMigrations')) {
-            $have_migrations = (bool)Finder::create()
-                ->in($dir)
-                ->files()
-                ->name('/Version\d{14}.*\.php/')
-                ->count();
-        }
+        $dir = self::getRootDir().'DoctrineMigrations';
+        if (self::isHaveMigrations($dir)) {
+            self::repackMigrations($dir);
 
-        // migration up
-        if ($have_migrations) {
             $cmd = 'doctrine:migrations:migrate --no-interaction';
             if ($event->getIO()->isDecorated()) {
                 $cmd .= ' --ansi';
@@ -282,24 +276,11 @@ class ScriptHandler
 
     /**
      * Migrate all plugins to down
-     *
-     * @param \Composer\Script\CommandEvent $event
      */
-    public static function migrateDown(CommandEvent $event)
+    public static function migrateDown()
     {
-        $have_migrations = false;
-
-        // find migrations
-        if (file_exists($dir = __DIR__.'/../../app/cache/dev/DoctrineMigrations/')) {
-            $have_migrations = (bool)Finder::create()
-                ->in($dir)
-                ->files()
-                ->name('/Version\d{14}.*\.php/')
-                ->count();
-        }
-
-        // migration down
-        if ($have_migrations) {
+        $dir = self::getRootDir().'cache/dev/DoctrineMigrations/';
+        if (self::isHaveMigrations($dir)) {
             file_put_contents(
                 $dir.'migrations.yml',
                 "migrations_namespace: 'Application\Migrations'\n".
@@ -314,12 +295,55 @@ class ScriptHandler
     }
 
     /**
-     * Сreate a backup of the database
+     * Is have migrations
      *
-     * @param \Composer\Script\CommandEvent $event
+     * @param string $dir
+     *
+     * @return boolean
      */
-    public static function backupDB(CommandEvent $event) {
-        $db = __DIR__.'/../../app/Resources/anime.db';
+    protected static function isHaveMigrations($dir)
+    {
+        if (!is_dir($dir)) {
+            return false;
+        }
+
+        return (bool)Finder::create()
+            ->in($dir)
+            ->files()
+            ->name('/Version\d{14}.*\.php/')
+            ->count();
+    }
+
+    /**
+     * Repack migrations
+     *
+     * @param string $dir
+     */
+    protected static function repackMigrations($dir)
+    {
+        if (is_dir($dir)) {
+            $finder = Finder::create()
+                ->in($dir)
+                ->files()
+                ->name('/Version\d{14}.*\.php/');
+
+            foreach ($finder as $file) {
+                /* @var $file \SplFileInfo */
+                $content = file_get_contents($file);
+                if (strpos($content, 'getMigrationClass()') !== false) {
+                    $content = str_replace('getMigrationClass()', 'getMigration()', $content);
+                    $content = preg_replace('/return "([^"]+)";/', 'return new \\\$1($this->version);', $content);
+                    file_put_contents($file, $content);
+                }
+            }
+        }
+    }
+
+    /**
+     * Сreate a backup of the database
+     */
+    public static function backupDB() {
+        $db = self::getRootDir().'Resources/anime.db';
         if (file_exists($db)) {
             copy($db, $db.'.bk');
         }
@@ -341,11 +365,15 @@ class ScriptHandler
 
     /**
      * Clears the Symfony cache
-     *
-     * @param $event CommandEvent
      */
-    public static function clearCache(CommandEvent $event)
+    public static function clearCache()
     {
+        // to avoid errors due to the encrypted container forcibly clean the cache directory
+        $dir = self::getRootDir().'cache/prod';
+        if (is_dir($dir)) {
+            (new Filesystem())->remove($dir);
+        }
+
         self::getContainer()->executeCommand('cache:clear --no-warmup --env=prod --no-debug', 0);
         self::getContainer()->executeCommand('cache:clear --no-warmup --env=test --no-debug', 0);
         self::getContainer()->executeCommand('cache:clear --no-warmup --env=dev --no-debug', 0);

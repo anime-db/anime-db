@@ -11,7 +11,6 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
-use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Kernel as KernelManipulator;
 
 /**
  * Job: Add package to kernel
@@ -35,8 +34,7 @@ class Add extends Job
     public function execute()
     {
         if ($bundle = $this->getPackageBundle()) {
-            $manipulator = new KernelManipulator();
-            $manipulator->addBundle($bundle);
+            $this->getContainer()->getManipulator('kernel')->addBundle($bundle);
         }
     }
 }
