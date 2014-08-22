@@ -17,7 +17,6 @@ use Symfony\Component\Finder\Finder;
 use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\StoreEvents;
 use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded;
 use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Updated;
-use AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Composer;
 use Composer\Package\Package;
 use Composer\IO\ConsoleIO;
