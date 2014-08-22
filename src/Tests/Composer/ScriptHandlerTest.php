@@ -64,6 +64,13 @@ class ScriptHandlerTest extends TestCaseWritable
     protected $package;
 
     /**
+     * IO
+     *
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $io;
+
+    /**
      * Default root dir
      *
      * @var string
@@ -79,6 +86,7 @@ class ScriptHandlerTest extends TestCaseWritable
         parent::setUp();
 
         $this->composer = $this->getMock('\Composer\Composer');
+        $this->io = $this->getMock('\Composer\IO\IOInterface');
         $this->package = $this->getMockBuilder('\Composer\Package\Package')
             ->disableOriginalConstructor()
             ->getMock();
@@ -434,15 +442,15 @@ class ScriptHandlerTest extends TestCaseWritable
 
     /**
      * Test deliver events
+     *
+     * @dataProvider isDecorated
+     *
+     * @param boolean $decorated
      */
-    public function testDeliverEvents()
+    public function testDeliverEvents($decorated)
     {
-        $this->executeDecoratedCommand(
-            'animedb:deliver-events',
-            'animedb:deliver-events --ansi'
-        );
+        $this->executeCommand('animedb:deliver-events', $decorated);
 
-        ScriptHandler::deliverEvents($this->event_command);
         ScriptHandler::deliverEvents($this->event_command);
     }
 
@@ -459,24 +467,21 @@ class ScriptHandlerTest extends TestCaseWritable
 
         $this->fs->mkdir($this->root_dir.'DoctrineMigrations');
         // dir is empty
-        ScriptHandler::migrateDown();
+        ScriptHandler::migrateUp($this->event_command);
     }
 
     /**
      * Test migrate up
+     *
+     * @dataProvider isDecorated
+     *
+     * @param boolean $decorated
      */
-    public function testMigrateUp()
+    public function testMigrateUp($decorated)
     {
         $dir = $this->root_dir.'DoctrineMigrations/';
         $this->fs->mkdir($dir);
-        $this->executeDecoratedCommand(
-            'doctrine:migrations:migrate --no-interaction',
-            'doctrine:migrations:migrate --no-interaction --ansi'
-        );
-
-        $this->initMigrations($dir);
-        ScriptHandler::migrateUp($this->event_command); // test
-        $this->checkRepackMigrations($dir);
+        $this->executeCommand('doctrine:migrations:migrate --no-interaction', $decorated);
 
         $this->initMigrations($dir);
         ScriptHandler::migrateUp($this->event_command); // test
@@ -528,27 +533,31 @@ class ScriptHandlerTest extends TestCaseWritable
             ->expects($this->never())
             ->method('executeCommand');
         // dir is not exists
-        ScriptHandler::migrateDown();
+        ScriptHandler::migrateDown($this->event_command);
 
         $this->fs->mkdir($this->root_dir.'cache/dev/DoctrineMigrations');
         // dir is empty
-        ScriptHandler::migrateDown();
+        ScriptHandler::migrateDown($this->event_command);
     }
 
     /**
      * Test migrate down no migrations
+     *
+     * @dataProvider isDecorated
+     *
+     * @param boolean $decorated
      */
-    public function testMigrateDown()
+    public function testMigrateDown($decorated)
     {
         $dir = $this->root_dir.'cache/dev/DoctrineMigrations/';
         $this->fs->mkdir($dir);
         $this->initMigrations($dir);
-        $this->container
-            ->expects($this->once())
-            ->method('executeCommand')
-            ->with('doctrine:migrations:migrate --no-interaction --configuration='.$dir.'migrations.yml 0');
+        $this->executeCommand(
+            'doctrine:migrations:migrate --no-interaction --configuration='.$dir.'migrations.yml 0',
+            $decorated
+        );
 
-        ScriptHandler::migrateDown(); // test
+        ScriptHandler::migrateDown($this->event_command); // test
 
         $this->assertFileExists($dir.'migrations.yml');
         $this->assertEquals(
@@ -590,66 +599,84 @@ class ScriptHandlerTest extends TestCaseWritable
 
     /**
      * Test dump assets
+     *
+     * @dataProvider isDecorated
+     *
+     * @param boolean $decorated
      */
-    public function testDumpAssets()
+    public function testDumpAssets($decorated)
     {
-        $this->executeDecoratedCommand(
-            'assetic:dump --env=prod --no-debug --force web',
-            'assetic:dump --env=prod --no-debug --force --ansi web'
-        );
+        $this->executeCommand('assetic:dump --env=prod --no-debug --force web', $decorated);
 
-        ScriptHandler::dumpAssets($this->event_command);
         ScriptHandler::dumpAssets($this->event_command);
     }
 
     /**
-     * Execute decorated command
+     * Is decorated
      *
-     * @param string $command1
-     * @param string $command2
+     * @return array
      */
-    protected function executeDecoratedCommand($command1, $command2 = '')
+    public function isDecorated()
     {
-        $io = $this->getMock('\Composer\IO\IOInterface');
-        $this->event_command
-            ->expects($this->exactly($command2 ? 2 : 1))
-            ->method('getIO')
-            ->willReturn($io);
-        $io
-            ->expects($this->at(0))
-            ->method('isDecorated')
-            ->willReturn(false);
-        $this->container
-            ->expects($this->at(0))
-            ->method('executeCommand')
-            ->with($command1, null);
-        if ($command2) {
-            $io
-                ->expects($this->at(1))
-                ->method('isDecorated')
-                ->willReturn(true);
-            $this->container
-                ->expects($this->at(1))
-                ->method('executeCommand')
-                ->with($command2, null);
+        return [
+            [true],
+            [false]
+        ];
+    }
+
+    /**
+     * Execute command
+     *
+     * @param string $command
+     * @param boolean $decorated
+     * @param \PHPUnit_Framework_MockObject_Matcher_Invocation|null $matcher
+     */
+    protected function executeCommand(
+        $command,
+        $decorated,
+        \PHPUnit_Framework_MockObject_Matcher_Invocation $matcher = null
+    ) {
+        if ($decorated) {
+            $command .= ' --ansi';
         }
+        $this->io
+            ->expects($this->atLeastOnce())
+            ->method('isDecorated')
+            ->willReturn($decorated);
+        $this->event_command
+            ->expects($this->atLeastOnce())
+            ->method('getIO')
+            ->willReturn($this->io);
+        $this->container
+            ->expects($matcher ?: $this->once())
+            ->method('executeCommand')
+            ->with($command, 0);
     }
 
     /**
      * Test add package to kernel no prod cache
+     *
+     * @dataProvider isDecorated
+     *
+     * @param boolean $decorated
      */
-    public function testAddPackageToKernelNoProd()
+    public function testAddPackageToKernelNoProd($decorated)
     {
-        $this->clearCache(0, 'prod');
-        $this->clearCache(1, 'test');
-        $this->clearCache(2, 'dev');
-        ScriptHandler::clearCache();
+        $this->clearCache(0, 'prod', $decorated);
+        $this->clearCache(1, 'test', $decorated);
+        $this->clearCache(2, 'dev', $decorated);
+
+        ScriptHandler::clearCache($this->event_command);
     }
 
     /**
      * Test add package to kernel
+     *
+     * @dataProvider isDecorated
+     *
+     * @param boolean $decorated
      */
-    public function testAddPackageToKernel()
+    public function testAddPackageToKernel($decorated)
     {
         // create fake prod cache
         $dir = $this->root_dir.'cache/prod/';
@@ -661,11 +688,11 @@ class ScriptHandlerTest extends TestCaseWritable
         touch($dir.'file1');
         touch($dir.'file2');
 
-        $this->clearCache(0, 'prod');
-        $this->clearCache(1, 'test');
-        $this->clearCache(2, 'dev');
+        $this->clearCache(0, 'prod', $decorated);
+        $this->clearCache(1, 'test', $decorated);
+        $this->clearCache(2, 'dev', $decorated);
 
-        ScriptHandler::clearCache();
+        ScriptHandler::clearCache($this->event_command);
 
         $this->assertFalse(is_dir($dir));
     }
@@ -676,11 +703,12 @@ class ScriptHandlerTest extends TestCaseWritable
      * @param integer $index
      * @param string $env
      */
-    protected function clearCache($index, $env)
+    protected function clearCache($index, $env, $decorated)
     {
-        $this->container
-            ->expects($this->at($index))
-            ->method('executeCommand')
-            ->with('cache:clear --no-warmup --env='.$env.' --no-debug', 0);
+        $this->executeCommand(
+            'cache:clear --no-warmup --env='.$env.' --no-debug',
+            $decorated,
+            $this->at($index)
+        );
     }
 }
