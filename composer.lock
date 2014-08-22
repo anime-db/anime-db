@@ -12,17 +12,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/anime-db/app-bundle.git",
-                "reference": "4f1c9a884194fd051d6feea67ba7ce6e464ebb76"
+                "reference": "0b0fab2f7a6b59430e95d801eb3e26f227faff57"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/app-bundle/zipball/4f1c9a884194fd051d6feea67ba7ce6e464ebb76",
-                "reference": "4f1c9a884194fd051d6feea67ba7ce6e464ebb76",
+                "url": "https://api.github.com/repos/anime-db/app-bundle/zipball/0b0fab2f7a6b59430e95d801eb3e26f227faff57",
+                "reference": "0b0fab2f7a6b59430e95d801eb3e26f227faff57",
                 "shasum": ""
             },
             "require": {
                 "anime-db/anime-db": ">=0.3.8",
-                "patchwork/utf8": "dev-lab-windows-fs",
+                "patchwork/utf8": "1.2.*",
                 "php": ">=5.4.0"
             },
             "suggest": {
@@ -31,8 +31,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "AnimeDb\\Bundle\\AppBundle\\": "src/",
-                    "AnimeDb\\Bundle\\AppBundle\\Tests\\": "tests/"
+                    "AnimeDb\\Bundle\\AppBundle\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -55,27 +54,27 @@
             ],
             "description": "The application for making home collection anime",
             "homepage": "http://anime-db.org",
-            "time": "2014-08-12 13:52:55"
+            "time": "2014-08-22 11:09:12"
         },
         {
             "name": "anime-db/catalog-bundle",
-            "version": "0.4.15",
+            "version": "0.4.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/anime-db/catalog-bundle.git",
-                "reference": "2f779f50814459030e2efce04c20cc125ec10034"
+                "reference": "b070b0f6dbb75fec4f685f8b04a7cd844b0314b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/catalog-bundle/zipball/2f779f50814459030e2efce04c20cc125ec10034",
-                "reference": "2f779f50814459030e2efce04c20cc125ec10034",
+                "url": "https://api.github.com/repos/anime-db/catalog-bundle/zipball/b070b0f6dbb75fec4f685f8b04a7cd844b0314b1",
+                "reference": "b070b0f6dbb75fec4f685f8b04a7cd844b0314b1",
                 "shasum": ""
             },
             "require": {
                 "anime-db/app-bundle": ">=0.3.13",
                 "ext-mbstring": "*",
                 "knplabs/knp-menu-bundle": "1.1.*",
-                "patchwork/utf8": "dev-lab-windows-fs",
+                "patchwork/utf8": "1.2.*",
                 "php": ">=5.4.0"
             },
             "suggest": {
@@ -84,8 +83,8 @@
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "AnimeDb\\Bundle\\CatalogBundle": "src/"
+                "psr-4": {
+                    "AnimeDb\\Bundle\\CatalogBundle\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -108,7 +107,7 @@
             ],
             "description": "The application for making home collection anime",
             "homepage": "http://anime-db.org",
-            "time": "2014-06-23 17:00:37"
+            "time": "2014-08-22 11:14:15"
         },
         {
             "name": "avalanche123/imagine-bundle",
@@ -534,7 +533,7 @@
                 {
                     "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -687,18 +686,18 @@
         },
         {
             "name": "doctrine/doctrine-migrations-bundle",
-            "version": "1.0.1",
+            "version": "1.0.0-BETA5",
             "target-dir": "Doctrine/Bundle/MigrationsBundle",
             "source": {
                 "type": "git",
-                "url": "https://github.com/anime-db/DoctrineMigrationsBundle.git",
-                "reference": "refs/heads/master"
+                "url": "https://github.com/doctrine/DoctrineMigrationsBundle.git",
+                "reference": "81575a4316951125ce408c70f30547c77d98f78a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/anime-db/DoctrineMigrationsBundle/archive/master.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://api.github.com/repos/doctrine/DoctrineMigrationsBundle/zipball/81575a4316951125ce408c70f30547c77d98f78a",
+                "reference": "81575a4316951125ce408c70f30547c77d98f78a",
+                "shasum": ""
             },
             "require": {
                 "doctrine/doctrine-bundle": "~1.0",
@@ -707,11 +706,42 @@
                 "symfony/framework-bundle": "~2.1"
             },
             "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.1.x-dev"
+                }
+            },
             "autoload": {
                 "psr-0": {
                     "Doctrine\\Bundle\\MigrationsBundle": ""
                 }
-            }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Doctrine Project",
+                    "homepage": "http://www.doctrine-project.org"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Symfony DoctrineMigrationsBundle",
+            "homepage": "http://www.doctrine-project.org",
+            "keywords": [
+                "dbal",
+                "migrations",
+                "schema"
+            ],
+            "time": "2014-08-17 07:53:47"
         },
         {
             "name": "doctrine/inflector",
@@ -771,7 +801,7 @@
                 {
                     "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -830,7 +860,7 @@
                 {
                     "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1352,7 +1382,7 @@
                 },
                 {
                     "name": "Robert Schönthal",
-                    "email": "seroscho@googlemail.com",
+                    "email": "robert.schoenthal@gmail.com",
                     "homepage": "http://digitalkaoz.net"
                 }
             ],
@@ -1463,7 +1493,7 @@
                     "email": "stof@notk.org"
                 },
                 {
-                    "name": "Knplabs",
+                    "name": "KnpLabs",
                     "homepage": "http://knplabs.com"
                 },
                 {
@@ -1622,16 +1652,16 @@
         },
         {
             "name": "patchwork/utf8",
-            "version": "dev-lab-windows-fs",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nicolas-grekas/Patchwork-UTF8.git",
-                "reference": "40f552c019956f446553b19f7de2da2f9c74d730"
+                "reference": "2e98a87caf5bcef78a369e03fac0ae806060196e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nicolas-grekas/Patchwork-UTF8/zipball/40f552c019956f446553b19f7de2da2f9c74d730",
-                "reference": "40f552c019956f446553b19f7de2da2f9c74d730",
+                "url": "https://api.github.com/repos/nicolas-grekas/Patchwork-UTF8/zipball/2e98a87caf5bcef78a369e03fac0ae806060196e",
+                "reference": "2e98a87caf5bcef78a369e03fac0ae806060196e",
                 "shasum": ""
             },
             "require": {
@@ -1644,6 +1674,11 @@
                 "ext-mbstring": "Use Mbstring for best performance"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2-dev"
+                }
+            },
             "autoload": {
                 "psr-0": {
                     "Patchwork": "class/",
@@ -1669,7 +1704,7 @@
                 "utf-8",
                 "utf8"
             ],
-            "time": "2014-06-17 08:23:06"
+            "time": "2014-08-05 10:00:12"
         },
         {
             "name": "psr/log",
