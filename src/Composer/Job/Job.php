@@ -254,4 +254,17 @@ abstract class Job
         $copy->setExtra($this->package->getExtra());
         return $copy;
     }
+
+    /**
+     * Get the routing node name from the package name
+     *
+     * @return string
+     */
+    protected function getRoutingNodeName()
+    {
+        $name = strtolower($this->getPackage()->getName());
+        // package with the bundle can contain the word a 'bundle' in the name
+        $name = preg_replace('/(\/.+)[^a-z]bundle$/', '$1', $name);
+        return preg_replace('/[^a-z_]+/', '_', $name);
+    }
 }

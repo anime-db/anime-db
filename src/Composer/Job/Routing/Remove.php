@@ -10,7 +10,7 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing;
 
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Routing as BaseRouting;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 
 /**
  * Job: Remove package from routing
@@ -18,14 +18,21 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Routing as BaseRouting;
  * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Remove extends BaseRouting
+class Remove extends Job
 {
+    /**
+     * Job priority
+     *
+     * @var integer
+     */
+    const PRIORITY = self::PRIORITY_INSTALL;
+
     /**
      * (non-PHPdoc)
      * @see AnimeDb\Bundle\AnimeDbBundle\Composer\Job.Job::execute()
      */
     public function execute()
     {
-        $this->getContainer()->getManipulator('routing')->removeResource($this->getNodeName());
+        $this->getContainer()->getManipulator('routing')->removeResource($this->getRoutingNodeName());
     }
 }

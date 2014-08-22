@@ -10,7 +10,7 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config;
 
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\AddConfig;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -19,30 +19,18 @@ use Symfony\Component\Finder\Finder;
  * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Add extends Job
+class Add extends AddConfig
 {
     /**
-     * Job priority
+     * Add config
      *
-     * @var integer
+     * @param string $bundle
+     * @param string $extension
+     * @param string $path
      */
-    const PRIORITY = self::PRIORITY_INSTALL;
-
-    /**
-     * (non-PHPdoc)
-     * @see AnimeDb\Bundle\AnimeDbBundle\Composer\Job.Job::execute()
-     */
-    public function execute()
+    protected function addConfig($bundle, $extension, $path)
     {
-        $config = $this->getPackageConfig();
-        $bundle = $this->getPackageBundle();
-        if ($config && $bundle) {
-            $bundle = new $bundle();
-            $info = pathinfo($config);
-            $path = $info['dirname'] != '.' ? $info['dirname'].'/'.$info['filename'] : $info['filename'];
-            $this->getContainer()->getManipulator('config')
-                ->addResource($bundle->getName(), $info['extension'], $path);
-        }
+        $this->getContainer()->getManipulator('config')->addResource($bundle, $extension, $path);
     }
 
     /**

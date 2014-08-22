@@ -10,7 +10,7 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing;
 
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Routing as BaseRouting;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\AddConfig;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -19,23 +19,19 @@ use Symfony\Component\Finder\Finder;
  * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Add extends BaseRouting
+class Add extends AddConfig
 {
     /**
-     * (non-PHPdoc)
-     * @see AnimeDb\Bundle\AnimeDbBundle\Composer\Job.Job::execute()
+     * Add config
+     *
+     * @param string $bundle
+     * @param string $extension
+     * @param string $path
      */
-    public function execute()
+    protected function addConfig($bundle, $extension, $path)
     {
-        $routing = $this->getPackageRouting();
-        $bundle = $this->getPackageBundle();
-        if ($routing && $bundle) {
-            $bundle = new $bundle();
-            $info = pathinfo($routing);
-            $path = $info['dirname'] != '.' ? $info['dirname'].'/'.$info['filename'] : $info['filename'];
-            $this->getContainer()->getManipulator('routing')
-                ->addResource($this->getNodeName(), $bundle->getName(), $info['extension'], $path);
-        }
+        $this->getContainer()->getManipulator('routing')
+            ->addResource($this->getRoutingNodeName(), $bundle, $extension, $path);
     }
 
     /**
@@ -43,7 +39,7 @@ class Add extends BaseRouting
      *
      * @return string
      */
-    protected function getPackageRouting()
+    protected function getPackageConfig()
     {
         // This package has a file routing.xml, which contains the list of services,
         // rather than being contain the list of routers
