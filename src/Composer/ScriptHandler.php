@@ -206,16 +206,16 @@ class ScriptHandler
         \Closure $uninstall,
         \Closure $update = null
     ) {
-        switch ($operation()->getJobType()) {
+        switch ($operation->getJobType()) {
             case 'install':
-                self::getContainer()->addJob($install($event->getOperation()->getPackage()));
+                self::getContainer()->addJob($install($operation->getPackage()));
                 break;
             case 'uninstall':
-                self::getContainer()->addJob($uninstall($event->getOperation()->getPackage()));
+                self::getContainer()->addJob($uninstall($operation->getPackage()));
                 break;
             case 'update':
                 $update = $update ?: $install;
-                self::getContainer()->addJob($update($event->getOperation()->getTargetPackage()));
+                self::getContainer()->addJob($update($operation->getTargetPackage()));
                 break;
         }
     }
