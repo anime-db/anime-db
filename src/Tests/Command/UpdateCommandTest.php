@@ -101,16 +101,6 @@ class UpdateCommandTest extends TestCaseWritable
     }
 
     /**
-     * (non-PHPdoc)
-     * @see \AnimeDb\Bundle\AnimeDbBundle\Tests\TestCaseWritable::tearDown()
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
-        $this->fs->remove($this->target);
-    }
-
-    /**
      * Test configure
      */
     public function testConfigure()
