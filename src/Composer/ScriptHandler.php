@@ -12,7 +12,7 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Composer;
 
 use Composer\Script\PackageEvent;
 use Composer\Script\CommandEvent;
-use Composer\Package\PackageInterface;
+use Composer\IO\IOInterface;
 use Composer\DependencyResolver\Operation\OperationInterface;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Installed as InstalledPackageNotify;
@@ -271,11 +271,7 @@ class ScriptHandler
      */
     public static function deliverEvents(CommandEvent $event)
     {
-        $cmd = 'animedb:deliver-events';
-        if ($event->getIO()->isDecorated()) {
-            $cmd .= ' --ansi';
-        }
-        self::getContainer()->executeCommand($cmd, null);
+        self::executeCommand('animedb:deliver-events', $event->getIO());
     }
 
     /**
@@ -288,19 +284,16 @@ class ScriptHandler
         $dir = self::getRootDir().'DoctrineMigrations';
         if (self::isHaveMigrations($dir)) {
             self::repackMigrations($dir);
-
-            $cmd = 'doctrine:migrations:migrate --no-interaction';
-            if ($event->getIO()->isDecorated()) {
-                $cmd .= ' --ansi';
-            }
-            self::getContainer()->executeCommand($cmd, null);
+            self::executeCommand('doctrine:migrations:migrate --no-interaction', $event->getIO());
         }
     }
 
     /**
      * Migrate all plugins to down
+     *
+     * @param \Composer\Script\CommandEvent $event
      */
-    public static function migrateDown()
+    public static function migrateDown(CommandEvent $event)
     {
         $dir = self::getRootDir().'cache/dev/DoctrineMigrations/';
         if (self::isHaveMigrations($dir)) {
@@ -311,8 +304,9 @@ class ScriptHandler
                 "table_name: 'migration_versions'"
             );
 
-            self::getContainer()->executeCommand(
-                'doctrine:migrations:migrate --no-interaction --configuration='.$dir.'migrations.yml 0'
+            self::executeCommand(
+                'doctrine:migrations:migrate --no-interaction --configuration='.$dir.'migrations.yml 0',
+                $event->getIO()
             );
         }
     }
@@ -379,17 +373,15 @@ class ScriptHandler
      */
     public static function dumpAssets(CommandEvent $event)
     {
-        $cmd = 'assetic:dump --env=prod --no-debug --force';
-        if ($event->getIO()->isDecorated()) {
-            $cmd .= ' --ansi';
-        }
-        self::getContainer()->executeCommand($cmd.' web', null);
+        self::executeCommand('assetic:dump --env=prod --no-debug --force web', $event->getIO());
     }
 
     /**
      * Clears the Symfony cache
+     *
+     * @param \Composer\Script\CommandEvent $event
      */
-    public static function clearCache()
+    public static function clearCache(CommandEvent $event)
     {
         // to avoid errors due to the encrypted container forcibly clean the cache directory
         $dir = self::getRootDir().'cache/prod';
@@ -397,8 +389,22 @@ class ScriptHandler
             (new Filesystem())->remove($dir);
         }
 
-        self::getContainer()->executeCommand('cache:clear --no-warmup --env=prod --no-debug', 0);
-        self::getContainer()->executeCommand('cache:clear --no-warmup --env=test --no-debug', 0);
-        self::getContainer()->executeCommand('cache:clear --no-warmup --env=dev --no-debug', 0);
+        self::executeCommand('cache:clear --no-warmup --env=prod --no-debug', $event->getIO());
+        self::executeCommand('cache:clear --no-warmup --env=test --no-debug', $event->getIO());
+        self::executeCommand('cache:clear --no-warmup --env=dev --no-debug', $event->getIO());
+    }
+
+    /**
+     * Execute command
+     *
+     * @param string $cmd
+     * @param \Composer\IO\IOInterface $io
+     */
+    protected static function executeCommand($cmd, IOInterface $io)
+    {
+        if ($io->isDecorated()) {
+            $cmd .= ' --ansi';
+        }
+        self::getContainer()->executeCommand($cmd, 0);
     }
 }
