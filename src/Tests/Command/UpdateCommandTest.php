@@ -354,7 +354,7 @@ class UpdateCommandTest extends TestCaseWritable
     /**
      * Write lines
      *
-     * @param array $lines
+     * @param string[] $lines
      */
     protected function write(array $lines)
     {
