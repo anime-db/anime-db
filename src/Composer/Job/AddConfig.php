@@ -42,7 +42,7 @@ abstract class AddConfig extends Job
             $bundle = new $bundle();
             $info = pathinfo($config);
             $path = $info['dirname'] != '.' ? $info['dirname'].'/'.$info['filename'] : $info['filename'];
-            $this->addConfig($bundle->getName(), $info['extension'], $path);
+            $this->doAddConfig($bundle->getName(), $info['extension'], $path);
         }
     }
 
