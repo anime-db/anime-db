@@ -12,6 +12,8 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Composer;
 
 use Composer\Script\PackageEvent;
 use Composer\Script\CommandEvent;
+use Composer\Package\PackageInterface;
+use Composer\DependencyResolver\Operation\OperationInterface;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Installed as InstalledPackageNotify;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Removed as RemovedPackageNotify;
@@ -104,17 +106,15 @@ class ScriptHandler
      */
     public static function packageInKernel(PackageEvent $event)
     {
-        switch ($event->getOperation()->getJobType()) {
-            case 'install':
-                self::getContainer()->addJob(new AddKernel($event->getOperation()->getPackage()));
-                break;
-            case 'update':
-                self::getContainer()->addJob(new AddKernel($event->getOperation()->getTargetPackage()));
-                break;
-            case 'uninstall':
-                self::getContainer()->addJob(new RemoveKernel($event->getOperation()->getPackage()));
-                break;
-        }
+        self::addJobByOperationType(
+            $event->getOperation(),
+            function ($package) {
+                return new AddKernel($package);
+            },
+            function ($package) {
+                return new RemoveKernel($package);
+            }
+        );
     }
 
     /**
@@ -124,17 +124,15 @@ class ScriptHandler
      */
     public static function packageInRouting(PackageEvent $event)
     {
-        switch ($event->getOperation()->getJobType()) {
-            case 'install':
-                self::getContainer()->addJob(new AddRouting($event->getOperation()->getPackage()));
-                break;
-            case 'update':
-                self::getContainer()->addJob(new AddRouting($event->getOperation()->getTargetPackage()));
-                break;
-            case 'uninstall':
-                self::getContainer()->addJob(new RemoveRouting($event->getOperation()->getPackage()));
-                break;
-        }
+        self::addJobByOperationType(
+            $event->getOperation(),
+            function ($package) {
+                return new AddRouting($package);
+            },
+            function ($package) {
+                return new RemoveRouting($package);
+            }
+        );
     }
 
     /**
@@ -144,17 +142,15 @@ class ScriptHandler
      */
     public static function packageInConfig(PackageEvent $event)
     {
-        switch ($event->getOperation()->getJobType()) {
-            case 'install':
-                self::getContainer()->addJob(new AddConfig($event->getOperation()->getPackage()));
-                break;
-            case 'update':
-                self::getContainer()->addJob(new AddConfig($event->getOperation()->getTargetPackage()));
-                break;
-            case 'uninstall':
-                self::getContainer()->addJob(new RemoveConfig($event->getOperation()->getPackage()));
-                break;
-        }
+        self::addJobByOperationType(
+            $event->getOperation(),
+            function ($package) {
+                return new AddConfig($package);
+            },
+            function ($package) {
+                return new RemoveConfig($package);
+            }
+        );
     }
 
     /**
@@ -164,17 +160,15 @@ class ScriptHandler
      */
     public static function migratePackage(PackageEvent $event)
     {
-        switch ($event->getOperation()->getJobType()) {
-            case 'install':
-                self::getContainer()->addJob(new UpMigrate($event->getOperation()->getPackage()));
-                break;
-            case 'update':
-                self::getContainer()->addJob(new UpMigrate($event->getOperation()->getTargetPackage()));
-                break;
-            case 'uninstall':
-                self::getContainer()->addJob(new DownMigrate($event->getOperation()->getPackage()));
-                break;
-        }
+        self::addJobByOperationType(
+            $event->getOperation(),
+            function ($package) {
+                return new UpMigrate($package);
+            },
+            function ($package) {
+                return new DownMigrate($package);
+            }
+        );
     }
 
     /**
@@ -184,15 +178,44 @@ class ScriptHandler
      */
     public static function notifyPackage(PackageEvent $event)
     {
-        switch ($event->getOperation()->getJobType()) {
+        self::addJobByOperationType(
+            $event->getOperation(),
+            function ($package) {
+                return new InstalledPackageNotify($package);
+            },
+            function ($package) {
+                return new RemovedPackageNotify($package);
+            },
+            function ($package) {
+                return new UpdatedPackageNotify($package);
+            }
+        );
+    }
+
+    /**
+     * Add job by operation type
+     *
+     * @param \Composer\DependencyResolver\Operation\OperationInterface $operation
+     * @param \Closure $install
+     * @param \Closure $update
+     * @param \Closure|null $uninstall
+     */
+    protected static function addJobByOperationType(
+        OperationInterface $operation,
+        \Closure $install,
+        \Closure $uninstall,
+        \Closure $update = null
+    ) {
+        switch ($operation()->getJobType()) {
             case 'install':
-                self::getContainer()->addJob(new InstalledPackageNotify($event->getOperation()->getPackage()));
-                break;
-            case 'update':
-                self::getContainer()->addJob(new UpdatedPackageNotify($event->getOperation()->getTargetPackage()));
+                self::getContainer()->addJob($install($event->getOperation()->getPackage()));
                 break;
             case 'uninstall':
-                self::getContainer()->addJob(new RemovedPackageNotify($event->getOperation()->getPackage()));
+                self::getContainer()->addJob($uninstall($event->getOperation()->getPackage()));
+                break;
+            case 'update':
+                $update = $update ?: $install;
+                self::getContainer()->addJob($update($event->getOperation()->getTargetPackage()));
                 break;
         }
     }
