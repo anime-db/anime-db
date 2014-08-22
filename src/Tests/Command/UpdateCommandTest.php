@@ -116,18 +116,11 @@ class UpdateCommandTest extends TestCaseWritable
     public function testExecute()
     {
         $command = $this->getCommandToExecute(['name' => '1.0.0'], '1.0.0', 0);
-        $this->output
-            ->expects($this->at(1))
-            ->method('writeln')
-            ->with('<info>Application has already been updated to the latest version</info>');
-        $this->output
-            ->expects($this->at(2))
-            ->method('writeln')
-            ->with('<info>Update requirements has been completed</info>');
-        $this->output
-            ->expects($this->at(3))
-            ->method('writeln')
-            ->with('<info>Updating the application has been completed<info>');
+        $this->write([
+            '<info>Application has already been updated to the latest version</info>',
+            '<info>Update requirements has been completed</info>',
+            '<info>Updating the application has been completed<info>'
+        ]);
 
         $command->run($this->input, $this->output); // test
     }
@@ -138,18 +131,11 @@ class UpdateCommandTest extends TestCaseWritable
     public function testExecuteFailed()
     {
         $command = $this->getCommandToExecute(['name' => '1.0.0'], '1.0.0', 1);
-        $this->output
-            ->expects($this->at(1))
-            ->method('writeln')
-            ->with('<info>Application has already been updated to the latest version</info>');
-        $this->output
-            ->expects($this->at(2))
-            ->method('writeln')
-            ->with('<error>During updating dependencies error occurred</error>');
-        $this->output
-            ->expects($this->at(3))
-            ->method('writeln')
-            ->with('<info>Updating the application has been completed<info>');
+        $this->write([
+            '<info>Application has already been updated to the latest version</info>',
+            '<error>During updating dependencies error occurred</error>',
+            '<info>Updating the application has been completed<info>'
+        ]);
 
         $command->run($this->input, $this->output); // test
     }
@@ -195,22 +181,12 @@ class UpdateCommandTest extends TestCaseWritable
         // init command
         $command = $this->getCommandToExecute($tag, '1.0.0', 0);
 
-        $this->output
-            ->expects($this->at(1))
-            ->method('writeln')
-            ->with('Discovered a new version of the application: <info>'.$tag['name'].'</info>');
-        $this->output
-            ->expects($this->at(2))
-            ->method('writeln')
-            ->with('<info>Update itself has been completed</info>');
-        $this->output
-            ->expects($this->at(3))
-            ->method('writeln')
-            ->with('<info>Update requirements has been completed</info>');
-        $this->output
-            ->expects($this->at(4))
-            ->method('writeln')
-            ->with('<info>Updating the application has been completed<info>');
+        $this->write([
+            'Discovered a new version of the application: <info>'.$tag['name'].'</info>',
+            '<info>Update itself has been completed</info>',
+            '<info>Update requirements has been completed</info>',
+            '<info>Updating the application has been completed<info>'
+        ]);
         $this->container
             ->expects($this->at(2))
             ->method('get')
@@ -373,5 +349,20 @@ class UpdateCommandTest extends TestCaseWritable
         $command->setHelperSet($helper_set);
         $command->setContainer($this->container);
         return $command;
+    }
+
+    /**
+     * Write lines
+     *
+     * @param array $lines
+     */
+    protected function write(array $lines)
+    {
+        foreach ($lines as $key => $line) {
+            $this->output
+                ->expects($this->at($key + 1))
+                ->method('writeln')
+                ->with($line);
+        }
     }
 }

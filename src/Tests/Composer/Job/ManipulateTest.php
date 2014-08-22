@@ -207,7 +207,7 @@ class ManipulateTest extends TestCaseWritable
      *
      * @param string $class
      * @param string $method
-     * @param array $args
+     * @param string[] $args
      *
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
