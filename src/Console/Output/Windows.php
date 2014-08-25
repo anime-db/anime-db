@@ -113,6 +113,46 @@ class Windows implements ConsoleOutputInterface
     }
 
     /**
+     * The current verbosity of the output is quiet
+     *
+     * @return boolean
+     */
+    public function isQuiet()
+    {
+        return self::VERBOSITY_QUIET === $this->getVerbosity();
+    }
+
+    /**
+     * The current verbosity of the output is verbose
+     *
+     * @return boolean
+     */
+    public function isVerbose()
+    {
+        return self::VERBOSITY_VERBOSE <= $this->getVerbosity();
+    }
+
+    /**
+     * The current verbosity of the output is very verbose
+     *
+     * @return boolean
+     */
+    public function isVeryVerbose()
+    {
+        return self::VERBOSITY_VERY_VERBOSE <= $this->getVerbosity();
+    }
+
+    /**
+     * The current verbosity of the output is debug
+     *
+     * @return boolean
+     */
+    public function isDebug()
+    {
+        return self::VERBOSITY_DEBUG <= $this->getVerbosity();
+    }
+
+    /**
      * (non-PHPdoc)
      * @see Symfony\Component\Console\Output.OutputInterface::setDecorated()
      */
