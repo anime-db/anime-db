@@ -4,7 +4,7 @@
     "type": "project",
     "description": "The application for making home collection anime",
     "homepage": "http://anime-db.org",
-    "version": "0.3.12",
+    "version": "0.3.13",
     "authors": [
         {
             "name": "Anime DB",
@@ -12,53 +12,31 @@
         },
         {
             "name": "Peter Gribanov",
-            "email": "info@peter-gribanov.ru"
+            "email": "info@peter-gribanov.ru",
+            "homepage": "http://peter-gribanov.ru",
+            "role": "Developer"
         },
         {
             "name": "Anime DB Community",
             "homepage": "https://github.com/anime-db/anime-db/graphs/contributors"
         }
     ],
+    "support": {
+        "email": "support@anime-db.org",
+        "issues": "https://github.com/anime-db/anime-db/issues"
+    },
     "autoload": {
-        "psr-0": {
-            "AnimeDb\\Bundle\\AnimeDbBundle": "src/"
+        "psr-4": {
+            "AnimeDb\\Bundle\\AnimeDbBundle\\": "src/"
         }
     },
-    "repositories": [
-        {
-            "type": "package",
-            "package": {
-                "name": "doctrine/doctrine-migrations-bundle",
-                "type": "symfony-bundle",
-                "version": "1.0.1",
-                "dist": {
-                    "url": "https://github.com/anime-db/DoctrineMigrationsBundle/archive/master.zip",
-                    "type": "zip"
-                },
-                "source": {
-                    "url": "https://github.com/anime-db/DoctrineMigrationsBundle.git",
-                    "type": "git",
-                    "reference": "refs/heads/master"
-                },
-                "require": {
-                    "php": ">=5.3.2",
-                    "symfony/framework-bundle": "~2.1",
-                    "doctrine/doctrine-bundle": "~1.0",
-                    "doctrine/migrations": "~1.0@dev"
-                },
-                "autoload": {
-                    "psr-0": {
-                        "Doctrine\\Bundle\\MigrationsBundle": ""
-                    }
-                },
-                "target-dir": "Doctrine/Bundle/MigrationsBundle"
-            }
-        }
-    ],
     "require": {
         "php": ">=5.4.0",
         "ext-pdo_sqlite": "*",
-        "symfony/symfony": "2.3.*",
+        "ext-zlib": "*",
+        "ext-json": "*",
+        "ext-fileinfo": "*",
+        "symfony/symfony": ">=2.3.16",
         "doctrine/orm": ">=2.2.3,<2.4-dev",
         "doctrine/doctrine-bundle": "1.2.*",
         "twig/extensions": "1.0.*",
@@ -73,24 +51,25 @@
         "doctrine/migrations": "dev-master",
         "doctrine/doctrine-migrations-bundle": "1.0.*",
         "composer/composer": "1.0.*",
-        "guzzle/guzzle": "3.7.*",
+        "guzzle/guzzle": ">=3.7.0",
         "avalanche123/imagine-bundle": "2.*",
         "anime-db/catalog-bundle": "0.4.*"
     },
-    "require-dev": {
-        "ext-fileinfo": "*"
-    },
     "suggest": {
-        "ext-apc": "Allows use APC for autoloading to improve performance"
+        "ext-apc": "Allows use APC for autoloading to improve performance",
+        "ext-mbstring": "Allows to convert the encoding of messages for the Windows command line"
     },
     "scripts": {
+        "pre-install-cmd": [
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::installConfig"
+        ],
         "pre-update-cmd": [
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::backupDB"
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::backupDB",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::installConfig"
         ],
         "post-install-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::installConfig",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::notifyProjectInstall",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::execJobs",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migrateUp",
@@ -103,7 +82,6 @@
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::installConfig",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::notifyProjectUpdate",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::execJobs",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migrateDown",
@@ -115,23 +93,23 @@
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::dumpAssets"
         ],
         "post-package-install": [
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPackageToKernel",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPackageToRouting",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPackageToConfig",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::packageInKernel",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::packageInRouting",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::packageInConfig",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migratePackage",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::notifyPackage"
         ],
         "post-package-update": [
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPackageToKernel",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPackageToRouting",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::addPackageToConfig",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::packageInKernel",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::packageInRouting",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::packageInConfig",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migratePackage",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::notifyPackage"
         ],
         "pre-package-uninstall": [
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::removePackageFromKernel",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::removePackageFromRouting",
-            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::removePackageFromConfig",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::packageInKernel",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::packageInRouting",
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::packageInConfig",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::migratePackage",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::notifyPackage"
         ]

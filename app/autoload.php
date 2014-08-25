@@ -1,5 +1,4 @@
 <?php
-
 use Doctrine\Common\Annotations\AnnotationRegistry;
 
 /* @var $loader \Composer\Autoload\ClassLoader */

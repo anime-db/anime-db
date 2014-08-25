@@ -1,0 +1,3 @@
+parameters:
+    anime_db.monitor: 'http://anime-db.org/download/monitor_1.0.zip'
+    anime_db.github.api: 'https://api.github.com/'
