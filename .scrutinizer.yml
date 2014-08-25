@@ -3,3 +3,7 @@ imports:
 
 tools:
     external_code_coverage: true
+
+filter:
+    excluded_paths:
+        - src/Tests/*
