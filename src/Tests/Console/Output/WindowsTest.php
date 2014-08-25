@@ -233,4 +233,126 @@ class WindowsTest extends \PHPUnit_Framework_TestCase
             ->willReturn($expected);
         $this->assertEquals($expected, call_user_func([$this->windows, $get]));
     }
+
+    /**
+     * Get verbosity
+     *
+     * @return array
+     */
+    public function getVerbosity()
+    {
+        return [
+            [
+                'isQuiet',
+                OutputInterface::VERBOSITY_QUIET,
+                true
+            ],
+            [
+                'isQuiet',
+                OutputInterface::VERBOSITY_NORMAL,
+                false
+            ],
+            [
+                'isVerbose',
+                OutputInterface::VERBOSITY_QUIET,
+                false
+            ],
+            [
+                'isVerbose',
+                OutputInterface::VERBOSITY_NORMAL,
+                false
+            ],
+            [
+                'isVerbose',
+                OutputInterface::VERBOSITY_VERBOSE,
+                true
+            ],
+            [
+                'isVerbose',
+                OutputInterface::VERBOSITY_VERY_VERBOSE,
+                true
+            ],
+            [
+                'isVerbose',
+                OutputInterface::VERBOSITY_DEBUG,
+                true
+            ],
+            [
+                'isVeryVerbose',
+                OutputInterface::VERBOSITY_QUIET,
+                false
+            ],
+            [
+                'isVeryVerbose',
+                OutputInterface::VERBOSITY_NORMAL,
+                false
+            ],
+            [
+                'isVeryVerbose',
+                OutputInterface::VERBOSITY_VERBOSE,
+                false
+            ],
+            [
+                'isVeryVerbose',
+                OutputInterface::VERBOSITY_VERY_VERBOSE,
+                true
+            ],
+            [
+                'isVeryVerbose',
+                OutputInterface::VERBOSITY_DEBUG,
+                true
+            ],
+            [
+                'isDebug',
+                OutputInterface::VERBOSITY_QUIET,
+                false
+            ],
+            [
+                'isDebug',
+                OutputInterface::VERBOSITY_NORMAL,
+                false
+            ],
+            [
+                'isDebug',
+                OutputInterface::VERBOSITY_VERBOSE,
+                false
+            ],
+            [
+                'isDebug',
+                OutputInterface::VERBOSITY_VERY_VERBOSE,
+                false
+            ],
+            [
+                'isDebug',
+                OutputInterface::VERBOSITY_DEBUG,
+                true
+            ]
+        ];
+    }
+
+    /**
+     * Test is verbosity
+     *
+     * @dataProvider getVerbosity
+     *
+     * @param string $method
+     * @param integer $verbosity
+     * @param boolean $expected
+     */
+    public function testIsVerbosity($method, $verbosity, $expected)
+    {
+        // set
+        $this->output
+            ->expects($this->once())
+            ->method('getVerbosity')
+            ->willReturn($verbosity);
+
+        $condition = call_user_func([$this->windows, $method]);
+
+        if ($expected) {
+            $this->assertTrue($condition);
+        } else {
+            $this->assertFalse($condition);
+        }
+    }
 }
