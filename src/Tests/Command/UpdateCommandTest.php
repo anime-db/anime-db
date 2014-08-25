@@ -111,29 +111,38 @@ class UpdateCommandTest extends TestCaseWritable
     }
 
     /**
-     * Test execute
+     * Get execute result
+     *
+     * @return array
      */
-    public function testExecute()
+    public function getExecuteResult()
     {
-        $command = $this->getCommandToExecute(['name' => '1.0.0'], '1.0.0', 0);
-        $this->write([
-            '<info>Application has already been updated to the latest version</info>',
-            '<info>Update requirements has been completed</info>',
-            '<info>Updating the application has been completed<info>'
-        ]);
-
-        $command->run($this->input, $this->output); // test
+        return [
+            [
+                0,
+                '<info>Update requirements has been completed</info>'
+            ],
+            [
+                1,
+                '<error>During updating dependencies error occurred</error>'
+            ]
+        ];
     }
 
     /**
-     * Test execute failed
+     * Test execute
+     *
+     * @dataProvider getExecuteResult
+     *
+     * @param integer $result
+     * @param string $message
      */
-    public function testExecuteFailed()
+    public function testExecute($result, $message)
     {
-        $command = $this->getCommandToExecute(['name' => '1.0.0'], '1.0.0', 1);
+        $command = $this->getCommandToExecute(['name' => '1.0.0'], '1.0.0', $result);
         $this->write([
             '<info>Application has already been updated to the latest version</info>',
-            '<error>During updating dependencies error occurred</error>',
+            $message,
             '<info>Updating the application has been completed<info>'
         ]);
 
@@ -352,17 +361,17 @@ class UpdateCommandTest extends TestCaseWritable
     }
 
     /**
-     * Write lines
+     * Write messages
      *
-     * @param string[] $lines
+     * @param string[] $messages
      */
-    protected function write(array $lines)
+    protected function write(array $messages)
     {
-        foreach ($lines as $key => $line) {
+        foreach ($messages as $key => $message) {
             $this->output
                 ->expects($this->at($key + 1))
                 ->method('writeln')
-                ->with($line);
+                ->with($message);
         }
     }
 }
