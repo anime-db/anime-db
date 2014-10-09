@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "42c49fa6e3a2bff8dfdd817bf4b7ed90",
+    "hash": "4c602b4c80b2024bd056c36f014e632f",
     "packages": [
         {
             "name": "anime-db/api-client-bundle",
@@ -59,16 +59,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/anime-db/app-bundle.git",
-                "reference": "c7d1849af289218768a48a41c0fcd1ed6e3d9747"
+                "reference": "bec43e22031e4321c604b13889652dea45a9767c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/app-bundle/zipball/c7d1849af289218768a48a41c0fcd1ed6e3d9747",
-                "reference": "c7d1849af289218768a48a41c0fcd1ed6e3d9747",
+                "url": "https://api.github.com/repos/anime-db/app-bundle/zipball/bec43e22031e4321c604b13889652dea45a9767c",
+                "reference": "bec43e22031e4321c604b13889652dea45a9767c",
                 "shasum": ""
             },
             "require": {
-                "anime-db/anime-db": ">=0.3.8",
+                "anime-db/anime-db": "dev-develop",
                 "anime-db/api-client-bundle": "0.1.*",
                 "anime-db/cache-time-keeper-bundle": "1.0.*",
                 "patchwork/utf8": "1.2.*",
@@ -103,7 +103,7 @@
             ],
             "description": "The application for making home collection anime",
             "homepage": "http://anime-db.org",
-            "time": "2014-09-22 13:21:13"
+            "time": "2014-10-09 13:30:19"
         },
         {
             "name": "anime-db/cache-time-keeper-bundle",
@@ -158,12 +158,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/anime-db/catalog-bundle.git",
-                "reference": "717bb4f0e3dfd2724b6857fa9eb9aaa85c9feec7"
+                "reference": "af3711b8d8d7274f541e54f8103af14b235ad950"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/catalog-bundle/zipball/717bb4f0e3dfd2724b6857fa9eb9aaa85c9feec7",
-                "reference": "717bb4f0e3dfd2724b6857fa9eb9aaa85c9feec7",
+                "url": "https://api.github.com/repos/anime-db/catalog-bundle/zipball/af3711b8d8d7274f541e54f8103af14b235ad950",
+                "reference": "af3711b8d8d7274f541e54f8103af14b235ad950",
                 "shasum": ""
             },
             "require": {
@@ -202,7 +202,57 @@
             ],
             "description": "The application for making home collection anime",
             "homepage": "http://anime-db.org",
-            "time": "2014-10-09 07:11:29"
+            "time": "2014-10-09 14:06:21"
+        },
+        {
+            "name": "anime-db/shmop",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/anime-db/shmop.git",
+                "reference": "44a41b80605b6b66c72086a8bd8c40d638a6cfa5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/anime-db/shmop/zipball/44a41b80605b6b66c72086a8bd8c40d638a6cfa5",
+                "reference": "44a41b80605b6b66c72086a8bd8c40d638a6cfa5",
+                "shasum": ""
+            },
+            "require": {
+                "ext-shmop": "*",
+                "php": ">=5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "AnimeDb\\Shmop\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Anime DB",
+                    "homepage": "http://anime-db.org"
+                },
+                {
+                    "name": "Peter Gribanov",
+                    "email": "info@peter-gribanov.ru"
+                },
+                {
+                    "name": "Anime DB Community",
+                    "homepage": "https://github.com/anime-db/shmop/graphs/contributors"
+                }
+            ],
+            "description": "Shmop is a simple and small abstraction layer for shared memory manipulation using PHP",
+            "homepage": "http://github.com/anime-db/shmop",
+            "keywords": [
+                "php",
+                "shmop"
+            ],
+            "time": "2014-08-11 11:44:00"
         },
         {
             "name": "avalanche123/imagine-bundle",
@@ -2763,12 +2813,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/anime-db/shikimori-widget-bundle.git",
-                "reference": "817fdde531756d59c4cb1a918dbf489d953aa80b"
+                "reference": "4e284c1866bc5e913e9ca6e5f916ec5e991a2fa5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/shikimori-widget-bundle/zipball/817fdde531756d59c4cb1a918dbf489d953aa80b",
-                "reference": "817fdde531756d59c4cb1a918dbf489d953aa80b",
+                "url": "https://api.github.com/repos/anime-db/shikimori-widget-bundle/zipball/4e284c1866bc5e913e9ca6e5f916ec5e991a2fa5",
+                "reference": "4e284c1866bc5e913e9ca6e5f916ec5e991a2fa5",
                 "shasum": ""
             },
             "require": {
@@ -2777,7 +2827,7 @@
                 "php": ">=5.4.0"
             },
             "require-dev": {
-                "anime-db/shikimori-filler-bundle": "0.1.*"
+                "anime-db/shikimori-filler-bundle": "dev-develop"
             },
             "suggest": {
                 "anime-db/shikimori-filler-bundle": "Allows to add links to the filling items"
@@ -2794,7 +2844,7 @@
             ],
             "description": "Plugin AniDB for the catalog Anime DB",
             "homepage": "http://github.com/anime-db/shikimori-widget-bundle",
-            "time": "2014-10-09 11:17:10"
+            "time": "2014-10-09 13:22:39"
         },
         {
             "name": "anime-db/world-art-filler-bundle",

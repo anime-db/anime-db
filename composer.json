@@ -4,7 +4,6 @@
     "type": "project",
     "description": "The application for making home collection anime",
     "homepage": "http://anime-db.org",
-    "version": "0.3.14",
     "authors": [
         {
             "name": "Anime DB",
@@ -53,7 +52,8 @@
         "composer/composer": "1.0.*",
         "guzzle/guzzle": ">=3.7.0",
         "avalanche123/imagine-bundle": "2.*",
-        "anime-db/catalog-bundle": "dev-develop"
+        "anime-db/catalog-bundle": "dev-develop",
+        "anime-db/shmop": "1.0.*"
     },
     "require-dev": {
         "anime-db/catalog-bundle": "dev-develop",
