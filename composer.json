@@ -59,7 +59,6 @@
         "anime-db/catalog-bundle": "dev-develop",
         "anime-db/item-folder-filler-bundle": "dev-develop",
         "anime-db/world-art-filler-bundle": "dev-develop",
-        "anime-db/my-anime-list-sync-bundle": "dev-develop",
         "anime-db/shikimori-filler-bundle": "dev-develop",
         "anime-db/shikimori-new-items-widget-bundle": "dev-develop",
         "anime-db/shikimori-related-items-widget-bundle": "dev-develop",
