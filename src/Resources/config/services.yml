@@ -18,6 +18,10 @@ services:
         class: AnimeDb\Bundle\AnimeDbBundle\Manipulator\Composer
         arguments: [ %kernel.root_dir%/../composer.json ]
 
+    anime_db.manipulator.parameters:
+        class: AnimeDb\Bundle\AnimeDbBundle\Manipulator\Parameters
+        arguments: [ %kernel.root_dir%/config/parameters.yml ]
+
     anime_db.zip:
         class: ZipArchive
         public: false
