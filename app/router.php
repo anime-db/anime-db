@@ -17,7 +17,7 @@ if (PHP_SAPI != 'cli-server') {
     exit('This script can be run from the CLI-server only.');
 }
 
-// immediately return the update log or develop
+// immediately return the update log or dev
 if ($_SERVER['SCRIPT_NAME'] == '/update.log' || $_SERVER['SCRIPT_NAME'] == '/app_dev.php') {
     return false;
 }
@@ -39,35 +39,6 @@ $kernel = new AppKernel('prod', false);
 $kernel->loadClassCache();
 $kernel = new AppCache($kernel);
 
-// give static or handle request
-if (is_file($file = __DIR__.'/../web'.$request->getScriptName())) {
-    $response = new Response();
-    // caching
-    $response
-        ->setPublic()
-        ->setEtag(md5_file($file))
-        ->setExpires((new \DateTime)->setTimestamp(time()+2592000)) // updates interval of 30 days
-        ->setLastModified((new \DateTime)->setTimestamp(filemtime($file)))
-        ->headers->addCacheControlDirective('must-revalidate', true);
-
-    // response was not modified for this request
-    if (!$response->isNotModified($request)) {
-        $response->setContent(file_get_contents($file));
-    }
-
-    // set content type
-    $mimes = [
-        'css' => 'text/css',
-        'js' => 'text/javascript'
-    ];
-    if (isset($mimes[($ext = pathinfo($request->getScriptName(), PATHINFO_EXTENSION))])) {
-        $response->headers->set('Content-Type', $mimes[$ext]);
-    } else {
-        $response->headers->set('Content-Type', mime_content_type($file));
-    }
-} else {
-    $response = $kernel->handle($request);
-}
-
+$response = $kernel->handle($request);
 $response->send();
 $kernel->terminate($request, $response);

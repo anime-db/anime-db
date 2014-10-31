@@ -52,3 +52,8 @@ services:
         class: AnimeDb\Bundle\AnimeDbBundle\Event\Listener\Request\Firewall
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: -255 }
+    anime_db.request.static:
+        class: AnimeDb\Bundle\AnimeDbBundle\Event\Listener\Request\StaticFiles
+        arguments: [ %kernel.root_dir%, %kernel.environment% ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: -256 }
