@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 
-namespace AnimeDb\Bundle\AnimeDbBundle\Event\Listener;
+namespace AnimeDb\Bundle\AnimeDbBundle\Event\Listener\Request;
 
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Firewall
  *
- * @package AnimeDb\Bundle\AnimeDbBundle\Event\Listener
+ * @package AnimeDb\Bundle\AnimeDbBundle\Event\Listener\Request
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Firewall
