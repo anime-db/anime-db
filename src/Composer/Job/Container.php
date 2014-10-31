@@ -73,7 +73,7 @@ class Container
      *
      * @param string $name
      *
-     * @return \AnimeDb\Bundle\AnimeDbBundle\Manipulator\Manipulator
+     * @return \AnimeDb\Bundle\AnimeDbBundle\Manipulator\ManipulatorInterface
      */
     public function getManipulator($name)
     {
