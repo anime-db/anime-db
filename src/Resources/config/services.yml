@@ -48,3 +48,7 @@ services:
             - @anime_db.composer.factory
             - @anime_db.composer.loader
             - %kernel.root_dir%/../composer.lock
+    anime_db.firewall:
+        class: AnimeDb\Bundle\AnimeDbBundle\Event\Listener\Firewall
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

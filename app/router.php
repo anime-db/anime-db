@@ -17,47 +17,14 @@ if (PHP_SAPI != 'cli-server') {
     exit('This script can be run from the CLI-server only.');
 }
 
-// immediately return the update log #88
-if ($_SERVER['SCRIPT_NAME'] == '/update.log') {
+// immediately return the update log or develop
+if ($_SERVER['SCRIPT_NAME'] == '/update.log' || $_SERVER['SCRIPT_NAME'] == '/app_dev.php') {
     return false;
 }
-
 
 // get request
 $loader = require_once __DIR__.'/bootstrap.php.cache';
 $request = Request::createFromGlobals();
-
-// Check that the access to the application by the local computer or local network
-// Comment this code to open access to the application from the internet
-if ($request->server->get('HTTP_CLIENT_IP') ||
-    $request->server->get('HTTP_X_FORWARDED_FOR') ||
-    !($addr = $request->server->get('REMOTE_ADDR')) ||
-    ( // localhost
-        !in_array($addr, ['127.0.0.1', 'fe80::1', '::1']) &&
-        (
-            // local network IPv6
-            (($ipv6 = (strpos($addr, ':') !== false)) && strpos($addr, 'fc00::') !== 0) ||
-            ( // local network IPv4
-                !$ipv6 &&
-                ($long = ip2long($addr)) === false ||
-                !(
-                    ($long >= ip2long('10.0.0.0')    && $long <= ip2long('10.255.255.255')) ||
-                    ($long >= ip2long('172.16.0.0')  && $long <= ip2long('172.31.255.255')) ||
-                    ($long >= ip2long('192.168.0.0') && $long <= ip2long('192.168.255.255'))
-                )
-            )
-        )
-    )
-) {
-    header('HTTP/1.0 403 Forbidden');
-    exit('You are not allowed to access this application.');
-}
-
-// skip dev
-if ($request->getBaseUrl() == '/app_dev.php') {
-    return false;
-}
-
 
 // Use APC for autoloading to improve performance
 if (extension_loaded('apc')) {
