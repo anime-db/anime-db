@@ -64,20 +64,18 @@ class StaticFiles
 
         $file = $request->getScriptName() == '/app_dev.php' ? $request->getPathInfo() : $request->getScriptName();
         if (is_file($file = $this->root_dir.'/../web'.$file)) {
-            $response = new Response();
+            $response = (new Response())->setPublic();
 
             // caching in prod env
             if ($this->env == 'prod') {
                 $response
-                    ->setPublic()
                     ->setEtag(md5_file($file))
-                    ->setExpires((new \DateTime)->setTimestamp(time()+2592000)) // updates interval of 30 days
-                    ->setLastModified((new \DateTime)->setTimestamp(filemtime($file)))
+                    ->setExpires((new \DateTime())->setTimestamp(time()+2592000)) // updates interval of 30 days
+                    ->setLastModified((new \DateTime())->setTimestamp(filemtime($file)))
                     ->headers->addCacheControlDirective('must-revalidate', true);
                 // response was not modified for this request
                 if ($response->isNotModified($request)) {
-                    $event->setResponse($response->setPublic());
-                    $event->stopPropagation();
+                    $event->setResponse($response);
                     return;
                 }
             }
@@ -87,13 +85,12 @@ class StaticFiles
                 'css' => 'text/css',
                 'js' => 'text/javascript'
             ];
-            if (isset($mimes[($ext = pathinfo($request->getScriptName(), PATHINFO_EXTENSION))])) {
+            if (isset($mimes[($ext = pathinfo($file, PATHINFO_EXTENSION))])) {
                 $response->headers->set('Content-Type', $mimes[$ext]);
             } else {
                 $response->headers->set('Content-Type', mime_content_type($file));
             }
-            $event->setResponse($response->setContent(file_get_contents($file))->setPublic());
-            $event->stopPropagation();
+            $event->setResponse($response->setContent(file_get_contents($file)));
         }
     }
 }
