@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5f1e7beb2106c026f191519c75028aa7",
+    "hash": "5ad58aef4a10122554c0ef985b95ecc4",
     "packages": [
         {
             "name": "anime-db/api-client-bundle",
@@ -350,12 +350,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "a309e1d89ded6919935a842faeaed8e888fbfe37"
+                "reference": "ffffab37a294f3383c812d0329623f0a4ba45387"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/a309e1d89ded6919935a842faeaed8e888fbfe37",
-                "reference": "a309e1d89ded6919935a842faeaed8e888fbfe37",
+                "url": "https://api.github.com/repos/composer/composer/zipball/ffffab37a294f3383c812d0329623f0a4ba45387",
+                "reference": "ffffab37a294f3383c812d0329623f0a4ba45387",
                 "shasum": ""
             },
             "require": {
@@ -410,7 +410,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2014-10-20 19:16:14"
+            "time": "2014-11-05 06:04:18"
         },
         {
             "name": "doctrine/annotations",
@@ -418,12 +418,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "6a6bec0670bb6e71a263b08bc1b98ea242928633"
+                "reference": "3b6668f54ad3f95d68b64a742f6b0de55d6caeb1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/6a6bec0670bb6e71a263b08bc1b98ea242928633",
-                "reference": "6a6bec0670bb6e71a263b08bc1b98ea242928633",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/3b6668f54ad3f95d68b64a742f6b0de55d6caeb1",
+                "reference": "3b6668f54ad3f95d68b64a742f6b0de55d6caeb1",
                 "shasum": ""
             },
             "require": {
@@ -478,7 +478,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2014-09-25 16:45:30"
+            "time": "2014-11-04 15:34:10"
         },
         {
             "name": "doctrine/cache",
@@ -555,12 +555,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/collections.git",
-                "reference": "8c5148e0ef8cee4afe86d45ba98f7b6d96e780d0"
+                "reference": "38ed66e6606309bec203a9df506ffa26d956d21d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/collections/zipball/8c5148e0ef8cee4afe86d45ba98f7b6d96e780d0",
-                "reference": "8c5148e0ef8cee4afe86d45ba98f7b6d96e780d0",
+                "url": "https://api.github.com/repos/doctrine/collections/zipball/38ed66e6606309bec203a9df506ffa26d956d21d",
+                "reference": "38ed66e6606309bec203a9df506ffa26d956d21d",
                 "shasum": ""
             },
             "require": {
@@ -613,7 +613,7 @@
                 "collections",
                 "iterator"
             ],
-            "time": "2014-09-24 12:11:27"
+            "time": "2014-11-05 15:56:21"
         },
         {
             "name": "doctrine/common",
@@ -1782,13 +1782,13 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/nicolas-grekas/Patchwork-UTF8.git",
-                "reference": "2e98a87caf5bcef78a369e03fac0ae806060196e"
+                "url": "https://github.com/tchwork/utf8.git",
+                "reference": "bd7384ddf6ac69e412803519dc6bcd2be6a53f3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nicolas-grekas/Patchwork-UTF8/zipball/2e98a87caf5bcef78a369e03fac0ae806060196e",
-                "reference": "2e98a87caf5bcef78a369e03fac0ae806060196e",
+                "url": "https://api.github.com/repos/tchwork/utf8/zipball/bd7384ddf6ac69e412803519dc6bcd2be6a53f3a",
+                "reference": "bd7384ddf6ac69e412803519dc6bcd2be6a53f3a",
                 "shasum": ""
             },
             "require": {
@@ -1819,19 +1819,19 @@
             "authors": [
                 {
                     "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com",
-                    "role": "Developer"
+                    "email": "p@tchwork.com"
                 }
             ],
-            "description": "Extensive, portable and performant handling of UTF-8 and grapheme clusters for PHP",
-            "homepage": "https://github.com/nicolas-grekas/Patchwork-UTF8",
+            "description": "Portable and performant UTF-8, Unicode and Grapheme Clusters for PHP",
+            "homepage": "https://github.com/tchwork/utf8",
             "keywords": [
+                "grapheme",
                 "i18n",
                 "unicode",
                 "utf-8",
                 "utf8"
             ],
-            "time": "2014-08-05 10:00:12"
+            "time": "2014-11-08 10:14:15"
         },
         {
             "name": "psr/log",
@@ -2305,12 +2305,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "b2ddfa8c3b14d6902a98f48f5b82362b4eeff593"
+                "reference": "85b016f37b16c60f54eab26786e264ae78d614e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/b2ddfa8c3b14d6902a98f48f5b82362b4eeff593",
-                "reference": "b2ddfa8c3b14d6902a98f48f5b82362b4eeff593",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/85b016f37b16c60f54eab26786e264ae78d614e3",
+                "reference": "85b016f37b16c60f54eab26786e264ae78d614e3",
                 "shasum": ""
             },
             "require": {
@@ -2410,7 +2410,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-10-31 01:05:12"
+            "time": "2014-11-09 07:53:45"
         },
         {
             "name": "twig/extensions",
