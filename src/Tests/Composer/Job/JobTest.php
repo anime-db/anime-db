@@ -115,7 +115,9 @@ class JobTest extends TestCaseWritable
     public function testContainer()
     {
         $this->initJob();
-        $container = $this->getMock('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container');
+        $container = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container')
+            ->disableOriginalConstructor()
+            ->getMock();
         $this->job->setContainer($container);
         $this->assertEquals($container, $this->job->getContainer());
     }
