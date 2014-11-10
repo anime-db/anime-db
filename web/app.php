@@ -8,15 +8,22 @@
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
 use Symfony\Component\HttpFoundation\Request;
-
-// If you don't want to setup permissions the proper way, just uncomment the following PHP line
-// read http://symfony.com/doc/current/book/installation.html#configuration-and-setup for more information
-umask(0000);
+use Symfony\Component\ClassLoader\ApcClassLoader;
 
 $loader = require_once __DIR__.'/../app/bootstrap.php.cache';
-require_once __DIR__.'/../app/AppKernel.php';
 
-$kernel = new AppKernel('dev', true);
+// Use APC for autoloading to improve performance
+if (extension_loaded('apc')) {
+    $loader = new ApcClassLoader('sf2', $loader);
+    $loader->register(true);
+}
+
+require_once __DIR__.'/../app/AppKernel.php';
+require_once __DIR__.'/../app/AppCache.php';
+
+$kernel = new AppKernel('prod', false);
+$kernel->loadClassCache();
+$kernel = new AppCache($kernel);
 $request = Request::createFromGlobals();
 
 $response = $kernel->handle($request);
