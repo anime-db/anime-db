@@ -56,6 +56,23 @@ class Container
     protected $php_path = null;
 
     /**
+     * Root dir
+     *
+     * @var string
+     */
+    protected $root_dir;
+
+    /**
+     * Construct
+     *
+     * @param string $root_dir
+     */
+    public function __construct($root_dir)
+    {
+        $this->root_dir = $root_dir;
+    }
+
+    /**
      * Get event dispatcher
      *
      * @return \AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher
@@ -78,22 +95,21 @@ class Container
     public function getManipulator($name)
     {
         if (!isset($this->manipulators[$name])) {
-            $root_dir = __DIR__.'/../../../';
             switch ($name) {
                 case 'composer':
-                    $this->manipulators[$name] = new ComposerManipulator($root_dir.'composer.json');
+                    $this->manipulators[$name] = new ComposerManipulator($this->root_dir.'/../composer.json');
                     break;
                 case 'config':
-                    $this->manipulators[$name] = new ConfigManipulator($root_dir.'app/config/vendor_config.yml');
+                    $this->manipulators[$name] = new ConfigManipulator($this->root_dir.'config/vendor_config.yml');
                     break;
                 case 'kernel':
                     $this->manipulators[$name] = new KernelManipulator(
-                        $root_dir.'app/bundles.php',
-                        $root_dir.'app/AppKernel.php'
+                        $this->root_dir.'bundles.php',
+                        $this->root_dir.'AppKernel.php'
                     );
                     break;
                 case 'routing':
-                    $this->manipulators[$name] = new RoutingManipulator($root_dir.'app/config/routing.yml');
+                    $this->manipulators[$name] = new RoutingManipulator($this->root_dir.'config/routing.yml');
                     break;
                 default:
                     throw new \InvalidArgumentException('Unknown manipulator: '.$name);
