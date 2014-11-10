@@ -33,7 +33,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->container = new Container();
+        $this->container = new Container(__DIR__.'/../../../../app/');
     }
 
     /**
