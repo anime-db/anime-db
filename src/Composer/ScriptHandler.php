@@ -61,7 +61,7 @@ class ScriptHandler
     public static function getContainer()
     {
         if (!(self::$container instanceof Container)) {
-            self::setContainer(new Container());
+            self::setContainer(new Container(self::getRootDir()));
         }
         return self::$container;
     }

@@ -101,7 +101,9 @@ class ScriptHandlerTest extends TestCaseWritable
         $this->event_package = $this->getMockBuilder('\Composer\Script\PackageEvent')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->container = $this->getMock('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container');
+        $this->container = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container')
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->default_container = ScriptHandler::getContainer();
         ScriptHandler::setContainer($this->container);
