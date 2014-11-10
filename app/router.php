@@ -9,7 +9,6 @@
  */
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\ClassLoader\ApcClassLoader;
 
 // run not in cli-server
