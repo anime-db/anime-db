@@ -33,13 +33,13 @@ class Firewall
             return;
         }
 
-        /* @var $request \Symfony\Component\HttpFoundation\Request */
-        $request = $event->getRequest();
+        /* @var $server \Symfony\Component\HttpFoundation\ServerBag */
+        $server = $event->getRequest()->server;
 
         // Check that the access to the application by the local computer or local network
-        if ($request->server->get('HTTP_CLIENT_IP') ||
-            $request->server->get('HTTP_X_FORWARDED_FOR') ||
-            !($addr = $request->server->get('REMOTE_ADDR')) ||
+        if ($server->get('HTTP_CLIENT_IP') ||
+            $server->get('HTTP_X_FORWARDED_FOR') ||
+            !($addr = $server->get('REMOTE_ADDR')) ||
             (!$this->isLocalHost($addr) && !$this->isLocalNetwork($addr))
         ) {
             $response = new Response('You are not allowed to access this application.', Response::HTTP_FORBIDDEN);
@@ -71,7 +71,7 @@ class Firewall
     {
         // local network IPv6
         if (strpos($addr, ':') !== false) {
-            return strpos($addr, 'fc00::') !== 0;
+            return strpos($addr, 'fc00::') === 0;
         }
 
         if (($long = ip2long($addr)) === false) {
