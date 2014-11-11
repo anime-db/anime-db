@@ -80,7 +80,7 @@ class Container
     public function getEventDispatcher()
     {
         if (!($this->dispatcher instanceof Dispatcher)) {
-            $this->dispatcher = new Dispatcher();
+            $this->dispatcher = new Dispatcher($this->root_dir);
         }
         return $this->dispatcher;
     }

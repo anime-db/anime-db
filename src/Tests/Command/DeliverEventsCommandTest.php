@@ -37,7 +37,9 @@ class DeliverEventsCommandTest extends \PHPUnit_Framework_TestCase
     {
         $input = $this->getMock('\Symfony\Component\Console\Input\InputInterface');
         $output = $this->getMock('\Symfony\Component\Console\Output\OutputInterface');
-        $dispatcher = $this->getMock('\AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher');
+        $dispatcher = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher')
+            ->disableOriginalConstructor()
+            ->getMock();
         $container = $this->getMock('\Symfony\Component\DependencyInjection\ContainerInterface');
         $container
             ->expects($this->once())

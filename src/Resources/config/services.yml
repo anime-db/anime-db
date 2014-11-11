@@ -11,6 +11,7 @@ services:
 
     anime_db.event_dispatcher:
         class: AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher
+        arguments: [ %kernel.root_dir% ]
         calls:
             - [ setDispatcherDriver, [ @event_dispatcher ] ]
 
