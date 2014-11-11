@@ -73,11 +73,9 @@ abstract class Job
      * Construct
      *
      * @param \Composer\Package\Package $package
-     * @param string $root_dir
      */
-    public function __construct(Package $package, $root_dir = '')
+    public function __construct(Package $package)
     {
-        $this->root_dir = $root_dir ?: __DIR__.'/../../../';
         $this->package = $package;
         $this->package->setExtra(array_merge([
                 'anime-db-routing' => '',
@@ -90,13 +88,39 @@ abstract class Job
     }
 
     /**
+     * Set root dir
+     *
+     * @param string $root_dir
+     *
+     * @return \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job
+     */
+    public function setRootDir($root_dir)
+    {
+        $this->root_dir = $root_dir;
+        return $this;
+    }
+
+    /**
+     * Get root dir
+     *
+     * @param string
+     */
+    public function getRootDir()
+    {
+        return $this->root_dir;
+    }
+
+    /**
      * Set container
      *
      * @param \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container $container
+     *
+     * @return \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job
      */
     public function setContainer(Container $container)
     {
         $this->container = $container;
+        return $this;
     }
 
     /**
