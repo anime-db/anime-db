@@ -69,8 +69,9 @@ class JobTest extends TestCaseWritable
             ->method('setExtra')
             ->with(array_merge($this->default_extra, $extra));
         $this->job = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job')
-            ->setConstructorArgs([$this->package, $this->root_dir])
+            ->setConstructorArgs([$this->package])
             ->getMockForAbstractClass();
+        $this->job->setRootDir($this->root_dir);
     }
 
     /**

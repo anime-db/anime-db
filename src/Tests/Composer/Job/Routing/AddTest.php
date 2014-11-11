@@ -194,8 +194,9 @@ class AddTest extends TestCaseWritable
                 'anime-db-migrations' => ''
             ]);
 
-        $job = new Add($package, $this->root_dir);
+        $job = new Add($package);
         $job->setContainer($this->container);
+        $job->setRootDir($this->root_dir);
         $job->execute();
     }
 }
