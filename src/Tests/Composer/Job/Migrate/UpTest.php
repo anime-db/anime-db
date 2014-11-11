@@ -82,6 +82,6 @@ class '.$version.' extends ProxyMigration
      */
     protected function getJob(\PHPUnit_Framework_MockObject_MockObject $package)
     {
-        return new Up($package, $this->root_dir);
+        return (new Up($package))->setRootDir($this->root_dir);
     }
 }

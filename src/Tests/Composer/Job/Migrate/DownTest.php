@@ -60,6 +60,6 @@ class DownTest extends TestCase
      */
     protected function getJob(\PHPUnit_Framework_MockObject_MockObject $package)
     {
-        return new Down($package, $this->root_dir);
+        return (new Down($package))->setRootDir($this->root_dir);
     }
 }
