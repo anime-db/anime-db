@@ -27,7 +27,7 @@ class Dispatcher
      *
      * @var string
      */
-    const EVENTS_DIR = '/../../app/cache/dev/events/';
+    const EVENTS_DIR = '/cache/dev/events/';
 
     /**
      * Dispatcher driver
@@ -37,6 +37,23 @@ class Dispatcher
     protected $driver;
 
     /**
+     * Directory to store events
+     *
+     * @var string
+     */
+    protected $events_dir = '';
+
+    /**
+     * Construct
+     *
+     * @param string $root_dir
+     */
+    public function __construct($root_dir)
+    {
+        $this->events_dir = $root_dir.self::EVENTS_DIR;
+    }
+
+    /**
      * Store the event and dispatch it later
      *
      * @param string $event_name
@@ -44,7 +61,7 @@ class Dispatcher
      */
     public function dispatch($event_name, Event $event)
     {
-        $dir = __DIR__.self::EVENTS_DIR.$event_name.'/';
+        $dir = $this->events_dir.$event_name.'/';
         if (!file_exists($dir)) {
             mkdir($dir, 0755, true);
         }
@@ -57,9 +74,9 @@ class Dispatcher
      */
     public function shippingDeferredEvents()
     {
-        if ($this->driver && file_exists(__DIR__.self::EVENTS_DIR)) {
+        if ($this->driver && is_dir($this->events_dir)) {
             $finder = new Finder();
-            $finder->files()->in(__DIR__.self::EVENTS_DIR)->name('*.meta')->sortByName();
+            $finder->files()->in($this->events_dir)->name('*.meta')->sortByName();
 
             /* @var $file \Symfony\Component\Finder\SplFileInfo */
             foreach ($finder as $file) {
