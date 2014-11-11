@@ -126,6 +126,7 @@ class Container
     public function addJob(Job $job)
     {
         $job->setContainer($this);
+        $job->setRootDir($this->root_dir.'/../');
         $this->jobs[$job->getPriority()][] = $job;
         $job->register();
     }
