@@ -114,7 +114,9 @@ class NotifyTest extends \PHPUnit_Framework_TestCase
             ->method('getType')
             ->willReturn('library');
 
-        $dispatcher = $this->getMock('\AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher');
+        $dispatcher = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher')
+            ->disableOriginalConstructor()
+            ->getMock();
         $dispatcher
             ->expects($this->once())
             ->method('dispatch')
@@ -129,7 +131,9 @@ class NotifyTest extends \PHPUnit_Framework_TestCase
                 $that->assertEquals('library', $event->getPackage()->getType());
                 $that->assertEquals($extra, $event->getPackage()->getExtra());
             });
-        $container = $this->getMock('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container');
+        $container = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container')
+            ->disableOriginalConstructor()
+            ->getMock();
         $container
             ->expects($this->once())
             ->method('getEventDispatcher')

@@ -33,7 +33,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->container = new Container();
+        $this->container = new Container(__DIR__.'/../../../../app/');
     }
 
     /**
@@ -154,7 +154,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     {
         ob_start();
         $this->container->executeCommand('--version --no-ansi');
-        exec('php ./app/console --version --no-ansi', $output);
+        exec('php '.__DIR__.'/../../../../app/console --version --no-ansi', $output);
         $this->assertEquals($output[0].PHP_EOL, ob_get_clean());
     }
 }

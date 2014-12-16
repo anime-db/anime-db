@@ -159,7 +159,9 @@ class UpdateCommandTest extends TestCaseWritable
             'zipball_url' => 'http://example.com/tags/1.0.1.zip'
         ];
         $dispatcher = $this->getMock('\Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $local_dispatcher = $this->getMock('\AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher');
+        $local_dispatcher = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher')
+            ->disableOriginalConstructor()
+            ->getMock();
         $package = $this->getMock('\Composer\Package\RootPackageInterface');
 
         // vars for closures

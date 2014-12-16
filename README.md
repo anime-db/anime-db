@@ -3,9 +3,9 @@
 [![Latest Stable Version](https://poser.pugx.org/anime-db/anime-db/v/stable.png)](https://packagist.org/packages/anime-db/anime-db)
 [![Latest Unstable Version](https://poser.pugx.org/anime-db/anime-db/v/unstable.png)](https://packagist.org/packages/anime-db/anime-db)
 [![Build Status](https://travis-ci.org/anime-db/anime-db.svg?branch=master)](https://travis-ci.org/anime-db/anime-db)
-[![Total Downloads](https://poser.pugx.org/anime-db/anime-db/downloads.png)](https://packagist.org/packages/anime-db/anime-db)
-[![License](https://poser.pugx.org/anime-db/anime-db/license.png)](https://packagist.org/packages/anime-db/anime-db)
 [![Code Coverage](https://scrutinizer-ci.com/g/anime-db/anime-db/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/anime-db/anime-db/?branch=master)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/863c136d-5f15-4cb1-b9c6-1ec86b8da8ed/mini.png)](https://insight.sensiolabs.com/projects/863c136d-5f15-4cb1-b9c6-1ec86b8da8ed)
+[![License](https://poser.pugx.org/anime-db/anime-db/license.png)](https://packagist.org/packages/anime-db/anime-db)
 
 # Anime DB #
 

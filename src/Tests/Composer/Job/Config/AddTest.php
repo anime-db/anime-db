@@ -35,7 +35,9 @@ class AddTest extends TestCaseWritable
     protected function setUp()
     {
         parent::setUp();
-        $this->container = $this->getMock('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container');
+        $this->container = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container')
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 
     /**
@@ -164,8 +166,9 @@ class AddTest extends TestCaseWritable
                 'anime-db-migrations' => ''
             ]);
 
-        $job = new Add($package, $this->root_dir);
+        $job = new Add($package);
         $job->setContainer($this->container);
+        $job->setRootDir($this->root_dir);
         $job->execute();
     }
 }

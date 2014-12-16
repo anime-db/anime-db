@@ -30,12 +30,11 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
     protected $fs;
 
     /**
-     * Construct
+     * Root dir
+     *
+     * @var string
      */
-    public function __construct()
-    {
-        $this->fs = new Filesystem();
-    }
+    protected $root_dir;
 
     /**
      * (non-PHPdoc)
@@ -43,8 +42,17 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        parent::setUp();
-        $this->fs->remove(__DIR__.'/../'.Dispatcher::EVENTS_DIR);
+        $this->fs = new Filesystem();
+        $this->root_dir = sys_get_temp_dir().'/tests/';
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see PHPUnit_Framework_TestCase::tearDown()
+     */
+    protected function tearDown()
+    {
+        $this->fs->remove($this->root_dir);
     }
 
     /**
@@ -52,7 +60,7 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
      */
     public function testEmptyDriver()
     {
-        $dispatcher = new Dispatcher();
+        $dispatcher = new Dispatcher($this->root_dir);
         $dispatcher->shippingDeferredEvents();
     }
 
@@ -76,7 +84,7 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
             ->with('baz', $event2)
             ->willReturnArgument(1);
 
-        $dispatcher = new Dispatcher();
+        $dispatcher = new Dispatcher($this->root_dir);
         $dispatcher->setDispatcherDriver($driver);
         $dispatcher->dispatch('bar', $event1);
         $dispatcher->dispatch('baz', $event2);

@@ -61,7 +61,7 @@ class ScriptHandler
     public static function getContainer()
     {
         if (!(self::$container instanceof Container)) {
-            self::setContainer(new Container());
+            self::setContainer(new Container(self::getRootDir()));
         }
         return self::$container;
     }
@@ -84,7 +84,7 @@ class ScriptHandler
     public static function getRootDir()
     {
         if (!self::$root_dir) {
-            self::setRootDir(__DIR__.'/../../app/');
+            self::setRootDir(getcwd().'/app/');
         }
         return self::$root_dir;
     }

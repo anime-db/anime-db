@@ -35,7 +35,9 @@ abstract class TestCase extends TestCaseWritable
     protected function setUp()
     {
         parent::setUp();
-        $this->container = $this->getMock('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container');
+        $this->container = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container')
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 
     /**
