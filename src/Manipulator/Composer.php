@@ -60,6 +60,8 @@ class Composer extends FileContent
      */
     protected function setContent($content)
     {
-        parent::setContent(json_encode($content, JSON_NUMERIC_CHECK|JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
+        $content = json_encode($content, JSON_NUMERIC_CHECK|JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
+        $content = str_replace('": ', '" : ', $content).PHP_EOL;
+        parent::setContent($content);
     }
 }
