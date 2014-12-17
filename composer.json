@@ -56,16 +56,6 @@
 		"anime-db/catalog-bundle" : ">=0.4.7",
 		"anime-db/shmop" : "1.0.*"
 	},
-	"require-dev" : {
-		"anime-db/catalog-bundle" : "dev-develop",
-		"anime-db/item-folder-filler-bundle" : "dev-develop",
-		"anime-db/world-art-filler-bundle" : "dev-develop",
-		"anime-db/shikimori-filler-bundle" : "dev-develop",
-		"anime-db/shikimori-new-items-widget-bundle" : "dev-develop",
-		"anime-db/shikimori-related-items-widget-bundle" : "dev-develop",
-		"anime-db/shikimori-similar-items-widget-bundle" : "dev-develop",
-		"anime-db/ani-db-filler-bundle" : "dev-develop"
-	},
 	"suggest" : {
 		"ext-apc" : "Allows use APC for autoloading to improve performance",
 		"ext-mbstring" : "Allows to convert the encoding of messages for the Windows command line"
