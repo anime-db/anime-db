@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "176040bd7e52c87d9ab2c2fb457e60f6",
+    "hash": "e0514c63cf1e4d445cf57f8e0f55d249",
     "packages": [
         {
             "name": "anime-db/api-client-bundle",
@@ -2295,16 +2295,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "2.5.x-dev",
+            "version": "v2.5.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "b2e0a803a66befa3d0c9a4f08d514e1287340f9d"
+                "reference": "00da57005c9c76773670f4d958dd95e9f4ae72f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/b2e0a803a66befa3d0c9a4f08d514e1287340f9d",
-                "reference": "b2e0a803a66befa3d0c9a4f08d514e1287340f9d",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/00da57005c9c76773670f4d958dd95e9f4ae72f6",
+                "reference": "00da57005c9c76773670f4d958dd95e9f4ae72f6",
                 "shasum": ""
             },
             "require": {
@@ -2364,7 +2364,7 @@
                 "egulias/email-validator": "~1.2",
                 "ircmaxell/password-compat": "~1.0",
                 "monolog/monolog": "~1.3",
-                "ocramius/proxy-manager": "~0.4|~1.0",
+                "ocramius/proxy-manager": ">=0.3.1,<0.6-dev",
                 "propel/propel1": "~1.6"
             },
             "type": "library",
@@ -2404,7 +2404,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-12-16 15:30:07"
+            "time": "2014-12-03 14:18:17"
         },
         {
             "name": "twig/extensions",
