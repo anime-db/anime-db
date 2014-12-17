@@ -17,6 +17,7 @@ web/bundles/
 web/assetic/
 app/cache/
 app/logs/
+app/var/
 app/bootstrap.php.cache
 app/config/parameters.yml
 app/SymfonyRequirements.php
