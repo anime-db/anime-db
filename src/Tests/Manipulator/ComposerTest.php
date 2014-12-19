@@ -103,11 +103,11 @@ class ComposerTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddPackage(array $before, array $after)
     {
-        file_put_contents($this->filename, json_encode($before, JSON_PRETTY_PRINT));
+        file_put_contents($this->filename, $this->encode($before));
 
         $this->manipulator->addPackage('foo', '1.0.0'); // test
 
-        $this->assertEquals(json_encode($after, JSON_PRETTY_PRINT), file_get_contents($this->filename));
+        $this->assertEquals($this->encode($after), file_get_contents($this->filename));
     }
 
     /**
@@ -156,10 +156,23 @@ class ComposerTest extends \PHPUnit_Framework_TestCase
      */
     public function testRemovePackage(array $before, array $after)
     {
-        file_put_contents($this->filename, json_encode($before, JSON_PRETTY_PRINT));
+        file_put_contents($this->filename, $this->encode($before));
 
         $this->manipulator->removePackage('foo'); // test
 
-        $this->assertEquals(json_encode($after, JSON_PRETTY_PRINT), file_get_contents($this->filename));
+        $this->assertEquals($this->encode($after), file_get_contents($this->filename));
+    }
+
+    /**
+     * Encode dat to JSON
+     *
+     * @param array $data
+     *
+     * @return string
+     */
+    protected function encode(array $data)
+    {
+        $content = json_encode($data, JSON_NUMERIC_CHECK|JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
+        return str_replace(['": ', '    '], ['" : ', "\t"], $content).PHP_EOL;
     }
 }

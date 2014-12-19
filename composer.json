@@ -4,15 +4,19 @@
 	"type" : "project",
 	"description" : "The application for making home collection anime",
 	"homepage" : "http://anime-db.org",
-	"authors" : [{
+	"version" : "0.3.15",
+	"authors" : [
+		{
 			"name" : "Anime DB",
 			"homepage" : "http://anime-db.org"
-		}, {
+		},
+		{
 			"name" : "Peter Gribanov",
 			"email" : "info@peter-gribanov.ru",
 			"homepage" : "http://peter-gribanov.ru",
 			"role" : "Developer"
-		}, {
+		},
+		{
 			"name" : "Anime DB Community",
 			"homepage" : "https://github.com/anime-db/anime-db/graphs/contributors"
 		}
@@ -32,7 +36,7 @@
 		"ext-zlib" : "*",
 		"ext-json" : "*",
 		"ext-fileinfo" : "*",
-		"symfony/symfony" : "2.5.*",
+		"symfony/symfony" : ">=2.5.0,<2.5.x-dev",
 		"doctrine/orm" : ">=2.2.3,<2.4-dev",
 		"doctrine/doctrine-bundle" : "1.2.*",
 		"twig/extensions" : "1.0.*",
@@ -49,18 +53,8 @@
 		"composer/composer" : "1.0.*",
 		"guzzle/guzzle" : ">=3.7.0",
 		"avalanche123/imagine-bundle" : "2.*",
-		"anime-db/catalog-bundle" : "dev-develop",
+		"anime-db/catalog-bundle" : ">=0.4.7",
 		"anime-db/shmop" : "1.0.*"
-	},
-	"require-dev" : {
-		"anime-db/catalog-bundle" : "dev-develop",
-		"anime-db/item-folder-filler-bundle" : "dev-develop",
-		"anime-db/world-art-filler-bundle" : "dev-develop",
-		"anime-db/shikimori-filler-bundle" : "dev-develop",
-		"anime-db/shikimori-new-items-widget-bundle" : "dev-develop",
-		"anime-db/shikimori-related-items-widget-bundle" : "dev-develop",
-		"anime-db/shikimori-similar-items-widget-bundle" : "dev-develop",
-		"anime-db/ani-db-filler-bundle" : "dev-develop"
 	},
 	"suggest" : {
 		"ext-apc" : "Allows use APC for autoloading to improve performance",

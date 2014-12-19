@@ -16,7 +16,11 @@ framework:
     templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
     default_locale:  "en"
     trusted_proxies: ~
-    session:         ~
+    session:
+        cookie_lifetime: 0
+        save_path: "%kernel.root_dir%/var/sessions"
+        cookie_domain: ""
+        name: SFADBSID
     fragments: { path: /_fragment }
 
 # Twig Configuration
@@ -70,7 +74,7 @@ doctrine:
 
 # Avalanche Configuration
 avalanche_imagine:
-    source_root:  %kernel.root_dir%/../web
-    web_root:     %kernel.root_dir%/../web
+    source_root:  "%kernel.root_dir%/../web"
+    web_root:     "%kernel.root_dir%/../web"
     cache_prefix: media/suit
     driver:       gd

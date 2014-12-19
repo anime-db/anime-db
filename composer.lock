@@ -4,20 +4,20 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5ad58aef4a10122554c0ef985b95ecc4",
+    "hash": "3977044cf88739b2ab07bcd636efa391",
     "packages": [
         {
             "name": "anime-db/api-client-bundle",
-            "version": "0.1.1",
+            "version": "0.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/anime-db/api-client-bundle.git",
-                "reference": "c823a76d68dc3beedc4e9062899bff7d6bea89a6"
+                "reference": "92bd5fa77081acc6ecf3777ba8f64676beba5f17"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/api-client-bundle/zipball/c823a76d68dc3beedc4e9062899bff7d6bea89a6",
-                "reference": "c823a76d68dc3beedc4e9062899bff7d6bea89a6",
+                "url": "https://api.github.com/repos/anime-db/api-client-bundle/zipball/92bd5fa77081acc6ecf3777ba8f64676beba5f17",
+                "reference": "92bd5fa77081acc6ecf3777ba8f64676beba5f17",
                 "shasum": ""
             },
             "require": {
@@ -51,24 +51,24 @@
             ],
             "description": "API client bundle for Anime DB",
             "homepage": "http://anime-db.org",
-            "time": "2014-09-08 13:31:29"
+            "time": "2014-12-11 07:42:07"
         },
         {
             "name": "anime-db/app-bundle",
-            "version": "dev-develop",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/anime-db/app-bundle.git",
-                "reference": "1481a2af1f6caf6e20da29bb6d614e0e8a25cca0"
+                "reference": "b04d1fbcafc193e213dc8f9423365a383cadd941"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/app-bundle/zipball/1481a2af1f6caf6e20da29bb6d614e0e8a25cca0",
-                "reference": "1481a2af1f6caf6e20da29bb6d614e0e8a25cca0",
+                "url": "https://api.github.com/repos/anime-db/app-bundle/zipball/b04d1fbcafc193e213dc8f9423365a383cadd941",
+                "reference": "b04d1fbcafc193e213dc8f9423365a383cadd941",
                 "shasum": ""
             },
             "require": {
-                "anime-db/anime-db": "dev-develop",
+                "anime-db/anime-db": ">=0.3.15",
                 "anime-db/api-client-bundle": "0.1.*",
                 "anime-db/cache-time-keeper-bundle": "1.0.*",
                 "patchwork/utf8": "1.2.*",
@@ -103,20 +103,20 @@
             ],
             "description": "The application for making home collection anime",
             "homepage": "http://anime-db.org",
-            "time": "2014-10-14 12:13:56"
+            "time": "2014-12-16 16:03:20"
         },
         {
             "name": "anime-db/cache-time-keeper-bundle",
-            "version": "1.0.4",
+            "version": "1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/anime-db/cache-time-keeper-bundle.git",
-                "reference": "5496845b7f0e6398bfe166f88e1596b4f4df947f"
+                "reference": "8474c54a9c2c7f081d62a699dff2782c350d3efa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/cache-time-keeper-bundle/zipball/5496845b7f0e6398bfe166f88e1596b4f4df947f",
-                "reference": "5496845b7f0e6398bfe166f88e1596b4f4df947f",
+                "url": "https://api.github.com/repos/anime-db/cache-time-keeper-bundle/zipball/8474c54a9c2c7f081d62a699dff2782c350d3efa",
+                "reference": "8474c54a9c2c7f081d62a699dff2782c350d3efa",
                 "shasum": ""
             },
             "require": {
@@ -150,29 +150,30 @@
                 "php",
                 "shmop"
             ],
-            "time": "2014-10-13 09:46:00"
+            "time": "2014-12-13 11:01:45"
         },
         {
             "name": "anime-db/catalog-bundle",
-            "version": "dev-develop",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/anime-db/catalog-bundle.git",
-                "reference": "9cf1264452f751985000e8eb4dccd7fe24e3c85d"
+                "reference": "1c84d3c93bdd0534d454226de4ed1b1590351752"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/catalog-bundle/zipball/9cf1264452f751985000e8eb4dccd7fe24e3c85d",
-                "reference": "9cf1264452f751985000e8eb4dccd7fe24e3c85d",
+                "url": "https://api.github.com/repos/anime-db/catalog-bundle/zipball/1c84d3c93bdd0534d454226de4ed1b1590351752",
+                "reference": "1c84d3c93bdd0534d454226de4ed1b1590351752",
                 "shasum": ""
             },
             "require": {
-                "anime-db/app-bundle": "dev-develop",
+                "anime-db/app-bundle": ">=0.4.0",
                 "ext-mbstring": "*",
                 "knplabs/knp-menu-bundle": "1.1.*",
                 "php": ">=5.4.0"
             },
             "suggest": {
+                "anime-db/ani-db-filler-bundle": "Allows import data from a site AniDB.net",
                 "anime-db/shikimori-filler-bundle": "Allows import data from a site Shikimori.org",
                 "anime-db/world-art-filler-bundle": "Allows import data from a site World-Art.ru"
             },
@@ -202,20 +203,20 @@
             ],
             "description": "The application for making home collection anime",
             "homepage": "http://anime-db.org",
-            "time": "2014-10-30 15:29:35"
+            "time": "2014-12-17 08:04:18"
         },
         {
             "name": "anime-db/shmop",
-            "version": "1.0.2",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/anime-db/shmop.git",
-                "reference": "44a41b80605b6b66c72086a8bd8c40d638a6cfa5"
+                "reference": "175c8cec3a2ae4225e3c017f2df0a5a7ac7778bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/shmop/zipball/44a41b80605b6b66c72086a8bd8c40d638a6cfa5",
-                "reference": "44a41b80605b6b66c72086a8bd8c40d638a6cfa5",
+                "url": "https://api.github.com/repos/anime-db/shmop/zipball/175c8cec3a2ae4225e3c017f2df0a5a7ac7778bf",
+                "reference": "175c8cec3a2ae4225e3c017f2df0a5a7ac7778bf",
                 "shasum": ""
             },
             "require": {
@@ -234,16 +235,8 @@
             ],
             "authors": [
                 {
-                    "name": "Anime DB",
-                    "homepage": "http://anime-db.org"
-                },
-                {
                     "name": "Peter Gribanov",
                     "email": "info@peter-gribanov.ru"
-                },
-                {
-                    "name": "Anime DB Community",
-                    "homepage": "https://github.com/anime-db/shmop/graphs/contributors"
                 }
             ],
             "description": "Shmop is a simple and small abstraction layer for shared memory manipulation using PHP",
@@ -252,7 +245,7 @@
                 "php",
                 "shmop"
             ],
-            "time": "2014-08-11 11:44:00"
+            "time": "2014-12-16 10:27:26"
         },
         {
             "name": "avalanche123/imagine-bundle",
@@ -350,24 +343,24 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "ffffab37a294f3383c812d0329623f0a4ba45387"
+                "reference": "c54d6f93e3c5838092363447498ecb366e1e60a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/ffffab37a294f3383c812d0329623f0a4ba45387",
-                "reference": "ffffab37a294f3383c812d0329623f0a4ba45387",
+                "url": "https://api.github.com/repos/composer/composer/zipball/c54d6f93e3c5838092363447498ecb366e1e60a2",
+                "reference": "c54d6f93e3c5838092363447498ecb366e1e60a2",
                 "shasum": ""
             },
             "require": {
                 "justinrainbow/json-schema": "~1.1",
                 "php": ">=5.3.2",
-                "seld/jsonlint": "1.*",
+                "seld/jsonlint": "~1.0",
                 "symfony/console": "~2.3",
                 "symfony/finder": "~2.2",
                 "symfony/process": "~2.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "~3.7"
+                "phpunit/phpunit": "~4.0"
             },
             "suggest": {
                 "ext-openssl": "Enabling the openssl extension allows you to access https URLs for repositories and packages",
@@ -410,7 +403,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2014-11-05 06:04:18"
+            "time": "2014-12-16 14:28:51"
         },
         {
             "name": "doctrine/annotations",
@@ -486,12 +479,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/cache.git",
-                "reference": "912e8a11ce3c75a630b225dd82aed83e00943ed5"
+                "reference": "803a41469d948bc120a6c913399e8bfc8b5d9650"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/912e8a11ce3c75a630b225dd82aed83e00943ed5",
-                "reference": "912e8a11ce3c75a630b225dd82aed83e00943ed5",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/803a41469d948bc120a6c913399e8bfc8b5d9650",
+                "reference": "803a41469d948bc120a6c913399e8bfc8b5d9650",
                 "shasum": ""
             },
             "require": {
@@ -502,6 +495,7 @@
             },
             "require-dev": {
                 "phpunit/phpunit": ">=3.7",
+                "predis/predis": "~0.8",
                 "satooshi/php-coveralls": "~0.6"
             },
             "type": "library",
@@ -547,7 +541,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2014-10-20 19:28:25"
+            "time": "2014-12-08 23:13:26"
         },
         {
             "name": "doctrine/collections",
@@ -1217,12 +1211,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle3.git",
-                "reference": "5e6fb7097efac7180bd75006079144025255eb63"
+                "reference": "eaadef477c9f7fdece3120cd68c38143c0cd4db4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/5e6fb7097efac7180bd75006079144025255eb63",
-                "reference": "5e6fb7097efac7180bd75006079144025255eb63",
+                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/eaadef477c9f7fdece3120cd68c38143c0cd4db4",
+                "reference": "eaadef477c9f7fdece3120cd68c38143c0cd4db4",
                 "shasum": ""
             },
             "require": {
@@ -1301,7 +1295,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2014-10-29 23:08:23"
+            "time": "2014-12-11 05:46:03"
         },
         {
             "name": "imagine/imagine",
@@ -1569,7 +1563,7 @@
                     "email": "stof@notk.org"
                 },
                 {
-                    "name": "KnpLabs",
+                    "name": "Knplabs",
                     "homepage": "http://knplabs.com"
                 },
                 {
@@ -1620,7 +1614,7 @@
                     "email": "stof@notk.org"
                 },
                 {
-                    "name": "KnpLabs",
+                    "name": "Knplabs",
                     "homepage": "http://knplabs.com"
                 },
                 {
@@ -1640,12 +1634,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kriswallsmith/assetic.git",
-                "reference": "ddaccff1bd80bd8721a56e0d36bb141363bf3605"
+                "reference": "02105abcd35fb32933bc566e4c3bec84c612e9c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/ddaccff1bd80bd8721a56e0d36bb141363bf3605",
-                "reference": "ddaccff1bd80bd8721a56e0d36bb141363bf3605",
+                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/02105abcd35fb32933bc566e4c3bec84c612e9c1",
+                "reference": "02105abcd35fb32933bc566e4c3bec84c612e9c1",
                 "shasum": ""
             },
             "require": {
@@ -1703,7 +1697,7 @@
                 "compression",
                 "minification"
             ],
-            "time": "2014-04-26 15:49:46"
+            "time": "2014-12-12 05:37:00"
         },
         {
             "name": "monolog/monolog",
@@ -1711,12 +1705,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "53c6cf358bf50a3d31a003639245dac1d4de694b"
+                "reference": "ebd0f73fbe23d5da142437fc439f491f575163ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/53c6cf358bf50a3d31a003639245dac1d4de694b",
-                "reference": "53c6cf358bf50a3d31a003639245dac1d4de694b",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/ebd0f73fbe23d5da142437fc439f491f575163ab",
+                "reference": "ebd0f73fbe23d5da142437fc439f491f575163ab",
                 "shasum": ""
             },
             "require": {
@@ -1775,7 +1769,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2014-10-29 06:32:01"
+            "time": "2014-12-16 12:52:39"
         },
         {
             "name": "patchwork/utf8",
@@ -1783,12 +1777,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/tchwork/utf8.git",
-                "reference": "bd7384ddf6ac69e412803519dc6bcd2be6a53f3a"
+                "reference": "3024ee72d0ce7fc4bf87421f2954f956d3ad2ee5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tchwork/utf8/zipball/bd7384ddf6ac69e412803519dc6bcd2be6a53f3a",
-                "reference": "bd7384ddf6ac69e412803519dc6bcd2be6a53f3a",
+                "url": "https://api.github.com/repos/tchwork/utf8/zipball/3024ee72d0ce7fc4bf87421f2954f956d3ad2ee5",
+                "reference": "3024ee72d0ce7fc4bf87421f2954f956d3ad2ee5",
                 "shasum": ""
             },
             "require": {
@@ -1831,7 +1825,7 @@
                 "utf-8",
                 "utf8"
             ],
-            "time": "2014-11-08 10:14:15"
+            "time": "2014-11-10 16:16:54"
         },
         {
             "name": "psr/log",
@@ -1929,12 +1923,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "715fcb65f9a4841ffaf40c0bf050329d74c84cad"
+                "reference": "ddcfeaeb504ece5de546dbefd5c527eed7453048"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/715fcb65f9a4841ffaf40c0bf050329d74c84cad",
-                "reference": "715fcb65f9a4841ffaf40c0bf050329d74c84cad",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/ddcfeaeb504ece5de546dbefd5c527eed7453048",
+                "reference": "ddcfeaeb504ece5de546dbefd5c527eed7453048",
                 "shasum": ""
             },
             "require": {
@@ -1966,7 +1960,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2014-09-03 12:25:05"
+            "time": "2014-12-03 13:50:45"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -2073,12 +2067,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "d0f361d88e5de851bbb8c542d3b6aa46d61a9ffc"
+                "reference": "e29c7b692bae6610b137670d6749151fd6e41608"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/d0f361d88e5de851bbb8c542d3b6aa46d61a9ffc",
-                "reference": "d0f361d88e5de851bbb8c542d3b6aa46d61a9ffc",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/e29c7b692bae6610b137670d6749151fd6e41608",
+                "reference": "e29c7b692bae6610b137670d6749151fd6e41608",
                 "shasum": ""
             },
             "require": {
@@ -2117,7 +2111,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2014-10-30 13:41:35"
+            "time": "2014-12-05 14:17:46"
         },
         {
             "name": "symfony/assetic-bundle",
@@ -2248,12 +2242,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/SwiftmailerBundle.git",
-                "reference": "0479e02dccbdcff3b2a84078f005d7fc4879925f"
+                "reference": "970b13d01871207e81d17b17ddda025e7e21e797"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/SwiftmailerBundle/zipball/0479e02dccbdcff3b2a84078f005d7fc4879925f",
-                "reference": "0479e02dccbdcff3b2a84078f005d7fc4879925f",
+                "url": "https://api.github.com/repos/symfony/SwiftmailerBundle/zipball/970b13d01871207e81d17b17ddda025e7e21e797",
+                "reference": "970b13d01871207e81d17b17ddda025e7e21e797",
                 "shasum": ""
             },
             "require": {
@@ -2297,20 +2291,20 @@
             ],
             "description": "Symfony SwiftmailerBundle",
             "homepage": "http://symfony.com",
-            "time": "2014-10-04 11:27:34"
+            "time": "2014-12-01 17:44:50"
         },
         {
             "name": "symfony/symfony",
-            "version": "2.5.x-dev",
+            "version": "v2.5.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "85b016f37b16c60f54eab26786e264ae78d614e3"
+                "reference": "00da57005c9c76773670f4d958dd95e9f4ae72f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/85b016f37b16c60f54eab26786e264ae78d614e3",
-                "reference": "85b016f37b16c60f54eab26786e264ae78d614e3",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/00da57005c9c76773670f4d958dd95e9f4ae72f6",
+                "reference": "00da57005c9c76773670f4d958dd95e9f4ae72f6",
                 "shasum": ""
             },
             "require": {
@@ -2368,10 +2362,10 @@
                 "doctrine/dbal": "~2.2",
                 "doctrine/orm": "~2.2,>=2.2.3",
                 "egulias/email-validator": "~1.2",
-                "ircmaxell/password-compat": "1.0.*",
+                "ircmaxell/password-compat": "~1.0",
                 "monolog/monolog": "~1.3",
                 "ocramius/proxy-manager": ">=0.3.1,<0.6-dev",
-                "propel/propel1": "1.6.*"
+                "propel/propel1": "~1.6"
             },
             "type": "library",
             "extra": {
@@ -2410,19 +2404,19 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-11-09 07:53:45"
+            "time": "2014-12-03 14:18:17"
         },
         {
             "name": "twig/extensions",
             "version": "v1.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/fabpot/Twig-extensions.git",
+                "url": "https://github.com/twigphp/Twig-extensions.git",
                 "reference": "f91a82ec225e5bb108e01a0f93c9be04f84dcfa0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig-extensions/zipball/f91a82ec225e5bb108e01a0f93c9be04f84dcfa0",
+                "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/f91a82ec225e5bb108e01a0f93c9be04f84dcfa0",
                 "reference": "f91a82ec225e5bb108e01a0f93c9be04f84dcfa0",
                 "shasum": ""
             },
@@ -2447,9 +2441,7 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
+                    "email": "fabien@symfony.com"
                 }
             ],
             "description": "Common additional features for Twig that do not directly belong in core",
@@ -2467,12 +2459,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "f8b6e918a7d8e073efe14cbed7ae02df40ef19ed"
+                "reference": "a1b847b3a3c835a495329b0ada8f3ec68a90fc9d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/f8b6e918a7d8e073efe14cbed7ae02df40ef19ed",
-                "reference": "f8b6e918a7d8e073efe14cbed7ae02df40ef19ed",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/a1b847b3a3c835a495329b0ada8f3ec68a90fc9d",
+                "reference": "a1b847b3a3c835a495329b0ada8f3ec68a90fc9d",
                 "shasum": ""
             },
             "require": {
@@ -2516,384 +2508,17 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-10-23 15:29:03"
+            "time": "2014-12-05 13:47:49"
         }
     ],
-    "packages-dev": [
-        {
-            "name": "anime-db/ani-db-browser-bundle",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/anime-db/ani-db-browser-bundle.git",
-                "reference": "43a45e35fe88e9f287eeac29658c676a160f8b61"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/ani-db-browser-bundle/zipball/43a45e35fe88e9f287eeac29658c676a160f8b61",
-                "reference": "43a45e35fe88e9f287eeac29658c676a160f8b61",
-                "shasum": ""
-            },
-            "require": {
-                "ext-zlib": "*",
-                "guzzle/guzzle": ">=3.7.0",
-                "php": ">=5.4.0",
-                "symfony/dom-crawler": ">=2.3.17"
-            },
-            "require-dev": {
-                "symfony/config": ">=2.3.17",
-                "symfony/dependency-injection": ">=2.3.17",
-                "symfony/http-kernel": ">=2.3.17"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "AnimeDb\\Bundle\\AniDbBrowserBundle\\": "src/",
-                    "AnimeDb\\Bundle\\AniDbBrowserBundle\\Tests\\": "tests/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-3.0"
-            ],
-            "description": "Plugin AniDB for the catalog Anime DB",
-            "homepage": "http://github.com/anime-db/ani-db-browser-bundle",
-            "time": "2014-08-12 09:03:35"
-        },
-        {
-            "name": "anime-db/ani-db-filler-bundle",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/anime-db/ani-db-filler-bundle.git",
-                "reference": "3457f4b9e832ef9c8c4ec83f60c247a21a2bce5e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/ani-db-filler-bundle/zipball/3457f4b9e832ef9c8c4ec83f60c247a21a2bce5e",
-                "reference": "3457f4b9e832ef9c8c4ec83f60c247a21a2bce5e",
-                "shasum": ""
-            },
-            "require": {
-                "anime-db/ani-db-browser-bundle": ">=1.0.0",
-                "anime-db/catalog-bundle": "dev-develop",
-                "php": ">=5.4.0"
-            },
-            "type": "anime-db-plugin",
-            "autoload": {
-                "psr-4": {
-                    "AnimeDb\\Bundle\\AniDbFillerBundle\\": "src/",
-                    "AnimeDb\\Bundle\\AniDbBrowserBundle\\Tests\\": "tests/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-3.0"
-            ],
-            "description": "Plugin AniDB for the catalog Anime DB",
-            "homepage": "http://github.com/anime-db/ani-db-filler-bundle",
-            "time": "2014-10-09 09:49:28"
-        },
-        {
-            "name": "anime-db/item-folder-filler-bundle",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/anime-db/item-folder-filler-bundle.git",
-                "reference": "ffbdab231fcfcf79f33555096aba6a80729ab0a2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/item-folder-filler-bundle/zipball/ffbdab231fcfcf79f33555096aba6a80729ab0a2",
-                "reference": "ffbdab231fcfcf79f33555096aba6a80729ab0a2",
-                "shasum": ""
-            },
-            "require": {
-                "anime-db/catalog-bundle": "dev-develop",
-                "php": ">=5.4.0"
-            },
-            "type": "anime-db-plugin",
-            "autoload": {
-                "psr-0": {
-                    "AnimeDb\\Bundle\\ItemFolderFillerBundle": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-3.0"
-            ],
-            "description": "Plugin adds information about the item in its folder",
-            "homepage": "http://github.com/anime-db/item-folder-filler-bundle",
-            "time": "2014-10-09 09:55:39"
-        },
-        {
-            "name": "anime-db/shikimori-browser-bundle",
-            "version": "0.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/anime-db/shikimori-browser-bundle.git",
-                "reference": "aae6a8182461201daa4c0d8dd6c32a936518a576"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/shikimori-browser-bundle/zipball/aae6a8182461201daa4c0d8dd6c32a936518a576",
-                "reference": "aae6a8182461201daa4c0d8dd6c32a936518a576",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "AnimeDb\\Bundle\\ShikimoriBrowserBundle": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-3.0"
-            ],
-            "description": "Plugin Shikimori for the catalog Anime DB",
-            "homepage": "http://github.com/anime-db/shikimori-browser-bundle",
-            "time": "2014-04-04 12:28:38"
-        },
-        {
-            "name": "anime-db/shikimori-filler-bundle",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/anime-db/shikimori-filler-bundle.git",
-                "reference": "48b92d9c265a7463dba54160d38e45d44660acc0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/shikimori-filler-bundle/zipball/48b92d9c265a7463dba54160d38e45d44660acc0",
-                "reference": "48b92d9c265a7463dba54160d38e45d44660acc0",
-                "shasum": ""
-            },
-            "require": {
-                "anime-db/catalog-bundle": "dev-develop",
-                "anime-db/shikimori-browser-bundle": "0.1.*",
-                "php": ">=5.4.0"
-            },
-            "type": "anime-db-plugin",
-            "autoload": {
-                "psr-4": {
-                    "AnimeDb\\Bundle\\ShikimoriFillerBundle\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-3.0"
-            ],
-            "description": "Plugin Shikimori for the catalog Anime DB",
-            "homepage": "http://github.com/anime-db/shikimori-filler-bundle",
-            "time": "2014-10-09 09:48:29"
-        },
-        {
-            "name": "anime-db/shikimori-new-items-widget-bundle",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/anime-db/shikimori-new-items-widget-bundle.git",
-                "reference": "a3c78b9e816bc4e95d3e13a19c3121cdb48d83e7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/shikimori-new-items-widget-bundle/zipball/a3c78b9e816bc4e95d3e13a19c3121cdb48d83e7",
-                "reference": "a3c78b9e816bc4e95d3e13a19c3121cdb48d83e7",
-                "shasum": ""
-            },
-            "require": {
-                "anime-db/catalog-bundle": "dev-develop",
-                "anime-db/shikimori-widget-bundle": "dev-develop",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "anime-db/shikimori-filler-bundle": "0.1.*"
-            },
-            "suggest": {
-                "anime-db/shikimori-filler-bundle": "Allows to add links to the filling items"
-            },
-            "type": "anime-db-plugin",
-            "autoload": {
-                "psr-4": {
-                    "AnimeDb\\Bundle\\ShikimoriNewItemsWidgetBundle\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-3.0"
-            ],
-            "description": "Plugin Shikimori for the catalog Anime DB",
-            "homepage": "http://github.com/anime-db/shikimori-new-items-widget-bundle",
-            "time": "2014-10-09 11:18:20"
-        },
-        {
-            "name": "anime-db/shikimori-related-items-widget-bundle",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/anime-db/shikimori-related-items-widget-bundle.git",
-                "reference": "99fb42c387fdcfa7f62c249451782d491bc4b911"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/shikimori-related-items-widget-bundle/zipball/99fb42c387fdcfa7f62c249451782d491bc4b911",
-                "reference": "99fb42c387fdcfa7f62c249451782d491bc4b911",
-                "shasum": ""
-            },
-            "require": {
-                "anime-db/catalog-bundle": "dev-develop",
-                "anime-db/shikimori-widget-bundle": "dev-develop",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "anime-db/shikimori-filler-bundle": "0.1.*"
-            },
-            "suggest": {
-                "anime-db/shikimori-filler-bundle": "Allows to add links to the filling items"
-            },
-            "type": "anime-db-plugin",
-            "autoload": {
-                "psr-4": {
-                    "AnimeDb\\Bundle\\ShikimoriRelatedItemsWidgetBundle\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-3.0"
-            ],
-            "description": "Plugin Shikimori for the catalog Anime DB",
-            "homepage": "http://github.com/anime-db/shikimori-related-items-widget-bundle",
-            "time": "2014-10-09 11:19:44"
-        },
-        {
-            "name": "anime-db/shikimori-similar-items-widget-bundle",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/anime-db/shikimori-similar-items-widget-bundle.git",
-                "reference": "5f2e18196a375b86e50f3b20830e27d1d176282e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/shikimori-similar-items-widget-bundle/zipball/5f2e18196a375b86e50f3b20830e27d1d176282e",
-                "reference": "5f2e18196a375b86e50f3b20830e27d1d176282e",
-                "shasum": ""
-            },
-            "require": {
-                "anime-db/catalog-bundle": "dev-develop",
-                "anime-db/shikimori-widget-bundle": "dev-develop",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "anime-db/shikimori-filler-bundle": "0.1.*"
-            },
-            "suggest": {
-                "anime-db/shikimori-filler-bundle": "Allows to add links to the filling items"
-            },
-            "type": "anime-db-plugin",
-            "autoload": {
-                "psr-4": {
-                    "AnimeDb\\Bundle\\ShikimoriSimilarItemsWidgetBundle\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-3.0"
-            ],
-            "description": "Plugin Shikimori for the catalog Anime DB",
-            "homepage": "http://github.com/anime-db/shikimori-similar-items-widget-bundle",
-            "time": "2014-10-09 11:18:52"
-        },
-        {
-            "name": "anime-db/shikimori-widget-bundle",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/anime-db/shikimori-widget-bundle.git",
-                "reference": "31fca491bec583369bd0996c6a5b9a53ca7051e6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/shikimori-widget-bundle/zipball/31fca491bec583369bd0996c6a5b9a53ca7051e6",
-                "reference": "31fca491bec583369bd0996c6a5b9a53ca7051e6",
-                "shasum": ""
-            },
-            "require": {
-                "anime-db/catalog-bundle": "dev-develop",
-                "anime-db/shikimori-browser-bundle": "0.1.*",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "anime-db/shikimori-filler-bundle": "dev-develop"
-            },
-            "suggest": {
-                "anime-db/shikimori-filler-bundle": "Allows to add links to the filling items"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "AnimeDb\\Bundle\\ShikimoriWidgetBundle\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-3.0"
-            ],
-            "description": "Plugin AniDB for the catalog Anime DB",
-            "homepage": "http://github.com/anime-db/shikimori-widget-bundle",
-            "time": "2014-10-10 11:48:02"
-        },
-        {
-            "name": "anime-db/world-art-filler-bundle",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/anime-db/world-art-filler-bundle.git",
-                "reference": "d2378f58f3d665d2087be912e31eb68ccfca94ac"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/world-art-filler-bundle/zipball/d2378f58f3d665d2087be912e31eb68ccfca94ac",
-                "reference": "d2378f58f3d665d2087be912e31eb68ccfca94ac",
-                "shasum": ""
-            },
-            "require": {
-                "anime-db/catalog-bundle": "dev-develop",
-                "ext-tidy": "*",
-                "php": ">=5.4.0"
-            },
-            "type": "anime-db-plugin",
-            "autoload": {
-                "psr-4": {
-                    "AnimeDb\\Bundle\\WorldArtFillerBundle\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-3.0"
-            ],
-            "description": "Plugin World-Art for the catalog Anime DB",
-            "homepage": "http://github.com/anime-db/world-art-filler-bundle",
-            "time": "2014-10-09 09:50:59"
-        }
-    ],
+    "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "doctrine/migrations": 20,
-        "anime-db/catalog-bundle": 20,
-        "anime-db/item-folder-filler-bundle": 20,
-        "anime-db/world-art-filler-bundle": 20,
-        "anime-db/shikimori-filler-bundle": 20,
-        "anime-db/shikimori-new-items-widget-bundle": 20,
-        "anime-db/shikimori-related-items-widget-bundle": 20,
-        "anime-db/shikimori-similar-items-widget-bundle": 20,
-        "anime-db/ani-db-filler-bundle": 20
+        "doctrine/migrations": 20
     },
     "prefer-stable": false,
+    "prefer-lowest": false,
     "platform": {
         "php": ">=5.4.0",
         "ext-pdo_sqlite": "*",
