@@ -4,6 +4,7 @@
 	"type" : "project",
 	"description" : "The application for making home collection anime",
 	"homepage" : "http://anime-db.org",
+	"version" : "0.3.15",
 	"authors" : [
 		{
 			"name" : "Anime DB",
