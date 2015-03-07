@@ -18,7 +18,6 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Manipulator;
  */
 class FileContentTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * Test empty file
      *
