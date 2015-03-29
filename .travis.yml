@@ -5,13 +5,21 @@ php:
     - 5.5
     - 5.6
 
+os:
+    - linux
+    - osx
+
+matrix:
+    allow_failures:
+      - os: osx
+
 notifications:
     email: dev@anime-db.org
 
-before_script:
+install:
     - composer self-update
     - composer --version
-    - composer install --dev --prefer-dist
+    - composer install --prefer-dist
 
 script:
     - phpunit -c app/ --verbose --coverage-clover=coverage.clover
