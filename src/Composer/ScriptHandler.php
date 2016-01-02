@@ -10,8 +10,8 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer;
 
-use Composer\Script\PackageEvent;
-use Composer\Script\CommandEvent;
+use Composer\Installer\PackageEvent;
+use Composer\Script\Event;
 use Composer\IO\IOInterface;
 use Composer\DependencyResolver\Operation\OperationInterface;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
@@ -102,7 +102,7 @@ class ScriptHandler
     /**
      * Add or remove package in kernel
      *
-     * @param \Composer\Script\PackageEvent $event
+     * @param \Composer\Installer\PackageEvent $event
      */
     public static function packageInKernel(PackageEvent $event)
     {
@@ -120,7 +120,7 @@ class ScriptHandler
     /**
      * Add or remove packages in routing
      *
-     * @param \Composer\Script\PackageEvent $event
+     * @param \Composer\Installer\PackageEvent $event
      */
     public static function packageInRouting(PackageEvent $event)
     {
@@ -138,7 +138,7 @@ class ScriptHandler
     /**
      * Add or remove packages in config
      *
-     * @param \Composer\Script\PackageEvent $event
+     * @param \Composer\Installer\PackageEvent $event
      */
     public static function packageInConfig(PackageEvent $event)
     {
@@ -156,7 +156,7 @@ class ScriptHandler
     /**
      * Migrate packages
      *
-     * @param \Composer\Script\PackageEvent $event
+     * @param \Composer\Installer\PackageEvent $event
      */
     public static function migratePackage(PackageEvent $event)
     {
@@ -174,7 +174,7 @@ class ScriptHandler
     /**
      * Notify listeners that the package has been installed/updated/removed
      *
-     * @param \Composer\Script\PackageEvent $event
+     * @param \Composer\Installer\PackageEvent $event
      */
     public static function notifyPackage(PackageEvent $event)
     {
@@ -223,9 +223,9 @@ class ScriptHandler
     /**
      * Notify listeners that the project has been installed
      *
-     * @param \Composer\Script\CommandEvent $event
+     * @param \Composer\Script\Event $event
      */
-    public static function notifyProjectInstall(CommandEvent $event)
+    public static function notifyProjectInstall(Event $event)
     {
         self::getContainer()->addJob(new InstalledProjectNotify($event->getComposer()->getPackage()));
     }
@@ -233,9 +233,9 @@ class ScriptHandler
     /**
      * Notify listeners that the project has been updated
      *
-     * @param \Composer\Script\CommandEvent $event
+     * @param \Composer\Script\Event $event
      */
-    public static function notifyProjectUpdate(CommandEvent $event)
+    public static function notifyProjectUpdate(Event $event)
     {
         self::getContainer()->addJob(new UpdatedProjectNotify($event->getComposer()->getPackage()));
     }
@@ -267,9 +267,9 @@ class ScriptHandler
     /**
      * Deliver deferred events
      *
-     * @param \Composer\Script\CommandEvent $event
+     * @param \Composer\Script\Event $event
      */
-    public static function deliverEvents(CommandEvent $event)
+    public static function deliverEvents(Event $event)
     {
         self::executeCommand('animedb:deliver-events', $event->getIO());
     }
@@ -277,9 +277,9 @@ class ScriptHandler
     /**
      * Migrate all plugins to up
      *
-     * @param \Composer\Script\CommandEvent $event
+     * @param \Composer\Script\Event $event
      */
-    public static function migrateUp(CommandEvent $event)
+    public static function migrateUp(Event $event)
     {
         $dir = self::getRootDir().'DoctrineMigrations';
         if (self::isHaveMigrations($dir)) {
@@ -291,9 +291,9 @@ class ScriptHandler
     /**
      * Migrate all plugins to down
      *
-     * @param \Composer\Script\CommandEvent $event
+     * @param \Composer\Script\Event $event
      */
-    public static function migrateDown(CommandEvent $event)
+    public static function migrateDown(Event $event)
     {
         $dir = self::getRootDir().'cache/dev/DoctrineMigrations/';
         if (self::isHaveMigrations($dir)) {
@@ -369,9 +369,9 @@ class ScriptHandler
     /**
      * Dumps all assets to the filesystem
      *
-     * @param \Composer\Script\CommandEvent $event
+     * @param \Composer\Script\Event $event
      */
-    public static function dumpAssets(CommandEvent $event)
+    public static function dumpAssets(Event $event)
     {
         self::executeCommand('assetic:dump --env=prod --no-debug --force web', $event->getIO());
     }
@@ -379,9 +379,9 @@ class ScriptHandler
     /**
      * Clears the Symfony cache
      *
-     * @param \Composer\Script\CommandEvent $event
+     * @param \Composer\Script\Event $event
      */
-    public static function clearCache(CommandEvent $event)
+    public static function clearCache(Event $event)
     {
         // to avoid errors due to the encrypted container forcibly clean the cache directory
         $dir = self::getRootDir().'cache/prod';

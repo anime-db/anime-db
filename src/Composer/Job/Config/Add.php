@@ -38,6 +38,8 @@ class Add extends AddConfig
      */
     protected function doAddConfig($bundle, $extension, $path)
     {
-        $this->getContainer()->getManipulator('config')->addResource($bundle, $extension, $path);
+        /* @var $manipulator \AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config */
+        $manipulator = $this->getContainer()->getManipulator('config');
+        $manipulator->addResource($bundle, $extension, $path);
     }
 }

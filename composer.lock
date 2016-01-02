@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ecded6fb15d4e69c1f54e80a1e3d2ed3",
-    "content-hash": "c1589dce640dc168d1fd71d9861c008d",
+    "hash": "79b39404d8c3db60e33574a7aa17159a",
+    "content-hash": "2e6064d13bfd6828e5782976b1478489",
     "packages": [
         {
             "name": "anime-db/ani-db-browser-bundle",
@@ -362,6 +362,48 @@
             "description": "Plugin Shikimori for the catalog Anime DB",
             "homepage": "http://github.com/anime-db/shikimori-filler-bundle",
             "time": "2015-03-29 14:14:39"
+        },
+        {
+            "name": "anime-db/shmop",
+            "version": "v1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/anime-db/shmop.git",
+                "reference": "a4702435182317327c75801da9bd1a97b86bd16f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/anime-db/shmop/zipball/a4702435182317327c75801da9bd1a97b86bd16f",
+                "reference": "a4702435182317327c75801da9bd1a97b86bd16f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-shmop": "*",
+                "php": ">=5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "AnimeDb\\Shmop\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Peter Gribanov",
+                    "email": "info@peter-gribanov.ru"
+                }
+            ],
+            "description": "Shmop is a simple and small abstraction layer for shared memory manipulation using PHP",
+            "homepage": "http://github.com/anime-db/shmop",
+            "keywords": [
+                "php",
+                "shmop"
+            ],
+            "time": "2015-01-16 10:38:08"
         },
         {
             "name": "anime-db/world-art-filler-bundle",

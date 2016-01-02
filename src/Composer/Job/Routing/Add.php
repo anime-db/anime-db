@@ -42,7 +42,8 @@ class Add extends AddConfig
      */
     protected function doAddConfig($bundle, $extension, $path)
     {
-        $this->getContainer()->getManipulator('routing')
-            ->addResource($this->getRoutingNodeName(), $bundle, $extension, $path);
+        /* @var $manipulator \AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing */
+        $manipulator = $this->getContainer()->getManipulator('routing');
+        $manipulator->addResource($this->getRoutingNodeName(), $bundle, $extension, $path);
     }
 }
