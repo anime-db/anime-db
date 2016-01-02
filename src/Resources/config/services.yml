@@ -1,7 +1,7 @@
 services:
     anime_db.listener.update:
         class: AnimeDb\Bundle\AnimeDbBundle\Event\Listener\UpdateItself
-        arguments: [ @anime_db.zip, %kernel.root_dir%, %anime_db.monitor% ]
+        arguments: [ '@anime_db.zip', '%kernel.root_dir%', '%anime_db.monitor%' ]
         tags:
             - { name: kernel.event_listener, event: anime_db.update_itself.downloaded, method: onAppDownloadedMergeComposerRequirements }
             - { name: kernel.event_listener, event: anime_db.update_itself.downloaded, method: onAppDownloadedMergeConfigs }
@@ -11,17 +11,17 @@ services:
 
     anime_db.event_dispatcher:
         class: AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher
-        arguments: [ %kernel.root_dir% ]
+        arguments: [ '%kernel.root_dir%' ]
         calls:
-            - [ setDispatcherDriver, [ @event_dispatcher ] ]
+            - [ setDispatcherDriver, [ '@event_dispatcher' ] ]
 
     anime_db.manipulator.composer:
         class: AnimeDb\Bundle\AnimeDbBundle\Manipulator\Composer
-        arguments: [ %kernel.root_dir%/../composer.json ]
+        arguments: [ '%kernel.root_dir%/../composer.json' ]
 
     anime_db.manipulator.parameters:
         class: AnimeDb\Bundle\AnimeDbBundle\Manipulator\Parameters
-        arguments: [ %kernel.root_dir%/config/parameters.yml ]
+        arguments: [ '%kernel.root_dir%/config/parameters.yml' ]
 
     anime_db.zip:
         class: ZipArchive
@@ -41,20 +41,22 @@ services:
 
     anime_db.client.github:
         class: AnimeDb\Bundle\AnimeDbBundle\Client\GitHub
-        arguments: [ %anime_db.github.api%, @anime_db.client ]
+        arguments: [ '%anime_db.github.api%', '@anime_db.client' ]
 
     anime_db.composer:
         class: AnimeDb\Bundle\AnimeDbBundle\Composer\Composer
         arguments:
-            - @anime_db.composer.factory
-            - @anime_db.composer.loader
-            - %kernel.root_dir%/../composer.lock
+            - '@anime_db.composer.factory'
+            - '@anime_db.composer.loader'
+            - '%kernel.root_dir%/../composer.lock'
+
     anime_db.request.firewall:
         class: AnimeDb\Bundle\AnimeDbBundle\Event\Listener\Request\Firewall
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: -255 }
+
     anime_db.request.static:
         class: AnimeDb\Bundle\AnimeDbBundle\Event\Listener\Request\StaticFiles
-        arguments: [ %kernel.root_dir%, %kernel.environment% ]
+        arguments: [ '%kernel.root_dir%', '%kernel.environment%' ]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: -256 }
