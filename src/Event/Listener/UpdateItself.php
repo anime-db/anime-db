@@ -156,7 +156,9 @@ class UpdateItself
             // copy params if need
             $old_file = $this->root_dir.'/config.ini';
             $new_file = $event->getPath().'/config.ini';
-            if (file_exists($new_file) && file_exists($old_file) && md5_file($old_file) != md5_file($new_file)) {
+            if (file_exists($new_file) && file_exists($old_file) && is_readable($new_file) &&
+                md5_file($old_file) != md5_file($new_file)
+            ) {
                 $old_body = file_get_contents($old_file);
                 $new_body = $tmp_body = file_get_contents($new_file);
 
@@ -183,7 +185,7 @@ class UpdateItself
             $old_file = $this->root_dir.'bin/service';
         }
         $new_file = $event->getPath().'/AnimeDB';
-        if (md5_file($old_file) != md5_file($new_file)) {
+        if (is_readable($new_file) && md5_file($old_file) != md5_file($new_file)) {
             $old_body = file_get_contents($old_file);
             $new_body = $tmp_body = file_get_contents($new_file);
 
