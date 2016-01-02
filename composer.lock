@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "79b39404d8c3db60e33574a7aa17159a",
-    "content-hash": "2e6064d13bfd6828e5782976b1478489",
+    "hash": "2d384637a9693ae53609a2795f658932",
+    "content-hash": "46a10daa7a381eef7ba3d8f32b0b2b19",
     "packages": [
         {
             "name": "anime-db/ani-db-browser-bundle",
@@ -134,12 +134,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/anime-db/app-bundle.git",
-                "reference": "ca08fd23b67abd25b47cfedd3f278c13169152fe"
+                "reference": "affa2a814a9169a574af7fc1385b184358a53511"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/app-bundle/zipball/ca08fd23b67abd25b47cfedd3f278c13169152fe",
-                "reference": "ca08fd23b67abd25b47cfedd3f278c13169152fe",
+                "url": "https://api.github.com/repos/anime-db/app-bundle/zipball/affa2a814a9169a574af7fc1385b184358a53511",
+                "reference": "affa2a814a9169a574af7fc1385b184358a53511",
                 "shasum": ""
             },
             "require": {
@@ -184,7 +184,7 @@
             ],
             "description": "The application for making home collection anime",
             "homepage": "http://anime-db.org",
-            "time": "2016-01-02 12:55:36"
+            "time": "2016-01-02 20:29:58"
         },
         {
             "name": "anime-db/cache-time-keeper-bundle",
@@ -239,12 +239,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/anime-db/catalog-bundle.git",
-                "reference": "98a69b992836d54d755a3d18c23f300dfaa9821c"
+                "reference": "2dc4a836faf08e4a4d585812b951f91c5132aab3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/catalog-bundle/zipball/98a69b992836d54d755a3d18c23f300dfaa9821c",
-                "reference": "98a69b992836d54d755a3d18c23f300dfaa9821c",
+                "url": "https://api.github.com/repos/anime-db/catalog-bundle/zipball/2dc4a836faf08e4a4d585812b951f91c5132aab3",
+                "reference": "2dc4a836faf08e4a4d585812b951f91c5132aab3",
                 "shasum": ""
             },
             "require": {
@@ -290,7 +290,7 @@
             ],
             "description": "The application for making home collection anime",
             "homepage": "http://anime-db.org",
-            "time": "2016-01-02 15:52:28"
+            "time": "2016-01-02 20:06:46"
         },
         {
             "name": "anime-db/shikimori-browser-bundle",
