@@ -133,7 +133,7 @@ class Kernel extends FileContent
     protected function setBundles(array $bundles)
     {
         $this->bundles = $bundles;
-        if ($bundles) {
+        if (!empty($bundles)) {
             $content = "<?php\nreturn [\n    ".implode(",\n    ", $bundles)."\n];";
         } else {
             $content = "<?php\nreturn [\n];";
