@@ -45,18 +45,18 @@ class Down extends BaseMigrate
                 ->name('/Version\d{14}.*\.php/');
 
             if ($package_migrations->count()) {
+                $fs = new Filesystem();
                 // remove wrappers of migrations
                 $migdir = $this->root_dir.'app/DoctrineMigrations/';
-                if (file_exists($migdir)) {
+                if ($fs->exists($migdir)) {
                     /* @var $file \SplFileInfo */
                     foreach ($package_migrations as $file) {
-                        @unlink($migdir.$file->getBasename());
+                        $fs->remove($migdir.$file->getBasename());
                     }
                 }
 
                 // copy the migrations to perform later
                 $tmp_dir = $this->root_dir.'app/cache/dev/DoctrineMigrations/';
-                $fs = new Filesystem();
                 $fs->mirror($from, $tmp_dir);
 
                 // change migrations namespace

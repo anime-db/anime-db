@@ -34,7 +34,9 @@ class Add extends Job
     public function execute()
     {
         if ($bundle = $this->getPackageBundle()) {
-            $this->getContainer()->getManipulator('kernel')->addBundle($bundle);
+            /* @var $manipulator \AnimeDb\Bundle\AnimeDbBundle\Manipulator\Kernel */
+            $manipulator = $this->getContainer()->getManipulator('kernel');
+            $manipulator->addBundle($bundle);
         }
     }
 }

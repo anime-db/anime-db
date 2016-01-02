@@ -72,25 +72,13 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
     protected $fs;
 
     /**
-     * Construct
-     *
-     * @param string $name
-     * @param array $data
-     * @param string $dataName
-     */
-    public function __construct($name = null, array $data = array(), $dataName = '')
-    {
-        parent::__construct($name, $data, $dataName);
-        $this->fs = new Filesystem();
-    }
-
-    /**
      * (non-PHPdoc)
      * @see PHPUnit_Framework_TestCase::setUp()
      */
     protected function setUp()
     {
         parent::setUp();
+        $this->fs = new Filesystem();
         // real path /foo/
         $this->root_dir = sys_get_temp_dir().'/tests/foo/bar/';
         $this->event_dir = sys_get_temp_dir().'/tests/baz/';
@@ -98,7 +86,7 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
         $this->monitor = tempnam(sys_get_temp_dir().'/tests/', 'monitor');
         $this->zip = $this->getMock('\ZipArchive');
 
-        $this->listener = new UpdateItself($this->zip, $this->root_dir, $this->monitor);
+        $this->listener = new UpdateItself($this->fs, $this->zip, $this->root_dir, $this->monitor);
 
         $this->event = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded')
             ->disableOriginalConstructor()

@@ -50,8 +50,10 @@ class Remove extends Job
      */
     public function execute()
     {
-        if ($this->bundle) {
-            $this->getContainer()->getManipulator('kernel')->removeBundle($this->bundle);
+        if ($this->bundle !== null) {
+            /* @var $manipulator \AnimeDb\Bundle\AnimeDbBundle\Manipulator\Kernel */
+            $manipulator = $this->getContainer()->getManipulator('kernel');
+            $manipulator->removeBundle($this->bundle);
         }
     }
 }

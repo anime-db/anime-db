@@ -50,10 +50,13 @@ class Remove extends Job
      */
     public function execute()
     {
-        if ($this->bundle) {
+        if ($this->bundle !== null) {
             $bundle = $this->bundle;
+            /* @var $bundle \Symfony\Component\HttpKernel\Bundle\Bundle */
             $bundle = new $bundle();
-            $this->getContainer()->getManipulator('config')->removeResource($bundle->getName());
+            /* @var $manipulator \AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config */
+            $manipulator = $this->getContainer()->getManipulator('config');
+            $manipulator->removeResource($bundle->getName());
         }
     }
 }

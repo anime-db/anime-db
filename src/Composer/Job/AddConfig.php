@@ -10,7 +10,6 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job;
 
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -38,7 +37,8 @@ abstract class AddConfig extends Job
     {
         $config = $this->getPackageConfig($name, $option);
         $bundle = $this->getPackageBundle();
-        if ($config && $bundle) {
+        if ($config && $bundle !== null) {
+            /* @var $bundle \Symfony\Component\HttpKernel\Bundle\Bundle */
             $bundle = new $bundle();
             $info = pathinfo($config);
             $path = $info['dirname'] != '.' ? $info['dirname'].'/'.$info['filename'] : $info['filename'];

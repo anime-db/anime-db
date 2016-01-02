@@ -33,6 +33,8 @@ class Remove extends Job
      */
     public function execute()
     {
-        $this->getContainer()->getManipulator('routing')->removeResource($this->getRoutingNodeName());
+        /* @var $manipulator \AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing */
+        $manipulator = $this->getContainer()->getManipulator('routing');
+        $manipulator->removeResource($this->getRoutingNodeName());
     }
 }

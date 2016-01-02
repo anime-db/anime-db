@@ -58,10 +58,7 @@ class Kernel extends FileContent
      */
     public function addBundle($bundle)
     {
-        if ($bundle[0] == '\\') {
-            $bundle = substr($bundle, 1);
-        }
-        $bundle = 'new '.$bundle.'()';
+        $bundle = $this->getBundleString($bundle);
         // not root bundle
         if (strpos($this->getKernal(), $bundle) === false) {
             $bundles = $this->getBundles();
@@ -79,15 +76,24 @@ class Kernel extends FileContent
      */
     public function removeBundle($bundle)
     {
-        if ($bundle[0] == '\\') {
-            $bundle = substr($bundle, 1);
-        }
-        $bundle = 'new '.$bundle.'()';
         $bundles = $this->getBundles();
-        if (($key = array_search($bundle, $bundles)) !== false) {
+        if (($key = array_search($this->getBundleString($bundle), $bundles)) !== false) {
             unset($bundles[$key]);
             $this->setBundles($bundles);
         }
+    }
+
+    /**
+     * @param string $bundle
+     *
+     * @return string
+     */
+    protected function getBundleString($bundle)
+    {
+        if ($bundle[0] == '\\') {
+            $bundle = substr($bundle, 1);
+        }
+        return 'new '.$bundle.'()';
     }
 
     /**
@@ -133,7 +139,7 @@ class Kernel extends FileContent
     protected function setBundles(array $bundles)
     {
         $this->bundles = $bundles;
-        if ($bundles) {
+        if (!empty($bundles)) {
             $content = "<?php\nreturn [\n    ".implode(",\n    ", $bundles)."\n];";
         } else {
             $content = "<?php\nreturn [\n];";
