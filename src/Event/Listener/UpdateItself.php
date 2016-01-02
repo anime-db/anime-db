@@ -11,6 +11,7 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Event\Listener;
 
 use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Update itself listener
@@ -70,14 +71,23 @@ class UpdateItself
     protected $zip;
 
     /**
+     * Filesystem
+     *
+     * @var \Symfony\Component\Filesystem\Filesystem
+     */
+    protected $fs;
+
+    /**
      * Construct
      *
+     * @param \Symfony\Component\Filesystem\Filesystem $fs
      * @param \ZipArchive $zip
      * @param string $root_dir
      * @param string $monitor
      */
-    public function __construct(\ZipArchive $zip, $root_dir, $monitor)
+    public function __construct(Filesystem $fs, \ZipArchive $zip, $root_dir, $monitor)
     {
+        $this->fs = $fs;
         $this->zip = $zip;
         $this->root_dir = $root_dir.'/../';
         $this->monitor = $monitor;
@@ -118,8 +128,8 @@ class UpdateItself
         ];
 
         foreach ($files as $file) {
-            if (file_exists($this->root_dir.$file)) {
-                copy($this->root_dir.$file, $event->getPath().$file);
+            if ($this->fs->exists($this->root_dir.$file)) {
+                $this->fs->copy($this->root_dir.$file, $event->getPath().$file);
             }
         }
     }
@@ -132,18 +142,20 @@ class UpdateItself
     public function onAppDownloadedMergeBinRun(Downloaded $event)
     {
         // remove startup files
-        @unlink($this->root_dir.'bin/AnimeDB_Run.vbs');
-        @unlink($this->root_dir.'bin/AnimeDB_Stop.vbs');
-        @unlink($this->root_dir.'AnimeDB_Run.vbs');
-        @unlink($this->root_dir.'AnimeDB_Stop.vbs');
+        $this->fs->remove([
+            $this->root_dir.'bin/AnimeDB_Run.vbs',
+            $this->root_dir.'bin/AnimeDB_Stop.vbs',
+            $this->root_dir.'AnimeDB_Run.vbs',
+            $this->root_dir.'AnimeDB_Stop.vbs'
+        ]);
 
         if (defined('PHP_WINDOWS_VERSION_BUILD')) {
             // application has not yet has the monitor
-            if (!file_exists($this->root_dir.'/config.ini')) {
+            if (!$this->fs->exists($this->root_dir.'/config.ini')) {
                 $monitor = sys_get_temp_dir().'/'.basename($this->monitor);
                 // download monitor if need
-                if (!file_exists($monitor)) {
-                    copy($this->monitor, $monitor);
+                if (!$this->fs->exists($monitor)) {
+                    $this->fs->copy($this->monitor, $monitor);
                 }
                 // unzip
                 if ($this->zip->open($monitor) !== true) {
@@ -156,7 +168,8 @@ class UpdateItself
             // copy params if need
             $old_file = $this->root_dir.'/config.ini';
             $new_file = $event->getPath().'/config.ini';
-            if (file_exists($new_file) && file_exists($old_file) && is_readable($new_file) &&
+            if ($this->fs->exists($new_file) && $this->fs->exists($old_file) &&
+                is_readable($new_file) &&
                 md5_file($old_file) != md5_file($new_file)
             ) {
                 $old_body = file_get_contents($old_file);
@@ -181,7 +194,7 @@ class UpdateItself
     public function onAppDownloadedMergeBinService(Downloaded $event)
     {
         $old_file = $this->root_dir.'AnimeDB';
-        if (!file_exists($old_file)) { // old name
+        if (!$this->fs->exists($old_file)) { // old name
             $old_file = $this->root_dir.'bin/service';
         }
         $new_file = $event->getPath().'/AnimeDB';
@@ -230,8 +243,10 @@ class UpdateItself
     public function onAppDownloadedChangeAccessToFiles(Downloaded $event)
     {
         if (!defined('PHP_WINDOWS_VERSION_BUILD')) {
-            @chmod($event->getPath().'/AnimeDB', 0755);
-            @chmod($event->getPath().'/app/console', 0755);
+            $this->fs->chmod([
+                $event->getPath().'/AnimeDB',
+                $event->getPath().'/app/console'
+            ], 0755);
         }
     }
 }
