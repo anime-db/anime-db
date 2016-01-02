@@ -1553,12 +1553,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "b22cdab1bb0a8fc37fe8d4b27a03ad589609803f"
+                "reference": "b792e959cd76fab408d3cb2afafc2183b344b053"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/b22cdab1bb0a8fc37fe8d4b27a03ad589609803f",
-                "reference": "b22cdab1bb0a8fc37fe8d4b27a03ad589609803f",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/b792e959cd76fab408d3cb2afafc2183b344b053",
+                "reference": "b792e959cd76fab408d3cb2afafc2183b344b053",
                 "shasum": ""
             },
             "require": {
@@ -1624,7 +1624,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2015-12-29 19:18:34"
+            "time": "2016-01-02 17:03:26"
         },
         {
             "name": "gedmo/doctrine-extensions",
