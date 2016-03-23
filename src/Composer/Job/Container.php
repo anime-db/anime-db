@@ -15,6 +15,7 @@ use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Composer as ComposerManipulator;
 use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config as ConfigManipulator;
 use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Kernel as KernelManipulator;
 use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing as RoutingManipulator;
+use AnimeDb\Bundle\AnimeDbBundle\Manipulator\PhpIni as PhpIniManipulator;
 use AnimeDb\Bundle\AnimeDbBundle\Manipulator\ManipulatorInterface;
 use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
@@ -94,6 +95,9 @@ class Container
                     break;
                 case 'routing':
                     $this->manipulators[$name] = new RoutingManipulator($this->root_dir.'config/routing.yml');
+                    break;
+                case 'php.ini':
+                    $this->manipulators[$name] = new PhpIniManipulator($this->root_dir.'/../bin/php/php.ini');
                     break;
                 default:
                     throw new \InvalidArgumentException('Unknown manipulator: '.$name);
