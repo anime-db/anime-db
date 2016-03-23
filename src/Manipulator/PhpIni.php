@@ -99,4 +99,48 @@ class PhpIni implements ManipulatorInterface
             file_put_contents($this->filename, $content);
         }
     }
+
+    /**
+     * @param string $byte
+     *
+     * @return int
+     */
+    public function byteStringToInt($byte)
+    {
+        switch(strtoupper(substr($byte, -1, 1))) {
+            case 'K':
+                $int = substr($byte, 0, -1) * 1024;
+                break;
+            case 'M':
+                $int = substr($byte, 0, -1) * 1048576; // 1024 * 1024
+                break;
+            case 'G':
+                $int = substr($byte, 0, -1) * 1073741824; // 1024 * 1024 * 1024
+                break;
+            default:
+                $int = $byte;
+        }
+
+        return (int)$int;
+    }
+
+    /**
+     * @param int $int
+     *
+     * @return string
+     */
+    public function byteIntToString($int)
+    {
+        if ($int % 1073741824 == 0) { // 1024 * 1024 * 1024
+            return ($int / 1073741824) . 'G';
+
+        } elseif ($int % 1048576 == 0) { // 1024 * 1024
+            return ($int / 1048576) . 'M';
+
+        } elseif ($int % 1024 == 0) {
+            return ($int / 1024) . 'K';
+        }
+
+        return (string)$int;
+    }
 }
