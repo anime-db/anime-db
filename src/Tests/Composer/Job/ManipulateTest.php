@@ -117,7 +117,7 @@ class ManipulateTest extends TestCaseWritable
         $this->container
             ->expects($this->once())
             ->method('getManipulator')
-            ->willReturn($manipulator)
+            ->will($this->returnValue($manipulator))
             ->with($manipulator_name);
 
         $this->execute($get_job, $matcher); // test
@@ -183,16 +183,16 @@ class ManipulateTest extends TestCaseWritable
         $package
             ->expects($matcher)
             ->method('getName')
-            ->willReturn('foo/bar');
+            ->will($this->returnValue('foo/bar'));
         $package
             ->expects($this->atLeastOnce())
             ->method('getExtra')
-            ->willReturn([
+            ->will($this->returnValue([
                 'anime-db-routing' => '',
                 'anime-db-config' => '',
                 'anime-db-bundle' => $bundle,
                 'anime-db-migrations' => ''
-            ]);
+            ]));
 
         $job = $get_job($package, $this->root_dir);
         $job->setContainer($this->container);

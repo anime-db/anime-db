@@ -89,7 +89,7 @@ class ScriptHandlerTest extends TestCaseWritable
         $this->package
             ->expects($this->any())
             ->method('getExtra')
-            ->willReturn([]);
+            ->will($this->returnValue([]));
         $this->event_command = $this->getMockBuilder('\Composer\Script\CommandEvent')
             ->disableOriginalConstructor()
             ->getMock();
@@ -262,24 +262,24 @@ class ScriptHandlerTest extends TestCaseWritable
         $this->event_package
             ->expects($this->atLeastOnce())
             ->method('getOperation')
-            ->willReturn($operation);
+            ->will($this->returnValue($operation));
         $operation
             ->expects($this->once())
             ->method('getJobType')
-            ->willReturn($type);
+            ->will($this->returnValue($type));
         $operation
             ->expects($this->once())
             ->method($method)
-            ->willReturn($this->package);
+            ->will($this->returnValue($this->package));
         $that = $this;
         $package = $this->package;
         $this->container
             ->expects($this->once())
             ->method('addJob')
-            ->willReturnCallback(function ($job) use ($that, $package, $job_class) {
+            ->will($this->returnCallback(function ($job) use ($that, $package, $job_class) {
                 $that->assertInstanceOf($job_class, $job);
                 $that->assertEquals($package, $job->getPackage());
-            });
+            }));
 
         call_user_func(['\AnimeDb\Bundle\AnimeDbBundle\Composer\ScriptHandler', $test], $this->event_package);
     }
@@ -313,11 +313,11 @@ class ScriptHandlerTest extends TestCaseWritable
         $this->event_package
             ->expects($this->atLeastOnce())
             ->method('getOperation')
-            ->willReturn($operation);
+            ->will($this->returnValue($operation));
         $operation
             ->expects($this->once())
             ->method('getJobType')
-            ->willReturn('undefined');
+            ->will($this->returnValue('undefined'));
         $operation
             ->expects($this->never())
             ->method('getPackage');
@@ -363,10 +363,10 @@ class ScriptHandlerTest extends TestCaseWritable
         $this->container
             ->expects($this->once())
             ->method('addJob')
-            ->willReturnCallback(function ($job) use ($that, $package, $job_class) {
+            ->will($this->returnCallback(function ($job) use ($that, $package, $job_class) {
                 $that->assertInstanceOf($job_class, $job);
                 $that->assertEquals($package, $job->getPackage());
-            });
+            }));
         call_user_func(['\AnimeDb\Bundle\AnimeDbBundle\Composer\ScriptHandler', $method], $this->event_command);
     }
 
@@ -378,11 +378,11 @@ class ScriptHandlerTest extends TestCaseWritable
         $this->event_command
             ->expects($this->once())
             ->method('getComposer')
-            ->willReturn($this->composer);
+            ->will($this->returnValue($this->composer));
         $this->composer
             ->expects($this->once())
             ->method('getPackage')
-            ->willReturn($this->package);
+            ->will($this->returnValue($this->package));
     }
 
     /**
@@ -635,11 +635,11 @@ class ScriptHandlerTest extends TestCaseWritable
         $this->io
             ->expects($this->atLeastOnce())
             ->method('isDecorated')
-            ->willReturn($decorated);
+            ->will($this->returnValue($decorated));
         $this->event_command
             ->expects($this->atLeastOnce())
             ->method('getIO')
-            ->willReturn($this->io);
+            ->will($this->returnValue($this->io));
         $this->container
             ->expects($matcher ?: $this->once())
             ->method('executeCommand')

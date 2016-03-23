@@ -133,13 +133,13 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         $job
             ->expects($this->any())
             ->method('getPriority')
-            ->willReturn($priority);
+            ->will($this->returnValue($priority));
         $job
             ->expects($this->once())
             ->method('execute')
-            ->willReturnCallback(function () use ($priority, &$order) {
+            ->will($this->returnCallback(function () use ($priority, &$order) {
                 $order[] = $priority;
-            });
+            }));
         return $job;
     }
 

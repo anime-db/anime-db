@@ -222,7 +222,7 @@ class WindowsTest extends \PHPUnit_Framework_TestCase
         $this->output
             ->expects($this->once())
             ->method($get)
-            ->willReturn($expected);
+            ->will($this->returnValue($expected));
         $this->assertEquals($expected, call_user_func([$this->windows, $get]));
     }
 
@@ -337,7 +337,7 @@ class WindowsTest extends \PHPUnit_Framework_TestCase
         $this->output
             ->expects($this->once())
             ->method('getVerbosity')
-            ->willReturn($verbosity);
+            ->will($this->returnValue($verbosity));
 
         $condition = call_user_func([$this->windows, $method]);
 

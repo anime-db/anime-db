@@ -133,21 +133,21 @@ class GitHubTest extends \PHPUnit_Framework_TestCase
         $client
             ->expects($this->once())
             ->method('setBaseUrl')
-            ->willReturnSelf()
+            ->will($this->returnSelf())
             ->with($this->api_host);
         $client
             ->expects($this->once())
             ->method('get')
-            ->willReturn($request)
+            ->will($this->returnValue($request))
             ->with('repos/'.$this->repository.'/tags');
         $request
             ->expects($this->once())
             ->method('send')
-            ->willReturn($response);
+            ->will($this->returnValue($response));
         $response
             ->expects($this->once())
             ->method('getBody')
-            ->willReturn(json_encode($expected))
+            ->will($this->returnValue(json_encode($expected)))
             ->with(true);
         return new GitHub($this->api_host, $client);
     }

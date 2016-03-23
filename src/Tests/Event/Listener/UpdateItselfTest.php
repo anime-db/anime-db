@@ -90,7 +90,7 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
         $this->event
             ->expects($this->any())
             ->method('getPath')
-            ->willReturn($this->event_dir);
+            ->will($this->returnValue($this->event_dir));
     }
 
     protected function tearDown()
@@ -232,7 +232,7 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('open')
             ->with(sys_get_temp_dir().'/'.basename($this->monitor))
-            ->willReturn(true);
+            ->will($this->returnValue(true));
         $this->zip
             ->expects($this->once())
             ->method('extractTo')
@@ -257,7 +257,7 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
         $this->zip
             ->expects($this->once())
             ->method('open')
-            ->willReturn(false);
+            ->will($this->returnValue(false));
 
         $this->listener->onAppDownloadedMergeBinRun($this->event); // test
     }

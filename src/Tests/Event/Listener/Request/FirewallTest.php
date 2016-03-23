@@ -53,7 +53,7 @@ class FirewallTest extends \PHPUnit_Framework_TestCase
         $this->event
             ->expects($this->once())
             ->method('getRequestType')
-            ->willReturn(HttpKernelInterface::SUB_REQUEST);
+            ->will($this->returnValue(HttpKernelInterface::SUB_REQUEST));
         $this->event
             ->expects($this->never())
             ->method('getRequest');
@@ -96,12 +96,12 @@ class FirewallTest extends \PHPUnit_Framework_TestCase
         $this->event
             ->expects($this->once())
             ->method('setResponse')
-            ->willReturnCallback(function ($response) use ($that) {
+            ->will($this->returnCallback(function ($response) use ($that) {
                 $that->assertInstanceOf('\Symfony\Component\HttpFoundation\Response', $response);
                 $that->assertEquals('You are not allowed to access this application.', $response->getContent());
                 $that->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
                 $that->assertTrue($response->headers->hasCacheControlDirective('public'));
-            });
+            }));
 
         $this->listener->onKernelRequest($this->event);
     }
@@ -162,19 +162,19 @@ class FirewallTest extends \PHPUnit_Framework_TestCase
         $this->event
             ->expects($this->once())
             ->method('getRequestType')
-            ->willReturn(HttpKernelInterface::MASTER_REQUEST);
+            ->will($this->returnValue(HttpKernelInterface::MASTER_REQUEST));
         $request = $this->getMock('\Symfony\Component\HttpFoundation\Request');
         $request->server = $this->getMock('\Symfony\Component\HttpFoundation\ServerBag');
         $request->server
             ->expects($this->atLeastOnce())
             ->method('get')
-            ->willReturnCallback(function ($value) use ($header, $ip) {
+            ->will($this->returnCallback(function ($value) use ($header, $ip) {
                 return $value == $header ? $ip : null;
-            });
+            }));
         $this->event
             ->expects($this->once())
             ->method('getRequest')
-            ->willReturn($request);
+            ->will($this->returnValue($request));
         return $request;
     }
 }

@@ -197,32 +197,32 @@ class UpdateCommandTest extends TestCaseWritable
         $this->container
             ->expects($this->at(2))
             ->method('get')
-            ->willReturn($this->filesystem)
+            ->will($this->returnValue($this->filesystem))
             ->with('filesystem');
         $this->container
             ->expects($this->at(3))
             ->method('get')
-            ->willReturn($dispatcher)
+            ->will($this->returnValue($dispatcher))
             ->with('event_dispatcher');
         $this->container
             ->expects($this->at(4))
             ->method('get')
-            ->willReturn($this->filesystem)
+            ->will($this->returnValue($this->filesystem))
             ->with('filesystem');
         $this->container
             ->expects($this->at(8))
             ->method('get')
-            ->willReturn($local_dispatcher)
+            ->will($this->returnValue($local_dispatcher))
             ->with('anime_db.event_dispatcher');
         $this->container
             ->expects($this->atLeastOnce())
             ->method('getParameter')
-            ->willReturn($this->root_dir.'app')
+            ->will($this->returnValue($this->root_dir.'app'))
             ->with('kernel.root_dir');
         $this->composer
             ->expects($this->once())
             ->method('download')
-            ->willReturnCallback(function ($package, $_target) use ($that, $target, $tag) {
+            ->will($this->returnCallback(function ($package, $_target) use ($that, $target, $tag) {
                 $that->assertEquals($target, $_target);
                 // check package
                 $that->assertInstanceOf('\Composer\Package\Package', $package);
@@ -232,34 +232,34 @@ class UpdateCommandTest extends TestCaseWritable
                 $that->assertEquals('zip', $package->getDistType());
                 $that->assertEquals($tag['zipball_url'], $package->getDistUrl());
                 $that->assertEquals('dist', $package->getInstallationSource());
-            });
+            }));
         $this->composer
             ->expects($this->once())
             ->method('getPackageFromConfigFile')
             ->with($this->target.'/composer.json')
-            ->willReturn($package);
+            ->will($this->returnValue($package));
         $this->composer
             ->expects($this->once())
             ->method('reload');
         $dispatcher
             ->expects($this->once())
             ->method('dispatch')
-            ->willReturnCallback(function ($name, $event) use ($that, $target, $package, $root_package) {
+            ->will($this->returnCallback(function ($name, $event) use ($that, $target, $package, $root_package) {
                 $that->assertEquals(StoreEvents::DOWNLOADED, $name);
                 // check event
                 $that->assertInstanceOf('\AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded', $event);
                 $that->assertEquals($target, $event->getPath());
                 $that->assertEquals($package, $event->getNewPackage());
                 $that->assertEquals($root_package, $event->getOldPackage());
-            });
+            }));
         $local_dispatcher
             ->expects($this->once())
             ->method('dispatch')
-            ->willReturnCallback(function ($name, $event) use ($that, $package) {
+            ->will($this->returnCallback(function ($name, $event) use ($that, $package) {
                 $that->assertEquals(StoreEvents::UPDATED, $name);
                 $that->assertInstanceOf('\AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Updated', $event);
                 $that->assertEquals($package, $event->getPackage());
-            });
+            }));
         $this->filesystem
             ->expects($this->at(0))
             ->method('remove')
@@ -267,7 +267,7 @@ class UpdateCommandTest extends TestCaseWritable
         $this->filesystem
             ->expects($this->at(1))
             ->method('remove')
-            ->willReturnCallback(function ($finder) use ($that, $fs, $root_dir) {
+            ->will($this->returnCallback(function ($finder) use ($that, $fs, $root_dir) {
                 $that->assertInstanceOf('\Symfony\Component\Finder\Finder', $finder);
                 // test remove files from Finder
                 $fs->remove($finder);
@@ -279,7 +279,7 @@ class UpdateCommandTest extends TestCaseWritable
                 $that->assertFileNotExists($root_dir.'app/config/config.yml');
                 $that->assertFileNotExists($root_dir.'src/AnimeDbAnimeDbBundle.php');
                 $that->assertFileNotExists($root_dir.'src/Tests/TestCaseWritable.php');
-            });
+            }));
         $this->filesystem
             ->expects($this->at(3))
             ->method('remove')
@@ -310,40 +310,40 @@ class UpdateCommandTest extends TestCaseWritable
         $installer
             ->expects($this->once())
             ->method('run')
-            ->willReturn($result);
+            ->will($this->returnValue($result));
         $this->container
             ->expects($that->at(0))
             ->method('get')
-            ->willReturn($this->composer)
+            ->will($this->returnValue($this->composer))
             ->with('anime_db.composer');
         $this->container
             ->expects($that->at(1))
             ->method('get')
-            ->willReturn($this->github)
+            ->will($this->returnValue($this->github))
             ->with('anime_db.client.github');
         $this->composer
             ->expects($this->once())
             ->method('setIO')
-            ->willReturnCallback(function ($io) use ($that) {
+            ->will($this->returnCallback(function ($io) use ($that) {
                 $that->assertInstanceOf('\Composer\IO\ConsoleIO', $io);
-            });
+            }));
         $this->github
             ->expects($this->once())
             ->method('getLastRelease')
-            ->willReturn($tag)
+            ->will($this->returnValue($tag))
             ->with('anime-db/anime-db');
         $this->composer
             ->expects($this->atLeastOnce())
             ->method('getRootPackage')
-            ->willReturn($this->package);
+            ->will($this->returnValue($this->package));
         $this->composer
             ->expects($this->once())
             ->method('getInstaller')
-            ->willReturn($installer);
+            ->will($this->returnValue($installer));
         $this->package
             ->expects($this->once())
             ->method('getPrettyVersion')
-            ->willReturn($current_version);
+            ->will($this->returnValue($current_version));
         $helper_set = $this->getMockBuilder('\Symfony\Component\Console\Helper\HelperSet')
             ->disableOriginalConstructor()
             ->getMock();

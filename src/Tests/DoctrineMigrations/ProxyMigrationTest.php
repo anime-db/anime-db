@@ -76,7 +76,7 @@ class ProxyMigrationTest extends \PHPUnit_Framework_TestCase
         $this->proxy
             ->expects($this->any())
             ->method('getMigration')
-            ->willReturn($migration);
+            ->will($this->returnValue($migration));
         $migration
             ->expects($this->once())
             ->method($method)
@@ -97,7 +97,7 @@ class ProxyMigrationTest extends \PHPUnit_Framework_TestCase
         $this->proxy
             ->expects($this->once())
             ->method('getMigration')
-            ->willReturn($migration);
+            ->will($this->returnValue($migration));
         $migration
             ->expects($this->once())
             ->method($method)

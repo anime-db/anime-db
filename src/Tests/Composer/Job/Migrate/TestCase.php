@@ -98,16 +98,16 @@ abstract class TestCase extends TestCaseWritable
         $package
             ->expects($this->atLeastOnce())
             ->method('getName')
-            ->willReturn('foo/bar');
+            ->will($this->returnValue('foo/bar'));
         $package
             ->expects($this->atLeastOnce())
             ->method('getExtra')
-            ->willReturn([
+            ->will($this->returnValue([
                 'anime-db-routing' => '',
                 'anime-db-config' => '',
                 'anime-db-bundle' => $bundle,
                 'anime-db-migrations' => $migrations
-            ]);
+            ]));
 
         $job = $this->getJob($package);
         $job->setContainer($this->container);

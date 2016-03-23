@@ -69,12 +69,12 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
             ->expects($this->at(0))
             ->method('dispatch')
             ->with('bar', $event1)
-            ->willReturnArgument(1);
+            ->will($this->returnArgument(1));
         $driver
             ->expects($this->at(1))
             ->method('dispatch')
             ->with('baz', $event2)
-            ->willReturnArgument(1);
+            ->will($this->returnArgument(1));
 
         $dispatcher = new Dispatcher($this->root_dir);
         $dispatcher->setDispatcherDriver($driver);

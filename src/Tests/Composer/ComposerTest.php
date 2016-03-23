@@ -117,7 +117,7 @@ class ComposerTest extends TestCaseWritable
         $manager
             ->expects($this->once())
             ->method('getDownloaderForInstalledPackage')
-            ->willReturnSelf()
+            ->will($this->returnSelf())
             ->with($package);
         $manager
             ->expects($this->once())
@@ -127,14 +127,14 @@ class ComposerTest extends TestCaseWritable
             $manager
                 ->expects($this->once())
                 ->method('setOutputProgress')
-                ->willReturnSelf()
+                ->will($this->returnSelf())
                 ->with(false);
         }
         $composer = $this->getComposer();
         $composer
             ->expects($this->once())
             ->method('getDownloadManager')
-            ->willReturn($manager);
+            ->will($this->returnValue($manager));
 
         $this->composer->download($package, $this->root_dir);
     }
@@ -149,7 +149,7 @@ class ComposerTest extends TestCaseWritable
         $composer
             ->expects($this->once())
             ->method('getPackage')
-            ->willReturn($package);
+            ->will($this->returnValue($package));
 
         $this->assertEquals($package, $this->composer->getRootPackage());
     }
@@ -169,7 +169,7 @@ class ComposerTest extends TestCaseWritable
         $this->loader
             ->expects($this->once())
             ->method('load')
-            ->willReturn($package)
+            ->will($this->returnValue($package))
             ->with($data, 'Composer\Package\RootPackage');
 
         $this->assertEquals($package, $this->composer->getPackageFromConfigFile($config));
@@ -216,7 +216,7 @@ class ComposerTest extends TestCaseWritable
             $download
                 ->expects($this->once())
                 ->method('setOutputProgress')
-                ->willReturnSelf()
+                ->will($this->returnSelf())
                 ->with(false);
         }
 
@@ -224,35 +224,35 @@ class ComposerTest extends TestCaseWritable
         $composer
             ->expects($this->once())
             ->method('getConfig')
-            ->willReturn($config);
+            ->will($this->returnValue($config));
         $composer
             ->expects($this->once())
             ->method('getPackage')
-            ->willReturn($package);
+            ->will($this->returnValue($package));
         $composer
             ->expects($this->atLeastOnce())
             ->method('getDownloadManager')
-            ->willReturn($download);
+            ->will($this->returnValue($download));
         $composer
             ->expects($this->once())
             ->method('getRepositoryManager')
-            ->willReturn($repository);
+            ->will($this->returnValue($repository));
         $composer
             ->expects($this->once())
             ->method('getLocker')
-            ->willReturn($locker);
+            ->will($this->returnValue($locker));
         $composer
             ->expects($this->once())
             ->method('getInstallationManager')
-            ->willReturn($installation);
+            ->will($this->returnValue($installation));
         $composer
             ->expects($this->once())
             ->method('getEventDispatcher')
-            ->willReturn($event);
+            ->will($this->returnValue($event));
         $composer
             ->expects($this->once())
             ->method('getAutoloadGenerator')
-            ->willReturn($autoload);
+            ->will($this->returnValue($autoload));
 
         $installer = $this->composer->getInstaller(); // test
 
@@ -311,11 +311,11 @@ class ComposerTest extends TestCaseWritable
         $this->factory
             ->expects($matcher ?: $this->once())
             ->method('createComposer')
-            ->willReturnCallback(function ($io) use ($that, $mock, $composer) {
+            ->will($this->returnCallback(function ($io) use ($that, $mock, $composer) {
                 // check IO from origin composer
                 $that->assertEquals($composer->getIO(), $io);
                 return $mock;
-            });
+            }));
         return $mock;
     }
 }

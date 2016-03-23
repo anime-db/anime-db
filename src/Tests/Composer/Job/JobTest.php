@@ -63,7 +63,7 @@ class JobTest extends TestCaseWritable
         $this->package
             ->expects($matcher ?: $this->once())
             ->method('getExtra')
-            ->willReturn($extra);
+            ->will($this->returnValue($extra));
         $this->package
             ->expects($matcher ?: $this->once())
             ->method('setExtra')
@@ -150,7 +150,7 @@ class JobTest extends TestCaseWritable
         $this->package
             ->expects($this->once())
             ->method('getName')
-            ->willReturn('foo/bar');
+            ->will($this->returnValue('foo/bar'));
         $this->assertEquals($this->root_dir.'vendor/foo/bar/', $this->job->getPackageDir());
     }
 
@@ -172,7 +172,7 @@ class JobTest extends TestCaseWritable
         $this->package
             ->expects($this->once())
             ->method('getName')
-            ->willReturn('demo-vendor/foo-bar-bundle');
+            ->will($this->returnValue('demo-vendor/foo-bar-bundle'));
 
         $this->assertNull($this->job->getPackageBundle());
     }
@@ -189,7 +189,7 @@ class JobTest extends TestCaseWritable
         $this->package
             ->expects($this->at(0))
             ->method('getExtra')
-            ->willReturn([]);
+            ->will($this->returnValue([]));
         $this->package
             ->expects($this->at(1))
             ->method('setExtra')
@@ -201,7 +201,7 @@ class JobTest extends TestCaseWritable
         $this->package
             ->expects($this->at(2))
             ->method('getExtra')
-            ->willReturn($this->default_extra);
+            ->will($this->returnValue($this->default_extra));
         $this->package
             ->expects($this->at(3))
             ->method('setExtra')
@@ -209,7 +209,7 @@ class JobTest extends TestCaseWritable
         $this->package
             ->expects($this->once())
             ->method('getName')
-            ->willReturn('anime-db/anime-db');
+            ->will($this->returnValue('anime-db/anime-db'));
 
         $this->assertEquals($bundle, $this->job->getPackageBundle());
     }
@@ -223,19 +223,19 @@ class JobTest extends TestCaseWritable
         $this->package
             ->expects($this->atLeastOnce())
             ->method('getName')
-            ->willReturn('foo/bar');
+            ->will($this->returnValue('foo/bar'));
         $this->package
             ->expects($this->atLeastOnce())
             ->method('getVersion')
-            ->willReturn('1.0.0');
+            ->will($this->returnValue('1.0.0'));
         $this->package
             ->expects($this->atLeastOnce())
             ->method('getPrettyVersion')
-            ->willReturn('1');
+            ->will($this->returnValue('1'));
         $this->package
             ->expects($this->atLeastOnce())
             ->method('getType')
-            ->willReturn('lib');
+            ->will($this->returnValue('lib'));
 
         $copy = $this->job->getPackageCopy(); // test
 

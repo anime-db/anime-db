@@ -88,7 +88,7 @@ class AddTest extends TestCaseWritable
         $this->container
             ->expects($this->once())
             ->method('getManipulator')
-            ->willReturn($manipulator)
+            ->will($this->returnValue($manipulator))
             ->with('routing');
 
         // test
@@ -134,16 +134,16 @@ class AddTest extends TestCaseWritable
         $package
             ->expects($this->atLeastOnce())
             ->method('getName')
-            ->willReturn('sensio/framework-extra-bundle');
+            ->will($this->returnValue('sensio/framework-extra-bundle'));
         $package
             ->expects($this->atLeastOnce())
             ->method('getExtra')
-            ->willReturn([
+            ->will($this->returnValue([
                 'anime-db-routing' => '',
                 'anime-db-config' => '',
                 'anime-db-bundle' => '\AnimeDb\Bundle\AnimeDbBundle\AnimeDbAnimeDbBundle',
                 'anime-db-migrations' => ''
-            ]);
+            ]));
 
         $job = new Add($package, $this->root_dir);
         $job->setContainer($this->container);
@@ -179,16 +179,16 @@ class AddTest extends TestCaseWritable
         $package
             ->expects($this->atLeastOnce())
             ->method('getName')
-            ->willReturn('foo/bar');
+            ->will($this->returnValue('foo/bar'));
         $package
             ->expects($this->atLeastOnce())
             ->method('getExtra')
-            ->willReturn([
+            ->will($this->returnValue([
                 'anime-db-routing' => $routing,
                 'anime-db-config' => '',
                 'anime-db-bundle' => $bundle,
                 'anime-db-migrations' => ''
-            ]);
+            ]));
 
         $job = new Add($package);
         $job->setContainer($this->container);

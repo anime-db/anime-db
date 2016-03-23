@@ -45,7 +45,7 @@ class DeliverEventsCommandTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('get')
             ->with('anime_db.event_dispatcher')
-            ->willReturn($dispatcher);
+            ->will($this->returnValue($dispatcher));
         $dispatcher
             ->expects($this->once())
             ->method('shippingDeferredEvents');

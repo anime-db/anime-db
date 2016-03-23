@@ -64,7 +64,7 @@ class StaticFilesTest extends \PHPUnit_Framework_TestCase
         $this->event
             ->expects($this->once())
             ->method('getRequestType')
-            ->willReturn(HttpKernelInterface::SUB_REQUEST);
+            ->will($this->returnValue(HttpKernelInterface::SUB_REQUEST));
         $this->event
             ->expects($this->never())
             ->method('getRequest');
@@ -77,11 +77,11 @@ class StaticFilesTest extends \PHPUnit_Framework_TestCase
         $request
             ->expects($this->once())
             ->method('getScriptName')
-            ->willReturn('/app_dev.php');
+            ->will($this->returnValue('/app_dev.php'));
         $request
             ->expects($this->once())
             ->method('getPathInfo')
-            ->willReturn('/no_file');
+            ->will($this->returnValue('/no_file'));
         $this->handle();
     }
 
@@ -91,7 +91,7 @@ class StaticFilesTest extends \PHPUnit_Framework_TestCase
         $request
             ->expects($this->atLeastOnce())
             ->method('getScriptName')
-            ->willReturn('/no_file');
+            ->will($this->returnValue('/no_file'));
         $this->handle('prod');
     }
 
@@ -123,20 +123,20 @@ class StaticFilesTest extends \PHPUnit_Framework_TestCase
         $request
             ->expects($this->once())
             ->method('getScriptName')
-            ->willReturn('/app_dev.php');
+            ->will($this->returnValue('/app_dev.php'));
         $request
             ->expects($this->once())
             ->method('getPathInfo')
-            ->willReturn($file);
+            ->will($this->returnValue($file));
         $this->event
             ->expects($this->once())
             ->method('setResponse')
-            ->willReturnCallback(function ($response) use ($that, $data, $mime) {
+            ->will($this->returnCallback(function ($response) use ($that, $data, $mime) {
                 $that->assertInstanceOf('\Symfony\Component\HttpFoundation\Response', $response);
                 $that->assertEquals($data, $response->getContent());
                 $that->assertTrue($response->headers->hasCacheControlDirective('public'));
                 $that->assertEquals($mime, $response->headers->get('Content-Type'));
-            });
+            }));
         $this->handle();
     }
 
@@ -156,11 +156,11 @@ class StaticFilesTest extends \PHPUnit_Framework_TestCase
         $request
             ->expects($this->atLeastOnce())
             ->method('getScriptName')
-            ->willReturn($filename);
+            ->will($this->returnValue($filename));
         $this->event
             ->expects($this->once())
             ->method('setResponse')
-            ->willReturnCallback(function ($response) use ($that, $data, $mime, $file) {
+            ->will($this->returnCallback(function ($response) use ($that, $data, $mime, $file) {
                 $that->assertInstanceOf('\Symfony\Component\HttpFoundation\Response', $response);
                 $that->assertEquals($data, $response->getContent());
                 $that->assertTrue($response->headers->hasCacheControlDirective('public'));
@@ -169,7 +169,7 @@ class StaticFilesTest extends \PHPUnit_Framework_TestCase
                 $that->assertTrue($response->headers->getCacheControlDirective('must-revalidate'));
                 $that->assertEquals(filemtime($file), $response->getLastModified()->getTimestamp());
                 $that->assertInstanceOf('\DateTime', $response->getExpires());
-            });
+            }));
         $this->handle('prod');
     }
 
@@ -184,26 +184,26 @@ class StaticFilesTest extends \PHPUnit_Framework_TestCase
         $request
             ->expects($this->atLeastOnce())
             ->method('getEtags')
-            ->willReturn(['*']);
+            ->will($this->returnValue(['*']));
         $request
             ->expects($this->atLeastOnce())
             ->method('getScriptName')
-            ->willReturn('/static');
+            ->will($this->returnValue('/static'));
         $request
             ->expects($this->atLeastOnce())
             ->method('isMethodSafe')
-            ->willReturn(true);
+            ->will($this->returnValue(true));
         $this->event
             ->expects($this->once())
             ->method('setResponse')
-            ->willReturnCallback(function ($response) use ($that, $file) {
+            ->will($this->returnCallback(function ($response) use ($that, $file) {
                 $that->assertInstanceOf('\Symfony\Component\HttpFoundation\Response', $response);
                 $that->assertEmpty($response->getContent());
                 $that->assertTrue($response->headers->hasCacheControlDirective('public'));
                 $that->assertEquals('"'.md5_file($file).'"', $response->headers->get('ETag'));
                 $that->assertTrue($response->headers->getCacheControlDirective('must-revalidate'));
                 $that->assertInstanceOf('\DateTime', $response->getExpires());
-            });
+            }));
         $this->handle('prod');
     }
 
@@ -225,11 +225,11 @@ class StaticFilesTest extends \PHPUnit_Framework_TestCase
         $this->event
             ->expects($this->once())
             ->method('getRequestType')
-            ->willReturn(HttpKernelInterface::MASTER_REQUEST);
+            ->will($this->returnValue(HttpKernelInterface::MASTER_REQUEST));
         $this->event
             ->expects($this->once())
             ->method('getRequest')
-            ->willReturn($request);
+            ->will($this->returnValue($request));
         return $request;
     }
 }
