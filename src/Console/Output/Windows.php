@@ -32,7 +32,7 @@ class Windows implements ConsoleOutputInterface
     /**
      * Do encode messages
      *
-     * @var boolean
+     * @var bool
      */
     private $encode = false;
 
@@ -114,7 +114,7 @@ class Windows implements ConsoleOutputInterface
     /**
      * The current verbosity of the output is quiet
      *
-     * @return boolean
+     * @return bool
      */
     public function isQuiet()
     {
@@ -124,7 +124,7 @@ class Windows implements ConsoleOutputInterface
     /**
      * The current verbosity of the output is verbose
      *
-     * @return boolean
+     * @return bool
      */
     public function isVerbose()
     {
@@ -134,7 +134,7 @@ class Windows implements ConsoleOutputInterface
     /**
      * The current verbosity of the output is very verbose
      *
-     * @return boolean
+     * @return bool
      */
     public function isVeryVerbose()
     {
@@ -144,7 +144,7 @@ class Windows implements ConsoleOutputInterface
     /**
      * The current verbosity of the output is debug
      *
-     * @return boolean
+     * @return bool
      */
     public function isDebug()
     {
@@ -162,7 +162,7 @@ class Windows implements ConsoleOutputInterface
     /**
      * Gets the decorated flag.
      *
-     * @return Boolean true if the output will decorate messages, false otherwise
+     * @return bool true if the output will decorate messages, false otherwise
      *
      * @api
      */

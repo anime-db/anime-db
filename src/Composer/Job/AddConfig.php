@@ -23,7 +23,7 @@ abstract class AddConfig extends Job
     /**
      * Job priority
      *
-     * @var integer
+     * @var int
      */
     const PRIORITY = self::PRIORITY_INSTALL;
 

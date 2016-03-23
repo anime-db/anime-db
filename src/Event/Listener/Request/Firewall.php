@@ -53,7 +53,7 @@ class Firewall
      *
      * @param string $addr
      *
-     * @return boolean
+     * @return bool
      */
     protected function isLocalHost($addr)
     {
@@ -65,7 +65,7 @@ class Firewall
      *
      * @param string $addr
      *
-     * @return boolean
+     * @return bool
      */
     protected function isLocalNetwork($addr)
     {

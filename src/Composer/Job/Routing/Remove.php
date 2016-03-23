@@ -21,7 +21,7 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 class Remove extends Job
 {
     /**
-     * @var integer
+     * @var int
      */
     const PRIORITY = self::PRIORITY_INSTALL;
 

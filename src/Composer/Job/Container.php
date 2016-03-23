@@ -155,7 +155,7 @@ class Container
      * @throws \RuntimeException
      *
      * @param string $cmd
-     * @param integer $timeout
+     * @param int $timeout
      */
     public function executeCommand($cmd, $timeout = 300)
     {

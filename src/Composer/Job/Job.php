@@ -23,28 +23,28 @@ abstract class Job
     /**
      * Preparation of \AppKernal to the initialization
      *
-     * @var integer
+     * @var int
      */
     const PRIORITY_INSTALL = 1;
 
     /**
      * Preparation of package to execute
      *
-     * @var integer
+     * @var int
      */
     const PRIORITY_INIT = 2;
 
     /**
      * Execute package
      *
-     * @var integer
+     * @var int
      */
     const PRIORITY_EXEC = 3;
 
     /**
      * Job priority
      *
-     * @var integer
+     * @var int
      */
     const PRIORITY = self::PRIORITY_EXEC;
 
@@ -144,7 +144,7 @@ abstract class Job
     /**
      * Get job priority
      *
-     * @return integer
+     * @return int
      */
     public function getPriority()
     {

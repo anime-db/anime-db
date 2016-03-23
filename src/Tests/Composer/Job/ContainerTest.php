@@ -113,7 +113,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     /**
      * Get job mock
      *
-     * @param integer $priority
+     * @param int $priority
      * @param array $order
      *
      * @return \PHPUnit_Framework_MockObject_MockObject

@@ -316,7 +316,7 @@ class ScriptHandler
      *
      * @param string $dir
      *
-     * @return boolean
+     * @return bool
      */
     protected static function isHaveMigrations($dir)
     {

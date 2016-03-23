@@ -130,7 +130,7 @@ class UpdateCommandTest extends TestCaseWritable
      *
      * @dataProvider getExecuteResult
      *
-     * @param integer $result
+     * @param int $result
      * @param string $message
      */
     public function testExecute($result, $message)
@@ -297,7 +297,7 @@ class UpdateCommandTest extends TestCaseWritable
      *
      * @param array $tag
      * @param string $current_version
-     * @param integer $result
+     * @param int $result
      *
      * @return \AnimeDb\Bundle\AnimeDbBundle\Command\UpdateCommand
      */

@@ -438,7 +438,7 @@ class ScriptHandlerTest extends TestCaseWritable
      *
      * @dataProvider isDecorated
      *
-     * @param boolean $decorated
+     * @param bool $decorated
      */
     public function testDeliverEvents($decorated)
     {
@@ -468,7 +468,7 @@ class ScriptHandlerTest extends TestCaseWritable
      *
      * @dataProvider isDecorated
      *
-     * @param boolean $decorated
+     * @param bool $decorated
      */
     public function testMigrateUp($decorated)
     {
@@ -538,7 +538,7 @@ class ScriptHandlerTest extends TestCaseWritable
      *
      * @dataProvider isDecorated
      *
-     * @param boolean $decorated
+     * @param bool $decorated
      */
     public function testMigrateDown($decorated)
     {
@@ -595,7 +595,7 @@ class ScriptHandlerTest extends TestCaseWritable
      *
      * @dataProvider isDecorated
      *
-     * @param boolean $decorated
+     * @param bool $decorated
      */
     public function testDumpAssets($decorated)
     {
@@ -621,7 +621,7 @@ class ScriptHandlerTest extends TestCaseWritable
      * Execute command
      *
      * @param string $command
-     * @param boolean $decorated
+     * @param bool $decorated
      * @param \PHPUnit_Framework_MockObject_Matcher_Invocation|null $matcher
      */
     protected function executeCommand(
@@ -651,7 +651,7 @@ class ScriptHandlerTest extends TestCaseWritable
      *
      * @dataProvider isDecorated
      *
-     * @param boolean $decorated
+     * @param bool $decorated
      */
     public function testAddPackageToKernelNoProd($decorated)
     {
@@ -667,7 +667,7 @@ class ScriptHandlerTest extends TestCaseWritable
      *
      * @dataProvider isDecorated
      *
-     * @param boolean $decorated
+     * @param bool $decorated
      */
     public function testAddPackageToKernel($decorated)
     {
@@ -693,9 +693,9 @@ class ScriptHandlerTest extends TestCaseWritable
     /**
      * Clear cache
      *
-     * @param integer $index
+     * @param int $index
      * @param string $env
-     * @param boolean $decorated
+     * @param bool $decorated
      */
     protected function clearCache($index, $env, $decorated)
     {

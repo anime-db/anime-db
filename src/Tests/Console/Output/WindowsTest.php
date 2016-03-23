@@ -115,11 +115,11 @@ class WindowsTest extends \PHPUnit_Framework_TestCase
      * @dataProvider getDataForWrite
      *
      * @param string $messages
-     * @param boolean $newline
-     * @param integer $type
+     * @param bool $newline
+     * @param int $type
      * @param string $expected_messages
-     * @param boolean $expected_newline
-     * @param integer $expected_type
+     * @param bool $expected_newline
+     * @param int $expected_type
      */
     public function testWrite(
         $messages,
@@ -328,8 +328,8 @@ class WindowsTest extends \PHPUnit_Framework_TestCase
      * @dataProvider getVerbosity
      *
      * @param string $method
-     * @param integer $verbosity
-     * @param boolean $expected
+     * @param int $verbosity
+     * @param bool $expected
      */
     public function testIsVerbosity($method, $verbosity, $expected)
     {
