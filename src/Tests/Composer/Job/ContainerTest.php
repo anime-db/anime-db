@@ -12,7 +12,6 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
-use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Test job container
@@ -27,32 +26,9 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
      */
     protected $container;
 
-    /**
-     * @var string
-     */
-    protected $tmp_dir = '';
-
-    /**
-     * @var Filesystem
-     */
-    protected $fs;
-
     protected function setUp()
     {
         $this->container = new Container(__DIR__.'/../../../../app/');
-
-        $this->fs = new Filesystem();
-        $this->tmp_dir = sys_get_temp_dir().'/test/';
-        if (!$this->fs->exists($this->tmp_dir.'bin/php/')) {
-            $this->fs->mkdir($this->tmp_dir.'bin/php/', 0777);
-        }
-        $this->fs->touch($this->tmp_dir.'bin/php/php.ini');
-    }
-
-    protected function tearDown()
-    {
-        $this->fs->chmod($this->tmp_dir, 0777);
-        $this->fs->remove($this->tmp_dir);
     }
 
     public function testGetEventDispatcher()
@@ -98,15 +74,6 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         $manipulator = $this->container->getManipulator($name);
         $this->assertInstanceOf($class, $manipulator);
         $this->assertEquals($manipulator, $this->container->getManipulator($name));
-    }
-
-    public function testGetManipulatorPhpIni()
-    {
-        $container = new Container($this->tmp_dir.'app');
-        $name = 'php.ini';
-        $manipulator = $container->getManipulator($name);
-        $this->assertInstanceOf('\AnimeDb\Bundle\AnimeDbBundle\Manipulator\PhpIni', $manipulator);
-        $this->assertEquals($manipulator, $container->getManipulator($name));
     }
 
     /**
