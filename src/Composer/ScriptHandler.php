@@ -28,6 +28,7 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel\Add as AddKernel;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel\Remove as RemoveKernel;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Add as AddRouting;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Remove as RemoveRouting;
+use AnimeDb\Bundle\AnimeDbBundle\Manipulator\PhpIni;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -255,6 +256,16 @@ class ScriptHandler
 
         if (!file_exists(self::getRootDir().'bundles.php')) {
             file_put_contents(self::getRootDir().'bundles.php', "<?php\nreturn [\n];");
+        }
+
+        // set memory_limit = 1G
+        if (file_exists(self::getRootDir().'/../bin/php/php.ini')) {
+            /* @var $manipulator PhpIni */
+            $manipulator = self::getContainer()->getManipulator('php.ini');
+            $limit = $manipulator->get('memory_limit');
+            if (!$limit || $manipulator->byteStringToInt($limit) < 1073741824) { // < 1G
+                $manipulator->set('memory_limit', '1G');
+            }
         }
     }
 
