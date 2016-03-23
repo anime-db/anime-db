@@ -10,7 +10,7 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config;
 
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\AddConfig;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\BaseAddConfig;
 use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config;
 
 /**
@@ -19,7 +19,7 @@ use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config;
  * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Add extends AddConfig
+class Add extends BaseAddConfig
 {
     public function execute()
     {

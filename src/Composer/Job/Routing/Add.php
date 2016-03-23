@@ -10,7 +10,7 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing;
 
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\AddConfig;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\BaseAddConfig;
 use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing;
 
 /**
@@ -19,7 +19,7 @@ use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing;
  * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Add extends AddConfig
+class Add extends BaseAddConfig
 {
     public function execute()
     {

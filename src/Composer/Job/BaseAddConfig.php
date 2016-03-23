@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-abstract class AddConfig extends Job
+abstract class BaseAddConfig extends Job
 {
     /**
      * @var int
@@ -27,8 +27,6 @@ abstract class AddConfig extends Job
     const PRIORITY = self::PRIORITY_INSTALL;
 
     /**
-     * TODO rename method. Using deprecated language feature PHP4 constructor
-     *
      * @param string $name
      * @param string $option
      */
