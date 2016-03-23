@@ -102,7 +102,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
 
     public function testGetManipulatorPhpIni()
     {
-        $container = new Container($this->tmp_dir.'/app/');
+        $container = new Container($this->tmp_dir.'app');
         $name = 'php.ini';
         $manipulator = $container->getManipulator($name);
         $this->assertInstanceOf('\AnimeDb\Bundle\AnimeDbBundle\Manipulator\PhpIni', $manipulator);
