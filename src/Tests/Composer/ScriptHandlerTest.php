@@ -656,7 +656,6 @@ class ScriptHandlerTest extends TestCaseWritable
     public function testAddPackageToKernelNoProd($decorated)
     {
         $this->clearCache(0, 'prod', $decorated);
-        $this->clearCache(1, 'test', $decorated);
         $this->clearCache(2, 'dev', $decorated);
 
         ScriptHandler::clearCache($this->event_command);
@@ -682,7 +681,6 @@ class ScriptHandlerTest extends TestCaseWritable
         touch($dir.'file2');
 
         $this->clearCache(0, 'prod', $decorated);
-        $this->clearCache(1, 'test', $decorated);
         $this->clearCache(2, 'dev', $decorated);
 
         ScriptHandler::clearCache($this->event_command);
