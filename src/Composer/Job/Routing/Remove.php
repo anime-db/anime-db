@@ -21,16 +21,10 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 class Remove extends Job
 {
     /**
-     * Job priority
-     *
      * @var integer
      */
     const PRIORITY = self::PRIORITY_INSTALL;
 
-    /**
-     * (non-PHPdoc)
-     * @see AnimeDb\Bundle\AnimeDbBundle\Composer\Job.Job::execute()
-     */
     public function execute()
     {
         /* @var $manipulator \AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing */

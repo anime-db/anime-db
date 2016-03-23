@@ -27,10 +27,6 @@ class Add extends Job
      */
     const PRIORITY = self::PRIORITY_INSTALL;
 
-    /**
-     * (non-PHPdoc)
-     * @see AnimeDb\Bundle\AnimeDbBundle\Composer\Job.Job::execute()
-     */
     public function execute()
     {
         if ($bundle = $this->getPackageBundle()) {

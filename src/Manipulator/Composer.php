@@ -54,8 +54,7 @@ class Composer extends FileContent
     }
 
     /**
-     * (non-PHPdoc)
-     * @see \AnimeDb\Bundle\AnimeDbBundle\Manipulator\FileContent::setContent()
+     * @param string $content
      */
     protected function setContent($content)
     {

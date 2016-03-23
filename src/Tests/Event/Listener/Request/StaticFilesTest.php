@@ -24,37 +24,25 @@ use Symfony\Component\Filesystem\Filesystem;
 class StaticFilesTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Event
-     *
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $event;
 
     /**
-     * Filesystem
-     *
      * @var \Symfony\Component\Filesystem\Filesystem
      */
     protected $fs;
 
     /**
-     * Root dir
-     *
      * @var string
      */
     protected $root_dir;
 
     /**
-     * Target dir
-     *
      * @var string
      */
     protected $target_dir;
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::setUp()
-     */
     protected function setUp()
     {
         $this->fs = new Filesystem();
@@ -66,18 +54,11 @@ class StaticFilesTest extends \PHPUnit_Framework_TestCase
         $this->fs->mkdir([$this->root_dir, $this->target_dir]);
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::tearDown()
-     */
     protected function tearDown()
     {
         $this->fs->remove(sys_get_temp_dir().'/tests/');
     }
 
-    /**
-     * Test on kernel request ignore
-     */
     public function testOnKernelRequestIgnore()
     {
         $this->event
@@ -90,9 +71,6 @@ class StaticFilesTest extends \PHPUnit_Framework_TestCase
         $this->handle();
     }
 
-    /**
-     * Test on kernel request dev
-     */
     public function testOnKernelRequestNoFileDev()
     {
         $request = $this->getRequest();
@@ -107,9 +85,6 @@ class StaticFilesTest extends \PHPUnit_Framework_TestCase
         $this->handle();
     }
 
-    /**
-     * Test on kernel request
-     */
     public function testOnKernelRequestNoFile()
     {
         $request = $this->getRequest();
@@ -121,8 +96,6 @@ class StaticFilesTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Get files
-     *
      * @return array
      */
     public function getFiles()
@@ -136,8 +109,6 @@ class StaticFilesTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test on kernel request dev
-     *
      * @dataProvider getFiles
      *
      * @param string $file
@@ -170,8 +141,6 @@ class StaticFilesTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test on kernel request
-     *
      * @dataProvider getFiles
      *
      * @param string $filename
@@ -204,9 +173,6 @@ class StaticFilesTest extends \PHPUnit_Framework_TestCase
         $this->handle('prod');
     }
 
-    /**
-     * Test on kernel request cache
-     */
     public function testOnKernelRequestCache()
     {
         $that = $this;
@@ -242,8 +208,6 @@ class StaticFilesTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Handle
-     *
      * @param string $env
      */
     protected function handle($env = 'test')
@@ -253,8 +217,6 @@ class StaticFilesTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Get request
-     *
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
     protected function getRequest()

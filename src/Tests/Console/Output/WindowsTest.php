@@ -42,10 +42,6 @@ class WindowsTest extends \PHPUnit_Framework_TestCase
      */
     protected $charset = [];
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::setUp()
-     */
     protected function setUp()
     {
         if (!extension_loaded('mbstring')) {
@@ -58,10 +54,6 @@ class WindowsTest extends \PHPUnit_Framework_TestCase
         $this->windows = new Windows($this->output);
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::tearDown()
-     */
     public function tearDown()
     {
         parent::tearDown();

@@ -36,20 +36,12 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
      */
     protected $root_dir;
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::setUp()
-     */
     protected function setUp()
     {
         $this->fs = new Filesystem();
         $this->root_dir = sys_get_temp_dir().'/tests/';
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::tearDown()
-     */
     protected function tearDown()
     {
         $this->fs->remove($this->root_dir);

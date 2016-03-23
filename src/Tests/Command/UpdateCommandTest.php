@@ -79,10 +79,6 @@ class UpdateCommandTest extends TestCaseWritable
      */
     protected $target;
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::setUp()
-     */
     protected function setUp()
     {
         parent::setUp();

@@ -71,10 +71,6 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
      */
     protected $fs;
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::setUp()
-     */
     protected function setUp()
     {
         parent::setUp();
@@ -97,10 +93,6 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
             ->willReturn($this->event_dir);
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::tearDown()
-     */
     protected function tearDown()
     {
         parent::tearDown();

@@ -31,10 +31,6 @@ class ManipulateTest extends TestCaseWritable
      */
     protected $container;
 
-    /**
-     * (non-PHPdoc)
-     * @see \AnimeDb\Bundle\AnimeDbBundle\Tests\TestCaseWritable::setUp()
-     */
     protected function setUp()
     {
         parent::setUp();

@@ -19,8 +19,7 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 class AppKernel extends Kernel
 {
     /**
-     * (non-PHPdoc)
-     * @see Symfony\Component\HttpKernel.KernelInterface::registerBundles()
+     * @return array
      */
     public function registerBundles()
     {
@@ -50,8 +49,7 @@ class AppKernel extends Kernel
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Symfony\Component\HttpKernel.KernelInterface::registerContainerConfiguration()
+     * @param LoaderInterface $loader
      */
     public function registerContainerConfiguration(LoaderInterface $loader)
     {

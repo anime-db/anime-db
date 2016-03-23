@@ -77,14 +77,9 @@ class ScriptHandlerTest extends TestCaseWritable
      */
     protected $default_root_dir;
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::setUp()
-     */
     protected function setUp()
     {
         parent::setUp();
-
         $this->composer = $this->getMock('\Composer\Composer');
         $this->io = $this->getMock('\Composer\IO\IOInterface');
         $this->package = $this->getMockBuilder('\Composer\Package\Package')
@@ -112,10 +107,6 @@ class ScriptHandlerTest extends TestCaseWritable
 
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::tearDown()
-     */
     protected function tearDown()
     {
         parent::tearDown();

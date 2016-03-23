@@ -22,10 +22,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DeliverEventsCommand extends ContainerAwareCommand
 {
-    /**
-     * (non-PHPdoc)
-     * @see Symfony\Component\Console\Command.Command::configure()
-     */
     protected function configure()
     {
         $this->setName('animedb:deliver-events')
@@ -33,8 +29,10 @@ class DeliverEventsCommand extends ContainerAwareCommand
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Symfony\Component\Console\Command.Command::execute()
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     *
+     * @return bool
      */
     protected function execute(InputInterface $input, OutputInterface $output) {
         $this->getContainer()->get('anime_db.event_dispatcher')->shippingDeferredEvents();

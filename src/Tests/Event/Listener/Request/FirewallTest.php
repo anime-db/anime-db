@@ -37,10 +37,6 @@ class FirewallTest extends \PHPUnit_Framework_TestCase
      */
     protected $event;
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::setUp()
-     */
     protected function setUp()
     {
         $this->event = $this->getMockBuilder('\Symfony\Component\HttpKernel\Event\GetResponseEvent')

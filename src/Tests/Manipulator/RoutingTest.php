@@ -35,10 +35,6 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
      */
     protected $filename;
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::setUp()
-     */
     protected function setUp()
     {
         parent::setUp();
@@ -46,10 +42,6 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
         $this->manipulator = new Routing($this->filename);
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::tearDown()
-     */
     protected function tearDown()
     {
         parent::tearDown();

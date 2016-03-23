@@ -38,10 +38,6 @@ class ProxyMigrationTest extends \PHPUnit_Framework_TestCase
      */
     protected $schema;
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::setUp()
-     */
     protected function setUp()
     {
         parent::setUp();

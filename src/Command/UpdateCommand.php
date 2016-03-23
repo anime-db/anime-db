@@ -29,10 +29,6 @@ use Composer\IO\ConsoleIO;
  */
 class UpdateCommand extends ContainerAwareCommand
 {
-    /**
-     * (non-PHPdoc)
-     * @see Symfony\Component\Console\Command.Command::configure()
-     */
     protected function configure()
     {
         $this->setName('animedb:update')
@@ -40,8 +36,10 @@ class UpdateCommand extends ContainerAwareCommand
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Symfony\Component\Console\Command.Command::execute()
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     *
+     * @return bool
      */
     protected function execute(InputInterface $input, OutputInterface $output) {
         /* @var $composer \AnimeDb\Bundle\AnimeDbBundle\Composer\Composer */

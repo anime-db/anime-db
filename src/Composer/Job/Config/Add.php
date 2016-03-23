@@ -20,10 +20,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\AddConfig;
  */
 class Add extends AddConfig
 {
-    /**
-     * (non-PHPdoc)
-     * @see \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\AddConfig::execute()
-     */
     public function execute()
     {
         $this->addConfig('config', 'anime-db-config');

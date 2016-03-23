@@ -27,10 +27,6 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
      */
     protected $container;
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::setUp()
-     */
     protected function setUp()
     {
         $this->container = new Container(__DIR__.'/../../../../app/');

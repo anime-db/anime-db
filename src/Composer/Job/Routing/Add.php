@@ -20,10 +20,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\AddConfig;
  */
 class Add extends AddConfig
 {
-    /**
-     * (non-PHPdoc)
-     * @see \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\AddConfig::execute()
-     */
     public function execute()
     {
         // This package has a file routing.xml, which contains the list of services,
@@ -34,8 +30,6 @@ class Add extends AddConfig
     }
 
     /**
-     * Do add config
-     *
      * @param string $bundle
      * @param string $extension
      * @param string $path

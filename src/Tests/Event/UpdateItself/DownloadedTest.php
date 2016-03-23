@@ -48,10 +48,6 @@ class DownloadedTest extends \PHPUnit_Framework_TestCase
      */
     protected $event;
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::setUp()
-     */
     protected function setUp()
     {
         parent::setUp();
