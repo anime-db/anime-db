@@ -62,7 +62,23 @@ class PhpIni implements ManipulatorInterface
     protected function load()
     {
         if (!$this->ini) {
-            $this->ini = (array)parse_ini_file($this->filename);
+            $ini = file_get_contents($this->filename);
+            $ini = str_replace(["\r\n", "\r"], "\n", $ini);
+            $ini = explode("\n", $ini);
+
+            foreach ($ini as $row) {
+                if ($row && ($row = parse_ini_string($row, false, INI_SCANNER_RAW))) {
+                    foreach ($row as $key => $value) {
+                        if (!isset($this->ini[$key])) {
+                            $this->ini[$key] = $value;
+                        } elseif (!is_array($this->ini[$key])) {
+                            $this->ini[$key] = [ $this->ini[$key], $value ];
+                        } else {
+                            $this->ini[$key][] = $value;
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -71,7 +87,13 @@ class PhpIni implements ManipulatorInterface
         if ($this->ini) {
             $content = '';
             foreach ($this->ini as $key => $value) {
-                $content .= $key.'='.$value.PHP_EOL;
+                if (is_array($value)) {
+                    foreach ($value as $v) {
+                        $content .= $key.' = '.$v.PHP_EOL;
+                    }
+                } else {
+                    $content .= $key.' = '.$value.PHP_EOL;
+                }
             }
 
             file_put_contents($this->filename, $content);
