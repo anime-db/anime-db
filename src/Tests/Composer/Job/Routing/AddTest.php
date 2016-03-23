@@ -12,6 +12,8 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job\Routing;
 
 use AnimeDb\Bundle\AnimeDbBundle\Tests\TestCaseWritable;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Add;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
+use Composer\Package\Package;
 
 /**
  * Test job routing add
@@ -22,23 +24,20 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Add;
 class AddTest extends TestCaseWritable
 {
     /**
-     * Container
-     *
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|Container
      */
     protected $container;
 
     protected function setUp()
     {
         parent::setUp();
-        $this->container = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container')
+        $this->container = $this
+            ->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container')
             ->disableOriginalConstructor()
             ->getMock();
     }
 
     /**
-     * Get package config
-     *
      * @return array
      */
     public function getPackageConfig()
@@ -63,8 +62,6 @@ class AddTest extends TestCaseWritable
     }
 
     /**
-     * Test execute
-     *
      * @dataProvider getPackageConfig
      *
      * @param string $routing
@@ -78,7 +75,8 @@ class AddTest extends TestCaseWritable
         } else {
             $this->touchConfig('/src'.$path.'.'.$ext);
         }
-        $manipulator = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing')
+        $manipulator = $this
+            ->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing')
             ->disableOriginalConstructor()
             ->getMock();
         $manipulator
@@ -95,9 +93,6 @@ class AddTest extends TestCaseWritable
         $this->execute($routing);
     }
 
-    /**
-     * Test execute no config
-     */
     public function testExecuteNoConfig()
     {
         $this->touchConfig('/undefined');
@@ -128,7 +123,9 @@ class AddTest extends TestCaseWritable
      */
     public function testExecuteIgnoreBundle()
     {
-        $package = $this->getMockBuilder('\Composer\Package\Package')
+        /* @var $package \PHPUnit_Framework_MockObject_MockObject|Package */
+        $package = $this
+            ->getMockBuilder('\Composer\Package\Package')
             ->disableOriginalConstructor()
             ->getMock();
         $package
@@ -152,8 +149,6 @@ class AddTest extends TestCaseWritable
     }
 
     /**
-     * Touch config
-     *
      * @param string $filename
      */
     protected function touchConfig($filename)
@@ -164,8 +159,6 @@ class AddTest extends TestCaseWritable
     }
 
     /**
-     * Execute job
-     *
      * @param string $routing
      * @param string $bundle
      */
@@ -173,7 +166,9 @@ class AddTest extends TestCaseWritable
         $routing = '',
         $bundle = '\AnimeDb\Bundle\AnimeDbBundle\AnimeDbAnimeDbBundle'
     ) {
-        $package = $this->getMockBuilder('\Composer\Package\Package')
+        /* @var $package \PHPUnit_Framework_MockObject_MockObject|Package */
+        $package = $this
+            ->getMockBuilder('\Composer\Package\Package')
             ->disableOriginalConstructor()
             ->getMock();
         $package

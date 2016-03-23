@@ -11,6 +11,7 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Console\Output;
 
 use AnimeDb\Bundle\AnimeDbBundle\Console\Output\Windows;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -22,16 +23,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 class WindowsTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Console output
-     *
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|ConsoleOutputInterface
      */
     protected $output;
 
     /**
-     * Windows output
-     *
-     * @var \AnimeDb\Bundle\AnimeDbBundle\Console\Output\Windows
+     * @var Windows
      */
     protected $windows;
 
@@ -48,7 +45,6 @@ class WindowsTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('Extension "mbstring" is not loaded');
         }
 
-        parent::setUp();
         $this->charset = mb_detect_order();
         $this->output = $this->getMock('\Symfony\Component\Console\Output\ConsoleOutputInterface');
         $this->windows = new Windows($this->output);
@@ -56,13 +52,9 @@ class WindowsTest extends \PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
-        parent::tearDown();
         mb_detect_order($this->charset);
     }
 
-    /**
-     * Test change mb_detect_order
-     */
     public function testChangeDetectOrder()
     {
         mb_detect_order(['UTF-8']);
@@ -75,8 +67,6 @@ class WindowsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Get data for write
-     *
      * @return array
      */
     public function getDataForWrite()
@@ -110,8 +100,6 @@ class WindowsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test write
-     *
      * @dataProvider getDataForWrite
      *
      * @param string $messages
@@ -137,8 +125,6 @@ class WindowsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Get data for write line
-     *
      * @return array
      */
     public function getDataForWriteLn()
@@ -166,8 +152,6 @@ class WindowsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test write line
-     *
      * @dataProvider getDataForWriteLn
      *
      * @param string $messages
@@ -184,8 +168,6 @@ class WindowsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Get data for proxy methods
-     *
      * @return array
      */
     public function getProxyMethods()
@@ -201,8 +183,6 @@ class WindowsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test proxy methods
-     *
      * @dataProvider getProxyMethods
      *
      * @param string $set
@@ -227,8 +207,6 @@ class WindowsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Get verbosity
-     *
      * @return array
      */
     public function getVerbosity()
@@ -323,8 +301,6 @@ class WindowsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test is verbosity
-     *
      * @dataProvider getVerbosity
      *
      * @param string $method

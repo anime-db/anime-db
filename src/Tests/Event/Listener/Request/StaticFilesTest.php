@@ -12,6 +12,8 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Event\Listener\Request;
 
 use AnimeDb\Bundle\AnimeDbBundle\Event\Listener\Request\StaticFiles;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -24,12 +26,12 @@ use Symfony\Component\Filesystem\Filesystem;
 class StaticFilesTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|GetResponseEvent
      */
     protected $event;
 
     /**
-     * @var \Symfony\Component\Filesystem\Filesystem
+     * @var Filesystem
      */
     protected $fs;
 
@@ -46,7 +48,8 @@ class StaticFilesTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->fs = new Filesystem();
-        $this->event = $this->getMockBuilder('\Symfony\Component\HttpKernel\Event\GetResponseEvent')
+        $this->event = $this
+            ->getMockBuilder('\Symfony\Component\HttpKernel\Event\GetResponseEvent')
             ->disableOriginalConstructor()
             ->getMock();
         $this->root_dir = sys_get_temp_dir().'/tests/target';
@@ -132,6 +135,7 @@ class StaticFilesTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('setResponse')
             ->will($this->returnCallback(function ($response) use ($that, $data, $mime) {
+                /* @var $response Response */
                 $that->assertInstanceOf('\Symfony\Component\HttpFoundation\Response', $response);
                 $that->assertEquals($data, $response->getContent());
                 $that->assertTrue($response->headers->hasCacheControlDirective('public'));
@@ -161,6 +165,7 @@ class StaticFilesTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('setResponse')
             ->will($this->returnCallback(function ($response) use ($that, $data, $mime, $file) {
+                /* @var $response Response */
                 $that->assertInstanceOf('\Symfony\Component\HttpFoundation\Response', $response);
                 $that->assertEquals($data, $response->getContent());
                 $that->assertTrue($response->headers->hasCacheControlDirective('public'));
@@ -197,6 +202,7 @@ class StaticFilesTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('setResponse')
             ->will($this->returnCallback(function ($response) use ($that, $file) {
+                /* @var $response Response */
                 $that->assertInstanceOf('\Symfony\Component\HttpFoundation\Response', $response);
                 $that->assertEmpty($response->getContent());
                 $that->assertTrue($response->headers->hasCacheControlDirective('public'));
@@ -230,6 +236,7 @@ class StaticFilesTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('getRequest')
             ->will($this->returnValue($request));
+
         return $request;
     }
 }

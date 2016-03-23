@@ -21,22 +21,16 @@ use Symfony\Component\Filesystem\Filesystem;
 abstract class TestCaseWritable extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Root dir
-     *
      * @var string
      */
     protected $root_dir;
 
     /**
-     * Filesystem
-     *
-     * @var \Symfony\Component\Filesystem\Filesystem
+     * @var Filesystem
      */
     protected $fs;
 
     /**
-     * Construct
-     *
      * @param string $name
      * @param array $data
      * @param string $dataName

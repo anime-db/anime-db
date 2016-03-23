@@ -22,35 +22,27 @@ use Symfony\Component\Yaml\Yaml;
 class ConfigTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Manipulator
-     *
-     * @var \AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config
+     * @var Config
      */
     protected $manipulator;
 
     /**
-     * Filename
-     *
      * @var string
      */
     protected $filename;
 
     protected function setUp()
     {
-        parent::setUp();
         $this->filename = tempnam(sys_get_temp_dir(), 'config');
         $this->manipulator = new Config($this->filename);
     }
 
     protected function tearDown()
     {
-        parent::tearDown();
         @unlink($this->filename);
     }
 
     /**
-     * Get data for add resource
-     *
      * @return array
      */
     public function getDataForAddResource()
@@ -114,8 +106,6 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test add resource
-     *
      * @dataProvider getDataForAddResource
      *
      * @param string $bundle
@@ -134,8 +124,6 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Get data for remove resource
-     *
      * @return array
      */
     public function getDataForRemoveResource()
@@ -169,8 +157,6 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test add resource
-     *
      * @dataProvider getDataForRemoveResource
      *
      * @param string $bundle

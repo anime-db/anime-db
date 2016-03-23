@@ -12,6 +12,7 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Event\Listener;
 
 use AnimeDb\Bundle\AnimeDbBundle\Event\Listener\UpdateItself;
+use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -23,29 +24,21 @@ use Symfony\Component\Filesystem\Filesystem;
 class UpdateItselfTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Listener
-     *
-     * @var \AnimeDb\Bundle\AnimeDbBundle\Event\Listener\UpdateItself
+     * @var UpdateItself
      */
     protected $listener;
 
     /**
-     * Root dir
-     *
      * @var string
      */
     protected $root_dir;
 
     /**
-     * Event dir
-     *
      * @var string
      */
     protected $event_dir;
 
     /**
-     * Link to monitor archive
-     *
      * @var string
      */
     protected $monitor;
@@ -53,27 +46,22 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
     /**
      * ZipArchive
      *
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|\ZipArchive
      */
     protected $zip;
 
     /**
-     * Event
-     *
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|Downloaded
      */
     protected $event;
 
     /**
-     * Filesystem
-     *
-     * @var \Symfony\Component\Filesystem\Filesystem
+     * @var Filesystem
      */
     protected $fs;
 
     protected function setUp()
     {
-        parent::setUp();
         $this->fs = new Filesystem();
         // real path /foo/
         $this->root_dir = sys_get_temp_dir().'/tests/foo/bar/';
@@ -84,7 +72,8 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
 
         $this->listener = new UpdateItself($this->fs, $this->zip, $this->root_dir, $this->monitor);
 
-        $this->event = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded')
+        $this->event = $this
+            ->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded')
             ->disableOriginalConstructor()
             ->getMock();
         $this->event
@@ -95,14 +84,10 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
 
     protected function tearDown()
     {
-        parent::tearDown();
         $this->fs->remove(sys_get_temp_dir().'/tests/');
         @unlink(sys_get_temp_dir().'/'.basename($this->monitor));
     }
 
-    /**
-     * Test merge composer requirements
-     */
     public function testOnAppDownloadedMergeComposerRequirements()
     {
         $composer = json_encode([
@@ -120,9 +105,6 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
         $this->assertFileEquals($this->root_dir.'/../composer.json', $this->event_dir.'/composer.json');
     }
 
-    /**
-     * Test do merge composer requirements
-     */
     public function testOnAppDownloadedMergeComposerRequirementsMerge()
     {
         $old_composer = [
@@ -150,9 +132,6 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * Test merge configs
-     */
     public function testOnAppDownloadedMergeConfigs()
     {
         $files = [
@@ -171,9 +150,6 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    /**
-     * Test change sccess to shell files
-     */
     public function testOnAppDownloadedChangeAccessToFiles()
     {
         if (defined('PHP_WINDOWS_VERSION_BUILD')) {
@@ -194,9 +170,6 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    /**
-     * Test remove old files on merge bin run
-     */
     public function testOnAppDownloadedMergeBinRunRemoveOld()
     {
         $files = [
@@ -220,9 +193,6 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    /**
-     * Test install monitor
-     */
     public function testOnAppDownloadedMergeBinRunInstallMonitor()
     {
         if (!defined('PHP_WINDOWS_VERSION_BUILD')) {
@@ -245,8 +215,6 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test failed unzip monitor
-     *
      * @expectedException \RuntimeException
      */
     public function testOnAppDownloadedMergeBinRunFailedInstallMonitor()
@@ -262,9 +230,6 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
         $this->listener->onAppDownloadedMergeBinRun($this->event); // test
     }
 
-    /**
-     * Test merge config.ini
-     */
     public function testOnAppDownloadedMergeBinRun()
     {
         if (!defined('PHP_WINDOWS_VERSION_BUILD')) {
@@ -286,24 +251,6 @@ php='.UpdateItself::DEFAULT_PHP.'
     }
 
     /**
-     * Test merge bin service
-     *
-     * @dataProvider getService
-     */
-    public function testOnAppDownloadedMergeBinService($root_file, $root_code, $event_code)
-    {
-        $this->fs->mkdir($this->root_dir.'../bin/');
-        file_put_contents($root_file, $root_code);
-        file_put_contents($this->event_dir.'AnimeDB', $event_code);
-
-        $this->listener->onAppDownloadedMergeBinService($this->event); // test
-
-        $this->assertFileEquals($root_file, $this->event_dir.'AnimeDB');
-    }
-
-    /**
-     * Data provider service
-     *
      * @return array
      */
     public function getService()
@@ -329,8 +276,24 @@ path=.
     }
 
     /**
-     * Init files
+     * @dataProvider getService
      *
+     * @param string $root_file
+     * @param string $root_code
+     * @param string $event_code
+     */
+    public function testOnAppDownloadedMergeBinService($root_file, $root_code, $event_code)
+    {
+        $this->fs->mkdir($this->root_dir.'../bin/');
+        file_put_contents($root_file, $root_code);
+        file_put_contents($this->event_dir.'AnimeDB', $event_code);
+
+        $this->listener->onAppDownloadedMergeBinService($this->event); // test
+
+        $this->assertFileEquals($root_file, $this->event_dir.'AnimeDB');
+    }
+
+    /**
      * @param string[] $files
      * @param string $dir
      */

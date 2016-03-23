@@ -11,6 +11,8 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Command;
 
 use AnimeDb\Bundle\AnimeDbBundle\Command\DeliverEventsCommand;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Test deliver events command
@@ -20,9 +22,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Command\DeliverEventsCommand;
  */
 class DeliverEventsCommandTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * Test configure
-     */
     public function testConfigure()
     {
         $command = new DeliverEventsCommand();
@@ -30,25 +29,28 @@ class DeliverEventsCommandTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($command->getDescription());
     }
 
-    /**
-     * Test execute
-     */
     public function testExecute()
     {
+        /* @var $input \PHPUnit_Framework_MockObject_MockObject|InputInterface */
         $input = $this->getMock('\Symfony\Component\Console\Input\InputInterface');
+
+        /* @var $output \PHPUnit_Framework_MockObject_MockObject|OutputInterface */
         $output = $this->getMock('\Symfony\Component\Console\Output\OutputInterface');
-        $dispatcher = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher')
+
+        $dispatcher = $this
+            ->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher')
             ->disableOriginalConstructor()
             ->getMock();
+        $dispatcher
+            ->expects($this->once())
+            ->method('shippingDeferredEvents');
+
         $container = $this->getMock('\Symfony\Component\DependencyInjection\ContainerInterface');
         $container
             ->expects($this->once())
             ->method('get')
             ->with('anime_db.event_dispatcher')
             ->will($this->returnValue($dispatcher));
-        $dispatcher
-            ->expects($this->once())
-            ->method('shippingDeferredEvents');
 
         $command = new DeliverEventsCommand();
         $command->setContainer($container);

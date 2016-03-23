@@ -11,6 +11,7 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job\Migrate;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Down;
+use Composer\Package\Package;
 
 /**
  * Test job migrate down
@@ -21,8 +22,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Down;
 class DownTest extends TestCase
 {
     /**
-     * Test create proxy migrations
-     *
      * @dataProvider getMigrations
      *
      * @param string $config
@@ -52,13 +51,11 @@ class DownTest extends TestCase
     }
 
     /**
-     * Get job
+     * @param \PHPUnit_Framework_MockObject_MockObject|Package $package
      *
-     * @param \PHPUnit_Framework_MockObject_MockObject $package
-     *
-     * @return \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Down
+     * @return Down
      */
-    protected function getJob(\PHPUnit_Framework_MockObject_MockObject $package)
+    protected function getJob($package)
     {
         return (new Down($package))->setRootDir($this->root_dir);
     }

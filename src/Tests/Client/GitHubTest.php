@@ -11,6 +11,7 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Client;
 
 use AnimeDb\Bundle\AnimeDbBundle\Client\GitHub;
+use Guzzle\Http\Client;
 
 /**
  * Test client GitHub
@@ -34,9 +35,6 @@ class GitHubTest extends \PHPUnit_Framework_TestCase
      */
     protected $repository = 'foo/bar';
 
-    /**
-     * Test get tags
-     */
     public function testGetTags()
     {
         $expected = $this->getTags()[0][0];
@@ -44,8 +42,6 @@ class GitHubTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Get tags
-     *
      * @return array
      */
     public function getTags()
@@ -104,8 +100,6 @@ class GitHubTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get last release
-     *
      * @dataProvider getTags
      *
      * @param array $list
@@ -117,18 +111,18 @@ class GitHubTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Get GitHub client
-     *
      * @param array $expected
      *
-     * @return \AnimeDb\Bundle\AnimeDbBundle\Client\GitHub
+     * @return GitHub
      */
     protected function getClient(array $expected)
     {
         $request = $this->getMock('\Guzzle\Http\Message\RequestInterface');
-        $response = $this->getMockBuilder('\Guzzle\Http\Message\Response')
+        $response = $this
+            ->getMockBuilder('\Guzzle\Http\Message\Response')
             ->disableOriginalConstructor()
             ->getMock();
+        /* @var $client \PHPUnit_Framework_MockObject_MockObject|Client */
         $client = $this->getMock('\Guzzle\Http\Client');
         $client
             ->expects($this->once())
@@ -149,6 +143,7 @@ class GitHubTest extends \PHPUnit_Framework_TestCase
             ->method('getBody')
             ->will($this->returnValue(json_encode($expected)))
             ->with(true);
+
         return new GitHub($this->api_host, $client);
     }
 }

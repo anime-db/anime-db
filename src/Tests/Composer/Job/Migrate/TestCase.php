@@ -10,8 +10,11 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job\Migrate;
 
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Migrate;
 use AnimeDb\Bundle\AnimeDbBundle\Tests\TestCaseWritable;
 use Symfony\Component\Yaml\Yaml;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
+use Composer\Package\Package;
 
 /**
  * Test job migrate down
@@ -22,31 +25,25 @@ use Symfony\Component\Yaml\Yaml;
 abstract class TestCase extends TestCaseWritable
 {
     /**
-     * Container
-     *
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|Container
      */
     protected $container;
 
     protected function setUp()
     {
         parent::setUp();
-        $this->container = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container')
+        $this->container = $this
+            ->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container')
             ->disableOriginalConstructor()
             ->getMock();
     }
 
-    /**
-     * Test no config
-     */
     public function testNoConfig()
     {
         $this->execute(); // test
     }
 
     /**
-     * Get migrations
-     *
      * @return array
      */
     public function getMigrations()
@@ -59,8 +56,6 @@ abstract class TestCase extends TestCaseWritable
     }
 
     /**
-     * Put config file
-     *
      * @param string $file
      */
     protected function putConfig($file)
@@ -83,8 +78,6 @@ abstract class TestCase extends TestCaseWritable
     }
 
     /**
-     * Execute job
-     *
      * @param string $migrations
      * @param string $bundle
      */
@@ -92,7 +85,8 @@ abstract class TestCase extends TestCaseWritable
         $migrations = '',
         $bundle = '\AnimeDb\Bundle\AnimeDbBundle\AnimeDbAnimeDbBundle'
     ) {
-        $package = $this->getMockBuilder('\Composer\Package\Package')
+        $package = $this
+            ->getMockBuilder('\Composer\Package\Package')
             ->disableOriginalConstructor()
             ->getMock();
         $package
@@ -116,11 +110,9 @@ abstract class TestCase extends TestCaseWritable
     }
 
     /**
-     * Get job
+     * @param \PHPUnit_Framework_MockObject_MockObject|Package $package
      *
-     * @param \PHPUnit_Framework_MockObject_MockObject $package
-     *
-     * @return \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Migrate
+     * @return Migrate
      */
-    abstract protected function getJob(\PHPUnit_Framework_MockObject_MockObject $package);
+    abstract protected function getJob($package);
 }

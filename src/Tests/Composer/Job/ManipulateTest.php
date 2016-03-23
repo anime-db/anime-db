@@ -10,6 +10,8 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job;
 
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 use AnimeDb\Bundle\AnimeDbBundle\Tests\TestCaseWritable;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config\Remove as RemoveConfig;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel\Add as AddKernel;
@@ -25,23 +27,20 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Remove as RemoveRouting;
 class ManipulateTest extends TestCaseWritable
 {
     /**
-     * Container
-     *
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|Container
      */
     protected $container;
 
     protected function setUp()
     {
         parent::setUp();
-        $this->container = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container')
+        $this->container = $this
+            ->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container')
             ->disableOriginalConstructor()
             ->getMock();
     }
 
     /**
-     * Get success add jobs
-     *
      * @return array
      */
     public function getSuccessAddJobs()
@@ -124,8 +123,6 @@ class ManipulateTest extends TestCaseWritable
     }
 
     /**
-     * Get no add jobs
-     *
      * @return array
      */
     public function getNoAddJobs()
@@ -177,7 +174,8 @@ class ManipulateTest extends TestCaseWritable
         \PHPUnit_Framework_MockObject_Matcher_Invocation $matcher,
         $bundle = '\AnimeDb\Bundle\AnimeDbBundle\AnimeDbAnimeDbBundle'
     ) {
-        $package = $this->getMockBuilder('\Composer\Package\Package')
+        $package = $this
+            ->getMockBuilder('\Composer\Package\Package')
             ->disableOriginalConstructor()
             ->getMock();
         $package
@@ -194,6 +192,7 @@ class ManipulateTest extends TestCaseWritable
                 'anime-db-migrations' => ''
             ]));
 
+        /* @var $job Job */
         $job = $get_job($package, $this->root_dir);
         $job->setContainer($this->container);
         $job->register();
@@ -201,8 +200,6 @@ class ManipulateTest extends TestCaseWritable
     }
 
     /**
-     * Get manipulator
-     *
      * @param string $class
      * @param string $method
      * @param string[] $args
@@ -211,13 +208,15 @@ class ManipulateTest extends TestCaseWritable
      */
     protected function getManipulator($class, $method, array $args = [])
     {
-        $manipulator = $this->getMockBuilder($class)
+        $manipulator = $this
+            ->getMockBuilder($class)
             ->disableOriginalConstructor()
             ->getMock();
         $invocation = $manipulator
             ->expects($this->once())
             ->method($method);
         call_user_func_array([$invocation, 'with'], $args);
+
         return $manipulator;
     }
 }

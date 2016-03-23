@@ -26,8 +26,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Updated as UpdatedUpdateItse
 class GetPackageTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Get events
-     *
      * @return array
      */
     public function getEvents()
@@ -73,8 +71,6 @@ class GetPackageTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get package
-     *
      * @dataProvider getEvents
      *
      * @param \Closure $get_event
@@ -82,9 +78,11 @@ class GetPackageTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetPackage(\Closure $get_event, $package)
     {
-        $package = $this->getMockBuilder($package)
+        $package = $this
+            ->getMockBuilder($package)
             ->disableOriginalConstructor()
             ->getMock();
+        /* @var $event InstalledPackage */
         $event = $get_event($package);
         $this->assertInstanceOf('\Symfony\Component\EventDispatcher\Event', $event);
         $this->assertEquals($package, $event->getPackage());

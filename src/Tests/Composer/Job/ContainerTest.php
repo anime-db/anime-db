@@ -11,6 +11,7 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 
 /**
  * Test job container
@@ -21,9 +22,7 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
 class ContainerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Container
-     *
-     * @var \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container
+     * @var Container
      */
     protected $container;
 
@@ -32,9 +31,6 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         $this->container = new Container(__DIR__.'/../../../../app/');
     }
 
-    /**
-     * Test get event dispatcher
-     */
     public function testGetEventDispatcher()
     {
         $dispatcher = $this->container->getEventDispatcher();
@@ -43,8 +39,6 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Get manipulators
-     *
      * @return array
      */
     public function getManipulators()
@@ -65,13 +59,15 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
             [
                 'routing',
                 '\AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing'
+            ],
+            [
+                'php.ini',
+                '\AnimeDb\Bundle\AnimeDbBundle\Manipulator\PhpIni'
             ]
         ];
     }
 
     /**
-     * Test get manipulator
-     *
      * @dataProvider getManipulators
      *
      * @param string $name
@@ -85,8 +81,6 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get manipulator failed
-     *
      * @expectedException \InvalidArgumentException
      */
     public function testGetManipulatorFailed()
@@ -94,9 +88,6 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         $this->container->getManipulator('undefined');
     }
 
-    /**
-     * Test jobs
-     */
     public function testJobs()
     {
         $order_execution = [];
@@ -111,16 +102,15 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Get job mock
-     *
      * @param int $priority
      * @param array $order
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit_Framework_MockObject_MockObject|Job
      */
     protected function getJob($priority, array &$order)
     {
-        $job = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job')
+        $job = $this
+            ->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job')
             ->disableOriginalConstructor()
             ->getMock();
         $job
@@ -140,12 +130,10 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnCallback(function () use ($priority, &$order) {
                 $order[] = $priority;
             }));
+
         return $job;
     }
 
-    /**
-     * Test execute command
-     */
     public function testExecuteCommand()
     {
         ob_start();

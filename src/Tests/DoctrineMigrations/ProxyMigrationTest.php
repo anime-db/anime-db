@@ -11,9 +11,6 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\DoctrineMigrations;
 
 use AnimeDb\Bundle\AnimeDbBundle\DoctrineMigrations\ProxyMigration;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 
 /**
@@ -25,22 +22,17 @@ use Doctrine\DBAL\Schema\Schema;
 class ProxyMigrationTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Proxy migration
-     *
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|ProxyMigration
      */
     protected $proxy;
 
     /**
-     * Schema
-     *
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|Schema
      */
     protected $schema;
 
     protected function setUp()
     {
-        parent::setUp();
         $this->schema = $this->getMock('\Doctrine\DBAL\Schema\Schema');
         $this->proxy = $this->getMockForAbstractClass(
             '\AnimeDb\Bundle\AnimeDbBundle\DoctrineMigrations\ProxyMigration',
@@ -50,9 +42,6 @@ class ProxyMigrationTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * Data provider
-     */
     public function getMethod()
     {
         return [
@@ -70,7 +59,8 @@ class ProxyMigrationTest extends \PHPUnit_Framework_TestCase
      */
     public function testMigration($method)
     {
-        $migration = $this->getMockBuilder('\Doctrine\DBAL\Migrations\AbstractMigration')
+        $migration = $this
+            ->getMockBuilder('\Doctrine\DBAL\Migrations\AbstractMigration')
             ->disableOriginalConstructor()
             ->getMock();
         $this->proxy
@@ -90,7 +80,8 @@ class ProxyMigrationTest extends \PHPUnit_Framework_TestCase
     public function testMigrationContainerAware($method)
     {
         $container = $this->getMock('\Symfony\Component\DependencyInjection\ContainerInterface');
-        $migration = $this->getMockBuilder('\\'.__NAMESPACE__.'\VersionTest_MigrationCustom')
+        $migration = $this
+            ->getMockBuilder('\\'.__NAMESPACE__.'\VersionTest_MigrationCustom')
             ->disableOriginalConstructor()
             ->getMock();
         $this->proxy->setContainer($container);
@@ -108,18 +99,4 @@ class ProxyMigrationTest extends \PHPUnit_Framework_TestCase
             ->with($container);
         call_user_func([$this->proxy, $method], $this->schema);
     }
-}
-
-/**
- * Migration with custom name
- */
-class VersionTest_MigrationCustom extends AbstractMigration implements ContainerAwareInterface
-{
-    public function setContainer(ContainerInterface $container = null) {}
-    public function down(Schema $schema) {}
-    public function postDown(Schema $schema) {}
-    public function postUp(Schema $schema) {}
-    public function preDown(Schema $schema) {}
-    public function preUp(Schema $schema) {}
-    public function up(Schema $schema) {}
 }

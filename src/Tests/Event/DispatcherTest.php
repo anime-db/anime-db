@@ -12,6 +12,7 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Event;
 
 use AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher;
 use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -23,15 +24,11 @@ use Symfony\Component\Filesystem\Filesystem;
 class DispatcherTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Filesystem
-     *
-     * @var \Symfony\Component\Filesystem\Filesystem
+     * @var Filesystem
      */
     protected $fs;
 
     /**
-     * Root dir
-     *
      * @var string
      */
     protected $root_dir;
@@ -47,23 +44,18 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
         $this->fs->remove($this->root_dir);
     }
 
-    /**
-     * Test empty driver
-     */
     public function testEmptyDriver()
     {
         $dispatcher = new Dispatcher($this->root_dir);
         $dispatcher->shippingDeferredEvents();
     }
 
-    /**
-     * Test dispatch
-     */
     public function testDispatch()
     {
         $event1 = new Event();
         $event2 = new Event();
 
+        /* @var $driver \PHPUnit_Framework_MockObject_MockObject|EventDispatcherInterface */
         $driver = $this->getMock('\Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $driver
             ->expects($this->at(0))

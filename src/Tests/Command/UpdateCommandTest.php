@@ -14,6 +14,16 @@ use AnimeDb\Bundle\AnimeDbBundle\Tests\TestCaseWritable;
 use AnimeDb\Bundle\AnimeDbBundle\Command\UpdateCommand;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Composer;
 use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\StoreEvents;
+use Symfony\Component\Console\Helper\HelperSet;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Composer\Package\RootPackageInterface;
+use Symfony\Component\Filesystem\Filesystem;
+use AnimeDb\Bundle\AnimeDbBundle\Client\GitHub;
+use Composer\Package\Package;
+use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded;
+use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Updated;
 
 /**
  * Test update command
@@ -24,51 +34,37 @@ use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\StoreEvents;
 class UpdateCommandTest extends TestCaseWritable
 {
     /**
-     * Input
-     *
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|InputInterface
      */
     protected $input;
 
     /**
-     * Output
-     *
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|OutputInterface
      */
     protected $output;
 
     /**
-     * Composer
-     *
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|Composer
      */
     protected $composer;
 
     /**
-     * GitHub client
-     *
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|GitHub
      */
     protected $github;
 
     /**
-     * Container
-     *
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface
      */
     protected $container;
 
     /**
-     * Root package
-     *
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|RootPackageInterface
      */
     protected $package;
 
     /**
-     * Filesystem
-     *
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|Filesystem
      */
     protected $filesystem;
 
@@ -87,18 +83,17 @@ class UpdateCommandTest extends TestCaseWritable
         $this->container = $this->getMock('\Symfony\Component\DependencyInjection\ContainerInterface');
         $this->package = $this->getMock('\Composer\Package\RootPackageInterface');
         $this->filesystem = $this->getMock('\Symfony\Component\Filesystem\Filesystem');
-        $this->composer = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Composer\Composer')
+        $this->composer = $this
+            ->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Composer\Composer')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->github = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Client\GitHub')
+        $this->github = $this
+            ->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Client\GitHub')
             ->disableOriginalConstructor()
             ->getMock();
         $this->target = sys_get_temp_dir().'/anime-db';
     }
 
-    /**
-     * Test configure
-     */
     public function testConfigure()
     {
         $command = new UpdateCommand();
@@ -107,8 +102,6 @@ class UpdateCommandTest extends TestCaseWritable
     }
 
     /**
-     * Get execute result
-     *
      * @return array
      */
     public function getExecuteResult()
@@ -126,8 +119,6 @@ class UpdateCommandTest extends TestCaseWritable
     }
 
     /**
-     * Test execute
-     *
      * @dataProvider getExecuteResult
      *
      * @param int $result
@@ -145,9 +136,6 @@ class UpdateCommandTest extends TestCaseWritable
         $command->run($this->input, $this->output); // test
     }
 
-    /**
-     * Test execute update itself
-     */
     public function testExecuteUpdateItself()
     {
         $tag = [
@@ -155,7 +143,8 @@ class UpdateCommandTest extends TestCaseWritable
             'zipball_url' => 'http://example.com/tags/1.0.1.zip'
         ];
         $dispatcher = $this->getMock('\Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $local_dispatcher = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher')
+        $local_dispatcher = $this
+            ->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher')
             ->disableOriginalConstructor()
             ->getMock();
         $package = $this->getMock('\Composer\Package\RootPackageInterface');
@@ -225,6 +214,7 @@ class UpdateCommandTest extends TestCaseWritable
             ->will($this->returnCallback(function ($package, $_target) use ($that, $target, $tag) {
                 $that->assertEquals($target, $_target);
                 // check package
+                /* @var $package Package */
                 $that->assertInstanceOf('\Composer\Package\Package', $package);
                 $that->assertEquals('anime-db/anime-db', $package->getName());
                 $that->assertEquals(Composer::getVersionCompatible($tag['name']), $package->getVersion());
@@ -247,6 +237,7 @@ class UpdateCommandTest extends TestCaseWritable
             ->will($this->returnCallback(function ($name, $event) use ($that, $target, $package, $root_package) {
                 $that->assertEquals(StoreEvents::DOWNLOADED, $name);
                 // check event
+                /* @var $event Downloaded */
                 $that->assertInstanceOf('\AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded', $event);
                 $that->assertEquals($target, $event->getPath());
                 $that->assertEquals($package, $event->getNewPackage());
@@ -257,6 +248,7 @@ class UpdateCommandTest extends TestCaseWritable
             ->method('dispatch')
             ->will($this->returnCallback(function ($name, $event) use ($that, $package) {
                 $that->assertEquals(StoreEvents::UPDATED, $name);
+                /* @var $event Updated */
                 $that->assertInstanceOf('\AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Updated', $event);
                 $that->assertEquals($package, $event->getPackage());
             }));
@@ -293,18 +285,17 @@ class UpdateCommandTest extends TestCaseWritable
     }
 
     /**
-     * Get command to execute
-     *
      * @param array $tag
      * @param string $current_version
      * @param int $result
      *
-     * @return \AnimeDb\Bundle\AnimeDbBundle\Command\UpdateCommand
+     * @return UpdateCommand
      */
     protected function getCommandToExecute(array $tag, $current_version, $result)
     {
         $that = $this;
-        $installer = $this->getMockBuilder('\Composer\Installer')
+        $installer = $this
+            ->getMockBuilder('\Composer\Installer')
             ->disableOriginalConstructor()
             ->getMock();
         $installer
@@ -344,7 +335,9 @@ class UpdateCommandTest extends TestCaseWritable
             ->expects($this->once())
             ->method('getPrettyVersion')
             ->will($this->returnValue($current_version));
-        $helper_set = $this->getMockBuilder('\Symfony\Component\Console\Helper\HelperSet')
+        /* @var $helper_set HelperSet */
+        $helper_set = $this
+            ->getMockBuilder('\Symfony\Component\Console\Helper\HelperSet')
             ->disableOriginalConstructor()
             ->getMock();
         $this->output

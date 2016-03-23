@@ -19,8 +19,6 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Manipulator;
 class FileContentTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Test empty file
-     *
      * @expectedException \RuntimeException
      */
     public function testEmptyFile()
@@ -29,8 +27,6 @@ class FileContentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test file not exists
-     *
      * @expectedException \RuntimeException
      */
     public function testFileNotExists()
