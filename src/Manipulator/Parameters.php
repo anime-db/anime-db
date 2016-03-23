@@ -35,7 +35,7 @@ class Parameters extends Yaml
      * Set parameter
      *
      * @param string $key
-     * @param string $value
+     * @param mixed $value
      */
     public function set($key, $value)
     {

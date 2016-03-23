@@ -101,9 +101,7 @@ abstract class Job
     }
 
     /**
-     * Get root dir
-     *
-     * @param string
+     * @return string
      */
     public function getRootDir()
     {
