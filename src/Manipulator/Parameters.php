@@ -46,4 +46,21 @@ class Parameters extends Yaml
         $yaml['parameters'][$key] = $value;
         $this->setContent($yaml);
     }
+
+    /**
+     * @param string[] $parameters
+     */
+    public function setParameters(array $parameters)
+    {
+        if ($parameters) {
+            $yaml = $this->getContent();
+            if (!isset($yaml['parameters'])) {
+                $yaml['parameters'] = [];
+            }
+            foreach ($parameters as $key => $value) {
+                $yaml['parameters'][$key] = $value;
+            }
+            $this->setContent($yaml);
+        }
+    }
 }

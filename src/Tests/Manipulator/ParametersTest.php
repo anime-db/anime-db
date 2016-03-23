@@ -22,43 +22,27 @@ use Symfony\Component\Yaml\Yaml;
 class ParametersTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Manipulator
-     *
-     * @var \AnimeDb\Bundle\AnimeDbBundle\Manipulator\Parameters
+     * @var Parameters
      */
     protected $manipulator;
 
     /**
-     * Filename
-     *
      * @var string
      */
     protected $filename;
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::setUp()
-     */
     protected function setUp()
     {
-        parent::setUp();
         $this->filename = tempnam(sys_get_temp_dir(), 'parameters.yml');
         $this->manipulator = new Parameters($this->filename);
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::tearDown()
-     */
     protected function tearDown()
     {
-        parent::tearDown();
         @unlink($this->filename);
     }
 
     /**
-     * Get data for set
-     *
      * @return array
      */
     public function getDataForSet()
@@ -94,8 +78,6 @@ class ParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test set
-     *
      * @dataProvider getDataForSet
      *
      * @param string $key
@@ -113,8 +95,59 @@ class ParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Get data for get
+     * @return array
+     */
+    public function getDataForSetParameters()
+    {
+        return [
+            [
+                ['foo' => 'bar'],
+                [],
+                [
+                    'parameters' => [
+                        'foo' => 'bar'
+                    ]
+                ]
+            ],
+            [
+                [
+                    'foo' => 'baz',
+                    'bar' => true
+                ],
+                [
+                    'parameters' => [
+                        'baz' => 123,
+                        'foo' => 'car'
+                    ]
+                ],
+                [
+                    'parameters' => [
+                        'baz' => 123,
+                        'foo' => 'baz',
+                        'bar' => true
+                    ]
+                ]
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider getDataForSetParameters
      *
+     * @param array $parameters
+     * @param array $before
+     * @param array $after
+     */
+    public function testSetParameters(array $parameters, array $before, array $after)
+    {
+        file_put_contents($this->filename, Yaml::dump($before));
+
+        $this->manipulator->setParameters($parameters);
+
+        $this->assertEquals(Yaml::dump($after), file_get_contents($this->filename));
+    }
+
+    /**
      * @return array
      */
     public function getDataForGet()
@@ -142,8 +175,6 @@ class ParametersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get
-     *
      * @dataProvider getDataForGet
      *
      * @param string $key
