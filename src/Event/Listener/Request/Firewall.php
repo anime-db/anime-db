@@ -13,6 +13,7 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Event\Listener\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ServerBag;
 
 /**
  * Firewall
@@ -23,9 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
 class Firewall
 {
     /**
-     * Kernel request handler
-     *
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
+     * @param GetResponseEvent $event
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
@@ -33,7 +32,7 @@ class Firewall
             return;
         }
 
-        /* @var $server \Symfony\Component\HttpFoundation\ServerBag */
+        /* @var $server ServerBag */
         $server = $event->getRequest()->server;
 
         // Check that the access to the application by the local computer or local network
@@ -49,11 +48,9 @@ class Firewall
     }
 
     /**
-     * Is local host
-     *
      * @param string $addr
      *
-     * @return boolean
+     * @return bool
      */
     protected function isLocalHost($addr)
     {
@@ -61,11 +58,9 @@ class Firewall
     }
 
     /**
-     * Is local network
-     *
      * @param string $addr
      *
-     * @return boolean
+     * @return bool
      */
     protected function isLocalNetwork($addr)
     {

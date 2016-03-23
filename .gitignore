@@ -23,3 +23,13 @@ app/config/parameters.yml
 app/SymfonyRequirements.php
 app/check.php
 vendor/
+
+# Monitor #
+###########
+AnimeDB.exe
+QtCore4.dll
+QtGui4.dll
+config.ini
+libgcc_s_dw2-1.dll
+mingwm10.dll
+ru.qm

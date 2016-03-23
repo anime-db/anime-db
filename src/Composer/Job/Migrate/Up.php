@@ -21,10 +21,6 @@ use Symfony\Component\Finder\Finder;
  */
 class Up extends BaseMigrate
 {
-    /**
-     * (non-PHPdoc)
-     * @see AnimeDb\Bundle\AnimeDbBundle\Composer\Job.Job::execute()
-     */
     public function execute()
     {
         if ($config_file = $this->getMigrationsConfig()) {

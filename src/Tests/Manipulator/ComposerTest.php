@@ -21,43 +21,27 @@ use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Composer;
 class ComposerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Manipulator
-     *
-     * @var \AnimeDb\Bundle\AnimeDbBundle\Manipulator\Composer
+     * @var Composer
      */
     protected $manipulator;
 
     /**
-     * Filename
-     *
      * @var string
      */
     protected $filename;
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::setUp()
-     */
     protected function setUp()
     {
-        parent::setUp();
         $this->filename = tempnam(sys_get_temp_dir(), 'composer');
         $this->manipulator = new Composer($this->filename);
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::tearDown()
-     */
     protected function tearDown()
     {
-        parent::tearDown();
         @unlink($this->filename);
     }
 
     /**
-     * Get config for add package
-     *
      * @return array
      */
     public function getConfigForAddPackage()
@@ -94,8 +78,6 @@ class ComposerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test add package
-     *
      * @dataProvider getConfigForAddPackage
      *
      * @param array $before
@@ -111,8 +93,6 @@ class ComposerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Get config for remove package
-     *
      * @return array
      */
     public function getConfigForRemovePackage()
@@ -147,8 +127,6 @@ class ComposerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test remove package
-     *
      * @dataProvider getConfigForRemovePackage
      *
      * @param array $before

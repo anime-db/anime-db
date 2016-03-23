@@ -22,10 +22,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Event\Project\Installed as Event;
  */
 class Installed extends Job
 {
-    /**
-     * (non-PHPdoc)
-     * @see AnimeDb\Bundle\AnimeDbBundle\Composer\Job.Job::execute()
-     */
     public function execute()
     {
         $this->getContainer()->getEventDispatcher()->dispatch(

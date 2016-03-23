@@ -22,10 +22,6 @@ use Symfony\Component\Finder\Finder;
  */
 class Down extends BaseMigrate
 {
-    /**
-     * (non-PHPdoc)
-     * @see \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job::register()
-     */
     public function register()
     {
         // migrate down before uninstall package
@@ -69,13 +65,11 @@ class Down extends BaseMigrate
         }
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see AnimeDb\Bundle\AnimeDbBundle\Composer\Job.Job::execute()
-     */
     public function execute()
     {
-        // job will be executed later 
-        // @see \AnimeDb\Bundle\AnimeDbBundle\Composer\ScriptHandler::migrateDown()
+        /**
+         * Job will be executed later
+         * @see \AnimeDb\Bundle\AnimeDbBundle\Composer\ScriptHandler::migrateDown()
+         */
     }
 }

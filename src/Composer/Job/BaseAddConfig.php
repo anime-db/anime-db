@@ -11,6 +11,7 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job;
 
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * Job: Add package config
@@ -18,18 +19,14 @@ use Symfony\Component\Finder\Finder;
  * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-abstract class AddConfig extends Job
+abstract class BaseAddConfig extends Job
 {
     /**
-     * Job priority
-     *
-     * @var integer
+     * @var int
      */
     const PRIORITY = self::PRIORITY_INSTALL;
 
     /**
-     * Add config
-     *
      * @param string $name
      * @param string $option
      */
@@ -38,7 +35,7 @@ abstract class AddConfig extends Job
         $config = $this->getPackageConfig($name, $option);
         $bundle = $this->getPackageBundle();
         if ($config && $bundle !== null) {
-            /* @var $bundle \Symfony\Component\HttpKernel\Bundle\Bundle */
+            /* @var $bundle Bundle */
             $bundle = new $bundle();
             $info = pathinfo($config);
             $path = $info['dirname'] != '.' ? $info['dirname'].'/'.$info['filename'] : $info['filename'];
@@ -47,8 +44,6 @@ abstract class AddConfig extends Job
     }
 
     /**
-     * Do add config
-     *
      * @param string $bundle
      * @param string $extension
      * @param string $path
@@ -56,8 +51,6 @@ abstract class AddConfig extends Job
     abstract protected function doAddConfig($bundle, $extension, $path);
 
     /**
-     * Get package config
-     *
      * @param string $name
      * @param string $option
      *
@@ -86,6 +79,7 @@ abstract class AddConfig extends Job
             $path = str_replace(DIRECTORY_SEPARATOR, '/', $file->getPathname());
             return substr($path, strrpos($path, '/Resources/config/'));
         }
+
         return '';
     }
 }

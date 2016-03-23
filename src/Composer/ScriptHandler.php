@@ -28,6 +28,7 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel\Add as AddKernel;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel\Remove as RemoveKernel;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Add as AddRouting;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Remove as RemoveRouting;
+use AnimeDb\Bundle\AnimeDbBundle\Manipulator\PhpIni;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -42,34 +43,29 @@ class ScriptHandler
     /**
      * Container of jobs
      *
-     * @var \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container|null
+     * @var Container|null
      */
     private static $container;
 
     /**
-     * Root dir
-     *
      * @var string
      */
     private static $root_dir;
 
     /**
-     * Get container of jobs
-     *
-     * @return \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container
+     * @return Container
      */
     public static function getContainer()
     {
         if (!(self::$container instanceof Container)) {
             self::setContainer(new Container(self::getRootDir()));
         }
+
         return self::$container;
     }
 
     /**
-     * Set container of jobs
-     *
-     * @param \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container $container
+     * @param Container $container
      */
     public static function setContainer(Container $container)
     {
@@ -77,8 +73,6 @@ class ScriptHandler
     }
 
     /**
-     * Get root dir
-     *
      * @return string
      */
     public static function getRootDir()
@@ -86,12 +80,11 @@ class ScriptHandler
         if (!self::$root_dir) {
             self::setRootDir(getcwd().'/app/');
         }
+
         return self::$root_dir;
     }
 
     /**
-     * Set root dir
-     *
      * @param string $root_dir
      */
     public static function setRootDir($root_dir)
@@ -102,7 +95,7 @@ class ScriptHandler
     /**
      * Add or remove package in kernel
      *
-     * @param \Composer\Installer\PackageEvent $event
+     * @param PackageEvent $event
      */
     public static function packageInKernel(PackageEvent $event)
     {
@@ -120,7 +113,7 @@ class ScriptHandler
     /**
      * Add or remove packages in routing
      *
-     * @param \Composer\Installer\PackageEvent $event
+     * @param PackageEvent $event
      */
     public static function packageInRouting(PackageEvent $event)
     {
@@ -138,7 +131,7 @@ class ScriptHandler
     /**
      * Add or remove packages in config
      *
-     * @param \Composer\Installer\PackageEvent $event
+     * @param PackageEvent $event
      */
     public static function packageInConfig(PackageEvent $event)
     {
@@ -156,7 +149,7 @@ class ScriptHandler
     /**
      * Migrate packages
      *
-     * @param \Composer\Installer\PackageEvent $event
+     * @param PackageEvent $event
      */
     public static function migratePackage(PackageEvent $event)
     {
@@ -174,7 +167,7 @@ class ScriptHandler
     /**
      * Notify listeners that the package has been installed/updated/removed
      *
-     * @param \Composer\Installer\PackageEvent $event
+     * @param PackageEvent $event
      */
     public static function notifyPackage(PackageEvent $event)
     {
@@ -195,7 +188,7 @@ class ScriptHandler
     /**
      * Add job by operation type
      *
-     * @param \Composer\DependencyResolver\Operation\OperationInterface $operation
+     * @param OperationInterface $operation
      * @param \Closure $install
      * @param \Closure $update
      * @param \Closure $uninstall
@@ -223,7 +216,7 @@ class ScriptHandler
     /**
      * Notify listeners that the project has been installed
      *
-     * @param \Composer\Script\Event $event
+     * @param Event $event
      */
     public static function notifyProjectInstall(Event $event)
     {
@@ -233,7 +226,7 @@ class ScriptHandler
     /**
      * Notify listeners that the project has been updated
      *
-     * @param \Composer\Script\Event $event
+     * @param Event $event
      */
     public static function notifyProjectUpdate(Event $event)
     {
@@ -256,18 +249,30 @@ class ScriptHandler
         if (!file_exists(self::getRootDir().'config/vendor_config.yml')) {
             file_put_contents(self::getRootDir().'config/vendor_config.yml', '');
         }
+
         if (!file_exists(self::getRootDir().'config/routing.yml')) {
             file_put_contents(self::getRootDir().'config/routing.yml', '');
         }
+
         if (!file_exists(self::getRootDir().'bundles.php')) {
             file_put_contents(self::getRootDir().'bundles.php', "<?php\nreturn [\n];");
+        }
+
+        // set memory_limit = 1G
+        if (file_exists(self::getRootDir().'/../bin/php/php.ini')) {
+            /* @var $manipulator PhpIni */
+            $manipulator = self::getContainer()->getManipulator('php.ini');
+            $limit = $manipulator->get('memory_limit');
+            if (!$limit || $manipulator->byteStringToInt($limit) < 1073741824) { // < 1G
+                $manipulator->set('memory_limit', '1G');
+            }
         }
     }
 
     /**
      * Deliver deferred events
      *
-     * @param \Composer\Script\Event $event
+     * @param Event $event
      */
     public static function deliverEvents(Event $event)
     {
@@ -277,7 +282,7 @@ class ScriptHandler
     /**
      * Migrate all plugins to up
      *
-     * @param \Composer\Script\Event $event
+     * @param Event $event
      */
     public static function migrateUp(Event $event)
     {
@@ -291,7 +296,7 @@ class ScriptHandler
     /**
      * Migrate all plugins to down
      *
-     * @param \Composer\Script\Event $event
+     * @param Event $event
      */
     public static function migrateDown(Event $event)
     {
@@ -312,11 +317,9 @@ class ScriptHandler
     }
 
     /**
-     * Is have migrations
-     *
      * @param string $dir
      *
-     * @return boolean
+     * @return bool
      */
     protected static function isHaveMigrations($dir)
     {
@@ -332,8 +335,6 @@ class ScriptHandler
     }
 
     /**
-     * Repack migrations
-     *
      * @param string $dir
      */
     protected static function repackMigrations($dir)
@@ -390,15 +391,12 @@ class ScriptHandler
         }
 
         self::executeCommand('cache:clear --no-warmup --env=prod --no-debug', $event->getIO());
-        self::executeCommand('cache:clear --no-warmup --env=test --no-debug', $event->getIO());
         self::executeCommand('cache:clear --no-warmup --env=dev --no-debug', $event->getIO());
     }
 
     /**
-     * Execute command
-     *
      * @param string $cmd
-     * @param \Composer\IO\IOInterface $io
+     * @param IOInterface $io
      */
     protected static function executeCommand($cmd, IOInterface $io)
     {

@@ -12,6 +12,8 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Event\Listener\Request;
 
 use AnimeDb\Bundle\AnimeDbBundle\Event\Listener\Request\Firewall;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -24,40 +26,30 @@ use Symfony\Component\HttpFoundation\Response;
 class FirewallTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Firewall
-     *
-     * @var \AnimeDb\Bundle\AnimeDbBundle\Event\Listener\Request\Firewall
+     * @var Firewall
      */
     protected $listener;
 
     /**
-     * Event
-     *
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|GetResponseEvent
      */
     protected $event;
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::setUp()
-     */
     protected function setUp()
     {
-        $this->event = $this->getMockBuilder('\Symfony\Component\HttpKernel\Event\GetResponseEvent')
+        $this->event = $this
+            ->getMockBuilder('\Symfony\Component\HttpKernel\Event\GetResponseEvent')
             ->disableOriginalConstructor()
             ->getMock();
         $this->listener = new Firewall();
     }
 
-    /**
-     * Test on kernel request ignore
-     */
     public function testOnKernelRequestIgnore()
     {
         $this->event
             ->expects($this->once())
             ->method('getRequestType')
-            ->willReturn(HttpKernelInterface::SUB_REQUEST);
+            ->will($this->returnValue(HttpKernelInterface::SUB_REQUEST));
         $this->event
             ->expects($this->never())
             ->method('getRequest');
@@ -65,8 +57,6 @@ class FirewallTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Get external IPs
-     *
      * @return array
      */
     public function getExternalIps()
@@ -83,8 +73,6 @@ class FirewallTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test on kernel request
-     *
      * @dataProvider getExternalIps
      *
      * @param string $header
@@ -100,19 +88,18 @@ class FirewallTest extends \PHPUnit_Framework_TestCase
         $this->event
             ->expects($this->once())
             ->method('setResponse')
-            ->willReturnCallback(function ($response) use ($that) {
+            ->will($this->returnCallback(function ($response) use ($that) {
+                /* @var $response Response */
                 $that->assertInstanceOf('\Symfony\Component\HttpFoundation\Response', $response);
                 $that->assertEquals('You are not allowed to access this application.', $response->getContent());
                 $that->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
                 $that->assertTrue($response->headers->hasCacheControlDirective('public'));
-            });
+            }));
 
         $this->listener->onKernelRequest($this->event);
     }
 
     /**
-     * Get local IPs
-     *
      * @return array
      */
     public function getLocalIps()
@@ -136,14 +123,12 @@ class FirewallTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test on kernel request local network
-     *
      * @dataProvider getLocalIps
      *
      * @param string $header
      * @param string $ip
      */
-    public function testOnKernelRequestLocal($header, $ip)
+    public function testOnKernelRequestLocalNetwork($header, $ip)
     {
         $this->getRequest($header, $ip);
         $this->event
@@ -154,8 +139,6 @@ class FirewallTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Get request
-     *
      * @param string $header
      * @param string $ip
      *
@@ -166,19 +149,21 @@ class FirewallTest extends \PHPUnit_Framework_TestCase
         $this->event
             ->expects($this->once())
             ->method('getRequestType')
-            ->willReturn(HttpKernelInterface::MASTER_REQUEST);
+            ->will($this->returnValue(HttpKernelInterface::MASTER_REQUEST));
+        /* @var $request \PHPUnit_Framework_MockObject_MockObject|Request */
         $request = $this->getMock('\Symfony\Component\HttpFoundation\Request');
         $request->server = $this->getMock('\Symfony\Component\HttpFoundation\ServerBag');
         $request->server
             ->expects($this->atLeastOnce())
             ->method('get')
-            ->willReturnCallback(function ($value) use ($header, $ip) {
+            ->will($this->returnCallback(function ($value) use ($header, $ip) {
                 return $value == $header ? $ip : null;
-            });
+            }));
         $this->event
             ->expects($this->once())
             ->method('getRequest')
-            ->willReturn($request);
+            ->will($this->returnValue($request));
+
         return $request;
     }
 }

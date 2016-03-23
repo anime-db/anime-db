@@ -12,6 +12,10 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer;
 
 use AnimeDb\Bundle\AnimeDbBundle\Tests\TestCaseWritable;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Composer;
+use Composer\Factory;
+use Composer\IO\IOInterface;
+use Composer\Package\Loader\LoaderInterface;
+use Composer\Package\RootPackageInterface;
 
 /**
  * Test composer
@@ -22,37 +26,25 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Composer;
 class ComposerTest extends TestCaseWritable
 {
     /**
-     * Factory
-     *
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|Factory
      */
     protected $factory;
 
     /**
-     * Loader
-     *
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|LoaderInterface
      */
     protected $loader;
 
     /**
-     * Lock file
-     *
      * @var string
      */
     protected $lock_file;
 
     /**
-     * Composer
-     *
-     * @var \AnimeDb\Bundle\AnimeDbBundle\Composer\Composer
+     * @var Composer
      */
     protected $composer;
 
-    /**
-     * (non-PHPdoc)
-     * @see \AnimeDb\Bundle\AnimeDbBundle\Tests\TestCaseWritable::setUp()
-     */
     protected function setUp()
     {
         parent::setUp();
@@ -62,9 +54,6 @@ class ComposerTest extends TestCaseWritable
         $this->composer = new Composer($this->factory, $this->loader, $this->lock_file);
     }
 
-    /**
-     * Test get IO
-     */
     public function testGetIO()
     {
         $io = $this->composer->getIO();
@@ -72,22 +61,18 @@ class ComposerTest extends TestCaseWritable
         $this->assertEquals($io, $this->composer->getIO());
     }
 
-    /**
-     * Test set IO
-     */
     public function testSetIO()
     {
+        /* @var $io \PHPUnit_Framework_MockObject_MockObject|IOInterface */
         $io = $this->getMock('\Composer\IO\IOInterface');
         $this->composer->setIO($io);
         $this->assertEquals($io, $this->composer->getIO());
     }
 
-    /**
-     * Test set IO reload
-     */
     public function testSetIOReload()
     {
         $this->getComposer($this->exactly(2));
+        /* @var $io \PHPUnit_Framework_MockObject_MockObject|IOInterface */
         $io = $this->getMock('\Composer\IO\IOInterface');
 
         $this->composer->reload(); // init composer
@@ -96,9 +81,6 @@ class ComposerTest extends TestCaseWritable
         $this->assertEquals($io, $this->composer->getIO());
     }
 
-    /**
-     * Test reload
-     */
     public function testReload()
     {
         $this->composer->reload();
@@ -109,19 +91,18 @@ class ComposerTest extends TestCaseWritable
         $this->assertFileNotExists($this->lock_file);
     }
 
-    /**
-     * Test download
-     */
     public function testDownload()
     {
+        /* @var $package \PHPUnit_Framework_MockObject_MockObject|RootPackageInterface */
         $package = $this->getMock('\Composer\Package\RootPackageInterface');
-        $manager = $this->getMockBuilder('\Composer\Downloader\DownloadManager')
+        $manager = $this
+            ->getMockBuilder('\Composer\Downloader\DownloadManager')
             ->disableOriginalConstructor()
             ->getMock();
         $manager
             ->expects($this->once())
             ->method('getDownloaderForInstalledPackage')
-            ->willReturnSelf()
+            ->will($this->returnSelf())
             ->with($package);
         $manager
             ->expects($this->once())
@@ -131,21 +112,18 @@ class ComposerTest extends TestCaseWritable
             $manager
                 ->expects($this->once())
                 ->method('setOutputProgress')
-                ->willReturnSelf()
+                ->will($this->returnSelf())
                 ->with(false);
         }
         $composer = $this->getComposer();
         $composer
             ->expects($this->once())
             ->method('getDownloadManager')
-            ->willReturn($manager);
+            ->will($this->returnValue($manager));
 
         $this->composer->download($package, $this->root_dir);
     }
 
-    /**
-     * Test get root package
-     */
     public function testGetRootPackage()
     {
         $package = $this->getMock('\Composer\Package\RootPackageInterface');
@@ -153,14 +131,11 @@ class ComposerTest extends TestCaseWritable
         $composer
             ->expects($this->once())
             ->method('getPackage')
-            ->willReturn($package);
+            ->will($this->returnValue($package));
 
         $this->assertEquals($package, $this->composer->getRootPackage());
     }
 
-    /**
-     * Test get package from config file
-     */
     public function testGetPackageFromConfigFile()
     {
         $config = $this->root_dir.'composer.json';
@@ -173,15 +148,13 @@ class ComposerTest extends TestCaseWritable
         $this->loader
             ->expects($this->once())
             ->method('load')
-            ->willReturn($package)
+            ->will($this->returnValue($package))
             ->with($data, 'Composer\Package\RootPackage');
 
         $this->assertEquals($package, $this->composer->getPackageFromConfigFile($config));
     }
 
     /**
-     * Test get package from config file no file
-     *
      * @expectedException \RuntimeException
      */
     public function testGetPackageFromConfigFileNoFile()
@@ -192,27 +165,29 @@ class ComposerTest extends TestCaseWritable
         $this->composer->getPackageFromConfigFile($this->root_dir.'composer.json');
     }
 
-    /**
-     * Test get installer
-     */
     public function testGetInstaller()
     {
         $package = $this->getMock('\Composer\Package\RootPackageInterface');
         $config = $this->getMock('\Composer\Config');
-        $download = $this->getMockBuilder('\Composer\Downloader\DownloadManager')
+        $download = $this
+            ->getMockBuilder('\Composer\Downloader\DownloadManager')
             ->disableOriginalConstructor()
             ->getMock();
-        $repository = $this->getMockBuilder('\Composer\Repository\RepositoryManager')
+        $repository = $this
+            ->getMockBuilder('\Composer\Repository\RepositoryManager')
             ->disableOriginalConstructor()
             ->getMock();
-        $locker = $this->getMockBuilder('\Composer\Package\Locker')
+        $locker = $this
+            ->getMockBuilder('\Composer\Package\Locker')
             ->disableOriginalConstructor()
             ->getMock();
         $installation = $this->getMock('\Composer\Installer\InstallationManager');
-        $event = $this->getMockBuilder('\Composer\EventDispatcher\EventDispatcher')
+        $event = $this
+            ->getMockBuilder('\Composer\EventDispatcher\EventDispatcher')
             ->disableOriginalConstructor()
             ->getMock();
-        $autoload = $this->getMockBuilder('\Composer\Autoload\AutoloadGenerator')
+        $autoload = $this
+            ->getMockBuilder('\Composer\Autoload\AutoloadGenerator')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -220,7 +195,7 @@ class ComposerTest extends TestCaseWritable
             $download
                 ->expects($this->once())
                 ->method('setOutputProgress')
-                ->willReturnSelf()
+                ->will($this->returnSelf())
                 ->with(false);
         }
 
@@ -228,35 +203,35 @@ class ComposerTest extends TestCaseWritable
         $composer
             ->expects($this->once())
             ->method('getConfig')
-            ->willReturn($config);
+            ->will($this->returnValue($config));
         $composer
             ->expects($this->once())
             ->method('getPackage')
-            ->willReturn($package);
+            ->will($this->returnValue($package));
         $composer
             ->expects($this->atLeastOnce())
             ->method('getDownloadManager')
-            ->willReturn($download);
+            ->will($this->returnValue($download));
         $composer
             ->expects($this->once())
             ->method('getRepositoryManager')
-            ->willReturn($repository);
+            ->will($this->returnValue($repository));
         $composer
             ->expects($this->once())
             ->method('getLocker')
-            ->willReturn($locker);
+            ->will($this->returnValue($locker));
         $composer
             ->expects($this->once())
             ->method('getInstallationManager')
-            ->willReturn($installation);
+            ->will($this->returnValue($installation));
         $composer
             ->expects($this->once())
             ->method('getEventDispatcher')
-            ->willReturn($event);
+            ->will($this->returnValue($event));
         $composer
             ->expects($this->once())
             ->method('getAutoloadGenerator')
-            ->willReturn($autoload);
+            ->will($this->returnValue($autoload));
 
         $installer = $this->composer->getInstaller(); // test
 
@@ -264,8 +239,6 @@ class ComposerTest extends TestCaseWritable
     }
 
     /**
-     * Get versions
-     *
      * @return array
      */
     public function getVersions()
@@ -290,8 +263,6 @@ class ComposerTest extends TestCaseWritable
     }
 
     /**
-     * Test get version compatible
-     *
      * @dataProvider getVersions
      *
      * @param string $actual
@@ -303,9 +274,9 @@ class ComposerTest extends TestCaseWritable
     }
 
     /**
-     * Get composer
-     *
      * @param \PHPUnit_Framework_MockObject_Matcher_Invocation|null $matcher
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject
      */
     protected function getComposer(\PHPUnit_Framework_MockObject_Matcher_Invocation $matcher = null)
     {
@@ -315,11 +286,12 @@ class ComposerTest extends TestCaseWritable
         $this->factory
             ->expects($matcher ?: $this->once())
             ->method('createComposer')
-            ->willReturnCallback(function ($io) use ($that, $mock, $composer) {
+            ->will($this->returnCallback(function ($io) use ($that, $mock, $composer) {
                 // check IO from origin composer
                 $that->assertEquals($composer->getIO(), $io);
                 return $mock;
-            });
+            }));
+
         return $mock;
     }
 }

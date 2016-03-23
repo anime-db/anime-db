@@ -11,6 +11,7 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
+use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing;
 
 /**
  * Job: Remove package from routing
@@ -21,19 +22,13 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 class Remove extends Job
 {
     /**
-     * Job priority
-     *
-     * @var integer
+     * @var int
      */
     const PRIORITY = self::PRIORITY_INSTALL;
 
-    /**
-     * (non-PHPdoc)
-     * @see AnimeDb\Bundle\AnimeDbBundle\Composer\Job.Job::execute()
-     */
     public function execute()
     {
-        /* @var $manipulator \AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing */
+        /* @var $manipulator Routing */
         $manipulator = $this->getContainer()->getManipulator('routing');
         $manipulator->removeResource($this->getRoutingNodeName());
     }

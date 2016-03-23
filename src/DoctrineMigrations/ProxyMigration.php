@@ -24,23 +24,17 @@ use Doctrine\DBAL\Schema\Schema;
 abstract class ProxyMigration extends AbstractMigration implements ContainerAwareInterface
 {
     /**
-     * Container
-     *
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     * @var ContainerInterface
      */
     private $container;
 
     /**
-     * Origin migration
-     *
-     * @var \Doctrine\DBAL\Migrations\AbstractMigration
+     * @var AbstractMigration
      */
     private $migration;
 
     /**
-     * Set container
-     *
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param ContainerInterface $container
      */
     public function setContainer(ContainerInterface $container = null)
     {
@@ -48,16 +42,12 @@ abstract class ProxyMigration extends AbstractMigration implements ContainerAwar
     }
 
     /**
-     * Get origin migration
-     *
-     * @return \Doctrine\DBAL\Migrations\AbstractMigration
+     * @return AbstractMigration
      */
     abstract protected function getMigration();
 
     /**
-     * Get origin migration lazy load
-     *
-     * @return \Doctrine\DBAL\Migrations\AbstractMigration
+     * @return AbstractMigration
      */
     private function getMigrationLazyLoad()
     {
@@ -67,12 +57,12 @@ abstract class ProxyMigration extends AbstractMigration implements ContainerAwar
                 $this->migration->setContainer($this->container);
             }
         }
+
         return $this->migration;
     }
 
     /**
-     * (non-PHPdoc)
-     * @see \Doctrine\DBAL\Migrations\AbstractMigration::up()
+     * @param Schema $schema
      */
     public function up(Schema $schema)
     {
@@ -80,8 +70,7 @@ abstract class ProxyMigration extends AbstractMigration implements ContainerAwar
     }
 
     /**
-     * (non-PHPdoc)
-     * @see \Doctrine\DBAL\Migrations\AbstractMigration::preUp()
+     * @param Schema $schema
      */
     public function preUp(Schema $schema)
     {
@@ -89,8 +78,7 @@ abstract class ProxyMigration extends AbstractMigration implements ContainerAwar
     }
 
     /**
-     * (non-PHPdoc)
-     * @see \Doctrine\DBAL\Migrations\AbstractMigration::postUp()
+     * @param Schema $schema
      */
     public function postUp(Schema $schema)
     {
@@ -98,8 +86,7 @@ abstract class ProxyMigration extends AbstractMigration implements ContainerAwar
     }
 
     /**
-     * (non-PHPdoc)
-     * @see \Doctrine\DBAL\Migrations\AbstractMigration::down()
+     * @param Schema $schema
      */
     public function down(Schema $schema)
     {
@@ -107,8 +94,7 @@ abstract class ProxyMigration extends AbstractMigration implements ContainerAwar
     }
 
     /**
-     * (non-PHPdoc)
-     * @see \Doctrine\DBAL\Migrations\AbstractMigration::preDown()
+     * @param Schema $schema
      */
     public function preDown(Schema $schema)
     {
@@ -116,8 +102,7 @@ abstract class ProxyMigration extends AbstractMigration implements ContainerAwar
     }
 
     /**
-     * (non-PHPdoc)
-     * @see \Doctrine\DBAL\Migrations\AbstractMigration::postDown()
+     * @param Schema $schema
      */
     public function postDown(Schema $schema)
     {

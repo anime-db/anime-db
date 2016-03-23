@@ -11,6 +11,7 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
+use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Kernel;
 
 /**
  * Job: Add package to kernel
@@ -21,20 +22,14 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 class Add extends Job
 {
     /**
-     * Job priority
-     *
-     * @var integer
+     * @var int
      */
     const PRIORITY = self::PRIORITY_INSTALL;
 
-    /**
-     * (non-PHPdoc)
-     * @see AnimeDb\Bundle\AnimeDbBundle\Composer\Job.Job::execute()
-     */
     public function execute()
     {
         if ($bundle = $this->getPackageBundle()) {
-            /* @var $manipulator \AnimeDb\Bundle\AnimeDbBundle\Manipulator\Kernel */
+            /* @var $manipulator Kernel */
             $manipulator = $this->getContainer()->getManipulator('kernel');
             $manipulator->addBundle($bundle);
         }

@@ -22,16 +22,12 @@ use Composer\Package\Package;
 class Removed extends Event
 {
     /**
-     * Package
-     *
-     * @var \Composer\Package\Package
+     * @var Package
      */
     protected $package;
 
     /**
-     * Construct
-     *
-     * @param \Composer\Package\Package $package
+     * @param Package $package
      */
     public function __construct(Package $package)
     {
@@ -39,9 +35,7 @@ class Removed extends Event
     }
 
     /**
-     * Get package
-     *
-     * @return \Composer\Package\Package
+     * @return Package
      */
     public function getPackage()
     {

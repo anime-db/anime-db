@@ -33,15 +33,11 @@ class Kernel extends FileContent
     private $kernel_filename;
 
     /**
-     * List of bundles
-     *
-     * @var array
+     * @var string[]|null
      */
     private $bundles = null;
 
     /**
-     * Construct
-     *
      * @param string $filename
      * @param string $kernel_filename
      */
@@ -110,8 +106,6 @@ class Kernel extends FileContent
     }
 
     /**
-     * Get list of bundles
-     *
      * @return array
      */
     protected function getBundles()
@@ -128,12 +122,11 @@ class Kernel extends FileContent
                 }
             }
         }
+
         return $this->bundles;
     }
 
     /**
-     * Set list of bundles
-     *
      * @param array $bundles
      */
     protected function setBundles(array $bundles)

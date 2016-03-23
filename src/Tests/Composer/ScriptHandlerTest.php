@@ -10,8 +10,15 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer;
 
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 use AnimeDb\Bundle\AnimeDbBundle\Tests\TestCaseWritable;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\ScriptHandler;
+use Composer\Composer;
+use Composer\IO\IOInterface;
+use Composer\Package\Package;
+use Composer\Script\Event;
+use Composer\Installer\PackageEvent;
 
 /**
  * Test script handler
@@ -22,86 +29,69 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\ScriptHandler;
 class ScriptHandlerTest extends TestCaseWritable
 {
     /**
-     * Container
-     *
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|Container
      */
     protected $container;
 
     /**
-     * Default container
-     *
-     * @var \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container
+     * @var Container
      */
     protected $default_container;
 
     /**
-     * Command event
-     *
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|Event
      */
     protected $event_command;
 
     /**
-     * Package event
-     *
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|PackageEvent
      */
     protected $event_package;
 
     /**
-     * Composer
-     *
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|Composer
      */
     protected $composer;
 
     /**
-     * Package
-     *
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|Package
      */
     protected $package;
 
     /**
-     * IO
-     *
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|IOInterface
      */
     protected $io;
 
     /**
-     * Default root dir
-     *
      * @var string
      */
     protected $default_root_dir;
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::setUp()
-     */
     protected function setUp()
     {
         parent::setUp();
-
         $this->composer = $this->getMock('\Composer\Composer');
         $this->io = $this->getMock('\Composer\IO\IOInterface');
-        $this->package = $this->getMockBuilder('\Composer\Package\Package')
+        $this->package = $this
+            ->getMockBuilder('\Composer\Package\Package')
             ->disableOriginalConstructor()
             ->getMock();
         // this method is called in the job that we did not test
         $this->package
             ->expects($this->any())
             ->method('getExtra')
-            ->willReturn([]);
-        $this->event_command = $this->getMockBuilder('\Composer\Script\CommandEvent')
+            ->will($this->returnValue([]));
+        $this->event_command = $this
+            ->getMockBuilder('\Composer\Script\Event')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->event_package = $this->getMockBuilder('\Composer\Script\PackageEvent')
+        $this->event_package = $this
+            ->getMockBuilder('\Composer\Installer\PackageEvent')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->container = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container')
+        $this->container = $this
+            ->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -112,10 +102,6 @@ class ScriptHandlerTest extends TestCaseWritable
 
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::tearDown()
-     */
     protected function tearDown()
     {
         parent::tearDown();
@@ -123,17 +109,12 @@ class ScriptHandlerTest extends TestCaseWritable
         ScriptHandler::setRootDir($this->default_root_dir);
     }
 
-    /**
-     * Test get container lazy load
-     */
     public function testGetContainerLazyLoad()
     {
         $this->assertEquals($this->container, ScriptHandler::getContainer());
     }
 
     /**
-     * Get data for registr package
-     *
      * @return array
      */
     public function getDataFroRegistrPackage()
@@ -253,8 +234,6 @@ class ScriptHandlerTest extends TestCaseWritable
     }
 
     /**
-     * Test registr package
-     *
      * @dataProvider getDataFroRegistrPackage
      *
      * @param string $type
@@ -265,37 +244,37 @@ class ScriptHandlerTest extends TestCaseWritable
      */
     public function testRegistrPackage($type, $method, $test, $operation_class, $job_class)
     {
-        $operation = $this->getMockBuilder($operation_class)
+        $operation = $this
+            ->getMockBuilder($operation_class)
             ->disableOriginalConstructor()
             ->getMock();
         $this->event_package
             ->expects($this->atLeastOnce())
             ->method('getOperation')
-            ->willReturn($operation);
+            ->will($this->returnValue($operation));
         $operation
             ->expects($this->once())
             ->method('getJobType')
-            ->willReturn($type);
+            ->will($this->returnValue($type));
         $operation
             ->expects($this->once())
             ->method($method)
-            ->willReturn($this->package);
+            ->will($this->returnValue($this->package));
         $that = $this;
         $package = $this->package;
         $this->container
             ->expects($this->once())
             ->method('addJob')
-            ->willReturnCallback(function ($job) use ($that, $package, $job_class) {
+            ->will($this->returnCallback(function ($job) use ($that, $package, $job_class) {
+                /* @var $job Job */
                 $that->assertInstanceOf($job_class, $job);
                 $that->assertEquals($package, $job->getPackage());
-            });
+            }));
 
         call_user_func(['\AnimeDb\Bundle\AnimeDbBundle\Composer\ScriptHandler', $test], $this->event_package);
     }
 
     /**
-     * Get data from registr package undefined type
-     *
      * @return array
      */
     public function getDataFromRegistrPackageUndefinedType()
@@ -310,8 +289,6 @@ class ScriptHandlerTest extends TestCaseWritable
     }
 
     /**
-     * Test registr package undefined job type
-     *
      * @dataProvider getDataFromRegistrPackageUndefinedType
      *
      * @param string $method
@@ -322,11 +299,11 @@ class ScriptHandlerTest extends TestCaseWritable
         $this->event_package
             ->expects($this->atLeastOnce())
             ->method('getOperation')
-            ->willReturn($operation);
+            ->will($this->returnValue($operation));
         $operation
             ->expects($this->once())
             ->method('getJobType')
-            ->willReturn('undefined');
+            ->will($this->returnValue('undefined'));
         $operation
             ->expects($this->never())
             ->method('getPackage');
@@ -338,8 +315,6 @@ class ScriptHandlerTest extends TestCaseWritable
     }
 
     /**
-     * Get job for notify project
-     *
      * @return array
      */
     public function getJobForNotifyProject()
@@ -357,8 +332,6 @@ class ScriptHandlerTest extends TestCaseWritable
     }
 
     /**
-     * Test notify project
-     *
      * @dataProvider getJobForNotifyProject
      *
      * @param string $method
@@ -372,31 +345,26 @@ class ScriptHandlerTest extends TestCaseWritable
         $this->container
             ->expects($this->once())
             ->method('addJob')
-            ->willReturnCallback(function ($job) use ($that, $package, $job_class) {
+            ->will($this->returnCallback(function ($job) use ($that, $package, $job_class) {
+                /* @var $job Job */
                 $that->assertInstanceOf($job_class, $job);
                 $that->assertEquals($package, $job->getPackage());
-            });
+            }));
         call_user_func(['\AnimeDb\Bundle\AnimeDbBundle\Composer\ScriptHandler', $method], $this->event_command);
     }
 
-    /**
-     * Get root package for job
-     */
     protected function getRootPackage()
     {
         $this->event_command
             ->expects($this->once())
             ->method('getComposer')
-            ->willReturn($this->composer);
+            ->will($this->returnValue($this->composer));
         $this->composer
             ->expects($this->once())
             ->method('getPackage')
-            ->willReturn($this->package);
+            ->will($this->returnValue($this->package));
     }
 
-    /**
-     * Test exec jobs
-     */
     public function testExecJobs()
     {
         $this->container
@@ -405,9 +373,6 @@ class ScriptHandlerTest extends TestCaseWritable
         ScriptHandler::execJobs();
     }
 
-    /**
-     * Test install config not exists
-     */
     public function testInstallConfigNotExists()
     {
         $this->fs->mkdir($this->root_dir.'config');
@@ -422,9 +387,6 @@ class ScriptHandlerTest extends TestCaseWritable
         $this->assertEquals("<?php\nreturn [\n];", file_get_contents($this->root_dir.'bundles.php'));
     }
 
-    /**
-     * Test install config
-     */
     public function testInstallConfig()
     {
         $this->fs->mkdir($this->root_dir.'config');
@@ -443,11 +405,9 @@ class ScriptHandlerTest extends TestCaseWritable
     }
 
     /**
-     * Test deliver events
-     *
      * @dataProvider isDecorated
      *
-     * @param boolean $decorated
+     * @param bool $decorated
      */
     public function testDeliverEvents($decorated)
     {
@@ -456,9 +416,6 @@ class ScriptHandlerTest extends TestCaseWritable
         ScriptHandler::deliverEvents($this->event_command);
     }
 
-    /**
-     * Test migrate up no migrations
-     */
     public function testMigrateUpNoMigrations()
     {
         $this->container
@@ -473,11 +430,9 @@ class ScriptHandlerTest extends TestCaseWritable
     }
 
     /**
-     * Test migrate up
-     *
      * @dataProvider isDecorated
      *
-     * @param boolean $decorated
+     * @param bool $decorated
      */
     public function testMigrateUp($decorated)
     {
@@ -491,8 +446,6 @@ class ScriptHandlerTest extends TestCaseWritable
     }
 
     /**
-     * Init migrations
-     *
      * @param string $dir
      */
     protected function initMigrations($dir)
@@ -508,8 +461,6 @@ class ScriptHandlerTest extends TestCaseWritable
     }
 
     /**
-     * Check repack migrations
-     *
      * @param string $dir
      */
     protected function checkRepackMigrations($dir)
@@ -526,9 +477,6 @@ class ScriptHandlerTest extends TestCaseWritable
         );
     }
 
-    /**
-     * Test migrate down no migrations
-     */
     public function testMigrateDownNoMigrations()
     {
         $this->container
@@ -543,11 +491,9 @@ class ScriptHandlerTest extends TestCaseWritable
     }
 
     /**
-     * Test migrate down no migrations
-     *
      * @dataProvider isDecorated
      *
-     * @param boolean $decorated
+     * @param bool $decorated
      */
     public function testMigrateDown($decorated)
     {
@@ -570,9 +516,6 @@ class ScriptHandlerTest extends TestCaseWritable
         );
     }
 
-    /**
-     * Test backup DB not exists
-     */
     public function testBackupDBNotExists()
     {
         $this->fs->mkdir($this->root_dir.'Resources');
@@ -583,9 +526,6 @@ class ScriptHandlerTest extends TestCaseWritable
         $this->assertFileNotExists($this->root_dir.'Resources/anime.db.bk');
     }
 
-    /**
-     * Test backup DB
-     */
     public function testBackupDB()
     {
         $this->fs->mkdir($this->root_dir.'Resources');
@@ -600,11 +540,9 @@ class ScriptHandlerTest extends TestCaseWritable
     }
 
     /**
-     * Test dump assets
-     *
      * @dataProvider isDecorated
      *
-     * @param boolean $decorated
+     * @param bool $decorated
      */
     public function testDumpAssets($decorated)
     {
@@ -614,8 +552,6 @@ class ScriptHandlerTest extends TestCaseWritable
     }
 
     /**
-     * Is decorated
-     *
      * @return array
      */
     public function isDecorated()
@@ -627,10 +563,8 @@ class ScriptHandlerTest extends TestCaseWritable
     }
 
     /**
-     * Execute command
-     *
      * @param string $command
-     * @param boolean $decorated
+     * @param bool $decorated
      * @param \PHPUnit_Framework_MockObject_Matcher_Invocation|null $matcher
      */
     protected function executeCommand(
@@ -644,11 +578,11 @@ class ScriptHandlerTest extends TestCaseWritable
         $this->io
             ->expects($this->atLeastOnce())
             ->method('isDecorated')
-            ->willReturn($decorated);
+            ->will($this->returnValue($decorated));
         $this->event_command
             ->expects($this->atLeastOnce())
             ->method('getIO')
-            ->willReturn($this->io);
+            ->will($this->returnValue($this->io));
         $this->container
             ->expects($matcher ?: $this->once())
             ->method('executeCommand')
@@ -656,27 +590,22 @@ class ScriptHandlerTest extends TestCaseWritable
     }
 
     /**
-     * Test add package to kernel no prod cache
-     *
      * @dataProvider isDecorated
      *
-     * @param boolean $decorated
+     * @param bool $decorated
      */
     public function testAddPackageToKernelNoProd($decorated)
     {
         $this->clearCache(0, 'prod', $decorated);
-        $this->clearCache(1, 'test', $decorated);
-        $this->clearCache(2, 'dev', $decorated);
+        $this->clearCache(1, 'dev', $decorated);
 
         ScriptHandler::clearCache($this->event_command);
     }
 
     /**
-     * Test add package to kernel
-     *
      * @dataProvider isDecorated
      *
-     * @param boolean $decorated
+     * @param bool $decorated
      */
     public function testAddPackageToKernel($decorated)
     {
@@ -691,8 +620,7 @@ class ScriptHandlerTest extends TestCaseWritable
         touch($dir.'file2');
 
         $this->clearCache(0, 'prod', $decorated);
-        $this->clearCache(1, 'test', $decorated);
-        $this->clearCache(2, 'dev', $decorated);
+        $this->clearCache(1, 'dev', $decorated);
 
         ScriptHandler::clearCache($this->event_command);
 
@@ -700,11 +628,9 @@ class ScriptHandlerTest extends TestCaseWritable
     }
 
     /**
-     * Clear cache
-     *
-     * @param integer $index
+     * @param int $index
      * @param string $env
-     * @param boolean $decorated
+     * @param bool $decorated
      */
     protected function clearCache($index, $env, $decorated)
     {

@@ -10,7 +10,8 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing;
 
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\AddConfig;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\BaseAddConfig;
+use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing;
 
 /**
  * Job: Add package to routing
@@ -18,12 +19,8 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\AddConfig;
  * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing
  * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
-class Add extends AddConfig
+class Add extends BaseAddConfig
 {
-    /**
-     * (non-PHPdoc)
-     * @see \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\AddConfig::execute()
-     */
     public function execute()
     {
         // This package has a file routing.xml, which contains the list of services,
@@ -34,15 +31,13 @@ class Add extends AddConfig
     }
 
     /**
-     * Do add config
-     *
      * @param string $bundle
      * @param string $extension
      * @param string $path
      */
     protected function doAddConfig($bundle, $extension, $path)
     {
-        /* @var $manipulator \AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing */
+        /* @var $manipulator Routing */
         $manipulator = $this->getContainer()->getManipulator('routing');
         $manipulator->addResource($this->getRoutingNodeName(), $bundle, $extension, $path);
     }

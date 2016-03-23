@@ -29,25 +29,19 @@ class Downloaded extends Event
     protected $path;
 
     /**
-     * New package
-     *
-     * @var \Composer\Package\RootPackageInterface
+     * @var RootPackageInterface
      */
     protected $new_package;
 
     /**
-     * Old package
-     *
-     * @var \Composer\Package\RootPackageInterface
+     * @var RootPackageInterface
      */
     protected $old_package;
 
     /**
-     * Construct
-     *
      * @param string $path
-     * @param \Composer\Package\RootPackageInterface $new_package
-     * @param \Composer\Package\RootPackageInterface $old_package
+     * @param RootPackageInterface $new_package
+     * @param RootPackageInterface $old_package
      */
     public function __construct($path, RootPackageInterface $new_package, RootPackageInterface $old_package)
     {
@@ -57,8 +51,6 @@ class Downloaded extends Event
     }
 
     /**
-     * Get path
-     *
      * @return string
      */
     public function getPath()
@@ -67,9 +59,7 @@ class Downloaded extends Event
     }
 
     /**
-     * Get new package
-     *
-     * @return \Composer\Package\RootPackageInterface
+     * @return RootPackageInterface
      */
     public function getNewPackage()
     {
@@ -77,9 +67,7 @@ class Downloaded extends Event
     }
 
     /**
-     * Get old package
-     *
-     * @return \Composer\Package\RootPackageInterface
+     * @return RootPackageInterface
      */
     public function getOldPackage()
     {

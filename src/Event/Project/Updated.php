@@ -22,16 +22,12 @@ use Composer\Package\Package;
 class Updated extends Event
 {
     /**
-     * Package
-     *
-     * @var \Composer\Package\Package
+     * @var Package
      */
     protected $package;
 
     /**
-     * Construct
-     *
-     * @param \Composer\Package\Package $package
+     * @param Package $package
      */
     public function __construct(Package $package)
     {
@@ -39,9 +35,7 @@ class Updated extends Event
     }
 
     /**
-     * Get package
-     *
-     * @return \Composer\Package\Package
+     * @return Package
      */
     public function getPackage()
     {

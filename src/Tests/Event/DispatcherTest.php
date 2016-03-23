@@ -12,6 +12,7 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Event;
 
 use AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher;
 use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -23,66 +24,49 @@ use Symfony\Component\Filesystem\Filesystem;
 class DispatcherTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Filesystem
-     *
-     * @var \Symfony\Component\Filesystem\Filesystem
+     * @var Filesystem
      */
     protected $fs;
 
     /**
-     * Root dir
-     *
      * @var string
      */
     protected $root_dir;
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::setUp()
-     */
     protected function setUp()
     {
         $this->fs = new Filesystem();
         $this->root_dir = sys_get_temp_dir().'/tests/';
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::tearDown()
-     */
     protected function tearDown()
     {
         $this->fs->remove($this->root_dir);
     }
 
-    /**
-     * Test empty driver
-     */
     public function testEmptyDriver()
     {
         $dispatcher = new Dispatcher($this->root_dir);
         $dispatcher->shippingDeferredEvents();
     }
 
-    /**
-     * Test dispatch
-     */
     public function testDispatch()
     {
         $event1 = new Event();
         $event2 = new Event();
 
+        /* @var $driver \PHPUnit_Framework_MockObject_MockObject|EventDispatcherInterface */
         $driver = $this->getMock('\Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $driver
             ->expects($this->at(0))
             ->method('dispatch')
             ->with('bar', $event1)
-            ->willReturnArgument(1);
+            ->will($this->returnArgument(1));
         $driver
             ->expects($this->at(1))
             ->method('dispatch')
             ->with('baz', $event2)
-            ->willReturnArgument(1);
+            ->will($this->returnArgument(1));
 
         $dispatcher = new Dispatcher($this->root_dir);
         $dispatcher->setDispatcherDriver($driver);

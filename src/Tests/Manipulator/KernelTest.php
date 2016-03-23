@@ -21,26 +21,17 @@ use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Kernel;
 class KernelTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Manipulator
-     *
-     * @var \AnimeDb\Bundle\AnimeDbBundle\Manipulator\Kernel
+     * @var Kernel
      */
     protected $manipulator;
 
     /**
-     * Filename
-     *
      * @var string
      */
     protected $filename;
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::setUp()
-     */
     protected function setUp()
     {
-        parent::setUp();
         $this->filename = tempnam(sys_get_temp_dir(), 'kernel');
         $kernel_filename = tempnam(sys_get_temp_dir(), 'kernel');
         $this->manipulator = new Kernel($this->filename, $kernel_filename);
@@ -53,19 +44,11 @@ class AppKernel extends Kernel {
 }');
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::tearDown()
-     */
     protected function tearDown()
     {
-        parent::tearDown();
         @unlink($this->filename);
     }
 
-    /**
-     * Test add bundle added in kernel
-     */
     public function testAddBundleAddedInKernel()
     {
         $this->manipulator->addBundle('\AcmeBundle'); // test
@@ -74,8 +57,6 @@ class AppKernel extends Kernel {
     }
 
     /**
-     * Get data for add bundle
-     *
      * @return array
      */
     public function getDataForAddBundle()
@@ -105,8 +86,6 @@ class AppKernel extends Kernel {
     }
 
     /**
-     * Test add bundle
-     *
      * @dataProvider getDataForAddBundle
      *
      * @param string $bundle
@@ -123,8 +102,6 @@ class AppKernel extends Kernel {
     }
 
     /**
-     * Get data for remove bundle
-     *
      * @return array
      */
     public function getDataForRemoveBundle()
@@ -149,8 +126,6 @@ class AppKernel extends Kernel {
     }
 
     /**
-     * Test remove bundle
-     *
      * @dataProvider getDataForRemoveBundle
      *
      * @param string $bundle

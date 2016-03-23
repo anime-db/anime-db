@@ -21,22 +21,16 @@ use Symfony\Component\Filesystem\Filesystem;
 abstract class TestCaseWritable extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Root dir
-     *
      * @var string
      */
     protected $root_dir;
 
     /**
-     * Filesystem
-     *
-     * @var \Symfony\Component\Filesystem\Filesystem
+     * @var Filesystem
      */
     protected $fs;
 
     /**
-     * Construct
-     *
      * @param string $name
      * @param array $data
      * @param string $dataName
@@ -47,25 +41,15 @@ abstract class TestCaseWritable extends \PHPUnit_Framework_TestCase
         $this->fs = new Filesystem();
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::setUp()
-     */
     protected function setUp()
     {
-        parent::setUp();
         $this->root_dir = sys_get_temp_dir().'/tests/';
         $this->fs->mkdir($this->root_dir);
 
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see PHPUnit_Framework_TestCase::tearDown()
-     */
     protected function tearDown()
     {
-        parent::tearDown();
         $this->fs->remove($this->root_dir);
     }
 }

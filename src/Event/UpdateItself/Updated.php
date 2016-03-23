@@ -22,16 +22,12 @@ use Composer\Package\RootPackageInterface;
 class Updated extends Event
 {
     /**
-     * Package
-     *
-     * @var \Composer\Package\RootPackageInterface
+     * @var RootPackageInterface
      */
     protected $package;
 
     /**
-     * Construct
-     *
-     * @param \Composer\Package\RootPackageInterface $package
+     * @param RootPackageInterface $package
      */
     public function __construct(RootPackageInterface $package)
     {
@@ -39,9 +35,7 @@ class Updated extends Event
     }
 
     /**
-     * Get package
-     *
-     * @return \Composer\Package\RootPackageInterface
+     * @return RootPackageInterface
      */
     public function getPackage()
     {

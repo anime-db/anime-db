@@ -10,12 +10,15 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job;
 
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Installed as InstalledPackage;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Removed as RemovedPackage;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Updated as UpdatedPackage;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Project\Installed as InstalledProject;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Project\Updated as UpdatedProject;
 use AnimeDb\Bundle\AnimeDbBundle\Event\Package\StoreEvents as StoreEventsPackage;
+use AnimeDb\Bundle\AnimeDbBundle\Event\Project\Installed;
 use AnimeDb\Bundle\AnimeDbBundle\Event\Project\StoreEvents as StoreEventsProject;
 
 /**
@@ -27,8 +30,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Event\Project\StoreEvents as StoreEventsProject
 class NotifyTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Get jobs
-     *
      * @return array
      */
     public function getJobs()
@@ -73,15 +74,13 @@ class NotifyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test execute
-     *
      * @dataProvider getJobs
      *
      * @param string $event_name
      * @param string $event_class
-     * @param \Closure $job
+     * @param \Closure $get_job
      */
-    public function testExecute($event_name, $event_class, \Closure $job)
+    public function testExecute($event_name, $event_class, \Closure $get_job)
     {
         $extra = [
             'anime-db-routing' => '',
@@ -90,39 +89,42 @@ class NotifyTest extends \PHPUnit_Framework_TestCase
             'anime-db-migrations' => '',
         ];
         $that = $this;
-        $package = $this->getMockBuilder('\Composer\Package\Package')
+        $package = $this
+            ->getMockBuilder('\Composer\Package\Package')
             ->disableOriginalConstructor()
             ->getMock();
         $package
             ->expects($this->atLeastOnce())
             ->method('getExtra')
-            ->willReturn($extra);
+            ->will($this->returnValue($extra));
         $package
             ->expects($this->atLeastOnce())
             ->method('getName')
-            ->willReturn('foo');
+            ->will($this->returnValue('foo'));
         $package
             ->expects($this->atLeastOnce())
             ->method('getVersion')
-            ->willReturn('1');
+            ->will($this->returnValue('1'));
         $package
             ->expects($this->atLeastOnce())
             ->method('getPrettyVersion')
-            ->willReturn('1.0');
+            ->will($this->returnValue('1.0'));
         $package
             ->expects($this->atLeastOnce())
             ->method('getType')
-            ->willReturn('library');
+            ->will($this->returnValue('library'));
 
-        $dispatcher = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher')
+        $dispatcher = $this
+            ->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher')
             ->disableOriginalConstructor()
             ->getMock();
         $dispatcher
             ->expects($this->once())
             ->method('dispatch')
             ->with($event_name)
-            ->willReturnCallback(function ($name, $event) use ($that, $package, $extra, $event_class) {
+            ->will($this->returnCallback(function ($name, $event) use ($that, $package, $extra, $event_class) {
                 $that->assertInstanceOf($event_class, $event);
+                /* @var $event Installed */
                 $that->assertInstanceOf('\Composer\Package\Package', $event->getPackage());
                 $that->assertNotEquals($package, $event->getPackage());
                 $that->assertEquals('foo', $event->getPackage()->getName());
@@ -130,16 +132,19 @@ class NotifyTest extends \PHPUnit_Framework_TestCase
                 $that->assertEquals('1.0', $event->getPackage()->getPrettyVersion());
                 $that->assertEquals('library', $event->getPackage()->getType());
                 $that->assertEquals($extra, $event->getPackage()->getExtra());
-            });
-        $container = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container')
+            }));
+        /* @var $container \PHPUnit_Framework_MockObject_MockObject|Container */
+        $container = $this
+            ->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container')
             ->disableOriginalConstructor()
             ->getMock();
         $container
             ->expects($this->once())
             ->method('getEventDispatcher')
-            ->willReturn($dispatcher);
+            ->will($this->returnValue($dispatcher));
 
-        $job = $job($package);
+        /* @var $job Job */
+        $job = $get_job($package);
         $job->setContainer($container);
         $job->execute();
     }

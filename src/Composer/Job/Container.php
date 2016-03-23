@@ -10,12 +10,13 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job;
 
-use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 use AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher;
 use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Composer as ComposerManipulator;
 use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config as ConfigManipulator;
 use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Kernel as KernelManipulator;
 use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing as RoutingManipulator;
+use AnimeDb\Bundle\AnimeDbBundle\Manipulator\PhpIni as PhpIniManipulator;
+use AnimeDb\Bundle\AnimeDbBundle\Manipulator\ManipulatorInterface;
 use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
 
@@ -28,43 +29,31 @@ use Symfony\Component\Process\Process;
 class Container
 {
     /**
-     * Event dispatcher
-     *
-     * @var \AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher|null
+     * @var Dispatcher|null
      */
     private $dispatcher;
 
     /**
-     * List manipulators
-     *
-     * @var array
+     * @var ManipulatorInterface[]
      */
     private $manipulators = [];
 
     /**
-     * List of jobs
-     *
-     * @var array
+     * @var Job[][]
      */
     protected $jobs = [];
 
     /**
-     * PHP path
-     *
      * @var string|null|false
      */
     protected $php_path = null;
 
     /**
-     * Root dir
-     *
      * @var string
      */
     protected $root_dir;
 
     /**
-     * Construct
-     *
      * @param string $root_dir
      */
     public function __construct($root_dir)
@@ -73,9 +62,7 @@ class Container
     }
 
     /**
-     * Get event dispatcher
-     *
-     * @return \AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher
+     * @return Dispatcher
      */
     public function getEventDispatcher()
     {
@@ -86,11 +73,9 @@ class Container
     }
 
     /**
-     * Get manipulator
-     *
      * @param string $name
      *
-     * @return \AnimeDb\Bundle\AnimeDbBundle\Manipulator\ManipulatorInterface
+     * @return ManipulatorInterface
      */
     public function getManipulator($name)
     {
@@ -111,17 +96,19 @@ class Container
                 case 'routing':
                     $this->manipulators[$name] = new RoutingManipulator($this->root_dir.'config/routing.yml');
                     break;
+                case 'php.ini':
+                    $this->manipulators[$name] = new PhpIniManipulator($this->root_dir.'/../bin/php/php.ini');
+                    break;
                 default:
                     throw new \InvalidArgumentException('Unknown manipulator: '.$name);
             }
         }
+
         return $this->manipulators[$name];
     }
 
     /**
-     * Add job
-     *
-     * @param \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job $job
+     * @param Job $job
      */
     public function addJob(Job $job)
     {
@@ -143,19 +130,17 @@ class Container
             $jobs = array_merge($jobs, $priority_jobs);
         }
 
-        /* @var $job \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job */
+        /* @var $job Job */
         foreach ($jobs as $job) {
             $job->execute();
         }
     }
 
     /**
-     * Execute command
-     *
      * @throws \RuntimeException
      *
      * @param string $cmd
-     * @param integer $timeout
+     * @param int $timeout
      */
     public function executeCommand($cmd, $timeout = 300)
     {
@@ -164,6 +149,7 @@ class Container
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });
+
         if (!$process->isSuccessful()) {
             throw new \RuntimeException(sprintf('An error occurred when executing the "%s" command.', $cmd));
         }
@@ -181,7 +167,9 @@ class Container
         if (is_null($this->php_path)) {
             $finder = new PhpExecutableFinder();
             if (!($this->php_path = $finder->find())) {
-                throw new \RuntimeException('The php executable could not be found, add it to your PATH environment variable and try again');
+                throw new \RuntimeException(
+                    'The php executable could not be found, add it to your PATH environment variable and try again'
+                );
             }
         }
         return $this->php_path;

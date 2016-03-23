@@ -19,8 +19,6 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Manipulator;
 class Parameters extends Yaml
 {
     /**
-     * Get parameter
-     *
      * @param string $key
      *
      * @return string
@@ -32,10 +30,8 @@ class Parameters extends Yaml
     }
 
     /**
-     * Set parameter
-     *
      * @param string $key
-     * @param string $value
+     * @param mixed $value
      */
     public function set($key, $value)
     {
@@ -45,5 +41,22 @@ class Parameters extends Yaml
         }
         $yaml['parameters'][$key] = $value;
         $this->setContent($yaml);
+    }
+
+    /**
+     * @param string[] $parameters
+     */
+    public function setParameters(array $parameters)
+    {
+        if ($parameters) {
+            $yaml = $this->getContent();
+            if (!isset($yaml['parameters'])) {
+                $yaml['parameters'] = [];
+            }
+            foreach ($parameters as $key => $value) {
+                $yaml['parameters'][$key] = $value;
+            }
+            $this->setContent($yaml);
+        }
     }
 }

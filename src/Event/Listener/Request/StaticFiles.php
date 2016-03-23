@@ -13,6 +13,7 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Event\Listener\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Static files
@@ -23,22 +24,16 @@ use Symfony\Component\HttpFoundation\Response;
 class StaticFiles
 {
     /**
-     * Root dir
-     *
      * @var string
      */
     protected $root_dir;
 
     /**
-     * Environment
-     *
      * @var string
      */
     protected $env;
 
     /**
-     * Construct
-     *
      * @param string $root_dir
      * @param string $env
      */
@@ -49,9 +44,7 @@ class StaticFiles
     }
 
     /**
-     * Kernel request handler
-     *
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
+     * @param GetResponseEvent $event
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
@@ -59,7 +52,7 @@ class StaticFiles
             return;
         }
 
-        /* @var $request \Symfony\Component\HttpFoundation\Request */
+        /* @var $request Request */
         $request = $event->getRequest();
 
         $file = $request->getScriptName() == '/app_dev.php' ? $request->getPathInfo() : $request->getScriptName();
@@ -85,11 +78,13 @@ class StaticFiles
                 'css' => 'text/css',
                 'js' => 'text/javascript'
             ];
+
             if (isset($mimes[($ext = pathinfo($file, PATHINFO_EXTENSION))])) {
                 $response->headers->set('Content-Type', $mimes[$ext]);
             } else {
                 $response->headers->set('Content-Type', mime_content_type($file));
             }
+
             $event->setResponse($response->setContent(file_get_contents($file)));
         }
     }

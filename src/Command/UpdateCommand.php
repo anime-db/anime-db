@@ -18,6 +18,7 @@ use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\StoreEvents;
 use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded;
 use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Updated;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Composer;
+use AnimeDb\Bundle\AnimeDbBundle\Client\GitHub;
 use Composer\Package\Package;
 use Composer\IO\ConsoleIO;
 
@@ -29,25 +30,25 @@ use Composer\IO\ConsoleIO;
  */
 class UpdateCommand extends ContainerAwareCommand
 {
-    /**
-     * (non-PHPdoc)
-     * @see Symfony\Component\Console\Command.Command::configure()
-     */
     protected function configure()
     {
-        $this->setName('animedb:update')
+        $this
+            ->setName('animedb:update')
             ->setDescription('Update the application');
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Symfony\Component\Console\Command.Command::execute()
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     *
+     * @return bool
      */
     protected function execute(InputInterface $input, OutputInterface $output) {
-        /* @var $composer \AnimeDb\Bundle\AnimeDbBundle\Composer\Composer */
+        /* @var $composer Composer */
         $composer = $this->getContainer()->get('anime_db.composer');
         $composer->setIO(new ConsoleIO($input, $output, $this->getHelperSet()));
-        /* @var $github \AnimeDb\Bundle\AnimeDbBundle\Client\GitHub */
+
+        /* @var $github GitHub */
         $github = $this->getContainer()->get('anime_db.client.github');
 
         // search tag with new version of application
@@ -74,11 +75,9 @@ class UpdateCommand extends ContainerAwareCommand
     }
 
     /**
-     * Do update itself
-     *
      * @param array $tag
-     * @param \AnimeDb\Bundle\AnimeDbBundle\Composer\Composer $composer
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param Composer $composer
+     * @param OutputInterface $output
      */
     protected function doUpdateItself(array $tag, Composer $composer, OutputInterface $output)
     {

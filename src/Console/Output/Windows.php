@@ -23,30 +23,24 @@ use Symfony\Component\Console\Formatter\OutputFormatterInterface;
 class Windows implements ConsoleOutputInterface
 {
     /**
-     * Output
-     *
-     * @var \Symfony\Component\Console\Output\ConsoleOutputInterface
+     * @var ConsoleOutputInterface
      */
     private $output;
 
     /**
      * Do encode messages
      *
-     * @var boolean
+     * @var bool
      */
     private $encode = false;
 
     /**
-     * Target encoding
-     *
      * @var string
      */
     const TARGET_ENCODING = 'CP866';
 
     /**
-     * Construct
-     *
-     * @param \Symfony\Component\Console\Output\ConsoleOutputInterface $output
+     * @param ConsoleOutputInterface $output
      */
     public function __construct(ConsoleOutputInterface $output)
     {
@@ -58,8 +52,9 @@ class Windows implements ConsoleOutputInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Symfony\Component\Console\Output.OutputInterface::write()
+     * @param array|string $messages
+     * @param bool|false $newline
+     * @param int $type
      */
     public function write($messages, $newline = false, $type = self::OUTPUT_NORMAL)
     {
@@ -67,8 +62,8 @@ class Windows implements ConsoleOutputInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Symfony\Component\Console\Output.OutputInterface::writeln()
+     * @param array|string $messages
+     * @param int $type
      */
     public function writeln($messages, $type = self::OUTPUT_NORMAL)
     {
@@ -95,8 +90,7 @@ class Windows implements ConsoleOutputInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Symfony\Component\Console\Output.OutputInterface::setVerbosity()
+     * @param int $level
      */
     public function setVerbosity($level)
     {
@@ -104,8 +98,7 @@ class Windows implements ConsoleOutputInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Symfony\Component\Console\Output.OutputInterface::getVerbosity()
+     * @return int
      */
     public function getVerbosity()
     {
@@ -115,7 +108,7 @@ class Windows implements ConsoleOutputInterface
     /**
      * The current verbosity of the output is quiet
      *
-     * @return boolean
+     * @return bool
      */
     public function isQuiet()
     {
@@ -125,7 +118,7 @@ class Windows implements ConsoleOutputInterface
     /**
      * The current verbosity of the output is verbose
      *
-     * @return boolean
+     * @return bool
      */
     public function isVerbose()
     {
@@ -135,7 +128,7 @@ class Windows implements ConsoleOutputInterface
     /**
      * The current verbosity of the output is very verbose
      *
-     * @return boolean
+     * @return bool
      */
     public function isVeryVerbose()
     {
@@ -145,7 +138,7 @@ class Windows implements ConsoleOutputInterface
     /**
      * The current verbosity of the output is debug
      *
-     * @return boolean
+     * @return bool
      */
     public function isDebug()
     {
@@ -153,8 +146,7 @@ class Windows implements ConsoleOutputInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Symfony\Component\Console\Output.OutputInterface::setDecorated()
+     * @param bool $decorated
      */
     public function setDecorated($decorated)
     {
@@ -164,7 +156,7 @@ class Windows implements ConsoleOutputInterface
     /**
      * Gets the decorated flag.
      *
-     * @return Boolean true if the output will decorate messages, false otherwise
+     * @return bool true if the output will decorate messages, false otherwise
      *
      * @api
      */
@@ -174,8 +166,7 @@ class Windows implements ConsoleOutputInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Symfony\Component\Console\Output.OutputInterface::setFormatter()
+     * @param OutputFormatterInterface $formatter
      */
     public function setFormatter(OutputFormatterInterface $formatter)
     {
@@ -183,8 +174,7 @@ class Windows implements ConsoleOutputInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Symfony\Component\Console\Output.OutputInterface::getFormatter()
+     * @return OutputFormatterInterface
      */
     public function getFormatter()
     {
@@ -192,8 +182,7 @@ class Windows implements ConsoleOutputInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Symfony\Component\Console\Output.ConsoleOutputInterface::getErrorOutput()
+     * @return OutputInterface
      */
     public function getErrorOutput()
     {
@@ -201,8 +190,7 @@ class Windows implements ConsoleOutputInterface
     }
 
     /**
-     * (non-PHPdoc)
-     * @see Symfony\Component\Console\Output.ConsoleOutputInterface::setErrorOutput()
+     * @param OutputInterface $error
      */
     public function setErrorOutput(OutputInterface $error)
     {

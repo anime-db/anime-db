@@ -10,8 +10,10 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job;
 
+use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
 use AnimeDb\Bundle\AnimeDbBundle\Tests\TestCaseWritable;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
+use Composer\Package\Package;
 
 /**
  * Test job
@@ -22,22 +24,16 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 class JobTest extends TestCaseWritable
 {
     /**
-     * Package
-     *
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|Package
      */
     protected $package;
 
     /**
-     * Job
-     *
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|Job
      */
     protected $job;
 
     /**
-     * Default extra
-     *
      * @var array
      */
     protected $default_extra = [
@@ -48,8 +44,6 @@ class JobTest extends TestCaseWritable
     ];
 
     /**
-     * Init job
-     *
      * @param array $extra
      * @param \PHPUnit_Framework_MockObject_Matcher_Invocation|null $matcher
      */
@@ -57,26 +51,26 @@ class JobTest extends TestCaseWritable
         array $extra = [],
         \PHPUnit_Framework_MockObject_Matcher_Invocation $matcher = null
     ) {
-        $this->package = $this->getMockBuilder('\Composer\Package\Package')
+        $this->package = $this
+            ->getMockBuilder('\Composer\Package\Package')
             ->disableOriginalConstructor()
             ->getMock();
         $this->package
             ->expects($matcher ?: $this->once())
             ->method('getExtra')
-            ->willReturn($extra);
+            ->will($this->returnValue($extra));
         $this->package
             ->expects($matcher ?: $this->once())
             ->method('setExtra')
             ->with(array_merge($this->default_extra, $extra));
-        $this->job = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job')
+        $this->job = $this
+            ->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job')
             ->setConstructorArgs([$this->package])
             ->getMockForAbstractClass();
         $this->job->setRootDir($this->root_dir);
     }
 
     /**
-     * Get package extra
-     *
      * @return array
      */
     public function getPackageExtra()
@@ -99,8 +93,6 @@ class JobTest extends TestCaseWritable
     }
 
     /**
-     * Test construct
-     *
      * @dataProvider getPackageExtra
      *
      * @param array $extra
@@ -116,80 +108,67 @@ class JobTest extends TestCaseWritable
     public function testContainer()
     {
         $this->initJob();
-        $container = $this->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container')
+        /* @var $container \PHPUnit_Framework_MockObject_MockObject|Container */
+        $container = $this
+            ->getMockBuilder('\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container')
             ->disableOriginalConstructor()
             ->getMock();
         $this->job->setContainer($container);
+
         $this->assertEquals($container, $this->job->getContainer());
     }
 
-    /**
-     * Test get package
-     */
     public function testGetPackage()
     {
         $this->initJob();
         $this->assertEquals($this->package, $this->job->getPackage());
     }
 
-    /**
-     * Test get priority
-     */
     public function testGetPriority()
     {
         $this->initJob();
         $this->assertEquals(Job::PRIORITY, $this->job->getPriority());
     }
 
-    /**
-     * Test get package dir
-     */
     public function testGetPackageDir()
     {
         $this->initJob();
         $this->package
             ->expects($this->once())
             ->method('getName')
-            ->willReturn('foo/bar');
+            ->will($this->returnValue('foo/bar'));
+
         $this->assertEquals($this->root_dir.'vendor/foo/bar/', $this->job->getPackageDir());
     }
 
-    /**
-     * Test get package bundle stdClass
-     */
     public function testGetPackageBundleStdClass()
     {
         $this->initJob(['anime-db-bundle' => '\stdClass'], $this->atLeastOnce());
         $this->job->getPackageBundle();
     }
 
-    /**
-     * Test get package bundle fail
-     */
     public function testGetPackageBundleFail()
     {
         $this->initJob([], $this->atLeastOnce());
         $this->package
             ->expects($this->once())
             ->method('getName')
-            ->willReturn('demo-vendor/foo-bar-bundle');
+            ->will($this->returnValue('demo-vendor/foo-bar-bundle'));
 
         $this->assertNull($this->job->getPackageBundle());
     }
 
-    /**
-     * Test get package bundle
-     */
     public function testGetPackageBundle()
     {
         $bundle = '\AnimeDb\Bundle\AnimeDbBundle\AnimeDbAnimeDbBundle';
-        $this->package = $this->getMockBuilder('\Composer\Package\Package')
+        $this->package = $this
+            ->getMockBuilder('\Composer\Package\Package')
             ->disableOriginalConstructor()
             ->getMock();
         $this->package
             ->expects($this->at(0))
             ->method('getExtra')
-            ->willReturn([]);
+            ->will($this->returnValue([]));
         $this->package
             ->expects($this->at(1))
             ->method('setExtra')
@@ -201,7 +180,7 @@ class JobTest extends TestCaseWritable
         $this->package
             ->expects($this->at(2))
             ->method('getExtra')
-            ->willReturn($this->default_extra);
+            ->will($this->returnValue($this->default_extra));
         $this->package
             ->expects($this->at(3))
             ->method('setExtra')
@@ -209,33 +188,30 @@ class JobTest extends TestCaseWritable
         $this->package
             ->expects($this->once())
             ->method('getName')
-            ->willReturn('anime-db/anime-db');
+            ->will($this->returnValue('anime-db/anime-db'));
 
         $this->assertEquals($bundle, $this->job->getPackageBundle());
     }
 
-    /**
-     * Test get package copy
-     */
     public function testGetPackageCopy()
     {
         $this->initJob([], $this->atLeastOnce());
         $this->package
             ->expects($this->atLeastOnce())
             ->method('getName')
-            ->willReturn('foo/bar');
+            ->will($this->returnValue('foo/bar'));
         $this->package
             ->expects($this->atLeastOnce())
             ->method('getVersion')
-            ->willReturn('1.0.0');
+            ->will($this->returnValue('1.0.0'));
         $this->package
             ->expects($this->atLeastOnce())
             ->method('getPrettyVersion')
-            ->willReturn('1');
+            ->will($this->returnValue('1'));
         $this->package
             ->expects($this->atLeastOnce())
             ->method('getType')
-            ->willReturn('lib');
+            ->will($this->returnValue('lib'));
 
         $copy = $this->job->getPackageCopy(); // test
 
@@ -247,9 +223,6 @@ class JobTest extends TestCaseWritable
         $this->assertEquals($this->package->getExtra(), $copy->getExtra());
     }
 
-    /**
-     * Test register
-     */
     public function testRegister()
     {
         $this->initJob();

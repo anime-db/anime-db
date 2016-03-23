@@ -11,6 +11,7 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job\Migrate;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Up;
+use Composer\Package\Package;
 
 /**
  * Test job migrate up
@@ -21,8 +22,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Up;
 class UpTest extends TestCase
 {
     /**
-     * Test create proxy migrations
-     *
      * @dataProvider getMigrations
      *
      * @param string $config
@@ -49,8 +48,6 @@ class UpTest extends TestCase
     }
 
     /**
-     * Get version body
-     *
      * @param string $version
      *
      * @return string
@@ -74,13 +71,11 @@ class '.$version.' extends ProxyMigration
     }
 
     /**
-     * Get job
+     * @param \PHPUnit_Framework_MockObject_MockObject|Package $package
      *
-     * @param \PHPUnit_Framework_MockObject_MockObject $package
-     *
-     * @return \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Up
+     * @return Up
      */
-    protected function getJob(\PHPUnit_Framework_MockObject_MockObject $package)
+    protected function getJob($package)
     {
         return (new Up($package))->setRootDir($this->root_dir);
     }
