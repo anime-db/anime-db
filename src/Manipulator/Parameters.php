@@ -19,8 +19,6 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Manipulator;
 class Parameters extends Yaml
 {
     /**
-     * Get parameter
-     *
      * @param string $key
      *
      * @return string
@@ -32,8 +30,6 @@ class Parameters extends Yaml
     }
 
     /**
-     * Set parameter
-     *
      * @param string $key
      * @param mixed $value
      */

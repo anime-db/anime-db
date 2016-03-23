@@ -17,6 +17,9 @@ use Composer\Package\PackageInterface;
 use Composer\Package\Loader\LoaderInterface;
 use Composer\Json\JsonFile;
 use Composer\Installer;
+use Composer\Package\RootPackage;
+use Composer\Package\RootPackageInterface;
+use Composer\Composer as BaseComposer;
 
 /**
  * Composer
@@ -27,16 +30,12 @@ use Composer\Installer;
 class Composer
 {
     /**
-     * Factory
-     *
-     * @var \Composer\Factory
+     * @var Factory
      */
     protected $factory;
 
     /**
-     * Loader
-     *
-     * @var \Composer\Package\Loader\LoaderInterface
+     * @var LoaderInterface
      */
     protected $loader;
 
@@ -48,24 +47,18 @@ class Composer
     protected $lock_file;
 
     /**
-     * Composer
-     *
-     * @var \Composer\Composer
+     * @var BaseComposer
      */
     protected $composer;
 
     /**
-     * IO
-     *
-     * @var \Composer\IO\IOInterface
+     * @var IOInterface
      */
     protected $io;
 
     /**
-     * Construct
-     *
-     * @param \Composer\Factory $factory
-     * @param \Composer\Package\Loader\LoaderInterface $loader
+     * @param Factory $factory
+     * @param LoaderInterface $loader
      * @param string $lock_file
      */
     public function __construct(Factory $factory, LoaderInterface $loader, $lock_file)
@@ -76,22 +69,19 @@ class Composer
     }
 
     /**
-     * Get IO
-     *
-     * @return \Composer\IO\IOInterface
+     * @return IOInterface
      */
     public function getIO()
     {
         if (!$this->io) {
             $this->io = new NullIO();
         }
+
         return $this->io;
     }
 
     /**
-     * Set IO
-     *
-     * @param \Composer\IO\IOInterface $io
+     * @param IOInterface $io
      */
     public function setIO(IOInterface $io)
     {
@@ -104,15 +94,14 @@ class Composer
     }
 
     /**
-     * Get composer
-     *
-     * @return \Composer\Composer
+     * @return BaseComposer
      */
     protected function getComposer()
     {
         if (!$this->composer) {
             $this->reload();
         }
+
         return $this->composer;
     }
 
@@ -125,13 +114,12 @@ class Composer
         if (file_exists($this->lock_file)) {
             unlink($this->lock_file);
         }
+
         $this->composer = $this->factory->createComposer($this->getIO());
     }
 
     /**
-     * Download
-     *
-     * @param \Composer\Package\PackageInterface $package
+     * @param PackageInterface $package
      * @param string $target
      */
     public function download(PackageInterface $package, $target)
@@ -148,9 +136,7 @@ class Composer
     }
 
     /**
-     * Get root package
-     *
-     * @return \Composer\Package\RootPackageInterface
+     * @return RootPackageInterface
      */
     public function getRootPackage()
     {
@@ -158,13 +144,11 @@ class Composer
     }
 
     /**
-     * Get package
-     *
      * @throws \RuntimeException
      *
      * @param string $config
      *
-     * @return \Composer\Package\RootPackage
+     * @return RootPackage
      */
     public function getPackageFromConfigFile($config)
     {
@@ -175,9 +159,7 @@ class Composer
     }
 
     /**
-     * Get installer
-     *
-     * @return \Composer\Installer
+     * @return Installer
      */
     public function getInstaller()
     {

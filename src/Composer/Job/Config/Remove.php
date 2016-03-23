@@ -11,6 +11,8 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
+use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config;
 
 /**
  * Job: Remove package from config
@@ -21,15 +23,11 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 class Remove extends Job
 {
     /**
-     * Job priority
-     *
      * @var int
      */
     const PRIORITY = self::PRIORITY_INSTALL;
 
     /**
-     * Package bundle name
-     *
      * @var string|null
      */
     protected $bundle;
@@ -44,9 +42,9 @@ class Remove extends Job
     {
         if ($this->bundle !== null) {
             $bundle = $this->bundle;
-            /* @var $bundle \Symfony\Component\HttpKernel\Bundle\Bundle */
+            /* @var $bundle Bundle */
             $bundle = new $bundle();
-            /* @var $manipulator \AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config */
+            /* @var $manipulator Config */
             $manipulator = $this->getContainer()->getManipulator('config');
             $manipulator->removeResource($bundle->getName());
         }

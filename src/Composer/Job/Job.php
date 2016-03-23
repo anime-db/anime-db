@@ -49,30 +49,22 @@ abstract class Job
     const PRIORITY = self::PRIORITY_EXEC;
 
     /**
-     * Container
-     *
-     * @var \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container
+     * @var Container
      */
     private $container;
 
     /**
-     * Package
-     *
-     * @var \Composer\Package\Package
+     * @var Package
      */
     private $package;
 
     /**
-     * Root dir
-     *
      * @var string
      */
     protected $root_dir;
 
     /**
-     * Construct
-     *
-     * @param \Composer\Package\Package $package
+     * @param Package $package
      */
     public function __construct(Package $package)
     {
@@ -88,11 +80,9 @@ abstract class Job
     }
 
     /**
-     * Set root dir
-     *
      * @param string $root_dir
      *
-     * @return \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job
+     * @return Job
      */
     public function setRootDir($root_dir)
     {
@@ -109,11 +99,9 @@ abstract class Job
     }
 
     /**
-     * Set container
+     * @param Container $container
      *
-     * @param \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container $container
-     *
-     * @return \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job
+     * @return Job
      */
     public function setContainer(Container $container)
     {
@@ -122,9 +110,7 @@ abstract class Job
     }
 
     /**
-     * Get container
-     *
-     * @return \AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container
+     * @return Container
      */
     public function getContainer()
     {
@@ -132,9 +118,7 @@ abstract class Job
     }
 
     /**
-     * Get package
-     *
-     * @return \Composer\Package\Package
+     * @return Package
      */
     public function getPackage()
     {
@@ -142,8 +126,6 @@ abstract class Job
     }
 
     /**
-     * Get job priority
-     *
      * @return int
      */
     public function getPriority()
@@ -164,8 +146,6 @@ abstract class Job
     }
 
     /**
-     * Get package option
-     *
      * @param string $option
      *
      * @return string
@@ -173,15 +153,15 @@ abstract class Job
     protected function getPackageOption($option)
     {
         $options = $this->package->getExtra();
+
         if (isset($options[$option])) {
             return $options[$option];
         }
+
         return '';
     }
 
     /**
-     * Get package option file
-     *
      * @param string $option
      *
      * @return string
@@ -189,15 +169,15 @@ abstract class Job
     protected function getPackageOptionFile($option)
     {
         $option = $this->getPackageOption($option);
+
         if ($option && file_exists($this->getPackageDir().$option)) {
             return $option;
         }
+
         return '';
     }
 
     /**
-     * Get packages directory
-     *
      * @return string
      */
     public function getPackageDir()
@@ -263,7 +243,7 @@ abstract class Job
     /**
      * Get a simple copy of the package
      *
-     * @return \Composer\Package\Package
+     * @return Package
      */
     public function getPackageCopy()
     {
@@ -274,6 +254,7 @@ abstract class Job
         );
         $copy->setType($this->package->getType());
         $copy->setExtra($this->package->getExtra());
+
         return $copy;
     }
 
@@ -287,6 +268,8 @@ abstract class Job
         $name = strtolower($this->getPackage()->getName());
         // package with the bundle can contain the word a 'bundle' in the name
         $name = preg_replace('/(\/.+)[^a-z]bundle$/', '$1', $name);
-        return preg_replace('/[^a-z_]+/', '_', $name);
+        $name = preg_replace('/[^a-z_]+/', '_', $name);
+
+        return $name;
     }
 }

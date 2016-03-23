@@ -24,23 +24,17 @@ use Doctrine\DBAL\Schema\Schema;
 abstract class ProxyMigration extends AbstractMigration implements ContainerAwareInterface
 {
     /**
-     * Container
-     *
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     * @var ContainerInterface
      */
     private $container;
 
     /**
-     * Origin migration
-     *
-     * @var \Doctrine\DBAL\Migrations\AbstractMigration
+     * @var AbstractMigration
      */
     private $migration;
 
     /**
-     * Set container
-     *
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param ContainerInterface $container
      */
     public function setContainer(ContainerInterface $container = null)
     {
@@ -48,16 +42,12 @@ abstract class ProxyMigration extends AbstractMigration implements ContainerAwar
     }
 
     /**
-     * Get origin migration
-     *
-     * @return \Doctrine\DBAL\Migrations\AbstractMigration
+     * @return AbstractMigration
      */
     abstract protected function getMigration();
 
     /**
-     * Get origin migration lazy load
-     *
-     * @return \Doctrine\DBAL\Migrations\AbstractMigration
+     * @return AbstractMigration
      */
     private function getMigrationLazyLoad()
     {
@@ -67,6 +57,7 @@ abstract class ProxyMigration extends AbstractMigration implements ContainerAwar
                 $this->migration->setContainer($this->container);
             }
         }
+
         return $this->migration;
     }
 

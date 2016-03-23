@@ -11,6 +11,7 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\AddConfig;
+use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config;
 
 /**
  * Job: Add package to config
@@ -26,15 +27,13 @@ class Add extends AddConfig
     }
 
     /**
-     * Do add config
-     *
      * @param string $bundle
      * @param string $extension
      * @param string $path
      */
     protected function doAddConfig($bundle, $extension, $path)
     {
-        /* @var $manipulator \AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config */
+        /* @var $manipulator Config */
         $manipulator = $this->getContainer()->getManipulator('config');
         $manipulator->addResource($bundle, $extension, $path);
     }

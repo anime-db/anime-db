@@ -12,6 +12,7 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Client;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Composer;
 use Guzzle\Http\Client;
+use Guzzle\Http\Message\Response;
 
 /**
  * GitHub client
@@ -22,17 +23,13 @@ use Guzzle\Http\Client;
 class GitHub
 {
     /**
-     * Client
-     *
-     * @var \Guzzle\Http\Client
+     * @var Client
      */
     protected $client;
 
     /**
-     * Construct
-     *
      * @param string $api
-     * @param \Guzzle\Http\Client $client
+     * @param Client $client
      */
     public function __construct($api, Client $client)
     {
@@ -40,22 +37,18 @@ class GitHub
     }
 
     /**
-     * Get list of tags
-     *
      * @param string $repository
      *
      * @return array
      */
     public function getTags($repository)
     {
-        /* @var $response \Guzzle\Http\Message\Response */
+        /* @var $response Response */
         $response = $this->client->get('repos/'.$repository.'/tags')->send();
         return json_decode($response->getBody(true), true);
     }
 
     /**
-     * Get last release
-     *
      * @param string $repository
      *
      * @return array|false
@@ -72,6 +65,7 @@ class GitHub
                 $last_tag = $tag;
             }
         }
+
         return $last_tag ?: false;
     }
 }

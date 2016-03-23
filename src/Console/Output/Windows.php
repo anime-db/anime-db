@@ -23,9 +23,7 @@ use Symfony\Component\Console\Formatter\OutputFormatterInterface;
 class Windows implements ConsoleOutputInterface
 {
     /**
-     * Output
-     *
-     * @var \Symfony\Component\Console\Output\ConsoleOutputInterface
+     * @var ConsoleOutputInterface
      */
     private $output;
 
@@ -37,16 +35,12 @@ class Windows implements ConsoleOutputInterface
     private $encode = false;
 
     /**
-     * Target encoding
-     *
      * @var string
      */
     const TARGET_ENCODING = 'CP866';
 
     /**
-     * Construct
-     *
-     * @param \Symfony\Component\Console\Output\ConsoleOutputInterface $output
+     * @param ConsoleOutputInterface $output
      */
     public function __construct(ConsoleOutputInterface $output)
     {

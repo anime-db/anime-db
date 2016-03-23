@@ -11,6 +11,7 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\AddConfig;
+use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing;
 
 /**
  * Job: Add package to routing
@@ -36,7 +37,7 @@ class Add extends AddConfig
      */
     protected function doAddConfig($bundle, $extension, $path)
     {
-        /* @var $manipulator \AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing */
+        /* @var $manipulator Routing */
         $manipulator = $this->getContainer()->getManipulator('routing');
         $manipulator->addResource($this->getRoutingNodeName(), $bundle, $extension, $path);
     }

@@ -24,7 +24,8 @@ class DeliverEventsCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
-        $this->setName('animedb:deliver-events')
+        $this
+            ->setName('animedb:deliver-events')
             ->setDescription('Shipping deferred events');
     }
 

@@ -22,15 +22,11 @@ use Symfony\Component\Filesystem\Filesystem;
 class UpdateItself
 {
     /**
-     * Default address
-     *
      * @var string
      */
     const DEFAULT_ADDRESS = '0.0.0.0';
 
     /**
-     * Default port
-     *
      * @var string
      */
     const DEFAULT_PORT = '56780';
@@ -50,8 +46,6 @@ class UpdateItself
     const DEFAULT_PATH = '.';
 
     /**
-     * Root dir
-     *
      * @var string
      */
     protected $root_dir = '';
@@ -64,23 +58,17 @@ class UpdateItself
     protected $monitor = '';
 
     /**
-     * Zip
-     *
      * @var \ZipArchive
      */
     protected $zip;
 
     /**
-     * Filesystem
-     *
-     * @var \Symfony\Component\Filesystem\Filesystem
+     * @var Filesystem
      */
     protected $fs;
 
     /**
-     * Construct
-     *
-     * @param \Symfony\Component\Filesystem\Filesystem $fs
+     * @param Filesystem $fs
      * @param \ZipArchive $zip
      * @param string $root_dir
      * @param string $monitor
@@ -96,7 +84,7 @@ class UpdateItself
     /**
      * Add requirements in composer.json from old version
      *
-     * @param \AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded $event
+     * @param Downloaded $event
      */
     public function onAppDownloadedMergeComposerRequirements(Downloaded $event)
     {
@@ -116,7 +104,7 @@ class UpdateItself
     /**
      * Copy configs from old version
      *
-     * @param \AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded $event
+     * @param Downloaded $event
      */
     public function onAppDownloadedMergeConfigs(Downloaded $event)
     {
@@ -137,7 +125,7 @@ class UpdateItself
     /**
      * Merge bin AnimeDB_Run.vbs commands
      *
-     * @param \AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded $event
+     * @param Downloaded $event
      */
     public function onAppDownloadedMergeBinRun(Downloaded $event)
     {
@@ -189,7 +177,7 @@ class UpdateItself
     /**
      * Merge bin AnimeDB commands
      *
-     * @param \AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded $event
+     * @param Downloaded $event
      */
     public function onAppDownloadedMergeBinService(Downloaded $event)
     {
@@ -232,13 +220,14 @@ class UpdateItself
             $value = substr($from, $start, $end-$start);
             $target = str_replace(sprintf($param, $default), sprintf($param, $value), $target);
         }
+
         return $target;
     }
 
     /**
      * Change access to executable files
      *
-     * @param \AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded $event
+     * @param Downloaded $event
      */
     public function onAppDownloadedChangeAccessToFiles(Downloaded $event)
     {

@@ -19,15 +19,11 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Manipulator;
 abstract class FileContent implements ManipulatorInterface
 {
     /**
-     * Composer filename
-     *
      * @var string
      */
     private $filename;
 
     /**
-     * Construct
-     *
      * @param string $filename
      */
     public function __construct($filename)
@@ -39,8 +35,6 @@ abstract class FileContent implements ManipulatorInterface
     }
 
     /**
-     * Get content
-     *
      * @return string
      */
     protected function getContent()
@@ -49,8 +43,6 @@ abstract class FileContent implements ManipulatorInterface
     }
 
     /**
-     * Set content
-     *
      * @param string $content
      */
     protected function setContent($content)

@@ -22,8 +22,6 @@ use Symfony\Component\Yaml\Yaml;
 abstract class Migrate extends Job
 {
     /**
-     * Job priority
-     *
      * @var int
      */
     const PRIORITY = self::PRIORITY_INIT;
@@ -54,9 +52,17 @@ abstract class Migrate extends Job
     /**
      * Parse config file
      *
+     * Return:
+     * <code>
+     * {
+     *   namespace: string,
+     *   directory: string
+     * }
+     * </code>
+     *
      * @param string $file
      *
-     * @return array {namespace:string, directory:string}
+     * @return array
      */
     protected function parseConfig($file)
     {
