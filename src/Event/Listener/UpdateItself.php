@@ -12,6 +12,8 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Event\Listener;
 
 use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Update itself listener
@@ -119,6 +121,26 @@ class UpdateItself
             if ($this->fs->exists($this->root_dir.$file)) {
                 $this->fs->copy($this->root_dir.$file, $event->getPath().$file);
             }
+        }
+    }
+
+    /**
+     * @param Downloaded $event
+     */
+    public function onAppDownloadedMergeAppSource(Downloaded $event)
+    {
+        $file = 'app/bootstrap.php.cache';
+        $this->fs->copy($this->root_dir.$file, $event->getPath().$file);
+
+        $finder = Finder::create()
+            ->files()
+            ->ignoreUnreadableDirs()
+            ->in($this->root_dir.'/DoctrineMigrations/')
+            ->in($this->root_dir.'/Resources/');
+
+        foreach ($finder as $file) {
+            /* @var $file SplFileInfo */
+            $this->fs->copy($file->getRealpath(), $event->getPath().$file->getFilename());
         }
     }
 
