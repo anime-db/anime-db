@@ -135,8 +135,8 @@ class UpdateItself
         $finder = Finder::create()
             ->files()
             ->ignoreUnreadableDirs()
-            ->in($this->root_dir.'/DoctrineMigrations/')
-            ->in($this->root_dir.'/Resources/');
+            ->in($this->root_dir.'/app/DoctrineMigrations/')
+            ->in($this->root_dir.'/app/Resources/');
 
         foreach ($finder as $file) {
             /* @var $file SplFileInfo */
