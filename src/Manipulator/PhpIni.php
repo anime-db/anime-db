@@ -40,7 +40,7 @@ class PhpIni implements ManipulatorInterface
     /**
      * @param string $key
      *
-     * @return string
+     * @return string|array
      */
     public function get($key)
     {

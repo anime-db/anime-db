@@ -262,8 +262,10 @@ class ScriptHandler
         if (file_exists(self::getRootDir().'/../bin/php/php.ini')) {
             /* @var $manipulator PhpIni */
             $manipulator = self::getContainer()->getManipulator('php.ini');
-            $limit = $manipulator->get('memory_limit');
-            if (!$limit || $manipulator->byteStringToInt($limit) < 1073741824) { // < 1G
+
+            $limit = $manipulator->get('memory_limit') ?: '1G';
+            $limit = is_array($limit) ? array_pop($limit) : $limit;
+            if ($manipulator->byteStringToInt($limit) < 1073741824) { // < 1G
                 $manipulator->set('memory_limit', '1G');
             }
         }
