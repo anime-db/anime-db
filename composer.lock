@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "028a46268da8054ad4ffe4eaddf77276",
-    "content-hash": "a7dad9bde11f94ce0902115836f98032",
+    "hash": "1e989a2e668752db6a8d678c5ef1295b",
+    "content-hash": "2c182e85971034be1313a1181a816ff4",
     "packages": [
         {
             "name": "anime-db/ani-db-browser-bundle",
@@ -130,16 +130,16 @@
         },
         {
             "name": "anime-db/app-bundle",
-            "version": "dev-master",
+            "version": "v0.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/anime-db/app-bundle.git",
-                "reference": "5aec63fd705de769f1ff43b67d1b3d51f2b675a0"
+                "reference": "1c775ca15143ec1ea62810b761d71d05348b0fc6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/app-bundle/zipball/5aec63fd705de769f1ff43b67d1b3d51f2b675a0",
-                "reference": "5aec63fd705de769f1ff43b67d1b3d51f2b675a0",
+                "url": "https://api.github.com/repos/anime-db/app-bundle/zipball/1c775ca15143ec1ea62810b761d71d05348b0fc6",
+                "reference": "1c775ca15143ec1ea62810b761d71d05348b0fc6",
                 "shasum": ""
             },
             "require": {
@@ -155,8 +155,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.4.x-dev",
-                    "dev-develop": "0.4.x-dev"
+                    "dev-master": "0.4.x-dev"
                 }
             },
             "autoload": {
@@ -184,7 +183,7 @@
             ],
             "description": "The application for making home collection anime",
             "homepage": "http://anime-db.org",
-            "time": "2016-01-02 21:59:29"
+            "time": "2016-03-25 11:02:26"
         },
         {
             "name": "anime-db/cache-time-keeper-bundle",
@@ -239,16 +238,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/anime-db/catalog-bundle.git",
-                "reference": "82a97c40aa1021e429a6ee65d4e5da593d4cea81"
+                "reference": "de0a6946ba7e73ab07d504a2d123f338e0bd7b39"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/catalog-bundle/zipball/82a97c40aa1021e429a6ee65d4e5da593d4cea81",
-                "reference": "82a97c40aa1021e429a6ee65d4e5da593d4cea81",
+                "url": "https://api.github.com/repos/anime-db/catalog-bundle/zipball/de0a6946ba7e73ab07d504a2d123f338e0bd7b39",
+                "reference": "de0a6946ba7e73ab07d504a2d123f338e0bd7b39",
                 "shasum": ""
             },
             "require": {
-                "anime-db/app-bundle": ">=0.4.0",
+                "anime-db/app-bundle": ">=0.4.0,<0.4.x-dev",
                 "ext-mbstring": "*",
                 "knplabs/knp-menu-bundle": "1.1.*",
                 "php": ">=5.4.0"
@@ -262,8 +261,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.4.x-dev",
-                    "dev-develop": "0.4.x-dev"
+                    "dev-master": "0.4.x-dev"
                 }
             },
             "autoload": {
@@ -291,7 +289,7 @@
             ],
             "description": "The application for making home collection anime",
             "homepage": "http://anime-db.org",
-            "time": "2016-01-04 18:47:36"
+            "time": "2016-03-25 10:56:43"
         },
         {
             "name": "anime-db/shikimori-browser-bundle",
@@ -503,12 +501,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "a8e9df55dc62d8806360be2f79ad112b8678d397"
+                "reference": "0a8528c5c7de43eca15237add666b4f8219aedc4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/a8e9df55dc62d8806360be2f79ad112b8678d397",
-                "reference": "a8e9df55dc62d8806360be2f79ad112b8678d397",
+                "url": "https://api.github.com/repos/composer/composer/zipball/0a8528c5c7de43eca15237add666b4f8219aedc4",
+                "reference": "0a8528c5c7de43eca15237add666b4f8219aedc4",
                 "shasum": ""
             },
             "require": {
@@ -570,7 +568,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2016-03-17 11:42:19"
+            "time": "2016-03-24 16:41:06"
         },
         {
             "name": "composer/semver",
@@ -640,12 +638,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/spdx-licenses.git",
-                "reference": "022fc25ca664f612b1e7007e0d87642ef489f000"
+                "reference": "3d981dc81786b761976fdd16f14e99837667d31a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/spdx-licenses/zipball/022fc25ca664f612b1e7007e0d87642ef489f000",
-                "reference": "022fc25ca664f612b1e7007e0d87642ef489f000",
+                "url": "https://api.github.com/repos/composer/spdx-licenses/zipball/3d981dc81786b761976fdd16f14e99837667d31a",
+                "reference": "3d981dc81786b761976fdd16f14e99837667d31a",
                 "shasum": ""
             },
             "require": {
@@ -693,7 +691,7 @@
                 "spdx",
                 "validator"
             ],
-            "time": "2015-11-04 10:29:55"
+            "time": "2016-03-25 11:03:12"
         },
         {
             "name": "doctrine/annotations",
@@ -701,12 +699,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "07a9af2d4de5f9ef0bf2d9ae94421e5fc50d7859"
+                "reference": "2e1b1f7597e2f647e99e96e747fcae9718ac817b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/07a9af2d4de5f9ef0bf2d9ae94421e5fc50d7859",
-                "reference": "07a9af2d4de5f9ef0bf2d9ae94421e5fc50d7859",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/2e1b1f7597e2f647e99e96e747fcae9718ac817b",
+                "reference": "2e1b1f7597e2f647e99e96e747fcae9718ac817b",
                 "shasum": ""
             },
             "require": {
@@ -761,7 +759,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2016-02-26 09:54:41"
+            "time": "2016-03-24 07:09:52"
         },
         {
             "name": "doctrine/cache",
@@ -839,12 +837,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/collections.git",
-                "reference": "866e100a425b8b73d15393fd081c6bf067f05bf9"
+                "reference": "382cc2c8e1bae7453e8598b5c52c951a9c97d53d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/collections/zipball/866e100a425b8b73d15393fd081c6bf067f05bf9",
-                "reference": "866e100a425b8b73d15393fd081c6bf067f05bf9",
+                "url": "https://api.github.com/repos/doctrine/collections/zipball/382cc2c8e1bae7453e8598b5c52c951a9c97d53d",
+                "reference": "382cc2c8e1bae7453e8598b5c52c951a9c97d53d",
                 "shasum": ""
             },
             "require": {
@@ -897,7 +895,7 @@
                 "collections",
                 "iterator"
             ],
-            "time": "2015-09-11 15:24:21"
+            "time": "2016-03-25 08:33:42"
         },
         {
             "name": "doctrine/common",
