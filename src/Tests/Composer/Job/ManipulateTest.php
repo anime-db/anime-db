@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
@@ -50,7 +48,7 @@ class ManipulateTest extends TestCaseWritable
                 $this->never(),
                 function ($package, $root_dir) {
                     return new RemoveConfig($package, $root_dir);
-                }
+                },
             ],
             [
                 'kernel',
@@ -62,7 +60,7 @@ class ManipulateTest extends TestCaseWritable
                 $this->never(),
                 function ($package, $root_dir) {
                     return new AddKernel($package, $root_dir);
-                }
+                },
             ],
             [
                 'kernel',
@@ -74,7 +72,7 @@ class ManipulateTest extends TestCaseWritable
                 $this->never(),
                 function ($package, $root_dir) {
                     return new RemoveKernel($package, $root_dir);
-                }
+                },
             ],
             [
                 'routing',
@@ -86,13 +84,13 @@ class ManipulateTest extends TestCaseWritable
                 $this->once(),
                 function ($package, $root_dir) {
                     return new RemoveRouting($package, $root_dir);
-                }
-            ]
+                },
+            ],
         ];
     }
 
     /**
-     * Test success add in execute
+     * Test success add in execute.
      *
      * @dataProvider getSuccessAddJobs
      *
@@ -125,23 +123,23 @@ class ManipulateTest extends TestCaseWritable
             [
                 function ($package, $root_dir) {
                     return new RemoveConfig($package, $root_dir);
-                }
+                },
             ],
             [
                 function ($package, $root_dir) {
                     return new AddKernel($package, $root_dir);
-                }
+                },
             ],
             [
                 function ($package, $root_dir) {
                     return new RemoveKernel($package, $root_dir);
-                }
-            ]
+                },
+            ],
         ];
     }
 
     /**
-     * Test no add in execute
+     * Test no add in execute.
      *
      * @dataProvider getNoAddJobs
      *
@@ -157,7 +155,7 @@ class ManipulateTest extends TestCaseWritable
     }
 
     /**
-     * Execute job
+     * Execute job.
      *
      * @param \Closure $get_job
      * @param \PHPUnit_Framework_MockObject_Matcher_Invocation $matcher
@@ -183,7 +181,7 @@ class ManipulateTest extends TestCaseWritable
                 'anime-db-routing' => '',
                 'anime-db-config' => '',
                 'anime-db-bundle' => $bundle,
-                'anime-db-migrations' => ''
+                'anime-db-migrations' => '',
             ]));
 
         /* @var $job Job */

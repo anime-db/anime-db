@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Console\Output;
 
 use Symfony\Component\Console\Output\OutputInterface;
@@ -15,7 +13,7 @@ use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Formatter\OutputFormatterInterface;
 
 /**
- * Decorate console output for Windows
+ * Decorate console output for Windows.
  */
 class Windows implements ConsoleOutputInterface
 {
@@ -25,7 +23,7 @@ class Windows implements ConsoleOutputInterface
     private $output;
 
     /**
-     * Do encode messages
+     * Do encode messages.
      *
      * @var bool
      */
@@ -55,7 +53,7 @@ class Windows implements ConsoleOutputInterface
      */
     public function write($messages, $newline = false, $type = self::OUTPUT_NORMAL)
     {
-        $this->output->write($this->encode((array)$messages), $newline, $type);
+        $this->output->write($this->encode((array) $messages), $newline, $type);
     }
 
     /**
@@ -64,11 +62,11 @@ class Windows implements ConsoleOutputInterface
      */
     public function writeln($messages, $type = self::OUTPUT_NORMAL)
     {
-        $this->output->writeln($this->encode((array)$messages), $type);
+        $this->output->writeln($this->encode((array) $messages), $type);
     }
 
     /**
-     * Encode messages
+     * Encode messages.
      *
      * @param array $messages
      *
@@ -83,6 +81,7 @@ class Windows implements ConsoleOutputInterface
                 }
             }
         }
+
         return $messages;
     }
 
@@ -103,7 +102,7 @@ class Windows implements ConsoleOutputInterface
     }
 
     /**
-     * The current verbosity of the output is quiet
+     * The current verbosity of the output is quiet.
      *
      * @return bool
      */
@@ -113,7 +112,7 @@ class Windows implements ConsoleOutputInterface
     }
 
     /**
-     * The current verbosity of the output is verbose
+     * The current verbosity of the output is verbose.
      *
      * @return bool
      */
@@ -123,7 +122,7 @@ class Windows implements ConsoleOutputInterface
     }
 
     /**
-     * The current verbosity of the output is very verbose
+     * The current verbosity of the output is very verbose.
      *
      * @return bool
      */
@@ -133,7 +132,7 @@ class Windows implements ConsoleOutputInterface
     }
 
     /**
-     * The current verbosity of the output is debug
+     * The current verbosity of the output is debug.
      *
      * @return bool
      */

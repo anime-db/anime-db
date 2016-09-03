@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Manipulator;
 
 class PhpIni implements ManipulatorInterface
@@ -41,6 +39,7 @@ class PhpIni implements ManipulatorInterface
     public function get($key)
     {
         $this->load();
+
         return isset($this->ini[$key]) ? $this->ini[$key] : '';
     }
 
@@ -68,7 +67,7 @@ class PhpIni implements ManipulatorInterface
                         if (!isset($this->ini[$key])) {
                             $this->ini[$key] = $value;
                         } elseif (!is_array($this->ini[$key])) {
-                            $this->ini[$key] = [ $this->ini[$key], $value ];
+                            $this->ini[$key] = [$this->ini[$key], $value];
                         } else {
                             $this->ini[$key][] = $value;
                         }
@@ -103,7 +102,7 @@ class PhpIni implements ManipulatorInterface
      */
     public function byteStringToInt($byte)
     {
-        switch(strtoupper(substr($byte, -1, 1))) {
+        switch (strtoupper(substr($byte, -1, 1))) {
             case 'K':
                 $int = substr($byte, 0, -1) * 1024;
                 break;
@@ -117,7 +116,7 @@ class PhpIni implements ManipulatorInterface
                 $int = $byte;
         }
 
-        return (int)$int;
+        return (int) $int;
     }
 
     /**
@@ -128,15 +127,13 @@ class PhpIni implements ManipulatorInterface
     public function byteIntToString($int)
     {
         if ($int % 1073741824 == 0) { // 1024 * 1024 * 1024
-            return ($int / 1073741824) . 'G';
-
+            return ($int / 1073741824).'G';
         } elseif ($int % 1048576 == 0) { // 1024 * 1024
-            return ($int / 1048576) . 'M';
-
+            return ($int / 1048576).'M';
         } elseif ($int % 1024 == 0) {
-            return ($int / 1024) . 'K';
+            return ($int / 1024).'K';
         }
 
-        return (string)$int;
+        return (string) $int;
     }
 }

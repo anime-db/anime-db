@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
@@ -40,20 +38,20 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         return [
             [
                 'composer',
-                '\AnimeDb\Bundle\AnimeDbBundle\Manipulator\Composer'
+                '\AnimeDb\Bundle\AnimeDbBundle\Manipulator\Composer',
             ],
             [
                 'config',
-                '\AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config'
+                '\AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config',
             ],
             [
                 'kernel',
-                '\AnimeDb\Bundle\AnimeDbBundle\Manipulator\Kernel'
+                '\AnimeDb\Bundle\AnimeDbBundle\Manipulator\Kernel',
             ],
             [
                 'routing',
-                '\AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing'
-            ]
+                '\AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing',
+            ],
         ];
     }
 

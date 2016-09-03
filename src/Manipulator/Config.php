@@ -1,19 +1,17 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Manipulator;
 
 class Config extends Yaml
 {
     /**
-     * Add a routing resource
+     * Add a routing resource.
      *
      * @param string $bundle
      * @param string $format
@@ -36,7 +34,7 @@ class Config extends Yaml
     }
 
     /**
-     * Remove a routing resource
+     * Remove a routing resource.
      *
      * @param string $bundle
      */

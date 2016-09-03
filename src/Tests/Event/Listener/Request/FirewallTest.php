@@ -1,14 +1,12 @@
 <?php
 
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Event\Listener\Request;
 
 use AnimeDb\Bundle\AnimeDbBundle\Event\Listener\Request\Firewall;
@@ -62,7 +60,7 @@ class FirewallTest extends \PHPUnit_Framework_TestCase
             ['REMOTE_ADDR', '9.255.255.255'],
             ['REMOTE_ADDR', '11.255.255.255'],
             ['REMOTE_ADDR', '172.32.0.0'],
-            ['REMOTE_ADDR', 'bad ip']
+            ['REMOTE_ADDR', 'bad ip'],
         ];
     }
 

@@ -1,20 +1,18 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\BaseAddConfig;
 use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing;
 
 /**
- * Job: Add package to routing
+ * Job: Add package to routing.
  */
 class Add extends BaseAddConfig
 {

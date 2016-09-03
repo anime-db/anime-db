@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Event\Listener;
 
 use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded;
@@ -28,14 +26,14 @@ class UpdateItself
     const DEFAULT_PORT = '56780';
 
     /**
-     * Default path to php executer
+     * Default path to php executer.
      *
      * @var string
      */
     const DEFAULT_PHP = './bin\\php\\php.exe';
 
     /**
-     * Default path to the directory with the application
+     * Default path to the directory with the application.
      *
      * @var string
      */
@@ -47,7 +45,7 @@ class UpdateItself
     protected $root_dir = '';
 
     /**
-     * Link to monitor archive
+     * Link to monitor archive.
      *
      * @var string
      */
@@ -78,7 +76,7 @@ class UpdateItself
     }
 
     /**
-     * Add requirements in composer.json from old version
+     * Add requirements in composer.json from old version.
      *
      * @param Downloaded $event
      */
@@ -92,13 +90,13 @@ class UpdateItself
 
         if ($old_config['require'] != $new_config['require']) {
             $new_config['require'] = array_merge($old_config['require'], $new_config['require']);
-            $new_config = json_encode($new_config, JSON_NUMERIC_CHECK|JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
+            $new_config = json_encode($new_config, JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
             file_put_contents($event->getPath().'/composer.json', $new_config);
         }
     }
 
     /**
-     * Copy configs from old version
+     * Copy configs from old version.
      *
      * @param Downloaded $event
      */
@@ -108,7 +106,7 @@ class UpdateItself
             '/app/config/parameters.yml',
             '/app/config/vendor_config.yml',
             '/app/config/routing.yml',
-            '/app/bundles.php'
+            '/app/bundles.php',
         ];
 
         foreach ($files as $file) {
@@ -139,7 +137,7 @@ class UpdateItself
     }
 
     /**
-     * Merge bin AnimeDB_Run.vbs commands
+     * Merge bin AnimeDB_Run.vbs commands.
      *
      * @param Downloaded $event
      */
@@ -150,7 +148,7 @@ class UpdateItself
             $this->root_dir.'bin/AnimeDB_Run.vbs',
             $this->root_dir.'bin/AnimeDB_Stop.vbs',
             $this->root_dir.'AnimeDB_Run.vbs',
-            $this->root_dir.'AnimeDB_Stop.vbs'
+            $this->root_dir.'AnimeDB_Stop.vbs',
         ]);
 
         if (defined('PHP_WINDOWS_VERSION_BUILD')) {
@@ -191,7 +189,7 @@ class UpdateItself
     }
 
     /**
-     * Merge bin AnimeDB commands
+     * Merge bin AnimeDB commands.
      *
      * @param Downloaded $event
      */
@@ -217,7 +215,7 @@ class UpdateItself
     }
 
     /**
-     * Copy param value if need
+     * Copy param value if need.
      *
      * @param string $from
      * @param string $target
@@ -231,9 +229,9 @@ class UpdateItself
         // param has been changed
         if (strpos($from, sprintf($param, $default)) === false) {
             list($left, $right) = explode('%s', $param);
-            $start = strpos($from, $left)+strlen($left); 
+            $start = strpos($from, $left) + strlen($left);
             $end = strpos($from, $right, $start);
-            $value = substr($from, $start, $end-$start);
+            $value = substr($from, $start, $end - $start);
             $target = str_replace(sprintf($param, $default), sprintf($param, $value), $target);
         }
 
@@ -241,7 +239,7 @@ class UpdateItself
     }
 
     /**
-     * Change access to executable files
+     * Change access to executable files.
      *
      * @param Downloaded $event
      */
@@ -250,7 +248,7 @@ class UpdateItself
         if (!defined('PHP_WINDOWS_VERSION_BUILD')) {
             $this->fs->chmod([
                 $event->getPath().'/AnimeDB',
-                $event->getPath().'/app/console'
+                $event->getPath().'/app/console',
             ], 0755);
         }
     }

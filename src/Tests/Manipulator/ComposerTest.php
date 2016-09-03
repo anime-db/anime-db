@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Manipulator;
 
 use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Composer;
@@ -44,30 +42,30 @@ class ComposerTest extends \PHPUnit_Framework_TestCase
             [
                 [
                     'require' => [
-                        'bar' => 'dev-master'
-                    ]
+                        'bar' => 'dev-master',
+                    ],
                 ],
                 [
                     'require' => [
                         'bar' => 'dev-master',
-                        'foo' => '1.0.0'
-                    ]
-                ]
+                        'foo' => '1.0.0',
+                    ],
+                ],
             ],
             [
                 [
                     'require' => [
                         'bar' => 'dev-master',
-                        'foo' => '0.1.22'
-                    ]
+                        'foo' => '0.1.22',
+                    ],
                 ],
                 [
                     'require' => [
                         'bar' => 'dev-master',
-                        'foo' => '1.0.0'
-                    ]
-                ]
-            ]
+                        'foo' => '1.0.0',
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -96,27 +94,27 @@ class ComposerTest extends \PHPUnit_Framework_TestCase
                 [
                     'require' => [
                         'bar' => 'dev-master',
-                        'foo' => '1.0.0'
-                    ]
+                        'foo' => '1.0.0',
+                    ],
                 ],
                 [
                     'require' => [
-                        'bar' => 'dev-master'
-                    ]
-                ]
+                        'bar' => 'dev-master',
+                    ],
+                ],
             ],
             [
                 [
                     'require' => [
-                        'bar' => 'dev-master'
-                    ]
+                        'bar' => 'dev-master',
+                    ],
                 ],
                 [
                     'require' => [
-                        'bar' => 'dev-master'
-                    ]
-                ]
-            ]
+                        'bar' => 'dev-master',
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -136,7 +134,7 @@ class ComposerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Encode dat to JSON
+     * Encode dat to JSON.
      *
      * @param array $data
      *
@@ -144,7 +142,8 @@ class ComposerTest extends \PHPUnit_Framework_TestCase
      */
     protected function encode(array $data)
     {
-        $content = json_encode($data, JSON_NUMERIC_CHECK|JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
+        $content = json_encode($data, JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+
         return str_replace(['": ', '    '], ['" : ', "\t"], $content).PHP_EOL;
     }
 }

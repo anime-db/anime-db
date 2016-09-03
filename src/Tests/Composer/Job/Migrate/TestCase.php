@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job\Migrate;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Migrate;
@@ -66,7 +64,7 @@ abstract class TestCase extends TestCaseWritable
         } else {
             file_put_contents($file, Yaml::dump([
                 'migrations_namespace' => '\Foo\Bundle\BarBundle\FooBarBundle\DoctrineMigrations',
-                'migrations_directory' => 'DoctrineMigrations'
+                'migrations_directory' => 'DoctrineMigrations',
             ]));
         }
     }
@@ -94,7 +92,7 @@ abstract class TestCase extends TestCaseWritable
                 'anime-db-routing' => '',
                 'anime-db-config' => '',
                 'anime-db-bundle' => $bundle,
-                'anime-db-migrations' => $migrations
+                'anime-db-migrations' => $migrations,
             ]));
 
         $job = $this->getJob($package);

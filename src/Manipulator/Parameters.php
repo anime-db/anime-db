@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Manipulator;
 
 class Parameters extends Yaml
@@ -20,6 +18,7 @@ class Parameters extends Yaml
     public function get($key)
     {
         $yaml = $this->getContent();
+
         return isset($yaml['parameters']) && isset($yaml['parameters'][$key]) ? $yaml['parameters'][$key] : '';
     }
 
