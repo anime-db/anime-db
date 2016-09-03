@@ -20,8 +20,8 @@ install:
     - composer install --prefer-dist --no-interaction --no-progress
 
 script:
-    - vendor/bin/phpunit
+    - bin/phpunit
 
 after_script:
-    - vendor/bin/ocular code-coverage:upload --format=php-clover build/coverage-clover.xml
-    - vendor/bin/coveralls -v -c .coveralls.yml
+    - bin/ocular code-coverage:upload --format=php-clover build/coverage-clover.xml
+    - bin/coveralls -v -c .coveralls.yml
