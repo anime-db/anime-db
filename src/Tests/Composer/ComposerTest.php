@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer;
 
 use AnimeDb\Bundle\AnimeDbBundle\Tests\TestCaseWritable;
@@ -135,7 +133,7 @@ class ComposerTest extends TestCaseWritable
         $config = $this->root_dir.'composer.json';
         $data = [
             'name' => 'foo/bar',
-            'type' => 'library'
+            'type' => 'library',
         ];
         file_put_contents($config, json_encode($data));
         $package = $this->getMock('\Composer\Package\RootPackageInterface');
@@ -252,7 +250,7 @@ class ComposerTest extends TestCaseWritable
             ['1.2.3-stable', false],
             ['1.2.3-stable2', false],
             ['1.2.3-rc', '1.2.3.6.1'],
-            ['1.2.3-rc2', '1.2.3.6.2']
+            ['1.2.3-rc2', '1.2.3.6.2'],
         ];
     }
 
@@ -283,6 +281,7 @@ class ComposerTest extends TestCaseWritable
             ->will($this->returnCallback(function ($io) use ($that, $mock, $composer) {
                 // check IO from origin composer
                 $that->assertEquals($composer->getIO(), $io);
+
                 return $mock;
             }));
 

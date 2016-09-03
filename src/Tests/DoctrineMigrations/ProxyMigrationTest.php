@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\DoctrineMigrations;
 
 use AnimeDb\Bundle\AnimeDbBundle\DoctrineMigrations\ProxyMigration;
@@ -44,7 +42,7 @@ class ProxyMigrationTest extends \PHPUnit_Framework_TestCase
             ['postUp'],
             ['down'],
             ['preDown'],
-            ['postDown']
+            ['postDown'],
         ];
     }
 

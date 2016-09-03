@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
@@ -34,36 +32,36 @@ class NotifyTest extends \PHPUnit_Framework_TestCase
                 '\AnimeDb\Bundle\AnimeDbBundle\Event\Package\Installed',
                 function ($package) {
                     return new InstalledPackage($package);
-                }
+                },
             ],
             [
                 StoreEventsPackage::REMOVED,
                 '\AnimeDb\Bundle\AnimeDbBundle\Event\Package\Removed',
                 function ($package) {
                     return new RemovedPackage($package);
-                }
+                },
             ],
             [
                 StoreEventsPackage::UPDATED,
                 '\AnimeDb\Bundle\AnimeDbBundle\Event\Package\Updated',
                 function ($package) {
                     return new UpdatedPackage($package);
-                }
+                },
             ],
             [
                 StoreEventsProject::INSTALLED,
                 '\AnimeDb\Bundle\AnimeDbBundle\Event\Project\Installed',
                 function ($package) {
                     return new InstalledProject($package);
-                }
+                },
             ],
             [
                 StoreEventsProject::UPDATED,
                 '\AnimeDb\Bundle\AnimeDbBundle\Event\Project\Updated',
                 function ($package) {
                     return new UpdatedProject($package);
-                }
-            ]
+                },
+            ],
         ];
     }
 

@@ -1,14 +1,12 @@
 <?php
 
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Event\Listener;
 
 use AnimeDb\Bundle\AnimeDbBundle\Event\Listener\UpdateItself;
@@ -39,7 +37,7 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
     protected $monitor;
 
     /**
-     * ZipArchive
+     * ZipArchive.
      *
      * @var \PHPUnit_Framework_MockObject_MockObject|\ZipArchive
      */
@@ -89,7 +87,7 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
             'name' => 'foo',
             'require' => [
                 'bar',
-                'baz'
+                'baz',
             ],
         ]);
         file_put_contents($this->root_dir.'/../composer.json', $composer);
@@ -105,13 +103,13 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
         $old_composer = [
             'name' => 'foo',
             'require' => [
-                'bar'
+                'bar',
             ],
         ];
         $new_composer = [
             'name' => 'foo',
             'require' => [
-                'baz'
+                'baz',
             ],
         ];
         file_put_contents($this->root_dir.'/../composer.json', json_encode($old_composer));
@@ -133,7 +131,7 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
             'app/config/parameters.yml',
             'app/config/vendor_config.yml',
             'app/config/routing.yml',
-            'app/bundles.php'
+            'app/bundles.php',
         ];
         $this->fs->mkdir([$this->event_dir.'/app/config/', $this->event_dir.'/app/']);
         $this->initFiles($files, $this->root_dir.'../');
@@ -171,7 +169,7 @@ class UpdateItselfTest extends \PHPUnit_Framework_TestCase
             'bin/AnimeDB_Run.vbs',
             'bin/AnimeDB_Stop.vbs',
             'AnimeDB_Run.vbs',
-            'AnimeDB_Stop.vbs'
+            'AnimeDB_Stop.vbs',
         ];
         $this->initFiles($files, $this->root_dir.'../');
 
@@ -254,19 +252,20 @@ php='.UpdateItself::DEFAULT_PHP.'
 
         $default_code = "#!/bin/sh
 addr='".UpdateItself::DEFAULT_ADDRESS."'
-port=".UpdateItself::DEFAULT_PORT."
-path=".UpdateItself::DEFAULT_PATH."
-";
+port=".UpdateItself::DEFAULT_PORT.'
+path='.UpdateItself::DEFAULT_PATH.'
+';
         $changed_code = "#!/bin/sh
 addr='localhost'
 port=80
 path=.
 ";
+
         return [
             [$this->root_dir.'../bin/service', $changed_code, $default_code],
             [$this->root_dir.'../bin/service', $default_code, $default_code],
             [$this->root_dir.'../AnimeDB', $changed_code, $default_code],
-            [$this->root_dir.'../AnimeDB', $default_code, $default_code]
+            [$this->root_dir.'../AnimeDB', $default_code, $default_code],
         ];
     }
 

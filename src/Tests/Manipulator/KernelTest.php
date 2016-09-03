@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Manipulator;
 
 use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Kernel;
@@ -59,23 +57,23 @@ class AppKernel extends Kernel {
             [
                 '\DemoBundle',
                 "<?php\nreturn [\n];",
-                "<?php\nreturn [\n    new DemoBundle()\n];"
+                "<?php\nreturn [\n    new DemoBundle()\n];",
             ],
             [
                 'DemoBundle',
                 "<?php\nreturn [\n];",
-                "<?php\nreturn [\n    new DemoBundle()\n];"
+                "<?php\nreturn [\n    new DemoBundle()\n];",
             ],
             [
                 '\DemoBundle',
                 "<?php\nreturn [\n    new DemoBundle()\n];",
-                "<?php\nreturn [\n    new DemoBundle()\n];"
+                "<?php\nreturn [\n    new DemoBundle()\n];",
             ],
             [
                 '\DemoBundle',
                 "<?php\nreturn [\n    new FooBundle()\n];",
-                "<?php\nreturn [\n    new FooBundle(),\n    new DemoBundle()\n];"
-            ]
+                "<?php\nreturn [\n    new FooBundle(),\n    new DemoBundle()\n];",
+            ],
         ];
     }
 
@@ -104,18 +102,18 @@ class AppKernel extends Kernel {
             [
                 '\DemoBundle',
                 "<?php\nreturn [\n    new DemoBundle()\n];",
-                "<?php\nreturn [\n];"
+                "<?php\nreturn [\n];",
             ],
             [
                 'DemoBundle',
                 "<?php\nreturn [\n    new DemoBundle()\n];",
-                "<?php\nreturn [\n];"
+                "<?php\nreturn [\n];",
             ],
             [
                 '\DemoBundle',
                 "<?php\nreturn [\n    new FooBundle(),\n    new DemoBundle()\n];",
-                "<?php\nreturn [\n    new FooBundle()\n];"
-            ]
+                "<?php\nreturn [\n    new FooBundle()\n];",
+            ],
         ];
     }
 

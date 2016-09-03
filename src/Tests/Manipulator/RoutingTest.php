@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Manipulator;
 
 use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing;
@@ -50,9 +48,9 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
                 [],
                 [
                     'demo-bundle' => [
-                        'resource' => '@DemoBundle/Resources/config/routing.yml'
-                    ]
-                ]
+                        'resource' => '@DemoBundle/Resources/config/routing.yml',
+                    ],
+                ],
             ],
             [
                 'demo-bundle',
@@ -61,17 +59,17 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
                 '/Resources/config/global/my_routing',
                 [
                     'acme-bundle' => [
-                        'resource' => '@AcmeBundle/Resources/config/routing.yml'
-                    ]
+                        'resource' => '@AcmeBundle/Resources/config/routing.yml',
+                    ],
                 ],
                 [
                     'acme-bundle' => [
-                        'resource' => '@AcmeBundle/Resources/config/routing.yml'
+                        'resource' => '@AcmeBundle/Resources/config/routing.yml',
                     ],
                     'demo-bundle' => [
-                        'resource' => '@DemoBundle/Resources/config/global/my_routing.xml'
-                    ]
-                ]
+                        'resource' => '@DemoBundle/Resources/config/global/my_routing.xml',
+                    ],
+                ],
             ],
             [
                 'demo-bundle',
@@ -80,15 +78,15 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
                 '/Resources/config/routing',
                 [
                     'demo-bundle' => [
-                        'resource' => '@DemoBundle/Resources/config/routing.yml'
-                    ]
+                        'resource' => '@DemoBundle/Resources/config/routing.yml',
+                    ],
                 ],
                 [
                     'demo-bundle' => [
-                        'resource' => '@DemoBundle/Resources/config/routing.yml'
-                    ]
-                ]
-            ]
+                        'resource' => '@DemoBundle/Resources/config/routing.yml',
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -120,37 +118,37 @@ class RoutingTest extends \PHPUnit_Framework_TestCase
             [
                 'demo-bundle',
                 [],
-                []
+                [],
             ],
             [
                 'demo-bundle',
                 [
                     'acme-bundle' => [
-                        'resource' => '@AcmeBundle/Resources/config/routing.yml'
-                    ]
+                        'resource' => '@AcmeBundle/Resources/config/routing.yml',
+                    ],
                 ],
                 [
                     'acme-bundle' => [
-                        'resource' => '@AcmeBundle/Resources/config/routing.yml'
-                    ]
-                ]
+                        'resource' => '@AcmeBundle/Resources/config/routing.yml',
+                    ],
+                ],
             ],
             [
                 'demo-bundle',
                 [
                     'acme-bundle' => [
-                        'resource' => '@AcmeBundle/Resources/config/routing.yml'
+                        'resource' => '@AcmeBundle/Resources/config/routing.yml',
                     ],
                     'demo-bundle' => [
-                        'resource' => '@DemoBundle/Resources/config/routing.yml'
-                    ]
+                        'resource' => '@DemoBundle/Resources/config/routing.yml',
+                    ],
                 ],
                 [
                     'acme-bundle' => [
-                        'resource' => '@AcmeBundle/Resources/config/routing.yml'
-                    ]
-                ]
-            ]
+                        'resource' => '@AcmeBundle/Resources/config/routing.yml',
+                    ],
+                ],
+            ],
         ];
     }
 

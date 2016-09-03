@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Manipulator;
 
 use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Parameters;
@@ -48,9 +46,9 @@ class ParametersTest extends \PHPUnit_Framework_TestCase
                 [],
                 [
                     'parameters' => [
-                        'foo' => 'bar'
-                    ]
-                ]
+                        'foo' => 'bar',
+                    ],
+                ],
             ],
             [
                 'foo',
@@ -58,15 +56,15 @@ class ParametersTest extends \PHPUnit_Framework_TestCase
                 [
                     'parameters' => [
                         'baz' => 123,
-                        'foo' => 'car'
-                    ]
+                        'foo' => 'car',
+                    ],
                 ],
                 [
                     'parameters' => [
                         'baz' => 123,
-                        'foo' => 'bar'
-                    ]
-                ]
+                        'foo' => 'bar',
+                    ],
+                ],
             ],
         ];
     }
@@ -99,28 +97,28 @@ class ParametersTest extends \PHPUnit_Framework_TestCase
                 [],
                 [
                     'parameters' => [
-                        'foo' => 'bar'
-                    ]
-                ]
+                        'foo' => 'bar',
+                    ],
+                ],
             ],
             [
                 [
                     'foo' => 'baz',
-                    'bar' => true
+                    'bar' => true,
                 ],
                 [
                     'parameters' => [
                         'baz' => 123,
-                        'foo' => 'car'
-                    ]
+                        'foo' => 'car',
+                    ],
                 ],
                 [
                     'parameters' => [
                         'baz' => 123,
                         'foo' => 'baz',
-                        'bar' => true
-                    ]
-                ]
+                        'bar' => true,
+                    ],
+                ],
             ],
         ];
     }
@@ -152,18 +150,18 @@ class ParametersTest extends \PHPUnit_Framework_TestCase
                 'bar',
                 [
                     'parameters' => [
-                        'foo' => 'bar'
-                    ]
-                ]
+                        'foo' => 'bar',
+                    ],
+                ],
             ],
             [
                 'foo',
                 '',
                 [
                     'parameters' => [
-                        'baz' => 123
-                    ]
-                ]
+                        'baz' => 123,
+                    ],
+                ],
             ],
         ];
     }

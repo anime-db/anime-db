@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Command;
 
 use AnimeDb\Bundle\AnimeDbBundle\Tests\TestCaseWritable;
@@ -63,7 +61,7 @@ class UpdateCommandTest extends TestCaseWritable
     protected $filesystem;
 
     /**
-     * Target dir
+     * Target dir.
      *
      * @var string
      */
@@ -103,12 +101,12 @@ class UpdateCommandTest extends TestCaseWritable
         return [
             [
                 0,
-                '<info>Update requirements has been completed</info>'
+                '<info>Update requirements has been completed</info>',
             ],
             [
                 1,
-                '<error>During updating dependencies error occurred</error>'
-            ]
+                '<error>During updating dependencies error occurred</error>',
+            ],
         ];
     }
 
@@ -124,7 +122,7 @@ class UpdateCommandTest extends TestCaseWritable
         $this->write([
             '<info>Application has already been updated to the latest version</info>',
             $message,
-            '<info>Updating the application has been completed<info>'
+            '<info>Updating the application has been completed<info>',
         ]);
 
         $command->run($this->input, $this->output); // test
@@ -134,7 +132,7 @@ class UpdateCommandTest extends TestCaseWritable
     {
         $tag = [
             'name' => '1.1.0-alpha',
-            'zipball_url' => 'http://example.com/tags/1.0.1.zip'
+            'zipball_url' => 'http://example.com/tags/1.0.1.zip',
         ];
         $dispatcher = $this->getMock('\Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $local_dispatcher = $this
@@ -157,7 +155,7 @@ class UpdateCommandTest extends TestCaseWritable
             $this->root_dir.'app/Resources/views/',
             $this->root_dir.'app/config/',
             $this->root_dir.'src/Tests/',
-            $this->root_dir.'src/Console'
+            $this->root_dir.'src/Console',
         ]);
         $this->fs->touch([
             $this->root_dir.'app/bootstrap.php.cache',
@@ -165,7 +163,7 @@ class UpdateCommandTest extends TestCaseWritable
             $this->root_dir.'app/Resources/views/base.html.twig',
             $this->root_dir.'app/config/config.yml',
             $this->root_dir.'src/AnimeDbAnimeDbBundle.php',
-            $this->root_dir.'src/Tests/TestCaseWritable.php'
+            $this->root_dir.'src/Tests/TestCaseWritable.php',
         ]);
 
         // init command
@@ -175,7 +173,7 @@ class UpdateCommandTest extends TestCaseWritable
             'Discovered a new version of the application: <info>'.$tag['name'].'</info>',
             '<info>Update itself has been completed</info>',
             '<info>Update requirements has been completed</info>',
-            '<info>Updating the application has been completed<info>'
+            '<info>Updating the application has been completed<info>',
         ]);
         $this->container
             ->expects($this->at(2))
@@ -342,11 +340,12 @@ class UpdateCommandTest extends TestCaseWritable
         $command = new UpdateCommand();
         $command->setHelperSet($helper_set);
         $command->setContainer($this->container);
+
         return $command;
     }
 
     /**
-     * Write messages
+     * Write messages.
      *
      * @param string[] $messages
      */

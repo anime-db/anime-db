@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Event\Listener\Request;
 
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -57,12 +55,13 @@ class StaticFiles
             if ($this->env == 'prod') {
                 $response
                     ->setEtag(md5_file($file))
-                    ->setExpires((new \DateTime())->setTimestamp(time()+2592000)) // updates interval of 30 days
+                    ->setExpires((new \DateTime())->setTimestamp(time() + 2592000)) // updates interval of 30 days
                     ->setLastModified((new \DateTime())->setTimestamp(filemtime($file)))
                     ->headers->addCacheControlDirective('must-revalidate', true);
                 // response was not modified for this request
                 if ($response->isNotModified($request)) {
                     $event->setResponse($response);
+
                     return;
                 }
             }
@@ -70,7 +69,7 @@ class StaticFiles
             // set content type
             $mimes = [
                 'css' => 'text/css',
-                'js' => 'text/javascript'
+                'js' => 'text/javascript',
             ];
 
             if (isset($mimes[($ext = pathinfo($file, PATHINFO_EXTENSION))])) {

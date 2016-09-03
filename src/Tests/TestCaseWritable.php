@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests;
 
 use Symfony\Component\Filesystem\Filesystem;
@@ -30,7 +28,7 @@ abstract class TestCaseWritable extends \PHPUnit_Framework_TestCase
      * @param array $data
      * @param string $dataName
      */
-    public function __construct($name = null, array $data = array(), $dataName = '')
+    public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
         $this->fs = new Filesystem();
@@ -40,7 +38,6 @@ abstract class TestCaseWritable extends \PHPUnit_Framework_TestCase
     {
         $this->root_dir = sys_get_temp_dir().'/tests/';
         $this->fs->mkdir($this->root_dir);
-
     }
 
     protected function tearDown()

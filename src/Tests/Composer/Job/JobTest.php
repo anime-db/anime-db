@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
@@ -34,7 +32,7 @@ class JobTest extends TestCaseWritable
         'anime-db-routing' => '',
         'anime-db-config' => '',
         'anime-db-bundle' => '',
-        'anime-db-migrations' => ''
+        'anime-db-migrations' => '',
     ];
 
     /**
@@ -79,10 +77,10 @@ class JobTest extends TestCaseWritable
                     'anime-db-bundle' => 'Acme\DemoBundle',
                     'anime-db-migrations' => 'my_migrations.yml',
                     'branch-alias' => [
-                        'dev-master' => '2.6-dev'
-                    ]
-                ]
-            ]
+                        'dev-master' => '2.6-dev',
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -97,7 +95,7 @@ class JobTest extends TestCaseWritable
     }
 
     /**
-     * Test get/set container
+     * Test get/set container.
      */
     public function testContainer()
     {

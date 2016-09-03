@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
@@ -93,7 +91,6 @@ class ScriptHandlerTest extends TestCaseWritable
         ScriptHandler::setContainer($this->container);
         $this->default_root_dir = ScriptHandler::getRootDir();
         ScriptHandler::setRootDir($this->root_dir);
-
     }
 
     protected function tearDown()
@@ -120,21 +117,21 @@ class ScriptHandlerTest extends TestCaseWritable
                 'getPackage',
                 'packageInKernel',
                 '\Composer\DependencyResolver\Operation\InstallOperation',
-                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel\Add'
+                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel\Add',
             ],
             [
                 'update',
                 'getTargetPackage',
                 'packageInKernel',
                 '\Composer\DependencyResolver\Operation\UpdateOperation',
-                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel\Add'
+                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel\Add',
             ],
             [
                 'uninstall',
                 'getPackage',
                 'packageInKernel',
                 '\Composer\DependencyResolver\Operation\UninstallOperation',
-                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel\Remove'
+                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel\Remove',
             ],
             // packageInRouting
             [
@@ -142,21 +139,21 @@ class ScriptHandlerTest extends TestCaseWritable
                 'getPackage',
                 'packageInRouting',
                 '\Composer\DependencyResolver\Operation\InstallOperation',
-                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Add'
+                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Add',
             ],
             [
                 'update',
                 'getTargetPackage',
                 'packageInRouting',
                 '\Composer\DependencyResolver\Operation\UpdateOperation',
-                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Add'
+                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Add',
             ],
             [
                 'uninstall',
                 'getPackage',
                 'packageInRouting',
                 '\Composer\DependencyResolver\Operation\UninstallOperation',
-                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Remove'
+                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Remove',
             ],
             // packageInConfig
             [
@@ -164,21 +161,21 @@ class ScriptHandlerTest extends TestCaseWritable
                 'getPackage',
                 'packageInConfig',
                 '\Composer\DependencyResolver\Operation\InstallOperation',
-                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config\Add'
+                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config\Add',
             ],
             [
                 'update',
                 'getTargetPackage',
                 'packageInConfig',
                 '\Composer\DependencyResolver\Operation\UpdateOperation',
-                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config\Add'
+                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config\Add',
             ],
             [
                 'uninstall',
                 'getPackage',
                 'packageInConfig',
                 '\Composer\DependencyResolver\Operation\UninstallOperation',
-                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config\Remove'
+                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config\Remove',
             ],
             // migratePackage
             [
@@ -186,21 +183,21 @@ class ScriptHandlerTest extends TestCaseWritable
                 'getPackage',
                 'migratePackage',
                 '\Composer\DependencyResolver\Operation\InstallOperation',
-                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Up'
+                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Up',
             ],
             [
                 'update',
                 'getTargetPackage',
                 'migratePackage',
                 '\Composer\DependencyResolver\Operation\UpdateOperation',
-                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Up'
+                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Up',
             ],
             [
                 'uninstall',
                 'getPackage',
                 'migratePackage',
                 '\Composer\DependencyResolver\Operation\UninstallOperation',
-                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Down'
+                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Down',
             ],
             // notifyPackage
             [
@@ -208,21 +205,21 @@ class ScriptHandlerTest extends TestCaseWritable
                 'getPackage',
                 'notifyPackage',
                 '\Composer\DependencyResolver\Operation\InstallOperation',
-                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Installed'
+                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Installed',
             ],
             [
                 'update',
                 'getTargetPackage',
                 'notifyPackage',
                 '\Composer\DependencyResolver\Operation\UpdateOperation',
-                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Updated'
+                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Updated',
             ],
             [
                 'uninstall',
                 'getPackage',
                 'notifyPackage',
                 '\Composer\DependencyResolver\Operation\UninstallOperation',
-                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Removed'
+                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package\Removed',
             ],
         ];
     }
@@ -316,11 +313,11 @@ class ScriptHandlerTest extends TestCaseWritable
         return [
             [
                 'notifyProjectInstall',
-                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Project\Installed'
+                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Project\Installed',
             ],
             [
                 'notifyProjectUpdate',
-                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Project\Updated'
+                '\AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Project\Updated',
             ],
         ];
     }
@@ -552,7 +549,7 @@ class ScriptHandlerTest extends TestCaseWritable
     {
         return [
             [true],
-            [false]
+            [false],
         ];
     }
 

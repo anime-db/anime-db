@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
@@ -21,7 +19,7 @@ abstract class Migrate extends Job
     const PRIORITY = self::PRIORITY_INIT;
 
     /**
-     * Get path to migrations config file from package
+     * Get path to migrations config file from package.
      *
      * @return string|null
      */
@@ -40,11 +38,11 @@ abstract class Migrate extends Job
             return $dir.'migrations.xml';
         }
 
-        return null;
+        return;
     }
 
     /**
-     * Parse config file
+     * Parse config file.
      *
      * Return:
      * <code>
@@ -91,7 +89,7 @@ abstract class Migrate extends Job
 
         return [
             'namespace' => $namespace && $namespace[0] == '\\' ? substr($namespace, 1) : $namespace,
-            'directory' => $directory
+            'directory' => $directory,
         ];
     }
 }
