@@ -12,6 +12,7 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Event\Listener\Request;
 
 use AnimeDb\Bundle\AnimeDbBundle\Event\Listener\Request\StaticFiles;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -53,7 +54,7 @@ class StaticFilesTest extends \PHPUnit_Framework_TestCase
 
     protected function tearDown()
     {
-        $this->fs->remove(sys_get_temp_dir().'/tests/');
+        $this->fs->remove(Finder::create()->in(sys_get_temp_dir().'/tests/')->directories()->files());
     }
 
     public function testOnKernelRequestIgnore()
