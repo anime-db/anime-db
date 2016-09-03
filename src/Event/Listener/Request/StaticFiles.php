@@ -15,12 +15,6 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Static files
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Event\Listener\Request
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class StaticFiles
 {
     /**

@@ -15,10 +15,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Shipping deferred events
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Command
- * @author  Peter Gribanov <info@peter-gribanov.ru>
+ * Shipping deferred events.
  */
 class DeliverEventsCommand extends ContainerAwareCommand
 {

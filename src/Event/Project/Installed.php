@@ -14,10 +14,7 @@ use Symfony\Component\EventDispatcher\Event;
 use Composer\Package\Package;
 
 /**
- * Event thrown when the project is installed
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Event\Project
- * @author  Peter Gribanov <info@peter-gribanov.ru>
+ * Event thrown when the project is installed.
  */
 class Installed extends Event
 {

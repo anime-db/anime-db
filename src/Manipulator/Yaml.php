@@ -12,12 +12,6 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Manipulator;
 
 use Symfony\Component\Yaml\Yaml as Util;
 
-/**
- * Yaml manipulator
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Manipulator
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 abstract class Yaml extends FileContent
 {
     /**

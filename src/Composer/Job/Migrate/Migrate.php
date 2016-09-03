@@ -13,12 +13,6 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 use Symfony\Component\Yaml\Yaml;
 
-/**
- * Migrate
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 abstract class Migrate extends Job
 {
     /**

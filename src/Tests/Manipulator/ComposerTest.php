@@ -12,12 +12,6 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Manipulator;
 
 use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Composer;
 
-/**
- * Test Composer Manipulator
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Manipulator
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class ComposerTest extends \PHPUnit_Framework_TestCase
 {
     /**

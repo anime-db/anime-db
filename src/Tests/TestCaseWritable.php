@@ -12,12 +12,6 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Tests;
 
 use Symfony\Component\Filesystem\Filesystem;
 
-/**
- * Test case writable
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 abstract class TestCaseWritable extends \PHPUnit_Framework_TestCase
 {
     /**

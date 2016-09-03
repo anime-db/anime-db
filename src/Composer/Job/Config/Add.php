@@ -15,9 +15,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config;
 
 /**
  * Job: Add package to config
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config
- * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Add extends BaseAddConfig
 {

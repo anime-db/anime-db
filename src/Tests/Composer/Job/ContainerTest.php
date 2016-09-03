@@ -13,12 +13,6 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 
-/**
- * Test job container
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class ContainerTest extends \PHPUnit_Framework_TestCase
 {
     /**

@@ -13,24 +13,14 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Client;
 use AnimeDb\Bundle\AnimeDbBundle\Client\GitHub;
 use Guzzle\Http\Client;
 
-/**
- * Test client GitHub
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Client
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class GitHubTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * API host
-     *
      * @var string
      */
     protected $api_host = 'api://host';
 
     /**
-     * Repository
-     *
      * @var string
      */
     protected $repository = 'foo/bar';

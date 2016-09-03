@@ -10,12 +10,6 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Manipulator;
 
-/**
- * Manipulator interface
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Manipulator
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 interface ManipulatorInterface
 {
 }

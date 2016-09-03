@@ -15,12 +15,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Add;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
 use Composer\Package\Package;
 
-/**
- * Test job routing add
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job\Routing
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class AddTest extends TestCaseWritable
 {
     /**

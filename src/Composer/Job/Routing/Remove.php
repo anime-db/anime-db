@@ -15,9 +15,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing;
 
 /**
  * Job: Remove package from routing
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing
- * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Remove extends Job
 {

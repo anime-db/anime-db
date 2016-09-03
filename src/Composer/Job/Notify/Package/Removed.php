@@ -16,9 +16,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Event\Package\Removed as Event;
 
 /**
  * Job: Notice that the package has been removed
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Package
- * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Removed extends Job
 {

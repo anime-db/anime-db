@@ -15,12 +15,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Event\Listener\UpdateItself;
 use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded;
 use Symfony\Component\Filesystem\Filesystem;
 
-/**
- * Test UpdateItself
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Event\Listener
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class UpdateItselfTest extends \PHPUnit_Framework_TestCase
 {
     /**

@@ -15,12 +15,6 @@ use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
-/**
- * Event dispatcher
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Event
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class Dispatcher
 {
     /**

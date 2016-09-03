@@ -16,12 +16,6 @@ use Symfony\Component\Yaml\Yaml;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
 use Composer\Package\Package;
 
-/**
- * Test job migrate down
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job\Migrate
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 abstract class TestCase extends TestCaseWritable
 {
     /**

@@ -11,11 +11,6 @@
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
-/**
- * App kernel
- *
- * @author Peter Gribanov <info@peter-gribanov.ru>
- */
 class AppKernel extends Kernel
 {
     /**

@@ -32,12 +32,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Manipulator\PhpIni;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
 
-/**
- * Composer script handler
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Composer
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class ScriptHandler
 {
     /**

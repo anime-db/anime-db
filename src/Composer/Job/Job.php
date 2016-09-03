@@ -12,12 +12,6 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job;
 
 use Composer\Package\Package;
 
-/**
- * Job
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 abstract class Job
 {
     /**

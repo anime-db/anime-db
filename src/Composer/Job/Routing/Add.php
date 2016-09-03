@@ -15,9 +15,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing;
 
 /**
  * Job: Add package to routing
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing
- * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Add extends BaseAddConfig
 {

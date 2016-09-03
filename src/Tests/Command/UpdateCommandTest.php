@@ -25,12 +25,6 @@ use Composer\Package\Package;
 use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded;
 use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Updated;
 
-/**
- * Test update command
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Command
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class UpdateCommandTest extends TestCaseWritable
 {
     /**

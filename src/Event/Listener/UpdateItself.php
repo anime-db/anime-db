@@ -15,12 +15,6 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
-/**
- * Update itself listener
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Event\Listener
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class UpdateItself
 {
     /**

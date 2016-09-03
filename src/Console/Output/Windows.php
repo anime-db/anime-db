@@ -16,9 +16,6 @@ use Symfony\Component\Console\Formatter\OutputFormatterInterface;
 
 /**
  * Decorate console output for Windows
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Console\Output
- * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Windows implements ConsoleOutputInterface
 {

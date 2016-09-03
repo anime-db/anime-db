@@ -15,12 +15,6 @@ use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
-/**
- * Test Dispatcher
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Event
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class DispatcherTest extends \PHPUnit_Framework_TestCase
 {
     /**

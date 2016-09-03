@@ -21,12 +21,6 @@ use Composer\Package\RootPackage;
 use Composer\Package\RootPackageInterface;
 use Composer\Composer as BaseComposer;
 
-/**
- * Composer
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Composer
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class Composer
 {
     /**

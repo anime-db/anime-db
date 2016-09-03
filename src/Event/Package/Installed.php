@@ -15,9 +15,6 @@ use Composer\Package\Package;
 
 /**
  * Event thrown when the package is installed
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Event\Package
- * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Installed extends Event
 {

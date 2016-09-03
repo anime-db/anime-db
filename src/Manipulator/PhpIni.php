@@ -10,10 +10,6 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Manipulator;
 
-/**
- * Class PhpIni
- * @package AnimeDb\Bundle\AnimeDbBundle\Manipulator
- */
 class PhpIni implements ManipulatorInterface
 {
     /**
