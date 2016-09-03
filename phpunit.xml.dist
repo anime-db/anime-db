@@ -9,19 +9,22 @@
     processIsolation            = "false"
     stopOnFailure               = "false"
     syntaxCheck                 = "false"
-    bootstrap                   = "bootstrap.php.cache"
+    bootstrap                   = "app/bootstrap.php.cache"
 >
     <testsuites>
         <testsuite name="Project Test Suite">
-            <directory>../src/Tests</directory>
+            <directory>src/Tests</directory>
         </testsuite>
     </testsuites>
+    <logging>
+        <log type="coverage-clover" target="build/coverage-clover.xml"/>
+    </logging>
     <filter>
         <whitelist>
-            <directory>../src</directory>
+            <directory>src</directory>
             <exclude>
-                <directory>../src/Resources</directory>
-                <directory>../src/Tests</directory>
+                <directory>src/Resources</directory>
+                <directory>src/Tests</directory>
             </exclude>
         </whitelist>
     </filter>
