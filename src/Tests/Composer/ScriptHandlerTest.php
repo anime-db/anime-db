@@ -20,12 +20,6 @@ use Composer\Package\Package;
 use Composer\Script\Event;
 use Composer\Installer\PackageEvent;
 
-/**
- * Test script handler
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Composer
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class ScriptHandlerTest extends TestCaseWritable
 {
     /**

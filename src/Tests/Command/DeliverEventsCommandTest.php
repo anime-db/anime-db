@@ -14,12 +14,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Command\DeliverEventsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * Test deliver events command
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Command
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class DeliverEventsCommandTest extends \PHPUnit_Framework_TestCase
 {
     public function testConfigure()

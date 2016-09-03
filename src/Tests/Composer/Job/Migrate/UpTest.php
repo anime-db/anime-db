@@ -13,12 +13,6 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job\Migrate;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate\Up;
 use Composer\Package\Package;
 
-/**
- * Test job migrate up
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job\Migrate
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class UpTest extends TestCase
 {
     /**

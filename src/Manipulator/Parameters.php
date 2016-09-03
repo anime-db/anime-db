@@ -10,12 +10,6 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Manipulator;
 
-/**
- * Parameters manipulator
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Manipulator
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class Parameters extends Yaml
 {
     /**

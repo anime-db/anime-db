@@ -14,12 +14,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Composer;
 use Guzzle\Http\Client;
 use Guzzle\Http\Message\Response;
 
-/**
- * GitHub client
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Client
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class GitHub
 {
     /**

@@ -2,9 +2,13 @@
 
 [![Latest Stable Version](https://poser.pugx.org/anime-db/anime-db/v/stable.png)](https://packagist.org/packages/anime-db/anime-db)
 [![Latest Unstable Version](https://poser.pugx.org/anime-db/anime-db/v/unstable.png)](https://packagist.org/packages/anime-db/anime-db)
+[![Total Downloads](https://poser.pugx.org/anime-db/anime-db/downloads)](https://packagist.org/packages/anime-db/anime-db)
 [![Build Status](https://travis-ci.org/anime-db/anime-db.svg?branch=master)](https://travis-ci.org/anime-db/anime-db)
-[![Code Coverage](https://scrutinizer-ci.com/g/anime-db/anime-db/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/anime-db/anime-db/?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/anime-db/anime-db/badge.svg?branch=master)](https://coveralls.io/github/anime-db/anime-db?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/anime-db/anime-db/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/anime-db/anime-db/?branch=master)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/863c136d-5f15-4cb1-b9c6-1ec86b8da8ed/mini.png)](https://insight.sensiolabs.com/projects/863c136d-5f15-4cb1-b9c6-1ec86b8da8ed)
+[![StyleCI](https://styleci.io/repos/8353416/shield)](https://styleci.io/repos/8353416)
+[![Dependency Status](https://www.versioneye.com/user/projects/5746f52dce8d0e00360bd76c/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5746f52dce8d0e00360bd76c)
 [![License](https://poser.pugx.org/anime-db/anime-db/license.png)](https://packagist.org/packages/anime-db/anime-db)
 
 # Anime DB #

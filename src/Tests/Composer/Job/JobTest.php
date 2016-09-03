@@ -15,12 +15,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Tests\TestCaseWritable;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
 use Composer\Package\Package;
 
-/**
- * Test job
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class JobTest extends TestCaseWritable
 {
     /**

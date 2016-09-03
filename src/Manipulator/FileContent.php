@@ -10,12 +10,6 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Manipulator;
 
-/**
- * File content manipulator
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Manipulator
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 abstract class FileContent implements ManipulatorInterface
 {
     /**

@@ -15,9 +15,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Kernel;
 
 /**
  * Job: Add package to kernel
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel
- * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Add extends Job
 {

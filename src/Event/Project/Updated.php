@@ -14,10 +14,7 @@ use Symfony\Component\EventDispatcher\Event;
 use Composer\Package\Package;
 
 /**
- * Event thrown when the project is updated
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Event\Project
- * @author  Peter Gribanov <info@peter-gribanov.ru>
+ * Event thrown when the project is updated.
  */
 class Updated extends Event
 {

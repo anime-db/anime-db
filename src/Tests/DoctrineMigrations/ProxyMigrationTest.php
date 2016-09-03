@@ -13,12 +13,6 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Tests\DoctrineMigrations;
 use AnimeDb\Bundle\AnimeDbBundle\DoctrineMigrations\ProxyMigration;
 use Doctrine\DBAL\Schema\Schema;
 
-/**
- * Test proxy migration
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests\DoctrineMigrations
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class ProxyMigrationTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -81,7 +75,7 @@ class ProxyMigrationTest extends \PHPUnit_Framework_TestCase
     {
         $container = $this->getMock('\Symfony\Component\DependencyInjection\ContainerInterface');
         $migration = $this
-            ->getMockBuilder('\\'.__NAMESPACE__.'\VersionTest_MigrationCustom')
+            ->getMockBuilder('\\'.__NAMESPACE__.'\VersionTestMigrationCustom')
             ->disableOriginalConstructor()
             ->getMock();
         $this->proxy->setContainer($container);

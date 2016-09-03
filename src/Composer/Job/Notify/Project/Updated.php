@@ -16,9 +16,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Event\Project\Updated as Event;
 
 /**
  * Job: Notice that the project has been updated
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Project
- * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Updated extends Job
 {

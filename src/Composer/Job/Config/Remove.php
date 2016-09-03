@@ -16,9 +16,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config;
 
 /**
  * Job: Remove package from config
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config
- * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Remove extends Job
 {

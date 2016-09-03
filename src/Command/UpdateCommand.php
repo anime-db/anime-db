@@ -22,12 +22,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Client\GitHub;
 use Composer\Package\Package;
 use Composer\IO\ConsoleIO;
 
-/**
- * Update Application
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Command
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class UpdateCommand extends ContainerAwareCommand
 {
     protected function configure()

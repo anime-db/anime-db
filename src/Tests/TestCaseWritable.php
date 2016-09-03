@@ -11,13 +11,8 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests;
 
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 
-/**
- * Test case writable
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 abstract class TestCaseWritable extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -50,6 +45,6 @@ abstract class TestCaseWritable extends \PHPUnit_Framework_TestCase
 
     protected function tearDown()
     {
-        $this->fs->remove($this->root_dir);
+        $this->fs->remove(Finder::create()->in($this->root_dir)->directories()->files());
     }
 }

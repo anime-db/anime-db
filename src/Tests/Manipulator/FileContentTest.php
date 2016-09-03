@@ -10,12 +10,6 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Manipulator;
 
-/**
- * Test File content manipulator
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Manipulator
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class FileContentTest extends \PHPUnit_Framework_TestCase
 {
     /**

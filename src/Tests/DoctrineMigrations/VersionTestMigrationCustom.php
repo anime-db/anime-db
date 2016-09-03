@@ -15,10 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 
-/**
- * Migration with custom name
- */
-class VersionTest_MigrationCustom extends AbstractMigration implements ContainerAwareInterface
+class VersionTestMigrationCustom extends AbstractMigration implements ContainerAwareInterface
 {
     public function setContainer(ContainerInterface $container = null) {}
     public function down(Schema $schema) {}

@@ -17,12 +17,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Event\Project\Installed as InstalledProject;
 use AnimeDb\Bundle\AnimeDbBundle\Event\Project\Updated as UpdatedProject;
 use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Updated as UpdatedUpdateItself;
 
-/**
- * Test get package event
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Event\Package
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class GetPackageTest extends \PHPUnit_Framework_TestCase
 {
     /**

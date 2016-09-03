@@ -15,9 +15,6 @@ use Symfony\Component\Finder\Finder;
 
 /**
  * Job: Migrate package up
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Migrate
- * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Up extends BaseMigrate
 {

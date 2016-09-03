@@ -41,24 +41,28 @@
 		"doctrine/doctrine-bundle" : "~1.4",
 		"doctrine/cache" : "<1.6",
 		"doctrine/common" : "<2.6",
-		"twig/extensions" : "1.0.*",
+		"twig/extensions" : "~1.0.0",
 		"symfony/assetic-bundle" : "~2.3",
 		"symfony/swiftmailer-bundle" : "~2.3",
 		"symfony/monolog-bundle" : "~2.4",
 		"sensio/distribution-bundle" : "~4.0",
 		"sensio/framework-extra-bundle" : "^3.0.2",
-		"sensio/generator-bundle" : "2.3.*",
+		"sensio/generator-bundle" : "~2.3.0",
 		"incenteev/composer-parameter-handler" : "~2.0",
-		"gedmo/doctrine-extensions" : "2.3.*",
-		"doctrine/migrations" : "1.0.*",
-		"doctrine/doctrine-migrations-bundle" : "1.0.*",
-		"composer/composer" : "1.0.*",
-		"guzzle/guzzle" : ">=3.7.0",
-		"avalanche123/imagine-bundle" : "2.*",
-		"anime-db/catalog-bundle" : ">=0.4.7",
+		"gedmo/doctrine-extensions" : "~2.3.0",
+		"doctrine/doctrine-migrations-bundle" : "~1.0.0",
+		"composer/composer" : "~1.0.0",
+		"guzzle/guzzle" : "~3.9.0",
+		"avalanche123/imagine-bundle" : "~2.1.1",
+		"anime-db/catalog-bundle" : "~0.4.7",
 		"anime-db/ani-db-filler-bundle" : "0.1.*",
 		"anime-db/shikimori-filler-bundle" : "0.1.*",
 		"anime-db/world-art-filler-bundle" : "0.1.*"
+	},
+	"require-dev" : {
+		"phpunit/phpunit" : "^4.8.0",
+		"scrutinizer/ocular" : "~1.3.0",
+		"satooshi/php-coveralls" : "^1.0.0"
 	},
 	"suggest" : {
 		"ext-apc" : "Allows use APC for autoloading to improve performance",
@@ -127,11 +131,6 @@
 		"symfony-web-dir" : "web",
 		"incenteev-parameters" : {
 			"file" : "app/config/parameters.yml"
-		},
-		"branch-alias" : {
-			"dev-master" : "0.3.x-dev",
-			"dev-develop" : "0.3.x-dev"
 		}
-	},
-	"minimum-stability" : "dev"
+	}
 }

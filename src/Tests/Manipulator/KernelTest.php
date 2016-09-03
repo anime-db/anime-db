@@ -12,12 +12,6 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Manipulator;
 
 use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Kernel;
 
-/**
- * Test Kernel Manipulator
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Manipulator
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class KernelTest extends \PHPUnit_Framework_TestCase
 {
     /**

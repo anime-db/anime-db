@@ -17,12 +17,6 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Test firewall
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Event\Listener\Request
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class FirewallTest extends \PHPUnit_Framework_TestCase
 {
     /**

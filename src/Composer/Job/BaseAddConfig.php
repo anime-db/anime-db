@@ -13,12 +13,6 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-/**
- * Job: Add package config
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 abstract class BaseAddConfig extends Job
 {
     /**

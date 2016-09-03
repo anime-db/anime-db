@@ -11,10 +11,7 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Event\Project;
 
 /**
- * Project event names
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Event\Project
- * @author  Peter Gribanov <info@peter-gribanov.ru>
+ * Project event names.
  */
 final class StoreEvents
 {

@@ -14,13 +14,8 @@ use AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 
-/**
- * Test Dispatcher
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Event
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class DispatcherTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -41,7 +36,7 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
 
     protected function tearDown()
     {
-        $this->fs->remove($this->root_dir);
+        $this->fs->remove(Finder::create()->in($this->root_dir)->directories()->files());
     }
 
     public function testEmptyDriver()

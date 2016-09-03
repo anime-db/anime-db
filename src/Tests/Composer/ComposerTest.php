@@ -17,12 +17,6 @@ use Composer\IO\IOInterface;
 use Composer\Package\Loader\LoaderInterface;
 use Composer\Package\RootPackageInterface;
 
-/**
- * Test composer
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Composer
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class ComposerTest extends TestCaseWritable
 {
     /**

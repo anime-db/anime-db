@@ -11,10 +11,7 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself;
 
 /**
- * Update itself event names
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself
- * @author  Peter Gribanov <info@peter-gribanov.ru>
+ * Update itself event names.
  */
 final class StoreEvents
 {

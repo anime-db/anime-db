@@ -13,12 +13,6 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Event\UpdateItself;
 use AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself\Downloaded;
 use Composer\Package\RootPackageInterface;
 
-/**
- * Test Downloaded event
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Event\UpdateItself
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class DownloadedTest extends \PHPUnit_Framework_TestCase
 {
     /**

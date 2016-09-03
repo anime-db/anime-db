@@ -20,12 +20,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Manipulator\ManipulatorInterface;
 use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
 
-/**
- * Routing manipulator
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class Container
 {
     /**

@@ -16,9 +16,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Event\Project\Installed as Event;
 
 /**
  * Job: Notice that the project has been installed
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Notify\Project
- * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Installed extends Job
 {

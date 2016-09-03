@@ -12,11 +12,6 @@ require_once __DIR__.'/AppKernel.php';
 
 use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
 
-/**
- * App cache kernel
- *
- * @author Peter Gribanov <info@peter-gribanov.ru>
- */
 class AppCache extends HttpCache
 {
 }

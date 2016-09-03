@@ -10,12 +10,6 @@
 
 namespace AnimeDb\Bundle\AnimeDbBundle\Manipulator;
 
-/**
- * Kernel manipulator
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Manipulator
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class Kernel extends FileContent
 {
     /**

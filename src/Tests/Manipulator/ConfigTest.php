@@ -13,12 +13,6 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Manipulator;
 use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config;
 use Symfony\Component\Yaml\Yaml;
 
-/**
- * Test Config Manipulator
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Manipulator
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class ConfigTest extends \PHPUnit_Framework_TestCase
 {
     /**

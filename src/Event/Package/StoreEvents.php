@@ -11,10 +11,7 @@
 namespace AnimeDb\Bundle\AnimeDbBundle\Event\Package;
 
 /**
- * Package event names
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Event\Package
- * @author  Peter Gribanov <info@peter-gribanov.ru>
+ * Package event names.
  */
 final class StoreEvents
 {

@@ -21,12 +21,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Event\Package\StoreEvents as StoreEventsPackage
 use AnimeDb\Bundle\AnimeDbBundle\Event\Project\Installed;
 use AnimeDb\Bundle\AnimeDbBundle\Event\Project\StoreEvents as StoreEventsProject;
 
-/**
- * Test job notify
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class NotifyTest extends \PHPUnit_Framework_TestCase
 {
     /**

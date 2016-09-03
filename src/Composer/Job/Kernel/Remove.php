@@ -15,9 +15,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Kernel;
 
 /**
  * Job: Remove package from kernel
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel
- * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Remove extends Job
 {

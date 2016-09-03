@@ -14,12 +14,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Console\Output\Windows;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * Test Windows output
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Console\Output
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class WindowsTest extends \PHPUnit_Framework_TestCase
 {
     /**

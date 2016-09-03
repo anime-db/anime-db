@@ -15,9 +15,6 @@ use Composer\Package\Package;
 
 /**
  * Event thrown when the package is removed
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Event\Package
- * @author  Peter Gribanov <info@peter-gribanov.ru>
  */
 class Removed extends Event
 {

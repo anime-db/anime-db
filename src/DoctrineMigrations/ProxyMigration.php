@@ -15,12 +15,6 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\DBAL\Schema\Schema;
 
-/**
- * Proxy migration
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\DoctrineMigrations
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 abstract class ProxyMigration extends AbstractMigration implements ContainerAwareInterface
 {
     /**

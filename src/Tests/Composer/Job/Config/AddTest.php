@@ -15,12 +15,6 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config\Add;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Container;
 use Composer\Package\Package;
 
-/**
- * Test job config add
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job\Config
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class AddTest extends TestCaseWritable
 {
     /**

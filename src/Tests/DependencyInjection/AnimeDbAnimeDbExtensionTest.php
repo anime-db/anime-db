@@ -13,12 +13,6 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Tests\DependencyInjection;
 use AnimeDb\Bundle\AnimeDbBundle\DependencyInjection\AnimeDbAnimeDbExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-/**
- * Test DependencyInjection
- *
- * @package AnimeDb\Bundle\AnimeDbBundle\Tests\DependencyInjection
- * @author  Peter Gribanov <info@peter-gribanov.ru>
- */
 class AnimeDbAnimeDbExtensionTest extends \PHPUnit_Framework_TestCase
 {
     public function testLoad()
