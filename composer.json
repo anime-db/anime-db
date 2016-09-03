@@ -54,7 +54,10 @@
 		"composer/composer" : "~1.0.0",
 		"guzzle/guzzle" : "~3.9.0",
 		"avalanche123/imagine-bundle" : "~2.1.1",
-		"anime-db/catalog-bundle" : "~0.4.7"
+		"anime-db/catalog-bundle" : "~0.4.7",
+		"anime-db/ani-db-filler-bundle" : "0.1.*",
+		"anime-db/shikimori-filler-bundle" : "0.1.*",
+		"anime-db/world-art-filler-bundle" : "0.1.*"
 	},
 	"suggest" : {
 		"ext-apc" : "Allows use APC for autoloading to improve performance",
