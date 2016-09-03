@@ -125,7 +125,9 @@ class UpdateCommand extends ContainerAwareCommand
                     ->in($this->getContainer()->getParameter('kernel.root_dir').'/../src')
                     ->in($this->getContainer()->getParameter('kernel.root_dir'))
             );
-        } catch (\Exception $e) {} // ignore errors during the removal of the old application
+        } catch (\Exception $e) {
+            // ignore errors during the removal of the old application
+        }
 
         // copy new version
         $fs->mirror(
