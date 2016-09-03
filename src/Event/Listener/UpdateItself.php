@@ -179,9 +179,9 @@ class UpdateItself
                 $old_body = file_get_contents($old_file);
                 $new_body = $tmp_body = file_get_contents($new_file);
 
-                $new_body = $this->copyParam($old_body, $new_body, "addr=%s\n", self::DEFAULT_ADDRESS);
-                $new_body = $this->copyParam($old_body, $new_body, "port=%s\n", self::DEFAULT_PORT);
-                $new_body = $this->copyParam($old_body, $new_body, "php=%s\n", self::DEFAULT_PHP);
+                $new_body = $this->copyParam($old_body, $new_body, 'addr=%s'.PHP_EOL, self::DEFAULT_ADDRESS);
+                $new_body = $this->copyParam($old_body, $new_body, 'port=%s'.PHP_EOL, self::DEFAULT_PORT);
+                $new_body = $this->copyParam($old_body, $new_body, 'php=%s'.PHP_EOL, self::DEFAULT_PHP);
 
                 if ($new_body != $tmp_body) {
                     file_put_contents($new_file, $new_body);
@@ -206,9 +206,9 @@ class UpdateItself
             $old_body = file_get_contents($old_file);
             $new_body = $tmp_body = file_get_contents($new_file);
 
-            $new_body = $this->copyParam($old_body, $new_body, "addr='%s'", self::DEFAULT_ADDRESS);
-            $new_body = $this->copyParam($old_body, $new_body, "port=%s\n", self::DEFAULT_PORT);
-            $new_body = $this->copyParam($old_body, $new_body, "path=%s\n", self::DEFAULT_PATH);
+            $new_body = $this->copyParam($old_body, $new_body, 'addr=\'%s\'', self::DEFAULT_ADDRESS);
+            $new_body = $this->copyParam($old_body, $new_body, 'port=%s'.PHP_EOL, self::DEFAULT_PORT);
+            $new_body = $this->copyParam($old_body, $new_body, 'path=%s'.PHP_EOL, self::DEFAULT_PATH);
 
             if ($new_body != $tmp_body) {
                 file_put_contents($new_file, $new_body);
