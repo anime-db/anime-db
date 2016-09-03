@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Config;
 
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Job;
@@ -15,7 +13,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Config;
 
 /**
- * Job: Remove package from config
+ * Job: Remove package from config.
  */
 class Remove extends Job
 {

@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Event\Package;
 
 use AnimeDb\Bundle\AnimeDbBundle\Event\Package\Installed as InstalledPackage;
@@ -29,38 +27,38 @@ class GetPackageTest extends \PHPUnit_Framework_TestCase
                 function ($package) {
                     return new InstalledPackage($package);
                 },
-                '\Composer\Package\Package'
+                '\Composer\Package\Package',
             ],
             [
                 function ($package) {
                     return new RemovedPackage($package);
                 },
-                '\Composer\Package\Package'
+                '\Composer\Package\Package',
             ],
             [
                 function ($package) {
                     return new UpdatedPackage($package);
                 },
-                '\Composer\Package\Package'
+                '\Composer\Package\Package',
             ],
             [
                 function ($package) {
                     return new InstalledProject($package);
                 },
-                '\Composer\Package\Package'
+                '\Composer\Package\Package',
             ],
             [
                 function ($package) {
                     return new UpdatedProject($package);
                 },
-                '\Composer\Package\Package'
+                '\Composer\Package\Package',
             ],
             [
                 function ($package) {
                     return new UpdatedUpdateItself($package);
                 },
-                '\Composer\Package\RootPackageInterface'
-            ]
+                '\Composer\Package\RootPackageInterface',
+            ],
         ];
     }
 

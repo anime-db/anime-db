@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Event\Project;
 
 /**
@@ -16,14 +14,14 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Event\Project;
 final class StoreEvents
 {
     /**
-     * Event thrown when the project is installed
+     * Event thrown when the project is installed.
      *
      * @var string
      */
     const INSTALLED = 'anime_db.project.installed';
 
     /**
-     * Event thrown when the project is updated
+     * Event thrown when the project is updated.
      *
      * @var string
      */

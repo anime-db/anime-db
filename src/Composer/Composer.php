@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer;
 
 use Composer\Factory;
@@ -34,7 +32,7 @@ class Composer
     protected $loader;
 
     /**
-     * Lock file composer.lock
+     * Lock file composer.lock.
      *
      * @var string
      */
@@ -100,7 +98,7 @@ class Composer
     }
 
     /**
-     * Reload Composer
+     * Reload Composer.
      */
     public function reload()
     {
@@ -149,6 +147,7 @@ class Composer
         if (!file_exists($config)) {
             throw new \RuntimeException('File "'.$config.'" not found');
         }
+
         return $this->loader->load((new JsonFile($config))->read(), 'Composer\Package\RootPackage');
     }
 
@@ -168,7 +167,7 @@ class Composer
     }
 
     /**
-     * Get version compatible
+     * Get version compatible.
      *
      * 3.2.1-RC2 => 3.2.1.6.2
      *
@@ -185,7 +184,7 @@ class Composer
             'alpha' => 3,
             'beta' => 4,
             'stable' => 5, // is not a real suffix. use it if suffix is not exists
-            'rc' => 6
+            'rc' => 6,
         ];
 
         $reg = '/^v?(?<version>\d+\.\d+\.\d+)(?:-(?<suffix>dev|patch|alpha|beta|rc)(?<suffix_version>\d+)?)?$/i';
@@ -196,7 +195,7 @@ class Composer
         // suffix version
         if (isset($match['suffix'])) {
             $suffix = $suffixes[strtolower($match['suffix'])].'.';
-            $suffix .= isset($match['suffix_version']) ? (int)$match['suffix_version'] : 1;
+            $suffix .= isset($match['suffix_version']) ? (int) $match['suffix_version'] : 1;
         } else {
             $suffix = $suffixes['stable'].'.0';
         }

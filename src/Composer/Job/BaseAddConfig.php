@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job;
 
 use Symfony\Component\Finder\Finder;
@@ -71,6 +69,7 @@ abstract class BaseAddConfig extends Job
         /* @var $file \SplFileInfo */
         foreach ($finder as $file) {
             $path = str_replace(DIRECTORY_SEPARATOR, '/', $file->getPathname());
+
             return substr($path, strrpos($path, '/Resources/config/'));
         }
 

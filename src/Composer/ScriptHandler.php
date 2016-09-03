@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer;
 
 use Composer\Installer\PackageEvent;
@@ -35,7 +33,7 @@ use Symfony\Component\Filesystem\Filesystem;
 class ScriptHandler
 {
     /**
-     * Container of jobs
+     * Container of jobs.
      *
      * @var Container|null
      */
@@ -87,7 +85,7 @@ class ScriptHandler
     }
 
     /**
-     * Add or remove package in kernel
+     * Add or remove package in kernel.
      *
      * @param PackageEvent $event
      */
@@ -105,7 +103,7 @@ class ScriptHandler
     }
 
     /**
-     * Add or remove packages in routing
+     * Add or remove packages in routing.
      *
      * @param PackageEvent $event
      */
@@ -123,7 +121,7 @@ class ScriptHandler
     }
 
     /**
-     * Add or remove packages in config
+     * Add or remove packages in config.
      *
      * @param PackageEvent $event
      */
@@ -141,7 +139,7 @@ class ScriptHandler
     }
 
     /**
-     * Migrate packages
+     * Migrate packages.
      *
      * @param PackageEvent $event
      */
@@ -159,7 +157,7 @@ class ScriptHandler
     }
 
     /**
-     * Notify listeners that the package has been installed/updated/removed
+     * Notify listeners that the package has been installed/updated/removed.
      *
      * @param PackageEvent $event
      */
@@ -180,7 +178,7 @@ class ScriptHandler
     }
 
     /**
-     * Add job by operation type
+     * Add job by operation type.
      *
      * @param OperationInterface $operation
      * @param \Closure $install
@@ -208,7 +206,7 @@ class ScriptHandler
     }
 
     /**
-     * Notify listeners that the project has been installed
+     * Notify listeners that the project has been installed.
      *
      * @param Event $event
      */
@@ -218,7 +216,7 @@ class ScriptHandler
     }
 
     /**
-     * Notify listeners that the project has been updated
+     * Notify listeners that the project has been updated.
      *
      * @param Event $event
      */
@@ -228,7 +226,7 @@ class ScriptHandler
     }
 
     /**
-     * Execution pending jobs
+     * Execution pending jobs.
      */
     public static function execJobs()
     {
@@ -236,7 +234,7 @@ class ScriptHandler
     }
 
     /**
-     * Install config files
+     * Install config files.
      */
     public static function installConfig()
     {
@@ -266,7 +264,7 @@ class ScriptHandler
     }
 
     /**
-     * Deliver deferred events
+     * Deliver deferred events.
      *
      * @param Event $event
      */
@@ -276,7 +274,7 @@ class ScriptHandler
     }
 
     /**
-     * Migrate all plugins to up
+     * Migrate all plugins to up.
      *
      * @param Event $event
      */
@@ -290,7 +288,7 @@ class ScriptHandler
     }
 
     /**
-     * Migrate all plugins to down
+     * Migrate all plugins to down.
      *
      * @param Event $event
      */
@@ -323,7 +321,7 @@ class ScriptHandler
             return false;
         }
 
-        return (bool)Finder::create()
+        return (bool) Finder::create()
             ->in($dir)
             ->files()
             ->name('/Version\d{14}.*\.php/')
@@ -354,9 +352,10 @@ class ScriptHandler
     }
 
     /**
-     * Сreate a backup of the database
+     * Сreate a backup of the database.
      */
-    public static function backupDB() {
+    public static function backupDB()
+    {
         $db = self::getRootDir().'Resources/anime.db';
         if (file_exists($db)) {
             copy($db, $db.'.bk');
@@ -364,7 +363,7 @@ class ScriptHandler
     }
 
     /**
-     * Dumps all assets to the filesystem
+     * Dumps all assets to the filesystem.
      *
      * @param \Composer\Script\Event $event
      */
@@ -374,7 +373,7 @@ class ScriptHandler
     }
 
     /**
-     * Clears the Symfony cache
+     * Clears the Symfony cache.
      *
      * @param \Composer\Script\Event $event
      */

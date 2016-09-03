@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -37,7 +35,8 @@ class UpdateCommand extends ContainerAwareCommand
      *
      * @return bool
      */
-    protected function execute(InputInterface $input, OutputInterface $output) {
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         /* @var $composer Composer */
         $composer = $this->getContainer()->get('anime_db.composer');
         $composer->setIO(new ConsoleIO($input, $output, $this->getHelperSet()));
@@ -110,7 +109,7 @@ class UpdateCommand extends ContainerAwareCommand
     }
 
     /**
-     * Rewrite the application files
+     * Rewrite the application files.
      *
      * @param string $from
      */

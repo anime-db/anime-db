@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job\Config;
 
 use AnimeDb\Bundle\AnimeDbBundle\Tests\TestCaseWritable;
@@ -40,18 +38,18 @@ class AddTest extends TestCaseWritable
             [
                 '',
                 '/Resources/config/config',
-                'yml'
+                'yml',
             ],
             [
                 '',
                 '/Resources/config/global/config',
-                'xml'
+                'xml',
             ],
             [
                 '/Resources/config/my_config.yml',
                 '/Resources/config/my_config',
-                'yml'
-            ]
+                'yml',
+            ],
         ];
     }
 
@@ -144,7 +142,7 @@ class AddTest extends TestCaseWritable
                 'anime-db-routing' => '',
                 'anime-db-config' => $config,
                 'anime-db-bundle' => $bundle,
-                'anime-db-migrations' => ''
+                'anime-db-migrations' => '',
             ]));
 
         $job = new Add($package);

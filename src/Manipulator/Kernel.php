@@ -1,26 +1,24 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Manipulator;
 
 class Kernel extends FileContent
 {
     /**
-     * AppKernal content
+     * AppKernal content.
      *
      * @var string
      */
     private $kernel;
 
     /**
-     * AppKernal filename
+     * AppKernal filename.
      *
      * @var string
      */
@@ -42,7 +40,7 @@ class Kernel extends FileContent
     }
 
     /**
-     * Add bundle to kernal
+     * Add bundle to kernal.
      *
      * @param string $bundle
      */
@@ -60,7 +58,7 @@ class Kernel extends FileContent
     }
 
     /**
-     * Remove bundle from kernal
+     * Remove bundle from kernal.
      *
      * @param string $bundle
      */
@@ -83,11 +81,12 @@ class Kernel extends FileContent
         if ($bundle[0] == '\\') {
             $bundle = substr($bundle, 1);
         }
+
         return 'new '.$bundle.'()';
     }
 
     /**
-     * Get AppKernal content
+     * Get AppKernal content.
      *
      * @return string
      */
@@ -96,6 +95,7 @@ class Kernel extends FileContent
         if (!$this->kernel) {
             $this->kernel = file_get_contents($this->kernel_filename);
         }
+
         return $this->kernel;
     }
 
@@ -108,7 +108,7 @@ class Kernel extends FileContent
             $this->bundles = [];
             $content = $this->getContent();
             $start = strpos($content, '[');
-            $bundles = trim(substr($content, $start+1, strpos($content, ']')-$start-1));
+            $bundles = trim(substr($content, $start + 1, strpos($content, ']') - $start - 1));
             if ($bundles) {
                 $this->bundles = explode("\n", $bundles);
                 foreach ($this->bundles as $key => $bundle) {
