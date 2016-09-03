@@ -75,7 +75,7 @@ class ProxyMigrationTest extends \PHPUnit_Framework_TestCase
     {
         $container = $this->getMock('\Symfony\Component\DependencyInjection\ContainerInterface');
         $migration = $this
-            ->getMockBuilder('\\'.__NAMESPACE__.'\VersionTest_MigrationCustom')
+            ->getMockBuilder('\\'.__NAMESPACE__.'\VersionTestMigrationCustom')
             ->disableOriginalConstructor()
             ->getMock();
         $this->proxy->setContainer($container);
