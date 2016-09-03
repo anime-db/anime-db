@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Event\Listener\Request;
 
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -67,10 +65,10 @@ class Firewall
             return false;
         }
 
-        return (
+        return
             ($long >= ip2long('10.0.0.0')    && $long <= ip2long('10.255.255.255')) ||
             ($long >= ip2long('172.16.0.0')  && $long <= ip2long('172.31.255.255')) ||
             ($long >= ip2long('192.168.0.0') && $long <= ip2long('192.168.255.255'))
-        );
+        ;
     }
 }

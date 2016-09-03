@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself;
 
 /**
@@ -16,14 +14,14 @@ namespace AnimeDb\Bundle\AnimeDbBundle\Event\UpdateItself;
 final class StoreEvents
 {
     /**
-     * Event thrown when the application download
+     * Event thrown when the application download.
      *
      * @var string
      */
     const DOWNLOADED = 'anime_db.update_itself.downloaded';
 
     /**
-     * Event thrown when the application updated
+     * Event thrown when the application updated.
      *
      * @var string
      */

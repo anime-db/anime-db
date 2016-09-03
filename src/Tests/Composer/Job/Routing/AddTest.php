@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Composer\Job\Routing;
 
 use AnimeDb\Bundle\AnimeDbBundle\Tests\TestCaseWritable;
@@ -40,18 +38,18 @@ class AddTest extends TestCaseWritable
             [
                 '',
                 '/Resources/config/routing',
-                'yml'
+                'yml',
             ],
             [
                 '',
                 '/Resources/config/global/routing',
-                'xml'
+                'xml',
             ],
             [
                 '/Resources/config/my_routing.yml',
                 '/Resources/config/my_routing',
-                'yml'
-            ]
+                'yml',
+            ],
         ];
     }
 
@@ -99,7 +97,7 @@ class AddTest extends TestCaseWritable
     }
 
     /**
-     * Test execute failed. Undefined bundle
+     * Test execute failed. Undefined bundle.
      */
     public function testExecuteNoBundle()
     {
@@ -113,7 +111,7 @@ class AddTest extends TestCaseWritable
     }
 
     /**
-     * Test execute failed. Ignore bundle
+     * Test execute failed. Ignore bundle.
      */
     public function testExecuteIgnoreBundle()
     {
@@ -133,7 +131,7 @@ class AddTest extends TestCaseWritable
                 'anime-db-routing' => '',
                 'anime-db-config' => '',
                 'anime-db-bundle' => '\AnimeDb\Bundle\AnimeDbBundle\AnimeDbAnimeDbBundle',
-                'anime-db-migrations' => ''
+                'anime-db-migrations' => '',
             ]));
 
         $job = new Add($package, $this->root_dir);
@@ -176,7 +174,7 @@ class AddTest extends TestCaseWritable
                 'anime-db-routing' => $routing,
                 'anime-db-config' => '',
                 'anime-db-bundle' => $bundle,
-                'anime-db-migrations' => ''
+                'anime-db-migrations' => '',
             ]));
 
         $job = new Add($package);

@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job;
 
 use Composer\Package\Package;
@@ -15,28 +13,28 @@ use Composer\Package\Package;
 abstract class Job
 {
     /**
-     * Preparation of \AppKernal to the initialization
+     * Preparation of \AppKernal to the initialization.
      *
      * @var int
      */
     const PRIORITY_INSTALL = 1;
 
     /**
-     * Preparation of package to execute
+     * Preparation of package to execute.
      *
      * @var int
      */
     const PRIORITY_INIT = 2;
 
     /**
-     * Execute package
+     * Execute package.
      *
      * @var int
      */
     const PRIORITY_EXEC = 3;
 
     /**
-     * Job priority
+     * Job priority.
      *
      * @var int
      */
@@ -81,6 +79,7 @@ abstract class Job
     public function setRootDir($root_dir)
     {
         $this->root_dir = $root_dir;
+
         return $this;
     }
 
@@ -100,6 +99,7 @@ abstract class Job
     public function setContainer(Container $container)
     {
         $this->container = $container;
+
         return $this;
     }
 
@@ -128,12 +128,12 @@ abstract class Job
     }
 
     /**
-     * Execute job
+     * Execute job.
      */
     abstract public function execute();
 
     /**
-     * Handle on register job in container
+     * Handle on register job in container.
      */
     public function register()
     {
@@ -180,7 +180,7 @@ abstract class Job
     }
 
     /**
-     * Get the bundle from package
+     * Get the bundle from package.
      *
      * For example package name 'demo-vendor/foo-bar-bundle' converted to:
      *   \DemoVendor\Bundle\FooBarBundle\DemoVendorFooBarBundle
@@ -206,7 +206,7 @@ abstract class Job
 
         $classes = [
             '\\'.$vendor.'\Bundle\\'.$bundle.'Bundle\\'.$vendor.$bundle.'Bundle',
-            '\\'.$vendor.'\Bundle\\'.$bundle.'Bundle\\'.$bundle.'Bundle'
+            '\\'.$vendor.'\Bundle\\'.$bundle.'Bundle\\'.$bundle.'Bundle',
         ];
 
         // vendor name can be contained in the bundle name
@@ -215,7 +215,7 @@ abstract class Job
         $bundle = trim($bundle);
         if (($pos = strpos($bundle, ' ')) !== false) {
             $vendor = substr($bundle, 0, $pos);
-            $bundle = str_replace(' ', '', substr($bundle, $pos+1));
+            $bundle = str_replace(' ', '', substr($bundle, $pos + 1));
             $classes[] = '\\'.$vendor.'\Bundle\\'.$bundle.'Bundle\\'.$vendor.$bundle.'Bundle';
             $classes[] = '\\'.$vendor.'\Bundle\\'.$bundle.'Bundle\\'.$bundle.'Bundle';
         }
@@ -231,11 +231,11 @@ abstract class Job
             }
         }
 
-        return null;
+        return;
     }
 
     /**
-     * Get a simple copy of the package
+     * Get a simple copy of the package.
      *
      * @return Package
      */
@@ -253,7 +253,7 @@ abstract class Job
     }
 
     /**
-     * Get the routing node name from the package name
+     * Get the routing node name from the package name.
      *
      * @return string
      */

@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Console\Output;
 
 use AnimeDb\Bundle\AnimeDbBundle\Console\Output\Windows;
@@ -27,7 +25,7 @@ class WindowsTest extends \PHPUnit_Framework_TestCase
     protected $windows;
 
     /**
-     * mb_detect_order
+     * mb_detect_order.
      *
      * @var array
      */
@@ -89,7 +87,7 @@ class WindowsTest extends \PHPUnit_Framework_TestCase
                 [mb_convert_encoding('日本', Windows::TARGET_ENCODING, 'UTF-8')],
                 true,
                 OutputInterface::OUTPUT_RAW,
-            ]
+            ],
         ];
     }
 
@@ -141,7 +139,7 @@ class WindowsTest extends \PHPUnit_Framework_TestCase
                 OutputInterface::OUTPUT_RAW,
                 [mb_convert_encoding('日本', Windows::TARGET_ENCODING, 'UTF-8')],
                 OutputInterface::OUTPUT_RAW,
-            ]
+            ],
         ];
     }
 
@@ -153,7 +151,8 @@ class WindowsTest extends \PHPUnit_Framework_TestCase
      * @param string $expected_messages
      * @param string $expected_type
      */
-    public function testWriteLn($messages, $type, $expected_messages, $expected_type) {
+    public function testWriteLn($messages, $type, $expected_messages, $expected_type)
+    {
         $this->output
             ->expects($this->once())
             ->method('writeLn')
@@ -168,11 +167,12 @@ class WindowsTest extends \PHPUnit_Framework_TestCase
     {
         $formatter = $this->getMock('\Symfony\Component\Console\Formatter\OutputFormatterInterface');
         $output = $this->getMock('\Symfony\Component\Console\Output\OutputInterface');
+
         return [
             ['setVerbosity', 'getVerbosity', 1],
             ['setDecorated', 'isDecorated', true],
             ['setFormatter', 'getFormatter', $formatter],
-            ['setErrorOutput', 'getErrorOutput', $output]
+            ['setErrorOutput', 'getErrorOutput', $output],
         ];
     }
 
@@ -209,88 +209,88 @@ class WindowsTest extends \PHPUnit_Framework_TestCase
             [
                 'isQuiet',
                 OutputInterface::VERBOSITY_QUIET,
-                true
+                true,
             ],
             [
                 'isQuiet',
                 OutputInterface::VERBOSITY_NORMAL,
-                false
+                false,
             ],
             [
                 'isVerbose',
                 OutputInterface::VERBOSITY_QUIET,
-                false
+                false,
             ],
             [
                 'isVerbose',
                 OutputInterface::VERBOSITY_NORMAL,
-                false
+                false,
             ],
             [
                 'isVerbose',
                 OutputInterface::VERBOSITY_VERBOSE,
-                true
+                true,
             ],
             [
                 'isVerbose',
                 OutputInterface::VERBOSITY_VERY_VERBOSE,
-                true
+                true,
             ],
             [
                 'isVerbose',
                 OutputInterface::VERBOSITY_DEBUG,
-                true
+                true,
             ],
             [
                 'isVeryVerbose',
                 OutputInterface::VERBOSITY_QUIET,
-                false
+                false,
             ],
             [
                 'isVeryVerbose',
                 OutputInterface::VERBOSITY_NORMAL,
-                false
+                false,
             ],
             [
                 'isVeryVerbose',
                 OutputInterface::VERBOSITY_VERBOSE,
-                false
+                false,
             ],
             [
                 'isVeryVerbose',
                 OutputInterface::VERBOSITY_VERY_VERBOSE,
-                true
+                true,
             ],
             [
                 'isVeryVerbose',
                 OutputInterface::VERBOSITY_DEBUG,
-                true
+                true,
             ],
             [
                 'isDebug',
                 OutputInterface::VERBOSITY_QUIET,
-                false
+                false,
             ],
             [
                 'isDebug',
                 OutputInterface::VERBOSITY_NORMAL,
-                false
+                false,
             ],
             [
                 'isDebug',
                 OutputInterface::VERBOSITY_VERBOSE,
-                false
+                false,
             ],
             [
                 'isDebug',
                 OutputInterface::VERBOSITY_VERY_VERBOSE,
-                false
+                false,
             ],
             [
                 'isDebug',
                 OutputInterface::VERBOSITY_DEBUG,
-                true
-            ]
+                true,
+            ],
         ];
     }
 

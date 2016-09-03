@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Event;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -18,7 +16,7 @@ use Symfony\Component\Finder\SplFileInfo;
 class Dispatcher
 {
     /**
-     * Directory to store events
+     * Directory to store events.
      *
      * @var string
      */
@@ -30,7 +28,7 @@ class Dispatcher
     protected $dispatcher;
 
     /**
-     * Directory to store events
+     * Directory to store events.
      *
      * @var string
      */
@@ -45,7 +43,7 @@ class Dispatcher
     }
 
     /**
-     * Store the event and dispatch it later
+     * Store the event and dispatch it later.
      *
      * @param string $event_name
      * @param Event $event

@@ -1,13 +1,11 @@
 <?php
 /**
- * AnimeDb package
+ * AnimeDb package.
  *
- * @package   AnimeDb
  * @author    Peter Gribanov <info@peter-gribanov.ru>
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-
 namespace AnimeDb\Bundle\AnimeDbBundle\Composer\Job;
 
 use AnimeDb\Bundle\AnimeDbBundle\Event\Dispatcher;
@@ -63,6 +61,7 @@ class Container
         if (!($this->dispatcher instanceof Dispatcher)) {
             $this->dispatcher = new Dispatcher($this->root_dir);
         }
+
         return $this->dispatcher;
     }
 
@@ -113,7 +112,7 @@ class Container
     }
 
     /**
-     * Execute all jobs
+     * Execute all jobs.
      */
     public function execute()
     {
@@ -150,7 +149,7 @@ class Container
     }
 
     /**
-     * Get path to php executable
+     * Get path to php executable.
      *
      * @throws \RuntimeException
      *
@@ -166,6 +165,7 @@ class Container
                 );
             }
         }
+
         return $this->php_path;
     }
 }
