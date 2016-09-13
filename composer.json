@@ -4,7 +4,7 @@
 	"type" : "project",
 	"description" : "The application for making home collection anime",
 	"homepage" : "http://anime-db.org",
-	"version" : "0.3.21",
+	"version" : "0.3.23",
 	"authors" : [
 		{
 			"name" : "Anime DB",
@@ -38,9 +38,10 @@
 		"ext-fileinfo" : "*",
 		"symfony/symfony" : ">=2.7.0,<2.7.x-dev",
 		"doctrine/orm" : "^2.4.8",
-		"doctrine/doctrine-bundle" : "~1.4",
 		"doctrine/cache" : "<1.6",
 		"doctrine/common" : "<2.6",
+		"doctrine/doctrine-bundle" : "~1.4",
+		"doctrine/doctrine-migrations-bundle" : "~1.0.0",
 		"twig/extensions" : "~1.0.0",
 		"symfony/assetic-bundle" : "~2.3",
 		"symfony/swiftmailer-bundle" : "~2.3",
@@ -50,11 +51,10 @@
 		"sensio/generator-bundle" : "~2.3.0",
 		"incenteev/composer-parameter-handler" : "~2.0",
 		"gedmo/doctrine-extensions" : "~2.3.0",
-		"doctrine/doctrine-migrations-bundle" : "~1.0.0",
 		"composer/composer" : "~1.0.0",
 		"guzzle/guzzle" : "~3.9.0",
 		"avalanche123/imagine-bundle" : "~2.1.1",
-		"anime-db/catalog-bundle" : "~0.4.7",
+		"anime-db/catalog-bundle" : ">=0.4.7",
 		"anime-db/ani-db-filler-bundle" : "0.1.*",
 		"anime-db/shikimori-filler-bundle" : "0.1.*",
 		"anime-db/world-art-filler-bundle" : "0.1.*"
@@ -131,6 +131,10 @@
 		"symfony-web-dir" : "web",
 		"incenteev-parameters" : {
 			"file" : "app/config/parameters.yml"
+		},
+		"branch-alias" : {
+			"dev-master" : "0.3.x-dev"
 		}
-	}
+	},
+	"minimum-stability" : "dev"
 }
