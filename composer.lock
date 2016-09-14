@@ -2477,16 +2477,16 @@
         },
         {
             "name": "seld/jsonlint",
-            "version": "1.4.0",
+            "version": "1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/jsonlint.git",
-                "reference": "66834d3e3566bb5798db7294619388786ae99394"
+                "reference": "e827b5254d3e58c736ea2c5616710983d80b0b70"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/jsonlint/zipball/66834d3e3566bb5798db7294619388786ae99394",
-                "reference": "66834d3e3566bb5798db7294619388786ae99394",
+                "url": "https://api.github.com/repos/Seldaek/jsonlint/zipball/e827b5254d3e58c736ea2c5616710983d80b0b70",
+                "reference": "e827b5254d3e58c736ea2c5616710983d80b0b70",
                 "shasum": ""
             },
             "require": {
@@ -2519,7 +2519,7 @@
                 "parser",
                 "validator"
             ],
-            "time": "2015-11-21 02:21:41"
+            "time": "2016-09-14 15:17:56"
         },
         {
             "name": "seld/phar-utils",
@@ -2572,12 +2572,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "cad8516c9c0f14d739add965fb93ff82ead467ec"
+                "reference": "b74cf0c0a95fd10421523c1f06df5ee77294e170"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/cad8516c9c0f14d739add965fb93ff82ead467ec",
-                "reference": "cad8516c9c0f14d739add965fb93ff82ead467ec",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/b74cf0c0a95fd10421523c1f06df5ee77294e170",
+                "reference": "b74cf0c0a95fd10421523c1f06df5ee77294e170",
                 "shasum": ""
             },
             "require": {
@@ -2623,7 +2623,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2016-09-10 19:25:23"
+            "time": "2016-09-14 20:23:57"
         },
         {
             "name": "sensio/framework-extra-bundle",

@@ -42,7 +42,7 @@ class Composer extends FileContent
      */
     protected function getContent()
     {
-        return (array) json_decode(parent::getContent(), true);
+        return (array)json_decode(parent::getContent(), true);
     }
 
     /**
@@ -51,7 +51,6 @@ class Composer extends FileContent
     protected function setContent($content)
     {
         $content = json_encode($content, JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-        $content = str_replace(['": ', '    '], ['" : ', "\t"], $content).PHP_EOL;
-        parent::setContent($content);
+        parent::setContent($content.PHP_EOL);
     }
 }
