@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "47b6a8d0b297fd745ec2d67280d733e3",
+    "hash": "8cfded93665db58f48d78aa511c86b71",
     "content-hash": "3499f62afdaf641dcf593b1f7ee66e7f",
     "packages": [
         {
@@ -49,16 +49,16 @@
         },
         {
             "name": "anime-db/ani-db-filler-bundle",
-            "version": "v0.1.10",
+            "version": "v0.1.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/anime-db/ani-db-filler-bundle.git",
-                "reference": "acc6a8c2326d5f4de59f715bdae602a7ce56f3c4"
+                "reference": "380eb941551a250721680df2ef8fb8c57e816ada"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/ani-db-filler-bundle/zipball/acc6a8c2326d5f4de59f715bdae602a7ce56f3c4",
-                "reference": "acc6a8c2326d5f4de59f715bdae602a7ce56f3c4",
+                "url": "https://api.github.com/repos/anime-db/ani-db-filler-bundle/zipball/380eb941551a250721680df2ef8fb8c57e816ada",
+                "reference": "380eb941551a250721680df2ef8fb8c57e816ada",
                 "shasum": ""
             },
             "require": {
@@ -86,7 +86,7 @@
             ],
             "description": "Plugin AniDB for the catalog Anime DB",
             "homepage": "http://github.com/anime-db/ani-db-filler-bundle",
-            "time": "2016-09-03 10:00:27"
+            "time": "2016-09-16 20:45:06"
         },
         {
             "name": "anime-db/api-client-bundle",
@@ -347,22 +347,29 @@
         },
         {
             "name": "anime-db/shikimori-filler-bundle",
-            "version": "v0.1.11.x-dev",
+            "version": "v0.1.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/anime-db/shikimori-filler-bundle.git",
-                "reference": "df3513cbd803bd72d5c84a7e4c2208b5df9d8af0"
+                "reference": "37ebdf7e3fd5340ac8c587228e2b04612684b2ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/shikimori-filler-bundle/zipball/df3513cbd803bd72d5c84a7e4c2208b5df9d8af0",
-                "reference": "df3513cbd803bd72d5c84a7e4c2208b5df9d8af0",
+                "url": "https://api.github.com/repos/anime-db/shikimori-filler-bundle/zipball/37ebdf7e3fd5340ac8c587228e2b04612684b2ca",
+                "reference": "37ebdf7e3fd5340ac8c587228e2b04612684b2ca",
                 "shasum": ""
             },
             "require": {
-                "anime-db/catalog-bundle": ">=0.4.17",
                 "anime-db/shikimori-browser-bundle": "1.0.*",
                 "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "anime-db/catalog-bundle": ">=0.4.17",
+                "doctrine/doctrine-bundle": "~1.4",
+                "phpunit/phpunit": "^4.8.0",
+                "satooshi/php-coveralls": "^1.0.0",
+                "scrutinizer/ocular": "~1.3.0",
+                "symfony/form": "~2.4|~3.0"
             },
             "type": "anime-db-plugin",
             "autoload": {
@@ -376,7 +383,7 @@
             ],
             "description": "Plugin Shikimori for the catalog Anime DB",
             "homepage": "http://github.com/anime-db/shikimori-filler-bundle",
-            "time": "2015-03-29 14:14:39"
+            "time": "2016-09-17 10:29:38"
         },
         {
             "name": "anime-db/world-art-filler-bundle",
