@@ -66,8 +66,8 @@ class Firewall
         }
 
         return
-            ($long >= ip2long('10.0.0.0')    && $long <= ip2long('10.255.255.255')) ||
-            ($long >= ip2long('172.16.0.0')  && $long <= ip2long('172.31.255.255')) ||
+            ($long >= ip2long('10.0.0.0') && $long <= ip2long('10.255.255.255')) ||
+            ($long >= ip2long('172.16.0.0') && $long <= ip2long('172.31.255.255')) ||
             ($long >= ip2long('192.168.0.0') && $long <= ip2long('192.168.255.255'))
         ;
     }

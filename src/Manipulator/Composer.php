@@ -42,7 +42,7 @@ class Composer extends FileContent
      */
     protected function getContent()
     {
-        return (array)json_decode(parent::getContent(), true);
+        return (array) json_decode(parent::getContent(), true);
     }
 
     /**
