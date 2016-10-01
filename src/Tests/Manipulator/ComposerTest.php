@@ -142,8 +142,6 @@ class ComposerTest extends \PHPUnit_Framework_TestCase
      */
     protected function encode(array $data)
     {
-        $content = json_encode($data, JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-
-        return str_replace(['": ', '    '], ['" : ', "\t"], $content).PHP_EOL;
+        return json_encode($data, JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES).PHP_EOL;
     }
 }
