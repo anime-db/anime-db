@@ -49,16 +49,16 @@
         },
         {
             "name": "anime-db/ani-db-filler-bundle",
-            "version": "v0.1.16",
+            "version": "v0.1.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/anime-db/ani-db-filler-bundle.git",
-                "reference": "265c8212c7998ac8100e0ee7461951e960f9c0da"
+                "reference": "7581beda0cd46b11867a703ca429147f0c5b5b46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/ani-db-filler-bundle/zipball/265c8212c7998ac8100e0ee7461951e960f9c0da",
-                "reference": "265c8212c7998ac8100e0ee7461951e960f9c0da",
+                "url": "https://api.github.com/repos/anime-db/ani-db-filler-bundle/zipball/7581beda0cd46b11867a703ca429147f0c5b5b46",
+                "reference": "7581beda0cd46b11867a703ca429147f0c5b5b46",
                 "shasum": ""
             },
             "require": {
@@ -86,7 +86,7 @@
             ],
             "description": "Plugin AniDB for the catalog Anime DB",
             "homepage": "http://github.com/anime-db/ani-db-filler-bundle",
-            "time": "2016-10-02 10:18:24"
+            "time": "2016-10-02 11:25:53"
         },
         {
             "name": "anime-db/api-client-bundle",
