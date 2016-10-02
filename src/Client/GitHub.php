@@ -52,7 +52,8 @@ class GitHub
         $last_tag = [];
         foreach ($this->getTags($repository) as $tag) {
             if (($version = Composer::getVersionCompatible($tag['name'])) &&
-                (!$last_version || version_compare($version, $last_version) != -1)
+                (!$last_version || version_compare($version, $last_version, '>=')) &&
+                version_compare($version, '1.0.0', '<') // v1.0.0 is BC
             ) {
                 $last_version = $version;
                 $last_tag = $tag;

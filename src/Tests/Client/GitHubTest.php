@@ -37,52 +37,58 @@ class GitHubTest extends \PHPUnit_Framework_TestCase
         return [
             [
                 [
-                    ['name' => '1.0'], // bad version
-                    ['name' => '1.0.0'],
-                    ['name' => '1.1.0-dev'],
-                    ['name' => '1.1.0-patch'],
-                    ['name' => '1.1.0-alpha'],
-                    ['name' => '1.1.0-beta'],
-                    ['name' => '1.1.0'],
-                    ['name' => '1.1.0-RC'],
+                    ['name' => '0.1'], // bad version
+                    ['name' => '0.1.0'],
+                    ['name' => '0.1.0-dev'],
+                    ['name' => '0.1.0-patch'],
+                    ['name' => '0.1.0-alpha'],
+                    ['name' => '0.1.0-beta'],
+                    ['name' => '0.1.0'],
+                    ['name' => '0.1.0-RC'],
+                    ['name' => '1.0.0'], // BC
                 ],
-                ['name' => '1.1.0-RC'],
+                ['name' => '0.1.0-RC'],
             ],
             [
                 [
-                    ['name' => '1.1.0-dev2'],
-                    ['name' => '1.1.1-dev'],
+                    ['name' => '0.1.0-dev2'],
+                    ['name' => '0.1.1-dev'],
+                    ['name' => '1.0.0'], // BC
                 ],
-                ['name' => '1.1.1-dev'],
+                ['name' => '0.1.1-dev'],
             ],
             [
                 [
-                    ['name' => '1.1.0-patch'],
-                    ['name' => '1.1.0-patch2'],
+                    ['name' => '0.1.0-patch'],
+                    ['name' => '0.1.0-patch2'],
+                    ['name' => '1.0.0'], // BC
                 ],
-                ['name' => '1.1.0-patch2'],
+                ['name' => '0.1.0-patch2'],
             ],
             [
                 [
-                    ['name' => '1.1.0-alpha3'],
-                    ['name' => '1.1.0-alpha1'],
+                    ['name' => '0.1.0-alpha3'],
+                    ['name' => '0.1.0-alpha1'],
+                    ['name' => '1.0.0'], // BC
                 ],
-                ['name' => '1.1.0-alpha3'],
+                ['name' => '0.1.0-alpha3'],
             ],
             [
                 [
-                    ['name' => '1.1.0-beta'],
-                    ['name' => '1.1.0-alpha'],
-                    ['name' => '1.1.0-beta4'],
+                    ['name' => '0.1.0-beta'],
+                    ['name' => '0.1.0-alpha'],
+                    ['name' => '0.1.0-beta4'],
+                    ['name' => '1.0.0'], // BC
                 ],
-                ['name' => '1.1.0-beta4'],
+                ['name' => '0.1.0-beta4'],
             ],
             [
                 [
-                    ['name' => '1.1.0-rc1'],
-                    ['name' => '1.1.0-RC'],
+                    ['name' => '0.1.0-rc1'],
+                    ['name' => '0.1.0-RC'],
+                    ['name' => '1.0.0'], // BC
                 ],
-                ['name' => '1.1.0-RC'],
+                ['name' => '0.1.0-RC'],
             ],
         ];
     }
