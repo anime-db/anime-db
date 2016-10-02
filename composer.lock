@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8cfded93665db58f48d78aa511c86b71",
+    "hash": "5baa4cf5bb1a25f9d227f628a59f158d",
     "content-hash": "3499f62afdaf641dcf593b1f7ee66e7f",
     "packages": [
         {
@@ -141,12 +141,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/anime-db/app-bundle.git",
-                "reference": "fd15501126d15a8329bd5889b68c35098392e428"
+                "reference": "fc854eb7aba6a5af3b72427f9bee8151a36c20de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/app-bundle/zipball/fd15501126d15a8329bd5889b68c35098392e428",
-                "reference": "fd15501126d15a8329bd5889b68c35098392e428",
+                "url": "https://api.github.com/repos/anime-db/app-bundle/zipball/fc854eb7aba6a5af3b72427f9bee8151a36c20de",
+                "reference": "fc854eb7aba6a5af3b72427f9bee8151a36c20de",
                 "shasum": ""
             },
             "require": {
@@ -195,7 +195,7 @@
             ],
             "description": "The application for making home collection anime",
             "homepage": "http://anime-db.org",
-            "time": "2016-10-01 13:22:19"
+            "time": "2016-10-02 15:35:31"
         },
         {
             "name": "anime-db/cache-time-keeper-bundle",
@@ -3783,12 +3783,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "c1016e6501312201ede77e3911748024d78cdd31"
+                "reference": "5c324f4951aca87a2de61b7903b75126516b6386"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/c1016e6501312201ede77e3911748024d78cdd31",
-                "reference": "c1016e6501312201ede77e3911748024d78cdd31",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/5c324f4951aca87a2de61b7903b75126516b6386",
+                "reference": "5c324f4951aca87a2de61b7903b75126516b6386",
                 "shasum": ""
             },
             "require": {
@@ -3838,7 +3838,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2016-09-28 11:19:12"
+            "time": "2016-10-02 13:12:17"
         },
         {
             "name": "phpunit/php-code-coverage",
