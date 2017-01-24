@@ -6,6 +6,7 @@
  * @copyright Copyright (c) 2011, Peter Gribanov
  * @license   http://opensource.org/licenses/GPL-3.0 GPL v3
  */
+
 namespace AnimeDb\Bundle\AnimeDbBundle\Tests\Manipulator;
 
 use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Routing;
