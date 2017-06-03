@@ -250,12 +250,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/anime-db/catalog-bundle.git",
-                "reference": "624708f13db52f3793e8a56e9375c448c62ca976"
+                "reference": "582acab8326ef2e59ec53693273b2f6c6cbdc0fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/catalog-bundle/zipball/624708f13db52f3793e8a56e9375c448c62ca976",
-                "reference": "624708f13db52f3793e8a56e9375c448c62ca976",
+                "url": "https://api.github.com/repos/anime-db/catalog-bundle/zipball/582acab8326ef2e59ec53693273b2f6c6cbdc0fd",
+                "reference": "582acab8326ef2e59ec53693273b2f6c6cbdc0fd",
                 "shasum": ""
             },
             "require": {
@@ -304,7 +304,7 @@
             ],
             "description": "The application for making home collection anime",
             "homepage": "http://anime-db.org",
-            "time": "2016-10-01T13:38:05+00:00"
+            "time": "2017-06-03T16:13:25+00:00"
         },
         {
             "name": "anime-db/shikimori-browser-bundle",
