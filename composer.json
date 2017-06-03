@@ -58,8 +58,7 @@
         "anime-db/catalog-bundle": ">=0.4.7",
         "anime-db/ani-db-filler-bundle": "0.1.*",
         "anime-db/shikimori-filler-bundle": "0.1.*",
-        "anime-db/world-art-filler-bundle": "0.1.*",
-        "anime-db/shmop": "1.0.*"
+        "anime-db/world-art-filler-bundle": "0.1.*"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8.0",
