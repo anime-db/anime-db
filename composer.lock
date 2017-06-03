@@ -250,12 +250,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/anime-db/catalog-bundle.git",
-                "reference": "582acab8326ef2e59ec53693273b2f6c6cbdc0fd"
+                "reference": "68dfb4525bdbb6d36456dac3871fadde607d3769"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/catalog-bundle/zipball/582acab8326ef2e59ec53693273b2f6c6cbdc0fd",
-                "reference": "582acab8326ef2e59ec53693273b2f6c6cbdc0fd",
+                "url": "https://api.github.com/repos/anime-db/catalog-bundle/zipball/68dfb4525bdbb6d36456dac3871fadde607d3769",
+                "reference": "68dfb4525bdbb6d36456dac3871fadde607d3769",
                 "shasum": ""
             },
             "require": {
@@ -304,7 +304,7 @@
             ],
             "description": "The application for making home collection anime",
             "homepage": "http://anime-db.org",
-            "time": "2017-06-03T16:13:25+00:00"
+            "time": "2017-06-03T20:05:56+00:00"
         },
         {
             "name": "anime-db/shikimori-browser-bundle",
@@ -386,28 +386,32 @@
         },
         {
             "name": "anime-db/world-art-filler-bundle",
-            "version": "dev-develop",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/anime-db/world-art-filler-bundle.git",
-                "reference": "dbd353b46734da53546b84cae01b6db790a8f7b8"
+                "reference": "f2ef4dbd12fe39c18183d1628b5049b8d381e42c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/world-art-filler-bundle/zipball/dbd353b46734da53546b84cae01b6db790a8f7b8",
-                "reference": "dbd353b46734da53546b84cae01b6db790a8f7b8",
+                "url": "https://api.github.com/repos/anime-db/world-art-filler-bundle/zipball/f2ef4dbd12fe39c18183d1628b5049b8d381e42c",
+                "reference": "f2ef4dbd12fe39c18183d1628b5049b8d381e42c",
                 "shasum": ""
             },
             "require": {
-                "anime-db/catalog-bundle": ">=0.4.17",
                 "ext-tidy": "*",
                 "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "anime-db/catalog-bundle": ">=0.4.17",
+                "phpunit/phpunit": "^4.8.0",
+                "satooshi/php-coveralls": "^1.0",
+                "scrutinizer/ocular": "1.3.*"
             },
             "type": "anime-db-plugin",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.1-dev",
-                    "dev-develop": "0.1-dev"
+                    "dev-master": "0.1-dev"
                 }
             },
             "autoload": {
@@ -421,7 +425,7 @@
             ],
             "description": "Plugin World-Art for the catalog Anime DB",
             "homepage": "http://github.com/anime-db/world-art-filler-bundle",
-            "time": "2015-03-29T19:56:18+00:00"
+            "time": "2017-06-03T20:59:14+00:00"
         },
         {
             "name": "avalanche123/imagine-bundle",
