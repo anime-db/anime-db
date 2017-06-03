@@ -190,7 +190,7 @@ class StaticFilesTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('/static'));
         $request
             ->expects($this->atLeastOnce())
-            ->method('isMethodSafe')
+            ->method('isMethodCacheable')
             ->will($this->returnValue(true));
         $this->event
             ->expects($this->once())
@@ -204,6 +204,7 @@ class StaticFilesTest extends \PHPUnit_Framework_TestCase
                 $that->assertTrue($response->headers->getCacheControlDirective('must-revalidate'));
                 $that->assertInstanceOf('\DateTime', $response->getExpires());
             }));
+
         $this->handle('prod');
     }
 
