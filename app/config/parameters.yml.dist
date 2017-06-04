@@ -13,4 +13,4 @@ parameters:
 #    mailer_password: ~
 
     locale: ~
-    secret: a996943667c670ed1dcd4fb3822fd659
+    secret: ~

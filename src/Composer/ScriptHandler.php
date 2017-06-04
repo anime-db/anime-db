@@ -27,6 +27,7 @@ use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel\Add as AddKernel;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Kernel\Remove as RemoveKernel;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Add as AddRouting;
 use AnimeDb\Bundle\AnimeDbBundle\Composer\Job\Routing\Remove as RemoveRouting;
+use AnimeDb\Bundle\AnimeDbBundle\Manipulator\Parameters;
 use AnimeDb\Bundle\AnimeDbBundle\Manipulator\PhpIni;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
@@ -262,6 +263,15 @@ class ScriptHandler
                 $manipulator->set('memory_limit', '1G');
             }
         }
+
+        // make parameters file if not exists
+        touch(self::getRootDir().'/config/parameters.yml');
+
+        /* @var $manipulator Parameters */
+        $manipulator = self::getContainer()->getManipulator('parameters');
+        if (!$manipulator->get('secret')) {
+            $manipulator->set('secret', SecretKey::generate()); // make unique secret key
+        }
     }
 
     /**
@@ -326,7 +336,8 @@ class ScriptHandler
             ->in($dir)
             ->files()
             ->name('/Version\d{14}.*\.php/')
-            ->count();
+            ->count()
+        ;
     }
 
     /**
@@ -338,7 +349,8 @@ class ScriptHandler
             $finder = Finder::create()
                 ->in($dir)
                 ->files()
-                ->name('/Version\d{14}.*\.php/');
+                ->name('/Version\d{14}.*\.php/')
+            ;
 
             foreach ($finder as $file) {
                 /* @var $file \SplFileInfo */
