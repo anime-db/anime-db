@@ -263,14 +263,20 @@ class ScriptHandler
                 $manipulator->set('memory_limit', '1G');
             }
         }
+    }
 
+    /**
+     * Make a unique secret key
+     */
+    public static function generateSecretKey()
+    {
         // make parameters file if not exists
         touch(self::getRootDir().'/config/parameters.yml');
 
         /* @var $manipulator Parameters */
         $manipulator = self::getContainer()->getManipulator('parameters');
         if (!$manipulator->get('secret')) {
-            $manipulator->set('secret', SecretKey::generate()); // make unique secret key
+            $manipulator->set('secret', SecretKey::generate());
         }
     }
 

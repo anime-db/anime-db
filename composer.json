@@ -74,6 +74,7 @@
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::installConfig"
         ],
         "post-install-cmd": [
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::generateSecretKey",
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::notifyProjectInstall",
@@ -90,6 +91,7 @@
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::installConfig"
         ],
         "post-update-cmd": [
+            "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::generateSecretKey",
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "AnimeDb\\Bundle\\AnimeDbBundle\\Composer\\ScriptHandler::notifyProjectUpdate",
