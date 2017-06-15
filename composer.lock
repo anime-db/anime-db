@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b4c98dd8db55eed97eb9aa3b8f6fc89d",
+    "hash": "01a02303b7f44badb13298640f7021df",
     "content-hash": "20c79256c5bb37bacdd51ef28409c597",
     "packages": [
         {
@@ -251,12 +251,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/anime-db/catalog-bundle.git",
-                "reference": "75a8a0e128974255d99d94164b5fe878a0d09a56"
+                "reference": "301cff575d6b16cec7d7c2c2212cac4f15bcff8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anime-db/catalog-bundle/zipball/75a8a0e128974255d99d94164b5fe878a0d09a56",
-                "reference": "75a8a0e128974255d99d94164b5fe878a0d09a56",
+                "url": "https://api.github.com/repos/anime-db/catalog-bundle/zipball/301cff575d6b16cec7d7c2c2212cac4f15bcff8a",
+                "reference": "301cff575d6b16cec7d7c2c2212cac4f15bcff8a",
                 "shasum": ""
             },
             "require": {
@@ -305,7 +305,7 @@
             ],
             "description": "The application for making home collection anime",
             "homepage": "http://anime-db.org",
-            "time": "2017-06-13 16:15:06"
+            "time": "2017-06-15 20:28:22"
         },
         {
             "name": "anime-db/shikimori-browser-bundle",
@@ -2936,12 +2936,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-apcu.git",
-                "reference": "2e7965b8cdfbba50d0092d3f6dca97dddec409e2"
+                "reference": "ddb6ce1ab412f6987099bbb72ab2f4354e545fec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-apcu/zipball/2e7965b8cdfbba50d0092d3f6dca97dddec409e2",
-                "reference": "2e7965b8cdfbba50d0092d3f6dca97dddec409e2",
+                "url": "https://api.github.com/repos/symfony/polyfill-apcu/zipball/ddb6ce1ab412f6987099bbb72ab2f4354e545fec",
+                "reference": "ddb6ce1ab412f6987099bbb72ab2f4354e545fec",
                 "shasum": ""
             },
             "require": {
@@ -2950,7 +2950,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.4-dev"
+                    "dev-master": "1.5-dev"
                 }
             },
             "autoload": {
@@ -2981,7 +2981,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2017-06-09 08:25:21"
+            "time": "2017-06-14 15:44:48"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -2989,12 +2989,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "f29dca382a6485c3cbe6379f0c61230167681937"
+                "reference": "7c8fae0ac1d216eb54349e6a8baa57d515fe8803"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/f29dca382a6485c3cbe6379f0c61230167681937",
-                "reference": "f29dca382a6485c3cbe6379f0c61230167681937",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/7c8fae0ac1d216eb54349e6a8baa57d515fe8803",
+                "reference": "7c8fae0ac1d216eb54349e6a8baa57d515fe8803",
                 "shasum": ""
             },
             "require": {
@@ -3006,7 +3006,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.4-dev"
+                    "dev-master": "1.5-dev"
                 }
             },
             "autoload": {
@@ -3040,7 +3040,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2017-06-09 14:24:12"
+            "time": "2017-06-14 15:44:48"
         },
         {
             "name": "symfony/swiftmailer-bundle",
