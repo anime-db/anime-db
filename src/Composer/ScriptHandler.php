@@ -266,7 +266,7 @@ class ScriptHandler
     }
 
     /**
-     * Make a unique secret key
+     * Make a unique secret key.
      */
     public static function generateSecretKey()
     {

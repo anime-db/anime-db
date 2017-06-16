@@ -20,7 +20,7 @@ class SecretKey
     {
         $secret = '';
         $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        for ($i = 0; $i < self::KEY_LENGTH; $i++) {
+        for ($i = 0; $i < self::KEY_LENGTH; ++$i) {
             $secret .= $chars[rand(0, strlen($chars) - 1)];
         }
 
