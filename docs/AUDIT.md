@@ -14,7 +14,7 @@ updated: 2026-06-18
 > [TECHNICAL.md](TECHNICAL.md) ·
 > [BUGS.md](BUGS.md) ·
 > [RECOMMENDATIONS.md](RECOMMENDATIONS.md) ·
-> [../CLAUDE.md](../CLAUDE.md) ·
+> [../AGENTS.md](../AGENTS.md) ·
 > [../README.md](../README.md)
 
 ## 1. Что это за проект
@@ -105,7 +105,7 @@ updated: 2026-06-18
 | [TECHNICAL.md](TECHNICAL.md)             | Глубокая техника: жизненный цикл, события, манипуляторы, самообновление |
 | [BUGS.md](BUGS.md)                       | Найденные баги и уязвимости с рекомендациями по исправлению             |
 | [RECOMMENDATIONS.md](RECOMMENDATIONS.md) | Улучшение сопровождаемости и безопасности                               |
-| [../CLAUDE.md](../CLAUDE.md)             | Памятка для AI-агента по работе с репозиторием                          |
+| [../AGENTS.md](../AGENTS.md)             | Памятка для AI-агента по работе с репозиторием                          |
 | [../README.md](../README.md)             | Человеко-понятное описание проекта                                      |
 
 ## 6. Приоритетный план действий (TL;DR)
