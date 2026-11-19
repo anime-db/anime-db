@@ -52,7 +52,7 @@ updated: 2026-06-18
 | `bundles.php` патчится текстовым парсингом (`Manipulator\Kernel`)        | работает, хрупко к форматированию                           |
 | B1 — апдейтер уплощает пути при merge app source                         | баг, открыт (см. [gotchas.md](gotchas.md))                  |
 
-## Ключевые правила работы (из [../CLAUDE.md](../CLAUDE.md))
+## Ключевые правила работы (из [../AGENTS.md](../AGENTS.md))
 
 - НЕ редактировать вручную автогенерируемые файлы: `app/bundles.php`,
   `app/config/{vendor_config,routing,parameters}.yml`, `app/DoctrineMigrations/*`.
